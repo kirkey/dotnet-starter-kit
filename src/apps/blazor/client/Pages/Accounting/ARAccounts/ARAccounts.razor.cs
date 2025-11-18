@@ -14,7 +14,9 @@ public partial class ArAccounts
     /// Reference to the EntityTable component.
     /// </summary>
     private EntityTable<ArAccountResponse, DefaultIdType, ArAccountViewModel> _table = null!;
-    
+
+    private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
+
     // Search filters
     private string? SearchAccountNumber { get; set; }
     private DefaultIdType? SearchCustomerId { get; set; }
@@ -230,5 +232,9 @@ public partial class ArAccounts
             await _table.ReloadDataAsync();
         }
     }
-}
 
+    private async Task ShowArAccountsHelp()
+    {
+        await DialogService.ShowAsync<ArAccountsHelpDialog>("Accounts Receivable Help", new DialogParameters(), _helpDialogOptions);
+    }
+}

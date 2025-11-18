@@ -1,0 +1,491 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.ApAccounts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Accounts Payable Management Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What Are AP Accounts?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Accounts Payable Subsidiary Ledger</MudText>
+                        <MudText Typo="Typo.body2">
+                            AP accounts represent amounts owed to vendors and suppliers for goods or services received on credit. 
+                            The subsidiary ledger tracks individual vendor accounts, while the general ledger shows the total AP balance.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Components:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Account Number:</strong> Unique identifier for each vendor account<br/>
+                                • <strong>Vendor Information:</strong> Linked to vendor master record<br/>
+                                • <strong>Current Balance:</strong> Total amount currently owed to vendor<br/>
+                                • <strong>Aging Buckets:</strong> Breakdown by invoice due dates (0-30, 31-60, 61-90, 90+ days)<br/>
+                                • <strong>Credit Terms:</strong> Net 30, 2/10 Net 30, etc.<br/>
+                                • <strong>Payment Method:</strong> Check, ACH, Wire Transfer
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> AP subsidiary ledger detail must equal the AP control account in general ledger.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Recording Vendor Invoices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Process Vendor Bills</MudText>
+                        <MudText Typo="Typo.body2">
+                            When goods or services are received on credit, record the vendor invoice:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Invoice Processing:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Receive Invoice:</strong> Vendor sends bill for goods/services<br/>
+                                2. <strong>Match Documents:</strong> Three-way match (PO, receiving report, invoice)<br/>
+                                3. <strong>Verify Details:</strong> Check quantities, prices, terms<br/>
+                                4. <strong>Enter Invoice:</strong> Create AP invoice in system<br/>
+                                5. <strong>Approve Invoice:</strong> Manager approval if required<br/>
+                                6. <strong>Post to AP:</strong> System updates AP subsidiary ledger<br/>
+                                7. <strong>Schedule Payment:</strong> Based on due date and terms
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (Automated):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Inventory/Expense          $1,000<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Payable          $1,000
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Always perform three-way match to prevent duplicate payments and fraud.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Recording Payments">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Process Vendor Payments</MudText>
+                        <MudText Typo="Typo.body2">
+                            Use the "Record Payment" action to pay vendor invoices:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Payment Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Select vendor AP account<br/>
+                                2. Click <strong>"Record Payment"</strong> from actions menu<br/>
+                                3. Enter payment date and amount<br/>
+                                4. Select payment method (Check, ACH, Wire, Credit Card)<br/>
+                                5. Enter check number or transaction reference<br/>
+                                6. Apply payment to specific invoices<br/>
+                                7. Take early payment discounts if within discount period<br/>
+                                8. System reduces AP balance and posts to GL<br/>
+                                9. Print check or initiate electronic payment
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (Automated):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Accounts Payable           $1,000<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash/Bank                 $1,000
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Schedule payments to take advantage of early payment discounts while optimizing cash flow.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Early Payment Discounts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding 2/10 Net 30 Terms</MudText>
+                        <MudText Typo="Typo.body2">
+                            Many vendors offer discounts for early payment. Common terms include:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Payment Terms Explained:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>2/10 Net 30:</strong> 2% discount if paid within 10 days, full amount due in 30 days<br/>
+                                • <strong>1/15 Net 45:</strong> 1% discount if paid within 15 days, full amount due in 45 days<br/>
+                                • <strong>Net 30:</strong> Full amount due in 30 days, no discount<br/>
+                                • <strong>Net 60:</strong> Full amount due in 60 days, no discount
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example Calculation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Invoice Amount: $10,000<br/>
+                                Terms: 2/10 Net 30<br/>
+                                <br/>
+                                If paid within 10 days:<br/>
+                                Discount: $10,000 × 2% = $200<br/>
+                                Payment Amount: $10,000 - $200 = $9,800<br/>
+                                <br/>
+                                If paid after 10 days but within 30:<br/>
+                                Payment Amount: $10,000 (no discount)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Annualized Cost of Not Taking Discount:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                For 2/10 Net 30: ~36.7% annual interest rate<br/>
+                                Formula: (Discount % / (100% - Discount %)) × (365 / Days Early)<br/>
+                                = (2% / 98%) × (365 / 20) = 37.2%
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Taking early payment discounts is almost always beneficial - it's like earning 36%+ annual return!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Recording Discount Lost">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Handling Missed Discount Opportunities</MudText>
+                        <MudText Typo="Typo.body2">
+                            When a payment is made after the discount period expires:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Recording Lost Discounts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Invoice recorded at net amount (after discount)<br/>
+                                2. If discount period missed, click <strong>"Record Discount Lost"</strong><br/>
+                                3. System adds lost discount to expense<br/>
+                                4. Increases AP balance by discount amount<br/>
+                                5. Tracks opportunity cost of late payment
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Purchase Discounts Lost    $200<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Payable          $200
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Management Attention:</strong> High discount lost amounts indicate poor cash management or approval delays.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="AP Aging & Cash Flow">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Payables Aging</MudText>
+                        <MudText Typo="Typo.body2">
+                            AP aging categorizes payables by how long they've been outstanding:
+                        </MudText>
+                        
+                        <MudText Typo="Typo.body2">
+                            <strong>Standard Aging Buckets:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            | Bucket      | Description          | Action Required    |<br/>
+                            |-------------|----------------------|--------------------|<br/>
+                            | Current     | 0-30 days           | ✓ Monitor          |<br/>
+                            | 31-60 days  | Overdue             | ⚠ Schedule Payment |<br/>
+                            | 61-90 days  | Past due            | ⚠ Contact Vendor   |<br/>
+                            | 90+ days    | Seriously overdue   | ❌ Urgent Priority |
+                        </MudText>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Days Payable Outstanding (DPO):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                DPO = (Accounts Payable / Cost of Goods Sold) × Days<br/>
+                                <br/>
+                                Example: $80,000 AP / $240,000 quarterly COGS × 90 days = 30 DPO<br/>
+                                Higher DPO can be good (better cash flow) but maintain vendor relationships.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Cash Flow Management:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Pay invoices as late as possible without penalties<br/>
+                                • Take early payment discounts when they exceed borrowing costs<br/>
+                                • Negotiate better terms with key vendors<br/>
+                                • Match payment timing with cash receipts<br/>
+                                • Avoid damaging vendor relationships with chronic late payment
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Balance:</strong> Optimize cash flow while maintaining good vendor relationships and credit ratings.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Vendor Credits & Debit Memos">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Handling Returns and Adjustments</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Credit Memo Scenarios:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Product Returns:</strong> Returning defective or incorrect items<br/>
+                                • <strong>Pricing Adjustments:</strong> Correcting overbilling<br/>
+                                • <strong>Rebates:</strong> Volume discounts or promotional credits<br/>
+                                • <strong>Overpayments:</strong> Paid more than invoice amount
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Processing Vendor Credits:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Receive credit memo from vendor<br/>
+                                2. Verify credit is valid and matches return/issue<br/>
+                                3. Enter credit memo in AP system<br/>
+                                4. Reduces AP balance for that vendor<br/>
+                                5. Apply to future invoices or request refund check
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Accounts Payable           $500<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Inventory/Expense         $500
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Reconciling AP Accounts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Subsidiary Ledger Reconciliation</MudText>
+                        <MudText Typo="Typo.body2">
+                            Regular reconciliation ensures accuracy between subsidiary and general ledger:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reconciliation Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Run AP subsidiary ledger total report<br/>
+                                2. Compare to AP control account balance in GL<br/>
+                                3. Click <strong>"Reconcile"</strong> action on AP account<br/>
+                                4. Review and investigate discrepancies<br/>
+                                5. Correct any differences found<br/>
+                                6. Reconcile vendor statements monthly<br/>
+                                7. Document reconciliation with date and notes
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Reconciliation Issues:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Payments not applied to correct vendor<br/>
+                                • Invoices posted to wrong account<br/>
+                                • Credit memos not properly recorded<br/>
+                                • Timing differences (unposted transactions)<br/>
+                                • Manual journal entries bypassing subsidiary ledger<br/>
+                                • Vendor statement discrepancies
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Vendor Statement Reconciliation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Receive monthly statement from vendor<br/>
+                                2. Compare to your AP subsidiary ledger for that vendor<br/>
+                                3. Identify outstanding invoices on both records<br/>
+                                4. Investigate discrepancies (missing invoices, unapplied payments)<br/>
+                                5. Contact vendor to resolve differences<br/>
+                                6. Adjust your records if needed
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Reconcile AP monthly before closing books. Investigate all discrepancies promptly.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="1099 Reporting">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Year-End Vendor Reporting</MudText>
+                        <MudText Typo="Typo.body2">
+                            US companies must report payments to vendors on Form 1099-MISC or 1099-NEC:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1099 Requirements:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Who:</strong> Non-incorporated vendors (sole proprietors, partnerships, LLCs)<br/>
+                                • <strong>Threshold:</strong> $600 or more paid during year<br/>
+                                • <strong>What:</strong> Services, rents, royalties, non-employee compensation<br/>
+                                • <strong>Exceptions:</strong> Corporations (except attorneys), merchandise purchases<br/>
+                                • <strong>Deadline:</strong> January 31st following year-end
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>AP System Setup:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Flag 1099 vendors in vendor master<br/>
+                                2. Collect W-9 forms from all vendors<br/>
+                                3. Track payments by 1099 box category<br/>
+                                4. Run 1099 reports at year-end<br/>
+                                5. Issue 1099 forms by January 31<br/>
+                                6. File with IRS electronically
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Compliance:</strong> Failing to file or late filing can result in IRS penalties. Maintain W-9s for all vendors.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">AP Management Best Practices</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Internal Controls:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Segregation of Duties:</strong> Separate invoice approval, payment processing, and reconciliation<br/>
+                                • <strong>Three-Way Match:</strong> Always match PO, receiving report, and invoice<br/>
+                                • <strong>Dual Signatures:</strong> Require two signatures for checks over threshold<br/>
+                                • <strong>Vendor Master Controls:</strong> Restrict who can add new vendors<br/>
+                                • <strong>Regular Audits:</strong> Review payments, duplicate invoice checks<br/>
+                                • <strong>Positive Pay:</strong> Implement positive pay with bank to prevent check fraud
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Efficiency Tips:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Automate invoice processing with OCR/scanning<br/>
+                                • Set up electronic payments (ACH) with regular vendors<br/>
+                                • Schedule payment runs strategically<br/>
+                                • Negotiate vendor payment terms<br/>
+                                • Maintain organized filing system<br/>
+                                • Use approval workflows
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Fraud Schemes to Watch:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Duplicate Payments:</strong> Same invoice paid twice<br/>
+                                • <strong>Fictitious Vendors:</strong> Employee sets up fake vendor, pays themselves<br/>
+                                • <strong>Invoice Manipulation:</strong> Changing amounts before approval<br/>
+                                • <strong>Kickbacks:</strong> Vendors paying employees for business<br/>
+                                • <strong>Check Tampering:</strong> Altering payee or amount on checks
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Remember:</strong> Strong AP controls protect company assets and maintain vendor trust.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if we receive an invoice before goods arrive?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Hold invoice until goods received and verified. Only record AP after confirming receipt.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we always take early payment discounts?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Almost always yes - 2/10 Net 30 is equivalent to 36%+ annual interest. Only skip if severe cash shortage.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if vendor claims we didn't pay but we have cancelled check?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Provide copy of cancelled check or payment confirmation. Reconcile your AP to their statement regularly to catch issues early.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How long should we keep AP records?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: IRS requires 7 years for tax purposes. Check state laws which may be longer. Keep permanently for major capital purchases.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we pay personal expenses through AP?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No - this is commingling funds. Owner expenses should go through owner draws or expense reimbursement process.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

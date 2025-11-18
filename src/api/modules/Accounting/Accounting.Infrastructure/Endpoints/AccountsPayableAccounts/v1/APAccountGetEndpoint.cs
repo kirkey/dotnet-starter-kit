@@ -16,7 +16,7 @@ public static class ApAccountGetEndpoint
             })
             .WithName(nameof(ApAccountGetEndpoint))
             .WithSummary("Get AP account by ID")
-            .Produces<APAccountResponse>()
+            .Produces<ApAccountResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);

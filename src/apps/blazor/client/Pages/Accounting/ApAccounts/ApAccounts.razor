@@ -2,7 +2,18 @@
 
 <PageHeader Title="AP Accounts" Header="Accounts Payable" SubHeader="Manage accounts payable subsidiary ledger with aging, payments, and reconciliation tracking." />
 
-<EntityTable @ref="_table" TEntity="APAccountResponse" TId="DefaultIdType" TRequest="ApAccountViewModel" Context="@Context">
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Info" OnClick="@ShowApAccountsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="ApAccountResponse" TId="DefaultIdType" TRequest="ApAccountViewModel" Context="@Context">
     <AdvancedSearchContent>
         <MudItem xs="12" sm="6" md="4">
             <MudTextField @bind-Value="@SearchAccountNumber"

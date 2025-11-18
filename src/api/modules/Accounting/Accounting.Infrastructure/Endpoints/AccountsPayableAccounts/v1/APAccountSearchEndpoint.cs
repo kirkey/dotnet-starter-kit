@@ -16,7 +16,7 @@ public static class ApAccountSearchEndpoint
             })
             .WithName(nameof(ApAccountSearchEndpoint))
             .WithSummary("Search AP accounts")
-            .Produces<PagedList<APAccountResponse>>()
+            .Produces<PagedList<ApAccountResponse>>()
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

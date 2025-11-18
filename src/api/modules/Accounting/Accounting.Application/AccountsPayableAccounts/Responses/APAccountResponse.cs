@@ -1,6 +1,6 @@
 namespace Accounting.Application.AccountsPayableAccounts.Responses;
 
-public record APAccountResponse
+public record ApAccountResponse
 {
     public DefaultIdType Id { get; init; }
     public string AccountNumber { get; init; } = string.Empty;

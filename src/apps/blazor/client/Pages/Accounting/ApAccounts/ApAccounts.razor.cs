@@ -8,12 +8,14 @@ public partial class ApAccounts
     /// <summary>
     /// The entity table context for managing AP accounts.
     /// </summary>
-    protected EntityServerTableContext<APAccountResponse, DefaultIdType, ApAccountViewModel> Context { get; set; } = null!;
+    protected EntityServerTableContext<ApAccountResponse, DefaultIdType, ApAccountViewModel> Context { get; set; } = null!;
 
     /// <summary>
     /// Reference to the EntityTable component.
     /// </summary>
-    private EntityTable<APAccountResponse, DefaultIdType, ApAccountViewModel> _table = null!;
+    private EntityTable<ApAccountResponse, DefaultIdType, ApAccountViewModel> _table = null!;
+
+    private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
 
     // Search filters
     private string? SearchAccountNumber { get; set; }
@@ -30,17 +32,17 @@ public partial class ApAccounts
     /// </summary>
     protected override void OnInitialized()
     {
-        Context = new EntityServerTableContext<APAccountResponse, DefaultIdType, ApAccountViewModel>(
+        Context = new EntityServerTableContext<ApAccountResponse, DefaultIdType, ApAccountViewModel>(
             entityName: "AP Account",
             entityNamePlural: "AP Accounts",
             entityResource: FshResources.Accounting,
             fields:
             [
-                new EntityField<APAccountResponse>(ap => ap.AccountNumber, "Account Number", "AccountNumber"),
-                new EntityField<APAccountResponse>(ap => ap.AccountName, "Account Name", "AccountName"),
-                new EntityField<APAccountResponse>(ap => ap.AccountType, "Type", "AccountType"),
-                new EntityField<APAccountResponse>(ap => ap.CurrentBalance, "Balance", "CurrentBalance", Type: typeof(decimal)),
-                new EntityField<APAccountResponse>(ap => ap.IsActive, "Status", "IsActive"),
+                new EntityField<ApAccountResponse>(ap => ap.AccountNumber, "Account Number", "AccountNumber"),
+                new EntityField<ApAccountResponse>(ap => ap.AccountName, "Account Name", "AccountName"),
+                new EntityField<ApAccountResponse>(ap => ap.AccountType, "Type", "AccountType"),
+                new EntityField<ApAccountResponse>(ap => ap.CurrentBalance, "Balance", "CurrentBalance", Type: typeof(decimal)),
+                new EntityField<ApAccountResponse>(ap => ap.IsActive, "Status", "IsActive"),
             ],
             enableAdvancedSearch: true,
             idFunc: ap => ap.Id,
@@ -48,9 +50,9 @@ public partial class ApAccounts
             {
                 // TODO: Implement when API endpoint is available
                 await Task.CompletedTask;
-                return new PaginationResponse<APAccountResponse>
+                return new PaginationResponse<ApAccountResponse>
                 {
-                    Items = new List<APAccountResponse>(),
+                    Items = new List<ApAccountResponse>(),
                     TotalCount = 0
                 };
             },
@@ -214,5 +216,9 @@ public partial class ApAccounts
             await _table.ReloadDataAsync();
         }
     }
-}
 
+    private async Task ShowApAccountsHelp()
+    {
+        await DialogService.ShowAsync<ApAccountsHelpDialog>("Accounts Payable Help", new DialogParameters(), _helpDialogOptions);
+    }
+}

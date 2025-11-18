@@ -25,7 +25,7 @@ public class AccountsPayableAccountByIdSpec : Specification<AccountsPayableAccou
 /// <summary>
 /// Specification for searching accounts payable accounts with filters and pagination.
 /// </summary>
-public class AccountsPayableAccountSearchSpec : EntitiesByPaginationFilterSpec<AccountsPayableAccount, Responses.APAccountResponse>
+public class AccountsPayableAccountSearchSpec : EntitiesByPaginationFilterSpec<AccountsPayableAccount, Responses.ApAccountResponse>
 {
     public AccountsPayableAccountSearchSpec(Search.v1.SearchApAccountsRequest request)
         : base(request)

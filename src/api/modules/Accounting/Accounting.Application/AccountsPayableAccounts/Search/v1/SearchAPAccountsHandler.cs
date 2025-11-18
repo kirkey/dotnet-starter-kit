@@ -9,9 +9,9 @@ namespace Accounting.Application.AccountsPayableAccounts.Search.v1;
 public sealed class SearchApAccountsHandler(
     ILogger<SearchApAccountsHandler> logger,
     [FromKeyedServices("accounting")] IReadRepository<AccountsPayableAccount> repository)
-    : IRequestHandler<SearchApAccountsRequest, PagedList<APAccountResponse>>
+    : IRequestHandler<SearchApAccountsRequest, PagedList<ApAccountResponse>>
 {
-    public async Task<PagedList<APAccountResponse>> Handle(SearchApAccountsRequest request, CancellationToken cancellationToken)
+    public async Task<PagedList<ApAccountResponse>> Handle(SearchApAccountsRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -21,6 +21,6 @@ public sealed class SearchApAccountsHandler(
 
         logger.LogInformation("Retrieved {Count} of {Total} AP accounts", items.Count, totalCount);
 
-        return new PagedList<APAccountResponse>(items, request.PageNumber, request.PageSize, totalCount);
+        return new PagedList<ApAccountResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }

@@ -1,0 +1,396 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.ArAccounts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Accounts Receivable Management Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What Are AR Accounts?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Accounts Receivable Subsidiary Ledger</MudText>
+                        <MudText Typo="Typo.body2">
+                            AR accounts represent amounts owed by customers for goods or services sold on credit. 
+                            The subsidiary ledger tracks individual customer accounts, while the general ledger shows the total AR balance.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Components:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Account Number:</strong> Unique identifier for each customer account<br/>
+                                • <strong>Customer Information:</strong> Linked to customer master record<br/>
+                                • <strong>Current Balance:</strong> Total amount currently owed by customer<br/>
+                                • <strong>Aging Buckets:</strong> Breakdown by invoice due dates (0-30, 31-60, 61-90, 90+ days)<br/>
+                                • <strong>Credit Limit:</strong> Maximum credit extended to customer<br/>
+                                • <strong>Payment Terms:</strong> Net 30, 2/10 Net 30, etc.
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> AR subsidiary ledger detail must equal the AR control account in general ledger.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Recording Customer Invoices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Process Sales Invoices</MudText>
+                        <MudText Typo="Typo.body2">
+                            When a sale on credit occurs, the system automatically updates AR accounts:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Invoice Processing:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Create Invoice:</strong> Generate customer invoice in Invoices module<br/>
+                                2. <strong>Verify Details:</strong> Confirm quantities, prices, customer info<br/>
+                                3. <strong>Check Credit Limit:</strong> Ensure customer hasn't exceeded limit<br/>
+                                4. <strong>Post Invoice:</strong> System updates AR subsidiary ledger<br/>
+                                5. <strong>Send to Customer:</strong> Email or mail invoice<br/>
+                                6. <strong>Monitor Aging:</strong> Track invoice in aging reports
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (Automated):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Accounts Receivable       $1,000<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Sales Revenue             $1,000
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Recording Collections">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Process Customer Payments</MudText>
+                        <MudText Typo="Typo.body2">
+                            Use the "Record Collection" action to apply payments against customer balances:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Collection Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Select customer AR account<br/>
+                                2. Click <strong>"Record Collection"</strong> from actions menu<br/>
+                                3. Enter receipt date and amount received<br/>
+                                4. Select payment method (Check, ACH, Credit Card, Wire)<br/>
+                                5. Enter check number or transaction reference<br/>
+                                6. Apply payment to specific invoices (oldest first recommended)<br/>
+                                7. System reduces AR balance and updates aging<br/>
+                                8. Journal entry auto-posted to GL
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (Automated):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Cash/Bank                  $1,000<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Receivable       $1,000
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Deposit customer payments promptly and match to invoices same day for accurate records.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="AR Aging & Collections">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Receivables Aging</MudText>
+                        <MudText Typo="Typo.body2">
+                            AR aging categorizes receivables by how long they've been outstanding:
+                        </MudText>
+                        
+                        <MudText Typo="Typo.body2">
+                            <strong>Standard Aging Buckets:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            | Bucket      | Description          | Action Required    |<br/>
+                            |-------------|----------------------|--------------------|<br/>
+                            | Current     | 0-30 days           | ✓ Monitor          |<br/>
+                            | 31-60 days  | Overdue             | ⚠ Follow Up        |<br/>
+                            | 61-90 days  | Past due            | ⚠ Collection Call  |<br/>
+                            | 90+ days    | Seriously overdue   | ❌ Escalate        |
+                        </MudText>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Collection Strategies:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>0-30 days:</strong> Friendly reminder email<br/>
+                                • <strong>31-60 days:</strong> Phone call, formal letter<br/>
+                                • <strong>61-90 days:</strong> Account hold, payment plan discussion<br/>
+                                • <strong>90+ days:</strong> Collection agency or write-off consideration
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Days Sales Outstanding (DSO):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                DSO = (Accounts Receivable / Total Credit Sales) × Days<br/>
+                                <br/>
+                                Example: $50,000 AR / $150,000 quarterly sales × 90 days = 30 DSO<br/>
+                                Lower DSO is better - indicates faster collections.
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Critical:</strong> Aging over 90 days has significantly higher uncollectible risk. Act promptly on aged balances.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Allowance for Doubtful Accounts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Estimating Bad Debt</MudText>
+                        <MudText Typo="Typo.body2">
+                            The allowance estimates uncollectible receivables to match expenses with revenues:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Estimation Methods:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Percentage of Sales:</strong> Apply historical bad debt % to current sales<br/>
+                                • <strong>Aging Method:</strong> Apply different percentages to each aging bucket<br/>
+                                • <strong>Specific Identification:</strong> Identify specific accounts likely uncollectible
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example - Aging Method:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Current (0-30):    $100,000 × 1% = $1,000<br/>
+                                31-60 days:         $30,000 × 5% = $1,500<br/>
+                                61-90 days:         $15,000 × 20% = $3,000<br/>
+                                90+ days:           $10,000 × 50% = $5,000<br/>
+                                Total Allowance: $10,500
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Updating Allowance:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Click <strong>"Update Allowance"</strong> action to adjust reserve quarterly
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>GAAP Requirement:</strong> Allowance method is required under accrual accounting to match expenses with revenues.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Bad Debt Write-Offs">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Recording Uncollectible Accounts</MudText>
+                        <MudText Typo="Typo.body2">
+                            When collection efforts fail and account is deemed uncollectible:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Write-Off Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Exhaust all reasonable collection efforts<br/>
+                                2. Obtain management approval for write-off<br/>
+                                3. Document collection attempts and reason<br/>
+                                4. Click <strong>"Record Write-Off"</strong> action<br/>
+                                5. Enter write-off amount and justification<br/>
+                                6. System removes from AR and charges allowance
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (Allowance Method):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Allowance for Doubtful Accounts  $1,500<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Receivable              $1,500
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Warning:</strong> Write-offs require proper documentation and approval. Never write off without exhausting collection efforts.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Customer Credits & Refunds">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Handling Returns and Credit Memos</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Credit Memo Scenarios:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Product Returns:</strong> Customer returns defective or unwanted items<br/>
+                                • <strong>Pricing Adjustments:</strong> Correcting billing errors<br/>
+                                • <strong>Service Failures:</strong> Compensation for service issues<br/>
+                                • <strong>Overpayments:</strong> Customer paid more than invoice amount
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Issuing Credit Memos:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Verify return/adjustment is valid<br/>
+                                2. Create credit memo in Invoices module<br/>
+                                3. Reduces AR balance for that customer<br/>
+                                4. Apply to future invoices or issue refund check
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Reconciling AR Accounts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Subsidiary Ledger Reconciliation</MudText>
+                        <MudText Typo="Typo.body2">
+                            Regular reconciliation ensures accuracy between subsidiary and general ledger:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reconciliation Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Run AR subsidiary ledger total report<br/>
+                                2. Compare to AR control account balance in GL<br/>
+                                3. Click <strong>"Reconcile"</strong> action on AR account<br/>
+                                4. Review and investigate discrepancies<br/>
+                                5. Correct any differences found<br/>
+                                6. Document reconciliation with date and notes
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Reconciliation Issues:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Payments not applied to correct customer<br/>
+                                • Invoices posted to wrong account<br/>
+                                • Credit memos not properly recorded<br/>
+                                • Timing differences (unposted transactions)<br/>
+                                • Manual journal entries bypassing subsidiary ledger
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Reconcile AR monthly before closing books. Investigate all discrepancies.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudList T="string" Dense="true">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Send invoices immediately upon delivery/service completion</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Follow up on overdue accounts within 5 days of due date</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Review AR aging weekly and prioritize collections</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Perform credit checks before extending credit to new customers</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Reconcile AR subsidiary ledger to GL monthly</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Update allowance for doubtful accounts quarterly</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Monitor DSO trends monthly - target 30-45 days</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Establish clear credit policies upfront</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="FAQ">
+                    <MudStack Spacing="2">
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: How long should I wait before writing off bad debt?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Typically 120+ days past due after exhausting collection efforts. Follow company policy and get management approval.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: What's a good DSO (Days Sales Outstanding)?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Depends on industry and payment terms. Generally, 30-45 days is good. Compare to industry benchmarks.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: When should I place a customer on credit hold?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: When they exceed credit limit or have balances 60+ days past due. Require payment before releasing hold.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: How do I handle partial payments?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Apply to oldest invoices first (unless customer specifies). Document which invoices are partially paid.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: Should I offer early payment discounts?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, if it improves cash flow. Common terms: 2/10 Net 30. Calculate the effective interest rate vs. cost of capital.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+
+            <MudAlert Severity="Severity.Success" Dense="true">
+                <strong>Pro Tip:</strong> Monitor DSO trends weekly and establish proactive collection procedures to maintain healthy cash flow.
+            </MudAlert>
+        </MudStack>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

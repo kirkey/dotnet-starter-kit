@@ -1,6 +1,17 @@
 @page "/accounting/ar-accounts"
 
-<PageHeader Title="AR Accounts" Header="Accounts Receivable" SubHeader="Manage accounts receivable subsidiary ledger with aging, collections, and write-off tracking." />
+<PageHeader Title="AR Accounts" Header="Accounts Receivable" SubHeader="Manage accounts receivable subsidiary ledger with aging, collections, and bad debt tracking." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Info" OnClick="@ShowArAccountsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
 
 <EntityTable @ref="_table" TEntity="ArAccountResponse" TId="DefaultIdType" TRequest="ArAccountViewModel" Context="@Context">
     <AdvancedSearchContent>

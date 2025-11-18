@@ -9,9 +9,9 @@ namespace Accounting.Application.AccountsPayableAccounts.Get;
 public sealed class GetAPAccountHandler(
     ILogger<GetAPAccountHandler> logger,
     [FromKeyedServices("accounting")] IReadRepository<AccountsPayableAccount> repository)
-    : IRequestHandler<GetAPAccountRequest, APAccountResponse>
+    : IRequestHandler<GetAPAccountRequest, ApAccountResponse>
 {
-    public async Task<APAccountResponse> Handle(GetAPAccountRequest request, CancellationToken cancellationToken)
+    public async Task<ApAccountResponse> Handle(GetAPAccountRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -25,7 +25,7 @@ public sealed class GetAPAccountHandler(
 
         logger.LogInformation("Retrieved AP account {APAccountId}", account.Id);
 
-        return new APAccountResponse
+        return new ApAccountResponse
         {
             Id = account.Id,
             AccountNumber = account.AccountNumber,
