@@ -1,3 +1,4 @@
+using Accounting.Application.PostingBatches.Responses;
 using Accounting.Application.PostingBatches.Search.v1;
 using Shared.Authorization;
 
@@ -16,8 +17,7 @@ public static class PostingBatchSearchEndpoint
             .WithName(nameof(PostingBatchSearchEndpoint))
             .WithSummary("Search posting batches")
             .WithDescription("Searches posting batches with filtering and pagination")
-            .Produces<PagedList<PostingBatchSearchResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .Produces<PagedList<PostingBatchResponse>>()
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

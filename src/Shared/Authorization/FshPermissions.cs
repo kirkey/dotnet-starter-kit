@@ -69,6 +69,14 @@ public static class FshPermissions
         new("Delete Accounting", FshActions.Delete, FshResources.Accounting),
         new("Import Accounting", FshActions.Import, FshResources.Accounting),
         new("Export Accounting", FshActions.Export, FshResources.Accounting),
+        new("Approve Accounting", FshActions.Approve, FshResources.Accounting),
+        new("Reject Accounting", FshActions.Reject, FshResources.Accounting),
+        new("Post Accounting", FshActions.Post, FshResources.Accounting),
+        new("Void Accounting", FshActions.Void, FshResources.Accounting),
+        new("Cancel Accounting", FshActions.Cancel, FshResources.Accounting),
+        new("Send Accounting", FshActions.Send, FshResources.Accounting),
+        new("Process Accounting", FshActions.Process, FshResources.Accounting),
+        new("Complete Accounting", FshActions.Complete, FshResources.Accounting),
 
         //Store
         new("View Store", FshActions.View, FshResources.Store),
@@ -112,6 +120,10 @@ public static class FshPermissions
         new("Delete Employees", FshActions.Delete, FshResources.Employees),
         new("Import Employees", FshActions.Import, FshResources.Employees),
         new("Export Employees", FshActions.Export, FshResources.Employees),
+        new("Manage Employees", FshActions.Manage, FshResources.Employees),
+        new("Assign Employees", FshActions.Assign, FshResources.Employees),
+        new("Submit Employees", FshActions.Submit, FshResources.Employees),
+        new("Complete Employees", FshActions.Complete, FshResources.Employees),
 
         //Human Resources - Attendance
         new("View Attendance", FshActions.View, FshResources.Attendance),
@@ -139,6 +151,10 @@ public static class FshPermissions
         new("Delete Leaves", FshActions.Delete, FshResources.Leaves),
         new("Import Leaves", FshActions.Import, FshResources.Leaves),
         new("Export Leaves", FshActions.Export, FshResources.Leaves),
+        new("Approve Leaves", FshActions.Approve, FshResources.Leaves),
+        new("Reject Leaves", FshActions.Reject, FshResources.Leaves),
+        new("Submit Leaves", FshActions.Submit, FshResources.Leaves),
+        new("Cancel Leaves", FshActions.Cancel, FshResources.Leaves),
 
         //Human Resources - Payroll
         new("View Payroll", FshActions.View, FshResources.Payroll),
@@ -148,6 +164,7 @@ public static class FshPermissions
         new("Delete Payroll", FshActions.Delete, FshResources.Payroll),
         new("Import Payroll", FshActions.Import, FshResources.Payroll),
         new("Export Payroll", FshActions.Export, FshResources.Payroll),
+        new("Process Payroll", FshActions.Process, FshResources.Payroll),
 
         //Human Resources - Benefits
         new("View Benefits", FshActions.View, FshResources.Benefits),
@@ -157,6 +174,8 @@ public static class FshPermissions
         new("Delete Benefits", FshActions.Delete, FshResources.Benefits),
         new("Import Benefits", FshActions.Import, FshResources.Benefits),
         new("Export Benefits", FshActions.Export, FshResources.Benefits),
+        new("Approve Benefits", FshActions.Approve, FshResources.Benefits),
+        new("Reject Benefits", FshActions.Reject, FshResources.Benefits),
 
         // Employees - special operations
         new("Regularize Employees", FshActions.Regularize, FshResources.Employees),
@@ -164,6 +183,15 @@ public static class FshPermissions
         
         // Benefit Enrollments - special operation
         new("Terminate BenefitEnrollments", FshActions.Terminate, FshResources.Benefits),
+
+        //Human Resources - Taxes
+        new("View Taxes", FshActions.View, FshResources.Taxes),
+        new("Search Taxes", FshActions.Search, FshResources.Taxes),
+        new("Create Taxes", FshActions.Create, FshResources.Taxes),
+        new("Update Taxes", FshActions.Update, FshResources.Taxes),
+        new("Delete Taxes", FshActions.Delete, FshResources.Taxes),
+        new("Import Taxes", FshActions.Import, FshResources.Taxes),
+        new("Export Taxes", FshActions.Export, FshResources.Taxes),
     ];
 
     public static IReadOnlyList<FshPermission> All { get; } = new ReadOnlyCollection<FshPermission>(AllPermissions);

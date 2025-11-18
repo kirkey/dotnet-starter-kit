@@ -12,7 +12,7 @@ public class AccountReconciliationViewModel
     public decimal SubsidiaryLedgerBalance { get; set; }
     public decimal Variance { get; set; }
     public string ReconciliationStatus { get; set; } = "Pending";
-    public DateTime ReconciliationDate { get; set; } = DateTime.UtcNow;
+    public DateTime? ReconciliationDate { get; set; } = DateTime.UtcNow;
     public string? VarianceExplanation { get; set; }
     public string SubsidiaryLedgerSource { get; set; } = string.Empty;
     public int LineItemCount { get; set; }

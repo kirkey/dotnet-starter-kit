@@ -18,7 +18,6 @@ public static class DeferredRevenueSearchEndpoint
             .WithSummary("Search deferred revenues")
             .WithDescription("Searches deferred revenue entries with filtering and pagination")
             .Produces<PagedList<DeferredRevenueResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

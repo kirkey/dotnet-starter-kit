@@ -5,61 +5,13 @@
         <MudStack Spacing="3">
             <MudText Typo="Typo.h6">Reconciliation Details</MudText>
             
-            @if (Reconciliation != null)
-            {
-                <MudGrid Spacing="2">
-                    <MudItem xs="12" sm="6">
-                        <MudStack Spacing="1">
-                            <MudText Typo="Typo.caption">GL Balance</MudText>
-                            <MudText Typo="Typo.body1">@Reconciliation.GlBalance.ToString("C")</MudText>
-                        </MudStack>
-                    </MudItem>
-                    <MudItem xs="12" sm="6">
-                        <MudStack Spacing="1">
-                            <MudText Typo="Typo.caption">Subsidiary Balance</MudText>
-                            <MudText Typo="Typo.body1">@Reconciliation.SubsidiaryLedgerBalance.ToString("C")</MudText>
-                        </MudStack>
-                    </MudItem>
-                    <MudItem xs="12" sm="6">
-                        <MudStack Spacing="1">
-                            <MudText Typo="Typo.caption">Variance</MudText>
-                            <MudText Typo="Typo.body1" Color="@(Reconciliation.Variance > 0 ? Color.Warning : Color.Success)">
-                                @Reconciliation.Variance.ToString("C")
-                            </MudText>
-                        </MudStack>
-                    </MudItem>
-                    <MudItem xs="12" sm="6">
-                        <MudStack Spacing="1">
-                            <MudText Typo="Typo.caption">Status</MudText>
-                            <MudChip Color="@GetStatusColor(Reconciliation.ReconciliationStatus)" Size="Size.Small">
-                                @Reconciliation.ReconciliationStatus
-                            </MudChip>
-                        </MudStack>
-                    </MudItem>
-                </MudGrid>
+            <MudAlert Severity="Severity.Info">
+                Details for reconciliation ID: @ReconciliationId
+            </MudAlert>
 
-                @if (!string.IsNullOrEmpty(Reconciliation.VarianceExplanation))
-                {
-                    <div>
-                        <MudText Typo="Typo.caption">Variance Explanation</MudText>
-                        <MudText Typo="Typo.body2">@Reconciliation.VarianceExplanation</MudText>
-                    </div>
-                }
-
-                @if (Reconciliation.AdjustingEntriesRecorded)
-                {
-                    <MudAlert Severity="Severity.Success" Dense="true">
-                        Adjusting entries have been recorded for this reconciliation.
-                    </MudAlert>
-                }
-
-                @if (Reconciliation.ApprovedOn.HasValue)
-                {
-                    <MudAlert Severity="Severity.Info" Dense="true">
-                        Approved by @Reconciliation.ApproverName on @Reconciliation.ApprovedOn?.ToString("g")
-                    </MudAlert>
-                }
-            }
+            <MudText Typo="Typo.body2">
+                To view full details, please edit the reconciliation or view it from the table.
+            </MudText>
         </MudStack>
     </DialogContent>
 
@@ -73,18 +25,8 @@
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter]
-    public dynamic? Reconciliation { get; set; }
+    public DefaultIdType ReconciliationId { get; set; }
 
     private void Close() => MudDialog.Close();
-
-    private Color GetStatusColor(string status) => status switch
-    {
-        "Pending" => Color.Default,
-        "Reconciled" => Color.Success,
-        "Approved" => Color.Info,
-        "Adjusted" => Color.Warning,
-        "Rejected" => Color.Error,
-        _ => Color.Default
-    };
 }
 

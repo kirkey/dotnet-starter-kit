@@ -17,7 +17,6 @@ public static class VendorSearchEndpoint
             .WithSummary("Search vendors")
             .WithDescription("Searches vendors with pagination and filtering support")
             .Produces<PagedList<VendorSearchResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

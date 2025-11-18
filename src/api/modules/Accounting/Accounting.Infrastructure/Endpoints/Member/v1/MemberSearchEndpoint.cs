@@ -1,3 +1,4 @@
+using Accounting.Application.Members.Responses;
 using Accounting.Application.Members.Search.v1;
 using Shared.Authorization;
 
@@ -18,6 +19,7 @@ public static class MemberSearchEndpoint
         .WithName(nameof(MemberSearchEndpoint))
         .WithSummary("Search members")
         .WithDescription("Search members with filters and pagination")
+        .Produces<PagedList<MemberResponse>>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
         .MapToApiVersion(1);
 

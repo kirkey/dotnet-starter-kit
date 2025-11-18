@@ -1,3 +1,4 @@
+using Accounting.Application.Meters.Responses;
 using Accounting.Application.Meters.Search.v1;
 using Shared.Authorization;
 
@@ -18,6 +19,7 @@ public static class MeterSearchEndpoint
         .WithName(nameof(MeterSearchEndpoint))
         .WithSummary("Search meters")
         .WithDescription("Search meters with filters and pagination")
+        .Produces<PagedList<MeterResponse>>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
         .MapToApiVersion(1);
 

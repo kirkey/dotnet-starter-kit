@@ -16,8 +16,7 @@ public static class ApAccountSearchEndpoint
             })
             .WithName(nameof(ApAccountSearchEndpoint))
             .WithSummary("Search AP accounts")
-            .Produces<List<APAccountResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .Produces<PagedList<APAccountResponse>>()
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

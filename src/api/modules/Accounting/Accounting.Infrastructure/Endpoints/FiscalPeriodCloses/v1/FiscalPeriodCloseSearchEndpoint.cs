@@ -17,7 +17,6 @@ public static class FiscalPeriodCloseSearchEndpoint
             .WithName(nameof(FiscalPeriodCloseSearchEndpoint))
             .WithSummary("Search fiscal period closes")
             .Produces<PagedList<FiscalPeriodCloseResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

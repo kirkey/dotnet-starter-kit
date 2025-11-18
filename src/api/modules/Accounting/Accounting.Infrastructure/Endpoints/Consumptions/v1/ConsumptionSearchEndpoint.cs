@@ -1,3 +1,4 @@
+using Accounting.Application.Consumptions.Responses;
 using Accounting.Application.Consumptions.Search.v1;
 using Shared.Authorization;
 
@@ -18,6 +19,7 @@ public static class ConsumptionSearchEndpoint
         .WithName(nameof(ConsumptionSearchEndpoint))
         .WithSummary("Search consumption records")
         .WithDescription("Search consumption records with filters and pagination")
+        .Produces<PagedList<ConsumptionResponse>>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
         .MapToApiVersion(1);
 

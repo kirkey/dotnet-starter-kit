@@ -1,0 +1,150 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.AccountReconciliations
+@using MudBlazor
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Edit Account Reconciliation</MudText>
+
+            <MudGrid Spacing="2">
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField Value="ViewModel?.Id" Underline="false" ReadOnly Label="ID" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField @bind-Value="ViewModel.ReconciliationStatus"
+                                  For="@(() => ViewModel.ReconciliationStatus)"
+                                  Label="Status"
+                                  ReadOnly
+                                  Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudDatePicker @bind-Date="@_reconciliationDate"
+                                   DateFormat="MMM dd, yyyy"
+                                   Label="Reconciliation Date"
+                                   Variant="Variant.Filled"
+                                   Required />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudNumericField T="decimal" @bind-Value="ViewModel.GlBalance"
+                                     Label="GL Balance"
+                                     Variant="Variant.Filled"
+                                     Format="N2"
+                                     Required />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudNumericField T="decimal" @bind-Value="ViewModel.SubsidiaryLedgerBalance"
+                                     Label="Subsidiary Ledger Balance"
+                                     Variant="Variant.Filled"
+                                     Format="N2"
+                                     Required />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudNumericField T="decimal" @bind-Value="ViewModel.Variance"
+                                     Label="Variance"
+                                     Variant="Variant.Filled"
+                                     Format="N2"
+                                     ReadOnly />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField @bind-Value="ViewModel.SubsidiaryLedgerSource"
+                                  For="@(() => ViewModel.SubsidiaryLedgerSource)"
+                                  Label="Source"
+                                  Variant="Variant.Filled"
+                                  Required />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudNumericField T="int" @bind-Value="ViewModel.LineItemCount"
+                                     Label="Line Items"
+                                     Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCheckBox @bind-Value="ViewModel.AdjustingEntriesRecorded"
+                                 Label="Adjusting Entries Recorded"
+                                 Color="Color.Primary" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="ViewModel.VarianceExplanation"
+                                  For="@(() => ViewModel.VarianceExplanation)"
+                                  Label="Variance Explanation"
+                                  Lines="3"
+                                  Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="ViewModel.Remarks"
+                                  For="@(() => ViewModel.Remarks)"
+                                  Label="Remarks"
+                                  Lines="2"
+                                  Variant="Variant.Filled" />
+                </MudItem>
+            </MudGrid>
+        </MudStack>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Save" Variant="Variant.Filled">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType Id { get; set; }
+
+    [Parameter]
+    public AccountReconciliationViewModel ViewModel { get; set; } = new();
+
+    private DateTime? _reconciliationDate;
+
+    protected override void OnInitialized()
+    {
+        if (ViewModel?.ReconciliationDate != default)
+        {
+            _reconciliationDate = ViewModel.ReconciliationDate;
+        }
+    }
+
+    private async Task Save()
+    {
+        try
+        {
+            if (_reconciliationDate.HasValue)
+            {
+                ViewModel.ReconciliationDate = _reconciliationDate.Value;
+            }
+
+            var command = new UpdateAccountReconciliationCommand
+            {
+                Id = Id,
+                GlBalance = ViewModel.GlBalance,
+                SubsidiaryLedgerBalance = ViewModel.SubsidiaryLedgerBalance,
+                VarianceExplanation = ViewModel.VarianceExplanation,
+                LineItemCount = ViewModel.LineItemCount,
+                AdjustingEntriesRecorded = ViewModel.AdjustingEntriesRecorded
+            };
+            
+            await Client.UpdateAccountReconciliationEndpointAsync(Id, command);
+            Snackbar.Add("Account reconciliation updated successfully", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error updating reconciliation: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}
+

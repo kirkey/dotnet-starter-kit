@@ -18,7 +18,7 @@
                     <MudItem xs="12" sm="6">
                         <MudStack Spacing="1">
                             <MudText Typo="Typo.caption" Color="Color.Default">Payment Method</MudText>
-                            <MudChip Color="Color.Info" Size="Size.Small">@Payment.PaymentMethod</MudChip>
+                            <MudChip T="string" Color="Color.Info" Size="Size.Small">@Payment.PaymentMethod</MudChip>
                         </MudStack>
                     </MudItem>
                     <MudItem xs="12" sm="6">
@@ -90,17 +90,17 @@
                 {
                     <MudDivider Class="my-2" />
                     <MudText Typo="Typo.subtitle2">Allocations (@Payment.Allocations.Count)</MudText>
-                    <MudTable Dense="true" Hover="true" Items="@Payment.Allocations">
+                    <MudTable Dense="true" Hover="true" Items="@Payment.Allocations" T="PaymentAllocationDto">
                         <HeaderContent>
                             <MudTh>Invoice/Reference</MudTh>
                             <MudTh Class="text-end">Amount</MudTh>
                         </HeaderContent>
-                        <RowTemplate>
+                        <RowTemplate Context="allocation">
                             <MudTd>
-                                <MudText Typo="Typo.body2">@context.GetType().GetProperty("InvoiceId")?.GetValue(context)?.ToString()</MudText>
+                                <MudText Typo="Typo.body2">@allocation.InvoiceId</MudText>
                             </MudTd>
                             <MudTd Class="text-end">
-                                <MudText Typo="Typo.body2">@(context.GetType().GetProperty("Amount")?.GetValue(context) ?? "N/A")</MudText>
+                                <MudText Typo="Typo.body2">@allocation.Amount.ToString("C")</MudText>
                             </MudTd>
                         </RowTemplate>
                     </MudTable>
@@ -113,4 +113,3 @@
         <MudButton OnClick="Close">Close</MudButton>
     </DialogActions>
 </MudDialog>
-

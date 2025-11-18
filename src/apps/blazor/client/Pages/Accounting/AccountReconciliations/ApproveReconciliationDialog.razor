@@ -36,10 +36,16 @@
     {
         try
         {
-            var command = new ApproveAccountReconciliationCommand(ReconciliationId, DefaultIdType.Empty, null, _remarks);
-            await Client.ApproveAccountReconciliationEndpointAsync("1", ReconciliationId, command);
+            var command = new ApproveAccountReconciliationCommand
+            {
+                Id = ReconciliationId,
+                ApproverId = DefaultIdType.Empty,
+                ApproverName = null,
+                Remarks = _remarks
+            };
+            await Client.ApproveAccountReconciliationEndpointAsync(ReconciliationId, command);
             Snackbar.Add("Reconciliation approved successfully", Severity.Success);
-            await MudDialog.CloseAsync(DialogResult.Ok(true));
+            MudDialog.Close(DialogResult.Ok(true));
         }
         catch (Exception ex)
         {

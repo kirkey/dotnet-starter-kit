@@ -25,8 +25,8 @@ public partial class PrepaidExpenses
                 new EntityField<PrepaidExpenseResponse>(e => e.TotalAmount, "Total Amount", "TotalAmount", typeof(decimal)),
                 new EntityField<PrepaidExpenseResponse>(e => e.AmortizedAmount, "Amortized", "AmortizedAmount", typeof(decimal)),
                 new EntityField<PrepaidExpenseResponse>(e => e.RemainingAmount, "Remaining", "RemainingAmount", typeof(decimal)),
-                new EntityField<PrepaidExpenseResponse>(e => e.StartDate, "Start Date", "StartDate", typeof(DateTime)),
-                new EntityField<PrepaidExpenseResponse>(e => e.EndDate, "End Date", "EndDate", typeof(DateTime)),
+                new EntityField<PrepaidExpenseResponse>(e => e.StartDate, "Start Date", "StartDate", typeof(DateOnly)),
+                new EntityField<PrepaidExpenseResponse>(e => e.EndDate, "End Date", "EndDate", typeof(DateOnly)),
                 new EntityField<PrepaidExpenseResponse>(e => e.Status, "Status", "Status"),
                 new EntityField<PrepaidExpenseResponse>(e => e.IsFullyAmortized, "Fully Amortized", "IsFullyAmortized", typeof(bool))
             ],

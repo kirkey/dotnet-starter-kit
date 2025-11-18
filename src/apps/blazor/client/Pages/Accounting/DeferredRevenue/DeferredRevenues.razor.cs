@@ -20,7 +20,7 @@ public partial class DeferredRevenues
             fields:
             [
                 new EntityField<DeferredRevenueResponse>(d => d.DeferredRevenueNumber, "Revenue Number", "DeferredRevenueNumber"),
-                new EntityField<DeferredRevenueResponse>(d => d.RecognitionDate, "Recognition Date", "RecognitionDate", typeof(DateTime)),
+                new EntityField<DeferredRevenueResponse>(d => d.RecognitionDate, "Recognition Date", "RecognitionDate", typeof(DateOnly)),
                 new EntityField<DeferredRevenueResponse>(d => d.Amount, "Amount", "Amount", typeof(decimal)),
                 new EntityField<DeferredRevenueResponse>(d => d.Description, "Description", "Description"),
                 new EntityField<DeferredRevenueResponse>(d => d.IsRecognized, "Recognized", "IsRecognized", typeof(bool)),

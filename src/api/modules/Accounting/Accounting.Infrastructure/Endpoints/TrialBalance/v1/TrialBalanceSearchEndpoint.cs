@@ -20,7 +20,6 @@ public static class TrialBalanceSearchEndpoint
             .WithSummary("Search trial balance reports")
             .WithDescription("Searches trial balance reports with filtering and pagination")
             .Produces<PagedList<TrialBalanceSearchResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

@@ -16,8 +16,7 @@ public static class ArAccountSearchEndpoint
             })
             .WithName(nameof(ArAccountSearchEndpoint))
             .WithSummary("Search AR accounts")
-            .Produces<List<ArAccountResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .Produces<PagedList<ArAccountResponse>>()
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

@@ -26,7 +26,6 @@ public static class CheckSearchEndpoint
             .WithSummary("Search checks")
             .WithDescription("Search and filter checks with pagination, status filtering, date ranges, and amount ranges. Supports advanced filtering by check number, bank account, payee name, and print/stop payment status.")
             .Produces<PagedList<CheckSearchResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

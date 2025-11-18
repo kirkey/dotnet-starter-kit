@@ -18,7 +18,6 @@ public static class ChartOfAccountSearchEndpoint
             .WithSummary("Search chart of accounts")
             .WithDescription("Searches chart of accounts with pagination and filtering support")
             .Produces<PagedList<ChartOfAccountResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

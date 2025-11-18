@@ -17,7 +17,6 @@ public static class RetainedEarningsSearchEndpoint
             .WithName(nameof(RetainedEarningsSearchEndpoint))
             .WithSummary("Search retained earnings")
             .Produces<List<RetainedEarningsResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

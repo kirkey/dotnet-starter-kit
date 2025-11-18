@@ -24,7 +24,6 @@ public static class CustomerSearchEndpoint
             .WithSummary("Search customers with pagination")
             .WithDescription("Searches and lists customers with optional filters and pagination support.")
             .Produces<PagedList<CustomerSearchResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

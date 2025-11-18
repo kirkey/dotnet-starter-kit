@@ -18,7 +18,6 @@ public static class JournalEntrySearchEndpoint
             .WithSummary("Search journal entries")
             .WithDescription("Searches journal entries with pagination and filtering support")
             .Produces<PagedList<JournalEntryResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

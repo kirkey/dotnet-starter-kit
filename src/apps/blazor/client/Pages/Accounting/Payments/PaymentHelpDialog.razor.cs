@@ -8,6 +8,9 @@ public partial class PaymentHelpDialog
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    private async Task Close() => await MudDialog.CloseAsync(DialogResult.Ok(true));
+    private Task Close()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+        return Task.CompletedTask;
+    }
 }
-

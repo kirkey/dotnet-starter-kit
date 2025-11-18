@@ -18,7 +18,6 @@ public static class PrepaidExpenseSearchEndpoint
             .WithSummary("Search prepaid expenses")
             .WithDescription("Search prepaid expenses with filtering and pagination")
             .Produces<PagedList<PrepaidExpenseResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

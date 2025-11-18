@@ -48,17 +48,17 @@
                 <MudExpansionPanel Text="Payment Methods">
                     <MudStack Spacing="2">
                         <MudText Typo="Typo.subtitle2">Supported Payment Methods</MudText>
-                        <MudList>
-                            <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                        <MudList T="string">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.AttachMoney">
                                 <MudText Typo="Typo.body2"><strong>Cash:</strong> Physical currency payments</MudText>
                             </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle">
                                 <MudText Typo="Typo.body2"><strong>Check:</strong> Paper check payments (include check number)</MudText>
                             </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CreditCard">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CreditCard">
                                 <MudText Typo="Typo.body2"><strong>Credit Card:</strong> Card payments (include auth code)</MudText>
                             </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.SwapHoriz">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.SwapHoriz">
                                 <MudText Typo="Typo.body2"><strong>EFT:</strong> Electronic bank transfers (include confirmation #)</MudText>
                             </MudListItem>
                         </MudList>
@@ -113,34 +113,34 @@
                         <MudText Typo="Typo.body2">
                             Use the Advanced Search options to find payments by:
                         </MudText>
-                        <MudList>
-                            <MudListItem>Payment Number</MudListItem>
-                            <MudListItem>Payment Method (Cash, Check, Credit Card, EFT)</MudListItem>
-                            <MudListItem>Payment Date Range</MudListItem>
-                            <MudListItem>Unapplied Amount (pending allocation)</MudListItem>
+                        <MudList T="string">
+                            <MudListItem T="string">Payment Number</MudListItem>
+                            <MudListItem T="string">Payment Method (Cash, Check, Credit Card, EFT)</MudListItem>
+                            <MudListItem T="string">Payment Date Range</MudListItem>
+                            <MudListItem T="string">Unapplied Amount (pending allocation)</MudListItem>
                         </MudList>
                     </MudStack>
                 </MudExpansionPanel>
 
                 <MudExpansionPanel Text="Best Practices">
                     <MudStack Spacing="2">
-                        <MudList Dense="true">
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        <MudList T="string" Dense="true">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
                                 <MudText Typo="Typo.body2">Always include a unique payment number for tracking</MudText>
                             </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
                                 <MudText Typo="Typo.body2">Record check numbers for paper checks</MudText>
                             </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
                                 <MudText Typo="Typo.body2">Include transaction IDs for electronic payments</MudText>
                             </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
                                 <MudText Typo="Typo.body2">Allocate payments promptly to keep AR current</MudText>
                             </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
                                 <MudText Typo="Typo.body2">Use notes for internal comments about payments</MudText>
                             </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
                                 <MudText Typo="Typo.body2">Void payments within same day of entry if incorrect</MudText>
                             </MudListItem>
                         </MudList>

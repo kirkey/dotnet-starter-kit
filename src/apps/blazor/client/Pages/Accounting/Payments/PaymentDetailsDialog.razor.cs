@@ -9,8 +9,7 @@ public partial class PaymentDetailsDialog
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter]
-    public dynamic? Payment { get; set; }
+    public PaymentGetResponse? Payment { get; set; }
 
     private void Close() => MudDialog.Close();
 }
-

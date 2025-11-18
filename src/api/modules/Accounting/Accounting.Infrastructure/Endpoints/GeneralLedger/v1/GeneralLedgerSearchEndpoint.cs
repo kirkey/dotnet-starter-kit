@@ -23,7 +23,6 @@ public static class GeneralLedgerSearchEndpoint
             .WithSummary("Search general ledger entries")
             .WithDescription("Searches general ledger entries with filtering and pagination")
             .Produces<PagedList<GeneralLedgerSearchResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

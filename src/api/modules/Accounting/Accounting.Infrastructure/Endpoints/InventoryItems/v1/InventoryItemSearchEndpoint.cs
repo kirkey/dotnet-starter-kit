@@ -18,7 +18,6 @@ public static class InventoryItemSearchEndpoint
             .WithSummary("Search inventory items")
             .WithDescription("Searches inventory items with filters and pagination")
             .Produces<PagedList<InventoryItemResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

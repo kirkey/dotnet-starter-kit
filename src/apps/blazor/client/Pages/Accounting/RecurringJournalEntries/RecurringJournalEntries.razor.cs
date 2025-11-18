@@ -23,8 +23,8 @@ public partial class RecurringJournalEntries
                 new EntityField<RecurringJournalEntryResponse>(r => r.Description, "Description", "Description"),
                 new EntityField<RecurringJournalEntryResponse>(r => r.Frequency, "Frequency", "Frequency"),
                 new EntityField<RecurringJournalEntryResponse>(r => r.Amount, "Amount", "Amount", typeof(decimal)),
-                new EntityField<RecurringJournalEntryResponse>(r => r.StartDate, "Start Date", "StartDate", typeof(DateTime)),
-                new EntityField<RecurringJournalEntryResponse>(r => r.NextRunDate, "Next Run", "NextRunDate", typeof(DateTime)),
+                new EntityField<RecurringJournalEntryResponse>(r => r.StartDate, "Start Date", "StartDate", typeof(DateOnly)),
+                new EntityField<RecurringJournalEntryResponse>(r => r.NextRunDate, "Next Run", "NextRunDate", typeof(DateOnly)),
                 new EntityField<RecurringJournalEntryResponse>(r => r.IsActive, "Active", "IsActive", typeof(bool)),
                 new EntityField<RecurringJournalEntryResponse>(r => r.Status, "Status", "Status")
             ],

@@ -18,7 +18,6 @@ public static class DepreciationMethodSearchEndpoint
             .WithSummary("Search depreciation methods")
             .WithDescription("Searches depreciation methods with filtering and pagination")
             .Produces<PagedList<DepreciationMethodResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

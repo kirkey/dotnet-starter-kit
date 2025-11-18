@@ -16,8 +16,7 @@ public static class CostCenterSearchEndpoint
             })
             .WithName(nameof(CostCenterSearchEndpoint))
             .WithSummary("Search cost centers")
-            .Produces<List<CostCenterResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .Produces<PagedList<CostCenterResponse>>()
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

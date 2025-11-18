@@ -16,8 +16,7 @@ public static class InterCompanyTransactionSearchEndpoint
             })
             .WithName(nameof(InterCompanyTransactionSearchEndpoint))
             .WithSummary("Search inter-company transactions")
-            .Produces<List<InterCompanyTransactionResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .Produces<PagedList<InterCompanyTransactionResponse>>()
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

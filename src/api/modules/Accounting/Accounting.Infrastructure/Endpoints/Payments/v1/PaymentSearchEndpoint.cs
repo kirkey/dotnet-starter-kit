@@ -23,7 +23,6 @@ public static class PaymentSearchEndpoint
             .WithSummary("Search payments")
             .WithDescription("Searches payments with filtering and pagination")
             .Produces<PagedList<PaymentSearchResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

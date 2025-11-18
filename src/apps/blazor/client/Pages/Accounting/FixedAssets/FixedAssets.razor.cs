@@ -26,7 +26,7 @@ public partial class FixedAssets
                 new EntityField<FixedAssetResponse>(a => a.AssetType, "Type", "AssetType"),
                 new EntityField<FixedAssetResponse>(a => a.SerialNumber, "Serial #", "SerialNumber"),
                 new EntityField<FixedAssetResponse>(a => a.Department, "Department", "Department"),
-                new EntityField<FixedAssetResponse>(a => a.PurchaseDate, "Purchase Date", "PurchaseDate", typeof(DateTime)),
+                new EntityField<FixedAssetResponse>(a => a.PurchaseDate, "Purchase Date", "PurchaseDate", typeof(DateOnly)),
                 new EntityField<FixedAssetResponse>(a => a.PurchasePrice, "Purchase Price", "PurchasePrice", typeof(decimal)),
                 new EntityField<FixedAssetResponse>(a => a.CurrentBookValue, "Book Value", "CurrentBookValue", typeof(decimal)),
                 new EntityField<FixedAssetResponse>(a => a.IsDisposed, "Disposed", "IsDisposed", typeof(bool)),

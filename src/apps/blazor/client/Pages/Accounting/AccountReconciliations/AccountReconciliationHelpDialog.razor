@@ -73,43 +73,43 @@
                 </MudExpansionPanel>
 
                 <MudExpansionPanel Text="Reconciliation Statuses">
-                    <MudList Dense="true">
-                        <MudListItem Icon="@Icons.Material.Filled.Schedule">
+                    <MudList T="string" Dense="true">
+                        <MudListItem T="string" Icon="@Icons.Material.Filled.Schedule">
                             <strong>Pending:</strong> Initial state when first created
                         </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle">
                             <strong>Reconciled:</strong> GL and subsidiary balances match (variance = 0)
                         </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.Edit">
+                        <MudListItem T="string" Icon="@Icons.Material.Filled.Edit">
                             <strong>Adjusted:</strong> Adjusting entries have been recorded
                         </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.Verified">
+                        <MudListItem T="string" Icon="@Icons.Material.Filled.Verified">
                             <strong>Approved:</strong> Reconciliation has been reviewed and approved
                         </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.Cancel">
+                        <MudListItem T="string" Icon="@Icons.Material.Filled.Cancel">
                             <strong>Rejected:</strong> Reconciliation was rejected and needs revision
                         </MudListItem>
                     </MudList>
                 </MudExpansionPanel>
 
                 <MudExpansionPanel Text="Best Practices">
-                    <MudList Dense="true">
-                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                    <MudList T="string" Dense="true">
+                        <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
                             Reconcile accounts monthly, ideally within 5 business days of period end
                         </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
                             Document all variances with clear explanations
                         </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
                             Record adjusting entries immediately when discovered
                         </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
                             Never approve a reconciliation with outstanding variance
                         </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
                             Have a manager or different person review and approve reconciliations
                         </MudListItem>
-                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
                             Keep reconciliation documentation for audit trail
                         </MudListItem>
                     </MudList>

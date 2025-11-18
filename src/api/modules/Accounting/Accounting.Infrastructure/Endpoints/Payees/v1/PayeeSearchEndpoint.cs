@@ -27,7 +27,6 @@ public static class PayeeSearchEndpoint
             .WithSummary("Search payees with pagination")
             .WithDescription("Searches payees with comprehensive filtering capabilities including keyword search, payee code, name, expense account code, and TIN filters with pagination support.")
             .Produces<PagedList<PayeeResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

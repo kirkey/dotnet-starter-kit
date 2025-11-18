@@ -27,9 +27,9 @@ public partial class SalesImports
             fields:
             [
                 new EntityField<SalesImportResponse>(x => x.ImportNumber, "Import Number", "ImportNumber"),
-                new EntityField<SalesImportResponse>(x => x.ImportDate, "Import Date", "ImportDate", typeof(DateTime)),
-                new EntityField<SalesImportResponse>(x => x.SalesPeriodFrom, "Period From", "SalesPeriodFrom", typeof(DateTime)),
-                new EntityField<SalesImportResponse>(x => x.SalesPeriodTo, "Period To", "SalesPeriodTo", typeof(DateTime)),
+                new EntityField<SalesImportResponse>(x => x.ImportDate, "Import Date", "ImportDate", typeof(DateOnly)),
+                new EntityField<SalesImportResponse>(x => x.SalesPeriodFrom, "Period From", "SalesPeriodFrom", typeof(DateOnly)),
+                new EntityField<SalesImportResponse>(x => x.SalesPeriodTo, "Period To", "SalesPeriodTo", typeof(DateOnly)),
                 new EntityField<SalesImportResponse>(x => x.WarehouseName, "Warehouse", "WarehouseName"),
                 new EntityField<SalesImportResponse>(x => x.FileName, "File Name", "FileName"),
                 new EntityField<SalesImportResponse>(x => x.TotalRecords, "Total Records", "TotalRecords", typeof(int)),

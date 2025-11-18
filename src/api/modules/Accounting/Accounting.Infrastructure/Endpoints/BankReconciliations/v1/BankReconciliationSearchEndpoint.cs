@@ -25,7 +25,6 @@ public static class SearchBankReconciliationsEndpoint
             .WithDescription("Search and filter bank reconciliations by bank account, date range, status, and reconciliation state. " +
                 "Supports pagination. Results are ordered by reconciliation date (most recent first).")
             .Produces<PagedList<BankReconciliationResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }

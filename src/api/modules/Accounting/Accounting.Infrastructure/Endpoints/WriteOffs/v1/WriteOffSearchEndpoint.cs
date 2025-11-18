@@ -16,8 +16,7 @@ public static class WriteOffSearchEndpoint
             })
             .WithName(nameof(WriteOffSearchEndpoint))
             .WithSummary("Search write-offs")
-            .Produces<List<WriteOffResponse>>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .Produces<PagedList<WriteOffResponse>>()
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
             .MapToApiVersion(1);
     }
