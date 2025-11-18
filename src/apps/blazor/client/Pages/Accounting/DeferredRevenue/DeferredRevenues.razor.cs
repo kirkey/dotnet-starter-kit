@@ -103,5 +103,18 @@ public partial class DeferredRevenues
         var options = new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true, CloseOnEscapeKey = true };
         await DialogService.ShowAsync<DeferredRevenueDetailsDialog>("Deferred Revenue Details", parameters, options);
     }
+
+    /// <summary>
+    /// Show deferred revenue help dialog.
+    /// </summary>
+    private async Task ShowDeferredRevenueHelp()
+    {
+        await DialogService.ShowAsync<DeferredRevenueHelpDialog>("Deferred Revenue Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

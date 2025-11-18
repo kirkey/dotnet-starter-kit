@@ -2,6 +2,17 @@
 
 <PageHeader Title="Debit Memos" Header="Debit Memos" Subheader="Manage debit memos for receivables and payables adjustments" />
 
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowDebitMemoHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
 <EntityTable @ref="_table" TEntity="DebitMemoResponse" TId="DefaultIdType" TRequest="DebitMemoViewModel" Context="@Context">
     
     <ExtraActions Context="context">

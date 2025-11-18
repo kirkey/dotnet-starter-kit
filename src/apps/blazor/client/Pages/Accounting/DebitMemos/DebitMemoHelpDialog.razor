@@ -1,0 +1,221 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.DebitMemos
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Debit Memos Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is a Debit Memo?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Debit Memos</MudText>
+                        <MudText Typo="Typo.body2">
+                            A debit memo is a document issued by a company to a vendor that increases the amount owed by the vendor or reduces the amount we owe. 
+                            It adjusts vendor liabilities upward to recover costs or correct errors.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>When to Issue Debit Memos:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Vendor Overbilling:</strong> Vendor charged too much<br/>
+                                • <strong>Quality Issues:</strong> Demand price adjustment for defects<br/>
+                                • <strong>Late Delivery:</strong> Penalty charges for delays<br/>
+                                • <strong>Reverse Vendor Credit:</strong> Vendor credit memo issued in error<br/>
+                                • <strong>Billing Errors:</strong> Wrong quantity or price applied<br/>
+                                • <strong>Freight Adjustments:</strong> Correct shared shipping costs
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Debit memos must be professional and well-documented to maintain vendor relationships.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Debit Memos">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Issue a Debit Memo</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Debit Memo Issuance Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Debit Memo Number</strong> (unique, sequential)<br/>
+                                3. Select <strong>Vendor</strong> being charged<br/>
+                                4. Enter <strong>Debit Date</strong><br/>
+                                5. Reference <strong>Original Invoice</strong> number<br/>
+                                6. Enter <strong>Reason</strong> for debit charge<br/>
+                                7. Add <strong>Line Items</strong> (what vendor is being charged for)<br/>
+                                8. Enter <strong>Description</strong> for each item<br/>
+                                9. Enter <strong>Amount</strong><br/>
+                                10. Verify <strong>Total Amount</strong><br/>
+                                11. Click <strong>"Issue"</strong> to send to vendor<br/>
+                                12. Send supporting documentation to vendor
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (When Issued):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Accounts Payable               $300<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Expense/Asset Reduction      $300
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Always include detailed explanations to justify the charge to the vendor.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Scenarios">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Real-World Examples</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example 1: Overbilling Correction</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Original Invoice: $10,000<br/>
+                                Vendor Overcharged: $500 (wrong price)<br/>
+                                Debit Memo: $500<br/>
+                                <br/>
+                                Result: Reduces AP by $500
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example 2: Quality Penalty</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                100 units delivered, 10% defective<br/>
+                                Unit price: $50<br/>
+                                Debit Memo: 10 × $50 = $500<br/>
+                                <br/>
+                                Result: Charge vendor for defects
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example 3: Reverse Vendor Credit</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Vendor Issued: $1,000 credit incorrectly<br/>
+                                Issue Debit Memo: $1,000<br/>
+                                <br/>
+                                Result: Negates the incorrect credit
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Caution:</strong> Debit memos can strain vendor relationships - communicate before issuing!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Debit Memo Best Practices</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Before Issuing:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Verify the issue is valid and documented<br/>
+                                ✓ Communicate with vendor first (email or phone)<br/>
+                                ✓ Give vendor opportunity to respond<br/>
+                                ✓ Obtain management approval<br/>
+                                ✓ Calculate the correct amount<br/>
+                                ✓ Reference supporting documentation
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Documentation Required:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Original invoice copy<br/>
+                                • Inspection report or quality documentation<br/>
+                                • Email communication with vendor<br/>
+                                • Management approval<br/>
+                                • Detailed calculation and justification
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>After Issuing:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Send to vendor with supporting documentation<br/>
+                                • Follow up if vendor doesn't respond<br/>
+                                • Track for vendor statement reconciliation<br/>
+                                • Be prepared to defend or negotiate<br/>
+                                • Document all vendor communications
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Track debit memos carefully - vendors often dispute these on reconciliation!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we issue a debit memo for a paid invoice?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, but vendor must refund the amount or credit it against future invoices.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if the vendor disagrees with our debit memo?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Negotiate based on your documentation. Be willing to compromise. Maintain vendor relationship.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we reverse a debit memo?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Void it, which reverses the debit. Use if issued in error. Requires same approval.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can vendor offset with their own debit memo?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, possible but uncommon. Usually they'll issue credit memo or negotiate. Track carefully.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

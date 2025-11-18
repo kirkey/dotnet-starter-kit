@@ -2,6 +2,17 @@
 
 <PageHeader Title="Credit Memos" Header="Credit Memos" Subheader="Manage credit memos for receivables and payables adjustments" />
 
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowCreditMemoHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
 <EntityTable @ref="_table" TEntity="CreditMemoResponse" TId="DefaultIdType" TRequest="CreditMemoViewModel" Context="@Context">
     <ExtraActions Context="context">
         @if (context.Id != DefaultIdType.Empty)

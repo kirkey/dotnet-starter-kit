@@ -201,4 +201,17 @@ public partial class DebitMemos
         // Navigate to applications view or show dialog with application history
         Snackbar.Add("View applications feature coming soon.", Severity.Info);
     }
+
+    /// <summary>
+    /// Show debit memo help dialog.
+    /// </summary>
+    private async Task ShowDebitMemoHelp()
+    {
+        await DialogService.ShowAsync<DebitMemoHelpDialog>("Debit Memos Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

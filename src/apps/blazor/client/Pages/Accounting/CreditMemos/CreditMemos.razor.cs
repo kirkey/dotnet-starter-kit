@@ -241,4 +241,17 @@ public partial class CreditMemos
         // Navigate to applications view or show dialog with application history
         Snackbar.Add("View applications feature coming soon.", Severity.Info);
     }
+
+    /// <summary>
+    /// Show credit memo help dialog.
+    /// </summary>
+    private async Task ShowCreditMemoHelp()
+    {
+        await DialogService.ShowAsync<CreditMemoHelpDialog>("Credit Memos Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

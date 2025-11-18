@@ -1,0 +1,351 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.DeferredRevenue
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Deferred Revenue Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Deferred Revenue?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Deferred Revenue (Unearned Revenue)</MudText>
+                        <MudText Typo="Typo.body2">
+                            Deferred revenue (also called unearned revenue or advance payments) is cash received from customers before goods are delivered or services are provided. 
+                            It's a liability because the company owes the customer goods/services, not cash.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Scenarios for Deferred Revenue:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Annual Subscriptions:</strong> Customer pays for 12-month subscription upfront<br/>
+                                • <strong>Prepaid Maintenance:</strong> Customer prepays service contract<br/>
+                                • <strong>Gift Cards:</strong> Prepaid before redemption<br/>
+                                • <strong>Retainer Fees:</strong> Customers prepay for services<br/>
+                                • <strong>Deposits:</strong> Down payments on future orders<br/>
+                                • <strong>Tuition/Courses:</strong> Fees paid before course delivery
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Revenue is recognized when goods/services are delivered, not when cash is received (accrual accounting).
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Revenue Recognition Principles">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">When to Recognize Revenue</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Revenue Recognition Criteria (ASC 606):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Revenue is recognized when:<br/>
+                                <br/>
+                                1. <strong>Contract:</strong> Valid contract exists between parties<br/>
+                                2. <strong>Performance Obligation:</strong> Company has identified what it must deliver<br/>
+                                3. <strong>Price:</strong> Transaction price is determined<br/>
+                                4. <strong>Payment Terms:</strong> Collection is probable<br/>
+                                5. <strong>Performance:</strong> Company has satisfied performance obligation (delivered goods/services)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Deferred vs. Recognized:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                January: Customer pays $12,000 for annual subscription<br/>
+                                Dr. Cash                    $12,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Deferred Revenue            $12,000<br/>
+                                <br/>
+                                (Each Month): Recognize $1,000 monthly service delivery<br/>
+                                Dr. Deferred Revenue        $1,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Service Revenue             $1,000<br/>
+                                <br/>
+                                (After 12 months): All revenue recognized, liability eliminated
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>GAAP Requirement:</strong> Must use accrual accounting to properly match revenue with delivery period.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Deferred Revenue Entries">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Record Deferred Revenue</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Entry Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Revenue Number</strong> (unique identifier)<br/>
+                                3. Select <strong>Customer</strong><br/>
+                                4. Enter <strong>Recognition Start Date</strong> (when to begin recognizing)<br/>
+                                5. Enter <strong>Recognition End Date</strong> (when to stop recognizing)<br/>
+                                6. Enter <strong>Total Revenue Amount</strong> (total to be recognized)<br/>
+                                7. Select <strong>Revenue Type</strong> (subscription, maintenance, deposit, etc.)<br/>
+                                8. Enter <strong>Frequency</strong> (monthly, quarterly, one-time)<br/>
+                                9. Add <strong>Description</strong> of what is being delivered<br/>
+                                10. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Recognition Schedule Calculation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                System automatically calculates:<br/>
+                                • Total amount to recognize<br/>
+                                • Recognition period (start to end date)<br/>
+                                • Monthly/periodic amount<br/>
+                                • Schedule of recognition dates
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (When Cash Received):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Cash/Bank                      $12,000<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Deferred Revenue (Liability)   $12,000
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Set up deferred revenue entry when cash is received, then system automatically recognizes monthly.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Revenue Recognition Process">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Recognizing Revenue Over Time</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Automatic Recognition:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                System automatically recognizes revenue on recognition dates:<br/>
+                                • Identifies unrecognized deferred revenue<br/>
+                                • Calculates amount to recognize per period<br/>
+                                • Creates journal entry to move from liability to revenue<br/>
+                                • Updates recognition status
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Manual Recognition:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Or recognize manually:<br/>
+                                1. Click <strong>"Recognize Revenue"</strong> action<br/>
+                                2. Select amount to recognize<br/>
+                                3. Enter recognition date<br/>
+                                4. Add notes<br/>
+                                5. Click <strong>"Recognize"</strong>
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (When Revenue Recognized):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Deferred Revenue (Liability)   $1,000<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Service Revenue (Income)      $1,000
+                        </MudText>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2 mt-3">
+                                <strong>Recognition Schedule Example:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Date        Revenue #  Customer  Amount   Status<br/>
+                                1/15/25     DR-001     ABC Inc   $1,000   Recognized<br/>
+                                2/15/25     DR-001     ABC Inc   $1,000   Recognized<br/>
+                                3/15/25     DR-001     ABC Inc   $1,000   Recognized<br/>
+                                4/15/25     DR-001     ABC Inc   $1,000   Pending<br/>
+                                5/15/25     DR-001     ABC Inc   $1,000   Pending<br/>
+                                ...
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Review deferred revenue aging monthly to ensure timely recognition.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Deferred Revenue Scenarios">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Real-World Examples</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example 1: Annual SaaS Subscription</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                January 1: Customer pays $12,000 for annual subscription<br/>
+                                <br/>
+                                Received: Dr. Cash $12,000 / Cr. Deferred Revenue $12,000<br/>
+                                <br/>
+                                Each Month (Jan-Dec): Recognize $1,000<br/>
+                                Dr. Deferred Revenue $1,000 / Cr. Service Revenue $1,000<br/>
+                                <br/>
+                                Result: Revenue spread evenly across 12 months
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example 2: Maintenance Contract</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Customer pays $24,000 for 2-year maintenance contract<br/>
+                                <br/>
+                                Received: Dr. Cash $24,000 / Cr. Deferred Revenue $24,000<br/>
+                                <br/>
+                                Monthly: Recognize $1,000 ($24,000 / 24 months)<br/>
+                                <br/>
+                                Recognition Period: 24 months<br/>
+                                Total Recognized at End: $24,000 (liability eliminated)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example 3: Gift Card</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Customer buys $500 gift card<br/>
+                                <br/>
+                                Received: Dr. Cash $500 / Cr. Deferred Revenue $500<br/>
+                                <br/>
+                                When redeemed: Dr. Deferred Revenue $500 / Cr. Sales Revenue $500<br/>
+                                <br/>
+                                Note: If card expires unused, may need to recognize as "breakage" revenue
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Different industries have different revenue recognition rules - follow ASC 606 carefully!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Deferred Revenue Best Practices</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Proper Setup:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Record deferred revenue when cash is received<br/>
+                                ✓ Set correct recognition start and end dates<br/>
+                                ✓ Choose appropriate recognition frequency<br/>
+                                ✓ Link to customer account for reconciliation<br/>
+                                ✓ Document contract terms and service period
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Monthly Close Procedures:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Identify deferred revenue due for recognition<br/>
+                                • Verify recognition dates and amounts<br/>
+                                • Ensure system recognizes automatically<br/>
+                                • Review for any adjustments needed<br/>
+                                • Reconcile deferred revenue aging report<br/>
+                                • Post journal entries to GL
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Monitoring:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Monitor deferred revenue balance trends<br/>
+                                • Review for unrecognized items past due dates<br/>
+                                • Investigate any unusual patterns<br/>
+                                • Ensure contracts are properly documented<br/>
+                                • Track by revenue type for analysis
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Key Success Factor:</strong> Properly recorded and timely recognized deferred revenue ensures accurate financial reporting.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if customer cancels before delivery?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Reverse the deferred revenue (credit liability, charge revenue), issue refund to customer.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we handle partial deliveries?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Recognize revenue only for goods/services actually delivered. Update recognition schedule accordingly.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if services extend beyond initial estimate?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: May need to adjust deferred revenue entry. Document the change and update recognition schedule.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How long can deferred revenue stay on the books?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: As long as the service/delivery period. Should match contract terms. Investigate old items.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Is deferred revenue a liability?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes! It's a current liability (to be fulfilled within 12 months) or long-term liability (beyond 12 months).
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

@@ -1,0 +1,272 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.CreditMemos
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Credit Memos Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is a Credit Memo?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Credit Memos</MudText>
+                        <MudText Typo="Typo.body2">
+                            A credit memo is a document issued by a company to a customer that reduces the amount owed. 
+                            It essentially reverses part or all of a previous invoice, reducing accounts receivable and customer debt.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>When to Issue Credit Memos:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Returned Goods:</strong> Customer returns defective or unwanted products<br/>
+                                • <strong>Pricing Errors:</strong> Invoice was overcharged<br/>
+                                • <strong>Damaged Goods:</strong> Products damaged during shipment<br/>
+                                • <strong>Service Issues:</strong> Services not rendered as promised<br/>
+                                • <strong>Quantity Discrepancies:</strong> Fewer items delivered than invoiced<br/>
+                                • <strong>Billing Errors:</strong> Incorrect quantity, price, or calculations
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Credit memos must be issued promptly with proper documentation to maintain customer relationships.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Credit Memos">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Issue a Credit Memo</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Credit Memo Issuance Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Credit Memo Number</strong> (unique, sequential)<br/>
+                                3. Select <strong>Customer</strong> being credited<br/>
+                                4. Enter <strong>Credit Date</strong><br/>
+                                5. Reference <strong>Original Invoice</strong> number<br/>
+                                6. Enter <strong>Reason</strong> for credit<br/>
+                                7. Add <strong>Line Items</strong> being credited<br/>
+                                8. Enter <strong>Description</strong> for each item<br/>
+                                9. Enter <strong>Quantity</strong> being returned/adjusted<br/>
+                                10. Enter <strong>Unit Price</strong><br/>
+                                11. Verify <strong>Total Amount</strong><br/>
+                                12. Click <strong>"Issue"</strong> to send to customer
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (When Issued):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Sales Returns/Allowances        $500<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Receivable           $500
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Issue credits promptly to maintain good customer relationships and prevent further disputes.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Credit Application">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How Customers Use Credits</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Options for Using Credits:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Apply to Invoice:</strong> Customer applies credit to outstanding invoice<br/>
+                                • <strong>Carry Forward:</strong> Customer saves credit for future purchases<br/>
+                                • <strong>Request Refund:</strong> Customer requests refund check<br/>
+                                • <strong>Apply Automatically:</strong> System automatically applies to oldest invoice
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Accounting Treatment:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                When applied to customer's next invoice:<br/>
+                                <br/>
+                                Dr. Accounts Receivable (new invoice)    $2,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Sales Revenue                    $2,000<br/>
+                                <br/>
+                                Dr. Accounts Receivable (old) - credited to zero<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Receivable (new)       $500<br/>
+                                <br/>
+                                Net new AR recorded: $1,500
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Track customer credits and follow up if not used within 90 days.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Credit Memo Statuses">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Credit Memo Lifecycle</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Draft:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Credit memo being prepared<br/>
+                                • Not yet sent to customer<br/>
+                                • Can be edited or cancelled
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Issued:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Credit memo sent to customer<br/>
+                                • Accounts receivable reduced<br/>
+                                • Awaiting customer to use/apply credit<br/>
+                                • Cannot be edited (controls prevent it)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Applied:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Customer applied credit to invoice<br/>
+                                • Reduces balance due<br/>
+                                • Credit fully used
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Refunded:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Customer requested refund of credit<br/>
+                                • Check issued or ACH transfer made<br/>
+                                • Accounts receivable and cash reduced
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Voided:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Credit memo cancelled<br/>
+                                • Reverses the credit granted<br/>
+                                • Used if credit was issued in error
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Credit Memo Best Practices</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Approval Requirements:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Credits under $100 - supervisor approval<br/>
+                                • Credits $100-$1,000 - manager approval<br/>
+                                • Credits over $1,000 - director/VP approval<br/>
+                                • Requires supporting documentation (return goods, inspection, authorization)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Documentation Required:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Original invoice copy<br/>
+                                ✓ Return goods receipt or inspection report<br/>
+                                ✓ Reason for credit documented<br/>
+                                ✓ Approval signature/authorization<br/>
+                                ✓ Customer communication (email, phone log)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Controls to Prevent Fraud:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Require manager approval for all credits<br/>
+                                • Never issue credits without supporting documentation<br/>
+                                • Monitor frequent credit requests from same customer<br/>
+                                • Review monthly credit memo totals<br/>
+                                • Investigate unusual credit patterns
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Red Flag:</strong> Credit memos can be used for fraud - always require proper authorization and documentation!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we issue a credit memo for a paid invoice?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, but it results in a refund instead of AR reduction. Process refund to customer (check or ACH).
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How long can a customer hold a credit?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No standard, but consider refunding after 12 months per accounting standards. Follow state requirements for unclaimed property.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we reverse a credit memo?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes - void it, which reverses the credit. Use if issued in error. Requires same approval level.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we issue credit memo or adjust the invoice?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Never adjust sent invoices. Always issue credit memo instead. Maintains audit trail and customer communication.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
