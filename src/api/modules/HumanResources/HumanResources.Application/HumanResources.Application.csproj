@@ -7,8 +7,5 @@
     <ProjectReference Include="..\..\..\framework\Core\Core.csproj" />
     <ProjectReference Include="..\HumanResources.Domain\HumanResources.Domain.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="OrganizationalUnits\Get\v1\OrganizationalUnitResponse.cs" />
-  </ItemGroup>
 </Project>
 

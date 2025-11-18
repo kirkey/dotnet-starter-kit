@@ -6,8 +6,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\framework\Core\Core.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Events\OrganizationalUnitEvents.cs" />
-  </ItemGroup>
 </Project>
 
