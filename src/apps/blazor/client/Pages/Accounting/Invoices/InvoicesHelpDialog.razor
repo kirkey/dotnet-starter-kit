@@ -1,0 +1,404 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.Invoices
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Invoices Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Invoice Management?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Invoices</MudText>
+                        <MudText Typo="Typo.body2">
+                            An invoice is a bill sent to customers for goods delivered or services provided. 
+                            Invoice management tracks amounts owed (accounts receivable), monitors payment status, and ensures timely collection.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Invoice Lifecycle:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Draft:</strong> Invoice created but not sent<br/>
+                                2. <strong>Sent:</strong> Invoice delivered to customer<br/>
+                                3. <strong>Partially Paid:</strong> Some payment received<br/>
+                                4. <strong>Paid:</strong> Full payment received<br/>
+                                5. <strong>Overdue:</strong> Past due date, unpaid<br/>
+                                6. <strong>Written Off:</strong> Uncollectible bad debt
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Prompt invoicing and follow-up maximize cash flow and minimize bad debt.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Invoices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Create an Invoice</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Invoice Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Invoice Number</strong> (unique, sequential)<br/>
+                                3. Select <strong>Customer</strong> from dropdown<br/>
+                                4. Enter <strong>Invoice Date</strong> (typically today)<br/>
+                                5. Enter <strong>Due Date</strong> (based on payment terms)<br/>
+                                6. Select <strong>Payment Terms</strong> (Net 30, Net 60, etc.)<br/>
+                                7. Add <strong>Line Items</strong>:<br/>
+                                &nbsp;&nbsp;&nbsp;- Description of goods/services<br/>
+                                &nbsp;&nbsp;&nbsp;- Quantity<br/>
+                                &nbsp;&nbsp;&nbsp;- Unit price<br/>
+                                &nbsp;&nbsp;&nbsp;- Tax (if applicable)<br/>
+                                8. Review <strong>Total Amount</strong><br/>
+                                9. Add <strong>Notes</strong> or special instructions<br/>
+                                10. Click <strong>"Save as Draft"</strong> or <strong>"Send Invoice"</strong>
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (When Invoice Created):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Accounts Receivable           $1,000<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Sales Revenue                 $1,000
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Invoice immediately after delivery to speed up payment and improve cash flow.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Payment Terms">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Payment Terms</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Payment Terms:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Due on Receipt:</strong> Payment due immediately<br/>
+                                • <strong>Net 15:</strong> Payment due in 15 days<br/>
+                                • <strong>Net 30:</strong> Payment due in 30 days (most common)<br/>
+                                • <strong>Net 60:</strong> Payment due in 60 days<br/>
+                                • <strong>Net 90:</strong> Payment due in 90 days<br/>
+                                • <strong>EOM (End of Month):</strong> Due at month end<br/>
+                                • <strong>2/10 Net 30:</strong> 2% discount if paid in 10 days, otherwise net 30
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Early Payment Discounts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Offering early payment discounts incentivizes faster payment:<br/>
+                                <br/>
+                                <strong>Example: 2/10 Net 30</strong><br/>
+                                Invoice Amount: $10,000<br/>
+                                If paid in 10 days: $10,000 - 2% = $9,800<br/>
+                                If paid in 30 days: $10,000<br/>
+                                <br/>
+                                Customer saves: $200<br/>
+                                You get cash 20 days earlier
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Match payment terms to customer creditworthiness - new customers get shorter terms.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Invoice Status Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Invoice Statuses</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Draft Status:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Invoice created but not sent<br/>
+                                • Can be edited or deleted<br/>
+                                • No AR impact yet<br/>
+                                • Use for review or approval before sending
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Sent Status:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Invoice delivered to customer (email, mail, etc.)<br/>
+                                • AR recorded in books<br/>
+                                • Payment expected by due date<br/>
+                                • Track delivery confirmation<br/>
+                                • Cannot be edited (void and reissue instead)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Partially Paid Status:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Customer made partial payment<br/>
+                                • Remaining balance still owed<br/>
+                                • Follow up on balance due<br/>
+                                • Common with payment plans
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Paid Status:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Full payment received<br/>
+                                • AR cleared<br/>
+                                • Invoice closed<br/>
+                                • Archive for records
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Overdue Status:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Past due date, unpaid<br/>
+                                • Begin collection procedures<br/>
+                                • Send reminder notices<br/>
+                                • May charge late fees (if agreed)<br/>
+                                • Escalate to collections if needed
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Collections & AR Aging">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Collections</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>AR Aging Report:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Customer    Current  1-30  31-60  61-90  90+    Total<br/>
+                                =========== ======== ===== ====== ====== ====== ======<br/>
+                                ABC Corp    $5,000   $0    $0     $0     $0     $5,000<br/>
+                                XYZ Inc     $2,000   $3,000 $0    $0     $0     $5,000<br/>
+                                Acme Co     $0       $0    $1,000 $2,000 $500   $3,500<br/>
+                                ----------- -------- ----- ------ ------ ------ ------<br/>
+                                TOTAL       $7,000   $3,000 $1,000 $2,000 $500  $13,500
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Collection Procedures:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Current (0-30 days):</strong> Normal monitoring<br/>
+                                • <strong>31-60 days:</strong> Friendly reminder call/email<br/>
+                                • <strong>61-90 days:</strong> Formal collection letter<br/>
+                                • <strong>91-120 days:</strong> Multiple follow-ups, payment plan offer<br/>
+                                • <strong>120+ days:</strong> Collections agency or legal action<br/>
+                                • <strong>180+ days:</strong> Consider write-off as bad debt
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Collection Best Practices:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Call customers before invoices become overdue<br/>
+                                ✓ Be professional but persistent<br/>
+                                ✓ Offer payment plans for struggling customers<br/>
+                                ✓ Document all collection attempts<br/>
+                                ✓ Know when to escalate or write off<br/>
+                                ✓ Stop doing business with chronic non-payers
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> The older an invoice gets, the harder it is to collect - act promptly!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Invoice Adjustments">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Correcting Invoices</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>When Corrections Are Needed:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Incorrect quantity or price<br/>
+                                • Wrong customer charged<br/>
+                                • Missing line items<br/>
+                                • Calculation errors<br/>
+                                • Customer returns goods<br/>
+                                • Service quality issues
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>How to Correct Sent Invoices:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>NEVER edit a sent invoice!</strong> Instead:<br/>
+                                <br/>
+                                1. If amount needs to be <strong>reduced</strong>:<br/>
+                                &nbsp;&nbsp;&nbsp;→ Issue <strong>Credit Memo</strong> for difference<br/>
+                                <br/>
+                                2. If amount needs to be <strong>increased</strong>:<br/>
+                                &nbsp;&nbsp;&nbsp;→ Issue <strong>supplemental invoice</strong> for additional amount<br/>
+                                <br/>
+                                3. If invoice is completely <strong>wrong</strong>:<br/>
+                                &nbsp;&nbsp;&nbsp;→ <strong>Void</strong> original invoice<br/>
+                                &nbsp;&nbsp;&nbsp;→ Issue new corrected invoice
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Critical:</strong> Never edit sent invoices - always use credit memos or void/reissue!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Invoice Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Professional Invoicing Tips</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Invoicing Best Practices:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Invoice immediately after delivery<br/>
+                                ✓ Use clear, detailed descriptions<br/>
+                                ✓ Include purchase order (PO) numbers<br/>
+                                ✓ Verify customer email/address<br/>
+                                ✓ Include payment instructions<br/>
+                                ✓ Offer multiple payment methods<br/>
+                                ✓ Send delivery confirmation<br/>
+                                ✓ Follow up on overdue invoices promptly<br/>
+                                ✓ Keep professional, courteous tone<br/>
+                                ✓ Maintain complete records
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Required Invoice Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Your company name and address<br/>
+                                • Customer name and address<br/>
+                                • Invoice number (unique)<br/>
+                                • Invoice date<br/>
+                                • Due date<br/>
+                                • Itemized list of goods/services<br/>
+                                • Unit prices and quantities<br/>
+                                • Subtotal, tax, total amount<br/>
+                                • Payment terms<br/>
+                                • Payment methods accepted
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Payment Acceleration Strategies:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Offer early payment discounts (2/10 Net 30)<br/>
+                                • Accept credit cards (convenience)<br/>
+                                • Set up ACH/direct debit<br/>
+                                • Send invoices electronically (faster)<br/>
+                                • Call customers when invoices are sent<br/>
+                                • Make payment process easy<br/>
+                                • Send reminders before due date
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Key Success Factor:</strong> Fast invoicing + persistent follow-up = better cash flow!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: When should we send invoices?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Immediately after goods/services delivered. Delays in invoicing delay payment and hurt cash flow.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if a customer disputes an invoice?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Investigate promptly. If valid, issue credit memo. If invalid, provide documentation to support charges.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How long should we keep invoice records?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Minimum 7 years for tax purposes. Longer for significant customers or legal reasons.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we charge late fees on overdue invoices?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, if stated in payment terms and agreed to by customer. Typically 1-1.5% per month.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: When should we write off bad debt?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: After exhausting collection efforts (typically 180+ days). Get approval and document attempts made.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+}
+

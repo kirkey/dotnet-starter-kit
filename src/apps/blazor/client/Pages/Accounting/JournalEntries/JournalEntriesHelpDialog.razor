@@ -1,0 +1,424 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.JournalEntries
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Journal Entries Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Journal Entries?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Journal Entries</MudText>
+                        <MudText Typo="Typo.body2">
+                            Journal entries are the fundamental building blocks of accounting. They record every financial transaction 
+                            using the double-entry system where debits must equal credits. Journal entries create the audit trail 
+                            from transactions to financial statements.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Golden Rule of Double-Entry:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                For every transaction:<br/>
+                                Total Debits = Total Credits<br/>
+                                <br/>
+                                Must ALWAYS balance!
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Types of Journal Entries:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Regular Entries:</strong> Day-to-day transactions<br/>
+                                • <strong>Adjusting Entries:</strong> Period-end accruals/deferrals<br/>
+                                • <strong>Closing Entries:</strong> Close temporary accounts to retained earnings<br/>
+                                • <strong>Reversing Entries:</strong> Reverse prior period accruals<br/>
+                                • <strong>Correcting Entries:</strong> Fix errors
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Every journal entry must have proper documentation and approval.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Debit and Credit Rules">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Debits and Credits</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>The Accounting Equation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Assets = Liabilities + Equity<br/>
+                                <br/>
+                                Assets = Liabilities + (Capital + Revenue - Expenses)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Debit/Credit Rules by Account Type:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                ASSETS:<br/>
+                                &nbsp;&nbsp;Increase: Debit<br/>
+                                &nbsp;&nbsp;Decrease: Credit<br/>
+                                &nbsp;&nbsp;Normal Balance: Debit<br/>
+                                <br/>
+                                LIABILITIES:<br/>
+                                &nbsp;&nbsp;Increase: Credit<br/>
+                                &nbsp;&nbsp;Decrease: Debit<br/>
+                                &nbsp;&nbsp;Normal Balance: Credit<br/>
+                                <br/>
+                                EQUITY:<br/>
+                                &nbsp;&nbsp;Increase: Credit<br/>
+                                &nbsp;&nbsp;Decrease: Debit<br/>
+                                &nbsp;&nbsp;Normal Balance: Credit<br/>
+                                <br/>
+                                REVENUE:<br/>
+                                &nbsp;&nbsp;Increase: Credit<br/>
+                                &nbsp;&nbsp;Decrease: Debit<br/>
+                                &nbsp;&nbsp;Normal Balance: Credit<br/>
+                                <br/>
+                                EXPENSES:<br/>
+                                &nbsp;&nbsp;Increase: Debit<br/>
+                                &nbsp;&nbsp;Decrease: Credit<br/>
+                                &nbsp;&nbsp;Normal Balance: Debit
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Memory Tip:</strong> DEAD CLIC - Debits: Expenses, Assets, Dividends | Credits: Liabilities, Income, Capital
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Journal Entries">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Record Journal Entries</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Entry Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Entry Number</strong> (auto-generated or manual)<br/>
+                                3. Select <strong>Entry Date</strong> (transaction date)<br/>
+                                4. Select <strong>Entry Type</strong> (Regular, Adjusting, Closing, etc.)<br/>
+                                5. Enter <strong>Description</strong> (what happened)<br/>
+                                6. Add <strong>Line Items</strong>:<br/>
+                                &nbsp;&nbsp;&nbsp;a. Select <strong>Account</strong><br/>
+                                &nbsp;&nbsp;&nbsp;b. Enter <strong>Debit</strong> or <strong>Credit</strong> amount<br/>
+                                &nbsp;&nbsp;&nbsp;c. Add line <strong>Description</strong> (detail)<br/>
+                                &nbsp;&nbsp;&nbsp;d. Repeat for all accounts affected<br/>
+                                7. Verify <strong>Debits = Credits</strong><br/>
+                                8. Attach <strong>Supporting Documents</strong><br/>
+                                9. Add <strong>Notes</strong> if needed<br/>
+                                10. Click <strong>"Save"</strong> or <strong>"Post"</strong>
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Never post entries where debits ≠ credits - system should prevent this!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Journal Entry Examples">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Real-World Journal Entries</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1. Cash Sale:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Cash                        $1,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Sales Revenue              $1,000<br/>
+                                (To record cash sale of goods)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>2. Credit Sale:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Accounts Receivable         $2,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Sales Revenue              $2,000<br/>
+                                (To record sale on account to XYZ Corp)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>3. Purchase Equipment (Cash):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Equipment                   $5,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash                       $5,000<br/>
+                                (To record purchase of computer equipment)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>4. Pay Expense:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Rent Expense                $2,500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash                       $2,500<br/>
+                                (To record payment of monthly rent)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>5. Accrue Expense:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Utilities Expense           $300<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accrued Expenses           $300<br/>
+                                (To accrue utilities for period not yet billed)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>6. Depreciation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Depreciation Expense        $1,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accumulated Depreciation   $1,000<br/>
+                                (To record monthly depreciation on equipment)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>7. Receive Payment on Account:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Cash                        $2,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Receivable        $2,000<br/>
+                                (To record payment received from customer)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>8. Pay Accounts Payable:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Accounts Payable            $1,500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash                       $1,500<br/>
+                                (To record payment to vendor for supplies)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Always include detailed descriptions - helps during audits and research!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Adjusting Entries">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Period-End Adjustments</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Adjusting Entries?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Adjusting entries ensure financial statements reflect accrual accounting:<br/>
+                                • Match expenses with revenue<br/>
+                                • Recognize revenue when earned<br/>
+                                • Show accurate balances at period-end
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Types of Adjusting Entries:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Accrued Revenue:</strong> Earned but not received<br/>
+                                2. <strong>Accrued Expense:</strong> Incurred but not paid<br/>
+                                3. <strong>Deferred Revenue:</strong> Received but not earned<br/>
+                                4. <strong>Prepaid Expense:</strong> Paid but not used<br/>
+                                5. <strong>Depreciation:</strong> Allocate asset cost over time
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Make adjusting entries at month-end before generating financial statements.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Reversing and Correcting Entries">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Fixing Errors and Reversals</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reversing Entries:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Used to reverse accruals from prior period:<br/>
+                                <br/>
+                                Prior Period (Dec 31):<br/>
+                                Dr. Wage Expense $5,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Wages Payable $5,000<br/>
+                                <br/>
+                                Next Period (Jan 1):<br/>
+                                Dr. Wages Payable $5,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Wage Expense $5,000<br/>
+                                (Reversing entry)<br/>
+                                <br/>
+                                When paid (Jan 5):<br/>
+                                Dr. Wage Expense $5,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash $5,000<br/>
+                                (Nets to zero expense in new period)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Correcting Entries:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Used to fix errors:<br/>
+                                <br/>
+                                <strong>Error:</strong> Recorded rent as utilities<br/>
+                                Dr. Utilities Expense $2,500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash $2,500 (WRONG!)<br/>
+                                <br/>
+                                <strong>Correction:</strong><br/>
+                                Dr. Rent Expense $2,500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Utilities Expense $2,500<br/>
+                                (To correct expense classification)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Never delete posted entries - always use correcting entries to maintain audit trail!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Approval and Posting">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Journal Entry Workflow</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Entry Statuses:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Draft:</strong> Being prepared, can edit/delete<br/>
+                                • <strong>Pending Approval:</strong> Submitted for review<br/>
+                                • <strong>Approved:</strong> Approved but not yet posted<br/>
+                                • <strong>Posted:</strong> Recorded in GL, affects balances<br/>
+                                • <strong>Rejected:</strong> Not approved, needs revision<br/>
+                                • <strong>Reversed:</strong> Reversed by another entry
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Approval Requirements:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Standard Entries:</strong> Supervisor approval<br/>
+                                • <strong>Adjusting Entries:</strong> Controller approval<br/>
+                                • <strong>Entries > $10K:</strong> CFO approval<br/>
+                                • <strong>Unusual Entries:</strong> Additional documentation required
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Posting Rules:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Must be approved before posting<br/>
+                                ✓ Debits must equal credits<br/>
+                                ✓ Must have supporting documentation<br/>
+                                ✓ Date must be in open accounting period<br/>
+                                ✓ All required fields completed<br/>
+                                ✓ Cannot post to closed periods
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Batch and post entries at scheduled times (daily, weekly) for consistency.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can I delete a posted journal entry?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No! Never delete posted entries. Use a reversing or correcting entry instead to maintain audit trail.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if I make a mistake in a posted entry?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Create a correcting entry to fix the error. Document what was wrong and why correction is needed.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How detailed should descriptions be?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Detailed enough that someone unfamiliar with the transaction can understand it months/years later.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can one person prepare and approve their own entries?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No! Separation of duties requires different people to prepare and approve entries for internal control.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What documentation is required?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Invoices, receipts, contracts, calculations, approvals - anything supporting the transaction. Attach to entry.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

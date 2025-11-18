@@ -1,0 +1,411 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.FinancialStatements
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Financial Statements Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Financial Statements?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Financial Statements</MudText>
+                        <MudText Typo="Typo.body2">
+                            Financial statements are formal records of a company's financial activities and position. 
+                            They provide a comprehensive picture of financial health, performance, and cash flows.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>The Three Core Financial Statements:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Balance Sheet:</strong> What you own and owe at a point in time<br/>
+                                2. <strong>Income Statement:</strong> Profit and loss over a period<br/>
+                                3. <strong>Cash Flow Statement:</strong> Cash movements during a period
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> These three statements are interconnected and tell the complete financial story.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Balance Sheet">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Statement of Financial Position</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Balance Sheet Formula:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Assets = Liabilities + Equity<br/>
+                                <br/>
+                                Must always balance!
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Balance Sheet Structure:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                ASSETS<br/>
+                                Current Assets:<br/>
+                                &nbsp;&nbsp;Cash                    $50,000<br/>
+                                &nbsp;&nbsp;Accounts Receivable     $30,000<br/>
+                                &nbsp;&nbsp;Inventory              $20,000<br/>
+                                &nbsp;&nbsp;Total Current          $100,000<br/>
+                                <br/>
+                                Fixed Assets:<br/>
+                                &nbsp;&nbsp;Property & Equipment   $200,000<br/>
+                                &nbsp;&nbsp;Less: Depreciation     ($50,000)<br/>
+                                &nbsp;&nbsp;Net Fixed Assets       $150,000<br/>
+                                <br/>
+                                TOTAL ASSETS                $250,000<br/>
+                                <br/>
+                                LIABILITIES<br/>
+                                Current Liabilities:<br/>
+                                &nbsp;&nbsp;Accounts Payable       $25,000<br/>
+                                &nbsp;&nbsp;Accrued Expenses       $15,000<br/>
+                                &nbsp;&nbsp;Total Current          $40,000<br/>
+                                <br/>
+                                Long-term Liabilities:<br/>
+                                &nbsp;&nbsp;Long-term Debt         $60,000<br/>
+                                <br/>
+                                TOTAL LIABILITIES           $100,000<br/>
+                                <br/>
+                                EQUITY<br/>
+                                &nbsp;&nbsp;Capital Stock          $100,000<br/>
+                                &nbsp;&nbsp;Retained Earnings       $50,000<br/>
+                                TOTAL EQUITY                $150,000<br/>
+                                <br/>
+                                TOTAL LIAB + EQUITY         $250,000<br/>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Balance Sheet Ratios:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Current Ratio:</strong> Current Assets / Current Liabilities (should be > 1.0)<br/>
+                                • <strong>Quick Ratio:</strong> (Current Assets - Inventory) / Current Liabilities<br/>
+                                • <strong>Debt-to-Equity:</strong> Total Debt / Total Equity<br/>
+                                • <strong>Working Capital:</strong> Current Assets - Current Liabilities
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Balance sheet shows financial position at a moment in time - like a snapshot.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Income Statement">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Profit & Loss Statement (P&L)</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Income Statement Formula:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Revenue - Expenses = Net Income<br/>
+                                <br/>
+                                Shows profitability over a period
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Income Statement Structure:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Revenue<br/>
+                                &nbsp;&nbsp;Sales Revenue              $500,000<br/>
+                                &nbsp;&nbsp;Less: Returns              ($10,000)<br/>
+                                &nbsp;&nbsp;Net Revenue                $490,000<br/>
+                                <br/>
+                                Cost of Goods Sold<br/>
+                                &nbsp;&nbsp;Materials                  $150,000<br/>
+                                &nbsp;&nbsp;Labor                       $80,000<br/>
+                                &nbsp;&nbsp;Total COGS                 $230,000<br/>
+                                <br/>
+                                Gross Profit                    $260,000<br/>
+                                Gross Margin: 53.1%<br/>
+                                <br/>
+                                Operating Expenses<br/>
+                                &nbsp;&nbsp;Salaries                   $100,000<br/>
+                                &nbsp;&nbsp;Rent                        $20,000<br/>
+                                &nbsp;&nbsp;Marketing                   $15,000<br/>
+                                &nbsp;&nbsp;Depreciation                $10,000<br/>
+                                &nbsp;&nbsp;Other                       $15,000<br/>
+                                &nbsp;&nbsp;Total OpEx                 $160,000<br/>
+                                <br/>
+                                Operating Income (EBIT)         $100,000<br/>
+                                <br/>
+                                Interest Expense                 ($5,000)<br/>
+                                <br/>
+                                Income Before Tax                $95,000<br/>
+                                Income Tax (25%)                ($23,750)<br/>
+                                <br/>
+                                NET INCOME                       $71,250<br/>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Profitability Metrics:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Gross Profit Margin:</strong> Gross Profit / Revenue × 100%<br/>
+                                • <strong>Operating Margin:</strong> Operating Income / Revenue × 100%<br/>
+                                • <strong>Net Profit Margin:</strong> Net Income / Revenue × 100%<br/>
+                                • <strong>EBITDA:</strong> Earnings Before Interest, Taxes, Depreciation, Amortization
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Income statement shows performance over time - like a movie, not a snapshot.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Cash Flow Statement">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Statement of Cash Flows</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Three Categories of Cash Flow:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Operating Activities:</strong> Cash from business operations<br/>
+                                2. <strong>Investing Activities:</strong> Purchase/sale of long-term assets<br/>
+                                3. <strong>Financing Activities:</strong> Borrowing, repaying debt, equity
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Cash Flow Statement Structure:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Operating Activities<br/>
+                                &nbsp;&nbsp;Net Income                  $71,250<br/>
+                                &nbsp;&nbsp;Add: Depreciation           $10,000<br/>
+                                &nbsp;&nbsp;Inc in AR                  ($10,000)<br/>
+                                &nbsp;&nbsp;Inc in AP                    $5,000<br/>
+                                &nbsp;&nbsp;Cash from Operations        $76,250<br/>
+                                <br/>
+                                Investing Activities<br/>
+                                &nbsp;&nbsp;Purchase Equipment         ($50,000)<br/>
+                                &nbsp;&nbsp;Sale of Old Equipment       $10,000<br/>
+                                &nbsp;&nbsp;Cash from Investing        ($40,000)<br/>
+                                <br/>
+                                Financing Activities<br/>
+                                &nbsp;&nbsp;Loan Proceeds               $20,000<br/>
+                                &nbsp;&nbsp;Loan Repayment             ($15,000)<br/>
+                                &nbsp;&nbsp;Dividends Paid             ($10,000)<br/>
+                                &nbsp;&nbsp;Cash from Financing         ($5,000)<br/>
+                                <br/>
+                                Net Change in Cash              $31,250<br/>
+                                Beginning Cash Balance          $18,750<br/>
+                                Ending Cash Balance             $50,000<br/>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Insights:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Positive Operating CF:</strong> Business generates cash from operations<br/>
+                                • <strong>Negative Investing CF:</strong> Investing in growth (usually good)<br/>
+                                • <strong>Financing CF:</strong> Shows how company funds operations<br/>
+                                • <strong>Free Cash Flow:</strong> Operating CF - Capital Expenditures
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Profit doesn't equal cash! Company can be profitable but cash-poor.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Generating Financial Statements">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Generate Statements</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Generation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Select <strong>Statement Type</strong> (Balance Sheet, Income Statement, Cash Flow)<br/>
+                                2. Choose <strong>Period</strong> (Month, Quarter, Year)<br/>
+                                3. Select <strong>Date Range</strong> (from/to dates)<br/>
+                                4. Choose <strong>Comparison Period</strong> (optional - prior year, budget)<br/>
+                                5. Select <strong>Format</strong> (Standard, Detailed, Summary)<br/>
+                                6. Click <strong>"Generate"</strong><br/>
+                                7. Review statement<br/>
+                                8. <strong>Export</strong> to PDF or Excel if needed
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Generate comparative statements (current vs. prior period) for better analysis.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Financial Statement Analysis">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Analyzing Financial Performance</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Horizontal Analysis (Trend Analysis):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Compare same items over multiple periods<br/>
+                                <br/>
+                                Example: Revenue 2024 vs. 2023<br/>
+                                2024: $500,000<br/>
+                                2023: $400,000<br/>
+                                Change: $100,000 (25% increase)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Vertical Analysis (Common-Size):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Express each item as % of base (Revenue for P&L, Assets for Balance Sheet)<br/>
+                                <br/>
+                                Example Income Statement:<br/>
+                                Revenue: $500,000 (100%)<br/>
+                                COGS: $230,000 (46%)<br/>
+                                Gross Profit: $270,000 (54%)<br/>
+                                OpEx: $160,000 (32%)<br/>
+                                Net Income: $71,250 (14.3%)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Financial Ratios:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Liquidity:</strong><br/>
+                                • Current Ratio > 1.5 (good)<br/>
+                                • Quick Ratio > 1.0 (good)<br/>
+                                <br/>
+                                <strong>Profitability:</strong><br/>
+                                • Gross Margin > 50% (varies by industry)<br/>
+                                • Net Margin > 10% (good)<br/>
+                                • ROA (Return on Assets) > 5%<br/>
+                                • ROE (Return on Equity) > 15%<br/>
+                                <br/>
+                                <strong>Leverage:</strong><br/>
+                                • Debt-to-Equity < 2.0 (safe)<br/>
+                                • Interest Coverage > 3.0 (good)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Benchmarking:</strong> Compare ratios to industry averages and competitors for context.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Month-End Financial Close">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Preparing Financial Statements</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Month-End Close Checklist:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ Record all transactions for period<br/>
+                                □ Post journal entries<br/>
+                                □ Reconcile bank accounts<br/>
+                                □ Reconcile AR and AP<br/>
+                                □ Record accruals and deferrals<br/>
+                                □ Calculate depreciation<br/>
+                                □ Reconcile inventory<br/>
+                                □ Review trial balance<br/>
+                                □ Make adjusting entries<br/>
+                                □ Generate financial statements<br/>
+                                □ Review for accuracy<br/>
+                                □ Close period (lock)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Close books within 5-7 business days of month-end for timely reporting.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How often should we generate financial statements?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Monthly for internal management. Quarterly and annually for external reporting (banks, investors, tax).
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Do financial statements need to be audited?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Depends on size and type. Public companies require audits. Private companies may need for loans or investors.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's the difference between cash and accrual basis?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Cash basis records when cash changes hands. Accrual records when earned/incurred. GAAP requires accrual for most businesses.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we correct financial statements after they're issued?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, through restatement for material errors. Document reasons and notify stakeholders. Avoid if possible through careful review.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What makes financial statements GAAP-compliant?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Following Generally Accepted Accounting Principles: proper recognition, measurement, disclosure, and presentation standards.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

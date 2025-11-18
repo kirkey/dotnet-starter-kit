@@ -1,0 +1,378 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.FixedAssets
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Fixed Assets Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Fixed Assets?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Fixed Assets</MudText>
+                        <MudText Typo="Typo.body2">
+                            Fixed assets are long-term tangible assets used in business operations for more than one year. 
+                            They provide long-term financial benefits and are recorded on the balance sheet at cost minus accumulated depreciation.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Fixed Assets:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Land:</strong> Does NOT depreciate<br/>
+                                • <strong>Buildings:</strong> Depreciate over 27.5-39 years<br/>
+                                • <strong>Machinery & Equipment:</strong> 5-10 years<br/>
+                                • <strong>Vehicles:</strong> 5 years<br/>
+                                • <strong>Computers:</strong> 3-5 years<br/>
+                                • <strong>Furniture & Fixtures:</strong> 7-10 years
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Capitalization Threshold:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Most companies set a minimum dollar amount (e.g., $1,000-$5,000) to capitalize an asset.<br/>
+                                Below threshold → expense immediately<br/>
+                                Above threshold → capitalize and depreciate
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Fixed assets generate value over multiple years - depreciate cost to match revenue.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Adding Fixed Assets">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Record New Assets</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Asset Addition Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Asset Tag/Number</strong> (unique ID)<br/>
+                                3. Enter <strong>Asset Description</strong><br/>
+                                4. Select <strong>Asset Category</strong> (equipment, vehicle, etc.)<br/>
+                                5. Enter <strong>Purchase Date</strong><br/>
+                                6. Enter <strong>Purchase Cost</strong> (total cost to acquire)<br/>
+                                7. Enter <strong>Salvage Value</strong> (residual value)<br/>
+                                8. Select <strong>Depreciation Method</strong><br/>
+                                9. Enter <strong>Useful Life</strong> (years)<br/>
+                                10. Enter <strong>Location</strong> (where it is)<br/>
+                                11. Enter <strong>Serial Number</strong><br/>
+                                12. Attach <strong>Purchase Documentation</strong><br/>
+                                13. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>What to Include in Asset Cost:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Purchase price<br/>
+                                ✓ Sales tax<br/>
+                                ✓ Shipping/freight<br/>
+                                ✓ Installation costs<br/>
+                                ✓ Setup/configuration<br/>
+                                ✓ Any costs to make asset ready for use<br/>
+                                <br/>
+                                <strong>Example:</strong><br/>
+                                Machine purchase: $10,000<br/>
+                                Shipping: $500<br/>
+                                Installation: $1,500<br/>
+                                Total to capitalize: $12,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Journal Entry for Asset Purchase:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Equipment                   $12,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash (or AP)               $12,000<br/>
+                                (To record purchase of manufacturing equipment)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Take photos of assets and attach to records for identification!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Depreciation">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Asset Depreciation</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Depreciate?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Depreciation allocates the cost of an asset over its useful life, matching the expense with the revenue it generates (matching principle).
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Straight-Line Depreciation Example:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Cost: $12,000<br/>
+                                Salvage Value: $2,000<br/>
+                                Useful Life: 5 years<br/>
+                                <br/>
+                                Annual Depreciation:<br/>
+                                ($12,000 - $2,000) / 5 = $2,000/year<br/>
+                                <br/>
+                                Monthly Depreciation:<br/>
+                                $2,000 / 12 = $166.67/month
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Depreciation Schedule:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Year  Beg Book Value  Depreciation  Accum Depr  End Book Value<br/>
+                                ====  ==============  ============  ==========  ==============<br/>
+                                1     $12,000         $2,000        $2,000      $10,000<br/>
+                                2     $10,000         $2,000        $4,000      $8,000<br/>
+                                3     $8,000          $2,000        $6,000      $6,000<br/>
+                                4     $6,000          $2,000        $8,000      $4,000<br/>
+                                5     $4,000          $2,000        $10,000     $2,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Monthly Depreciation Entry:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Depreciation Expense        $166.67<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accumulated Depreciation   $166.67<br/>
+                                (To record monthly depreciation on equipment)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Depreciation continues until book value equals salvage value or asset is disposed.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Asset Maintenance">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Tracking Repairs and Maintenance</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Capitalize vs. Expense:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>CAPITALIZE (add to asset cost) if:</strong><br/>
+                                • Extends useful life significantly<br/>
+                                • Increases capacity or efficiency<br/>
+                                • Major overhaul or betterment<br/>
+                                • Example: Adding air conditioning to building<br/>
+                                <br/>
+                                <strong>EXPENSE (repairs & maintenance) if:</strong><br/>
+                                • Routine maintenance<br/>
+                                • Keeps asset in normal operating condition<br/>
+                                • Doesn't extend life<br/>
+                                • Example: Oil change, tire replacement
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Maintenance Journal Entries:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Routine Maintenance (Expense):<br/>
+                                Dr. Repairs & Maintenance Expense  $500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash                          $500<br/>
+                                <br/>
+                                Major Improvement (Capitalize):<br/>
+                                Dr. Equipment                      $5,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash                          $5,000
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Document rationale for capitalizing vs. expensing - auditors will question!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Disposing of Assets">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Asset Disposal Process</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Disposal Methods:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Sale:</strong> Sold to third party<br/>
+                                • <strong>Trade-In:</strong> Traded for new asset<br/>
+                                • <strong>Scrap:</strong> No longer useful, discarded<br/>
+                                • <strong>Donation:</strong> Given to charity
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Disposal Calculation Example:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Original Cost:              $12,000<br/>
+                                Accumulated Depreciation:   ($8,000)<br/>
+                                Book Value:                  $4,000<br/>
+                                <br/>
+                                Sale Price:                  $5,000<br/>
+                                <br/>
+                                Gain on Sale = $5,000 - $4,000 = $1,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Disposal Journal Entry (Sale with Gain):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Cash                           $5,000<br/>
+                                Dr. Accumulated Depreciation       $8,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Equipment                      $12,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Gain on Asset Sale             $1,000<br/>
+                                (To record sale of equipment at gain)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Disposal with Loss:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Sale Price: $3,000 (less than book value of $4,000)<br/>
+                                Loss = $4,000 - $3,000 = $1,000<br/>
+                                <br/>
+                                Dr. Cash                           $3,000<br/>
+                                Dr. Accumulated Depreciation       $8,000<br/>
+                                Dr. Loss on Asset Sale             $1,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Equipment                      $12,000
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Document disposal with photos, bills of sale, and approvals.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Physical Inventory">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Fixed Asset Physical Count</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Physical Counts?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Verify assets still exist<br/>
+                                • Identify missing/stolen assets<br/>
+                                • Confirm location accuracy<br/>
+                                • Required for audit<br/>
+                                • Update condition status
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Physical Count Procedures:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Print asset list by location<br/>
+                                2. Visit each location with list<br/>
+                                3. Verify each asset by tag number<br/>
+                                4. Check condition (good, fair, poor)<br/>
+                                5. Note any missing assets<br/>
+                                6. Note any found assets not on list<br/>
+                                7. Update system with findings<br/>
+                                8. Investigate discrepancies<br/>
+                                9. Process disposals for missing assets<br/>
+                                10. Document and approve
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Frequency:</strong> Conduct physical counts annually, or more often for high-value/high-risk assets.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: When do we start depreciating an asset?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: When asset is "placed in service" - ready for use, not necessarily when purchased.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we change depreciation method after starting?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Difficult - requires accounting change documentation. Better to choose correctly from start.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if we fully depreciate an asset still in use?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Keep on books at salvage value. No further depreciation. Remove only when disposed.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we handle stolen or destroyed assets?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Write off net book value as loss. Insurance proceeds reduce loss. File police report for stolen assets.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's the difference between book and tax depreciation?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Book (GAAP) uses straight-line typically. Tax uses MACRS for tax benefits. Maintain both!
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

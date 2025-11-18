@@ -484,6 +484,19 @@ public partial class Invoices
             await _table.ReloadDataAsync();
         }
     }
+
+    /// <summary>
+    /// Show invoices help dialog.
+    /// </summary>
+    private async Task ShowInvoicesHelp()
+    {
+        await DialogService.ShowAsync<InvoicesHelpDialog>("Invoices Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 // Supporting types for dialog state

@@ -103,5 +103,18 @@ public partial class DepreciationMethods
         var options = new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true, CloseOnEscapeKey = true };
         await DialogService.ShowAsync<DepreciationMethodDetailsDialog>("Depreciation Method Details", parameters, options);
     }
+
+    /// <summary>
+    /// Show depreciation methods help dialog.
+    /// </summary>
+    private async Task ShowDepreciationMethodsHelp()
+    {
+        await DialogService.ShowAsync<DepreciationMethodsHelpDialog>("Depreciation Methods Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

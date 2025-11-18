@@ -186,5 +186,18 @@ public partial class FiscalPeriodClose
     {
         await _table.ReloadDataAsync();
     }
+
+    /// <summary>
+    /// Show fiscal period close help dialog.
+    /// </summary>
+    private async Task ShowFiscalPeriodCloseHelp()
+    {
+        await DialogService.ShowAsync<FiscalPeriodCloseHelpDialog>("Fiscal Period Close Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

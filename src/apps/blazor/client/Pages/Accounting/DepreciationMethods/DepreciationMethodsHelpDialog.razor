@@ -1,0 +1,294 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.DepreciationMethods
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Depreciation Methods Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Depreciation?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Asset Depreciation</MudText>
+                        <MudText Typo="Typo.body2">
+                            Depreciation is the systematic allocation of a fixed asset's cost over its useful life. 
+                            It matches the expense of using an asset with the revenue it generates, following the matching principle in accounting.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Depreciation Matters:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Matching Principle:</strong> Match asset cost with revenue period<br/>
+                                • <strong>Tax Deduction:</strong> Reduces taxable income<br/>
+                                • <strong>Asset Valuation:</strong> Shows book value accurately<br/>
+                                • <strong>Replacement Planning:</strong> Prepare for asset replacement<br/>
+                                • <strong>GAAP Compliance:</strong> Required by accounting standards
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Different depreciation methods affect financial statements and taxes differently.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Depreciation Methods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Types of Depreciation Methods</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1. Straight-Line Method (Most Common):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Equal expense each year over asset's useful life<br/>
+                                <br/>
+                                <strong>Formula:</strong> (Cost - Salvage Value) / Useful Life<br/>
+                                <br/>
+                                <strong>Example:</strong><br/>
+                                Cost: $10,000<br/>
+                                Salvage Value: $1,000<br/>
+                                Useful Life: 5 years<br/>
+                                <br/>
+                                Annual Depreciation = ($10,000 - $1,000) / 5 = $1,800/year
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>2. Declining Balance Method (Accelerated):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Higher expense in early years, lower in later years<br/>
+                                <br/>
+                                <strong>Double Declining Balance (200%):</strong><br/>
+                                Rate = 2 × (1 / Useful Life)<br/>
+                                Depreciation = Book Value × Rate<br/>
+                                <br/>
+                                <strong>Example (5-year asset):</strong><br/>
+                                Rate = 2 × (1/5) = 40%<br/>
+                                Year 1: $10,000 × 40% = $4,000<br/>
+                                Year 2: $6,000 × 40% = $2,400<br/>
+                                Year 3: $3,600 × 40% = $1,440
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>3. Units of Production Method:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Based on actual usage rather than time<br/>
+                                <br/>
+                                <strong>Formula:</strong> (Cost - Salvage) / Total Units × Units Used<br/>
+                                <br/>
+                                <strong>Example (Machine):</strong><br/>
+                                Cost: $50,000<br/>
+                                Salvage: $5,000<br/>
+                                Total Units: 100,000 units<br/>
+                                <br/>
+                                Per Unit = ($50,000 - $5,000) / 100,000 = $0.45/unit<br/>
+                                If produce 20,000 units: 20,000 × $0.45 = $9,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>4. Sum-of-Years-Digits (SYD):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Accelerated method, but less aggressive than declining balance<br/>
+                                <br/>
+                                <strong>Formula:</strong> (Remaining Life / Sum of Years) × Depreciable Base<br/>
+                                <br/>
+                                <strong>Example (5-year asset):</strong><br/>
+                                Sum = 5+4+3+2+1 = 15<br/>
+                                Year 1: (5/15) × $9,000 = $3,000<br/>
+                                Year 2: (4/15) × $9,000 = $2,400<br/>
+                                Year 3: (3/15) × $9,000 = $1,800
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Straight-line is simplest and most common for financial reporting; accelerated methods often used for tax.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Depreciation Methods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Set Up Depreciation Methods</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Setup Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Method Name</strong> (e.g., "Straight-Line 5 Years")<br/>
+                                3. Select <strong>Method Type</strong> (Straight-Line, Declining Balance, etc.)<br/>
+                                4. Enter <strong>Useful Life</strong> (in years)<br/>
+                                5. Enter <strong>Rate</strong> (for declining balance methods)<br/>
+                                6. Add <strong>Description</strong> of when to use<br/>
+                                7. Set <strong>Asset Category</strong> (optional - which assets use this)<br/>
+                                8. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Create separate methods for financial reporting vs. tax reporting if they differ.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Choosing the Right Method">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">When to Use Each Method</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Straight-Line - Best For:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Buildings and real estate<br/>
+                                ✓ Furniture and fixtures<br/>
+                                ✓ General office equipment<br/>
+                                ✓ Assets with consistent value over time<br/>
+                                ✓ Financial reporting (simplicity)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Declining Balance - Best For:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Technology/computers (rapid obsolescence)<br/>
+                                ✓ Vehicles (higher maintenance costs later)<br/>
+                                ✓ Manufacturing equipment<br/>
+                                ✓ Assets that lose value faster initially<br/>
+                                ✓ Tax depreciation (accelerated deduction)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Units of Production - Best For:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Manufacturing machinery<br/>
+                                ✓ Mining equipment<br/>
+                                ✓ Vehicles by mileage<br/>
+                                ✓ Assets where usage varies significantly<br/>
+                                ✓ Better matching of expense to actual use
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Depreciation method choice affects financial statements - consult with accountant!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Tax Depreciation (MACRS)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Modified Accelerated Cost Recovery System</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>MACRS Overview:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                US tax law requires MACRS for most business assets<br/>
+                                <br/>
+                                <strong>Common MACRS Property Classes:</strong><br/>
+                                • 3-year: Tractor units, racehorses<br/>
+                                • 5-year: Computers, office equipment, cars, trucks<br/>
+                                • 7-year: Office furniture, most machinery<br/>
+                                • 15-year: Land improvements, restaurant property<br/>
+                                • 27.5-year: Residential rental property<br/>
+                                • 39-year: Commercial buildings
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Section 179 & Bonus Depreciation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Section 179:</strong><br/>
+                                • Immediate expensing of qualifying assets<br/>
+                                • Up to $1,160,000 (2023 limit)<br/>
+                                • Subject to business income limits<br/>
+                                <br/>
+                                <strong>Bonus Depreciation:</strong><br/>
+                                • Additional first-year deduction<br/>
+                                • Percentage varies by year<br/>
+                                • No income limitation
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tax Strategy:</strong> Use accelerated methods for tax to defer tax payments and improve cash flow!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we use different depreciation methods for the same asset?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes! Use one method for financial reporting (usually straight-line) and another for tax (MACRS). Maintain both sets of records.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What is salvage value?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Estimated value of asset at end of useful life. Subtract this from cost before calculating depreciation.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we change depreciation method after asset is in service?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Difficult - requires accounting change justification and restatement. Better to choose correctly initially.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What assets don't depreciate?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Land (never depreciates), inventory, and assets held for sale. Only capitalize and depreciate assets used in business.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How often should we review depreciation methods?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Annually, or when tax laws change. Ensure methods still appropriate for asset types and business needs.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

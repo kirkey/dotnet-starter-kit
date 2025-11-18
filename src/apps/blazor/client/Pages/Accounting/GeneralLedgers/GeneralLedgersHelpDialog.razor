@@ -1,0 +1,391 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.GeneralLedgers
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">General Ledger Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is the General Ledger?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding the General Ledger (GL)</MudText>
+                        <MudText Typo="Typo.body2">
+                            The General Ledger is the master set of accounts that records all financial transactions of a business. 
+                            It's the central repository where all journal entries are posted and serves as the foundation for 
+                            generating financial statements.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>GL Structure:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Chart of Accounts:</strong> List of all GL accounts<br/>
+                                • <strong>Account Numbers:</strong> Unique identifier for each account<br/>
+                                • <strong>Account Types:</strong> Asset, Liability, Equity, Revenue, Expense<br/>
+                                • <strong>Sub-Ledgers:</strong> AR, AP, Inventory detail rolls up to GL<br/>
+                                • <strong>Transactions:</strong> All journal entries post here
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> GL is the "books" of the company - where everything ends up!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="GL Account Structure">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Account Numbering and Organization</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Typical Account Number Structure:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                1000-1999: ASSETS<br/>
+                                &nbsp;&nbsp;1000-1099: Cash & Bank Accounts<br/>
+                                &nbsp;&nbsp;1100-1199: Accounts Receivable<br/>
+                                &nbsp;&nbsp;1200-1299: Inventory<br/>
+                                &nbsp;&nbsp;1300-1399: Prepaid Expenses<br/>
+                                &nbsp;&nbsp;1400-1899: Fixed Assets<br/>
+                                &nbsp;&nbsp;1900-1999: Other Assets<br/>
+                                <br/>
+                                2000-2999: LIABILITIES<br/>
+                                &nbsp;&nbsp;2000-2099: Accounts Payable<br/>
+                                &nbsp;&nbsp;2100-2199: Accrued Expenses<br/>
+                                &nbsp;&nbsp;2200-2299: Short-term Debt<br/>
+                                &nbsp;&nbsp;2300-2899: Long-term Liabilities<br/>
+                                &nbsp;&nbsp;2900-2999: Other Liabilities<br/>
+                                <br/>
+                                3000-3999: EQUITY<br/>
+                                &nbsp;&nbsp;3000-3099: Capital Stock<br/>
+                                &nbsp;&nbsp;3100-3199: Retained Earnings<br/>
+                                &nbsp;&nbsp;3200-3999: Other Equity<br/>
+                                <br/>
+                                4000-4999: REVENUE<br/>
+                                &nbsp;&nbsp;4000-4099: Product Sales<br/>
+                                &nbsp;&nbsp;4100-4199: Service Revenue<br/>
+                                &nbsp;&nbsp;4900-4999: Other Income<br/>
+                                <br/>
+                                5000-5999: COST OF GOODS SOLD<br/>
+                                &nbsp;&nbsp;5000-5099: Materials<br/>
+                                &nbsp;&nbsp;5100-5199: Labor<br/>
+                                &nbsp;&nbsp;5200-5299: Overhead<br/>
+                                <br/>
+                                6000-9999: OPERATING EXPENSES<br/>
+                                &nbsp;&nbsp;6000-6999: Sales & Marketing<br/>
+                                &nbsp;&nbsp;7000-7999: General & Administrative<br/>
+                                &nbsp;&nbsp;8000-8999: Depreciation & Amortization<br/>
+                                &nbsp;&nbsp;9000-9999: Other Expenses
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Leave gaps in numbering for future accounts - don't use every number!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Viewing GL Activity">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Review GL Accounts</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>GL Account Detail View:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Select account from list<br/>
+                                2. Choose date range<br/>
+                                3. View transactions:<br/>
+                                &nbsp;&nbsp;&nbsp;- Date<br/>
+                                &nbsp;&nbsp;&nbsp;- Journal entry number<br/>
+                                &nbsp;&nbsp;&nbsp;- Description<br/>
+                                &nbsp;&nbsp;&nbsp;- Debit amount<br/>
+                                &nbsp;&nbsp;&nbsp;- Credit amount<br/>
+                                &nbsp;&nbsp;&nbsp;- Running balance<br/>
+                                4. Drill down to source documents<br/>
+                                5. Export to Excel if needed
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Sample GL Account Activity:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Account: 1010 - Cash in Bank<br/>
+                                Period: November 2025<br/>
+                                <br/>
+                                Date    JE#    Description           Debit    Credit   Balance<br/>
+                                ====    ===    ================      =====    ======   =======<br/>
+                                11/01   -      Beginning Balance                       $25,000<br/>
+                                11/05   1001   Customer payment      $5,000             $30,000<br/>
+                                11/10   1015   Rent payment                   $2,500   $27,500<br/>
+                                11/15   1025   Invoice payment       $3,000             $30,500<br/>
+                                11/20   1040   Payroll payment                $8,000   $22,500<br/>
+                                11/25   1055   Equipment purchase             $5,000   $17,500<br/>
+                                11/30   -      Ending Balance                          $17,500
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Review GL accounts monthly - catch errors early!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="GL Reconciliation">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Reconciling GL Accounts</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Reconcile GL Accounts?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Verify accuracy of recorded transactions<br/>
+                                • Identify errors or missing entries<br/>
+                                • Ensure balances match external records<br/>
+                                • Required for period close<br/>
+                                • Support financial statement accuracy
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Accounts Requiring Regular Reconciliation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Monthly:</strong><br/>
+                                • All bank accounts (cash)<br/>
+                                • Accounts receivable (aging report)<br/>
+                                • Accounts payable (vendor statements)<br/>
+                                • Credit card accounts<br/>
+                                • Accrued expenses<br/>
+                                <br/>
+                                <strong>Quarterly:</strong><br/>
+                                • Fixed assets<br/>
+                                • Accumulated depreciation<br/>
+                                • Long-term debt<br/>
+                                • Prepaid expenses<br/>
+                                <br/>
+                                <strong>Annually:</strong><br/>
+                                • All balance sheet accounts<br/>
+                                • Tax accounts<br/>
+                                • Equity accounts
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reconciliation Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Print GL account detail<br/>
+                                2. Obtain external statement/documentation<br/>
+                                3. Compare GL balance to external source<br/>
+                                4. Identify and list differences<br/>
+                                5. Investigate each difference<br/>
+                                6. Make adjusting entries if needed<br/>
+                                7. Document reconciliation<br/>
+                                8. Obtain approval<br/>
+                                9. File for audit trail
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> All balance sheet accounts should be reconciled at period-end!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="GL Reports">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Key GL Reports</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1. Trial Balance:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Lists all GL accounts with debit/credit balances<br/>
+                                <br/>
+                                Purpose: Verify debits = credits<br/>
+                                Frequency: Monthly, before financial statements<br/>
+                                <br/>
+                                Example format:<br/>
+                                Account    Description         Debit      Credit<br/>
+                                1010       Cash               $50,000<br/>
+                                1100       AR                 $30,000<br/>
+                                2000       AP                            $25,000<br/>
+                                3100       Ret Earnings                  $55,000<br/>
+                                TOTALS                        $80,000    $80,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>2. General Ledger Report:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Complete listing of all accounts and transactions<br/>
+                                <br/>
+                                Purpose: Detailed review, audit support<br/>
+                                Frequency: As needed, typically monthly
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>3. Account Activity Report:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Detail of single account's transactions<br/>
+                                <br/>
+                                Purpose: Account analysis, reconciliation<br/>
+                                Frequency: As needed
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>4. Account Balance Report:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Current balances of all accounts<br/>
+                                <br/>
+                                Purpose: Quick balance check<br/>
+                                Frequency: Real-time/on-demand
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Generate comparative reports (current vs. prior period) for better analysis.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="GL Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Maintaining GL Integrity</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Account Management:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Use consistent account numbering<br/>
+                                ✓ Clear, descriptive account names<br/>
+                                ✓ Don't create unnecessary accounts<br/>
+                                ✓ Inactivate unused accounts (don't delete)<br/>
+                                ✓ Document purpose of each account<br/>
+                                ✓ Review chart of accounts annually
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Transaction Management:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ All entries must balance (debits = credits)<br/>
+                                ✓ Detailed, clear descriptions<br/>
+                                ✓ Supporting documentation attached<br/>
+                                ✓ Proper approval before posting<br/>
+                                ✓ Regular posting schedule<br/>
+                                ✓ Never delete posted transactions
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reconciliation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Reconcile all balance sheet accounts monthly<br/>
+                                ✓ Document all reconciliations<br/>
+                                ✓ Investigate all variances<br/>
+                                ✓ Obtain management approval<br/>
+                                ✓ File reconciliations for audit
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Internal Controls:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Separation of duties (entry vs. approval)<br/>
+                                ✓ Regular review of account activity<br/>
+                                ✓ Lock closed periods<br/>
+                                ✓ Restrict GL posting access<br/>
+                                ✓ Maintain complete audit trail<br/>
+                                ✓ Regular backup of data
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Golden Rule:</strong> Clean GL = accurate financial statements = good decisions!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's the difference between GL and sub-ledgers?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Sub-ledgers (AR, AP, Inventory) track detail. GL shows summary balances. Sub-ledgers must reconcile to GL.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How often should we post to GL?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Depends on volume. High-volume: daily. Medium: weekly. Low: bi-weekly. At minimum: before month-end close.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we change account numbers?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Possible but complicated - affects history. Better to create new account and inactivate old one.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if GL is out of balance?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Investigate immediately! Check for unposted entries, errors, or system issues. Trial balance must balance!
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How long should we keep GL records?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Minimum 7 years for tax. Longer for legal, significant transactions. Many keep permanently (digital storage).
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

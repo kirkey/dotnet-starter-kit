@@ -3,7 +3,7 @@
 
 <PageTitle>Financial Statements</PageTitle>
 
-<FshTitle Title="Financial Statements" Description="Generate and view Balance Sheet, Income Statement, and Cash Flow Statement" />
+<PageHeader Title="Financial Statements" Description="Generate and view Balance Sheet, Income Statement, and Cash Flow Statement" />
 
 <MudContainer MaxWidth="MaxWidth.False" Class="pa-6">
     <MudCard>
@@ -12,6 +12,7 @@
                 <MudText Typo="Typo.h6">Financial Statements</MudText>
             </CardHeaderContent>
             <CardHeaderActions>
+                <MudIconButton Icon="@Icons.Material.Filled.Help" Color="Color.Info" OnClick="@ShowFinancialStatementsHelp" Title="Help" />
                 <MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="Color.Default" OnClick="@(() => RefreshCurrentStatement())" Title="Refresh" />
             </CardHeaderActions>
         </MudCardHeader>

@@ -1,0 +1,403 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.Vendors
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Vendors Management Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Vendor Management?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding the Vendor Master File</MudText>
+                        <MudText Typo="Typo.body2">
+                            Vendor management maintains the master record of all suppliers who provide goods or services to your company. 
+                            These records are essential for purchasing, accounts payable, and supplier relationship management.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Vendor Records Matter:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Purchasing:</strong> Accurate contact info and terms<br/>
+                                • <strong>AP Tracking:</strong> Link bills and payments to vendors<br/>
+                                • <strong>Payment Terms:</strong> Manage when payments are due<br/>
+                                • <strong>Cost Control:</strong> Track spending by vendor<br/>
+                                • <strong>Quality:</strong> Monitor vendor performance<br/>
+                                • <strong>Compliance:</strong> 1099 reporting, W9 collection
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Maintain current vendor records and review performance regularly.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Vendor Records">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Add a New Vendor</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Required Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Vendor Code</strong> (unique ID, e.g., "VEND-001")<br/>
+                                3. Enter <strong>Vendor Name</strong> (full legal business name)<br/>
+                                4. Select <strong>Vendor Type</strong> (Supplier, Contractor, Service Provider)<br/>
+                                5. Enter <strong>Business Address</strong> (where vendor is located)<br/>
+                                6. Enter <strong>Contact Person</strong> (primary contact)<br/>
+                                7. Enter <strong>Phone Number</strong> (business phone)<br/>
+                                8. Enter <strong>Email Address</strong> (for orders, invoices)<br/>
+                                9. Select <strong>Payment Terms</strong> (Net 30, 2/10 Net 30, etc.)<br/>
+                                10. Click <strong>"Save"</strong> to create
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Additional Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Tax ID (EIN):</strong> For 1099 reporting<br/>
+                                • <strong>W-9 Form:</strong> Collect and maintain on file<br/>
+                                • <strong>Payment Method:</strong> Check, ACH, Wire, Credit Card<br/>
+                                • <strong>Bank Account:</strong> For ACH/Wire payments<br/>
+                                • <strong>Account Number:</strong> Vendor's account # for you<br/>
+                                • <strong>Website:</strong> Vendor's website URL<br/>
+                                • <strong>Notes:</strong> Special instructions, history
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Request W-9 form immediately to avoid 1099 issues at year-end.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Vendor Types">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Different Types of Vendors</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Supplier:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Provides materials, inventory, goods<br/>
+                                • Ongoing relationship<br/>
+                                • Regular orders and deliveries<br/>
+                                • Volume discounts may apply<br/>
+                                • Examples: Raw materials, office supplies, inventory
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Service Provider:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Provides services, not goods<br/>
+                                • May be recurring or project-based<br/>
+                                • Often professional services<br/>
+                                • May require 1099 reporting<br/>
+                                • Examples: IT support, consulting, maintenance
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Contractor:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Independent contractors<br/>
+                                • Not employees<br/>
+                                • Requires W-9 and 1099 reporting<br/>
+                                • Project or time-based work<br/>
+                                • Examples: Freelancers, consultants, temporary labor
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>One-Time Vendor:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Single purchase or project<br/>
+                                • No ongoing relationship<br/>
+                                • Simpler setup<br/>
+                                • Still need basic info for payment
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Vendor type affects payment terms, 1099 reporting, and purchasing procedures.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Payment Terms">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Vendor Payment Terms</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Payment Terms:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>COD (Cash on Delivery):</strong> Pay when goods arrive<br/>
+                                • <strong>Net 10:</strong> Payment due in 10 days<br/>
+                                • <strong>Net 30:</strong> Payment due in 30 days (most common)<br/>
+                                • <strong>Net 60:</strong> Payment due in 60 days<br/>
+                                • <strong>2/10 Net 30:</strong> 2% discount if paid in 10 days, else net 30<br/>
+                                • <strong>EOM (End of Month):</strong> Due at month end<br/>
+                                • <strong>Credit Card:</strong> Immediate payment via card
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Early Payment Discount Example:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Invoice: $10,000<br/>
+                                Terms: 2/10 Net 30<br/>
+                                <br/>
+                                If paid in 10 days: $10,000 × 98% = $9,800<br/>
+                                If paid in 30 days: $10,000<br/>
+                                <br/>
+                                Savings: $200 (for paying 20 days early)<br/>
+                                Annualized return: 36.7%!<br/>
+                                <br/>
+                                ✓ Almost always worth taking the discount!
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Key Insight:</strong> Taking early payment discounts = 36%+ annual return - better than most investments!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Vendor Performance">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Monitoring Vendor Quality</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Performance Metrics:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>On-Time Delivery:</strong> % of orders delivered on time<br/>
+                                • <strong>Quality:</strong> Defect rate, returns, complaints<br/>
+                                • <strong>Pricing:</strong> Competitive vs. alternatives<br/>
+                                • <strong>Responsiveness:</strong> How quickly they respond<br/>
+                                • <strong>Accuracy:</strong> Order accuracy, correct items<br/>
+                                • <strong>Service:</strong> Customer service quality
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Vendor Ratings:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Preferred:</strong> Excellent performance, negotiate best terms<br/>
+                                • <strong>Approved:</strong> Meets standards, continue using<br/>
+                                • <strong>Probation:</strong> Performance issues, monitor closely<br/>
+                                • <strong>Inactive:</strong> No longer using, keep for records
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Vendor Reviews:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Conduct quarterly or annual reviews<br/>
+                                • Review performance metrics<br/>
+                                • Discuss issues and improvements<br/>
+                                • Negotiate better terms if performing well<br/>
+                                • Consider alternatives if underperforming
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Document vendor performance - helps with negotiations and sourcing decisions.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Vendor Compliance">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">1099 Reporting & Tax Compliance</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1099 Requirements:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Must issue 1099-NEC to vendors if ALL conditions met:<br/>
+                                <br/>
+                                ✓ Paid for services (not goods)<br/>
+                                ✓ Paid $600 or more in the year<br/>
+                                ✓ Vendor is not a corporation (exceptions exist)<br/>
+                                ✓ Vendor is US-based<br/>
+                                <br/>
+                                Examples needing 1099:<br/>
+                                • Independent contractors<br/>
+                                • Freelancers<br/>
+                                • Consultants<br/>
+                                • Attorneys<br/>
+                                • Rent payments<br/>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>W-9 Form:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Request W-9 from new vendors before paying<br/>
+                                • Verifies legal name and Tax ID (EIN/SSN)<br/>
+                                • Confirms entity type (LLC, Corp, Individual)<br/>
+                                • Keep on file for 1099 reporting<br/>
+                                • Update if vendor information changes
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Year-End 1099 Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Run vendor payment report for year<br/>
+                                2. Identify vendors meeting 1099 criteria<br/>
+                                3. Verify W-9 on file for each<br/>
+                                4. Generate 1099-NEC forms (due by Jan 31)<br/>
+                                5. File with IRS<br/>
+                                6. Send copies to vendors<br/>
+                                7. Retain copies for records
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Penalties for late/missing 1099s - collect W-9s proactively!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Vendor Relationships">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Building Strong Vendor Partnerships</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Relationship Best Practices:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Pay on time (or early for discounts)<br/>
+                                ✓ Communicate clearly and professionally<br/>
+                                ✓ Be fair and honest<br/>
+                                ✓ Give reasonable notice for changes<br/>
+                                ✓ Provide feedback on performance<br/>
+                                ✓ Acknowledge good service<br/>
+                                ✓ Address issues promptly<br/>
+                                ✓ Maintain long-term partnerships
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Negotiation Strategies:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Request volume discounts<br/>
+                                • Negotiate better payment terms<br/>
+                                • Ask for price matching<br/>
+                                • Bundle purchases for savings<br/>
+                                • Leverage good payment history<br/>
+                                • Compare alternatives<br/>
+                                • Build win-win relationships
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>When to Change Vendors:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Consistent quality problems<br/>
+                                • Chronic delivery delays<br/>
+                                • Uncompetitive pricing<br/>
+                                • Poor customer service<br/>
+                                • Better alternatives available<br/>
+                                • Business relationship breakdown
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Key Success Factor:</strong> Good vendor relationships = better prices, service, and reliability!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How many vendors should we have?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Enough for competition but not so many you can't manage them. Consolidate when possible for volume discounts.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we get multiple quotes for purchases?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, for significant purchases. Typically 3 quotes ensures competitive pricing. May not be needed for small/routine purchases.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: When do we need a signed vendor agreement?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: For significant, ongoing relationships or large purchases. Protects both parties and clarifies terms.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we handle vendor disputes?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Document issues, communicate professionally, seek resolution. Withhold payment only if justified. Consider mediation if needed.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we deactivate vendors?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, mark as inactive if no longer using. Don't delete - keep for historical records and potential future use.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

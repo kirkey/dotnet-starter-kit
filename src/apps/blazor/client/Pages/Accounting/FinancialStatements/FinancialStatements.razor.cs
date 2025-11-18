@@ -25,5 +25,18 @@ public partial class FinancialStatements
                 break;
         }
     }
+
+    /// <summary>
+    /// Show financial statements help dialog.
+    /// </summary>
+    private async Task ShowFinancialStatementsHelp()
+    {
+        await DialogService.ShowAsync<FinancialStatementsHelpDialog>("Financial Statements Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

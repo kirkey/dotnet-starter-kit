@@ -112,5 +112,18 @@ public partial class Vendors
 
         base.OnInitialized();
     }
+
+    /// <summary>
+    /// Show vendors help dialog.
+    /// </summary>
+    private async Task ShowVendorsHelp()
+    {
+        await DialogService.ShowAsync<VendorsHelpDialog>("Vendors Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

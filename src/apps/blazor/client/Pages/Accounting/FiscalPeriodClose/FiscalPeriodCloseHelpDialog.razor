@@ -1,0 +1,427 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.FiscalPeriodClose
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Fiscal Period Close Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Period Close?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Period Close Process</MudText>
+                        <MudText Typo="Typo.body2">
+                            Period close (month-end or year-end close) is the process of finalizing all accounting transactions for a specific period, 
+                            ensuring accuracy, and generating financial statements. Once closed, the period is "locked" to prevent further changes.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Period Close Matters:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Financial Reporting:</strong> Generate accurate statements<br/>
+                                • <strong>Compliance:</strong> Meet GAAP and tax requirements<br/>
+                                • <strong>Data Integrity:</strong> Lock completed periods<br/>
+                                • <strong>Performance Tracking:</strong> Compare period-over-period<br/>
+                                • <strong>Decision Making:</strong> Provide reliable data to management
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Timely, accurate period close is critical for reliable financial reporting.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Month-End Close Checklist">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Complete Month-End Close Procedures</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Pre-Close Activities (Days 1-3):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ <strong>Verify all transactions posted</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Review unposted transactions<br/>
+                                &nbsp;&nbsp;&nbsp;- Post all approved journal entries<br/>
+                                &nbsp;&nbsp;&nbsp;- Complete data entry for period<br/>
+                                <br/>
+                                □ <strong>Reconcile bank accounts</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Match bank statements to GL<br/>
+                                &nbsp;&nbsp;&nbsp;- Clear outstanding items<br/>
+                                &nbsp;&nbsp;&nbsp;- Record bank fees/interest<br/>
+                                <br/>
+                                □ <strong>Reconcile AR (Accounts Receivable)</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Review aging report<br/>
+                                &nbsp;&nbsp;&nbsp;- Verify customer balances<br/>
+                                &nbsp;&nbsp;&nbsp;- Record bad debt allowance<br/>
+                                <br/>
+                                □ <strong>Reconcile AP (Accounts Payable)</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Review vendor statements<br/>
+                                &nbsp;&nbsp;&nbsp;- Clear unrecorded bills<br/>
+                                &nbsp;&nbsp;&nbsp;- Accrue for goods received
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Adjusting Entries (Days 3-4):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ <strong>Record accruals</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Accrued expenses (utilities, wages, etc.)<br/>
+                                &nbsp;&nbsp;&nbsp;- Accrued revenue (earned but not invoiced)<br/>
+                                <br/>
+                                □ <strong>Record deferrals</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Prepaid expenses<br/>
+                                &nbsp;&nbsp;&nbsp;- Deferred revenue recognition<br/>
+                                <br/>
+                                □ <strong>Calculate depreciation</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Run depreciation for all assets<br/>
+                                &nbsp;&nbsp;&nbsp;- Post depreciation expense<br/>
+                                <br/>
+                                □ <strong>Reconcile inventory</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Physical counts vs. system<br/>
+                                &nbsp;&nbsp;&nbsp;- Adjust for shrinkage/waste<br/>
+                                &nbsp;&nbsp;&nbsp;- Record COGS adjustments<br/>
+                                <br/>
+                                □ <strong>Record allocations</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Overhead allocations<br/>
+                                &nbsp;&nbsp;&nbsp;- Cost center distributions<br/>
+                                &nbsp;&nbsp;&nbsp;- Intercompany charges
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Review & Finalization (Days 4-5):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ <strong>Generate trial balance</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Review for errors<br/>
+                                &nbsp;&nbsp;&nbsp;- Verify debits = credits<br/>
+                                <br/>
+                                □ <strong>Review financial statements</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Balance sheet<br/>
+                                &nbsp;&nbsp;&nbsp;- Income statement<br/>
+                                &nbsp;&nbsp;&nbsp;- Cash flow statement<br/>
+                                <br/>
+                                □ <strong>Variance analysis</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Compare to budget<br/>
+                                &nbsp;&nbsp;&nbsp;- Compare to prior period<br/>
+                                &nbsp;&nbsp;&nbsp;- Investigate significant variances<br/>
+                                <br/>
+                                □ <strong>Final review</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Controller review<br/>
+                                &nbsp;&nbsp;&nbsp;- CFO approval<br/>
+                                &nbsp;&nbsp;&nbsp;- Management sign-off<br/>
+                                <br/>
+                                □ <strong>Close period</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Lock period to prevent changes<br/>
+                                &nbsp;&nbsp;&nbsp;- Archive reports<br/>
+                                &nbsp;&nbsp;&nbsp;- Document significant items
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Complete month-end close within 5-7 business days for timely reporting.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Year-End Close">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Annual Close Procedures</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Year-End Close (In Addition to Month-End):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ <strong>Complete all month-end procedures</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- All standard month-end tasks<br/>
+                                <br/>
+                                □ <strong>Physical inventory count</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Full physical count required<br/>
+                                &nbsp;&nbsp;&nbsp;- Reconcile to system<br/>
+                                &nbsp;&nbsp;&nbsp;- Adjust for variances<br/>
+                                <br/>
+                                □ <strong>Fixed asset verification</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Verify all assets still exist<br/>
+                                &nbsp;&nbsp;&nbsp;- Dispose of retired assets<br/>
+                                &nbsp;&nbsp;&nbsp;- Update depreciation schedules<br/>
+                                <br/>
+                                □ <strong>Review accruals and reserves</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Bad debt allowance<br/>
+                                &nbsp;&nbsp;&nbsp;- Warranty reserves<br/>
+                                &nbsp;&nbsp;&nbsp;- Vacation accrual<br/>
+                                &nbsp;&nbsp;&nbsp;- Bonus accrual<br/>
+                                <br/>
+                                □ <strong>Confirm balances</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- AR confirmations (sample)<br/>
+                                &nbsp;&nbsp;&nbsp;- AP confirmations<br/>
+                                &nbsp;&nbsp;&nbsp;- Bank confirmations<br/>
+                                &nbsp;&nbsp;&nbsp;- Legal confirmations<br/>
+                                <br/>
+                                □ <strong>Tax preparation</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Prepare depreciation schedules<br/>
+                                &nbsp;&nbsp;&nbsp;- Reconcile tax accounts<br/>
+                                &nbsp;&nbsp;&nbsp;- Calculate tax provision<br/>
+                                &nbsp;&nbsp;&nbsp;- Prepare 1099s<br/>
+                                <br/>
+                                □ <strong>Close retained earnings</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Close revenue accounts<br/>
+                                &nbsp;&nbsp;&nbsp;- Close expense accounts<br/>
+                                &nbsp;&nbsp;&nbsp;- Net income to retained earnings<br/>
+                                <br/>
+                                □ <strong>Prepare for audit (if applicable)</strong><br/>
+                                &nbsp;&nbsp;&nbsp;- Organize documentation<br/>
+                                &nbsp;&nbsp;&nbsp;- Prepare PBC (Provided by Client) list<br/>
+                                &nbsp;&nbsp;&nbsp;- Schedule audit dates
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Year-end close typically takes 2-4 weeks due to additional procedures and audit requirements.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Adjusting Entries">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Typical Period-End Journal Entries</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1. Accrued Expenses:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Utilities Expense          $1,500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accrued Utilities          $1,500<br/>
+                                (To record utilities for period not yet billed)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>2. Prepaid Expense Amortization:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Insurance Expense          $500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Prepaid Insurance          $500<br/>
+                                (To record one month of prepaid insurance)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>3. Deferred Revenue Recognition:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Deferred Revenue           $1,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Service Revenue            $1,000<br/>
+                                (To recognize revenue earned this period)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>4. Depreciation Expense:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Depreciation Expense       $2,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accumulated Depreciation   $2,000<br/>
+                                (To record monthly depreciation)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>5. Bad Debt Expense:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Bad Debt Expense           $3,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Allowance for Doubtful Accounts  $3,000<br/>
+                                (To record estimated uncollectible accounts)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>6. Inventory Adjustment:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Cost of Goods Sold         $500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Inventory                  $500<br/>
+                                (To adjust inventory to physical count)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> All adjusting entries require proper documentation and approval.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Period Close Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Ensuring Smooth Close Process</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Timeline Management:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Create detailed close calendar<br/>
+                                ✓ Assign responsibilities and deadlines<br/>
+                                ✓ Start close on business day 1 of next period<br/>
+                                ✓ Target completion: 5-7 business days<br/>
+                                ✓ Hold close review meetings<br/>
+                                ✓ Document delays and issues
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Quality Control:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Use standardized checklists<br/>
+                                ✓ Require dual review for all entries<br/>
+                                ✓ Reconcile all balance sheet accounts<br/>
+                                ✓ Investigate unusual variances<br/>
+                                ✓ Document all significant adjustments<br/>
+                                ✓ Obtain management sign-off
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Communication:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Announce close schedule to all departments<br/>
+                                ✓ Set cutoff dates for data entry<br/>
+                                ✓ Daily status updates during close<br/>
+                                ✓ Escalate issues promptly<br/>
+                                ✓ Notify stakeholders when complete
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Process Improvement:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Review close process after each period<br/>
+                                ✓ Identify bottlenecks and inefficiencies<br/>
+                                ✓ Automate repetitive tasks<br/>
+                                ✓ Standardize procedures<br/>
+                                ✓ Continuously reduce close time
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Goal:</strong> Work toward "Fast Close" - complete within 1-3 business days through automation and optimization!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Reopening Closed Periods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">When and How to Reopen Periods</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Valid Reasons to Reopen:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Material errors discovered<br/>
+                                • Omitted transactions<br/>
+                                • Incorrect journal entries<br/>
+                                • Audit adjustments<br/>
+                                • Regulatory compliance corrections
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reopen Procedure:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Document reason for reopening<br/>
+                                2. Get management approval<br/>
+                                3. Notify stakeholders<br/>
+                                4. Unlock period in system<br/>
+                                5. Make necessary corrections<br/>
+                                6. Review impact on subsequent periods<br/>
+                                7. Regenerate financial statements<br/>
+                                8. Re-close period<br/>
+                                9. Document all changes made
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Caution:</strong> Reopening periods should be rare - implement strong close procedures to avoid need!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How long should month-end close take?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Best-in-class: 1-3 days. Good: 5-7 days. Acceptable: 10 days. Work toward reducing time through process improvement.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we process transactions after closing a period?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No - that's why period close exists. Closed periods are locked. Process corrections in current period or reopen (rare).
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if we discover errors after close?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Assess materiality. If immaterial, correct in current period. If material, may need to reopen and restate.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Who should approve period close?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Typically Controller reviews, CFO approves. Document approval in close checklist.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we speed up the close process?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Automate recurring entries, standardize procedures, reconcile continuously (not just month-end), close sub-ledgers early.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
