@@ -1,0 +1,518 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.Banks
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Banks Management Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Banks Management?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Bank Master Records</MudText>
+                        <MudText Typo="Typo.body2">
+                            The Banks module maintains master records for all financial institutions your company uses for checking accounts, 
+                            savings, money market accounts, and other banking relationships.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Purpose of Bank Records:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Check Printing:</strong> Required information for printing checks (routing number, account number)<br/>
+                                • <strong>Bank Reconciliation:</strong> Links to bank accounts for reconciliation process<br/>
+                                • <strong>Electronic Payments:</strong> ACH, wire transfer setup and processing<br/>
+                                • <strong>Payment Processing:</strong> Associates payments with correct bank account<br/>
+                                • <strong>Reporting:</strong> Track banking relationships and fees by institution<br/>
+                                • <strong>Audit Trail:</strong> Maintain complete banking relationship documentation
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Keep bank records current with address, contact information, and banking codes.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Bank Records">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Add a New Bank</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Required Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button on Banks page<br/>
+                                2. Enter <strong>Bank Code</strong> - unique identifier (e.g., "WF-CHK", "BOA-SAV")<br/>
+                                3. Enter <strong>Bank Name</strong> - full legal name of financial institution<br/>
+                                4. Enter <strong>Routing Number</strong> - 9-digit ABA routing number<br/>
+                                5. Optionally enter <strong>SWIFT Code</strong> - for international wires (8 or 11 characters)<br/>
+                                6. Enter <strong>Bank Address</strong> - physical location<br/>
+                                7. Enter <strong>Contact Person</strong> - your relationship manager or contact<br/>
+                                8. Enter <strong>Phone Number</strong> - main bank contact number<br/>
+                                9. Enter <strong>Email</strong> - bank contact email<br/>
+                                10. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Bank Code Naming Convention:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Use clear, consistent naming:<br/>
+                                • Bank abbreviation + account type<br/>
+                                • Examples: "WF-CHK" (Wells Fargo Checking), "BOA-SAV" (Bank of America Savings)<br/>
+                                • "CHASE-MM" (Chase Money Market), "CITIBANK-INT" (Citibank International)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Get bank information from your checkbook, bank statement, or contact your bank directly.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Routing Numbers">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding ABA Routing Numbers</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>What is a Routing Number?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                The ABA (American Bankers Association) routing number is a 9-digit code that identifies the financial institution 
+                                and location where your account was opened. It's used for:<br/>
+                                <br/>
+                                • <strong>Check Processing:</strong> Printed on bottom left of checks<br/>
+                                • <strong>ACH Transfers:</strong> Electronic funds transfers<br/>
+                                • <strong>Wire Transfers:</strong> Domestic wire transfers<br/>
+                                • <strong>Direct Deposits:</strong> Payroll, tax refunds, etc.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Finding Your Routing Number:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Look at the bottom of a check:<br/>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                |:012345678|: 1234567890 1001<br/>
+                                <br/>
+                                012345678 = Routing Number (9 digits)<br/>
+                                1234567890 = Account Number<br/>
+                                1001 = Check Number
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Important Notes:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Routing numbers are always 9 digits<br/>
+                                • Some banks use different routing numbers for different transaction types (paper vs. ACH vs. wire)<br/>
+                                • Large banks may have multiple routing numbers for different regions<br/>
+                                • Verify with your bank which routing number to use
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Always verify routing numbers with your bank - using wrong routing number causes payment delays or failures!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="SWIFT Codes">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding SWIFT/BIC Codes</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>What is a SWIFT Code?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                SWIFT (Society for Worldwide Interbank Financial Telecommunication) codes, also called BIC (Bank Identifier Code), 
+                                are used for international wire transfers. They identify the bank and branch in global transactions.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>SWIFT Code Format:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                AAAA BB CC DDD<br/>
+                                <br/>
+                                AAAA = Bank Code (4 letters)<br/>
+                                BB = Country Code (2 letters)<br/>
+                                CC = Location Code (2 letters or digits)<br/>
+                                DDD = Branch Code (3 letters or digits, optional)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Examples:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>CHASUS33:</strong> Chase Bank, USA, New York<br/>
+                                • <strong>BOFAUS3N:</strong> Bank of America, USA<br/>
+                                • <strong>WFBIUS6S:</strong> Wells Fargo, USA<br/>
+                                • <strong>CITIUS33:</strong> Citibank, USA, New York
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>When You Need SWIFT Codes:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Receiving international wire transfers<br/>
+                                • Sending international wire transfers<br/>
+                                • International ACH transactions<br/>
+                                • Foreign currency transactions
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> SWIFT codes are optional for domestic-only banking but required for international transactions.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Managing Bank Accounts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Bank vs. Bank Account Relationship</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Understanding the Difference:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Bank Record:</strong> The financial institution itself (Wells Fargo, Chase, etc.)<br/>
+                                • <strong>Bank Account:</strong> Specific accounts at that bank (Checking #123, Savings #456)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>One Bank, Multiple Accounts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                You may have multiple accounts at one bank:<br/>
+                                <br/>
+                                <strong>Wells Fargo (Bank Record)</strong><br/>
+                                &nbsp;&nbsp;├─ Operating Checking (Account #1234)<br/>
+                                &nbsp;&nbsp;├─ Payroll Checking (Account #5678)<br/>
+                                &nbsp;&nbsp;└─ Savings (Account #9012)<br/>
+                                <br/>
+                                All share the same routing number but different account numbers
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Bank Accounts in Chart of Accounts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Each bank account has a corresponding GL account:<br/>
+                                • 1010 - Wells Fargo Operating Checking<br/>
+                                • 1020 - Wells Fargo Payroll Checking<br/>
+                                • 1030 - Wells Fargo Savings<br/>
+                                <br/>
+                                The Bank record links to these GL accounts for reconciliation and payment processing.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Check Printing Setup">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Configuring Banks for Check Printing</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Information Required on Checks:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Printed checks require specific bank information:<br/>
+                                <br/>
+                                • <strong>Company Name & Address:</strong> From company profile<br/>
+                                • <strong>Bank Name & Address:</strong> From bank record<br/>
+                                • <strong>Routing Number:</strong> Printed in MICR encoding (magnetic ink)<br/>
+                                • <strong>Account Number:</strong> From bank account setup<br/>
+                                • <strong>Check Number:</strong> Sequential numbering<br/>
+                                • <strong>Signature Line:</strong> For authorized signers
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Check Stock Considerations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Pre-Printed Checks:</strong> Bank info already printed, just add payee/amount<br/>
+                                • <strong>Blank Check Stock:</strong> Print all information including routing/account<br/>
+                                • <strong>MICR Toner:</strong> Magnetic ink required for routing/account numbers<br/>
+                                • <strong>Security Features:</strong> Watermarks, microprinting, security warnings<br/>
+                                • <strong>Positive Pay:</strong> Coordinate with bank for fraud prevention
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Security:</strong> Store blank checks securely. Control access. Use check stock with security features.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Electronic Payments">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">ACH and Wire Transfer Setup</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>ACH Transfers:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Automated Clearing House (ACH) is used for:<br/>
+                                • <strong>Vendor Payments:</strong> Pay vendors electronically<br/>
+                                • <strong>Payroll Direct Deposit:</strong> Employee payments<br/>
+                                • <strong>Customer Collections:</strong> Automatic payment collection<br/>
+                                • <strong>Tax Payments:</strong> Federal and state tax payments<br/>
+                                <br/>
+                                <strong>Setup Requirements:</strong><br/>
+                                • Routing number (sometimes different for ACH vs. paper)<br/>
+                                • Account number<br/>
+                                • ACH Company ID (assigned by bank)<br/>
+                                • ACH origination agreement with bank
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Wire Transfers:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Wire transfers are used for:<br/>
+                                • <strong>Large Payments:</strong> Time-sensitive or large amount payments<br/>
+                                • <strong>International Transfers:</strong> Foreign vendor payments<br/>
+                                • <strong>Real Estate Transactions:</strong> Property purchases<br/>
+                                • <strong>Same-Day Settlement:</strong> When immediate funds needed<br/>
+                                <br/>
+                                <strong>Domestic Wire Requirements:</strong><br/>
+                                • Routing number (may be different for wires)<br/>
+                                • Account number<br/>
+                                • Beneficiary name and address<br/>
+                                <br/>
+                                <strong>International Wire Requirements:</strong><br/>
+                                • SWIFT/BIC code<br/>
+                                • IBAN (for European banks)<br/>
+                                • Intermediary bank information (if needed)<br/>
+                                • Beneficiary bank name, address, account details
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Cost Comparison:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                ACH Transfer:           $0.25 - $1.50 per transaction<br/>
+                                Domestic Wire:          $25 - $35 per transfer<br/>
+                                International Wire:     $45 - $65 per transfer
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Use ACH for routine payments (lower cost). Reserve wires for urgent or high-value transactions.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Bank Security">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Banking Security Best Practices</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Protecting Bank Account Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Restrict Access:</strong> Limit who can view/edit bank records<br/>
+                                • <strong>Secure Storage:</strong> Keep checkbooks, deposit slips in locked location<br/>
+                                • <strong>Shred Documents:</strong> Destroy old bank statements, voided checks<br/>
+                                • <strong>Monitor Access:</strong> Review audit logs for bank record changes<br/>
+                                • <strong>Separate Duties:</strong> Different people for payments vs. reconciliation
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Online Banking Security:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Multi-Factor Authentication:</strong> Enable MFA for online banking<br/>
+                                • <strong>Strong Passwords:</strong> Complex, unique passwords changed regularly<br/>
+                                • <strong>Limited Users:</strong> Minimum necessary online banking users<br/>
+                                • <strong>Role-Based Access:</strong> View-only vs. transaction authority<br/>
+                                • <strong>Transaction Alerts:</strong> Email/SMS alerts for all transactions<br/>
+                                • <strong>Daily Review:</strong> Check transactions daily for unauthorized activity
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Fraud Prevention Tools:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Positive Pay:</strong> Submit check issue file to bank; bank only pays matching checks<br/>
+                                • <strong>ACH Positive Pay:</strong> Pre-authorize specific ACH transactions<br/>
+                                • <strong>Debit Blocks:</strong> Block unauthorized debits on certain accounts<br/>
+                                • <strong>Transaction Limits:</strong> Daily transaction limits on accounts<br/>
+                                • <strong>Dual Authorization:</strong> Require two approvals for large transactions
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Fraud Schemes:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Check Washing:</strong> Altering payee/amount on legitimate checks<br/>
+                                • <strong>Counterfeit Checks:</strong> Fake checks using your routing/account<br/>
+                                • <strong>ACH Fraud:</strong> Unauthorized ACH debits<br/>
+                                • <strong>Business Email Compromise:</strong> Fake wire instructions from "vendors"<br/>
+                                • <strong>Account Takeover:</strong> Criminals gain online banking access
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Critical:</strong> Never share online banking credentials. Always verify wire instructions by phone using known number.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Bank Relationship Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Banking Relationships</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Banking Contacts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Maintain contact information for:<br/>
+                                • <strong>Relationship Manager:</strong> Your main contact for banking services<br/>
+                                • <strong>Branch Manager:</strong> Local branch contact<br/>
+                                • <strong>Treasury Services:</strong> ACH, wires, merchant services setup<br/>
+                                • <strong>Customer Service:</strong> General inquiries and support<br/>
+                                • <strong>Fraud Department:</strong> Report suspicious activity<br/>
+                                • <strong>Online Banking Support:</strong> Technical support for online access
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Regular Communication:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Schedule annual reviews with relationship manager<br/>
+                                • Discuss banking fees and opportunities to reduce costs<br/>
+                                • Review service agreements and terms<br/>
+                                • Stay informed about new banking services<br/>
+                                • Negotiate better terms as your business grows
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Documentation to Maintain:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Service agreements and contracts<br/>
+                                • Fee schedules<br/>
+                                • Authorization forms<br/>
+                                • Signature cards<br/>
+                                • ACH origination agreements<br/>
+                                • Positive pay agreements<br/>
+                                • Online banking access documentation
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Do I need a separate bank record for each account?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No. One bank record represents the financial institution. Multiple accounts at that bank share the same bank record 
+                                but have different account numbers in your Chart of Accounts.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can I change the routing number?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, you can edit bank records. However, be careful - changing routing numbers affects check printing and electronic payments. 
+                                Verify the correct routing number before changing.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What happens if I enter the wrong routing number?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Checks may not clear, or ACH/wire transfers will fail or be delayed. Always verify routing numbers with your bank before use.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Do I need SWIFT codes for US banks?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Only if you receive or send international wire transfers. For domestic-only banking, SWIFT codes are optional.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do I close an old bank relationship?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Don't delete bank records - they're needed for historical transactions. Instead, mark as inactive or rename to "CLOSED - [Bank Name]". 
+                                Keep records for audit purposes (7 years minimum).
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can multiple bank accounts use the same routing number?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes! All accounts at the same bank branch typically share the same routing number. The account number is what differentiates them.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

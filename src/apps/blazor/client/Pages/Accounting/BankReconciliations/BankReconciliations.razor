@@ -25,12 +25,17 @@
             </MudButton>
         </MudButtonGroup>
 
+        <MudSpacer />
+
         <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
             <MudButton StartIcon="@Icons.Material.Filled.FileDownload" OnClick="@ExportReconciliations">
                 Export
             </MudButton>
             <MudButton StartIcon="@Icons.Material.Filled.Settings" OnClick="@ShowSettings">
                 Settings
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowBankReconciliationsHelp">
+                Help
             </MudButton>
         </MudButtonGroup>
     </MudStack>

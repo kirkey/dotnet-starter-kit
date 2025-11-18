@@ -446,6 +446,19 @@ public partial class Bills
         Snackbar.Add("Settings feature coming soon", Severity.Info);
     }
 
+    /// <summary>
+    /// Shows bills help dialog.
+    /// </summary>
+    private async Task ShowBillsHelp()
+    {
+        await DialogService.ShowAsync<BillsHelpDialog>("Bill Management Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
+
     // View Bill Details with Line Items
     private async Task ViewBillDetails(DefaultIdType billId)
     {

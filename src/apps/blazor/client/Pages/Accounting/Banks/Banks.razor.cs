@@ -69,6 +69,19 @@ public partial class Banks
                 await Client.BankUpdateEndpointAsync("1", id, viewModel.Adapt<BankUpdateCommand>());
             },
             deleteFunc: async id => await Client.BankDeleteEndpointAsync("1", id));
+
+    /// <summary>
+    /// Show banks help dialog.
+    /// </summary>
+    private async Task ShowBanksHelp()
+    {
+        await DialogService.ShowAsync<BanksHelpDialog>("Banks Management Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 

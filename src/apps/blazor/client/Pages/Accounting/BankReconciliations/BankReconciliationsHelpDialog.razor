@@ -1,0 +1,530 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.BankReconciliations
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Bank Reconciliation Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Bank Reconciliation?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Bank Reconciliation</MudText>
+                        <MudText Typo="Typo.body2">
+                            Bank reconciliation is the process of matching your company's cash records (general ledger) with your bank statement 
+                            to ensure accuracy and identify any discrepancies.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why It's Critical:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Catch Errors:</strong> Identify bank errors, recording mistakes, or timing differences<br/>
+                                • <strong>Detect Fraud:</strong> Spot unauthorized transactions or check alterations<br/>
+                                • <strong>Track Outstanding Items:</strong> Monitor checks not yet cleared, deposits in transit<br/>
+                                • <strong>Ensure Accuracy:</strong> Verify true cash balance for financial reporting<br/>
+                                • <strong>Control Cash:</strong> Maintain proper internal controls over cash<br/>
+                                • <strong>Audit Trail:</strong> Document reconciliation for auditors and stakeholders
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Reconcile all bank accounts monthly, within 5 business days of month-end.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Reconciliation Process">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Step-by-Step Reconciliation Workflow</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1. Prepare for Reconciliation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Download bank statement for the month<br/>
+                                • Ensure all cash transactions are posted in GL<br/>
+                                • Review and post any pending deposits or checks<br/>
+                                • Have prior month's reconciliation available
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>2. Start New Reconciliation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Click <strong>"Create"</strong> button<br/>
+                                • Select bank account to reconcile<br/>
+                                • Enter statement ending date<br/>
+                                • Enter bank statement ending balance<br/>
+                                • System loads unreconciled transactions
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>3. Match Transactions:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Check off transactions that appear on bank statement<br/>
+                                • Match deposits (receipts) between records and statement<br/>
+                                • Match checks and withdrawals between records and statement<br/>
+                                • Verify amounts match exactly<br/>
+                                • Leave uncleared items unchecked (outstanding checks, deposits in transit)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>4. Identify Reconciling Items:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Bank Charges:</strong> Service fees, wire fees not yet recorded<br/>
+                                • <strong>Interest Earned:</strong> Interest income not yet recorded<br/>
+                                • <strong>NSF Checks:</strong> Bounced checks returned by bank<br/>
+                                • <strong>Bank Errors:</strong> Incorrect amounts posted by bank<br/>
+                                • <strong>Recording Errors:</strong> Transposition errors, duplicate entries<br/>
+                                • <strong>Outstanding Checks:</strong> Checks issued but not yet cashed<br/>
+                                • <strong>Deposits in Transit:</strong> Deposits recorded but not yet on statement
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>5. Make Adjustments:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Add journal entries for bank charges, interest, NSF checks<br/>
+                                • Correct any recording errors in your books<br/>
+                                • Do NOT adjust for outstanding checks or deposits in transit<br/>
+                                • Document all adjustments with explanations
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>6. Complete Reconciliation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Verify reconciliation balances (difference = $0)<br/>
+                                • Review outstanding items for reasonableness<br/>
+                                • Click <strong>"Complete"</strong> to finalize<br/>
+                                • Submit for approval if required<br/>
+                                • Print or save reconciliation report
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Goal:</strong> Adjusted bank balance must equal adjusted book balance.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Reconciliation Formula">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Bank Reconciliation Formula</MudText>
+                        
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            <strong>Adjusted Bank Balance:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Bank Statement Ending Balance<br/>
+                            + Deposits in Transit<br/>
+                            - Outstanding Checks<br/>
+                            +/- Bank Errors<br/>
+                            = Adjusted Bank Balance
+                        </MudText>
+
+                        <MudText Typo="Typo.body2" Class="mb-2 mt-3">
+                            <strong>Adjusted Book Balance:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            GL Cash Account Balance<br/>
+                            + Interest Earned<br/>
+                            - Bank Charges/Fees<br/>
+                            - NSF Checks<br/>
+                            +/- Recording Errors<br/>
+                            = Adjusted Book Balance
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Reconciled:</strong> Adjusted Bank Balance = Adjusted Book Balance
+                        </MudAlert>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example Reconciliation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                <strong>Bank Side:</strong><br/>
+                                Bank Statement Balance:        $10,500<br/>
+                                Add: Deposits in Transit        $2,000<br/>
+                                Less: Outstanding Checks       ($1,200)<br/>
+                                Adjusted Bank Balance:         $11,300<br/>
+                                <br/>
+                                <strong>Book Side:</strong><br/>
+                                GL Cash Balance:               $11,350<br/>
+                                Add: Interest Earned               $25<br/>
+                                Less: Bank Service Charge         ($30)<br/>
+                                Less: NSF Check                   ($45)<br/>
+                                Adjusted Book Balance:         $11,300<br/>
+                                <br/>
+                                <strong>✓ Reconciled! Balances Match</strong>
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Reconciling Items">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Typical Reconciliation Adjustments</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Items Requiring Book Adjustment:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Bank Service Charges:</strong> Monthly maintenance fees<br/>
+                                • <strong>Wire Transfer Fees:</strong> Incoming/outgoing wire fees<br/>
+                                • <strong>Check Printing Charges:</strong> Cost of ordering checks<br/>
+                                • <strong>Interest Income:</strong> Interest earned on account balance<br/>
+                                • <strong>NSF (Not Sufficient Funds):</strong> Customer checks bounced<br/>
+                                • <strong>ACH Fees:</strong> Electronic payment processing fees<br/>
+                                • <strong>Overdraft Charges:</strong> Penalties for negative balance<br/>
+                                • <strong>Merchant Services Fees:</strong> Credit card processing fees<br/>
+                                • <strong>Automatic Payments:</strong> Loan payments, subscriptions not recorded
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Example Journal Entry - Bank Charges:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Bank Service Charge Expense    $30<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash in Bank               $30
+                        </MudText>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2 mt-3">
+                                <strong>Items NOT Requiring Book Adjustment:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Outstanding Checks:</strong> Already recorded in books, just not cleared yet<br/>
+                                • <strong>Deposits in Transit:</strong> Already recorded in books, just not on statement yet<br/>
+                                • <strong>Bank Errors:</strong> Contact bank to correct (rare)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Only adjust books for items NOT yet recorded. Outstanding checks are already in your books!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Handling Discrepancies">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Troubleshooting Reconciliation Differences</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>When Reconciliation Doesn't Balance:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Check Math:</strong> Verify addition/subtraction on reconciliation<br/>
+                                2. <strong>Verify Ending Balance:</strong> Confirm you used correct bank statement balance<br/>
+                                3. <strong>Review Outstanding Items:</strong> Ensure old outstanding checks are still valid<br/>
+                                4. <strong>Look for Duplicates:</strong> Check for duplicate entries in books<br/>
+                                5. <strong>Check for Omissions:</strong> Missing transactions in books or on statement<br/>
+                                6. <strong>Verify Amounts:</strong> Transposition errors (e.g., $542 vs $452)<br/>
+                                7. <strong>Review Prior Reconciliation:</strong> Errors may have carried forward<br/>
+                                8. <strong>Check All Accounts:</strong> Ensure transaction posted to correct account
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Error Patterns:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Difference divisible by 9:</strong> Likely transposition error<br/>
+                                • <strong>Difference equals a transaction:</strong> Missing or duplicate entry<br/>
+                                • <strong>Difference is exactly double:</strong> Transaction recorded twice<br/>
+                                • <strong>Small round amount:</strong> Possibly bank charge not recorded
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Stale Outstanding Checks:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Checks outstanding over 6 months (stale-dated) should be:<br/>
+                                1. Contact payee to verify if check was received/lost<br/>
+                                2. Void old check in system<br/>
+                                3. Issue replacement check if needed<br/>
+                                4. If not needed, write back to income or liability account
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Never Force:</strong> Don't make arbitrary adjustments to force reconciliation. Always find the root cause!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Outstanding Items">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Outstanding Checks & Deposits</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Outstanding Checks:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Checks written and recorded in your books but not yet cashed by the recipient:<br/>
+                                <br/>
+                                • <strong>Normal Timeline:</strong> Most checks clear within 3-5 business days<br/>
+                                • <strong>Monitor Age:</strong> Track checks outstanding over 30 days<br/>
+                                • <strong>Follow Up:</strong> Contact recipient if over 60 days<br/>
+                                • <strong>Void if Necessary:</strong> After 6 months, consider void and reissue<br/>
+                                • <strong>Escheatment Laws:</strong> Unclaimed property may need to be reported to state
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Deposits in Transit:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Deposits recorded in your books but not yet shown on bank statement:<br/>
+                                <br/>
+                                • <strong>Typical Scenario:</strong> Deposit made on last day of month<br/>
+                                • <strong>Should Clear:</strong> Within 1-2 business days<br/>
+                                • <strong>Verify Receipt:</strong> Keep deposit slips and confirmation receipts<br/>
+                                • <strong>Investigate:</strong> If not on next statement, contact bank immediately
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Best Practices:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Keep a running list of outstanding items<br/>
+                                • Investigate items outstanding over 90 days<br/>
+                                • Document reason for long-outstanding items<br/>
+                                • Review with management monthly
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Bank Reconciliation Reports">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Reconciliation Reports</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Available Reports:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Click <strong>"Reports"</strong> button to access:<br/>
+                                <br/>
+                                • <strong>Reconciliation Summary:</strong> Overview of all bank accounts status<br/>
+                                • <strong>Outstanding Checks Report:</strong> List of uncleared checks by age<br/>
+                                • <strong>Deposits in Transit:</strong> List of uncleared deposits<br/>
+                                • <strong>Reconciliation Detail:</strong> Full reconciliation with all transactions<br/>
+                                • <strong>Variance Analysis:</strong> Trend of reconciliation differences<br/>
+                                • <strong>Aging Analysis:</strong> Outstanding items by 30/60/90+ days
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>What to Include in Reconciliation File:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Bank statement (all pages)<br/>
+                                • Completed reconciliation report<br/>
+                                • Supporting journal entries<br/>
+                                • Investigation notes for discrepancies<br/>
+                                • Approval signatures<br/>
+                                • Outstanding check list
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Internal Controls">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Bank Reconciliation Best Practices & Controls</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Segregation of Duties:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Different Person:</strong> Reconciler should NOT handle cash or sign checks<br/>
+                                • <strong>Management Review:</strong> Someone other than preparer approves reconciliation<br/>
+                                • <strong>Bank Statement Access:</strong> Reconciler receives unopened bank statement<br/>
+                                • <strong>Online Banking:</strong> Reconciler has read-only access
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Control Procedures:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Monthly Reconciliation:</strong> Complete within 5-10 business days of month-end<br/>
+                                • <strong>Independent Review:</strong> Manager reviews and approves reconciliation<br/>
+                                • <strong>Investigate Variances:</strong> Research and document all differences<br/>
+                                • <strong>Document Adjustments:</strong> All journal entries properly supported<br/>
+                                • <strong>Follow Up:</strong> Monitor old outstanding items<br/>
+                                • <strong>Positive Pay:</strong> Implement with bank to prevent check fraud<br/>
+                                • <strong>Online Alerts:</strong> Set up alerts for large transactions<br/>
+                                • <strong>Dual Signatures:</strong> Require two signatures for large checks
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Red Flags to Watch:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Reconciliation consistently late or incomplete<br/>
+                                • Same person handles cash AND reconciles<br/>
+                                • Unexplained or forced adjustments<br/>
+                                • Growing list of old outstanding items<br/>
+                                • Bank statements go directly to cash handler<br/>
+                                • Recurring reconciliation differences<br/>
+                                • Missing supporting documentation
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Critical Control:</strong> NEVER let the person who handles cash or signs checks perform the bank reconciliation!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Workflow & Status">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Reconciliation Workflow & Status Management</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reconciliation Statuses:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Draft:</strong> Reconciliation started but not complete<br/>
+                                • <strong>In Progress:</strong> Actively being worked on<br/>
+                                • <strong>Pending Review:</strong> Completed, awaiting approval<br/>
+                                • <strong>Approved:</strong> Reviewed and approved by manager<br/>
+                                • <strong>Rejected:</strong> Returned for corrections<br/>
+                                • <strong>Completed:</strong> Finalized and locked
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Workflow Actions:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Create:</strong> Start new reconciliation for period<br/>
+                                • <strong>Edit:</strong> Modify draft or in-progress reconciliation<br/>
+                                • <strong>Complete:</strong> Finalize reconciliation (must balance)<br/>
+                                • <strong>Submit for Approval:</strong> Send to manager for review<br/>
+                                • <strong>Approve:</strong> Manager approves reconciliation<br/>
+                                • <strong>Reject:</strong> Return to preparer with comments<br/>
+                                • <strong>View Details:</strong> See full reconciliation report<br/>
+                                • <strong>Export:</strong> Download reconciliation to Excel/PDF
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Quick Filters:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Use toolbar buttons to filter reconciliations:<br/>
+                                • <strong>Pending Approvals:</strong> Reconciliations awaiting your approval<br/>
+                                • <strong>In Progress:</strong> Reconciliations currently being worked<br/>
+                                • <strong>Completed:</strong> Finalized reconciliations
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How often should I reconcile bank accounts?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Monthly, at minimum. High-volume accounts should be reconciled weekly or even daily.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if the reconciliation is off by a few cents?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Still investigate! Small differences can indicate bigger problems. If truly immaterial (under $1) and fully investigated, 
+                                you may post to "Rounding Difference" account with documentation.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should I adjust for outstanding checks?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: NO! Outstanding checks are already recorded in your books. They're just timing differences. Only adjust for items NOT in your books yet.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if I find a bank error?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Contact bank immediately with documentation. Most banks require notification within 60 days. Bank will correct their records; 
+                                you adjust in your reconciliation but don't post journal entry (it's a bank-side adjustment).
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How long should I keep reconciliations?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Keep 7 years for IRS audit purposes. Keep permanently for major disputes or litigation.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can I reconcile before month-end?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, you can perform a preliminary reconciliation mid-month to catch issues early, but always do a final reconciliation 
+                                after month-end with the official bank statement.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

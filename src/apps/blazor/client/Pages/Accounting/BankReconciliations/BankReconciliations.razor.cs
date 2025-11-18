@@ -309,5 +309,18 @@ public partial class BankReconciliations
     {
         Snackbar.Add("Settings coming soon.", Severity.Info);
     }
+
+    /// <summary>
+    /// Show bank reconciliation help dialog.
+    /// </summary>
+    private async Task ShowBankReconciliationsHelp()
+    {
+        await DialogService.ShowAsync<BankReconciliationsHelpDialog>("Bank Reconciliation Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

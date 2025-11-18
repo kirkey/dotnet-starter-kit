@@ -1,0 +1,629 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.Bills
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Bill Management Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Bill Management?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Vendor Bills & Accounts Payable</MudText>
+                        <MudText Typo="Typo.body2">
+                            Bill Management is the systematic process of recording, tracking, approving, and paying vendor invoices (bills) 
+                            for goods and services your company purchases on credit.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Bill vs. Invoice:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Bill (Vendor Invoice):</strong> Document FROM vendor requesting payment for goods/services provided<br/>
+                                • <strong>Invoice (Customer Invoice):</strong> Document TO customer requesting payment for goods/services you provided<br/>
+                                <br/>
+                                In this module, we manage BILLS (money you owe to vendors).
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Bill Management Lifecycle:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Receive:</strong> Vendor sends bill for goods/services<br/>
+                                2. <strong>Enter:</strong> Bill entered into system<br/>
+                                3. <strong>Match:</strong> Three-way match (PO, receiving, bill)<br/>
+                                4. <strong>Approve:</strong> Manager approval workflow<br/>
+                                5. <strong>Post:</strong> Bill posted to accounts payable<br/>
+                                6. <strong>Schedule:</strong> Payment scheduled based on terms<br/>
+                                7. <strong>Pay:</strong> Payment processed (check, ACH, wire)<br/>
+                                8. <strong>Reconcile:</strong> Payment matched to bill
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Proper bill management ensures accurate AP records and optimal cash flow management.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Bills">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Enter Vendor Bills</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Step-by-Step Bill Entry:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. <strong>Bill Number:</strong> Enter vendor's invoice number (required, unique)<br/>
+                                3. <strong>Vendor:</strong> Select vendor from dropdown<br/>
+                                4. <strong>Bill Date:</strong> Date vendor issued bill<br/>
+                                5. <strong>Due Date:</strong> When payment is due (calculated from terms)<br/>
+                                6. <strong>Payment Terms:</strong> Net 30, 2/10 Net 30, etc.<br/>
+                                7. <strong>Reference:</strong> PO number, project code, etc.<br/>
+                                8. <strong>Description:</strong> What the bill is for<br/>
+                                9. <strong>Add Line Items:</strong> Detail each product/service<br/>
+                                10. <strong>Verify Total:</strong> Ensure total matches vendor bill<br/>
+                                11. Click <strong>"Save"</strong> (saves as draft)<br/>
+                                12. Click <strong>"Post"</strong> when ready to post to AP
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Bill Line Items:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Each line item includes:<br/>
+                                • <strong>Description:</strong> Item or service description<br/>
+                                • <strong>Quantity:</strong> Number of units<br/>
+                                • <strong>Unit Price:</strong> Price per unit<br/>
+                                • <strong>Amount:</strong> Quantity × Unit Price<br/>
+                                • <strong>GL Account:</strong> Expense or asset account to charge<br/>
+                                • <strong>Tax:</strong> Sales/use tax if applicable<br/>
+                                • <strong>Department/Project:</strong> Cost allocation (optional)
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (When Posted):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Expense/Asset Account(s)    $1,000<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Payable          $1,000
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Enter bills promptly when received to maintain accurate payables and avoid missing early payment discounts.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Three-Way Match">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Three-Way Match Process</MudText>
+                        <MudText Typo="Typo.body2">
+                            The three-way match is a critical internal control that prevents duplicate payments, errors, and fraud.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Three Documents to Match:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Purchase Order (PO):</strong> What you ordered<br/>
+                                2. <strong>Receiving Report/Packing Slip:</strong> What you actually received<br/>
+                                3. <strong>Vendor Bill/Invoice:</strong> What vendor is charging you
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>What to Verify:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Quantities Match:</strong> Ordered = Received = Billed<br/>
+                                • <strong>Prices Match:</strong> PO price = Bill price<br/>
+                                • <strong>Descriptions Match:</strong> Same items/services<br/>
+                                • <strong>Vendor Matches:</strong> Same supplier<br/>
+                                • <strong>Terms Match:</strong> Payment terms as agreed<br/>
+                                • <strong>Math is Correct:</strong> Extensions and totals accurate
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>When Discrepancies Exist:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Quantity Variance:</strong> Only pay for what was received<br/>
+                                • <strong>Price Variance:</strong> Contact vendor, pay PO price unless authorized change<br/>
+                                • <strong>Damaged Goods:</strong> Return for credit or negotiate discount<br/>
+                                • <strong>Unauthorized Charges:</strong> Request corrected invoice<br/>
+                                • <strong>Math Errors:</strong> Request corrected invoice
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Non-PO Invoices:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Some purchases don't have POs (utilities, rent, subscriptions):<br/>
+                                • Verify invoice is expected and reasonable<br/>
+                                • Check against contract or agreement<br/>
+                                • Verify pricing against prior bills<br/>
+                                • Obtain manager approval before paying
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Never pay a bill without proper verification. Three-way match prevents fraud and duplicate payments!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Bill Approval Workflow">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Bill Approval Process</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Approval is Required:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Verify Legitimacy:</strong> Ensure bill is valid and authorized<br/>
+                                • <strong>Budget Control:</strong> Confirm funds available<br/>
+                                • <strong>Prevent Fraud:</strong> Detect fictitious vendors or duplicate bills<br/>
+                                • <strong>Accuracy Check:</strong> Review for errors before payment<br/>
+                                • <strong>Segregation of Duties:</strong> Different person approves vs. pays
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Approval Levels:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Typical approval thresholds:<br/>
+                                • <strong>Under $500:</strong> Department manager<br/>
+                                • <strong>$500 - $5,000:</strong> Department head<br/>
+                                • <strong>$5,000 - $25,000:</strong> Director or VP<br/>
+                                • <strong>Over $25,000:</strong> CFO or CEO<br/>
+                                <br/>
+                                (Your organization may have different thresholds)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Approval Workflow:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. AP clerk enters bill<br/>
+                                2. System routes to appropriate approver based on amount<br/>
+                                3. Approver reviews bill and supporting documents<br/>
+                                4. Approver clicks <strong>"Approve"</strong> or <strong>"Reject"</strong><br/>
+                                5. If rejected, returned to AP clerk with comments<br/>
+                                6. If approved, bill moves to "Approved" status<br/>
+                                7. AP clerk posts bill<br/>
+                                8. Bill ready for payment scheduling
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>What Approvers Should Verify:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Vendor is legitimate and authorized<br/>
+                                ✓ Goods/services were received<br/>
+                                ✓ Amount is reasonable and correct<br/>
+                                ✓ Three-way match completed (if applicable)<br/>
+                                ✓ Budget is available<br/>
+                                ✓ GL coding is appropriate<br/>
+                                ✓ No duplicate of previous bill<br/>
+                                ✓ Supporting documentation attached
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Use "Pending Approvals" quick filter to see bills awaiting your approval.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Payment Terms & Discounts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Payment Terms</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Payment Terms:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Due on Receipt:</strong> Pay immediately<br/>
+                                • <strong>Net 30:</strong> Full payment due in 30 days<br/>
+                                • <strong>Net 60:</strong> Full payment due in 60 days<br/>
+                                • <strong>2/10 Net 30:</strong> 2% discount if paid within 10 days, else full amount due in 30<br/>
+                                • <strong>1/15 Net 45:</strong> 1% discount if paid within 15 days, else full amount due in 45<br/>
+                                • <strong>EOM:</strong> End of month<br/>
+                                • <strong>15 MFI:</strong> 15th of month following invoice
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Early Payment Discount Example:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Bill Amount: $10,000<br/>
+                                Terms: 2/10 Net 30<br/>
+                                Bill Date: March 1<br/>
+                                <br/>
+                                If paid by March 11 (within 10 days):<br/>
+                                Discount: $10,000 × 2% = $200<br/>
+                                Payment: $10,000 - $200 = $9,800<br/>
+                                <br/>
+                                If paid after March 11:<br/>
+                                Payment: $10,000 (no discount)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Take Discounts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Taking 2/10 Net 30 discount = 36.7% annual return!<br/>
+                                <br/>
+                                You're paying 20 days early to save 2%.<br/>
+                                That's like earning 36.7% annual interest on your money.<br/>
+                                <br/>
+                                Almost always better than keeping cash in bank (earning 1-5%)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Always take early payment discounts unless facing severe cash shortage!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Bill Statuses">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Bill Status Workflow</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Bill Status Progression:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Draft:</strong> Bill entered but not validated or posted<br/>
+                                • <strong>Pending Approval:</strong> Submitted for manager approval<br/>
+                                • <strong>Approved:</strong> Approved but not yet posted to GL<br/>
+                                • <strong>Posted:</strong> Posted to AP, not yet paid<br/>
+                                • <strong>Partially Paid:</strong> Some payment made, balance remaining<br/>
+                                • <strong>Paid:</strong> Fully paid<br/>
+                                • <strong>Void:</strong> Cancelled/voided<br/>
+                                • <strong>Rejected:</strong> Approval denied, returned to AP clerk
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Status Actions:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Draft:</strong> Can edit, submit for approval, or delete<br/>
+                                • <strong>Pending Approval:</strong> Awaiting manager action (approve/reject)<br/>
+                                • <strong>Approved:</strong> Can post to GL<br/>
+                                • <strong>Posted:</strong> Can schedule payment, cannot edit<br/>
+                                • <strong>Paid:</strong> View only, cannot modify<br/>
+                                • <strong>Void:</strong> Archived, view only
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Quick Filters:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Use toolbar buttons for common views:<br/>
+                                • <strong>Pending Approvals:</strong> Bills awaiting approval<br/>
+                                • <strong>Unposted Bills:</strong> Approved but not yet posted<br/>
+                                • <strong>Unpaid Bills:</strong> Posted bills awaiting payment
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Paying Bills">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Bill Payment Process</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Payment Methods:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Check:</strong> Print and mail physical check<br/>
+                                • <strong>ACH:</strong> Electronic bank transfer (2-3 day settlement)<br/>
+                                • <strong>Wire Transfer:</strong> Same-day electronic transfer<br/>
+                                • <strong>Credit Card:</strong> Company card payment<br/>
+                                • <strong>Cash:</strong> Rare, petty cash for small amounts
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Payment Scheduling:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Review unpaid bills using <strong>"Unpaid Bills"</strong> filter<br/>
+                                2. Consider due dates and discount dates<br/>
+                                3. Select bills to pay (pay discounts first!)<br/>
+                                4. Group by vendor or payment method<br/>
+                                5. Create payment batch<br/>
+                                6. Review payment batch for accuracy<br/>
+                                7. Process payments<br/>
+                                8. Print checks or initiate electronic payments<br/>
+                                9. Record payment in system<br/>
+                                10. System updates bill status and AP balance
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Payment Batch Processing:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Click <strong>"Payment Batch"</strong> button to:<br/>
+                                • Select multiple bills for payment<br/>
+                                • Preview total payment amount<br/>
+                                • Generate check run<br/>
+                                • Create ACH payment file<br/>
+                                • Process all payments at once
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (When Paid):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Accounts Payable           $1,000<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash/Bank Account         $1,000<br/>
+                            <br/>
+                            (Or with discount taken:)<br/>
+                            Dr. Accounts Payable           $1,000<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash/Bank Account           $980<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Purchase Discounts Taken     $20
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Cash Management:</strong> Schedule payments to optimize cash flow while taking advantage of discounts.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Bill Aging & Reporting">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Accounts Payable Aging Analysis</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>AP Aging Report:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Click <strong>"Aging Report"</strong> to see bills by age:<br/>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                | Vendor      | Current | 1-30  | 31-60 | 61-90 | 90+   | Total  |<br/>
+                                |-------------|---------|-------|-------|-------|-------|--------|<br/>
+                                | Acme Corp   | $5,000  | $0    | $0    | $0    | $0    | $5,000 |<br/>
+                                | Beta Inc    | $2,000  | $500  | $0    | $0    | $0    | $2,500 |<br/>
+                                | Old Vendor  | $0      | $0    | $0    | $200  | $800  | $1,000 |<br/>
+                                | TOTAL       | $7,000  | $500  | $0    | $200  | $800  | $8,500 |
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>What Aging Tells You:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Current:</strong> On-time payments, good vendor relationships<br/>
+                                • <strong>1-30 Days Past Due:</strong> Acceptable if within terms<br/>
+                                • <strong>31-60 Days:</strong> Contact vendor, schedule payment<br/>
+                                • <strong>61-90 Days:</strong> Immediate attention needed<br/>
+                                • <strong>90+ Days:</strong> Critical - risk of collection action, damaged relationship
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Other Useful Reports:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Click <strong>"Reports"</strong> button for:<br/>
+                                • <strong>Unpaid Bills:</strong> All open bills by vendor<br/>
+                                • <strong>Bills Due This Week:</strong> Upcoming payment obligations<br/>
+                                • <strong>Discount Opportunities:</strong> Bills with available early payment discounts<br/>
+                                • <strong>Vendor Spend Analysis:</strong> Total spending by vendor<br/>
+                                • <strong>Cash Requirements:</strong> Projected payment needs by period<br/>
+                                • <strong>Payment History:</strong> Bills paid by date range
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Monitor Aging:</strong> Review AP aging weekly. Old balances damage vendor relationships and credit rating.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Vendor Credits & Adjustments">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Handling Vendor Credits</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>When You Receive Credit Memos:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Vendors issue credit memos for:<br/>
+                                • <strong>Returns:</strong> Returning defective or incorrect products<br/>
+                                • <strong>Overbilling:</strong> Vendor charged too much<br/>
+                                • <strong>Damaged Goods:</strong> Price adjustment for damaged items<br/>
+                                • <strong>Rebates:</strong> Volume discounts or promotional credits<br/>
+                                • <strong>Overpayment:</strong> You paid more than owed
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Recording Vendor Credits:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Receive credit memo from vendor<br/>
+                                2. Create negative bill or credit memo entry<br/>
+                                3. Reference original bill number<br/>
+                                4. Apply credit to original bill or keep as vendor credit<br/>
+                                5. System reduces AP balance<br/>
+                                6. Use credit against future bills or request refund
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (Credit Memo):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Accounts Payable           $500<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Expense/Inventory         $500
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Internal Controls">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Bill Management Internal Controls</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Segregation of Duties:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Bill Entry:</strong> AP clerk enters bills<br/>
+                                • <strong>Approval:</strong> Manager approves bills<br/>
+                                • <strong>Payment:</strong> Different person processes payments<br/>
+                                • <strong>Reconciliation:</strong> Another person reconciles vendor statements<br/>
+                                • <strong>Never:</strong> Same person enters AND approves AND pays bills
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Control Procedures:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Three-way match for all PO-based purchases<br/>
+                                ✓ Approval required before payment<br/>
+                                ✓ Duplicate bill checking (by bill number and amount)<br/>
+                                ✓ Vendor master file controls (who can add vendors)<br/>
+                                ✓ Sequential check numbering<br/>
+                                ✓ Positive pay with bank<br/>
+                                ✓ Regular vendor statement reconciliation<br/>
+                                ✓ Periodic AP aging review
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Fraud Schemes to Prevent:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Fictitious Vendors:</strong> Employee creates fake vendor, pays themselves<br/>
+                                • <strong>Duplicate Payments:</strong> Same bill paid twice<br/>
+                                • <strong>Personal Purchases:</strong> Personal expenses charged to company<br/>
+                                • <strong>Kickbacks:</strong> Vendor bribes employee for business<br/>
+                                • <strong>Invoice Manipulation:</strong> Altering amounts before approval<br/>
+                                • <strong>Shell Companies:</strong> Employee owns "vendor"
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Red Flag:</strong> Rush payment requests, vague descriptions, or vendor addresses matching employee addresses!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's the difference between a bill and an invoice?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: It's the same document from different perspectives. When you receive it from a vendor (you owe them), it's a "bill". 
+                                When you send it to a customer (they owe you), it's an "invoice".
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can I enter a bill before goods are received?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Save as draft, but don't post until goods/services are received and verified. Recording AP before receiving creates incorrect liabilities.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if vendor says we didn't pay but we have proof?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Provide copy of cancelled check or payment confirmation. This is why you should reconcile vendor statements monthly.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can I void a paid bill?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: You must void the payment first, then you can void the bill. Paid bills cannot be voided until payment is reversed.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do I handle recurring bills (utilities, rent)?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Set up recurring bill templates if available, or set reminders to enter monthly. Verify amount each time - don't blindly pay recurring charges.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if I accidentally paid the wrong bill?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Contact vendor immediately. Request refund or ask to apply payment to correct bill. Record the correction in your system.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
