@@ -2,6 +2,17 @@
 
 <PageHeader Title="Chart Of Accounts" Header="Chart Of Accounts" SubHeader="Manage Chart of Accounts." />
 
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Info" OnClick="@ShowChartOfAccountsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
 <EntityTable @ref="_table" TEntity="ChartOfAccountResponse" TId="DefaultIdType" TRequest="ChartOfAccountViewModel" Context="@Context">
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)

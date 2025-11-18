@@ -6,6 +6,8 @@ public partial class ChartOfAccounts
 
     private EntityTable<ChartOfAccountResponse, DefaultIdType, ChartOfAccountViewModel> _table = null!;
 
+    private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+
     protected override Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<ChartOfAccountResponse, DefaultIdType, ChartOfAccountViewModel>(
@@ -46,6 +48,11 @@ public partial class ChartOfAccounts
             deleteFunc: async id => await Client.ChartOfAccountDeleteEndpointAsync("1", id));
 
         return Task.CompletedTask;
+    }
+
+    private async Task ShowChartOfAccountsHelp()
+    {
+        await DialogService.ShowAsync<ChartOfAccountsHelpDialog>("Chart of Accounts Help", new DialogParameters(), _helpDialogOptions);
     }
 }
 

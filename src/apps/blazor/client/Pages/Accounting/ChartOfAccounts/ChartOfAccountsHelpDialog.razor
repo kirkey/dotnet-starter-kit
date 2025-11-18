@@ -1,0 +1,377 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.ChartOfAccounts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Chart of Accounts Management Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="Creating Accounts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Create a New Account</MudText>
+                        <MudText Typo="Typo.body2">
+                            <ol style="margin: 10px 0; padding-left: 20px;">
+                                <li>Click the "Add Chart Of Account" button</li>
+                                <li>Select a <strong>Parent Account</strong> (optional - leave blank for top-level accounts)</li>
+                                <li>Choose the <strong>USOA Category</strong> (Assets, Liabilities, Equity, Revenue, Expenses)</li>
+                                <li>Select the <strong>Account Type</strong>: DEBIT or CREDIT</li>
+                                <li>Enter <strong>Parent Code</strong> if this is a sub-account (e.g., "1000" for Assets)</li>
+                                <li>Enter unique <strong>Account Code</strong> (e.g., "1000-01" for Cash)</li>
+                                <li>Set initial <strong>Balance</strong> if applicable</li>
+                                <li>Provide a clear <strong>Name</strong> (e.g., "Cash - Operating Account")</li>
+                                <li>Add optional <strong>Description</strong> and <strong>Notes</strong></li>
+                                <li>Click Save</li>
+                            </ol>
+                        </MudText>
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Use a consistent numbering scheme (e.g., 1000-1999 for Assets, 2000-2999 for Liabilities).
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Account Categories (USOA)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding USOA Categories</MudText>
+                        <MudText Typo="Typo.body2">
+                            The Uniform System of Accounts (USOA) categorizes accounts into five main types:
+                        </MudText>
+                        <MudList T="string">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.AccountBalance">
+                                <MudText Typo="Typo.body2"><strong>Assets:</strong> Resources owned by the organization (Cash, Accounts Receivable, Property, Equipment)</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CreditCard">
+                                <MudText Typo="Typo.body2"><strong>Liabilities:</strong> Debts and obligations (Accounts Payable, Loans, Accrued Expenses)</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.Balance">
+                                <MudText Typo="Typo.body2"><strong>Equity:</strong> Owner's stake in the organization (Capital, Retained Earnings)</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.TrendingUp">
+                                <MudText Typo="Typo.body2"><strong>Revenue:</strong> Income from operations (Sales, Service Revenue, Interest Income)</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.TrendingDown">
+                                <MudText Typo="Typo.body2"><strong>Expenses:</strong> Costs of operations (Salaries, Rent, Utilities, Supplies)</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Account Types: DEBIT vs CREDIT">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Normal Balance Classification</MudText>
+                        <MudText Typo="Typo.body2">
+                            Each account has a "normal balance" side that determines how increases and decreases are recorded:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>DEBIT Normal Balance Accounts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Assets</strong> - Increases with debits, decreases with credits<br/>
+                                • <strong>Expenses</strong> - Increases with debits, decreases with credits
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>CREDIT Normal Balance Accounts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Liabilities</strong> - Increases with credits, decreases with debits<br/>
+                                • <strong>Equity</strong> - Increases with credits, decreases with debits<br/>
+                                • <strong>Revenue</strong> - Increases with credits, decreases with debits
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Setting the wrong account type can cause reporting errors. Always verify the normal balance for the category.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Account Hierarchy & Parent-Child Structure">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Building Account Hierarchies</MudText>
+                        <MudText Typo="Typo.body2">
+                            Organize accounts in a parent-child structure for better reporting and rollups:
+                        </MudText>
+                        
+                        <MudText Typo="Typo.body2">
+                            <strong>Example Hierarchy:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            1000 - Assets (Parent)<br/>
+                            &nbsp;&nbsp;1100 - Current Assets (Parent)<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;1110 - Cash - Operating (Child)<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;1120 - Cash - Savings (Child)<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;1200 - Accounts Receivable (Child)<br/>
+                            &nbsp;&nbsp;1500 - Fixed Assets (Parent)<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;1510 - Property (Child)<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;1520 - Equipment (Child)
+                        </MudText>
+
+                        <MudList T="string" Dense="true">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Parent accounts summarize child account balances</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Use Parent Code to link child accounts to parents</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Maintain consistent coding within each branch</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Managing Account Balances">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Balance Updates & Reconciliation</MudText>
+                        <MudText Typo="Typo.body2">
+                            Account balances are typically updated through:
+                        </MudText>
+                        <MudList T="string">
+                            <MudListItem T="string">
+                                <MudText Typo="Typo.body2"><strong>Journal Entries:</strong> Primary method for recording transactions</MudText>
+                            </MudListItem>
+                            <MudListItem T="string">
+                                <MudText Typo="Typo.body2"><strong>Posting Batches:</strong> Batch processing of multiple transactions</MudText>
+                            </MudListItem>
+                            <MudListItem T="string">
+                                <MudText Typo="Typo.body2"><strong>System Transactions:</strong> Automated entries from invoices, payments, payroll</MudText>
+                            </MudListItem>
+                            <MudListItem T="string">
+                                <MudText Typo="Typo.body2"><strong>Manual Adjustments:</strong> Correcting entries or period-end adjustments</MudText>
+                            </MudListItem>
+                        </MudList>
+                        
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Initial balances can be set when creating accounts, but ongoing updates should use proper journal entries.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Editing & Updating Accounts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Modifying Existing Accounts</MudText>
+                        <MudText Typo="Typo.body2">
+                            To update an account:
+                        </MudText>
+                        <MudText Typo="Typo.body2">
+                            <ol style="margin: 10px 0; padding-left: 20px;">
+                                <li>Locate the account in the list</li>
+                                <li>Click the <strong>Edit</strong> action from the row menu</li>
+                                <li>Modify allowed fields (Name, Description, Notes, Balance)</li>
+                                <li>Click Save to apply changes</li>
+                            </ol>
+                        </MudText>
+                        
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Restriction:</strong> Account Code, Type, and Category cannot be changed after creation to maintain audit integrity. Create a new account if these need to change.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Deleting & Deactivating Accounts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Account Removal Options</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Deleting Accounts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Only available for accounts with zero balance<br/>
+                                • No transaction history recorded<br/>
+                                • Permanently removes the account<br/>
+                                • Use the Delete action from the row menu
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Deactivating Accounts (Recommended):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Preserves historical transaction data<br/>
+                                • Prevents new transactions<br/>
+                                • Can be reactivated if needed<br/>
+                                • Maintains audit trail integrity
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Warning:</strong> Never delete accounts with transaction history. This can break financial reports and audit trails.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Searching & Filtering">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Finding Accounts</MudText>
+                        <MudText Typo="Typo.body2">
+                            Use search and filters to locate accounts:
+                        </MudText>
+                        <MudList T="string">
+                            <MudListItem T="string">
+                                <MudText Typo="Typo.body2"><strong>Keyword Search:</strong> Search by name, code, or description</MudText>
+                            </MudListItem>
+                            <MudListItem T="string">
+                                <MudText Typo="Typo.body2"><strong>Category Filter:</strong> Filter by USOA category</MudText>
+                            </MudListItem>
+                            <MudListItem T="string">
+                                <MudText Typo="Typo.body2"><strong>Type Filter:</strong> Show only DEBIT or CREDIT accounts</MudText>
+                            </MudListItem>
+                            <MudListItem T="string">
+                                <MudText Typo="Typo.body2"><strong>Code Range:</strong> Filter by account code ranges</MudText>
+                            </MudListItem>
+                            <MudListItem T="string">
+                                <MudText Typo="Typo.body2"><strong>Parent Account:</strong> View all child accounts of a parent</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudList T="string" Dense="true">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Use a logical, consistent numbering system (e.g., 1000s for Assets, 2000s for Liabilities)</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Reserve number ranges for future expansion (skip by 10s: 1010, 1020, 1030)</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Use clear, descriptive names that indicate the account's purpose</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Document special accounts in the Notes field (e.g., "For grant tracking")</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Review and reconcile account balances regularly</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Keep inactive accounts but mark them clearly (deactivate instead of delete)</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Limit the number of accounts - too many creates confusion</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Group related accounts under common parents for better reporting</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Workflows">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Typical Account Management Tasks</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1. Initial Setup:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Create main category accounts (Assets, Liabilities, etc.) → Add parent accounts for each category → Create detailed sub-accounts → Set initial balances → Review hierarchy
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>2. Adding New Accounts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Identify the parent category → Determine next available code → Create account with proper type → Test with sample transaction → Document purpose in notes
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>3. Period-End Review:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Run account balance report → Verify all balances are reasonable → Reconcile bank and critical accounts → Review for inactive accounts → Document any anomalies
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>4. Account Cleanup:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Identify zero-balance accounts → Check for recent activity → Deactivate unused accounts → Consolidate similar accounts if needed → Update reports and templates
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="FAQ">
+                    <MudStack Spacing="2">
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: Can I change an account code after creation?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No, account codes are immutable to maintain audit integrity. Create a new account and transfer the balance via journal entry if needed.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: What happens to child accounts when I delete a parent?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: You cannot delete a parent account that has active children. Remove or reassign child accounts first.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: How do I import an existing chart of accounts?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Use the Import feature (coming soon) or use the API to bulk create accounts from a CSV/Excel file.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: Should Revenue accounts be DEBIT or CREDIT?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Revenue accounts have a CREDIT normal balance. They increase with credits and decrease with debits.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: Can I have multiple accounts with the same name?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: While possible, it's not recommended. Use unique names or add qualifiers (e.g., "Cash - Operating" vs "Cash - Payroll").
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: How deep can my account hierarchy go?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: There's no strict limit, but 3-4 levels is typically sufficient. Deeper hierarchies become harder to manage.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+
+            <MudAlert Severity="Severity.Success" Dense="true">
+                <strong>Pro Tip:</strong> A well-organized chart of accounts is the foundation of accurate financial reporting. Take time to plan your structure before adding accounts.
+            </MudAlert>
+        </MudStack>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
