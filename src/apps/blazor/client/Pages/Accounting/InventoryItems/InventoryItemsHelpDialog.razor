@@ -1,0 +1,428 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.InventoryItems
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Inventory Items Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Inventory Management?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Inventory</MudText>
+                        <MudText Typo="Typo.body2">
+                            Inventory represents goods held for sale or use in the business. Proper inventory management is critical for 
+                            financial accuracy, profitability analysis, and operational efficiency. Inventory is a significant asset on the 
+                            balance sheet and affects both cost of goods sold and profit calculations.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Manage Inventory?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Financial Accuracy:</strong> Correct asset values on balance sheet<br/>
+                                • <strong>Profitability:</strong> Accurate COGS = accurate profit calculation<br/>
+                                • <strong>Operational:</strong> Know what's in stock to fulfill orders<br/>
+                                • <strong>Cost Control:</strong> Identify shrinkage, theft, obsolescence<br/>
+                                • <strong>Tax Compliance:</strong> Support tax deductions and depreciation<br/>
+                                • <strong>Planning:</strong> Forecast needs for procurement
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Types of Inventory:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Raw Materials:</strong> Inputs to manufacturing<br/>
+                                • <strong>Work in Progress:</strong> Partially completed goods<br/>
+                                • <strong>Finished Goods:</strong> Ready for sale<br/>
+                                • <strong>Merchandise:</strong> Items purchased for resale<br/>
+                                • <strong>Supplies:</strong> Used in operations (sometimes expensed)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Inventory is an asset until sold - then becomes COGS expense!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Inventory Items">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Add Inventory Items</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Item Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>SKU</strong> (unique identifier)<br/>
+                                3. Enter <strong>Item Name</strong><br/>
+                                4. Select <strong>Category</strong><br/>
+                                5. Enter <strong>Description</strong><br/>
+                                6. Enter <strong>Unit of Measure</strong> (pieces, pounds, etc.)<br/>
+                                7. Enter <strong>Unit Cost</strong> (what you paid)<br/>
+                                8. Enter <strong>Selling Price</strong><br/>
+                                9. Enter <strong>Reorder Point</strong> (when to reorder)<br/>
+                                10. Enter <strong>Reorder Quantity</strong> (how much to order)<br/>
+                                11. Enter <strong>Beginning Quantity</strong><br/>
+                                12. Select <strong>Valuation Method</strong> (FIFO, LIFO, Weighted Avg)<br/>
+                                13. Attach <strong>Product Image</strong><br/>
+                                14. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Valuation Methods Explained:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>FIFO (First-In, First-Out):</strong><br/>
+                                &nbsp;&nbsp;First items purchased are sold first<br/>
+                                &nbsp;&nbsp;Ending inventory = most recent costs<br/>
+                                &nbsp;&nbsp;Better in inflation (higher COGS, lower profit)<br/>
+                                <br/>
+                                • <strong>LIFO (Last-In, First-Out):</strong><br/>
+                                &nbsp;&nbsp;Last items purchased are sold first<br/>
+                                &nbsp;&nbsp;Ending inventory = oldest costs<br/>
+                                &nbsp;&nbsp;Tax advantage in inflation (lower taxable income)<br/>
+                                <br/>
+                                • <strong>Weighted Average:</strong><br/>
+                                &nbsp;&nbsp;Average all purchase costs<br/>
+                                &nbsp;&nbsp;Most stable/consistent<br/>
+                                &nbsp;&nbsp;Smooths out price fluctuations
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Choose valuation method carefully - impacts both profit and taxes!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Inventory Transactions">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Recording Inventory Movements</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Purchase (Add Stock):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Received 100 units - P10 each<br/>
+                                <br/>
+                                Dr. Inventory              P1,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Payable    P1,000<br/>
+                                (To record inventory purchase)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Sale (Reduce Stock):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Sold 30 units - P10 cost<br/>
+                                <br/>
+                                Dr. Cost of Goods Sold    P300<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Inventory             P300<br/>
+                                (To record inventory sold)<br/>
+                                <br/>
+                                (Separately record sale revenue)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Adjustment (Shrinkage/Write-Off):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Found 5 units damaged/missing<br/>
+                                <br/>
+                                Dr. Inventory Shrinkage Expense  P50<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Inventory                    P50<br/>
+                                (To record damaged/missing inventory)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Critical:</strong> Use correct method - periodic vs. perpetual affects when entries are recorded!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Physical Inventory Count">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Physical Inventory Process</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Count Physical Inventory?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Verify system counts match reality<br/>
+                                • Identify shrinkage (theft, damage, waste)<br/>
+                                • Support financial statement accuracy<br/>
+                                • Required for GAAP compliance<br/>
+                                • Adjust records to actual count<br/>
+                                • Identify obsolete items
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Physical Count Procedure:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Choose count date (typically year-end)<br/>
+                                2. Close system to prevent transactions<br/>
+                                3. Assign teams to locations<br/>
+                                4. Count each item physically<br/>
+                                5. Record counts on tags/sheets<br/>
+                                6. Reconcile counts to system<br/>
+                                7. Investigate variances<br/>
+                                8. Record adjusting entries<br/>
+                                9. Update system with actual counts<br/>
+                                10. Document process and approvals
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Handling Variances:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Item ABC-123:<br/>
+                                System: 100 units<br/>
+                                Actual: 97 units<br/>
+                                Variance: 3 units (3% - acceptable)<br/>
+                                <br/>
+                                Adjusting Entry:<br/>
+                                Dr. Inventory Shrinkage      P30<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Inventory                 P30<br/>
+                                (To adjust for physical count)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Small variances (1-3%) are normal. Large variances need investigation!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Stock Level Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Stock Levels</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Stock Level Metrics:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Current Stock:</strong> How many units on hand now<br/>
+                                • <strong>Reorder Point:</strong> When to place new order<br/>
+                                • <strong>Reorder Quantity:</strong> How many to order<br/>
+                                • <strong>Safety Stock:</strong> Buffer for unexpected demand<br/>
+                                • <strong>Maximum Stock:</strong> Don't exceed this level<br/>
+                                • <strong>Lead Time:</strong> Days to receive new stock
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reorder Point Calculation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Average Daily Usage: 10 units<br/>
+                                Lead Time: 7 days<br/>
+                                Safety Stock: 30 units<br/>
+                                <br/>
+                                Reorder Point = (10 × 7) + 30 = 100 units<br/>
+                                <br/>
+                                When inventory drops to 100 units,
+                                place order for new stock
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Add/Reduce Stock Functions:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Add Stock:</strong> Receive new inventory from supplier<br/>
+                                • <strong>Reduce Stock:</strong> Sell items or adjust for shrinkage<br/>
+                                • <strong>Adjust Count:</strong> Fix system discrepancies<br/>
+                                • <strong>Transfer:</strong> Move between warehouses<br/>
+                                • <strong>Obsolete:</strong> Mark items no longer sellable
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Review stock levels weekly - catch issues early!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Inventory Valuation & COGS">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Recording Cost of Goods Sold</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Inventory to COGS Flow:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Beginning Inventory        P50,000<br/>
+                                + Purchases               P100,000<br/>
+                                - Ending Inventory        (P45,000)<br/>
+                                = Cost of Goods Sold      P105,000<br/>
+                                <br/>
+                                Revenue                   P200,000<br/>
+                                - COGS                    (P105,000)<br/>
+                                = Gross Profit             P95,000<br/>
+                                - Expenses                 (P50,000)<br/>
+                                = Net Income               P45,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Inventory Valuation on Balance Sheet:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                CURRENT ASSETS<br/>
+                                Inventory at lower of cost/market value<br/>
+                                <br/>
+                                Method matters!<br/>
+                                FIFO: Higher value (newest costs)<br/>
+                                LIFO: Lower value (oldest costs)<br/>
+                                Weighted Avg: Middle value<br/>
+                                <br/>
+                                Impact on balance sheet = Impact on profit
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Ending inventory of one period = Beginning inventory next period!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: When should we count physical inventory?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: At minimum once yearly at fiscal year-end. Many companies also do quarterly counts. High-value items may be cycled-counted continuously.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's acceptable shrinkage?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: 1-2% is typical (theft, damage, waste). Higher suggests problems. Investigate 5%+ variance immediately.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we handle obsolete inventory?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Write off at year-end when identified. Recognize expense. Consider disposal cost. Don't carry obsolete items on books.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we change valuation method?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Difficult - requires auditor approval and documentation. Choose carefully from start. IRS approval needed for tax purposes.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if physical count differs from system?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Always use physical count (actual) as correct. Adjust system to match. Investigate why difference occurred and implement prevention.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Inventory Management Best Practices</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>System Controls:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Separate receiving, storage, and sales areas<br/>
+                                ✓ Require documentation for all movements<br/>
+                                ✓ Restrict access to high-value items<br/>
+                                ✓ Track by SKU consistently<br/>
+                                ✓ Cycle count high-value items<br/>
+                                ✓ Use barcodes/RFID for accuracy<br/>
+                                ✓ Reconcile daily to system
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Financial Controls:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Physical count at year-end<br/>
+                                ✓ Compare actual to system<br/>
+                                ✓ Investigate variances<br/>
+                                ✓ Record adjusting entries<br/>
+                                ✓ Review for obsolescence<br/>
+                                ✓ Verify valuation method<br/>
+                                ✓ Recalculate COGS monthly
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Purchasing Controls:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Use reorder points and quantities<br/>
+                                ✓ Avoid overstocking<br/>
+                                ✓ Track lead times<br/>
+                                ✓ Compare suppliers<br/>
+                                ✓ Verify quality on receipt<br/>
+                                ✓ Match invoice to receipt<br/>
+                                ✓ Review purchase prices regularly
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Golden Rule:</strong> Accurate inventory = Accurate financials = Good decisions!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+}
+

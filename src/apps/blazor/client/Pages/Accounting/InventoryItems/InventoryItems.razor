@@ -1,8 +1,19 @@
 @page "/accounting/inventory-items"
 
-<PageHeader Title="Inventory Items" Header="Inventory Items" SubHeader="Manage inventory items, track stock levels, and adjust quantities." />
+<PageHeader Title="Inventory Items" Header="Inventory Items" SubHeader="Manage inventory items." />
 
-<EntityTable @ref="_table" TEntity="InventoryItemResponse" TId="DefaultIdType" TRequest="InventoryItemViewModel" Context="@Context">
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowInventoryItemsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="StockLevelResponse" TId="DefaultIdType" TRequest="InventoryItemViewModel" Context="@Context">
     <AdvancedSearchContent>
         <MudItem xs="12" sm="6" md="4">
             <MudTextField @bind-Value="@SearchSku"

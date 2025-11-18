@@ -104,5 +104,18 @@ public partial class InventoryItems
         var options = new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true, CloseOnEscapeKey = true };
         await DialogService.ShowAsync<InventoryItemDetailsDialog>("Inventory Item Details", parameters, options);
     }
+
+    /// <summary>
+    /// Show inventory items help dialog.
+    /// </summary>
+    private async Task ShowInventoryItemsHelp()
+    {
+        await DialogService.ShowAsync<InventoryItemsHelpDialog>("Inventory Items Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
