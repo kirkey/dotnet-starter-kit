@@ -136,5 +136,18 @@ public partial class WriteOffs
         var result = await dialog.Result;
         if (!result.Canceled && _table is not null) await _table.ReloadDataAsync();
     }
+
+    /// <summary>
+    /// Show write-offs help dialog.
+    /// </summary>
+    private async Task ShowWriteOffsHelp()
+    {
+        await DialogService.ShowAsync<WriteOffsHelpDialog>("Write-Offs Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

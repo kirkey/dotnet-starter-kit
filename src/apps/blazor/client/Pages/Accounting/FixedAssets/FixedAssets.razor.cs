@@ -147,5 +147,18 @@ public partial class FixedAssets
         var options = new DialogOptions { MaxWidth = MaxWidth.ExtraLarge, FullWidth = true, CloseButton = true, CloseOnEscapeKey = true };
         await DialogService.ShowAsync<FixedAssetDetailsDialog>("Fixed Asset Details", parameters, options);
     }
+
+    /// <summary>
+    /// Show fixed assets help dialog.
+    /// </summary>
+    private async Task ShowFixedAssetsHelp()
+    {
+        await DialogService.ShowAsync<FixedAssetsHelpDialog>("Fixed Assets Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

@@ -129,5 +129,18 @@ public partial class GeneralLedgers
     {
         Navigation.NavigateTo($"/accounting/journal-entries?entryId={entryId}");
     }
+
+    /// <summary>
+    /// Show general ledgers help dialog.
+    /// </summary>
+    private async Task ShowGeneralLedgersHelp()
+    {
+        await DialogService.ShowAsync<GeneralLedgersHelpDialog>("General Ledger Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

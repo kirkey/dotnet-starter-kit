@@ -1,0 +1,319 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.WriteOffs
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Write-Offs Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Write-Offs?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Write-Offs</MudText>
+                        <MudText Typo="Typo.body2">
+                            A write-off is the accounting action of removing an uncollectible receivable from the books by 
+                            reducing both the asset (Accounts Receivable) and the allowance (Allowance for Doubtful Accounts). 
+                            Write-offs formally acknowledge that a debt will not be collected.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Types of Write-Offs:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Accounts Receivable (AR):</strong> Customer can't/won't pay<br/>
+                                • <strong>Inventory:</strong> Obsolete, damaged, stolen goods<br/>
+                                • <strong>Fixed Assets:</strong> Impaired or abandoned equipment<br/>
+                                • <strong>Loans:</strong> Bad loans (bank write-offs)<br/>
+                                • <strong>Intangible Assets:</strong> Goodwill impairment
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Write-Off AR?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Customer bankruptcy<br/>
+                                • Customer cannot be located<br/>
+                                • Amount too small to pursue<br/>
+                                • Legal judgment uncollectible<br/>
+                                • Statute of limitations expired
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Write-off is FINAL - acknowledges $$ will never be received. Rare to recover after!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Write-Off Methods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Two Approaches to Write-Offs</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1. Allowance Method (Preferred - GAAP):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Estimate bad debts upfront<br/>
+                                • Record allowance (contra-asset account)<br/>
+                                • Write-off against the allowance<br/>
+                                • No expense hit at write-off time<br/>
+                                • Expense recorded when estimate made<br/>
+                                <br/>
+                                <strong>Journal Entry:</strong><br/>
+                                Dr. Allowance for Doubtful Accounts  $500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Receivable        $500<br/>
+                                (To write-off uncollectible account)<br/>
+                                <br/>
+                                Net AR unchanged (both sides reduced)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>2. Direct Write-Off Method (Not GAAP):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Record expense when actual write-off occurs<br/>
+                                • No advance allowance<br/>
+                                • Violates matching principle<br/>
+                                • Used only for small companies/tax purposes<br/>
+                                • Not acceptable for financial reporting<br/>
+                                <br/>
+                                <strong>Journal Entry:</strong><br/>
+                                Dr. Bad Debt Expense              $500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Receivable        $500<br/>
+                                <br/>
+                                Expense recorded at write-off time
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Use Allowance Method for GAAP compliance!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Write-Off Process">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Record Write-Offs</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Write-Off Procedures:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Identify uncollectible AR:</strong><br/>
+                                &nbsp;&nbsp;&nbsp;Review aging report<br/>
+                                &nbsp;&nbsp;&nbsp;90+ days overdue<br/>
+                                &nbsp;&nbsp;&nbsp;Customer bankrupt or unreachable<br/>
+                                <br/>
+                                2. <strong>Obtain approval:</strong><br/>
+                                &nbsp;&nbsp;&nbsp;Manager sign-off required<br/>
+                                &nbsp;&nbsp;&nbsp;Document justification<br/>
+                                &nbsp;&nbsp;&nbsp;Keep communication record<br/>
+                                <br/>
+                                3. <strong>Record write-off:</strong><br/>
+                                &nbsp;&nbsp;&nbsp;Debit: Allowance for Doubtful Accounts<br/>
+                                &nbsp;&nbsp;&nbsp;Credit: Accounts Receivable<br/>
+                                <br/>
+                                4. <strong>Update AR aging:</strong><br/>
+                                &nbsp;&nbsp;&nbsp;Remove from aging report<br/>
+                                &nbsp;&nbsp;&nbsp;Account balance goes to zero<br/>
+                                <br/>
+                                5. <strong>Document:</strong><br/>
+                                &nbsp;&nbsp;&nbsp;Reason for write-off<br/>
+                                &nbsp;&nbsp;&nbsp;Approval authorization<br/>
+                                &nbsp;&nbsp;&nbsp;Supporting documentation
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Important:</strong> Write-offs require documentation and approval - don't just delete accounts!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Recovery Handling">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">When Written-Off AR is Collected</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Recovery Steps (Rare but Possible!):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Sometimes customer pays after write-off (settlement, lawsuit win, etc.)<br/>
+                                <br/>
+                                <strong>Two-Step Process:</strong><br/>
+                                <br/>
+                                Step 1 - Reverse original write-off:<br/>
+                                Dr. Accounts Receivable         $500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Allowance for Doubtful Accounts  $500<br/>
+                                <br/>
+                                Step 2 - Record collection:<br/>
+                                Dr. Cash                        $500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Receivable        $500<br/>
+                                <br/>
+                                <strong>OR Combined Single Entry:</strong><br/>
+                                Dr. Cash                        $500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Allowance for Doubtful Accounts  $500<br/>
+                                (To record recovery of written-off amount)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Keep records on written-off AR for 7+ years - recoveries do happen!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Allowance Calculation">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Estimating Uncollectible Amounts</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Percentage of Sales Method:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Annual Credit Sales:     $500,000<br/>
+                                Historical Bad Debt %:   2%<br/>
+                                <br/>
+                                Bad Debt Expense: $500,000 × 2% = $10,000<br/>
+                                <br/>
+                                Journal Entry:<br/>
+                                Dr. Bad Debt Expense          $10,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Allowance for Doubtful Accts  $10,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Aging of AR Method:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Current (0-30 days):    $200,000 × 1% = $2,000<br/>
+                                31-60 days:             $100,000 × 5% = $5,000<br/>
+                                61-90 days:              $50,000 × 15% = $7,500<br/>
+                                90+ days:                $30,000 × 50% = $15,000<br/>
+                                <br/>
+                                Required Allowance:              $29,500<br/>
+                                <br/>
+                                Current Allowance Balance: $20,000<br/>
+                                Adjustment Needed:        $9,500 (increase)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Aging method more conservative - estimates based on collection history by age.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Impact on Financial Statements">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How Write-Offs Appear</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Balance Sheet Impact (Allowance Method):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                ASSETS<br/>
+                                Accounts Receivable       $100,000<br/>
+                                Less: Allowance           ($10,000)<br/>
+                                Net AR                     $90,000<br/>
+                                <br/>
+                                After write-off of $5,000:<br/>
+                                Accounts Receivable        $95,000<br/>
+                                Less: Allowance            ($5,000)<br/>
+                                Net AR                     $90,000<br/>
+                                <br/>
+                                Net AR unchanged!
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Income Statement Impact:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Allowance Method:</strong><br/>
+                                • Bad Debt Expense recorded when allowance estimated<br/>
+                                • No income statement impact at write-off time<br/>
+                                • Expense matched to sales period<br/>
+                                <br/>
+                                <strong>Direct Write-Off Method:</strong><br/>
+                                • Bad Debt Expense recorded at write-off time<br/>
+                                • May be in different year than sale<br/>
+                                • Violates matching principle<br/>
+                                • Not GAAP compliant
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Use Allowance Method so write-offs don't surprise P&L!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we write-off AR without allowance?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Technically yes (direct method), but not GAAP compliant. Always use Allowance Method for proper financial reporting.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if allowance is exhausted and need more write-offs?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Increase allowance with new entry, or use direct write-off method for excess. Bad estimate - review assumptions.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we write-off AR that's disputed by customer?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: NO - only write-off if truly uncollectible. Disputed AR may be collectable. Use legal channels if needed.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we prevent fraud in write-offs?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Controls: Require approval, document reason, segregate duties, review for patterns. Watch for embezzlement!
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What tax treatment for write-offs?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Generally deductible if properly documented. Accrual method vs. cash method rules differ. Consult tax advisor.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

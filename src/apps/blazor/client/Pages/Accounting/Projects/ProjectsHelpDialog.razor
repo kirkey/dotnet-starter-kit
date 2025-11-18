@@ -1,0 +1,329 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.Projects
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Projects Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Project Accounting?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Project Costing</MudText>
+                        <MudText Typo="Typo.body2">
+                            Project accounting tracks revenues, costs, and profitability for individual projects or jobs. 
+                            It enables detailed cost allocation, budget monitoring, and performance analysis for each project, 
+                            essential for project-based businesses and understanding true project profitability.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Track by Project?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Profitability Analysis:</strong> Know which projects make money<br/>
+                                • <strong>Cost Control:</strong> Monitor spending vs. budget<br/>
+                                • <strong>Resource Allocation:</strong> Track time and materials<br/>
+                                • <strong>Client Billing:</strong> Cost-plus or time & materials billing<br/>
+                                • <strong>Performance Evaluation:</strong> Compare estimated vs. actual<br/>
+                                • <strong>Future Estimating:</strong> Improve future project quotes
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Industries Using Project Accounting:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Construction and contracting<br/>
+                                • Consulting and professional services<br/>
+                                • Engineering and architecture<br/>
+                                • Software development<br/>
+                                • Marketing and advertising agencies<br/>
+                                • Manufacturing (job shops)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Project accounting answers "Did we make money on this project?"
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Projects">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Set Up Projects</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Project Setup Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Project Number</strong> (unique ID)<br/>
+                                3. Enter <strong>Project Name</strong> (descriptive)<br/>
+                                4. Select <strong>Customer</strong><br/>
+                                5. Enter <strong>Start Date</strong><br/>
+                                6. Enter <strong>End Date</strong> (estimated)<br/>
+                                7. Select <strong>Project Manager</strong><br/>
+                                8. Select <strong>Status</strong> (Planning, Active, Complete)<br/>
+                                9. Enter <strong>Budget Amount</strong><br/>
+                                10. Enter <strong>Contract Amount</strong><br/>
+                                11. Select <strong>Billing Type</strong> (Fixed Price, T&M, Cost-Plus)<br/>
+                                12. Add <strong>Description</strong><br/>
+                                13. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Project Billing Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Fixed Price:</strong> One price regardless of cost<br/>
+                                &nbsp;&nbsp;&nbsp;Risk: You bear cost overruns<br/>
+                                &nbsp;&nbsp;&nbsp;Reward: Keep savings if under budget<br/>
+                                <br/>
+                                • <strong>Time & Materials (T&M):</strong> Bill for hours + materials<br/>
+                                &nbsp;&nbsp;&nbsp;Risk: Customer bears cost overruns<br/>
+                                &nbsp;&nbsp;&nbsp;Billing: Hours × rate + material markup<br/>
+                                <br/>
+                                • <strong>Cost-Plus:</strong> Costs + markup percentage<br/>
+                                &nbsp;&nbsp;&nbsp;Example: Costs + 15% markup<br/>
+                                &nbsp;&nbsp;&nbsp;Common in construction
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Set realistic budgets - track costs from day one to avoid surprises!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Project Cost Tracking">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Recording Project Costs</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Types of Project Costs:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Direct Labor:</strong> Employee time on project<br/>
+                                2. <strong>Direct Materials:</strong> Materials used<br/>
+                                3. <strong>Subcontractors:</strong> Outside labor/services<br/>
+                                4. <strong>Equipment:</strong> Equipment rental/usage<br/>
+                                5. <strong>Overhead:</strong> Allocated indirect costs<br/>
+                                6. <strong>Travel & Expenses:</strong> Project-related expenses
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Recording Cost Example:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Labor Entry:<br/>
+                                Employee: John Smith<br/>
+                                Hours: 8 hours<br/>
+                                Rate: $50/hour<br/>
+                                Total: $400<br/>
+                                <br/>
+                                Dr. Project #123 - Labor    $400<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Wages Payable           $400<br/>
+                                <br/>
+                                Material Entry:<br/>
+                                Materials purchased: $1,000<br/>
+                                <br/>
+                                Dr. Project #123 - Materials  $1,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Inventory/AP               $1,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Project Cost Report:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Project #123 - Office Renovation<br/>
+                                <br/>
+                                Category        Budget    Actual    Variance    %<br/>
+                                =============   ======    ======    ========    ===<br/>
+                                Labor           $25,000   $23,500   $1,500     94%<br/>
+                                Materials       $15,000   $16,200   ($1,200)   108%<br/>
+                                Subcontractors  $10,000   $9,800    $200       98%<br/>
+                                Equipment       $5,000    $4,500    $500       90%<br/>
+                                Other           $3,000    $2,800    $200       93%<br/>
+                                -------------   ------    ------    -------    ---<br/>
+                                TOTAL           $58,000   $56,800   $1,200     98%<br/>
+                                <br/>
+                                Contract Amount: $65,000<br/>
+                                Projected Profit: $8,200 (12.6%)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Track costs in real-time - don't wait until month-end to discover overruns!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Project Billing">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Invoicing Customers</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Billing Methods:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Progress Billing:</strong><br/>
+                                Bill based on % complete or milestones<br/>
+                                <br/>
+                                Example: $100,000 project, 25% complete<br/>
+                                Invoice: $25,000<br/>
+                                <br/>
+                                <strong>Time & Materials Billing:</strong><br/>
+                                Labor: 160 hours × $75/hr = $12,000<br/>
+                                Materials: $5,000 × 110% markup = $5,500<br/>
+                                Total Invoice: $17,500<br/>
+                                <br/>
+                                <strong>Milestone Billing:</strong><br/>
+                                Design Complete: 30% = $30,000<br/>
+                                Construction 50%: 50% = $50,000<br/>
+                                Final Completion: 20% = $20,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Retainage:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Common in construction - customer holds back %<br/>
+                                <br/>
+                                Example: $25,000 invoice with 10% retainage<br/>
+                                Billed: $25,000<br/>
+                                Received: $22,500<br/>
+                                Retained: $2,500 (due at project completion)<br/>
+                                <br/>
+                                Dr. Accounts Receivable      $22,500<br/>
+                                Dr. Retainage Receivable     $2,500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Project Revenue          $25,000
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Invoice promptly - waiting to bill delays cash flow and increases risk!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Project Profitability">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Analyzing Project Performance</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Profitability Calculation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Project Revenue:             $65,000<br/>
+                                Less: Direct Costs<br/>
+                                &nbsp;&nbsp;Labor              ($23,500)<br/>
+                                &nbsp;&nbsp;Materials          ($16,200)<br/>
+                                &nbsp;&nbsp;Subcontractors     ($9,800)<br/>
+                                &nbsp;&nbsp;Equipment          ($4,500)<br/>
+                                &nbsp;&nbsp;Other              ($2,800)<br/>
+                                Total Direct Costs:          ($56,800)<br/>
+                                <br/>
+                                Gross Profit:                $8,200<br/>
+                                Gross Margin:                12.6%<br/>
+                                <br/>
+                                Less: Overhead Allocation    ($3,250)<br/>
+                                Net Profit:                  $4,950<br/>
+                                Net Margin:                  7.6%
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Performance Indicators:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Gross Margin %:</strong> (Revenue - Direct Costs) / Revenue<br/>
+                                &nbsp;&nbsp;&nbsp;Target: 20-40% depending on industry<br/>
+                                <br/>
+                                • <strong>Budget Variance:</strong> Actual vs. Budget<br/>
+                                &nbsp;&nbsp;&nbsp;Good: Within 5% of budget<br/>
+                                <br/>
+                                • <strong>Schedule Variance:</strong> On time vs. delayed<br/>
+                                &nbsp;&nbsp;&nbsp;Delays usually = cost overruns<br/>
+                                <br/>
+                                • <strong>Utilization Rate:</strong> Billable hours / Total hours<br/>
+                                &nbsp;&nbsp;&nbsp;Target: 70-85%
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Review project profitability monthly - catch problems early!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: When should we start a new project?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: When you sign a contract or need to track costs separately. Set up before incurring costs to capture everything.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we allocate overhead to projects?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Common methods: % of direct labor, % of total direct costs, or fixed rate per project. Be consistent.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if a project goes over budget?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Analyze why (scope change, poor estimate, delays). Fixed price = you absorb. T&M = bill customer more if authorized.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How long should we keep project records?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Minimum 7 years for tax. Longer for significant projects, warranty issues, or potential disputes.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we track internal projects?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes for significant initiatives (IT implementations, facility improvements) to understand true costs and ROI.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

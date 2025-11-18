@@ -182,5 +182,18 @@ public partial class TrialBalance
             Snackbar.Add($"Error exporting trial balance: {ex.Message}", Severity.Error);
         }
     }
+
+    /// <summary>
+    /// Show trial balance help dialog.
+    /// </summary>
+    private async Task ShowTrialBalanceHelp()
+    {
+        await DialogService.ShowAsync<TrialBalanceHelpDialog>("Trial Balance Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

@@ -1,0 +1,372 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.RecurringJournalEntries
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Recurring Journal Entries Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Recurring Journal Entries?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Recurring Entries</MudText>
+                        <MudText Typo="Typo.body2">
+                            Recurring journal entries are journal entries that repeat on a regular schedule (monthly, quarterly, annually). 
+                            They automate repetitive accounting tasks, reduce manual effort, ensure consistency, and minimize errors 
+                            for entries that occur regularly.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Recurring Entries:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Depreciation:</strong> Monthly depreciation expense<br/>
+                                • <strong>Amortization:</strong> Prepaid expense, deferred revenue<br/>
+                                • <strong>Rent:</strong> Monthly rent expense<br/>
+                                • <strong>Insurance:</strong> Prepaid insurance amortization<br/>
+                                • <strong>Loan Interest:</strong> Monthly interest accrual<br/>
+                                • <strong>Allocations:</strong> Overhead, cost center allocations<br/>
+                                • <strong>Accruals:</strong> Recurring monthly accruals
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Benefits of Automation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Save time - no manual entry each month<br/>
+                                ✓ Reduce errors - consistent amounts<br/>
+                                ✓ Never forget - automatic generation<br/>
+                                ✓ Audit trail - documented schedule<br/>
+                                ✓ Month-end efficiency - faster close
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> If you record the same entry every month, automate it!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Recurring Entries">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Set Up Recurring Entries</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Setup Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Template Name</strong> (e.g., "Monthly Depreciation")<br/>
+                                3. Enter <strong>Description</strong><br/>
+                                4. Select <strong>Frequency</strong>:<br/>
+                                &nbsp;&nbsp;&nbsp;- Daily<br/>
+                                &nbsp;&nbsp;&nbsp;- Weekly<br/>
+                                &nbsp;&nbsp;&nbsp;- Monthly (most common)<br/>
+                                &nbsp;&nbsp;&nbsp;- Quarterly<br/>
+                                &nbsp;&nbsp;&nbsp;- Annually<br/>
+                                5. Enter <strong>Start Date</strong><br/>
+                                6. Enter <strong>End Date</strong> (or leave open)<br/>
+                                7. Select <strong>Auto-Post</strong> (yes/no)<br/>
+                                8. Add <strong>Journal Entry Lines</strong>:<br/>
+                                &nbsp;&nbsp;&nbsp;- Account<br/>
+                                &nbsp;&nbsp;&nbsp;- Debit/Credit<br/>
+                                &nbsp;&nbsp;&nbsp;- Amount (or formula)<br/>
+                                9. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example - Monthly Depreciation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Template Name: Monthly Depreciation<br/>
+                                Frequency: Monthly (1st of month)<br/>
+                                Amount: $5,000<br/>
+                                <br/>
+                                Entry Lines:<br/>
+                                Dr. Depreciation Expense     $5,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accumulated Depreciation $5,000<br/>
+                                <br/>
+                                Will auto-generate on:<br/>
+                                Jan 1, Feb 1, Mar 1, etc.
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Start with manual review before enabling auto-post - verify amounts first!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Auto-Post vs Manual Review">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Posting Options</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Auto-Post (Automatic Posting):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Pros:</strong><br/>
+                                • Fully automated - zero manual work<br/>
+                                • Never forget to post<br/>
+                                • Consistent timing<br/>
+                                • Maximum efficiency<br/>
+                                <br/>
+                                <strong>Cons:</strong><br/>
+                                • No review before posting<br/>
+                                • Errors post automatically<br/>
+                                • Less control<br/>
+                                <br/>
+                                <strong>Best for:</strong><br/>
+                                • Stable, unchanging amounts<br/>
+                                • Low-risk entries<br/>
+                                • Well-tested templates
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Manual Review (Generate, then Post):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Pros:</strong><br/>
+                                • Review before posting<br/>
+                                • Catch errors<br/>
+                                • Adjust amounts if needed<br/>
+                                • More control<br/>
+                                <br/>
+                                <strong>Cons:</strong><br/>
+                                • Requires manual step<br/>
+                                • Can be forgotten<br/>
+                                • Less efficient<br/>
+                                <br/>
+                                <strong>Best for:</strong><br/>
+                                • Variable amounts<br/>
+                                • High-value entries<br/>
+                                • New templates being tested
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Always test new recurring entries manually for 2-3 cycles before enabling auto-post!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Managing Recurring Entries">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Ongoing Maintenance</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Entry Statuses:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Active:</strong> Generating entries on schedule<br/>
+                                • <strong>Suspended:</strong> Temporarily paused<br/>
+                                • <strong>Expired:</strong> Past end date, no longer generating<br/>
+                                • <strong>Draft:</strong> Template created but not activated
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Maintenance Tasks:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ Review generated entries monthly<br/>
+                                □ Update amounts when changed (new assets, rate changes)<br/>
+                                □ Suspend entries no longer needed<br/>
+                                □ Set end dates for finite entries<br/>
+                                □ Review audit log of generated entries<br/>
+                                □ Verify all expected entries generated<br/>
+                                □ Clean up expired entries annually
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>When to Update:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Asset purchases:</strong> Increase depreciation<br/>
+                                • <strong>Asset disposals:</strong> Decrease depreciation<br/>
+                                • <strong>Contract renewals:</strong> Update rent, insurance amounts<br/>
+                                • <strong>Rate changes:</strong> Interest rates, overhead allocations<br/>
+                                • <strong>Organizational changes:</strong> Cost center allocations
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Set calendar reminders to review recurring entries quarterly!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Generation and Approval">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How Entries are Generated</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Automatic Generation Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. System checks schedule daily<br/>
+                                2. Identifies entries due today<br/>
+                                3. Generates journal entries from templates<br/>
+                                4. If auto-post enabled:<br/>
+                                &nbsp;&nbsp;&nbsp;→ Automatically post to GL<br/>
+                                &nbsp;&nbsp;&nbsp;→ Send notification<br/>
+                                5. If manual review required:<br/>
+                                &nbsp;&nbsp;&nbsp;→ Create as "Pending Approval"<br/>
+                                &nbsp;&nbsp;&nbsp;→ Await approval<br/>
+                                &nbsp;&nbsp;&nbsp;→ Post after approval<br/>
+                                6. Log generation in audit trail
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Approval Workflow:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                For entries requiring review:<br/>
+                                <br/>
+                                1. Generated entry appears in queue<br/>
+                                2. Reviewer checks amounts<br/>
+                                3. Options:<br/>
+                                &nbsp;&nbsp;&nbsp;• <strong>Approve:</strong> Entry posts to GL<br/>
+                                &nbsp;&nbsp;&nbsp;• <strong>Reject:</strong> Entry discarded, investigate<br/>
+                                &nbsp;&nbsp;&nbsp;• <strong>Edit:</strong> Adjust amounts, then approve<br/>
+                                4. Document reason if rejected
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Batch review and approve recurring entries early in month-end close!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Examples">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Real-World Recurring Entries</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1. Monthly Rent:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Frequency: Monthly (1st)<br/>
+                                <br/>
+                                Dr. Rent Expense            $5,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash/Accrued Rent       $5,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>2. Prepaid Insurance Amortization:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Frequency: Monthly<br/>
+                                <br/>
+                                Dr. Insurance Expense       $1,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Prepaid Insurance       $1,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>3. Overhead Allocation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Frequency: Monthly<br/>
+                                <br/>
+                                Dr. Department A Overhead   $3,000<br/>
+                                Dr. Department B Overhead   $2,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Overhead Pool           $5,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>4. Loan Interest Accrual:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Frequency: Monthly<br/>
+                                <br/>
+                                Dr. Interest Expense        $500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Interest Payable        $500
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Start simple - begin with 3-5 recurring entries, add more as comfortable.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What happens if I miss activating a new recurring entry?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Won't generate until activated. If missed months, can manually create catch-up entries or adjust start date.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can I edit an entry after it's been generated?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, if not yet posted. Edit before approving. If already posted, create correcting entry.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if amounts change mid-year?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Update template with new amount. Change applies to future generations. Past entries unchanged.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do I temporarily stop a recurring entry?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Set status to "Suspended". To resume, change back to "Active". No entries generated while suspended.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should I use auto-post for all recurring entries?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No - use manual review for variable amounts, high-value entries, or new templates. Auto-post only for stable, low-risk entries.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

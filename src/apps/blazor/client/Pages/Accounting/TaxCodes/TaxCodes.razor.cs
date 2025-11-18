@@ -78,5 +78,18 @@ public partial class TaxCodes
             entityName: "Tax Code",
             entityNamePlural: "Tax Codes",
             entityResource: FshResources.Accounting);
+
+    /// <summary>
+    /// Show tax codes help dialog.
+    /// </summary>
+    private async Task ShowTaxCodesHelp()
+    {
+        await DialogService.ShowAsync<TaxCodesHelpDialog>("Tax Codes Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

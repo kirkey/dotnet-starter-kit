@@ -1,0 +1,310 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.RetainedEarnings
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Retained Earnings Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Retained Earnings?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Retained Earnings</MudText>
+                        <MudText Typo="Typo.body2">
+                            Retained Earnings is the cumulative amount of net income that a company has retained (not distributed to shareholders) 
+                            since its inception. It represents profits reinvested in the business rather than paid out as dividends. 
+                            This equity account connects the income statement to the balance sheet.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Retained Earnings Formula:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Beginning Retained Earnings<br/>
+                                + Net Income (or - Net Loss)<br/>
+                                - Dividends Paid<br/>
+                                - Other Distributions<br/>
+                                = Ending Retained Earnings
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Beginning RE (Jan 1):        $100,000<br/>
+                                + Net Income (year):          $50,000<br/>
+                                - Dividends Paid:            ($10,000)<br/>
+                                Ending RE (Dec 31):          $140,000
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Retained Earnings = All profits earned minus all dividends paid since company started.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Year-End Close Process">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Closing Net Income to Retained Earnings</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Year-End Closing Entries:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                At year-end, close temporary accounts (revenue and expenses) to retained earnings:
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Step 1 - Close Revenue Accounts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Sales Revenue               $500,000<br/>
+                                Dr. Other Income                 $10,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Income Summary              $510,000<br/>
+                                (To close all revenue accounts)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Step 2 - Close Expense Accounts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Dr. Income Summary              $450,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cost of Goods Sold          $300,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Operating Expenses          $130,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Interest Expense             $10,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Tax Expense                  $10,000<br/>
+                                (To close all expense accounts)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Step 3 - Close Income Summary to Retained Earnings:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Net Income = $510,000 - $450,000 = $60,000<br/>
+                                <br/>
+                                Dr. Income Summary               $60,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Retained Earnings            $60,000<br/>
+                                (To close net income to retained earnings)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Perform closing entries annually. Some companies also do quarterly closes.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Dividend Distributions">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Paying Dividends to Shareholders</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Dividend Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Dividends are distributions of retained earnings to shareholders:<br/>
+                                <br/>
+                                1. <strong>Declaration Date:</strong> Board declares dividend<br/>
+                                2. <strong>Record Date:</strong> Determine who receives dividend<br/>
+                                3. <strong>Payment Date:</strong> Cash paid to shareholders
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Dividend Journal Entries:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Declaration Date:<br/>
+                                Dr. Retained Earnings           $20,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Dividends Payable           $20,000<br/>
+                                (To record dividend declaration)<br/>
+                                <br/>
+                                Payment Date:<br/>
+                                Dr. Dividends Payable           $20,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash                        $20,000<br/>
+                                (To record dividend payment)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Dividend Considerations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Can only pay dividends if sufficient retained earnings<br/>
+                                • Must have cash available<br/>
+                                • Board approval required<br/>
+                                • Legal restrictions may apply<br/>
+                                • Tax implications for shareholders
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Cannot pay dividends if retained earnings is negative (accumulated deficit)!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Statement of Retained Earnings">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Financial Statement Presentation</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Statement of Retained Earnings:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                ABC Company<br/>
+                                Statement of Retained Earnings<br/>
+                                For Year Ended December 31, 2025<br/>
+                                <br/>
+                                Retained Earnings, Jan 1, 2025      $100,000<br/>
+                                <br/>
+                                Add: Net Income                       $60,000<br/>
+                                <br/>
+                                Less: Dividends Declared             ($15,000)<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prior Period Adjustment      ($5,000)<br/>
+                                <br/>
+                                Retained Earnings, Dec 31, 2025     $140,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Balance Sheet Presentation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Stockholders' Equity:<br/>
+                                &nbsp;&nbsp;Common Stock ($1 par, 10,000 shares)  $10,000<br/>
+                                &nbsp;&nbsp;Additional Paid-in Capital             $50,000<br/>
+                                &nbsp;&nbsp;Retained Earnings                     $140,000<br/>
+                                &nbsp;&nbsp;Treasury Stock                        ($20,000)<br/>
+                                Total Stockholders' Equity            $180,000
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Retained Earnings links the Income Statement (via Net Income) to the Balance Sheet.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Negative Retained Earnings">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Accumulated Deficit</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>What is an Accumulated Deficit?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                When cumulative losses exceed cumulative profits, retained earnings becomes negative. 
+                                This is called an "Accumulated Deficit."<br/>
+                                <br/>
+                                <strong>Example:</strong><br/>
+                                Beginning RE: $50,000<br/>
+                                Net Loss (year): ($80,000)<br/>
+                                Ending RE: ($30,000) ← Accumulated Deficit
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Implications:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Cannot legally pay dividends<br/>
+                                • May indicate financial distress<br/>
+                                • Common for startups/growth companies<br/>
+                                • Shown in parentheses on balance sheet<br/>
+                                • Must return to positive before distributions
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Recovering from Deficit:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Generate profits over time<br/>
+                                • Profits accumulate to reduce deficit<br/>
+                                • May take several years<br/>
+                                • Sometimes cleared through reorganization
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Caution:</strong> Large or growing deficits may signal serious business problems requiring immediate attention!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Is Retained Earnings the same as cash?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: NO! Retained Earnings is equity (profits retained). Cash is an asset. A company can have high retained earnings but be cash-poor.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How often do we close to retained earnings?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: At least annually at fiscal year-end. Some companies close quarterly or monthly for internal reporting.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can retained earnings be negative?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes - called "Accumulated Deficit." Occurs when cumulative losses exceed cumulative profits. Common for startups.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What happens to retained earnings when we sell the company?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: In asset sale, retained earnings stays with selling entity. In stock sale, retained earnings transfers with company to new owners.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we distribute all retained earnings as dividends?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No - need to retain earnings for growth, working capital, emergencies. Balance distribution with reinvestment needs.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

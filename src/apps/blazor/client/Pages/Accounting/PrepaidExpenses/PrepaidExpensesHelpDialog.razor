@@ -1,0 +1,301 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.PrepaidExpenses
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Prepaid Expenses Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Prepaid Expenses?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Prepaid Expenses</MudText>
+                        <MudText Typo="Typo.body2">
+                            Prepaid expenses are advance payments for goods or services to be received in future periods. 
+                            They are recorded as assets and then expensed over time as the benefit is received, following 
+                            the matching principle in accrual accounting.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Prepaid Expenses:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Insurance:</strong> Annual premium paid in advance<br/>
+                                • <strong>Rent:</strong> First/last month or quarterly rent<br/>
+                                • <strong>Subscriptions:</strong> Software licenses, memberships<br/>
+                                • <strong>Maintenance Contracts:</strong> Annual service agreements<br/>
+                                • <strong>Property Taxes:</strong> Prepaid taxes<br/>
+                                • <strong>Supplies:</strong> Large bulk purchases
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Track Prepaid Expenses?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Match expense with period benefited<br/>
+                                • Show accurate financial position<br/>
+                                • Comply with GAAP accrual accounting<br/>
+                                • Avoid over/understating expenses<br/>
+                                • Track value remaining
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Prepaid = Asset until consumed, then becomes Expense.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Recording Prepaid Expenses">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Record Prepaids</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Initial Recording Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Description</strong> (e.g., "Annual Insurance")<br/>
+                                3. Select <strong>Expense Category</strong> (Insurance, Rent, etc.)<br/>
+                                4. Enter <strong>Total Amount</strong> paid<br/>
+                                5. Enter <strong>Start Date</strong> (when coverage begins)<br/>
+                                6. Enter <strong>End Date</strong> (when coverage ends)<br/>
+                                7. Select <strong>Amortization Method</strong> (Straight-line typically)<br/>
+                                8. System calculates <strong>Monthly Expense</strong><br/>
+                                9. Attach <strong>Invoice/Contract</strong><br/>
+                                10. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example - Annual Insurance:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Total Premium: $12,000<br/>
+                                Coverage: Jan 1 - Dec 31 (12 months)<br/>
+                                Monthly Expense: $12,000 / 12 = $1,000/month<br/>
+                                <br/>
+                                Initial Entry (Jan 1):<br/>
+                                Dr. Prepaid Insurance         $12,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash                      $12,000<br/>
+                                (To record prepaid annual insurance)<br/>
+                                <br/>
+                                Monthly Amortization (each month):<br/>
+                                Dr. Insurance Expense         $1,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Prepaid Insurance         $1,000<br/>
+                                (To amortize 1 month of insurance)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Set up automatic monthly amortization to avoid forgetting!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Amortization Schedule">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Tracking Expense Over Time</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Sample Amortization Schedule:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Prepaid Insurance: $12,000 (12 months)<br/>
+                                <br/>
+                                Month    Beg Balance  Expense  End Balance<br/>
+                                ====     ===========  =======  ===========<br/>
+                                Jan      $12,000      $1,000   $11,000<br/>
+                                Feb      $11,000      $1,000   $10,000<br/>
+                                Mar      $10,000      $1,000   $9,000<br/>
+                                Apr      $9,000       $1,000   $8,000<br/>
+                                May      $8,000       $1,000   $7,000<br/>
+                                Jun      $7,000       $1,000   $6,000<br/>
+                                Jul      $6,000       $1,000   $5,000<br/>
+                                Aug      $5,000       $1,000   $4,000<br/>
+                                Sep      $4,000       $1,000   $3,000<br/>
+                                Oct      $3,000       $1,000   $2,000<br/>
+                                Nov      $2,000       $1,000   $1,000<br/>
+                                Dec      $1,000       $1,000   $0
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Balance Sheet Presentation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Current Asset</strong> if expires within 1 year<br/>
+                                • Shows amount not yet expensed<br/>
+                                • Decreases monthly as amortized<br/>
+                                • Should reach zero at end date
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Review prepaid balances monthly - catch amortization errors early!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Month-End Procedures">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Monthly Amortization Process</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Month-End Checklist:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ Review all active prepaid expenses<br/>
+                                □ Verify amortization amounts<br/>
+                                □ Post monthly amortization entries<br/>
+                                □ Review ending balances<br/>
+                                □ Identify expired prepaids (balance = $0)<br/>
+                                □ Close fully amortized items<br/>
+                                □ Reconcile prepaid asset account to detail<br/>
+                                □ Document any adjustments
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Automatic vs. Manual Amortization:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Automatic:</strong><br/>
+                                • System generates monthly entries<br/>
+                                • Reduces manual work<br/>
+                                • Consistent, no forgetting<br/>
+                                • Review and approve monthly<br/>
+                                <br/>
+                                <strong>Manual:</strong><br/>
+                                • Create entry each month<br/>
+                                • More control<br/>
+                                • Risk of forgetting<br/>
+                                • Use for irregular amortization
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Missed amortization entries understate expenses and overstate assets!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Special Situations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Handling Complex Scenarios</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Early Termination:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                If prepaid service cancelled early:<br/>
+                                <br/>
+                                Example: Cancel insurance after 6 months<br/>
+                                Remaining balance: $6,000<br/>
+                                Refund received: $5,500<br/>
+                                <br/>
+                                Dr. Cash                      $5,500<br/>
+                                Dr. Insurance Expense         $500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Prepaid Insurance         $6,000<br/>
+                                (To record cancellation and loss)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Adjustments:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                If amount or period changes:<br/>
+                                • Calculate new monthly amount<br/>
+                                • Adjust remaining balance<br/>
+                                • Update amortization schedule<br/>
+                                • Document reason for change
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Year-End Review:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Review all prepaid balances<br/>
+                                • Confirm amortization complete<br/>
+                                • Identify any missed entries<br/>
+                                • True-up if necessary<br/>
+                                • Plan for upcoming year renewals
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Set calendar reminders for renewal dates to avoid lapses in coverage!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's the minimum amount to record as prepaid?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Many companies set threshold (e.g., $1,000) for materiality. Below threshold, expense immediately for simplicity.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we expense the entire prepaid immediately?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Not for GAAP purposes if material and benefits future periods. Must amortize to match expense with benefit period.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if we forget to amortize for several months?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Catch up in current month - record cumulative missed expense. Update schedule going forward. Document correction.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we handle prepaid expenses that span fiscal years?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Continue amortizing normally. Year-end: portion expensed in current year shows on P&L, remainder on balance sheet as asset.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we track small prepaids (under $500)?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Depends on materiality. Small amounts often expensed immediately for administrative efficiency. Set company policy threshold.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

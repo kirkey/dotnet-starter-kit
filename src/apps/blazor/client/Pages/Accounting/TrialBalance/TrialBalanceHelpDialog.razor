@@ -1,0 +1,302 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.TrialBalance
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Trial Balance Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is a Trial Balance?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Trial Balance</MudText>
+                        <MudText Typo="Typo.body2">
+                            A Trial Balance is a list of all general ledger accounts with their debit or credit balances as of a specific date. 
+                            It serves as a crucial verification tool to ensure that total debits equal total credits, validating the 
+                            fundamental double-entry bookkeeping principle.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Trial Balance Formula:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Total Debits = Total Credits<br/>
+                                <br/>
+                                MUST ALWAYS BALANCE!<br/>
+                                <br/>
+                                If not balanced = errors exist
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Trial Balance Matters:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Error Detection:</strong> Catches posting errors immediately<br/>
+                                • <strong>Verification:</strong> Confirms GL integrity<br/>
+                                • <strong>Financial Statement Source:</strong> Trial balance feeds into statements<br/>
+                                • <strong>Month-End Close:</strong> First step in closing process<br/>
+                                • <strong>Audit Support:</strong> Demonstrates accounting controls
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> If trial balance doesn't balance, financial statements are invalid - must find error!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Trial Balance Example">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Sample Trial Balance</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Sample Trial Balance - November 30, 2025:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Account #  Account Name              Debit       Credit<br/>
+                                =========  =======================  ==========  ==========<br/>
+                                1010       Cash                     P50,000<br/>
+                                1100       Accounts Receivable      P30,000<br/>
+                                1200       Inventory                P40,000<br/>
+                                1300       Prepaid Insurance                    P5,000<br/>
+                                1500       Equipment               P100,000<br/>
+                                1510       Accum. Depreciation                 (P20,000)<br/>
+                                2000       Accounts Payable                    P25,000<br/>
+                                2100       Wages Payable                       P10,000<br/>
+                                3000       Common Stock                        P100,000<br/>
+                                3100       Retained Earnings                   P30,000<br/>
+                                4000       Sales Revenue                       P150,000<br/>
+                                5000       Cost of Goods Sold      P60,000<br/>
+                                6000       Wage Expense            P20,000<br/>
+                                6100       Rent Expense            P10,000<br/>
+                                6200       Utilities Expense        P5,000<br/>
+                                =========  =======================  ==========  ==========<br/>
+                                TOTALS                             P315,000    P315,000<br/>
+                                <br/>
+                                ✓ BALANCED!
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> If doesn't balance, difference = clue to error type!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Types of Trial Balance">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Different Trial Balance Purposes</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1. Unadjusted Trial Balance:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Pulled before adjusting entries<br/>
+                                • Shows raw GL account balances<br/>
+                                • Used to identify what adjustments needed<br/>
+                                • Timing: Early in close process
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>2. Adjusted Trial Balance:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Pulled after adjusting entries posted<br/>
+                                • Shows accounts ready for financial statements<br/>
+                                • All accruals, deferrals, depreciation included<br/>
+                                • Timing: After month-end adjustments
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>3. Post-Closing Trial Balance:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Pulled after closing entries<br/>
+                                • Only permanent accounts (Balance Sheet)<br/>
+                                • No revenue/expense accounts (all closed)<br/>
+                                • Timing: After period close<br/>
+                                • Foundation for next period
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Unadjusted vs. Adjusted = before/after adjustments. Post-Closing = after period close.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Finding Errors When Out of Balance">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Troubleshooting Trial Balance Errors</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Step 1 - Verify Totals:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ Recalculate debit column total<br/>
+                                □ Recalculate credit column total<br/>
+                                □ Check for arithmetic errors<br/>
+                                □ Verify on calculator/Excel
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Step 2 - Check Difference Amount (Clues!):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Difference = P1,000<br/>
+                                • Could be a P1,000 entry on wrong side<br/>
+                                • Could be P1,000 entry not recorded<br/>
+                                <br/>
+                                Difference = P100<br/>
+                                • Look for P100 or P1,000 entries<br/>
+                                • Check decimal point errors<br/>
+                                <br/>
+                                Difference divisible by 2?<br/>
+                                • Debit recorded as credit or vice versa<br/>
+                                • Example: P500 entry on both sides = P1,000 diff
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Step 3 - Systematic Review:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ Review recent journal entries<br/>
+                                □ Check for entries with swapped debits/credits<br/>
+                                □ Verify each account posting<br/>
+                                □ Review GL detail for unusual amounts<br/>
+                                □ Check for posting to wrong account<br/>
+                                □ Look for duplicate entries
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Error Patterns:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Off by 1:</strong> Typo in amount<br/>
+                                • <strong>Off by 9:</strong> Transposed numbers (e.g., 45 vs 54)<br/>
+                                • <strong>Off by factor of 10:</strong> Decimal point error<br/>
+                                • <strong>Off by 2x amount:</strong> Debit/credit reversed
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Critical:</strong> Cannot generate financial statements if trial balance doesn't balance - must resolve!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Trial Balance Process">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Month-End Procedure</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Trial Balance in Close Cycle:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Post all transactions:</strong><br/>
+                                &nbsp;&nbsp;&nbsp;Record all journal entries for period<br/>
+                                <br/>
+                                2. <strong>Generate Unadjusted Trial Balance:</strong><br/>
+                                &nbsp;&nbsp;&nbsp;List all GL accounts with balances<br/>
+                                &nbsp;&nbsp;&nbsp;Verify debits = credits<br/>
+                                <br/>
+                                3. <strong>Identify adjusting entries needed:</strong><br/>
+                                &nbsp;&nbsp;&nbsp;Review for accruals/deferrals<br/>
+                                &nbsp;&nbsp;&nbsp;Calculate depreciation<br/>
+                                &nbsp;&nbsp;&nbsp;Review for unrecorded items<br/>
+                                <br/>
+                                4. <strong>Post adjusting entries:</strong><br/>
+                                &nbsp;&nbsp;&nbsp;Record all adjustments in GL<br/>
+                                <br/>
+                                5. <strong>Generate Adjusted Trial Balance:</strong><br/>
+                                &nbsp;&nbsp;&nbsp;Verify new debits = credits<br/>
+                                &nbsp;&nbsp;&nbsp;Ready for financial statements<br/>
+                                <br/>
+                                6. <strong>Prepare financial statements:</strong><br/>
+                                &nbsp;&nbsp;&nbsp;Use adjusted trial balance<br/>
+                                <br/>
+                                7. <strong>Close period:</strong><br/>
+                                &nbsp;&nbsp;&nbsp;Post closing entries<br/>
+                                &nbsp;&nbsp;&nbsp;Generate post-closing trial balance
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Trial balance is your monthly checkpoint - verify immediately if out of balance!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can trial balance balance but still have errors?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: YES! Trial balance only ensures debits=credits. Doesn't catch: wrong account, wrong amount, missing entries, duplicate entries.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How often should we generate trial balance?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: At minimum monthly at month-end. Many companies pull weekly or even daily for monitoring. More frequent = catch errors faster.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should revenue/expense accounts appear in post-closing trial balance?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: NO! Post-closing should only show permanent accounts (Assets, Liabilities, Equity). Revenue/expenses are closed to retained earnings.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if trial balance is off by P0.01?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Likely rounding difference. Check if any accounts have 3+ decimal places. May need to adjust rounding policy or investigate source system.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we generate financial statements if trial balance doesn't balance?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: NO - don't even try! Unbalanced trial balance invalidates everything. Find and fix error first. Statements would be unreliable.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

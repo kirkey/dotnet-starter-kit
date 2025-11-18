@@ -333,4 +333,17 @@ public partial class JournalEntries
             }
         }
     }
+
+    /// <summary>
+    /// Show journal entries help dialog.
+    /// </summary>
+    private async Task ShowJournalEntriesHelp()
+    {
+        await DialogService.ShowAsync<JournalEntriesHelpDialog>("Journal Entries Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

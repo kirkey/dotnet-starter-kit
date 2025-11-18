@@ -1,0 +1,256 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.Payees
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Payees Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Payees?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Payees</MudText>
+                        <MudText Typo="Typo.body2">
+                            Payees are individuals or entities to whom payments are made. The payee master file maintains 
+                            contact information, payment preferences, and tax details for all payment recipients including 
+                            vendors, contractors, employees, and other payment recipients.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Types of Payees:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Vendors:</strong> Suppliers of goods/services<br/>
+                                • <strong>Contractors:</strong> Independent contractors (1099)<br/>
+                                • <strong>Employees:</strong> Staff payroll<br/>
+                                • <strong>Landlords:</strong> Rent payments<br/>
+                                • <strong>Utilities:</strong> Service providers<br/>
+                                • <strong>Government:</strong> Tax payments<br/>
+                                • <strong>Other:</strong> Refunds, reimbursements
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Maintain accurate payee records for proper payment processing and tax compliance.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Payees">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Add Payees</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Payee Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Payee Name</strong> (full legal name)<br/>
+                                3. Select <strong>Payee Type</strong> (Vendor, Contractor, etc.)<br/>
+                                4. Enter <strong>Address</strong> (mailing address)<br/>
+                                5. Enter <strong>Contact Person</strong> (if applicable)<br/>
+                                6. Enter <strong>Phone Number</strong><br/>
+                                7. Enter <strong>Email Address</strong><br/>
+                                8. Enter <strong>Tax ID (EIN/SSN)</strong><br/>
+                                9. Select <strong>Payment Method</strong> (Check, ACH, Wire)<br/>
+                                10. Enter <strong>Bank Account Info</strong> (if ACH/Wire)<br/>
+                                11. Attach <strong>W-9 Form</strong><br/>
+                                12. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Collect W-9 before making first payment to ensure 1099 compliance!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Payment Methods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Different Ways to Pay</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Check Payment:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Traditional paper check<br/>
+                                • Mailed to payee address<br/>
+                                • Cost: $1-2 per check<br/>
+                                • Time: 3-7 days<br/>
+                                • Best for: Small vendors, one-time payments
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>ACH (Automated Clearing House):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Electronic bank transfer<br/>
+                                • Direct deposit to bank account<br/>
+                                • Cost: $0.25-1.50 per transaction<br/>
+                                • Time: 1-2 business days<br/>
+                                • Requires: Bank routing & account number<br/>
+                                • Best for: Regular payments, payroll
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Wire Transfer:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Immediate electronic transfer<br/>
+                                • Same-day settlement<br/>
+                                • Cost: $25-35 per transaction<br/>
+                                • Time: Same day<br/>
+                                • Best for: Large, urgent payments
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Cost Comparison:</strong> ACH saves 90%+ vs. checks. Wire costs 10x more than ACH but is instant.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="1099 Compliance">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Tax Reporting Requirements</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>When to Issue 1099-NEC:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Must issue if ALL conditions met:<br/>
+                                ✓ Paid for services (not goods)<br/>
+                                ✓ Paid $600 or more in year<br/>
+                                ✓ Payee is not a corporation<br/>
+                                ✓ Payee is US-based<br/>
+                                <br/>
+                                <strong>Examples requiring 1099:</strong><br/>
+                                • Independent contractors<br/>
+                                • Freelancers<br/>
+                                • Consultants<br/>
+                                • Attorneys (even corporations)<br/>
+                                • Rent payments
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>W-9 Collection:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Request W-9 from payee BEFORE first payment:<br/>
+                                • Verifies legal name<br/>
+                                • Confirms Tax ID (EIN or SSN)<br/>
+                                • Shows entity type (LLC, Corp, Individual)<br/>
+                                • Required for 1099 reporting<br/>
+                                • Keep on file for compliance
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Missing W-9s cause year-end scrambling. Collect proactively!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Payee Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Maintaining Payee Records</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Regular Maintenance:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Update addresses when changed<br/>
+                                ✓ Verify bank account info annually<br/>
+                                ✓ Renew W-9 forms every 3 years<br/>
+                                ✓ Inactivate unused payees<br/>
+                                ✓ Merge duplicate records<br/>
+                                ✓ Review payment methods for efficiency
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Security Considerations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Verify payee changes with phone call<br/>
+                                • Watch for fraudulent bank account changes<br/>
+                                • Require dual approval for new payees<br/>
+                                • Segregate duties (setup vs. payment)<br/>
+                                • Review inactive payees quarterly
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Fraud Alert:</strong> Scammers request bank account changes via email. Always verify by phone!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's the difference between a payee and a vendor?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Vendors are suppliers we buy from regularly. Payees include vendors plus anyone else we pay (contractors, employees, landlords, etc.).
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can one person be both a vendor and a contractor?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, but track separately if different payment terms or 1099 requirements. May need separate payee records.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we switch a payee from check to ACH?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Obtain voided check or bank letter with routing & account numbers. Update payment method in payee record. Verify first payment.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we delete payees?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Don't delete - mark inactive instead. Need history for tax reporting and audits. Only delete if never paid.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if payee refuses to provide W-9?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: You may be required to backup withhold 24% and remit to IRS. Consult tax advisor. Some may not want to do business under these terms.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

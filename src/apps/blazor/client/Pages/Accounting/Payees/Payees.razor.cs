@@ -69,4 +69,17 @@ public partial class Payees
                 await Client.PayeeUpdateEndpointAsync("1", id, viewModel.Adapt<PayeeUpdateCommand>());
             },
             deleteFunc: async id => await Client.PayeeDeleteEndpointAsync("1", id));
+
+    /// <summary>
+    /// Show payees help dialog.
+    /// </summary>
+    private async Task ShowPayeesHelp()
+    {
+        await DialogService.ShowAsync<PayeesHelpDialog>("Payees Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

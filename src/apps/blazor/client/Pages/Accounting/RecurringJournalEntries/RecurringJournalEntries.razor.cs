@@ -163,5 +163,18 @@ public partial class RecurringJournalEntries
         var options = new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true, CloseOnEscapeKey = true };
         await DialogService.ShowAsync<RecurringJournalEntryDetailsDialog>("Template Details", parameters, options);
     }
+
+    /// <summary>
+    /// Show recurring journal entries help dialog.
+    /// </summary>
+    private async Task ShowRecurringJournalEntriesHelp()
+    {
+        await DialogService.ShowAsync<RecurringJournalEntriesHelpDialog>("Recurring Journal Entries Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

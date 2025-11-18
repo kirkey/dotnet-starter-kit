@@ -76,4 +76,17 @@ public partial class Projects
 
         return Task.CompletedTask;
     }
+
+    /// <summary>
+    /// Show projects help dialog.
+    /// </summary>
+    private async Task ShowProjectsHelp()
+    {
+        await DialogService.ShowAsync<ProjectsHelpDialog>("Projects Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

@@ -150,5 +150,18 @@ public partial class PrepaidExpenses
         var options = new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true, CloseButton = true, CloseOnEscapeKey = true };
         await DialogService.ShowAsync<PrepaidExpenseDetailsDialog>("Prepaid Expense Details", parameters, options);
     }
+
+    /// <summary>
+    /// Show prepaid expenses help dialog.
+    /// </summary>
+    private async Task ShowPrepaidExpensesHelp()
+    {
+        await DialogService.ShowAsync<PrepaidExpensesHelpDialog>("Prepaid Expenses Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

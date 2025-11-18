@@ -265,5 +265,18 @@ public partial class RetainedEarnings
             parameters,
             options);
     }
+
+    /// <summary>
+    /// Show retained earnings help dialog.
+    /// </summary>
+    private async Task ShowRetainedEarningsHelp()
+    {
+        await DialogService.ShowAsync<RetainedEarningsHelpDialog>("Retained Earnings Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
