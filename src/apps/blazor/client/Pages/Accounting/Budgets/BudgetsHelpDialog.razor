@@ -1,0 +1,409 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.Budgets
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Budgets Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Budget Management?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Budgets</MudText>
+                        <MudText Typo="Typo.body2">
+                            A budget is a financial plan that projects revenues, expenses, and cash flows for a future period. 
+                            Budget management compares actual results against budgeted amounts to monitor financial performance and enable course corrections.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Budgets Are Important:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Planning:</strong> Establish financial targets and goals<br/>
+                                • <strong>Control:</strong> Monitor spending and prevent overspending<br/>
+                                • <strong>Performance:</strong> Measure actual vs. budget performance<br/>
+                                • <strong>Decision Making:</strong> Identify where to allocate resources<br/>
+                                • <strong>Accountability:</strong> Hold departments responsible for budgets<br/>
+                                • <strong>Forecasting:</strong> Plan for future needs based on trends
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Budget for multiple scenarios (best case, realistic, worst case).
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Budget Types">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Different Budget Types Explained</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Operating Budget:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Projects revenues and operating expenses for the fiscal period<br/>
+                                • Most common budget type<br/>
+                                • Includes sales, COGS, operating expenses, salaries, utilities, etc.<br/>
+                                • Typically prepared at department level and rolled up to company level
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Capital Budget:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Projects spending on fixed assets (equipment, buildings, vehicles)<br/>
+                                • Longer time horizon (1-5 years)<br/>
+                                • Includes purchase price, installation, training, etc.<br/>
+                                • Used for major one-time purchases requiring approval
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Cash Flow Budget:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Projects cash inflows and outflows by period (weekly, monthly)<br/>
+                                • Addresses timing differences (when cash actually moves)<br/>
+                                • Essential for managing working capital and loan requirements<br/>
+                                • Different from profit (which is accounting-based)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Master Budget:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Comprehensive budget including all operating, capital, and cash components<br/>
+                                • Integrates all departments and functions<br/>
+                                • Used for company-wide financial planning
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Static Budget vs. Flexible Budget:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Static Budget:</strong> Fixed amounts based on expected activity level<br/>
+                                • <strong>Flexible Budget:</strong> Adjusts for actual activity level achieved<br/>
+                                • <br/>
+                                Example: If revenue expected $100K but actual $120K:<br/>
+                                - Static budget: Compare to fixed amounts<br/>
+                                - Flexible budget: Adjust budget amounts proportionally to $120K level
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Most companies use multiple budget types for different planning purposes.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Budgets">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Create a Budget</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Budget Creation Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Budget Name</strong> (e.g., "2026 Operating Budget")<br/>
+                                3. Select <strong>Accounting Period</strong> (if budget covers multiple periods, select first)<br/>
+                                4. Enter <strong>Fiscal Year</strong> (e.g., 2026)<br/>
+                                5. Select <strong>Budget Type</strong> (Operating, Capital, Cash Flow, Master, Static, or Flexible)<br/>
+                                6. Set <strong>Budget Status</strong> (Draft, Approved, Active, Closed)<br/>
+                                7. Add budget line items or import from prior year<br/>
+                                8. Click <strong>"Save"</strong> to save as draft<br/>
+                                9. Assign to department managers for detailed input<br/>
+                                10. Review and approve when complete
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Budget Line Items:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>GL Account:</strong> Link to Chart of Accounts<br/>
+                                • <strong>Budget Amount:</strong> Projected amount for the period<br/>
+                                • <strong>Department:</strong> Which department owns the budget<br/>
+                                • <strong>Cost Center:</strong> For tracking by cost center<br/>
+                                • <strong>Project:</strong> If budget relates to specific project<br/>
+                                • <strong>Notes:</strong> Assumptions or explanations
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Start with prior year budget and adjust for expected changes (salary increases, inflation, growth).
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Budget vs. Actual Analysis">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Comparing Budget to Actual Results</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Budget vs. Actual Variance:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Variance = Actual - Budget<br/>
+                                <br/>
+                                • <strong>Favorable Variance:</strong> Better than budget (less expense, more revenue)<br/>
+                                • <strong>Unfavorable Variance:</strong> Worse than budget (more expense, less revenue)<br/>
+                                • <strong>Zero Variance:</strong> Exactly on budget (rare!)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Variance Analysis Example:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Salaries Budget:       $50,000<br/>
+                                Salaries Actual:       $52,500<br/>
+                                Variance:              $2,500 (unfavorable)<br/>
+                                Variance %:            5% over budget<br/>
+                                <br/>
+                                Cause: Additional contractor hired for 6 months
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Variance Investigation Rules:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Investigate Large Variances:</strong> >10% or >$10,000 typically<br/>
+                                • <strong>Identify Root Cause:</strong> Timing, volume, price, efficiency<br/>
+                                • <strong>Determine Impact:</strong> One-time or ongoing issue?<br/>
+                                • <strong>Plan Action:</strong> How will it be addressed?<br/>
+                                • <strong>Reforecast:</strong> Update budget for remainder of year if needed
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Don't ignore small variances in aggregate - many small overages add up!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Budget Phases">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Budget Lifecycle Phases</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Draft Phase:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Budget being prepared, not yet finalized<br/>
+                                • Can be edited by budget owner<br/>
+                                • Awaiting management review and approval
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Approved Phase:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Budget reviewed and approved by management<br/>
+                                • Ready to activate for the fiscal period<br/>
+                                • Cannot be edited (controls prevent changes)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Active Phase:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Budget is currently in effect for the period<br/>
+                                • Actual transactions are recorded and compared<br/>
+                                • Used for purchase orders, expense approvals<br/>
+                                • May allow amendments for major changes
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Closed Phase:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Fiscal period ended, budget is closed<br/>
+                                • No new transactions recorded against budget<br/>
+                                • Archived for historical reference<br/>
+                                • Final variance analysis performed
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Budget Management Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Tips for Effective Budgeting</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Budget Development:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Involve department managers (they know their departments best)<br/>
+                                • Use historical data plus adjustments for changes<br/>
+                                • Build in contingency for unknowns (typically 5-10%)<br/>
+                                • Ensure accounts align with Chart of Accounts<br/>
+                                • Document assumptions and drivers
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Budget Monitoring:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Review budget vs. actual monthly, not just year-end<br/>
+                                • Investigate variances >10% promptly<br/>
+                                • Reforecast mid-year if significant changes occur<br/>
+                                • Communicate variances and corrective actions<br/>
+                                • Track leading indicators (orders, headcount) not just spending
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Budget Discipline:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Don't overspend budgets without approval<br/>
+                                • Use budget as decision-making tool<br/>
+                                • Hold managers accountable to budgets<br/>
+                                • Balance control with flexibility<br/>
+                                • Learn from budget misses for next year
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Zero-Based Budgeting:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Start from zero rather than adjusting prior year:<br/>
+                                • Eliminates "we always spend this" mentality<br/>
+                                • Forces justification of all spending<br/>
+                                • Useful annually or for new initiatives<br/>
+                                • More time-consuming than incremental budgeting<br/>
+                                • Identifies unnecessary expenses
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Key Success Factor:</strong> Budgets are planning and control tools - use them actively, not just reports!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Budget Reporting">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Budget Reports and Analysis</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Budget Reports:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Budget vs. Actual Report:</strong> Side-by-side comparison with variances<br/>
+                                • <strong>Variance Analysis:</strong> Detailed breakdown of differences<br/>
+                                • <strong>Department Summary:</strong> Budget performance by department<br/>
+                                • <strong>GL Account Analysis:</strong> Performance by account<br/>
+                                • <strong>Trend Report:</strong> Budget vs. actual over multiple periods<br/>
+                                • <strong>Forecast Report:</strong> Year-end projection based on actual YTD
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Budget Report Components:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Account    Budget    Actual    Variance    Var %<br/>
+                                ========== ========= ========= ========== ========<br/>
+                                5010       $50,000   $52,500   $2,500U    5.0%U<br/>
+                                5020       $30,000   $28,750   ($1,250)F  (4.2%)F<br/>
+                                5030       $20,000   $20,000   $0         0.0%
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Export budget reports for board presentations and strategic planning.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How often should budgets be reviewed?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Minimum monthly, ideally weekly for active control. Many companies do quarterly deep dives and annual planning.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's a reasonable variance threshold?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Typically 10% or $5,000-$10,000, whichever is greater. Small variances are normal - focus on material ones.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we change the budget mid-year?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, but document the reasons and get approval. Keep original budget for comparison. Track "Revised Budget" separately.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we handle unexpected opportunities?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Use budget amendments or supplemental budgets. Get approval before spending. Trade off with other budget items if needed.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if a department is constantly over budget?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Investigate root causes, set spending controls, and adjust next year's budget based on actual performance patterns.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

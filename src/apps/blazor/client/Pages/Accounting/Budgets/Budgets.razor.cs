@@ -51,6 +51,19 @@ public partial class Budgets
 
         return Task.CompletedTask;
     }
+
+    /// <summary>
+    /// Show budgets help dialog.
+    /// </summary>
+    private async Task ShowBudgetsHelp()
+    {
+        await DialogService.ShowAsync<BudgetsHelpDialog>("Budgets Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 public class BudgetViewModel

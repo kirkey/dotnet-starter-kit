@@ -63,5 +63,18 @@ public partial class Customers
             entityName: "Customer",
             entityNamePlural: "Customers",
             entityResource: FshResources.Accounting);
+
+    /// <summary>
+    /// Show customers help dialog.
+    /// </summary>
+    private async Task ShowCustomersHelp()
+    {
+        await DialogService.ShowAsync<CustomersHelpDialog>("Customers Management Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

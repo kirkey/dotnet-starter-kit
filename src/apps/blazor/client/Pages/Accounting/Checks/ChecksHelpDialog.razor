@@ -1,0 +1,529 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.Checks
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Check Management Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Check Management?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Check Processing</MudText>
+                        <MudText Typo="Typo.body2">
+                            Check management is the process of issuing, tracking, and reconciling checks for vendor payments, employee expenses, and other cash disbursements. 
+                            It ensures proper controls, accurate records, and fraud prevention.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Check Lifecycle:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Available:</strong> New check stock received and recorded<br/>
+                                2. <strong>Issued:</strong> Check written and sent to payee<br/>
+                                3. <strong>Cleared:</strong> Check deposited by payee and cleared bank<br/>
+                                4. <strong>Void:</strong> Check cancelled (errors, duplicates)<br/>
+                                5. <strong>Stale:</strong> Uncashed check older than 6 months<br/>
+                                6. <strong>Stop Payment:</strong> Payment halted at bank request
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Track all checks from issue through clearing for complete audit trail.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Check Statuses & Lifecycle">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Check Status Workflow</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Available:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • New checks added to system<br/>
+                                • Sequential numbering maintained<br/>
+                                • Ready to be issued<br/>
+                                • No cash impact yet
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Issued:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Check has been written with amount, payee, and date<br/>
+                                • Cash reserved (holds amount on balance sheet)<br/>
+                                • Typically occurs on or before check date<br/>
+                                • Can be printed or handwritten<br/>
+                                • Track delivery to payee
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Cleared:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Payee deposited check at their bank<br/>
+                                • Check cleared through banking system<br/>
+                                • Appears on your bank statement<br/>
+                                • Cash impact finalized<br/>
+                                • Matched to payment in accounts payable
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Void:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Check cancelled and not used<br/>
+                                • Reasons: Errors, duplicates, corrections<br/>
+                                • Cash hold released<br/>
+                                • Physically voided (marked, destroyed)<br/>
+                                • Creates audit trail for missing checks
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Stale:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Check uncashed for more than 6 months<br/>
+                                • Bank may refuse to honor stale check<br/>
+                                • Need to contact payee and reissue<br/>
+                                • Write-off to income if payee can't be found<br/>
+                                • Subject to escheatment laws (unclaimed property)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Stop Payment:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Bank instructed not to honor check<br/>
+                                • Initiated by check issuer<br/>
+                                • Reasons: Lost check, unauthorized payment, error<br/>
+                                • Bank charges fee (~$25-$35)<br/>
+                                • Does not reverse accounting entry automatically
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Stale-dated checks create liability issues - follow up on uncashed checks!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Issuing Checks">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Issue a Check</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Check Issuance Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Select check from Available status<br/>
+                                2. Click <strong>"Issue Check"</strong> action<br/>
+                                3. Enter <strong>Check Date</strong> (date check will be dated)<br/>
+                                4. Enter <strong>Payee Name</strong> (who check is for)<br/>
+                                5. Enter <strong>Amount</strong> in words and numbers<br/>
+                                6. Select <strong>Bank Account</strong> (which account to draw from)<br/>
+                                7. Enter <strong>Reference</strong> (invoice #, bill #, etc.)<br/>
+                                8. Add <strong>Memo</strong> (what check is for)<br/>
+                                9. Select <strong>Payee Address</strong> (for mailing)<br/>
+                                10. Click <strong>"Issue"</strong> to finalize<br/>
+                                11. Print check (or it's handwritten)<br/>
+                                12. Sign check (authorized signers only)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>What to Check Before Issuing:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Amount matches supporting document (bill, invoice, etc.)<br/>
+                                ✓ Payee name is correct (no typos!)<br/>
+                                ✓ Bank account correct (right company, right location)<br/>
+                                ✓ Check date is reasonable (not past-dated or future-dated)<br/>
+                                ✓ Authorization/approval obtained if required<br/>
+                                ✓ Check number is sequential (no gaps)<br/>
+                                ✓ Both authorized signers available for signing
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (When Issued):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Accounts Payable (or Expense)   $1,000<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash/Bank Account            $1,000
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Critical:</strong> NEVER issue checks without proper authorization and supporting documentation!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Voiding Checks">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Void a Check</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>When to Void a Check:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Issued in Error:</strong> Wrong amount, wrong payee<br/>
+                                • <strong>Duplicate Payment:</strong> Paid same bill twice<br/>
+                                • <strong>Incorrect Information:</strong> Address wrong, name misspelled<br/>
+                                • <strong>Stale or Lost:</strong> Check won't be used
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Void Check Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Locate check in Available or Issued status<br/>
+                                2. Click <strong>"Void Check"</strong> action<br/>
+                                3. Enter <strong>Reason</strong> (document why voiding)<br/>
+                                4. Click <strong>"Void"</strong> to confirm<br/>
+                                5. Physically void the check (mark "VOID" across face)<br/>
+                                6. Keep voided check for audit trail
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (When Voided):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Cash/Bank Account              $1,000<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Payable (or Expense)  $1,000
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Important:</strong> Voiding reverses the cash impact. Handle voided checks separately in reconciliation.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Clearing Checks">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Recording Check Clearance</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>What Happens When Check Clears:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Payee deposited the check<br/>
+                                • Check appeared on bank statement<br/>
+                                • Funds withdrawn from bank account<br/>
+                                • Payment is now confirmed<br/>
+                                • Status updated to "Cleared"
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Marking Check as Cleared:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Receive monthly bank statement<br/>
+                                2. Locate check on statement<br/>
+                                3. Match to issued check in system<br/>
+                                4. Click <strong>"Clear Check"</strong> action<br/>
+                                5. Enter <strong>Clear Date</strong> (date on bank statement)<br/>
+                                6. Optionally add <strong>Notes</strong><br/>
+                                7. Click <strong>"Clear"</strong> to confirm
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>During Bank Reconciliation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Outstanding checks (issued but not cleared) = deduction from bank balance<br/>
+                                • Cleared checks = remove from outstanding list<br/>
+                                • No accounting entry needed to clear checks<br/>
+                                • Just update status for tracking
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Reconcile checks monthly to find discrepancies early.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Stopping Payments">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Stop Payment on a Check</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Stop Payment Scenarios:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Lost Check:</strong> Check was lost in mail<br/>
+                                • <strong>Dispute:</strong> Payee disputes services received<br/>
+                                • <strong>Unauthorized Payment:</strong> Check issued fraudulently<br/>
+                                • <strong>Duplicate Payment:</strong> Paid same bill twice<br/>
+                                • <strong>Amount Error:</strong> Wrong amount written
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Stop Payment Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Contact bank IMMEDIATELY (by phone first)<br/>
+                                2. Provide check number and amount<br/>
+                                3. Bank will issue stop payment order<br/>
+                                4. Get confirmation from bank<br/>
+                                5. In system, click <strong>"Stop Payment"</strong> action<br/>
+                                6. Enter <strong>Reason</strong><br/>
+                                7. Enter <strong>Stop Payment Fee</strong><br/>
+                                8. Click <strong>"Stop Payment"</strong><br/>
+                                9. Contact payee to explain (if appropriate)<br/>
+                                10. Reissue check if still owed
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Journal Entry (For Stop Payment Fee):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Dr. Bank Fees/Service Charges    $30<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash/Bank Account               $30
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Time Sensitive!</strong> Stop payments must be done before check clears (usually within 24 hours).
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Check Security & Fraud Prevention">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Protecting Against Check Fraud</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Check Fraud Schemes:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Check Washing:</strong> Altering payee or amount<br/>
+                                • <strong>Counterfeit Checks:</strong> Fake checks using company info<br/>
+                                • <strong>Forged Signatures:</strong> Unauthorized check signers<br/>
+                                • <strong>Duplicate Payments:</strong> Same check paid twice<br/>
+                                • <strong>Check Kiting:</strong> Floating checks between accounts
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Security Controls:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Dual Signers:</strong> Require two authorized signatures on large checks<br/>
+                                • <strong>Signature Cards:</strong> Keep updated at bank<br/>
+                                • <strong>Sequential Numbering:</strong> Account for all check numbers<br/>
+                                • <strong>Positive Pay:</strong> Provide issue file to bank, they only pay matching checks<br/>
+                                • <strong>Account Reconciliation:</strong> Monthly bank reconciliation catches fraud<br/>
+                                • <strong>Segregation of Duties:</strong> Different people approve, write, sign checks<br/>
+                                • <strong>Secure Storage:</strong> Lock blank checks when not in use<br/>
+                                • <strong>Voided Check Retention:</strong> Keep all voided checks
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Red Flags for Fraud:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                🚩 Check stock missing or can't be located<br/>
+                                🚩 High number of voided checks<br/>
+                                🚩 Unusual payees (employee names, unfamiliar vendors)<br/>
+                                🚩 Duplicate check numbers<br/>
+                                🚩 Checks to personal addresses<br/>
+                                🚩 Round dollar amounts (suspicious pattern)<br/>
+                                🚩 Lack of supporting documentation
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Critical:</strong> NEVER authorize checks without supporting documentation and proper approval!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Check Printing">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Printing Checks</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Check Stock Options:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Pre-Printed Checks:</strong> Bank/company info already printed, just add details<br/>
+                                • <strong>Blank Stock:</strong> Print all information from system<br/>
+                                • <strong>Multi-Copy:</strong> Original + copies for accounting/vendor
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Printing Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Select checks to print<br/>
+                                2. Click <strong>"Print Checks"</strong> action<br/>
+                                3. Load check stock in printer<br/>
+                                4. System prints check details (amounts in numbers/words)<br/>
+                                5. Check comes out ready for signature<br/>
+                                6. Verify all details print correctly<br/>
+                                7. Sign checks (authorized signers only)<br/>
+                                8. Envelopes and mail<br/>
+                                9. Update status to "Issued"
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Security in Printing:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Use secure printer (access control)<br/>
+                                • Don't leave printed checks unattended<br/>
+                                • Shred misprints (don't save)<br/>
+                                • Monitor who has access to printers<br/>
+                                • Use checks with security features (watermarks, microprinting)
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Check Reconciliation">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Reconciling Checks with Bank</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Outstanding Checks:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Checks issued but not yet cleared (cashed) by payee:<br/>
+                                • <strong>Normal Duration:</strong> 3-10 business days<br/>
+                                • <strong>More than 30 days:</strong> Follow up with payee<br/>
+                                • <strong>More than 90 days:</strong> Consider stop payment or reissue<br/>
+                                • <strong>More than 6 months:</strong> Stale-dated, likely won't clear
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Monthly Reconciliation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Receive bank statement<br/>
+                                2. Identify which checks cleared<br/>
+                                3. Mark cleared checks in system<br/>
+                                4. List all outstanding checks<br/>
+                                5. Verify amounts match<br/>
+                                6. Investigate any discrepancies<br/>
+                                7. Follow up on stale checks<br/>
+                                8. Complete bank reconciliation
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Outstanding Check Aging:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Check #  Payee      Amount    Days Out   Status<br/>
+                                1001     Acme Corp  $5,000    3          Normal<br/>
+                                1002     Vendor Co  $2,500    45         Follow Up<br/>
+                                1003     Bob Smith  $1,000    180        Stale - Reissue
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Monitor outstanding checks monthly - old outstanding checks impact cash position!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How long are blank checks valid?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Banks typically honor checks for 6 months. After that, checks become "stale-dated" and banks may refuse payment.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we handwrite checks?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, but they must have routing/account in MICR format. Most companies use printed checks for security and appearance.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if we mail a check and recipient says they didn't get it?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Request stop payment, then reissue. If original check eventually shows up, you can reconcile it.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we use electronic payments instead of checks?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes! ACH and wire transfers are faster, safer, and more cost-effective. Many companies transition away from checks.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How many authorized check signers should we have?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Typically 2-3 people. Larger checks may require dual signatures. Provide signatures to bank to prevent forgeries.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

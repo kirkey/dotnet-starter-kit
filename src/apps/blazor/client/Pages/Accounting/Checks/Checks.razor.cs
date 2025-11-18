@@ -393,4 +393,17 @@ public partial class Checks
             _ = _table.ReloadDataAsync();
         }
     }
+
+    /// <summary>
+    /// Show checks help dialog.
+    /// </summary>
+    private async Task ShowChecksHelp()
+    {
+        await DialogService.ShowAsync<ChecksHelpDialog>("Check Management Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

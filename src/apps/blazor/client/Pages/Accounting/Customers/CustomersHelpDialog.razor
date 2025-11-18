@@ -1,0 +1,499 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.Customers
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Customers Management Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is Customer Management?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding the Customer Master File</MudText>
+                        <MudText Typo="Typo.body2">
+                            Customer management maintains the master record of all customers who purchase goods or services from your company. 
+                            These records are essential for invoicing, accounts receivable, and customer relationship management.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Customer Records Matter:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Invoicing:</strong> Accurate billing addresses and contact info<br/>
+                                • <strong>AR Tracking:</strong> Link sales and payments to customers<br/>
+                                • <strong>Credit Management:</strong> Track credit limits and payment history<br/>
+                                • <strong>Collections:</strong> Contact information for following up on unpaid invoices<br/>
+                                • <strong>Analytics:</strong> Understand revenue by customer, market, geography<br/>
+                                • <strong>Compliance:</strong> 1099 reporting for contract labor, tax withholding
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Keep customer records current and complete - accurate data enables better decisions.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Customer Types">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Different Types of Customers</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Individual:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Personal consumer customers<br/>
+                                • Typically smaller transactions<br/>
+                                • May pay by credit card, cash, check<br/>
+                                • Limited credit terms usually<br/>
+                                • Examples: Retail customers, patients, clients
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Business:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • For-profit companies<br/>
+                                • Larger, more frequent transactions<br/>
+                                • Typically net 30-60 payment terms<br/>
+                                • May have multiple locations/contacts<br/>
+                                • Examples: Retailers, wholesalers, manufacturers
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Government:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Federal, state, local government agencies<br/>
+                                • Often strict payment processes<br/>
+                                • May require special tax IDs (DUNS, GSA, etc.)<br/>
+                                • Usually slow to pay (60-90+ days)<br/>
+                                • May need certified vendors
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Non-Profit:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Charitable, educational, religious organizations<br/>
+                                • May have tax-exempt status<br/>
+                                • Often price-sensitive<br/>
+                                • May need donation documentation<br/>
+                                • Examples: Schools, universities, charities
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Wholesale vs. Retail:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Wholesale:</strong> Businesses that buy in bulk for resale<br/>
+                                • <strong>Retail:</strong> Businesses or individuals buying for own use<br/>
+                                • Wholesale typically gets volume discounts<br/>
+                                • Different pricing structures may apply
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Customer type affects pricing, payment terms, tax treatment, and collections strategies.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Customer Records">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Add a New Customer</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Required Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Customer Number</strong> (unique ID, e.g., "CUST-2025-001")<br/>
+                                3. Enter <strong>Customer Name</strong> (full legal name)<br/>
+                                4. Select <strong>Customer Type</strong> (Individual, Business, Government, etc.)<br/>
+                                5. Enter <strong>Billing Address</strong> (where invoices are sent)<br/>
+                                6. Enter <strong>Shipping Address</strong> (where goods delivered, if different)<br/>
+                                7. Enter <strong>Contact Person</strong> (primary contact name)<br/>
+                                8. Enter <strong>Phone Number</strong> (business phone)<br/>
+                                9. Enter <strong>Email Address</strong> (for invoices, notifications)<br/>
+                                10. Click <strong>"Save"</strong> to create
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Optional Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Tax ID:</strong> Federal EIN, SSN, or state tax number<br/>
+                                • <strong>Industry:</strong> Industry classification<br/>
+                                • <strong>Website:</strong> Customer's website URL<br/>
+                                • <strong>Credit Limit:</strong> Maximum credit to extend<br/>
+                                • <strong>Payment Terms:</strong> Net 30, 2/10 Net 30, etc.<br/>
+                                • <strong>Bank Information:</strong> For ACH payments<br/>
+                                • <strong>Notes:</strong> Special instructions, preferences
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Have customer complete customer information form to ensure accuracy of all details.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Customer Information">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Important Customer Data to Collect</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Contact Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Primary Contact:</strong> Main person you deal with<br/>
+                                • <strong>Billing Contact:</strong> Who receives invoices<br/>
+                                • <strong>Shipping Contact:</strong> Who receives deliveries<br/>
+                                • <strong>Payment Contact:</strong> Who processes payments<br/>
+                                • Keep multiple contacts for larger customers
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Address Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Billing Address:</strong> For invoices and collection letters<br/>
+                                • <strong>Shipping Address:</strong> May be different from billing<br/>
+                                • <strong>Corporate Headquarters:</strong> For larger organizations<br/>
+                                • <strong>Multiple Locations:</strong> May need separate records per site
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Credit Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Credit Limit:</strong> Maximum balance allowed<br/>
+                                • <strong>Payment Terms:</strong> When payment is due<br/>
+                                • <strong>Early Payment Discount:</strong> If offered<br/>
+                                • <strong>Credit Hold:</strong> Flag if account should be on hold<br/>
+                                • <strong>Special Pricing:</strong> Volume discounts, contracts
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Identification Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Tax ID:</strong> Federal EIN, SSN, state ID<br/>
+                                • <strong>Business License:</strong> If required for your industry<br/>
+                                • <strong>Resale Certificate:</strong> If customer is tax-exempt<br/>
+                                • <strong>Government ID:</strong> For government entity customers
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Verify customer identity and address before offering credit or large transactions.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Credit Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Customer Credit</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Setting Credit Limits:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Based on customer type, size, industry<br/>
+                                • Consider payment history (if existing customer)<br/>
+                                • Factor in financial strength/creditworthiness<br/>
+                                • Typical initial limits: $5,000-$50,000<br/>
+                                • Review and adjust periodically
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Monitoring Credit:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Check balance vs. credit limit before accepting orders<br/>
+                                • Place on hold if exceeding limit<br/>
+                                • Monitor aging of receivables<br/>
+                                • Review payment patterns<br/>
+                                • Get trade references for new customers
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Credit Decisions:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Accept:</strong> Grant credit at requested or lower limit<br/>
+                                • <strong>Conditional:</strong> Require deposit, references, or personal guarantee<br/>
+                                • <strong>Decline:</strong> Require cash/prepayment only<br/>
+                                • <strong>Review:</strong> Request financials for large customers
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Collection Strategies:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>0-30 days:</strong> Friendly reminder<br/>
+                                • <strong>31-60 days:</strong> Phone call, formal notice<br/>
+                                • <strong>61-90 days:</strong> Hold account, payment plan discussion<br/>
+                                • <strong>90+ days:</strong> Legal action or collection agency
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Aggressive early collection is better than trying to collect old debt!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Customer Segmentation">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Categorizing Customers for Analysis</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>By Revenue (ABC Analysis):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>A Customers:</strong> Top 20% of revenue (80% of total)<br/>
+                                • <strong>B Customers:</strong> Middle 30% of revenue (15% of total)<br/>
+                                • <strong>C Customers:</strong> Bottom 50% of revenue (5% of total)<br/>
+                                • Different service/credit levels per segment
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>By Geography:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Region (East Coast, West Coast, etc.)<br/>
+                                • State or country<br/>
+                                • Urban vs. rural<br/>
+                                • Helps with territory management and shipping
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>By Industry:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Retail, wholesale, manufacturing, services<br/>
+                                • Helps identify growth opportunities<br/>
+                                • Understand industry-specific challenges<br/>
+                                • Plan targeted marketing
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>By Payment Reliability:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Excellent:</strong> Always pay on time<br/>
+                                • <strong>Good:</strong> Pay within terms<br/>
+                                • <strong>Fair:</strong> Occasional delays<br/>
+                                • <strong>Poor:</strong> Chronic late payer<br/>
+                                • Adjust credit terms accordingly
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Focus attention on high-value customers for better service and retention.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Customer Maintenance">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Keeping Customer Records Current</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Regular Updates:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Update addresses when changed<br/>
+                                • Update contact information when staff changes<br/>
+                                • Note new locations or divisions<br/>
+                                • Update payment terms if modified<br/>
+                                • Record credit limit changes
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Deactivating Customers:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Mark as inactive if no longer purchasing<br/>
+                                • Don't delete (historical data needed)<br/>
+                                • Keep available for past transactions<br/>
+                                • Reactivate if they return
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Merging Duplicate Records:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Watch for duplicate entries<br/>
+                                • Company data sometimes duplicated with different contact names<br/>
+                                • Consolidate when identified<br/>
+                                • Update to single record
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Validation Checks:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Phone number format check<br/>
+                                • Email format validation<br/>
+                                • Address completeness<br/>
+                                • Prevent duplicate customer numbers<br/>
+                                • Tax ID validation
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Data quality in customer master drives quality of invoicing, reporting, and collections!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Customer Communication">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Effective Customer Interaction</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Invoice Distribution:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Email invoices promptly<br/>
+                                • Use customer's preferred contact method<br/>
+                                • Copy multiple contacts if needed<br/>
+                                • Include clear payment instructions<br/>
+                                • Keep records of delivery
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Payment Reminders:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Send reminders before due date<br/>
+                                • Follow up promptly if overdue<br/>
+                                • Provide payment options<br/>
+                                • Be professional but persistent<br/>
+                                • Document all communication
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Issue Resolution:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Respond to inquiries quickly<br/>
+                                • Address billing disputes promptly<br/>
+                                • Document issues and resolutions<br/>
+                                • Provide credit memos when appropriate<br/>
+                                • Follow up on customer satisfaction
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Key Success Factor:</strong> Good customer communication improves collections and customer retention!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we perform credit checks on all customers?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Recommended for business customers. For individuals, weigh cost vs. risk. Always check for existing payment history with you.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How often should we review credit limits?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: At least annually. More frequently for growth customers or those with payment issues. Adjust based on financial performance.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if a customer's information changes?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Update immediately in the system. Verify changes are correct before processing new orders. This affects invoicing and collections.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we require advance payment from new customers?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes! This is common and recommended. Collect deposit or full prepayment until customer proves reliability.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How long should we keep inactive customer records?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Keep permanently (they have historical invoices). Mark as inactive but don't delete. They may become active again.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
