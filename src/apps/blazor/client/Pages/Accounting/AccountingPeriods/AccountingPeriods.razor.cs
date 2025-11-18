@@ -2,11 +2,11 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.AccountingPeriods;
 
 public partial class AccountingPeriods
 {
-    
-
     protected EntityServerTableContext<AccountingPeriodResponse, DefaultIdType, AccountingPeriodViewModel> Context { get; set; } = null!;
 
     private EntityTable<AccountingPeriodResponse, DefaultIdType, AccountingPeriodViewModel> _table = null!;
+
+    private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
 
     protected override Task OnInitializedAsync()
     {
@@ -51,10 +51,15 @@ public partial class AccountingPeriods
 
         return Task.CompletedTask;
     }
+
+    private async Task ShowAccountingPeriodsHelp()
+    {
+        await DialogService.ShowAsync<AccountingPeriodsHelpDialog>("Accounting Periods Help", new DialogParameters(), _helpDialogOptions);
+    }
 }
 
 public class AccountingPeriodViewModel : UpdateAccountingPeriodCommand
 {
-    // Properties will be inherited from UpdateAccountingPeriodRequest
+    // Properties will be inherited from UpdateAccountingPeriodCommand
     // This class serves as the view model for the entity table
 }

@@ -1,0 +1,380 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.AccountingPeriods
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Accounting Periods Management Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="Creating Accounting Periods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Create a New Period</MudText>
+                        <MudText Typo="Typo.body2">
+                            <ol style="margin: 10px 0; padding-left: 20px;">
+                                <li>Click the "Add Accounting Period" button</li>
+                                <li>Enter a descriptive <strong>Name</strong> (e.g., "January 2025", "Q1 2025")</li>
+                                <li>Set the <strong>Start Date</strong> (first day of the period)</li>
+                                <li>Set the <strong>End Date</strong> (last day of the period)</li>
+                                <li>Choose the <strong>Period Type</strong>: Monthly, Quarterly, Yearly, or Annual</li>
+                                <li>Enter the <strong>Fiscal Year</strong> (e.g., 2025)</li>
+                                <li>Check <strong>Adjustment Period</strong> if this is for year-end adjustments</li>
+                                <li>Add optional <strong>Description</strong> and <strong>Notes</strong></li>
+                                <li>Click Save</li>
+                            </ol>
+                        </MudText>
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Periods should not overlap. Ensure dates are sequential and contiguous.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Period Types">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Period Types</MudText>
+                        <MudList T="string">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CalendarMonth">
+                                <MudText Typo="Typo.body2"><strong>Monthly:</strong> Standard calendar month periods (Jan, Feb, Mar...)</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.DateRange">
+                                <MudText Typo="Typo.body2"><strong>Quarterly:</strong> Three-month reporting periods (Q1: Jan-Mar, Q2: Apr-Jun, etc.)</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.EventNote">
+                                <MudText Typo="Typo.body2"><strong>Yearly:</strong> Full 12-month fiscal year period</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.Today">
+                                <MudText Typo="Typo.body2"><strong>Annual:</strong> Calendar year or custom annual period</MudText>
+                            </MudListItem>
+                        </MudList>
+                        <MudText Typo="Typo.body2">
+                            Choose the type that matches your organization's reporting structure and requirements.
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Adjustment Periods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">What Are Adjustment Periods?</MudText>
+                        <MudText Typo="Typo.body2">
+                            Adjustment periods are special periods used for year-end closing entries and adjustments:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Purpose:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Record year-end adjusting journal entries<br/>
+                                • Post depreciation, accruals, and deferrals<br/>
+                                • Correct errors discovered after period close<br/>
+                                • Reclassify accounts for accurate reporting
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>When to Use:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Create after the last regular period of the fiscal year<br/>
+                                • Typically named "Period 13" or "Adjustments 2025"<br/>
+                                • Keep date range same as final period (e.g., Dec 31 - Dec 31)<br/>
+                                • Always mark with "Adjustment Period" checkbox
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Adjustment periods affect prior period balances. Only use for legitimate year-end adjustments.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Fiscal Year Configuration">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Setting Up Fiscal Years</MudText>
+                        <MudText Typo="Typo.body2">
+                            Your fiscal year may differ from the calendar year. Common configurations:
+                        </MudText>
+                        
+                        <MudText Typo="Typo.body2">
+                            <strong>Calendar Year (Jan 1 - Dec 31):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Period 1: Jan 1 - Jan 31, 2025 (Fiscal Year: 2025)<br/>
+                            Period 2: Feb 1 - Feb 28, 2025 (Fiscal Year: 2025)<br/>
+                            ...<br/>
+                            Period 12: Dec 1 - Dec 31, 2025 (Fiscal Year: 2025)
+                        </MudText>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Fiscal Year (Jul 1 - Jun 30):</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Period 1: Jul 1 - Jul 31, 2024 (Fiscal Year: 2025)<br/>
+                            Period 2: Aug 1 - Aug 31, 2024 (Fiscal Year: 2025)<br/>
+                            ...<br/>
+                            Period 12: Jun 1 - Jun 30, 2025 (Fiscal Year: 2025)
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> The fiscal year represents the year in which the fiscal period ends.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Opening & Closing Periods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Period Status Management</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Opening a Period:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Allows transactions to be posted to that period<br/>
+                                • Users can create journal entries for the period<br/>
+                                • System validates transaction dates fall within period range<br/>
+                                • Multiple periods can be open simultaneously
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Closing a Period:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Prevents new transactions from being posted<br/>
+                                • Locks financial data for that period<br/>
+                                • Required before running final reports<br/>
+                                • Can be reopened if adjustments are needed
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Period Close Checklist:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Verify all transactions are posted<br/>
+                                2. Reconcile bank accounts<br/>
+                                3. Review account balances<br/>
+                                4. Run trial balance report<br/>
+                                5. Post depreciation and accruals<br/>
+                                6. Review for errors or missing entries<br/>
+                                7. Close the period
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Close periods promptly after month-end to maintain data integrity.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Editing Periods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Updating Period Information</MudText>
+                        <MudText Typo="Typo.body2">
+                            You can modify certain period details after creation:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Editable Fields:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Name:</strong> Update for clarity or consistency<br/>
+                                • <strong>Description:</strong> Add notes about the period<br/>
+                                • <strong>Notes:</strong> Document special circumstances<br/>
+                                • <strong>Period Type:</strong> Adjust classification if needed
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Restricted Fields:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Start Date:</strong> Cannot change after transactions exist<br/>
+                                • <strong>End Date:</strong> Cannot change after transactions exist<br/>
+                                • <strong>Fiscal Year:</strong> Fixed after creation<br/>
+                                • <strong>Adjustment Period:</strong> Cannot toggle after transactions posted
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Caution:</strong> Changing dates on active periods can cause reporting inconsistencies.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Deleting Periods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Period Removal</MudText>
+                        <MudText Typo="Typo.body2">
+                            Periods can only be deleted under specific conditions:
+                        </MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">No transactions have been posted to the period</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">No journal entries reference the period</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Period is not currently open for posting</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">No financial reports have been generated for the period</MudText>
+                            </MudListItem>
+                        </MudList>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Warning:</strong> Deleting periods with transaction history will corrupt your financial records. Always close instead of delete.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudList T="string" Dense="true">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Create all periods for the fiscal year at once for consistency</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Use consistent naming: "January 2025", "Feb 2025", etc.</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Close periods within 5-10 business days after month-end</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Keep only 2-3 periods open at a time to limit errors</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Create adjustment period 13 for year-end closing entries</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Document the reason in Notes when reopening closed periods</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Ensure dates don't overlap between consecutive periods</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Review period setup annually before new fiscal year begins</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Workflows">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Typical Period Management Tasks</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1. Annual Setup (Start of Fiscal Year):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Create 12 monthly periods → Add quarterly summary periods → Create adjustment period 13 → Set fiscal year on all → Open only Period 1
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>2. Month-End Close:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Post all transactions → Run reconciliations → Review reports → Post accruals/deferrals → Close current period → Open next period
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>3. Year-End Close:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Close Period 12 → Open adjustment period → Post year-end adjustments → Run annual reports → Close adjustment period → Archive fiscal year
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>4. Reopening for Corrections:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Identify error period → Document reason for reopening → Reopen period → Post correcting entries → Review impact on reports → Re-close period
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="FAQ">
+                    <MudStack Spacing="2">
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: Can I have more than one period open at a time?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, but it's recommended to limit to 2-3 periods to reduce posting errors and maintain control.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: What happens to transactions if I change period dates?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: The system prevents date changes if transactions exist. You would need to reverse entries, change dates, then re-enter.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: How many adjustment periods should I create?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Typically one adjustment period (Period 13) is sufficient for year-end entries. Only create more if required by your accounting policies.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: Can I reopen a closed period?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, but document the reason. Reopening affects financial reports and audit trails. Use adjustment periods for post-close corrections instead.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: What's the difference between Monthly and Annual period types?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: The type is for reporting classification. Monthly is for standard month periods, while Annual represents the full fiscal year summary.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: Can periods overlap in date ranges?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No, periods should be sequential and non-overlapping. The system may validate this to prevent data integrity issues.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+
+            <MudAlert Severity="Severity.Success" Dense="true">
+                <strong>Pro Tip:</strong> Proper period management is critical for accurate financial reporting and audit compliance. Plan your fiscal calendar carefully.
+            </MudAlert>
+        </MudStack>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

@@ -1,0 +1,430 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.Accruals
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Accruals Management Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What Are Accruals?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Accrual Accounting</MudText>
+                        <MudText Typo="Typo.body2">
+                            Accruals are accounting entries used to recognize revenues and expenses in the period they occur, 
+                            regardless of when cash is actually received or paid. This follows the accrual basis of accounting principle.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Types of Accruals:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Accrued Expenses:</strong> Expenses incurred but not yet paid (salaries, utilities, interest)<br/>
+                                • <strong>Accrued Revenues:</strong> Revenue earned but not yet received (services rendered, work completed)<br/>
+                                • <strong>Period-End Adjustments:</strong> Matching revenues and expenses to the correct accounting period
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Accruals ensure financial statements accurately reflect the organization's financial position at period-end.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Accruals">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Record an Accrual</MudText>
+                        <MudText Typo="Typo.body2">
+                            <ol style="margin: 10px 0; padding-left: 20px;">
+                                <li>Click the "Add Accrual" button</li>
+                                <li>Enter a unique <strong>Accrual Number</strong> (e.g., "ACR-2025-001")</li>
+                                <li>Set the <strong>Accrual Date</strong> (usually the last day of the accounting period)</li>
+                                <li>Enter the <strong>Amount</strong> to be accrued</li>
+                                <li>Add a clear <strong>Description</strong> explaining what is being accrued and why</li>
+                                <li>Leave <strong>Is Reversed</strong> unchecked (will be set when reversing)</li>
+                                <li>Click Save</li>
+                            </ol>
+                        </MudText>
+                        
+                        <MudText Typo="Typo.body2">
+                            <strong>Example - Accrued Salary Expense:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Accrual Number: ACR-2025-011<br/>
+                            Date: November 30, 2025<br/>
+                            Amount: $15,000.00<br/>
+                            Description: Accrued salary expense for November (payroll date: Dec 5)
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Use consistent numbering and clear descriptions for easy tracking and audit trails.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Accrual Scenarios">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Typical Accrual Entries</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1. Accrued Salaries & Wages:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                When payroll period doesn't align with accounting period end. Record unpaid wages earned by employees 
+                                through period-end that will be paid in the next period.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>2. Accrued Interest:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Interest expense accrued on loans or interest income earned on investments that hasn't been paid/received yet. 
+                                Calculate using: Principal × Rate × Time.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>3. Accrued Utilities:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Electricity, water, gas consumed during the period but bill not yet received. Estimate based on usage patterns 
+                                and prior bills.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>4. Accrued Revenue (Unbilled):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Services performed or goods delivered but not yet invoiced. Common in consulting, construction, and service industries.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>5. Accrued Taxes:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Income taxes, property taxes, or sales taxes owed for the period but not yet paid to tax authorities.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>6. Accrued Vacation/Leave:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Employee vacation time earned but not yet taken. Required for accurate liability recognition on balance sheet.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Reversing Accruals">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How and When to Reverse Accruals</MudText>
+                        <MudText Typo="Typo.body2">
+                            Most accruals are reversed in the following period when the actual transaction occurs. This prevents double-counting.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reversal Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Locate the accrual entry in the list<br/>
+                                2. Click Edit on the accrual<br/>
+                                3. Check the <strong>"Is Reversed"</strong> checkbox<br/>
+                                4. Set the <strong>Reversal Date</strong> (typically the first day of the next period)<br/>
+                                5. Click Save
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>What Happens on Reversal:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Original entry is marked as reversed in the system<br/>
+                                • A reversing journal entry is automatically created<br/>
+                                • The reversing entry has the opposite debit/credit of the original<br/>
+                                • Net effect becomes zero, preparing for the actual transaction posting
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Always reverse accruals before posting the actual transaction to avoid duplicate expenses or revenues.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Accrual vs. Deferral">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding the Difference</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Accruals:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Record revenue/expense BEFORE cash is exchanged.<br/>
+                                <strong>Timing:</strong> Economic event happens first, cash exchange happens later.<br/>
+                                <strong>Examples:</strong> Accrued salaries, accrued interest, unbilled revenue.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Deferrals (Prepaid/Deferred):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Record revenue/expense AFTER cash is exchanged.<br/>
+                                <strong>Timing:</strong> Cash exchange happens first, economic event happens later.<br/>
+                                <strong>Examples:</strong> Prepaid insurance, deferred revenue, prepaid rent.
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Quick Reference Table:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            | Type            | Cash First? | Recognition |<br/>
+                            |-----------------|-------------|-------------|<br/>
+                            | Accrued Expense | No          | Before Cash |<br/>
+                            | Accrued Revenue | No          | Before Cash |<br/>
+                            | Prepaid Expense | Yes         | After Cash  |<br/>
+                            | Deferred Revenue| Yes         | After Cash  |
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Editing Accruals">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Modifying Existing Accruals</MudText>
+                        <MudText Typo="Typo.body2">
+                            Accruals can be edited before they are reversed or before the period is closed:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Editable Fields:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Amount:</strong> Adjust if estimate was incorrect<br/>
+                                • <strong>Description:</strong> Clarify or add detail<br/>
+                                • <strong>Is Reversed:</strong> Mark as reversed when appropriate<br/>
+                                • <strong>Reversal Date:</strong> Set when reversing the accrual
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Restricted Fields:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Accrual Number:</strong> Fixed after creation for audit tracking<br/>
+                                • <strong>Accrual Date:</strong> Generally fixed; changing affects period assignments
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Caution:</strong> Editing accruals after period close may require reopening the period and re-running financial reports.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Deleting Accruals">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">When to Delete vs. Reverse</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Delete Accruals When:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Accrual was recorded in error<br/>
+                                • Duplicate entry was created<br/>
+                                • Period hasn't been closed yet<br/>
+                                • No journal entries have been posted against it
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reverse Accruals When:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Moving to the next accounting period<br/>
+                                • Actual transaction has occurred<br/>
+                                • Need to maintain audit trail<br/>
+                                • Period is already closed
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Warning:</strong> Deleting accruals after period close can break financial reports. Use reversal instead.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudList T="string" Dense="true">
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Use unique, sequential numbering for all accruals (ACR-YYYY-001)</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Record accruals on the last day of the accounting period</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Reverse accruals on the first day of the following period</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Write clear descriptions including what, why, and estimated vs. actual</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Document calculation methods in notes (formulas, assumptions)</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Review and adjust estimates when actual amounts become known</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Maintain a period-end accruals checklist for consistency</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Set up recurring accruals for predictable items (interest, rent)</MudText>
+                            </MudListItem>
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.body2">Reconcile accrual accounts monthly to prevent accumulation of errors</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Workflows">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Typical Accrual Management Tasks</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1. Month-End Accrual Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Review accrual checklist → Identify unrecorded expenses/revenues → Calculate amounts → Create accrual entries → 
+                                Review for completeness → Close accounting period
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>2. Start of Month Reversal:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Open new period → Review previous period accruals → Mark accruals as reversed → Set reversal date to Day 1 → 
+                                Verify reversing entries posted → Record actual transactions
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>3. Payroll Accrual Cycle:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Calculate unpaid wages (Nov 16-30) → Create salary accrual for $15K → Close November → 
+                                Reverse accrual on Dec 1 → Process actual payroll on Dec 5 → Verify net expense is correct for period
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>4. Utility Accrual:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Estimate November usage → Create accrual for $2K → Receive actual bill in December ($2.1K) → 
+                                Reverse accrual → Post actual bill → Adjust estimate process for next time
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="FAQ">
+                    <MudStack Spacing="2">
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: Do all accruals need to be reversed?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Most accruals are reversed when the actual transaction occurs. Some ongoing accruals (like accrued vacation liability) 
+                                are adjusted rather than reversed.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: What if my accrual estimate was wrong?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Reverse the original accrual amount, then record the actual amount when known. The difference will automatically 
+                                adjust the expense/revenue in the current period.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: Can I create accruals for previous periods?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, but you'll need to reopen the closed period and re-run financial reports. Use adjustment periods for 
+                                post-close corrections instead.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: Should I accrue small amounts?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Apply a materiality threshold (e.g., $500+). Accruing every small expense creates unnecessary work without 
+                                improving financial statement accuracy.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: How long should I keep accrual records?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Retain accrual documentation according to your organization's record retention policy, typically 7 years 
+                                for tax and audit purposes.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: What's the difference between accrual and provision?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Accruals are for known obligations with reasonably certain amounts. Provisions are for uncertain timing or amount 
+                                (like warranty claims or legal settlements).
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+
+            <MudAlert Severity="Severity.Success" Dense="true">
+                <strong>Pro Tip:</strong> Maintain a standard accrual checklist reviewed monthly to ensure consistency and completeness of period-end accruals.
+            </MudAlert>
+        </MudStack>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

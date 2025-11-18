@@ -15,6 +15,8 @@ public partial class Accruals
 
     private EntityTable<AccrualResponse, DefaultIdType, AccrualViewModel> _table = null!;
 
+    private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+
     protected override Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<AccrualResponse, DefaultIdType, AccrualViewModel>(
@@ -63,5 +65,9 @@ public partial class Accruals
 
         return Task.CompletedTask;
     }
-}
 
+    private async Task ShowAccrualsHelp()
+    {
+        await DialogService.ShowAsync<AccrualsHelpDialog>("Accruals Help", new DialogParameters(), _helpDialogOptions);
+    }
+}
