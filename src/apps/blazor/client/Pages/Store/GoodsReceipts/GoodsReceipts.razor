@@ -2,6 +2,17 @@
 
 <PageHeader Title="Goods Receipts" Header="Goods Receipts" SubHeader="Manage goods received from suppliers with partial receiving support." />
 
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowGoodsReceiptsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
 <EntityTable @ref="_table" TEntity="GoodsReceiptResponse" TId="DefaultIdType" TRequest="GoodsReceiptViewModel" Context="@Context">
     
     <AdvancedSearchContent>

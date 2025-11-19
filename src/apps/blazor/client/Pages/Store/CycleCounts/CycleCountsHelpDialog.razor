@@ -1,0 +1,281 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.CycleCounts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Cycle Counts Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is a Cycle Count?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Cycle Counting</MudText>
+                        <MudText Typo="Typo.body2">
+                            A cycle count is a partial inventory count focused on specific items or locations without shutting down the warehouse. 
+                            Instead of doing one massive physical inventory annually, cycle counts verify smaller portions of inventory regularly, 
+                            catching discrepancies quickly and maintaining inventory accuracy year-round.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Use Cycle Counts?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Continuous Verification:</strong> Don't wait for year-end count<br/>
+                                • <strong>Minimal Disruption:</strong> Count ongoing, no warehouse shutdown<br/>
+                                • <strong>Quick Issue Resolution:</strong> Fix problems within days<br/>
+                                • <strong>Improved Accuracy:</strong> 95%+ inventory accuracy achievable<br/>
+                                • <strong>Cost Savings:</strong> Fewer surprises at physical inventory<br/>
+                                • <strong>Staff Familiarity:</strong> Team learns inventory procedures
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Cycle Count vs. Physical Inventory:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Physical Inventory (Annual):</strong><br/>
+                                • Entire inventory counted<br/>
+                                • Warehouse typically closed<br/>
+                                • Takes 1-3 days<br/>
+                                • Major disruption<br/>
+                                • Expensive (staff overtime)<br/>
+                                <br/>
+                                <strong>Cycle Count (Ongoing):</strong><br/>
+                                • Small portion counted<br/>
+                                • Warehouse stays operational<br/>
+                                • Takes 1-2 hours<br/>
+                                • Minimal disruption<br/>
+                                • Lower cost<br/>
+                                • Continuous improvement
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Regular small counts beat one big count - catch errors faster!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Planning Cycle Counts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Schedule Counts</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Cycle Count Strategies:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>ABC Analysis:</strong> Count high-value (A) items more frequently<br/>
+                                • <strong>Random Selection:</strong> Random bins/items each cycle<br/>
+                                • <strong>Scheduled:</strong> Specific bins on rotation<br/>
+                                • <strong>Trigger-Based:</strong> Count when variance detected<br/>
+                                • <strong>Location-Based:</strong> Count one aisle per week
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Sample Cycle Count Schedule:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Week 1: ABC Items (High-Value) - 50 items<br/>
+                                Week 2: Aisle A Bins 1-20 - 40 items<br/>
+                                Week 3: Aisle B Bins 1-20 - 40 items<br/>
+                                Week 4: Random Selection - 50 items<br/>
+                                Month 2: Repeat cycle<br/>
+                                <br/>
+                                Result: Entire inventory counted 4x per year<br/>
+                                Cost: ~4 hours/week staff time
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> ABC method - count high-value items weekly, low-value quarterly!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Performing a Cycle Count">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Step-by-Step Count Process</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Cycle Count Procedure:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Create Cycle Count:</strong> Define items to count<br/>
+                                2. <strong>Prepare List:</strong> Print pick list with SKU, expected qty<br/>
+                                3. <strong>Lock Bins:</strong> Prevent additions during count<br/>
+                                4. <strong>Count Items:</strong> Physically count each item<br/>
+                                5. <strong>Record Count:</strong> Enter actual quantity found<br/>
+                                6. <strong>Verify:</strong> Second person checks high-value items<br/>
+                                7. <strong>Investigate Variance:</strong> Find reason for differences<br/>
+                                8. <strong>Adjust System:</strong> Update to actual count<br/>
+                                9. <strong>Document:</strong> Record reasons for variances<br/>
+                                10. <strong>Unlock Bins:</strong> Resume normal operations
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Handling Variances:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Item ABC-123:<br/>
+                                System: 50 units<br/>
+                                Actual Count: 48 units<br/>
+                                Variance: -2 units (4%)<br/>
+                                <br/>
+                                Investigation: Found 1 unit damaged,<br/>
+                                1 unit mislabeled to different bin<br/>
+                                <br/>
+                                Action: Adjust system to 48 units,<br/>
+                                move mislabeled unit to correct bin
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Critical:</strong> Investigate ALL significant variances - don't just adjust!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Resolution & Adjustments">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Recording Count Results</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Adjustment Entry Example:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                System Inventory: 100 units<br/>
+                                Physical Count: 95 units<br/>
+                                Variance: -5 units<br/>
+                                <br/>
+                                Dr. Inventory Shrinkage    $250<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Inventory         $250<br/>
+                                (To adjust inventory to actual count)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Variance Categories:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Shrinkage:</strong> Lost/stolen/damaged<br/>
+                                • <strong>Posting Error:</strong> System entry mistake<br/>
+                                • <strong>Mislocation:</strong> Item in wrong bin<br/>
+                                • <strong>Receiving Error:</strong> Qty received mismatch<br/>
+                                • <strong>Picking Error:</strong> Wrong qty picked<br/>
+                                • <strong>Unknown:</strong> Investigate further
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Track variance trends - spot patterns indicating larger problems!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Optimizing Cycle Counts</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Count Best Practices:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Count same time each day (minimal traffic)<br/>
+                                ✓ Use trained staff (consistency)<br/>
+                                ✓ Count during slow periods<br/>
+                                ✓ Two-person verification for high-value<br/>
+                                ✓ Use barcode scanning (reduce errors)<br/>
+                                ✓ Lock bins during count<br/>
+                                ✓ Document everything<br/>
+                                ✓ Follow up on variances
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Continuous Improvement:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ Monthly: Review variance trends<br/>
+                                □ Quarterly: Adjust count schedule<br/>
+                                □ Identify high-variance items<br/>
+                                □ Increase count frequency for problem items<br/>
+                                □ Update bin locations if changed<br/>
+                                □ Train staff on better procedures<br/>
+                                □ Target 99%+ accuracy
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Goal:</strong> 95%+ inventory accuracy through consistent cycle counting!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How many items should each cycle count include?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Typically 30-50 items per count. Balance accuracy with efficiency - 1-2 hours of work.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's an acceptable variance %?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Industry standard: 1-3% variance. Above 5% indicates problems needing investigation.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Do we still need annual physical inventory?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes for audit purposes, but with good cycle counting, physical count is verification, not discovery.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we prioritize which items to count?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: ABC method: A-items (high value) weekly, B-items monthly, C-items quarterly.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if we find a large discrepancy?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Investigate immediately. Repeat count. Check receiving records, pick sheets, and bin location.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

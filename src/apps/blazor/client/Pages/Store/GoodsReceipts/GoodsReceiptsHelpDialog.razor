@@ -1,0 +1,294 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.GoodsReceipts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Goods Receipts Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is a Goods Receipt?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Goods Receipts</MudText>
+                        <MudText Typo="Typo.body2">
+                            A Goods Receipt is the record created when inventory items are received from a supplier, documenting the physical receipt 
+                            of goods into the warehouse. It's the middle step between Purchase Order (ordering) and Invoice (payment). 
+                            Goods receipts verify that what was ordered has actually been received in good condition.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Track Goods Receipts?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Receiving Verification:</strong> Confirm PO items received<br/>
+                                • <strong>Quality Control:</strong> Inspect items upon receipt<br/>
+                                • <strong>Inventory Update:</strong> Stock on-hand increases<br/>
+                                • <strong>Discrepancy Resolution:</strong> Address shortages/damages<br/>
+                                • <strong>Accounts Payable Link:</strong> Three-way match for payment<br/>
+                                • <strong>Warehouse Location:</strong> Place items in correct bins
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Flow: PO → Receipt → Invoice → Payment:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Purchase Order (PO):</strong> Order from supplier<br/>
+                                2. <strong>Goods Receipt:</strong> Items received at warehouse<br/>
+                                3. <strong>Inspection:</strong> Quality/qty verification<br/>
+                                4. <strong>Invoice Receipt:</strong> Supplier invoice arrives<br/>
+                                5. <strong>Three-Way Match:</strong> PO = Receipt = Invoice<br/>
+                                6. <strong>Payment:</strong> Pay supplier
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Never pay supplier until goods received and verified!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Goods Receipts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Record Receipt</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Goods Receipt Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Link to PO:</strong> Select Purchase Order<br/>
+                                2. <strong>Enter Date:</strong> Date items received<br/>
+                                3. <strong>Enter Receipt Number:</strong> Supplier shipment/tracking<br/>
+                                4. <strong>Add Items:</strong> Enter items being received<br/>
+                                5. <strong>Enter Quantities:</strong> Qty received (may differ from PO)<br/>
+                                6. <strong>Quality Status:</strong> OK / Damaged / Defective<br/>
+                                7. <strong>Specify Bins:</strong> Warehouse locations<br/>
+                                8. <strong>Add Notes:</strong> Any issues/observations<br/>
+                                9. <strong>Attach Evidence:</strong> Shipping docs, photos<br/>
+                                10. <strong>Approve:</strong> QA/Manager signs off<br/>
+                                11. <strong>Post Receipt:</strong> Updates inventory
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Receipt from Purchase Order:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                PO #12345 from ABC Supplies<br/>
+                                <br/>
+                                Item ABC-123: Qty Ordered: 100<br/>
+                                Item DEF-456: Qty Ordered: 50<br/>
+                                <br/>
+                                Receipt #67890:<br/>
+                                Item ABC-123: Qty Received: 100 (OK)<br/>
+                                Item DEF-456: Qty Received: 48 (2 damaged)<br/>
+                                <br/>
+                                Action: Accept 98 items, report damage
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Inspect items immediately upon receipt!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Quality & Inspection">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Receiving Inspection Process</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Inspection Checklist:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ <strong>Count:</strong> Verify correct quantity received<br/>
+                                □ <strong>Condition:</strong> Check packaging integrity<br/>
+                                □ <strong>Damage:</strong> Look for dents, breaks, etc.<br/>
+                                □ <strong>Expiry:</strong> Check shelf-life dates<br/>
+                                □ <strong>Match:</strong> Verify item codes match PO<br/>
+                                □ <strong>Documentation:</strong> Check shipping papers<br/>
+                                □ <strong>Temperature:</strong> For temperature-sensitive items
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Receipt Issues:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Short Ship:</strong> Received less than ordered<br/>
+                                • <strong>Damaged Goods:</strong> Items broken/defective<br/>
+                                • <strong>Wrong Items:</strong> Different SKU received<br/>
+                                • <strong>Expired:</strong> Items past shelf-life<br/>
+                                • <strong>Quality:</strong> Items don't meet standards<br/>
+                                • <strong>Missing Docs:</strong> No shipping papers
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Handling Non-Conforming Goods:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Document:</strong> Note issue in receipt<br/>
+                                2. <strong>Separate:</strong> Move to quarantine area<br/>
+                                3. <strong>Contact Supplier:</strong> Report problem<br/>
+                                4. <strong>Get Return Authorization:</strong> RMA<br/>
+                                5. <strong>Hold for Return:</strong> Or get credit<br/>
+                                6. <strong>Adjust Records:</strong> Reduce received qty
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Critical:</strong> Never accept damaged goods without documenting - it's your liability!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Three-Way Match">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Matching PO - Receipt - Invoice</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>The Three-Way Match Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Purchase Order (PO):        Invoice (INV):          Receipt (GR):<br/>
+                                Item ABC: Qty 100 - $50     Item ABC: Qty 100       Item ABC: Qty 100 OK<br/>
+                                Item DEF: Qty 50 - $25      Item DEF: Qty 50        Item DEF: Qty 48<br/>
+                                Total: $75                  Total: $75              (2 damaged)<br/>
+                                <br/>
+                                Match Check:<br/>
+                                ✓ PO qty = Receipt qty (except damaged)<br/>
+                                ✓ PO qty = Invoice qty (invoice may vary)<br/>
+                                ✓ PO price = Invoice price ✓<br/>
+                                <br/>
+                                Resolution: Invoice for 100 + 48 items<br/>
+                                Deduct damaged items from payment
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Match Discrepancy Resolution:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>If PO ≠ Receipt:</strong><br/>
+                                Contact supplier - short ship or overship<br/>
+                                <br/>
+                                <strong>If PO ≠ Invoice Price:</strong><br/>
+                                Contact supplier - verify correct price<br/>
+                                <br/>
+                                <strong>If Receipt ≠ Invoice Qty:</strong><br/>
+                                Check if invoice includes undelivered items<br/>
+                                Pay only for items received
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Three-way match prevents paying for goods not received or already returned!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Journal Entries">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Accounting Treatment</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Receipt Entry (Perpetual Inventory):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                When goods received:<br/>
+                                <br/>
+                                Dr. Inventory              $5,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Payable    $5,000<br/>
+                                (To record inventory receipt from supplier)<br/>
+                                <br/>
+                                Key: Inventory updated immediately on receipt<br/>
+                                (not when invoice arrives)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Damaged Goods Adjustment:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                When damage discovered:<br/>
+                                <br/>
+                                Dr. Accounts Payable       $200 (damaged qty)<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Inventory             $200<br/>
+                                (To reverse cost of damaged items)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>System Benefit:</strong> Goods receipt updates inventory before invoice - better stock accuracy!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if we receive goods before the PO is entered?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Create receipt anyway but flag for matching. Quickly enter PO to close the loop. Never accept goods without authorization.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What do we do with damaged goods?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Quarantine and document. Contact supplier for RMA. Reverse from inventory. Don't hold hoping to use later.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we receive partial shipments?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes - enter receipt for what arrived. PO remains open for remaining items. Match invoice to receipt not PO.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How long do we keep goods receipts?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Minimum 7 years for tax/audit. Some companies keep longer for warranty/return purposes.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if invoice doesn't match receipt?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Hold payment. Contact supplier. Pay based on receipt, not invoice. Adjust when discrepancy resolved.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

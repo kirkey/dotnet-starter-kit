@@ -206,6 +206,19 @@ public partial class GoodsReceipts
 
         await DialogService.ShowAsync<ReceivingHistoryDialog>("Receiving History", parameters, options);
     }
+
+    /// <summary>
+    /// Show goods receipts help dialog.
+    /// </summary>
+    private async Task ShowGoodsReceiptsHelp()
+    {
+        await DialogService.ShowAsync<GoodsReceiptsHelpDialog>("Goods Receipts Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

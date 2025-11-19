@@ -241,6 +241,19 @@ public partial class CycleCounts
             }
         }
     }
+
+    /// <summary>
+    /// Show cycle counts help dialog.
+    /// </summary>
+    private async Task ShowCycleCountsHelp()
+    {
+        await DialogService.ShowAsync<CycleCountsHelpDialog>("Cycle Counts Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>
@@ -260,4 +273,6 @@ public class CycleCountViewModel
     public string? Notes { get; set; }
     public string? Status { get; set; }
 }
+
+
 
