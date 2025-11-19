@@ -11,19 +11,19 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 {
     [DbContext(typeof(HrDbContext))]
-    partial class HumanResourcesDbContextModelSnapshot : ModelSnapshot
+    partial class HrDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("humanresources")
+                .HasDefaultSchema("hr")
                 .HasAnnotation("ProductVersion", "9.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Attendance", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Attendance", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -141,12 +141,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                         .IsUnique()
                         .HasDatabaseName("IX_Attendance_EmployeeId_AttendanceDate");
 
-                    b.ToTable("Attendance", "humanresources");
+                    b.ToTable("Attendances", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.AttendanceReport", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.AttendanceReport", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -297,10 +297,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("FromDate", "ToDate")
                         .HasDatabaseName("idx_attendance_report_period");
 
-                    b.ToTable("AttendanceReport", "humanresources");
+                    b.ToTable("AttendanceReport", "hr");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.BankAccount", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.BankAccount", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -428,12 +428,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "IsPrimary")
                         .HasDatabaseName("IX_BankAccount_Employee_Primary");
 
-                    b.ToTable("BankAccount", "humanresources");
+                    b.ToTable("BankAccounts", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Benefit", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Benefit", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -546,12 +546,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("BenefitName", "BenefitType")
                         .HasDatabaseName("IX_Benefit_Name_Type");
 
-                    b.ToTable("Benefits", "humanresources");
+                    b.ToTable("Benefits", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.BenefitAllocation", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.BenefitAllocation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -661,12 +661,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EnrollmentId", "AllocationDate")
                         .HasDatabaseName("IX_BenefitAllocation_Enrollment_Date");
 
-                    b.ToTable("BenefitAllocations", "humanresources");
+                    b.ToTable("BenefitAllocations", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.BenefitEnrollment", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.BenefitEnrollment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -765,12 +765,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "BenefitId", "EffectiveDate")
                         .HasDatabaseName("IX_BenefitEnrollment_Effective");
 
-                    b.ToTable("BenefitEnrollments", "humanresources");
+                    b.ToTable("BenefitEnrollments", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Deduction", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Deduction", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -879,12 +879,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("DeductionType", "IsActive")
                         .HasDatabaseName("IX_Deduction_Type_Active");
 
-                    b.ToTable("Deductions", "humanresources");
+                    b.ToTable("Deductions", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Designation", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Designation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -995,12 +995,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("SalaryGrade")
                         .HasDatabaseName("IX_Designations_SalaryGrade");
 
-                    b.ToTable("Designations", "humanresources");
+                    b.ToTable("Designations", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.DesignationAssignment", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.DesignationAssignment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1089,10 +1089,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "EffectiveDate", "EndDate")
                         .HasDatabaseName("IX_EDA_PointInTime");
 
-                    b.ToTable("DesignationAssignments", "humanresources");
+                    b.ToTable("DesignationAssignments", "hr");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.DocumentTemplate", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.DocumentTemplate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1174,10 +1174,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("TemplateName")
                         .HasDatabaseName("IX_DocumentTemplate_TemplateName");
 
-                    b.ToTable("DocumentTemplates", "humanresources");
+                    b.ToTable("DocumentTemplates", "hr");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1351,12 +1351,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("FirstName", "LastName")
                         .HasDatabaseName("IX_Employee_FirstName_LastName");
 
-                    b.ToTable("Employees", "humanresources");
+                    b.ToTable("Employees", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.EmployeeContact", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeContact", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1463,12 +1463,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "ContactType")
                         .HasDatabaseName("IX_EmployeeContacts_EmployeeId_ContactType");
 
-                    b.ToTable("EmployeeContacts", "humanresources");
+                    b.ToTable("EmployeeContacts", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.EmployeeDependent", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeDependent", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1592,12 +1592,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "DependentType")
                         .HasDatabaseName("IX_EmployeeDependents_EmployeeId_DependentType");
 
-                    b.ToTable("EmployeeDependents", "humanresources");
+                    b.ToTable("EmployeeDependents", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.EmployeeDocument", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeDocument", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1706,10 +1706,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "DocumentType")
                         .HasDatabaseName("IX_EmployeeDocuments_EmployeeId_DocumentType");
 
-                    b.ToTable("EmployeeDocument", "humanresources");
+                    b.ToTable("EmployeeDocument", "hr");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.EmployeeEducation", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1827,12 +1827,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "EducationLevel")
                         .HasDatabaseName("IX_EmployeeEducations_EmployeeId_EducationLevel");
 
-                    b.ToTable("EmployeeEducations", "humanresources");
+                    b.ToTable("EmployeeEducations", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.EmployeePayComponent", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeePayComponent", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1966,12 +1966,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "PayComponentId", "IsActive")
                         .HasDatabaseName("IX_EmployeePayComponents_Employee_Component_Active");
 
-                    b.ToTable("EmployeePayComponents", "humanresources");
+                    b.ToTable("EmployeePayComponents", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.GeneratedDocument", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.GeneratedDocument", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2084,10 +2084,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EntityId", "EntityType")
                         .HasDatabaseName("IX_GeneratedDocument_EntityId_EntityType");
 
-                    b.ToTable("GeneratedDocuments", "humanresources");
+                    b.ToTable("GeneratedDocuments", "hr");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Holiday", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Holiday", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2190,12 +2190,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("IsActive")
                         .HasDatabaseName("IX_Holiday_IsActive");
 
-                    b.ToTable("Holidays", "humanresources");
+                    b.ToTable("Holidays", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.LeaveBalance", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.LeaveBalance", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2285,10 +2285,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                         .IsUnique()
                         .HasDatabaseName("IX_LeaveBalance_EmployeeId_LeaveTypeId_Year");
 
-                    b.ToTable("LeaveBalances", "humanresources");
+                    b.ToTable("LeaveBalances", "hr");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.LeaveReport", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.LeaveReport", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2437,10 +2437,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("FromDate", "ToDate")
                         .HasDatabaseName("idx_leave_report_period");
 
-                    b.ToTable("LeaveReport", "humanresources");
+                    b.ToTable("LeaveReport", "hr");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.LeaveRequest", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.LeaveRequest", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2549,10 +2549,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "StartDate", "EndDate")
                         .HasDatabaseName("IX_LeaveRequest_EmployeeId_DateRange");
 
-                    b.ToTable("LeaveRequests", "humanresources");
+                    b.ToTable("LeaveRequests", "hr");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.LeaveType", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.LeaveType", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2662,10 +2662,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("LeaveName")
                         .HasDatabaseName("IX_LeaveType_LeaveName");
 
-                    b.ToTable("LeaveTypes", "humanresources");
+                    b.ToTable("LeaveTypes", "hr");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.OrganizationalUnit", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.OrganizationalUnit", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2768,12 +2768,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("Type")
                         .HasDatabaseName("IX_OrganizationalUnits_Type");
 
-                    b.ToTable("OrganizationalUnits", "humanresources");
+                    b.ToTable("OrganizationalUnits", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.PayComponent", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.PayComponent", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2908,12 +2908,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
                     b.HasIndex("IsMandatory");
 
-                    b.ToTable("PayComponents", "humanresources");
+                    b.ToTable("PayComponents", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.PayComponentRate", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.PayComponentRate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3028,12 +3028,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("PayComponentId", "Year", "MinAmount", "MaxAmount")
                         .HasDatabaseName("IX_PayComponentRates_Component_Year_Range");
 
-                    b.ToTable("PayComponentRates", "humanresources");
+                    b.ToTable("PayComponentRates", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Payroll", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Payroll", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3151,12 +3151,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                         .IsUnique()
                         .HasDatabaseName("IX_Payroll_DateRange");
 
-                    b.ToTable("Payrolls", "humanresources");
+                    b.ToTable("Payrolls", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.PayrollDeduction", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.PayrollDeduction", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3276,12 +3276,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("StartDate", "EndDate")
                         .HasDatabaseName("IX_PayrollDeduction_DateRange");
 
-                    b.ToTable("PayrollDeduction", "humanresources");
+                    b.ToTable("PayrollDeduction", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.PayrollLine", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.PayrollLine", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3430,12 +3430,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                         .IsUnique()
                         .HasDatabaseName("IX_PayrollLine_PayrollId_EmployeeId");
 
-                    b.ToTable("PayrollLines", "humanresources");
+                    b.ToTable("PayrollLines", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.PayrollReport", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.PayrollReport", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3598,10 +3598,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("FromDate", "ToDate")
                         .HasDatabaseName("idx_payroll_report_date_range");
 
-                    b.ToTable("PayrollReport", "humanresources");
+                    b.ToTable("PayrollReport", "hr");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.PerformanceReview", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.PerformanceReview", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3724,12 +3724,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("ReviewerId", "ReviewPeriodStart", "ReviewPeriodEnd")
                         .HasDatabaseName("IX_PerformanceReview_Reviewer_Period");
 
-                    b.ToTable("PerformanceReview", "humanresources");
+                    b.ToTable("PerformanceReview", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Shift", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Shift", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3808,10 +3808,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("ShiftName")
                         .HasDatabaseName("IX_Shift_ShiftName");
 
-                    b.ToTable("Shifts", "humanresources");
+                    b.ToTable("Shifts", "hr");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.ShiftAssignment", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.ShiftAssignment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3896,10 +3896,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "StartDate", "EndDate")
                         .HasDatabaseName("IX_ShiftAssignment_EmployeeId_Period");
 
-                    b.ToTable("ShiftAssignments", "humanresources");
+                    b.ToTable("ShiftAssignments", "hr");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.ShiftBreak", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.ShiftBreak", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -3967,10 +3967,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("ShiftId")
                         .HasDatabaseName("IX_ShiftBreak_ShiftId");
 
-                    b.ToTable("ShiftBreaks", "humanresources");
+                    b.ToTable("ShiftBreaks", "hr");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.TaxBracket", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.TaxBracket", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4054,12 +4054,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("TaxType", "Year", "MinIncome", "MaxIncome")
                         .HasDatabaseName("IX_TaxBracket_Type_Year_Range");
 
-                    b.ToTable("TaxBrackets", "humanresources");
+                    b.ToTable("TaxBrackets", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.TaxMaster", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.TaxMaster", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4176,10 +4176,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("TaxType", "Jurisdiction", "EffectiveDate")
                         .HasDatabaseName("idx_tax_master_type_jurisdiction_date");
 
-                    b.ToTable("TaxMaster", "humanresources");
+                    b.ToTable("TaxMaster", "hr");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Timesheet", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Timesheet", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4305,12 +4305,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                         .IsUnique()
                         .HasDatabaseName("IX_Timesheet_EmployeeId_Period");
 
-                    b.ToTable("Timesheets", "humanresources");
+                    b.ToTable("Timesheets", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.TimesheetLine", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.TimesheetLine", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -4401,14 +4401,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("WorkDate")
                         .HasDatabaseName("IX_TimesheetLine_WorkDate");
 
-                    b.ToTable("TimesheetLines", "humanresources");
+                    b.ToTable("TimesheetLines", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Attendance", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Attendance", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany("AttendanceRecords")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4417,9 +4417,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.BankAccount", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.BankAccount", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4428,13 +4428,13 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.BenefitAllocation", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.BenefitAllocation", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.BenefitEnrollment", null)
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.BenefitEnrollment", null)
                         .WithMany("Allocations")
                         .HasForeignKey("BenefitEnrollmentId");
 
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.BenefitEnrollment", "Enrollment")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.BenefitEnrollment", "Enrollment")
                         .WithMany()
                         .HasForeignKey("EnrollmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4443,15 +4443,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Enrollment");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.BenefitEnrollment", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.BenefitEnrollment", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Benefit", "Benefit")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Benefit", "Benefit")
                         .WithMany("Enrollments")
                         .HasForeignKey("BenefitId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany("BenefitEnrollments")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4462,15 +4462,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.DesignationAssignment", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.DesignationAssignment", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Designation", "Designation")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Designation", "Designation")
                         .WithMany()
                         .HasForeignKey("DesignationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany("DesignationAssignments")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4481,9 +4481,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.OrganizationalUnit", "OrganizationalUnit")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.OrganizationalUnit", "OrganizationalUnit")
                         .WithMany()
                         .HasForeignKey("OrganizationalUnitId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -4492,9 +4492,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("OrganizationalUnit");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.EmployeeContact", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeContact", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany("Contacts")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4503,9 +4503,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.EmployeeDependent", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeDependent", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany("Dependents")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4514,9 +4514,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.EmployeeDocument", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeDocument", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany("Documents")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4525,9 +4525,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.EmployeeEducation", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany("EducationRecords")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4536,15 +4536,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.EmployeePayComponent", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeePayComponent", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.PayComponent", "PayComponent")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.PayComponent", "PayComponent")
                         .WithMany()
                         .HasForeignKey("PayComponentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -4555,9 +4555,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("PayComponent");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.GeneratedDocument", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.GeneratedDocument", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.DocumentTemplate", "DocumentTemplate")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.DocumentTemplate", "DocumentTemplate")
                         .WithMany()
                         .HasForeignKey("DocumentTemplateId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -4566,15 +4566,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("DocumentTemplate");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.LeaveBalance", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.LeaveBalance", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany("LeaveBalances")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.LeaveType", "LeaveType")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.LeaveType", "LeaveType")
                         .WithMany()
                         .HasForeignKey("LeaveTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -4585,15 +4585,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("LeaveType");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.LeaveRequest", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.LeaveRequest", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany("LeaveRequests")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.LeaveType", "LeaveType")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.LeaveType", "LeaveType")
                         .WithMany()
                         .HasForeignKey("LeaveTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -4604,9 +4604,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("LeaveType");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.OrganizationalUnit", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.OrganizationalUnit", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.OrganizationalUnit", "Parent")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.OrganizationalUnit", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -4614,9 +4614,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.PayComponentRate", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.PayComponentRate", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.PayComponent", "PayComponent")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.PayComponent", "PayComponent")
                         .WithMany("Rates")
                         .HasForeignKey("PayComponentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4625,19 +4625,19 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("PayComponent");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.PayrollDeduction", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.PayrollDeduction", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.OrganizationalUnit", "OrganizationalUnit")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.OrganizationalUnit", "OrganizationalUnit")
                         .WithMany()
                         .HasForeignKey("OrganizationalUnitId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.PayComponent", "PayComponent")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.PayComponent", "PayComponent")
                         .WithMany()
                         .HasForeignKey("PayComponentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -4650,15 +4650,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("PayComponent");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.PayrollLine", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.PayrollLine", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany("PayrollLines")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Payroll", "Payroll")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Payroll", "Payroll")
                         .WithMany("Lines")
                         .HasForeignKey("PayrollId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4669,15 +4669,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Payroll");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.PerformanceReview", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.PerformanceReview", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Reviewer")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Reviewer")
                         .WithMany()
                         .HasForeignKey("ReviewerId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -4688,15 +4688,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Reviewer");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.ShiftAssignment", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.ShiftAssignment", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany("ShiftAssignments")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Shift", "Shift")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Shift", "Shift")
                         .WithMany("Assignments")
                         .HasForeignKey("ShiftId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4707,9 +4707,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Shift");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.ShiftBreak", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.ShiftBreak", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Shift", "Shift")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Shift", "Shift")
                         .WithMany("Breaks")
                         .HasForeignKey("ShiftId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4718,9 +4718,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Shift");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Timesheet", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Timesheet", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", "Employee")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", "Employee")
                         .WithMany("Timesheets")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4729,9 +4729,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.TimesheetLine", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.TimesheetLine", b =>
                 {
-                    b.HasOne("FSH.Starter.WebApi.Hr.Domain.Entities.Timesheet", "Timesheet")
+                    b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.Timesheet", "Timesheet")
                         .WithMany("Lines")
                         .HasForeignKey("TimesheetId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4740,17 +4740,17 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Timesheet");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Benefit", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Benefit", b =>
                 {
                     b.Navigation("Enrollments");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.BenefitEnrollment", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.BenefitEnrollment", b =>
                 {
                     b.Navigation("Allocations");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Employee", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Employee", b =>
                 {
                     b.Navigation("AttendanceRecords");
 
@@ -4777,29 +4777,29 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Navigation("Timesheets");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.OrganizationalUnit", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.OrganizationalUnit", b =>
                 {
                     b.Navigation("Children");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.PayComponent", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.PayComponent", b =>
                 {
                     b.Navigation("Rates");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Payroll", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Payroll", b =>
                 {
                     b.Navigation("Lines");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Shift", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Shift", b =>
                 {
                     b.Navigation("Assignments");
 
                     b.Navigation("Breaks");
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Hr.Domain.Entities.Timesheet", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.Timesheet", b =>
                 {
                     b.Navigation("Lines");
                 });

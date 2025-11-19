@@ -12,11 +12,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "humanresources");
+                name: "hr");
 
             migrationBuilder.CreateTable(
                 name: "AttendanceReport",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -60,7 +60,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "Benefits",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -99,7 +99,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "Deductions",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -136,7 +136,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "Designations",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -170,7 +170,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "DocumentTemplates",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -201,7 +201,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "Holidays",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -240,7 +240,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "LeaveReport",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -284,7 +284,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "LeaveTypes",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -325,7 +325,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "OrganizationalUnits",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -359,7 +359,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_OrganizationalUnits_OrganizationalUnits_ParentId",
                         column: x => x.ParentId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "OrganizationalUnits",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -367,7 +367,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "PayComponents",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -412,7 +412,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "PayrollReport",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -457,7 +457,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "Payrolls",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -497,7 +497,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "Shifts",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -529,7 +529,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "TaxBrackets",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -561,7 +561,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "TaxMaster",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -599,7 +599,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "GeneratedDocuments",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -636,7 +636,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_GeneratedDocuments_DocumentTemplates_DocumentTemplateId",
                         column: x => x.DocumentTemplateId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "DocumentTemplates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -644,7 +644,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "Employees",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -698,7 +698,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_Employees_OrganizationalUnits_OrganizationalUnitId",
                         column: x => x.OrganizationalUnitId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "OrganizationalUnits",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -706,7 +706,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "PayComponentRates",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -746,7 +746,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_PayComponentRates_PayComponents_PayComponentId",
                         column: x => x.PayComponentId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "PayComponents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -754,7 +754,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "ShiftBreaks",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -783,15 +783,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_ShiftBreaks_Shifts_ShiftId",
                         column: x => x.ShiftId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Shifts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Attendance",
-                schema: "humanresources",
+                name: "Attendances",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -825,19 +825,19 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Attendance", x => x.Id);
+                    table.PrimaryKey("PK_Attendances", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Attendance_Employees_EmployeeId",
+                        name: "FK_Attendances_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "BankAccount",
-                schema: "humanresources",
+                name: "BankAccounts",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -872,11 +872,11 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BankAccount", x => x.Id);
+                    table.PrimaryKey("PK_BankAccounts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BankAccount_Employees_EmployeeId",
+                        name: "FK_BankAccounts_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -884,7 +884,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "BenefitEnrollments",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -919,14 +919,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_BenefitEnrollments_Benefits_BenefitId",
                         column: x => x.BenefitId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Benefits",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_BenefitEnrollments_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -934,7 +934,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "DesignationAssignments",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -967,14 +967,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_DesignationAssignments_Designations_DesignationId",
                         column: x => x.DesignationId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Designations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_DesignationAssignments_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -982,7 +982,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "EmployeeContacts",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1017,7 +1017,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_EmployeeContacts_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1025,7 +1025,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "EmployeeDependents",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1063,7 +1063,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_EmployeeDependents_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1071,7 +1071,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "EmployeeDocument",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1107,7 +1107,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_EmployeeDocument_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1115,7 +1115,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "EmployeeEducations",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1152,7 +1152,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_EmployeeEducations_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1160,7 +1160,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "EmployeePayComponents",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1205,14 +1205,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_EmployeePayComponents_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EmployeePayComponents_PayComponents_PayComponentId",
                         column: x => x.PayComponentId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "PayComponents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -1220,7 +1220,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "LeaveBalances",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1253,14 +1253,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_LeaveBalances_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LeaveBalances_LeaveTypes_LeaveTypeId",
                         column: x => x.LeaveTypeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "LeaveTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -1268,7 +1268,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "LeaveRequests",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1305,14 +1305,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_LeaveRequests_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LeaveRequests_LeaveTypes_LeaveTypeId",
                         column: x => x.LeaveTypeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "LeaveTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -1320,7 +1320,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "PayrollDeduction",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1359,21 +1359,21 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_PayrollDeduction_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PayrollDeduction_OrganizationalUnits_OrganizationalUnitId",
                         column: x => x.OrganizationalUnitId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "OrganizationalUnits",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PayrollDeduction_PayComponents_PayComponentId",
                         column: x => x.PayComponentId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "PayComponents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -1381,7 +1381,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "PayrollLines",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1428,14 +1428,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_PayrollLines_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PayrollLines_Payrolls_PayrollId",
                         column: x => x.PayrollId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Payrolls",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1443,7 +1443,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "PerformanceReview",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1483,14 +1483,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_PerformanceReview_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PerformanceReview_Employees_ReviewerId",
                         column: x => x.ReviewerId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -1498,7 +1498,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "ShiftAssignments",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1529,14 +1529,14 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_ShiftAssignments_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ShiftAssignments_Shifts_ShiftId",
                         column: x => x.ShiftId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Shifts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1544,7 +1544,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "Timesheets",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1584,7 +1584,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_Timesheets_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1592,7 +1592,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "BenefitAllocations",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1628,13 +1628,13 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_BenefitAllocations_BenefitEnrollments_BenefitEnrollmentId",
                         column: x => x.BenefitEnrollmentId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "BenefitEnrollments",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_BenefitAllocations_BenefitEnrollments_EnrollmentId",
                         column: x => x.EnrollmentId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "BenefitEnrollments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1642,7 +1642,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
             migrationBuilder.CreateTable(
                 name: "TimesheetLines",
-                schema: "humanresources",
+                schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -1675,1003 +1675,1003 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     table.ForeignKey(
                         name: "FK_TimesheetLines_Timesheets_TimesheetId",
                         column: x => x.TimesheetId,
-                        principalSchema: "humanresources",
+                        principalSchema: "hr",
                         principalTable: "Timesheets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attendance_AttendanceDate",
-                schema: "humanresources",
-                table: "Attendance",
-                column: "AttendanceDate");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Attendance_EmployeeId",
-                schema: "humanresources",
-                table: "Attendance",
-                column: "EmployeeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Attendance_EmployeeId_AttendanceDate",
-                schema: "humanresources",
-                table: "Attendance",
-                columns: new[] { "EmployeeId", "AttendanceDate" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Attendance_IsActive",
-                schema: "humanresources",
-                table: "Attendance",
-                column: "IsActive");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Attendance_IsApproved",
-                schema: "humanresources",
-                table: "Attendance",
-                column: "IsApproved");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Attendance_Status",
-                schema: "humanresources",
-                table: "Attendance",
-                column: "Status");
-
-            migrationBuilder.CreateIndex(
                 name: "idx_attendance_report_department_id",
-                schema: "humanresources",
+                schema: "hr",
                 table: "AttendanceReport",
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "idx_attendance_report_employee_id",
-                schema: "humanresources",
+                schema: "hr",
                 table: "AttendanceReport",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "idx_attendance_report_generated_on",
-                schema: "humanresources",
+                schema: "hr",
                 table: "AttendanceReport",
                 column: "GeneratedOn");
 
             migrationBuilder.CreateIndex(
                 name: "idx_attendance_report_is_active",
-                schema: "humanresources",
+                schema: "hr",
                 table: "AttendanceReport",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "idx_attendance_report_period",
-                schema: "humanresources",
+                schema: "hr",
                 table: "AttendanceReport",
                 columns: new[] { "FromDate", "ToDate" });
 
             migrationBuilder.CreateIndex(
                 name: "idx_attendance_report_type",
-                schema: "humanresources",
+                schema: "hr",
                 table: "AttendanceReport",
                 column: "ReportType");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Attendance_AttendanceDate",
+                schema: "hr",
+                table: "Attendances",
+                column: "AttendanceDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendance_EmployeeId",
+                schema: "hr",
+                table: "Attendances",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendance_EmployeeId_AttendanceDate",
+                schema: "hr",
+                table: "Attendances",
+                columns: new[] { "EmployeeId", "AttendanceDate" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendance_IsActive",
+                schema: "hr",
+                table: "Attendances",
+                column: "IsActive");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendance_IsApproved",
+                schema: "hr",
+                table: "Attendances",
+                column: "IsApproved");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendance_Status",
+                schema: "hr",
+                table: "Attendances",
+                column: "Status");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BankAccount_AccountType",
-                schema: "humanresources",
-                table: "BankAccount",
+                schema: "hr",
+                table: "BankAccounts",
                 column: "AccountType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankAccount_Employee_Primary",
-                schema: "humanresources",
-                table: "BankAccount",
+                schema: "hr",
+                table: "BankAccounts",
                 columns: new[] { "EmployeeId", "IsPrimary" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankAccount_EmployeeId",
-                schema: "humanresources",
-                table: "BankAccount",
+                schema: "hr",
+                table: "BankAccounts",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankAccount_IsActive",
-                schema: "humanresources",
-                table: "BankAccount",
+                schema: "hr",
+                table: "BankAccounts",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankAccount_IsVerified",
-                schema: "humanresources",
-                table: "BankAccount",
+                schema: "hr",
+                table: "BankAccounts",
                 column: "IsVerified");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankAccount_Last4Digits",
-                schema: "humanresources",
-                table: "BankAccount",
+                schema: "hr",
+                table: "BankAccounts",
                 column: "Last4Digits");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitAllocation_AllocationDate",
-                schema: "humanresources",
+                schema: "hr",
                 table: "BenefitAllocations",
                 column: "AllocationDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitAllocation_Enrollment_Date",
-                schema: "humanresources",
+                schema: "hr",
                 table: "BenefitAllocations",
                 columns: new[] { "EnrollmentId", "AllocationDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitAllocation_EnrollmentId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "BenefitAllocations",
                 column: "EnrollmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitAllocation_ReferenceNumber",
-                schema: "humanresources",
+                schema: "hr",
                 table: "BenefitAllocations",
                 column: "ReferenceNumber");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitAllocation_Status",
-                schema: "humanresources",
+                schema: "hr",
                 table: "BenefitAllocations",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitAllocations_BenefitEnrollmentId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "BenefitAllocations",
                 column: "BenefitEnrollmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitEnrollment_BenefitId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "BenefitEnrollments",
                 column: "BenefitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitEnrollment_Effective",
-                schema: "humanresources",
+                schema: "hr",
                 table: "BenefitEnrollments",
                 columns: new[] { "EmployeeId", "BenefitId", "EffectiveDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitEnrollment_EmployeeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "BenefitEnrollments",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitEnrollment_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "BenefitEnrollments",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Benefit_BenefitName",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Benefits",
                 column: "BenefitName");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Benefit_BenefitType",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Benefits",
                 column: "BenefitType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Benefit_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Benefits",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Benefit_Name_Type",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Benefits",
                 columns: new[] { "BenefitName", "BenefitType" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Deduction_DeductionName",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Deductions",
                 column: "DeductionName");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Deduction_DeductionType",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Deductions",
                 column: "DeductionType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Deduction_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Deductions",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Deduction_Type_Active",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Deductions",
                 columns: new[] { "DeductionType", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EDA_Designations",
-                schema: "humanresources",
+                schema: "hr",
                 table: "DesignationAssignments",
                 columns: new[] { "DesignationId", "EffectiveDate", "EndDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EDA_EmployeeHistory",
-                schema: "humanresources",
+                schema: "hr",
                 table: "DesignationAssignments",
                 columns: new[] { "EmployeeId", "EffectiveDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EDA_PayrollPeriod",
-                schema: "humanresources",
+                schema: "hr",
                 table: "DesignationAssignments",
                 columns: new[] { "EffectiveDate", "EndDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EDA_PointInTime",
-                schema: "humanresources",
+                schema: "hr",
                 table: "DesignationAssignments",
                 columns: new[] { "EmployeeId", "EffectiveDate", "EndDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Designations_Area",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Designations",
                 column: "Area");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Designations_Code",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Designations",
                 column: "Code",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Designations_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Designations",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Designations_IsManagerial",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Designations",
                 column: "IsManagerial");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Designations_SalaryGrade",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Designations",
                 column: "SalaryGrade");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DocumentTemplate_DocumentType",
-                schema: "humanresources",
+                schema: "hr",
                 table: "DocumentTemplates",
                 column: "DocumentType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DocumentTemplate_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "DocumentTemplates",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DocumentTemplate_TemplateName",
-                schema: "humanresources",
+                schema: "hr",
                 table: "DocumentTemplates",
                 column: "TemplateName");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeContacts_ContactType",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeContacts",
                 column: "ContactType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeContacts_EmployeeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeContacts",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeContacts_EmployeeId_ContactType",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeContacts",
                 columns: new[] { "EmployeeId", "ContactType" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeContacts_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeContacts",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDependents_DependentType",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeDependents",
                 column: "DependentType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDependents_EmployeeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeDependents",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDependents_EmployeeId_DependentType",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeDependents",
                 columns: new[] { "EmployeeId", "DependentType" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDependents_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeDependents",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDependents_IsBeneficiary",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeDependents",
                 column: "IsBeneficiary");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDependents_IsClaimableDependent",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeDependents",
                 column: "IsClaimableDependent");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_DocumentType",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeDocument",
                 column: "DocumentType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_EmployeeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeDocument",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_EmployeeId_DocumentType",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeDocument",
                 columns: new[] { "EmployeeId", "DocumentType" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_ExpiryDate",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeDocument",
                 column: "ExpiryDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeDocument",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeEducations_EducationLevel",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeEducations",
                 column: "EducationLevel");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeEducations_EmployeeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeEducations",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeEducations_EmployeeId_EducationLevel",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeEducations",
                 columns: new[] { "EmployeeId", "EducationLevel" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeEducations_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeEducations",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeEducations_IsVerified",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeeEducations",
                 column: "IsVerified");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeePayComponents_DateRange",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeePayComponents",
                 columns: new[] { "EffectiveStartDate", "EffectiveEndDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeePayComponents_Employee_Component_Active",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeePayComponents",
                 columns: new[] { "EmployeeId", "PayComponentId", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeePayComponents_EmployeeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeePayComponents",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeePayComponents_PayComponentId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeePayComponents",
                 column: "PayComponentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeePayComponents_ReferenceNumber",
-                schema: "humanresources",
+                schema: "hr",
                 table: "EmployeePayComponents",
                 column: "ReferenceNumber");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_Email",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Employees",
                 column: "Email");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_EmployeeNumber",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Employees",
                 column: "EmployeeNumber",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_FirstName_LastName",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Employees",
                 columns: new[] { "FirstName", "LastName" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Employees",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_OrganizationalUnitId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Employees",
                 column: "OrganizationalUnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_Status",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Employees",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GeneratedDocument_EntityId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "GeneratedDocuments",
                 column: "EntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GeneratedDocument_EntityId_EntityType",
-                schema: "humanresources",
+                schema: "hr",
                 table: "GeneratedDocuments",
                 columns: new[] { "EntityId", "EntityType" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_GeneratedDocument_GeneratedDate",
-                schema: "humanresources",
+                schema: "hr",
                 table: "GeneratedDocuments",
                 column: "GeneratedDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GeneratedDocument_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "GeneratedDocuments",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GeneratedDocument_Status",
-                schema: "humanresources",
+                schema: "hr",
                 table: "GeneratedDocuments",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GeneratedDocuments_DocumentTemplateId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "GeneratedDocuments",
                 column: "DocumentTemplateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Holiday_HolidayDate",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Holidays",
                 column: "HolidayDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Holiday_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Holidays",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveBalance_EmployeeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveBalances",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveBalance_EmployeeId_LeaveTypeId_Year",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveBalances",
                 columns: new[] { "EmployeeId", "LeaveTypeId", "Year" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveBalance_LeaveTypeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveBalances",
                 column: "LeaveTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "idx_leave_report_department_id",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveReport",
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "idx_leave_report_employee_id",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveReport",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "idx_leave_report_generated_on",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveReport",
                 column: "GeneratedOn");
 
             migrationBuilder.CreateIndex(
                 name: "idx_leave_report_is_active",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveReport",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "idx_leave_report_period",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveReport",
                 columns: new[] { "FromDate", "ToDate" });
 
             migrationBuilder.CreateIndex(
                 name: "idx_leave_report_type",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveReport",
                 column: "ReportType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveRequest_EmployeeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveRequests",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveRequest_EmployeeId_DateRange",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveRequests",
                 columns: new[] { "EmployeeId", "StartDate", "EndDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveRequest_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveRequests",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveRequest_LeaveTypeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveRequests",
                 column: "LeaveTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveRequest_Status",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveRequests",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveType_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveTypes",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveType_LeaveName",
-                schema: "humanresources",
+                schema: "hr",
                 table: "LeaveTypes",
                 column: "LeaveName");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrganizationalUnits_Code",
-                schema: "humanresources",
+                schema: "hr",
                 table: "OrganizationalUnits",
                 column: "Code",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrganizationalUnits_HierarchyPath",
-                schema: "humanresources",
+                schema: "hr",
                 table: "OrganizationalUnits",
                 column: "HierarchyPath");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrganizationalUnits_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "OrganizationalUnits",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrganizationalUnits_ParentId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "OrganizationalUnits",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrganizationalUnits_Type",
-                schema: "humanresources",
+                schema: "hr",
                 table: "OrganizationalUnits",
                 column: "Type");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayComponentRates_Component_Year_Range",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayComponentRates",
                 columns: new[] { "PayComponentId", "Year", "MinAmount", "MaxAmount" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayComponentRates_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayComponentRates",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayComponentRates_Year",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayComponentRates",
                 column: "Year");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayComponents_Code",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayComponents",
                 column: "Code",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayComponents_ComponentType",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayComponents",
                 column: "ComponentType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayComponents_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayComponents",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayComponents_IsMandatory",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayComponents",
                 column: "IsMandatory");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollDeduction_DateRange",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollDeduction",
                 columns: new[] { "StartDate", "EndDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollDeduction_EmployeeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollDeduction",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollDeduction_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollDeduction",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollDeduction_OrganizationalUnitId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollDeduction",
                 column: "OrganizationalUnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollDeduction_PayComponentId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollDeduction",
                 column: "PayComponentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollDeduction_ReferenceNumber",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollDeduction",
                 column: "ReferenceNumber");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollLine_EmployeeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollLines",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollLine_PayrollId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollLines",
                 column: "PayrollId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollLine_PayrollId_EmployeeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollLines",
                 columns: new[] { "PayrollId", "EmployeeId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "idx_payroll_report_date_range",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollReport",
                 columns: new[] { "FromDate", "ToDate" });
 
             migrationBuilder.CreateIndex(
                 name: "idx_payroll_report_department_id",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollReport",
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "idx_payroll_report_employee_id",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollReport",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "idx_payroll_report_generated_on",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollReport",
                 column: "GeneratedOn");
 
             migrationBuilder.CreateIndex(
                 name: "idx_payroll_report_is_active",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollReport",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "idx_payroll_report_period",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollReport",
                 column: "PayrollPeriod");
 
             migrationBuilder.CreateIndex(
                 name: "idx_payroll_report_type",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PayrollReport",
                 column: "ReportType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payroll_DateRange",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Payrolls",
                 columns: new[] { "StartDate", "EndDate" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payroll_IsLocked",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Payrolls",
                 column: "IsLocked");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payroll_StartDate",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Payrolls",
                 column: "StartDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payroll_Status",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Payrolls",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PerformanceReview_Employee_Period",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PerformanceReview",
                 columns: new[] { "EmployeeId", "ReviewPeriodStart", "ReviewPeriodEnd" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PerformanceReview_EmployeeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PerformanceReview",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PerformanceReview_Reviewer_Period",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PerformanceReview",
                 columns: new[] { "ReviewerId", "ReviewPeriodStart", "ReviewPeriodEnd" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PerformanceReview_ReviewerId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PerformanceReview",
                 column: "ReviewerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PerformanceReview_Status",
-                schema: "humanresources",
+                schema: "hr",
                 table: "PerformanceReview",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShiftAssignment_EmployeeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "ShiftAssignments",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShiftAssignment_EmployeeId_Period",
-                schema: "humanresources",
+                schema: "hr",
                 table: "ShiftAssignments",
                 columns: new[] { "EmployeeId", "StartDate", "EndDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShiftAssignment_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "ShiftAssignments",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShiftAssignment_ShiftId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "ShiftAssignments",
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShiftAssignment_StartDate",
-                schema: "humanresources",
+                schema: "hr",
                 table: "ShiftAssignments",
                 column: "StartDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShiftBreak_ShiftId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "ShiftBreaks",
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Shift_IsActive",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Shifts",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Shift_ShiftName",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Shifts",
                 column: "ShiftName");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TaxBracket_TaxType_Year",
-                schema: "humanresources",
+                schema: "hr",
                 table: "TaxBrackets",
                 columns: new[] { "TaxType", "Year" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_TaxBracket_Type_Year_Range",
-                schema: "humanresources",
+                schema: "hr",
                 table: "TaxBrackets",
                 columns: new[] { "TaxType", "Year", "MinIncome", "MaxIncome" });
 
             migrationBuilder.CreateIndex(
                 name: "idx_tax_master_code",
-                schema: "humanresources",
+                schema: "hr",
                 table: "TaxMaster",
                 column: "Code",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "idx_tax_master_is_active",
-                schema: "humanresources",
+                schema: "hr",
                 table: "TaxMaster",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "idx_tax_master_jurisdiction",
-                schema: "humanresources",
+                schema: "hr",
                 table: "TaxMaster",
                 column: "Jurisdiction");
 
             migrationBuilder.CreateIndex(
                 name: "idx_tax_master_tax_type",
-                schema: "humanresources",
+                schema: "hr",
                 table: "TaxMaster",
                 column: "TaxType");
 
             migrationBuilder.CreateIndex(
                 name: "idx_tax_master_type_jurisdiction_date",
-                schema: "humanresources",
+                schema: "hr",
                 table: "TaxMaster",
                 columns: new[] { "TaxType", "Jurisdiction", "EffectiveDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_TimesheetLine_IsBillable",
-                schema: "humanresources",
+                schema: "hr",
                 table: "TimesheetLines",
                 column: "IsBillable");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TimesheetLine_TimesheetId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "TimesheetLines",
                 column: "TimesheetId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TimesheetLine_WorkDate",
-                schema: "humanresources",
+                schema: "hr",
                 table: "TimesheetLines",
                 column: "WorkDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Timesheet_EmployeeId",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Timesheets",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Timesheet_EmployeeId_Period",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Timesheets",
                 columns: new[] { "EmployeeId", "StartDate", "EndDate" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Timesheet_IsApproved",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Timesheets",
                 column: "IsApproved");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Timesheet_IsLocked",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Timesheets",
                 column: "IsLocked");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Timesheet_StartDate",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Timesheets",
                 column: "StartDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Timesheet_Status",
-                schema: "humanresources",
+                schema: "hr",
                 table: "Timesheets",
                 column: "Status");
         }
@@ -2680,152 +2680,152 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Attendance",
-                schema: "humanresources");
-
-            migrationBuilder.DropTable(
                 name: "AttendanceReport",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
-                name: "BankAccount",
-                schema: "humanresources");
+                name: "Attendances",
+                schema: "hr");
+
+            migrationBuilder.DropTable(
+                name: "BankAccounts",
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "BenefitAllocations",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "Deductions",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "DesignationAssignments",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "EmployeeContacts",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "EmployeeDependents",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "EmployeeDocument",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "EmployeeEducations",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "EmployeePayComponents",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "GeneratedDocuments",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "Holidays",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "LeaveBalances",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "LeaveReport",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "LeaveRequests",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "PayComponentRates",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "PayrollDeduction",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "PayrollLines",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "PayrollReport",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "PerformanceReview",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "ShiftAssignments",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "ShiftBreaks",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "TaxBrackets",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "TaxMaster",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "TimesheetLines",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "BenefitEnrollments",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "Designations",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "DocumentTemplates",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "LeaveTypes",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "PayComponents",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "Payrolls",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "Shifts",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "Timesheets",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "Benefits",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "Employees",
-                schema: "humanresources");
+                schema: "hr");
 
             migrationBuilder.DropTable(
                 name: "OrganizationalUnits",
-                schema: "humanresources");
+                schema: "hr");
         }
     }
 }

@@ -6,6 +6,7 @@ Add documentation for each Entity, fields, methods, functions and classes.
 Only use string as enums.
 
 ## 📋 Best Practices Rules
+Use the primary constructor syntax
 
 ### ✅ Rules to Apply:
 1. **Commands for Writes** - Create, Update, Delete, Workflow actions

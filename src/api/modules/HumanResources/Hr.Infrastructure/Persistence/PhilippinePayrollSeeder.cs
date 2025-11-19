@@ -7,19 +7,10 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 /// Seeds Philippine payroll components and rates based on current labor laws.
 /// Updated for 2025 rates.
 /// </summary>
-internal sealed class PhilippinePayrollSeeder
+internal sealed class PhilippinePayrollSeeder(
+    ILogger<PhilippinePayrollSeeder> logger,
+    HrDbContext context)
 {
-    private readonly ILogger<PhilippinePayrollSeeder> _logger;
-    private readonly HrDbContext _context;
-
-    public PhilippinePayrollSeeder(
-        ILogger<PhilippinePayrollSeeder> logger,
-        HrDbContext context)
-    {
-        _logger = logger;
-        _context = context;
-    }
-
     /// <summary>
     /// Seeds all Philippine payroll components and rates.
     /// </summary>
@@ -42,7 +33,7 @@ internal sealed class PhilippinePayrollSeeder
     /// </summary>
     private async Task SeedBasicPayComponentsAsync(CancellationToken cancellationToken)
     {
-        if (await _context.PayComponents.AnyAsync(x => x.Code == "BASIC_PAY", cancellationToken))
+        if (await context.PayComponents.AnyAsync(x => x.Code == "BASIC_PAY", cancellationToken))
             return;
 
         var basicPay = PayComponent.Create(
@@ -61,10 +52,10 @@ internal sealed class PhilippinePayrollSeeder
         basicPay.SetTaxTreatment(isSubjectToTax: true, isTaxExempt: false);
         basicPay.SetPayImpact(affectsGrossPay: true, affectsNetPay: true);
 
-        await _context.PayComponents.AddAsync(basicPay, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.PayComponents.AddAsync(basicPay, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
         
-        _logger.LogInformation("[{Tenant}] seeded basic pay component", _context.TenantInfo!.Identifier);
+        logger.LogInformation("[{Tenant}] seeded basic pay component", context.TenantInfo!.Identifier);
     }
 
     /// <summary>
@@ -75,7 +66,7 @@ internal sealed class PhilippinePayrollSeeder
     /// </summary>
     private async Task SeedSssComponentsAndRatesAsync(CancellationToken cancellationToken)
     {
-        if (await _context.PayComponents.AnyAsync(x => x.Code == "SSS_EE", cancellationToken))
+        if (await context.PayComponents.AnyAsync(x => x.Code == "SSS_EE", cancellationToken))
             return;
 
         // Employee Share
@@ -129,12 +120,12 @@ internal sealed class PhilippinePayrollSeeder
         sssEc.SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false);
         sssEc.SetPayImpact(affectsGrossPay: false, affectsNetPay: false);
 
-        await _context.PayComponents.AddRangeAsync(
+        await context.PayComponents.AddRangeAsync(
             new[] { sssEmployee, sssEmployer, sssEc },
             cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("[{Tenant}] seeded SSS components", _context.TenantInfo!.Identifier);
+        logger.LogInformation("[{Tenant}] seeded SSS components", context.TenantInfo!.Identifier);
 
         // Seed SSS 2025 Rate Brackets using TEMPORAL PATTERN (date ranges)
         // Effective: January 1, 2025 - December 31, 2025
@@ -230,12 +221,12 @@ internal sealed class PhilippinePayrollSeeder
             sssBrackets.Add(rate);
         }
 
-        await _context.PayComponentRates.AddRangeAsync(sssBrackets, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.PayComponentRates.AddRangeAsync(sssBrackets, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation(
+        logger.LogInformation(
             "[{Tenant}] seeded {Count} SSS rate brackets for 2025 (Circular No. 2024-006) using temporal pattern", 
-            _context.TenantInfo!.Identifier, 
+            context.TenantInfo!.Identifier, 
             sssBrackets.Count);
     }
 
@@ -245,7 +236,7 @@ internal sealed class PhilippinePayrollSeeder
     /// </summary>
     private async Task SeedPhilHealthComponentsAndRatesAsync(CancellationToken cancellationToken)
     {
-        if (await _context.PayComponents.AnyAsync(x => x.Code == "PHIC_EE", cancellationToken))
+        if (await context.PayComponents.AnyAsync(x => x.Code == "PHIC_EE", cancellationToken))
             return;
 
         // Employee Share
@@ -284,12 +275,12 @@ internal sealed class PhilippinePayrollSeeder
             .SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false)
             .SetPayImpact(affectsGrossPay: false, affectsNetPay: false);
 
-        await _context.PayComponents.AddRangeAsync(
+        await context.PayComponents.AddRangeAsync(
             new[] { philHealthEmployee, philHealthEmployer },
             cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("[{Tenant}] seeded PhilHealth components", _context.TenantInfo!.Identifier);
+        logger.LogInformation("[{Tenant}] seeded PhilHealth components", context.TenantInfo!.Identifier);
 
         // PhilHealth 2025 Rate Brackets using TEMPORAL PATTERN
         var effectiveStart = new DateTime(2025, 1, 1);
@@ -331,11 +322,11 @@ internal sealed class PhilippinePayrollSeeder
                 .Update(description: "Maximum cap ₱5,000 total (₱2,500 each)")
         };
 
-        await _context.PayComponentRates.AddRangeAsync(philHealthBrackets, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.PayComponentRates.AddRangeAsync(philHealthBrackets, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("[{Tenant}] seeded {Count} PhilHealth rate brackets for 2025",
-            _context.TenantInfo!.Identifier, philHealthBrackets.Count);
+        logger.LogInformation("[{Tenant}] seeded {Count} PhilHealth rate brackets for 2025",
+            context.TenantInfo!.Identifier, philHealthBrackets.Count);
     }
 
     /// <summary>
@@ -344,7 +335,7 @@ internal sealed class PhilippinePayrollSeeder
     /// </summary>
     private async Task SeedPagIbigComponentsAndRatesAsync(CancellationToken cancellationToken)
     {
-        if (await _context.PayComponents.AnyAsync(x => x.Code == "HDMF_EE", cancellationToken))
+        if (await context.PayComponents.AnyAsync(x => x.Code == "HDMF_EE", cancellationToken))
             return;
 
         // Employee Share
@@ -383,12 +374,12 @@ internal sealed class PhilippinePayrollSeeder
             .SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false)
             .SetPayImpact(affectsGrossPay: false, affectsNetPay: false);
 
-        await _context.PayComponents.AddRangeAsync(
+        await context.PayComponents.AddRangeAsync(
             new[] { pagibigEmployee, pagibigEmployer },
             cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("[{Tenant}] seeded Pag-IBIG components", _context.TenantInfo!.Identifier);
+        logger.LogInformation("[{Tenant}] seeded Pag-IBIG components", context.TenantInfo!.Identifier);
 
         // Pag-IBIG 2025 Rate Brackets using TEMPORAL PATTERN
         var effectiveStart = new DateTime(2025, 1, 1);
@@ -419,11 +410,11 @@ internal sealed class PhilippinePayrollSeeder
                 .Update(description: "Employee 2%, Employer 2%")
         };
 
-        await _context.PayComponentRates.AddRangeAsync(pagibigBrackets, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.PayComponentRates.AddRangeAsync(pagibigBrackets, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("[{Tenant}] seeded {Count} Pag-IBIG rate brackets for 2025",
-            _context.TenantInfo!.Identifier, pagibigBrackets.Count);
+        logger.LogInformation("[{Tenant}] seeded {Count} Pag-IBIG rate brackets for 2025",
+            context.TenantInfo!.Identifier, pagibigBrackets.Count);
     }
 
     /// <summary>
@@ -432,7 +423,7 @@ internal sealed class PhilippinePayrollSeeder
     /// </summary>
     private async Task SeedWithholdingTaxComponentsAndRatesAsync(CancellationToken cancellationToken)
     {
-        if (await _context.PayComponents.AnyAsync(x => x.Code == "WITHHOLDING_TAX", cancellationToken))
+        if (await context.PayComponents.AnyAsync(x => x.Code == "WITHHOLDING_TAX", cancellationToken))
             return;
 
         var withholdingTax = PayComponent.Create(
@@ -452,10 +443,10 @@ internal sealed class PhilippinePayrollSeeder
             .SetTaxTreatment(isSubjectToTax: false, isTaxExempt: false)
             .SetPayImpact(affectsGrossPay: false, affectsNetPay: true);
 
-        await _context.PayComponents.AddAsync(withholdingTax, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.PayComponents.AddAsync(withholdingTax, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("[{Tenant}] seeded withholding tax component", _context.TenantInfo!.Identifier);
+        logger.LogInformation("[{Tenant}] seeded withholding tax component", context.TenantInfo!.Identifier);
 
         // TRAIN Law 2025 Tax Brackets (Monthly) using TEMPORAL PATTERN
         var effectiveStart = new DateTime(2025, 1, 1);
@@ -530,11 +521,11 @@ internal sealed class PhilippinePayrollSeeder
                 .Update(description: "Over ₱8,000,000 annual - ₱2,202,500 + 35% of excess over ₱8,000,000")
         };
 
-        await _context.PayComponentRates.AddRangeAsync(taxBrackets, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.PayComponentRates.AddRangeAsync(taxBrackets, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("[{Tenant}] seeded {Count} withholding tax brackets for 2025",
-            _context.TenantInfo!.Identifier, taxBrackets.Count);
+        logger.LogInformation("[{Tenant}] seeded {Count} withholding tax brackets for 2025",
+            context.TenantInfo!.Identifier, taxBrackets.Count);
     }
 
     /// <summary>
@@ -542,7 +533,7 @@ internal sealed class PhilippinePayrollSeeder
     /// </summary>
     private async Task SeedOvertimeComponentsAsync(CancellationToken cancellationToken)
     {
-        if (await _context.PayComponents.AnyAsync(x => x.Code == "OT_REGULAR", cancellationToken))
+        if (await context.PayComponents.AnyAsync(x => x.Code == "OT_REGULAR", cancellationToken))
             return;
 
         var overtimeComponents = new List<PayComponent>
@@ -612,11 +603,11 @@ internal sealed class PhilippinePayrollSeeder
                 .SetPayImpact(affectsGrossPay: true, affectsNetPay: true)
         };
 
-        await _context.PayComponents.AddRangeAsync(overtimeComponents, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.PayComponents.AddRangeAsync(overtimeComponents, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("[{Tenant}] seeded {Count} overtime pay components",
-            _context.TenantInfo!.Identifier, overtimeComponents.Count);
+        logger.LogInformation("[{Tenant}] seeded {Count} overtime pay components",
+            context.TenantInfo!.Identifier, overtimeComponents.Count);
     }
 
     /// <summary>
@@ -624,7 +615,7 @@ internal sealed class PhilippinePayrollSeeder
     /// </summary>
     private async Task SeedPremiumPayComponentsAsync(CancellationToken cancellationToken)
     {
-        if (await _context.PayComponents.AnyAsync(x => x.Code == "NIGHT_DIFF", cancellationToken))
+        if (await context.PayComponents.AnyAsync(x => x.Code == "NIGHT_DIFF", cancellationToken))
             return;
 
         var premiumComponents = new List<PayComponent>
@@ -690,11 +681,11 @@ internal sealed class PhilippinePayrollSeeder
                 .SetPayImpact(affectsGrossPay: true, affectsNetPay: true)
         };
 
-        await _context.PayComponents.AddRangeAsync(premiumComponents, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.PayComponents.AddRangeAsync(premiumComponents, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("[{Tenant}] seeded {Count} premium pay components",
-            _context.TenantInfo!.Identifier, premiumComponents.Count);
+        logger.LogInformation("[{Tenant}] seeded {Count} premium pay components",
+            context.TenantInfo!.Identifier, premiumComponents.Count);
     }
 
     /// <summary>
@@ -702,7 +693,7 @@ internal sealed class PhilippinePayrollSeeder
     /// </summary>
     private async Task SeedAllowancesAndBenefitsAsync(CancellationToken cancellationToken)
     {
-        if (await _context.PayComponents.AnyAsync(x => x.Code == "ALLOW_TRANS", cancellationToken))
+        if (await context.PayComponents.AnyAsync(x => x.Code == "ALLOW_TRANS", cancellationToken))
             return;
 
         var allowanceComponents = new List<PayComponent>
@@ -783,11 +774,11 @@ internal sealed class PhilippinePayrollSeeder
                 .SetPayImpact(affectsGrossPay: true, affectsNetPay: true)
         };
 
-        await _context.PayComponents.AddRangeAsync(allowanceComponents, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.PayComponents.AddRangeAsync(allowanceComponents, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("[{Tenant}] seeded {Count} allowance and benefit components",
-            _context.TenantInfo!.Identifier, allowanceComponents.Count);
+        logger.LogInformation("[{Tenant}] seeded {Count} allowance and benefit components",
+            context.TenantInfo!.Identifier, allowanceComponents.Count);
     }
 
     /// <summary>
@@ -795,7 +786,7 @@ internal sealed class PhilippinePayrollSeeder
     /// </summary>
     private async Task SeedDeductionsAsync(CancellationToken cancellationToken)
     {
-        if (await _context.PayComponents.AnyAsync(x => x.Code == "DED_LOAN", cancellationToken))
+        if (await context.PayComponents.AnyAsync(x => x.Code == "DED_LOAN", cancellationToken))
             return;
 
         var deductionComponents = new List<PayComponent>
@@ -899,11 +890,11 @@ internal sealed class PhilippinePayrollSeeder
                 .SetPayImpact(affectsGrossPay: false, affectsNetPay: true)
         };
 
-        await _context.PayComponents.AddRangeAsync(deductionComponents, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.PayComponents.AddRangeAsync(deductionComponents, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("[{Tenant}] seeded {Count} deduction components",
-            _context.TenantInfo!.Identifier, deductionComponents.Count);
+        logger.LogInformation("[{Tenant}] seeded {Count} deduction components",
+            context.TenantInfo!.Identifier, deductionComponents.Count);
     }
 
     /// <summary>
@@ -911,7 +902,7 @@ internal sealed class PhilippinePayrollSeeder
     /// </summary>
     private async Task SeedThirteenthMonthPayAsync(CancellationToken cancellationToken)
     {
-        if (await _context.PayComponents.AnyAsync(x => x.Code == "THIRTEENTH_MONTH", cancellationToken))
+        if (await context.PayComponents.AnyAsync(x => x.Code == "THIRTEENTH_MONTH", cancellationToken))
             return;
 
         var thirteenthMonth = PayComponent.Create(
@@ -933,10 +924,10 @@ internal sealed class PhilippinePayrollSeeder
             .SetPayImpact(affectsGrossPay: true, affectsNetPay: true)
             .SetLimits(minValue: 0m, maxValue: null);
 
-        await _context.PayComponents.AddAsync(thirteenthMonth, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.PayComponents.AddAsync(thirteenthMonth, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("[{Tenant}] seeded 13th month pay component", _context.TenantInfo!.Identifier);
+        logger.LogInformation("[{Tenant}] seeded 13th month pay component", context.TenantInfo!.Identifier);
     }
 }
 

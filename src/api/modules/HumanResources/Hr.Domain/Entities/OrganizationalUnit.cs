@@ -238,6 +238,7 @@ public class OrganizationalUnit : AuditableEntity, IAggregateRoot
 /// </summary>
 public enum OrganizationalUnitType
 {
+    Company = 0,
     Department = 1,
     Division = 2,
     Section = 3
