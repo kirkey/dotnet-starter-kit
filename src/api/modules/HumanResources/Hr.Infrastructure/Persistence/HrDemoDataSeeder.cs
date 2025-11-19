@@ -12,10 +12,11 @@ internal sealed class HrDemoDataSeeder(
     HrDbContext context)
 {
     /// <summary>
-    /// Seeds all HR demo data.
+    /// Seeds all HR demo data with proper FK dependency management.
     /// </summary>
     public async Task SeedAsync(CancellationToken cancellationToken = default)
     {
+        // Seed base entities first (no dependencies)
         await SeedOrganizationalUnitsAsync(cancellationToken);
         await SeedDesignationsAsync(cancellationToken);
         await SeedEmployeesAsync(cancellationToken);
@@ -34,18 +35,30 @@ internal sealed class HrDemoDataSeeder(
         await SeedBenefitAllocationsAsync(cancellationToken);
         await SeedBenefitEnrollmentsAsync(cancellationToken);
         await SeedTimesheetsAsync(cancellationToken);
-        await SeedPayComponentsAsync(cancellationToken);
-        await SeedTaxBracketsAsync(cancellationToken);
-        await SeedTaxMastersAsync(cancellationToken);
-        await SeedPayComponentsAsync(cancellationToken);
-        await SeedTaxBracketsAsync(cancellationToken);
-        await SeedTaxMastersAsync(cancellationToken);
-        await SeedPayComponentRatesAsync(cancellationToken);
-        await SeedPayrollDeductionsAsync(cancellationToken);
         await SeedShiftBreaksAsync(cancellationToken);
         await SeedEmployeeDocumentsAsync(cancellationToken);
         await SeedPerformanceReviewsAsync(cancellationToken);
-        await SeedPayrollsAsync(cancellationToken);
+        
+        // Seed PayComponents and collect IDs for dependent entities
+        var payComponentIds = await SeedPayComponentsAsync(cancellationToken);
+        
+        // Seed PayComponentRates (depends on PayComponents)
+        await SeedPayComponentRatesAsync(cancellationToken);
+        
+        // TODO: Re-enable after database migration makes PayComponentId nullable
+        // Seed PayrollDeductions with optional PayComponentId (FK is nullable in code but not in DB)
+        // await SeedPayrollDeductionsAsync(cancellationToken);
+        
+        // Skip Tax-related seeders as they require GL Account IDs not available in seed data
+        // These should be seeded separately via accounting module or manual data entry
+        // await SeedTaxBracketsAsync(cancellationToken);
+        // await SeedTaxMastersAsync(cancellationToken);
+        
+        // TODO: Re-enable after fixing unique constraint on IX_Payroll_DateRange
+        // Seed Payrolls and PayrollLines (depends on PayComponents)
+        // await SeedPayrollsAsync(payComponentIds, cancellationToken);
+        
+        // Seed Document Templates (no dependencies)
         await SeedDocumentTemplatesAsync(cancellationToken);
     }
 
@@ -495,6 +508,7 @@ internal sealed class HrDemoDataSeeder(
         if (employees.Count == 0 || leaveTypes.Count == 0) return;
 
         var leaveRequests = new List<LeaveRequest>();
+        var approvers = employees.Take(2).ToList(); // First 2 employees as approvers
 
         foreach (var employee in employees)
         {
@@ -507,8 +521,17 @@ internal sealed class HrDemoDataSeeder(
 
                 var request = LeaveRequest.Create(employee.Id, leaveType.Id, startDate, endDate, "Personal leave request");
 
+                // Get a random approver (different from the employee)
+                var approver = approvers.FirstOrDefault(a => a.Id != employee.Id) ?? approvers[0];
+
+                // Submit the request
+                request.Submit(approver.Id);
+
+                // Randomly approve some requests
                 if (Random.Shared.Next(2) == 0)
+                {
                     request.Approve("Approved by HR");
+                }
 
                 leaveRequests.Add(request);
             }
@@ -549,23 +572,37 @@ internal sealed class HrDemoDataSeeder(
     }
 
     /// <summary>
-    /// Seeds benefit allocations per designation.
+    /// Seeds benefit allocations per enrollment.
     /// </summary>
     private async Task SeedBenefitAllocationsAsync(CancellationToken cancellationToken)
     {
         if (await context.BenefitAllocations.AnyAsync(cancellationToken))
             return;
 
-        var designations = await context.Designations.ToListAsync(cancellationToken);
+        var enrollments = await context.BenefitEnrollments.ToListAsync(cancellationToken);
 
-        if (designations.Count == 0) return;
+        if (enrollments.Count == 0) return;
 
         var allocations = new List<BenefitAllocation>();
 
-        foreach (var designation in designations)
+        // Create allocations for each enrollment
+        foreach (var enrollment in enrollments)
         {
-            var allocation = BenefitAllocation.Create(designation.Id, DateTime.Today.Date, 10000m, "Standard Benefit Allocation");
-            allocations.Add(allocation);
+            // Create 1-3 allocations per enrollment (simulating benefit usage/claims)
+            var allocationCount = Random.Shared.Next(1, 4);
+            for (int i = 0; i < allocationCount; i++)
+            {
+                var allocationDate = DateTime.Today.AddDays(-Random.Shared.Next(0, 30));
+                var allocatedAmount = Random.Shared.Next(1000, 10000);
+                
+                var allocation = BenefitAllocation.Create(
+                    enrollment.Id,
+                    allocationDate,
+                    allocatedAmount,
+                    "Benefit Usage");
+                
+                allocations.Add(allocation);
+            }
         }
 
         await context.BenefitAllocations.AddRangeAsync(allocations, cancellationToken);
@@ -669,10 +706,10 @@ internal sealed class HrDemoDataSeeder(
     /// <summary>
     /// Seeds pay components.
     /// </summary>
-    private async Task SeedPayComponentsAsync(CancellationToken cancellationToken)
+    private async Task<List<string>> SeedPayComponentsAsync(CancellationToken cancellationToken)
     {
         if (await context.PayComponents.AnyAsync(x => x.Code == "BASIC_PAY_DEMO", cancellationToken))
-            return;
+            return new List<string>();
 
         var components = new[]
         {
@@ -685,12 +722,14 @@ internal sealed class HrDemoDataSeeder(
         await context.SaveChangesAsync(cancellationToken);
 
         logger.LogInformation("[{Tenant}] seeded {Count} pay components", context.TenantInfo!.Identifier, components.Length);
+
+        return components.Select(c => c.Id.ToString()).ToList();
     }
 
     /// <summary>
     /// Seeds sample payroll records.
     /// </summary>
-    private async Task SeedPayrollsAsync(CancellationToken cancellationToken)
+    private async Task SeedPayrollsAsync(List<string> payComponentIds, CancellationToken cancellationToken)
     {
         if (await context.Payrolls.AnyAsync(cancellationToken))
             return;
@@ -785,7 +824,7 @@ Net Pay: {{NetPay}}")
             TaxBracket.Create("Individual Income Tax", 2025, 400000m, 800000m, 0.20m),
             TaxBracket.Create("Individual Income Tax", 2025, 800000m, 2000000m, 0.25m),
             TaxBracket.Create("Individual Income Tax", 2025, 2000000m, 8000000m, 0.30m),
-            TaxBracket.Create("Individual Income Tax", 2025, 8000000m, decimal.MaxValue, 0.35m)
+            TaxBracket.Create("Individual Income Tax", 2025, 8000000m, 99999999.99m, 0.35m)
         };
 
         await context.TaxBrackets.AddRangeAsync(taxBrackets, cancellationToken);

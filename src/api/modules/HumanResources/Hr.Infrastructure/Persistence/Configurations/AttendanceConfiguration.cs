@@ -57,6 +57,22 @@ public class AttendanceConfiguration : IEntityTypeConfiguration<Attendance>
 
         builder.HasIndex(a => a.IsActive)
             .HasDatabaseName("IX_Attendance_IsActive");
+
+        // Optimized for approval workflow queries
+        builder.HasIndex(a => new { a.IsApproved, a.AttendanceDate, a.EmployeeId })
+            .HasDatabaseName("IX_Attendance_Approval_Workflow");
+
+        // Active record filtering with date range
+        builder.HasIndex(a => new { a.EmployeeId, a.AttendanceDate, a.IsActive })
+            .HasDatabaseName("IX_Attendance_EmployeeId_Date_Active");
+
+        // Date range optimization for reports
+        builder.HasIndex(a => new { a.AttendanceDate, a.IsActive })
+            .HasDatabaseName("IX_Attendance_Date_Active");
+
+        // Status + date composite for report filtering
+        builder.HasIndex(a => new { a.Status, a.AttendanceDate, a.IsActive })
+            .HasDatabaseName("IX_Attendance_Status_Date_Active");
     }
 }
 

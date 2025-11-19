@@ -50,6 +50,18 @@ internal sealed class DeductionConfiguration : IEntityTypeConfiguration<Deductio
 
         builder.HasIndex(d => new { d.DeductionType, d.IsActive })
             .HasDatabaseName("IX_Deduction_Type_Active");
+
+        // Optimized for active deduction browsing
+        builder.HasIndex(d => new { d.IsActive, d.DeductionType })
+            .HasDatabaseName("IX_Deduction_Active_Type");
+
+        // Recovery method queries
+        builder.HasIndex(d => new { d.RecoveryMethod, d.IsActive })
+            .HasDatabaseName("IX_Deduction_RecoveryMethod_Active");
+
+        // GL account reconciliation
+        builder.HasIndex(d => new { d.GlAccountCode, d.DeductionType, d.IsActive })
+            .HasDatabaseName("IX_Deduction_GlAccount_Type_Active");
     }
 }
 

@@ -62,6 +62,22 @@ public class EmployeeContactConfiguration : IEntityTypeConfiguration<EmployeeCon
 
         builder.HasIndex(c => c.IsActive)
             .HasDatabaseName("IX_EmployeeContacts_IsActive");
+
+        // Optimized for priority-based contact lookup
+        builder.HasIndex(c => new { c.Priority, c.EmployeeId, c.IsActive })
+            .HasDatabaseName("IX_EmployeeContacts_Priority_Active");
+
+        // Emergency contact lookups
+        builder.HasIndex(c => new { c.ContactType, c.IsActive })
+            .HasDatabaseName("IX_EmployeeContacts_Type_Active");
+
+        // Phone number reverse lookups
+        builder.HasIndex(c => new { c.PhoneNumber, c.IsActive })
+            .HasDatabaseName("IX_EmployeeContacts_Phone_Active");
+
+        // Email reverse lookups
+        builder.HasIndex(c => new { c.Email, c.IsActive })
+            .HasDatabaseName("IX_EmployeeContacts_Email_Active");
     }
 }
 

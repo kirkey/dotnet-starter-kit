@@ -52,6 +52,18 @@ internal sealed class PayrollConfiguration : IEntityTypeConfiguration<Payroll>
 
         builder.HasIndex(p => p.IsLocked)
             .HasDatabaseName("IX_Payroll_IsLocked");
+
+        // Optimized for locked record filtering
+        builder.HasIndex(p => new { p.IsLocked, p.Status })
+            .HasDatabaseName("IX_Payroll_Locked_Status");
+
+        // Period-based queries optimization
+        builder.HasIndex(p => new { p.StartDate, p.EndDate, p.Status })
+            .HasDatabaseName("IX_Payroll_Period_Status");
+
+        // Active payroll lookup (not locked)
+        builder.HasIndex(p => new { p.IsLocked, p.StartDate })
+            .HasDatabaseName("IX_Payroll_Active_Period");
     }
 }
 

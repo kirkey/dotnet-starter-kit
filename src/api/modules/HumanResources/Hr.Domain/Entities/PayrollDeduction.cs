@@ -11,7 +11,7 @@ public class PayrollDeduction : AuditableEntity, IAggregateRoot
 
     private PayrollDeduction(
         DefaultIdType id,
-        DefaultIdType payComponentId,
+        DefaultIdType? payComponentId,
         string deductionType,
         decimal deductionAmount = 0,
         decimal deductionPercentage = 0)
@@ -28,9 +28,10 @@ public class PayrollDeduction : AuditableEntity, IAggregateRoot
 
     /// <summary>
     /// The pay component this deduction uses (e.g., Health Insurance, Loan).
+    /// Optional for statutory deductions like SSS, PhilHealth.
     /// </summary>
-    public DefaultIdType PayComponentId { get; private set; }
-    public PayComponent PayComponent { get; private set; } = default!;
+    public DefaultIdType? PayComponentId { get; private set; }
+    public PayComponent? PayComponent { get; private set; }
 
     /// <summary>
     /// Deduction type (FixedAmount, Percentage, Monthly, PerPayPeriod).
@@ -110,7 +111,7 @@ public class PayrollDeduction : AuditableEntity, IAggregateRoot
     /// Creates a new payroll deduction.
     /// </summary>
     public static PayrollDeduction Create(
-        DefaultIdType payComponentId,
+        DefaultIdType? payComponentId,
         string deductionType,
         decimal deductionAmount = 0,
         decimal deductionPercentage = 0)

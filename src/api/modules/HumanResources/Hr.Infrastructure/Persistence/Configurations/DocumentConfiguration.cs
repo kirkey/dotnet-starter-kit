@@ -33,6 +33,14 @@ public class DocumentTemplateConfiguration : IEntityTypeConfiguration<DocumentTe
 
         builder.HasIndex(d => d.IsActive)
             .HasDatabaseName("IX_DocumentTemplate_IsActive");
+
+        // Optimized for document type browsing
+        builder.HasIndex(d => new { d.DocumentType, d.IsActive })
+            .HasDatabaseName("IX_DocumentTemplate_Type_Active");
+
+        // Template availability
+        builder.HasIndex(d => new { d.IsActive, d.TemplateName })
+            .HasDatabaseName("IX_DocumentTemplate_Active_Name");
     }
 }
 
@@ -85,6 +93,22 @@ public class GeneratedDocumentConfiguration : IEntityTypeConfiguration<Generated
 
         builder.HasIndex(d => d.IsActive)
             .HasDatabaseName("IX_GeneratedDocument_IsActive");
+
+        // Optimized for entity-specific document queries
+        builder.HasIndex(d => new { d.EntityId, d.EntityType, d.GeneratedDate })
+            .HasDatabaseName("IX_GeneratedDocument_Entity_Date");
+
+        // Approval tracking
+        builder.HasIndex(d => new { d.Status, d.GeneratedDate })
+            .HasDatabaseName("IX_GeneratedDocument_Status_Date");
+
+        // Signature tracking
+        builder.HasIndex(d => new { d.SignedBy, d.GeneratedDate })
+            .HasDatabaseName("IX_GeneratedDocument_SignedBy_Date");
+
+        // Status + IsActive filtering
+        builder.HasIndex(d => new { d.Status, d.IsActive })
+            .HasDatabaseName("IX_GeneratedDocument_Status_Active");
     }
 }
 

@@ -45,5 +45,21 @@ internal sealed class BenefitEnrollmentConfiguration : IEntityTypeConfiguration<
 
         builder.HasIndex(e => e.IsActive)
             .HasDatabaseName("IX_BenefitEnrollment_IsActive");
+
+        // Optimized for active enrollment filtering
+        builder.HasIndex(e => new { e.IsActive, e.EffectiveDate })
+            .HasDatabaseName("IX_BenefitEnrollment_Active_Effective");
+
+        // Employee enrollment history
+        builder.HasIndex(e => new { e.EmployeeId, e.IsActive })
+            .HasDatabaseName("IX_BenefitEnrollment_EmployeeActive");
+
+        // Benefit utilization analysis
+        builder.HasIndex(e => new { e.BenefitId, e.IsActive })
+            .HasDatabaseName("IX_BenefitEnrollment_BenefitActive");
+
+        // Active enrollment with date range
+        builder.HasIndex(e => new { e.EmployeeId, e.EffectiveDate, e.EndDate, e.IsActive })
+            .HasDatabaseName("IX_BenefitEnrollment_Period_Active");
     }
 }

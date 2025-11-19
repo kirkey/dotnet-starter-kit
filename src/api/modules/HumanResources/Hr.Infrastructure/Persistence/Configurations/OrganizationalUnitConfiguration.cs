@@ -54,6 +54,26 @@ public class OrganizationalUnitConfiguration : IEntityTypeConfiguration<Organiza
         builder.HasIndex(ou => ou.Type)
             .HasDatabaseName("IX_OrganizationalUnits_Type");
 
+        // Optimized for hierarchy traversal (parent-child)
+        builder.HasIndex(ou => new { ou.ParentId, ou.IsActive })
+            .HasDatabaseName("IX_OrganizationalUnits_Parent_Active");
+
+        // Filtered index for active organizational units
+        builder.HasIndex(ou => new { ou.Type, ou.IsActive })
+            .HasDatabaseName("IX_OrganizationalUnits_Type_Active");
+
+        // Hierarchical path queries optimization
+        builder.HasIndex(ou => new { ou.HierarchyPath, ou.IsActive })
+            .HasDatabaseName("IX_OrganizationalUnits_Path_Active");
+
+        // Cost center lookups
+        builder.HasIndex(ou => new { ou.CostCenter, ou.IsActive })
+            .HasDatabaseName("IX_OrganizationalUnits_CostCenter_Active");
+
+        // Location-based queries
+        builder.HasIndex(ou => new { ou.Location, ou.Type, ou.IsActive })
+            .HasDatabaseName("IX_OrganizationalUnits_Location_Type_Active");
+
         builder.HasOne(ou => ou.Parent)
             .WithMany(ou => ou.Children)
             .HasForeignKey(ou => ou.ParentId)

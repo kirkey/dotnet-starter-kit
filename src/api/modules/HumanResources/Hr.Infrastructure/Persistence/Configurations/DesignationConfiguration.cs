@@ -64,6 +64,22 @@ public class DesignationConfiguration : IEntityTypeConfiguration<Designation>
         builder.HasIndex(d => d.IsManagerial)
             .HasDatabaseName("IX_Designations_IsManagerial");
 
+        // Optimized for manager role identification
+        builder.HasIndex(d => new { d.IsManagerial, d.IsActive })
+            .HasDatabaseName("IX_Designations_Manager_Active");
+
+        // Salary grade + area lookups
+        builder.HasIndex(d => new { d.SalaryGrade, d.Area, d.IsActive })
+            .HasDatabaseName("IX_Designations_Grade_Area_Active");
+
+        // Title-based searches (covering index would benefit lookup)
+        builder.HasIndex(d => new { d.Title, d.IsActive })
+            .HasDatabaseName("IX_Designations_Title_Active");
+
+        // Area filtering
+        builder.HasIndex(d => new { d.Area, d.IsActive })
+            .HasDatabaseName("IX_Designations_Area_Active");
+
         // Audit fields
         builder.Property(d => d.CreatedBy)
             .HasMaxLength(256);

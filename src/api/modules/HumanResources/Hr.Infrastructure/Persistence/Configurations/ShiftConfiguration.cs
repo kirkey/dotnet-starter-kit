@@ -33,6 +33,14 @@ public class ShiftConfiguration : IEntityTypeConfiguration<Shift>
 
         builder.HasIndex(s => s.IsActive)
             .HasDatabaseName("IX_Shift_IsActive");
+
+        // Optimized for active shift browsing
+        builder.HasIndex(s => new { s.IsActive, s.ShiftName })
+            .HasDatabaseName("IX_Shift_Active_Name");
+
+        // Time-based availability checks
+        builder.HasIndex(s => new { s.StartTime, s.EndTime, s.IsActive })
+            .HasDatabaseName("IX_Shift_TimeSlot_Active");
     }
 }
 
@@ -92,6 +100,22 @@ public class ShiftAssignmentConfiguration : IEntityTypeConfiguration<ShiftAssign
 
         builder.HasIndex(a => a.IsActive)
             .HasDatabaseName("IX_ShiftAssignment_IsActive");
+
+        // Optimized for active assignment lookup
+        builder.HasIndex(a => new { a.EmployeeId, a.IsActive })
+            .HasDatabaseName("IX_ShiftAssignment_EmployeeId_Active");
+
+        // Period-based active assignment queries
+        builder.HasIndex(a => new { a.EmployeeId, a.StartDate, a.EndDate, a.IsActive })
+            .HasDatabaseName("IX_ShiftAssignment_Period_Active");
+
+        // Shift utilization analysis
+        builder.HasIndex(a => new { a.ShiftId, a.StartDate, a.EndDate, a.IsActive })
+            .HasDatabaseName("IX_ShiftAssignment_Utilization");
+
+        // Date range filtering for reports
+        builder.HasIndex(a => new { a.StartDate, a.EndDate, a.IsActive })
+            .HasDatabaseName("IX_ShiftAssignment_DateRange_Active");
     }
 }
 

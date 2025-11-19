@@ -21,6 +21,10 @@ internal sealed class HolidayConfiguration : IEntityTypeConfiguration<Holiday>
 
         builder.HasIndex(h => h.IsActive)
             .HasDatabaseName("IX_Holiday_IsActive");
+
+        // Optimized for holiday period queries
+        builder.HasIndex(h => new { h.HolidayDate, h.IsActive })
+            .HasDatabaseName("IX_Holiday_Date_Active");
     }
 }
 

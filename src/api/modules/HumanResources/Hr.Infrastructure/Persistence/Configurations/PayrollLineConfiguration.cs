@@ -90,6 +90,14 @@ internal sealed class PayrollLineConfiguration : IEntityTypeConfiguration<Payrol
         builder.HasIndex(l => new { l.PayrollId, l.EmployeeId })
             .HasDatabaseName("IX_PayrollLine_PayrollId_EmployeeId")
             .IsUnique();
+
+        // Optimized for payroll completion tracking
+        builder.HasIndex(l => new { l.PayrollId, l.EmployeeId })
+            .HasDatabaseName("IX_PayrollLine_Completion");
+
+        // Payment method tracking
+        builder.HasIndex(l => new { l.PaymentMethod })
+            .HasDatabaseName("IX_PayrollLine_PaymentMethod");
     }
 }
 

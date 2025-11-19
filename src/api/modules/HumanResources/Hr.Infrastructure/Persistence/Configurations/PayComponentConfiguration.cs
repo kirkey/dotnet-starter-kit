@@ -61,6 +61,22 @@ internal sealed class PayComponentConfiguration : IEntityTypeConfiguration<PayCo
 
         builder.HasIndex(x => x.IsMandatory);
 
+        // Optimized for mandatory component identification
+        builder.HasIndex(x => new { x.IsMandatory, x.IsActive })
+            .HasDatabaseName("IX_PayComponent_Mandatory_Active");
+
+        // Calculation method queries
+        builder.HasIndex(x => new { x.CalculationMethod, x.ComponentType, x.IsActive })
+            .HasDatabaseName("IX_PayComponent_Calculation_Active");
+
+        // GL account lookups
+        builder.HasIndex(x => new { x.GlAccountCode, x.IsActive })
+            .HasDatabaseName("IX_PayComponent_GlAccount_Active");
+
+        // Component type filtering
+        builder.HasIndex(x => new { x.ComponentType, x.IsActive })
+            .HasDatabaseName("IX_PayComponent_Type_Active");
+
         // Relationships
         builder.HasMany(x => x.Rates)
             .WithOne(x => x.PayComponent)

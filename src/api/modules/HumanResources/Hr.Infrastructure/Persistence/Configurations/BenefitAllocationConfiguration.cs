@@ -46,5 +46,17 @@ internal sealed class BenefitAllocationConfiguration : IEntityTypeConfiguration<
 
         builder.HasIndex(x => new { x.EnrollmentId, x.AllocationDate })
             .HasDatabaseName("IX_BenefitAllocation_Enrollment_Date");
+
+        // Optimized for allocation status filtering
+        builder.HasIndex(x => new { x.Status, x.AllocationType })
+            .HasDatabaseName("IX_BenefitAllocation_Status_Type");
+
+        // Allocation date range queries
+        builder.HasIndex(x => new { x.AllocationDate, x.Status })
+            .HasDatabaseName("IX_BenefitAllocation_DateRange_Status");
+
+        // Reference number lookup with status
+        builder.HasIndex(x => new { x.ReferenceNumber, x.Status })
+            .HasDatabaseName("IX_BenefitAllocation_Reference_Status");
     }
 }

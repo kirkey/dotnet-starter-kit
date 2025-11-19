@@ -35,7 +35,8 @@ internal sealed class PayrollDeductionConfiguration : IEntityTypeConfiguration<P
         builder.HasOne(x => x.PayComponent)
             .WithMany()
             .HasForeignKey(x => x.PayComponentId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired(false);
 
         builder.HasOne(x => x.Employee)
             .WithMany()
@@ -67,6 +68,26 @@ internal sealed class PayrollDeductionConfiguration : IEntityTypeConfiguration<P
 
         builder.HasIndex(x => x.ReferenceNumber)
             .HasDatabaseName("IX_PayrollDeduction_ReferenceNumber");
+
+        // Optimized for active deduction filtering
+        builder.HasIndex(x => new { x.IsActive, x.EmployeeId })
+            .HasDatabaseName("IX_PayrollDeduction_Active_Employee");
+
+        // Active period queries
+        builder.HasIndex(x => new { x.EmployeeId, x.StartDate, x.EndDate, x.IsActive })
+            .HasDatabaseName("IX_PayrollDeduction_Period_Active");
+
+        // Component-based queries
+        builder.HasIndex(x => new { x.PayComponentId, x.IsActive })
+            .HasDatabaseName("IX_PayrollDeduction_Component_Active");
+
+        // Unit deductions for reports
+        builder.HasIndex(x => new { x.OrganizationalUnitId, x.IsActive })
+            .HasDatabaseName("IX_PayrollDeduction_OrgUnit_Active");
+
+        // Reference number with status
+        builder.HasIndex(x => new { x.ReferenceNumber, x.IsActive })
+            .HasDatabaseName("IX_PayrollDeduction_Reference_Active");
     }
 }
 

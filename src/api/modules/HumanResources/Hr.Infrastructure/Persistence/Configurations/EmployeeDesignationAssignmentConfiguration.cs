@@ -47,6 +47,14 @@ public class DesignationAssignmentConfiguration : IEntityTypeConfiguration<Desig
 
         builder.HasIndex(a => new { a.EffectiveDate, a.EndDate })
             .HasDatabaseName("IX_EDA_PayrollPeriod");
+
+        // Optimized for active assignments (null EndDate)
+        builder.HasIndex(a => new { a.EmployeeId, a.EffectiveDate })
+            .HasDatabaseName("IX_EDA_EmployeeActive");
+
+        // Payroll period salary lookups (composite for better performance)
+        builder.HasIndex(a => new { a.EffectiveDate, a.EndDate, a.EmployeeId, a.DesignationId })
+            .HasDatabaseName("IX_EDA_PayrollLookup");
     }
 }
 

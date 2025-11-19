@@ -137,9 +137,21 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("Status")
                         .HasDatabaseName("IX_Attendance_Status");
 
+                    b.HasIndex("AttendanceDate", "IsActive")
+                        .HasDatabaseName("IX_Attendance_Date_Active");
+
                     b.HasIndex("EmployeeId", "AttendanceDate")
                         .IsUnique()
                         .HasDatabaseName("IX_Attendance_EmployeeId_AttendanceDate");
+
+                    b.HasIndex("EmployeeId", "AttendanceDate", "IsActive")
+                        .HasDatabaseName("IX_Attendance_EmployeeId_Date_Active");
+
+                    b.HasIndex("IsApproved", "AttendanceDate", "EmployeeId")
+                        .HasDatabaseName("IX_Attendance_Approval_Workflow");
+
+                    b.HasIndex("Status", "AttendanceDate", "IsActive")
+                        .HasDatabaseName("IX_Attendance_Status_Date_Active");
 
                     b.ToTable("Attendances", "hr");
 
@@ -658,8 +670,17 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("Status")
                         .HasDatabaseName("IX_BenefitAllocation_Status");
 
+                    b.HasIndex("AllocationDate", "Status")
+                        .HasDatabaseName("IX_BenefitAllocation_DateRange_Status");
+
                     b.HasIndex("EnrollmentId", "AllocationDate")
                         .HasDatabaseName("IX_BenefitAllocation_Enrollment_Date");
+
+                    b.HasIndex("ReferenceNumber", "Status")
+                        .HasDatabaseName("IX_BenefitAllocation_Reference_Status");
+
+                    b.HasIndex("Status", "AllocationType")
+                        .HasDatabaseName("IX_BenefitAllocation_Status_Type");
 
                     b.ToTable("BenefitAllocations", "hr");
 
@@ -762,8 +783,20 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("IsActive")
                         .HasDatabaseName("IX_BenefitEnrollment_IsActive");
 
+                    b.HasIndex("BenefitId", "IsActive")
+                        .HasDatabaseName("IX_BenefitEnrollment_BenefitActive");
+
+                    b.HasIndex("EmployeeId", "IsActive")
+                        .HasDatabaseName("IX_BenefitEnrollment_EmployeeActive");
+
+                    b.HasIndex("IsActive", "EffectiveDate")
+                        .HasDatabaseName("IX_BenefitEnrollment_Active_Effective");
+
                     b.HasIndex("EmployeeId", "BenefitId", "EffectiveDate")
                         .HasDatabaseName("IX_BenefitEnrollment_Effective");
+
+                    b.HasIndex("EmployeeId", "EffectiveDate", "EndDate", "IsActive")
+                        .HasDatabaseName("IX_BenefitEnrollment_Period_Active");
 
                     b.ToTable("BenefitEnrollments", "hr");
 
@@ -878,6 +911,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
                     b.HasIndex("DeductionType", "IsActive")
                         .HasDatabaseName("IX_Deduction_Type_Active");
+
+                    b.HasIndex("IsActive", "DeductionType")
+                        .HasDatabaseName("IX_Deduction_Active_Type");
+
+                    b.HasIndex("RecoveryMethod", "IsActive")
+                        .HasDatabaseName("IX_Deduction_RecoveryMethod_Active");
+
+                    b.HasIndex("GlAccountCode", "DeductionType", "IsActive")
+                        .HasDatabaseName("IX_Deduction_GlAccount_Type_Active");
 
                     b.ToTable("Deductions", "hr");
 
@@ -995,6 +1037,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("SalaryGrade")
                         .HasDatabaseName("IX_Designations_SalaryGrade");
 
+                    b.HasIndex("Area", "IsActive")
+                        .HasDatabaseName("IX_Designations_Area_Active");
+
+                    b.HasIndex("IsManagerial", "IsActive")
+                        .HasDatabaseName("IX_Designations_Manager_Active");
+
+                    b.HasIndex("Title", "IsActive")
+                        .HasDatabaseName("IX_Designations_Title_Active");
+
+                    b.HasIndex("SalaryGrade", "Area", "IsActive")
+                        .HasDatabaseName("IX_Designations_Grade_Area_Active");
+
                     b.ToTable("Designations", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
@@ -1081,13 +1135,16 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                         .HasDatabaseName("IX_EDA_PayrollPeriod");
 
                     b.HasIndex("EmployeeId", "EffectiveDate")
-                        .HasDatabaseName("IX_EDA_EmployeeHistory");
+                        .HasDatabaseName("IX_EDA_EmployeeActive");
 
                     b.HasIndex("DesignationId", "EffectiveDate", "EndDate")
                         .HasDatabaseName("IX_EDA_Designations");
 
                     b.HasIndex("EmployeeId", "EffectiveDate", "EndDate")
                         .HasDatabaseName("IX_EDA_PointInTime");
+
+                    b.HasIndex("EffectiveDate", "EndDate", "EmployeeId", "DesignationId")
+                        .HasDatabaseName("IX_EDA_PayrollLookup");
 
                     b.ToTable("DesignationAssignments", "hr");
                 });
@@ -1173,6 +1230,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
                     b.HasIndex("TemplateName")
                         .HasDatabaseName("IX_DocumentTemplate_TemplateName");
+
+                    b.HasIndex("DocumentType", "IsActive")
+                        .HasDatabaseName("IX_DocumentTemplate_Type_Active");
+
+                    b.HasIndex("IsActive", "TemplateName")
+                        .HasDatabaseName("IX_DocumentTemplate_Active_Name");
 
                     b.ToTable("DocumentTemplates", "hr");
                 });
@@ -1348,8 +1411,20 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("Status")
                         .HasDatabaseName("IX_Employee_Status");
 
+                    b.HasIndex("Email", "IsActive")
+                        .HasDatabaseName("IX_Employee_Email_Active");
+
                     b.HasIndex("FirstName", "LastName")
                         .HasDatabaseName("IX_Employee_FirstName_LastName");
+
+                    b.HasIndex("Status", "IsActive")
+                        .HasDatabaseName("IX_Employee_Status_Active");
+
+                    b.HasIndex("LastName", "FirstName", "IsActive")
+                        .HasDatabaseName("IX_Employee_LastName_FirstName_Active");
+
+                    b.HasIndex("OrganizationalUnitId", "Status", "IsActive")
+                        .HasDatabaseName("IX_Employee_OrgUnit_Status_Active");
 
                     b.ToTable("Employees", "hr");
 
@@ -1460,8 +1535,20 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("IsActive")
                         .HasDatabaseName("IX_EmployeeContacts_IsActive");
 
+                    b.HasIndex("ContactType", "IsActive")
+                        .HasDatabaseName("IX_EmployeeContacts_Type_Active");
+
+                    b.HasIndex("Email", "IsActive")
+                        .HasDatabaseName("IX_EmployeeContacts_Email_Active");
+
                     b.HasIndex("EmployeeId", "ContactType")
                         .HasDatabaseName("IX_EmployeeContacts_EmployeeId_ContactType");
+
+                    b.HasIndex("PhoneNumber", "IsActive")
+                        .HasDatabaseName("IX_EmployeeContacts_Phone_Active");
+
+                    b.HasIndex("Priority", "EmployeeId", "IsActive")
+                        .HasDatabaseName("IX_EmployeeContacts_Priority_Active");
 
                     b.ToTable("EmployeeContacts", "hr");
 
@@ -1592,6 +1679,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "DependentType")
                         .HasDatabaseName("IX_EmployeeDependents_EmployeeId_DependentType");
 
+                    b.HasIndex("IsBeneficiary", "IsActive")
+                        .HasDatabaseName("IX_EmployeeDependents_Beneficiary_Active");
+
+                    b.HasIndex("IsClaimableDependent", "IsActive")
+                        .HasDatabaseName("IX_EmployeeDependents_Claimable_Active");
+
+                    b.HasIndex("EmployeeId", "DependentType", "IsActive")
+                        .HasDatabaseName("IX_EmployeeDependents_Employee_Type_Active");
+
                     b.ToTable("EmployeeDependents", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
@@ -1706,7 +1802,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "DocumentType")
                         .HasDatabaseName("IX_EmployeeDocuments_EmployeeId_DocumentType");
 
-                    b.ToTable("EmployeeDocument", "hr");
+                    b.ToTable("EmployeeDocuments", "hr");
                 });
 
             modelBuilder.Entity("FSH.Starter.WebApi.HumanResources.Domain.Entities.EmployeeEducation", b =>
@@ -1824,8 +1920,20 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("IsVerified")
                         .HasDatabaseName("IX_EmployeeEducations_IsVerified");
 
+                    b.HasIndex("CertificateNumber", "IsActive")
+                        .HasDatabaseName("IX_EmployeeEducations_Certificate_Active");
+
+                    b.HasIndex("EducationLevel", "IsActive")
+                        .HasDatabaseName("IX_EmployeeEducations_Level_Active");
+
                     b.HasIndex("EmployeeId", "EducationLevel")
                         .HasDatabaseName("IX_EmployeeEducations_EmployeeId_EducationLevel");
+
+                    b.HasIndex("IsVerified", "IsActive")
+                        .HasDatabaseName("IX_EmployeeEducations_Verified_Active");
+
+                    b.HasIndex("EmployeeId", "EducationLevel", "IsVerified")
+                        .HasDatabaseName("IX_EmployeeEducations_Summary");
 
                     b.ToTable("EmployeeEducations", "hr");
 
@@ -2084,6 +2192,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EntityId", "EntityType")
                         .HasDatabaseName("IX_GeneratedDocument_EntityId_EntityType");
 
+                    b.HasIndex("SignedBy", "GeneratedDate")
+                        .HasDatabaseName("IX_GeneratedDocument_SignedBy_Date");
+
+                    b.HasIndex("Status", "GeneratedDate")
+                        .HasDatabaseName("IX_GeneratedDocument_Status_Date");
+
+                    b.HasIndex("Status", "IsActive")
+                        .HasDatabaseName("IX_GeneratedDocument_Status_Active");
+
+                    b.HasIndex("EntityId", "EntityType", "GeneratedDate")
+                        .HasDatabaseName("IX_GeneratedDocument_Entity_Date");
+
                     b.ToTable("GeneratedDocuments", "hr");
                 });
 
@@ -2190,6 +2310,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("IsActive")
                         .HasDatabaseName("IX_Holiday_IsActive");
 
+                    b.HasIndex("HolidayDate", "IsActive")
+                        .HasDatabaseName("IX_Holiday_Date_Active");
+
                     b.ToTable("Holidays", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
@@ -2281,9 +2404,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("LeaveTypeId")
                         .HasDatabaseName("IX_LeaveBalance_LeaveTypeId");
 
+                    b.HasIndex("EmployeeId", "Year")
+                        .HasDatabaseName("IX_LeaveBalance_EmployeeYear");
+
+                    b.HasIndex("LeaveTypeId", "Year")
+                        .HasDatabaseName("IX_LeaveBalance_LeaveType_Year");
+
                     b.HasIndex("EmployeeId", "LeaveTypeId", "Year")
                         .IsUnique()
                         .HasDatabaseName("IX_LeaveBalance_EmployeeId_LeaveTypeId_Year");
+
+                    b.HasIndex("EmployeeId", "Year", "LeaveTypeId")
+                        .HasDatabaseName("IX_LeaveBalance_Period_Query");
 
                     b.ToTable("LeaveBalances", "hr");
                 });
@@ -2549,6 +2681,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId", "StartDate", "EndDate")
                         .HasDatabaseName("IX_LeaveRequest_EmployeeId_DateRange");
 
+                    b.HasIndex("EmployeeId", "StartDate", "Status")
+                        .HasDatabaseName("IX_LeaveRequest_EmployeeHistory");
+
+                    b.HasIndex("Status", "EmployeeId", "StartDate")
+                        .HasDatabaseName("IX_LeaveRequest_Workflow");
+
+                    b.HasIndex("Status", "StartDate", "EmployeeId")
+                        .HasDatabaseName("IX_LeaveRequest_Pending_Queue");
+
+                    b.HasIndex("EmployeeId", "StartDate", "EndDate", "Status")
+                        .HasDatabaseName("IX_LeaveRequest_Overlap_Detection");
+
                     b.ToTable("LeaveRequests", "hr");
                 });
 
@@ -2768,6 +2912,21 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("Type")
                         .HasDatabaseName("IX_OrganizationalUnits_Type");
 
+                    b.HasIndex("CostCenter", "IsActive")
+                        .HasDatabaseName("IX_OrganizationalUnits_CostCenter_Active");
+
+                    b.HasIndex("HierarchyPath", "IsActive")
+                        .HasDatabaseName("IX_OrganizationalUnits_Path_Active");
+
+                    b.HasIndex("ParentId", "IsActive")
+                        .HasDatabaseName("IX_OrganizationalUnits_Parent_Active");
+
+                    b.HasIndex("Type", "IsActive")
+                        .HasDatabaseName("IX_OrganizationalUnits_Type_Active");
+
+                    b.HasIndex("Location", "Type", "IsActive")
+                        .HasDatabaseName("IX_OrganizationalUnits_Location_Type_Active");
+
                     b.ToTable("OrganizationalUnits", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
@@ -2907,6 +3066,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("IsActive");
 
                     b.HasIndex("IsMandatory");
+
+                    b.HasIndex("ComponentType", "IsActive")
+                        .HasDatabaseName("IX_PayComponent_Type_Active");
+
+                    b.HasIndex("GlAccountCode", "IsActive")
+                        .HasDatabaseName("IX_PayComponent_GlAccount_Active");
+
+                    b.HasIndex("IsMandatory", "IsActive")
+                        .HasDatabaseName("IX_PayComponent_Mandatory_Active");
+
+                    b.HasIndex("CalculationMethod", "ComponentType", "IsActive")
+                        .HasDatabaseName("IX_PayComponent_Calculation_Active");
 
                     b.ToTable("PayComponents", "hr");
 
@@ -3147,9 +3318,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("Status")
                         .HasDatabaseName("IX_Payroll_Status");
 
+                    b.HasIndex("IsLocked", "StartDate")
+                        .HasDatabaseName("IX_Payroll_Active_Period");
+
+                    b.HasIndex("IsLocked", "Status")
+                        .HasDatabaseName("IX_Payroll_Locked_Status");
+
                     b.HasIndex("StartDate", "EndDate")
                         .IsUnique()
                         .HasDatabaseName("IX_Payroll_DateRange");
+
+                    b.HasIndex("StartDate", "EndDate", "Status")
+                        .HasDatabaseName("IX_Payroll_Period_Status");
 
                     b.ToTable("Payrolls", "hr");
 
@@ -3237,7 +3417,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Property<Guid?>("OrganizationalUnitId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("PayComponentId")
+                    b.Property<Guid?>("PayComponentId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("ReferenceNumber")
@@ -3273,10 +3453,25 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("ReferenceNumber")
                         .HasDatabaseName("IX_PayrollDeduction_ReferenceNumber");
 
+                    b.HasIndex("IsActive", "EmployeeId")
+                        .HasDatabaseName("IX_PayrollDeduction_Active_Employee");
+
+                    b.HasIndex("OrganizationalUnitId", "IsActive")
+                        .HasDatabaseName("IX_PayrollDeduction_OrgUnit_Active");
+
+                    b.HasIndex("PayComponentId", "IsActive")
+                        .HasDatabaseName("IX_PayrollDeduction_Component_Active");
+
+                    b.HasIndex("ReferenceNumber", "IsActive")
+                        .HasDatabaseName("IX_PayrollDeduction_Reference_Active");
+
                     b.HasIndex("StartDate", "EndDate")
                         .HasDatabaseName("IX_PayrollDeduction_DateRange");
 
-                    b.ToTable("PayrollDeduction", "hr");
+                    b.HasIndex("EmployeeId", "StartDate", "EndDate", "IsActive")
+                        .HasDatabaseName("IX_PayrollDeduction_Period_Active");
+
+                    b.ToTable("PayrollDeductions", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
@@ -3423,12 +3618,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("EmployeeId")
                         .HasDatabaseName("IX_PayrollLine_EmployeeId");
 
+                    b.HasIndex("PaymentMethod")
+                        .HasDatabaseName("IX_PayrollLine_PaymentMethod");
+
                     b.HasIndex("PayrollId")
                         .HasDatabaseName("IX_PayrollLine_PayrollId");
 
                     b.HasIndex("PayrollId", "EmployeeId")
                         .IsUnique()
-                        .HasDatabaseName("IX_PayrollLine_PayrollId_EmployeeId");
+                        .HasDatabaseName("IX_PayrollLine_Completion");
 
                     b.ToTable("PayrollLines", "hr");
 
@@ -3724,7 +3922,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("ReviewerId", "ReviewPeriodStart", "ReviewPeriodEnd")
                         .HasDatabaseName("IX_PerformanceReview_Reviewer_Period");
 
-                    b.ToTable("PerformanceReview", "hr");
+                    b.ToTable("PerformanceReviews", "hr");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
@@ -3807,6 +4005,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
                     b.HasIndex("ShiftName")
                         .HasDatabaseName("IX_Shift_ShiftName");
+
+                    b.HasIndex("IsActive", "ShiftName")
+                        .HasDatabaseName("IX_Shift_Active_Name");
+
+                    b.HasIndex("StartTime", "EndTime", "IsActive")
+                        .HasDatabaseName("IX_Shift_TimeSlot_Active");
 
                     b.ToTable("Shifts", "hr");
                 });
@@ -3893,8 +4097,20 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("StartDate")
                         .HasDatabaseName("IX_ShiftAssignment_StartDate");
 
+                    b.HasIndex("EmployeeId", "IsActive")
+                        .HasDatabaseName("IX_ShiftAssignment_EmployeeId_Active");
+
                     b.HasIndex("EmployeeId", "StartDate", "EndDate")
                         .HasDatabaseName("IX_ShiftAssignment_EmployeeId_Period");
+
+                    b.HasIndex("StartDate", "EndDate", "IsActive")
+                        .HasDatabaseName("IX_ShiftAssignment_DateRange_Active");
+
+                    b.HasIndex("EmployeeId", "StartDate", "EndDate", "IsActive")
+                        .HasDatabaseName("IX_ShiftAssignment_Period_Active");
+
+                    b.HasIndex("ShiftId", "StartDate", "EndDate", "IsActive")
+                        .HasDatabaseName("IX_ShiftAssignment_Utilization");
 
                     b.ToTable("ShiftAssignments", "hr");
                 });
@@ -4301,9 +4517,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasIndex("Status")
                         .HasDatabaseName("IX_Timesheet_Status");
 
+                    b.HasIndex("IsApproved", "Status")
+                        .HasDatabaseName("IX_Timesheet_Pending_Approvals");
+
                     b.HasIndex("EmployeeId", "StartDate", "EndDate")
                         .IsUnique()
                         .HasDatabaseName("IX_Timesheet_EmployeeId_Period");
+
+                    b.HasIndex("StartDate", "EndDate", "EmployeeId", "Status")
+                        .HasDatabaseName("IX_Timesheet_Period_Status");
+
+                    b.HasIndex("Status", "IsApproved", "IsLocked", "EmployeeId")
+                        .HasDatabaseName("IX_Timesheet_Status_Approval_Lock");
 
                     b.ToTable("Timesheets", "hr");
 
@@ -4400,6 +4625,15 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 
                     b.HasIndex("WorkDate")
                         .HasDatabaseName("IX_TimesheetLine_WorkDate");
+
+                    b.HasIndex("IsBillable", "WorkDate")
+                        .HasDatabaseName("IX_TimesheetLine_Billable_Date");
+
+                    b.HasIndex("ProjectId", "WorkDate", "IsBillable")
+                        .HasDatabaseName("IX_TimesheetLine_Project_Tracking");
+
+                    b.HasIndex("TimesheetId", "WorkDate", "IsBillable")
+                        .HasDatabaseName("IX_TimesheetLine_Completion");
 
                     b.ToTable("TimesheetLines", "hr");
 
@@ -4640,8 +4874,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.HasOne("FSH.Starter.WebApi.HumanResources.Domain.Entities.PayComponent", "PayComponent")
                         .WithMany()
                         .HasForeignKey("PayComponentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Employee");
 

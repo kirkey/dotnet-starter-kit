@@ -116,6 +116,22 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 
         builder.HasIndex(e => new { e.FirstName, e.LastName })
             .HasDatabaseName("IX_Employee_FirstName_LastName");
+
+        // Optimized indexes for multi-tenant + status filtering
+        builder.HasIndex(e => new { e.Status, e.IsActive })
+            .HasDatabaseName("IX_Employee_Status_Active");
+
+        // Organizational unit + department filtering
+        builder.HasIndex(e => new { e.OrganizationalUnitId, e.Status, e.IsActive })
+            .HasDatabaseName("IX_Employee_OrgUnit_Status_Active");
+
+        // Email lookup with active filter (covering index)
+        builder.HasIndex(e => new { e.Email, e.IsActive })
+            .HasDatabaseName("IX_Employee_Email_Active");
+
+        // Last name + first name composite for name searches
+        builder.HasIndex(e => new { e.LastName, e.FirstName, e.IsActive })
+            .HasDatabaseName("IX_Employee_LastName_FirstName_Active");
     }
 }
 

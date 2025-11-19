@@ -63,6 +63,18 @@ public class TimesheetConfiguration : IEntityTypeConfiguration<Timesheet>
 
         builder.HasIndex(t => t.IsLocked)
             .HasDatabaseName("IX_Timesheet_IsLocked");
+
+        // Optimized for approval/lock status filtering
+        builder.HasIndex(t => new { t.Status, t.IsApproved, t.IsLocked, t.EmployeeId })
+            .HasDatabaseName("IX_Timesheet_Status_Approval_Lock");
+
+        // Period query optimization
+        builder.HasIndex(t => new { t.StartDate, t.EndDate, t.EmployeeId, t.Status })
+            .HasDatabaseName("IX_Timesheet_Period_Status");
+
+        // Review workflow - pending approvals
+        builder.HasIndex(t => new { t.IsApproved, t.Status })
+            .HasDatabaseName("IX_Timesheet_Pending_Approvals");
     }
 }
 
@@ -105,6 +117,18 @@ public class TimesheetLineConfiguration : IEntityTypeConfiguration<TimesheetLine
 
         builder.HasIndex(l => l.IsBillable)
             .HasDatabaseName("IX_TimesheetLine_IsBillable");
+
+        // Optimized for billable hour queries
+        builder.HasIndex(l => new { l.IsBillable, l.WorkDate })
+            .HasDatabaseName("IX_TimesheetLine_Billable_Date");
+
+        // Project-based hour tracking
+        builder.HasIndex(l => new { l.ProjectId, l.WorkDate, l.IsBillable })
+            .HasDatabaseName("IX_TimesheetLine_Project_Tracking");
+
+        // Timesheet completion optimization
+        builder.HasIndex(l => new { l.TimesheetId, l.WorkDate, l.IsBillable })
+            .HasDatabaseName("IX_TimesheetLine_Completion");
     }
 }
 

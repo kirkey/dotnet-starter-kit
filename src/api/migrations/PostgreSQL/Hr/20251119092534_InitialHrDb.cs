@@ -1070,7 +1070,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 });
 
             migrationBuilder.CreateTable(
-                name: "EmployeeDocument",
+                name: "EmployeeDocuments",
                 schema: "hr",
                 columns: table => new
                 {
@@ -1103,9 +1103,9 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeDocument", x => x.Id);
+                    table.PrimaryKey("PK_EmployeeDocuments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EmployeeDocument_Employees_EmployeeId",
+                        name: "FK_EmployeeDocuments_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalSchema: "hr",
                         principalTable: "Employees",
@@ -1319,12 +1319,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 });
 
             migrationBuilder.CreateTable(
-                name: "PayrollDeduction",
+                name: "PayrollDeductions",
                 schema: "hr",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    PayComponentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    PayComponentId = table.Column<Guid>(type: "uuid", nullable: true),
                     DeductionType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     DeductionAmount = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: false),
                     DeductionPercentage = table.Column<decimal>(type: "numeric(5,2)", precision: 5, scale: 2, nullable: false),
@@ -1355,23 +1355,23 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PayrollDeduction", x => x.Id);
+                    table.PrimaryKey("PK_PayrollDeductions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PayrollDeduction_Employees_EmployeeId",
+                        name: "FK_PayrollDeductions_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PayrollDeduction_OrganizationalUnits_OrganizationalUnitId",
+                        name: "FK_PayrollDeductions_OrganizationalUnits_OrganizationalUnitId",
                         column: x => x.OrganizationalUnitId,
                         principalSchema: "hr",
                         principalTable: "OrganizationalUnits",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PayrollDeduction_PayComponents_PayComponentId",
+                        name: "FK_PayrollDeductions_PayComponents_PayComponentId",
                         column: x => x.PayComponentId,
                         principalSchema: "hr",
                         principalTable: "PayComponents",
@@ -1442,7 +1442,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 });
 
             migrationBuilder.CreateTable(
-                name: "PerformanceReview",
+                name: "PerformanceReviews",
                 schema: "hr",
                 columns: table => new
                 {
@@ -1479,16 +1479,16 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PerformanceReview", x => x.Id);
+                    table.PrimaryKey("PK_PerformanceReviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PerformanceReview_Employees_EmployeeId",
+                        name: "FK_PerformanceReviews_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalSchema: "hr",
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PerformanceReview_Employees_ReviewerId",
+                        name: "FK_PerformanceReviews_Employees_ReviewerId",
                         column: x => x.ReviewerId,
                         principalSchema: "hr",
                         principalTable: "Employees",
@@ -1718,10 +1718,22 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "ReportType");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Attendance_Approval_Workflow",
+                schema: "hr",
+                table: "Attendances",
+                columns: new[] { "IsApproved", "AttendanceDate", "EmployeeId" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Attendance_AttendanceDate",
                 schema: "hr",
                 table: "Attendances",
                 column: "AttendanceDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendance_Date_Active",
+                schema: "hr",
+                table: "Attendances",
+                columns: new[] { "AttendanceDate", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Attendance_EmployeeId",
@@ -1735,6 +1747,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 table: "Attendances",
                 columns: new[] { "EmployeeId", "AttendanceDate" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendance_EmployeeId_Date_Active",
+                schema: "hr",
+                table: "Attendances",
+                columns: new[] { "EmployeeId", "AttendanceDate", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Attendance_IsActive",
@@ -1753,6 +1771,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "hr",
                 table: "Attendances",
                 column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendance_Status_Date_Active",
+                schema: "hr",
+                table: "Attendances",
+                columns: new[] { "Status", "AttendanceDate", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankAccount_AccountType",
@@ -1797,6 +1821,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "AllocationDate");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BenefitAllocation_DateRange_Status",
+                schema: "hr",
+                table: "BenefitAllocations",
+                columns: new[] { "AllocationDate", "Status" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BenefitAllocation_Enrollment_Date",
                 schema: "hr",
                 table: "BenefitAllocations",
@@ -1807,6 +1837,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "hr",
                 table: "BenefitAllocations",
                 column: "EnrollmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BenefitAllocation_Reference_Status",
+                schema: "hr",
+                table: "BenefitAllocations",
+                columns: new[] { "ReferenceNumber", "Status" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitAllocation_ReferenceNumber",
@@ -1821,10 +1857,28 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "Status");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BenefitAllocation_Status_Type",
+                schema: "hr",
+                table: "BenefitAllocations",
+                columns: new[] { "Status", "AllocationType" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BenefitAllocations_BenefitEnrollmentId",
                 schema: "hr",
                 table: "BenefitAllocations",
                 column: "BenefitEnrollmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BenefitEnrollment_Active_Effective",
+                schema: "hr",
+                table: "BenefitEnrollments",
+                columns: new[] { "IsActive", "EffectiveDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BenefitEnrollment_BenefitActive",
+                schema: "hr",
+                table: "BenefitEnrollments",
+                columns: new[] { "BenefitId", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BenefitEnrollment_BenefitId",
@@ -1839,6 +1893,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 columns: new[] { "EmployeeId", "BenefitId", "EffectiveDate" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_BenefitEnrollment_EmployeeActive",
+                schema: "hr",
+                table: "BenefitEnrollments",
+                columns: new[] { "EmployeeId", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BenefitEnrollment_EmployeeId",
                 schema: "hr",
                 table: "BenefitEnrollments",
@@ -1849,6 +1909,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "hr",
                 table: "BenefitEnrollments",
                 column: "IsActive");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BenefitEnrollment_Period_Active",
+                schema: "hr",
+                table: "BenefitEnrollments",
+                columns: new[] { "EmployeeId", "EffectiveDate", "EndDate", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Benefit_BenefitName",
@@ -1875,6 +1941,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 columns: new[] { "BenefitName", "BenefitType" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Deduction_Active_Type",
+                schema: "hr",
+                table: "Deductions",
+                columns: new[] { "IsActive", "DeductionType" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Deduction_DeductionName",
                 schema: "hr",
                 table: "Deductions",
@@ -1887,10 +1959,22 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "DeductionType");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Deduction_GlAccount_Type_Active",
+                schema: "hr",
+                table: "Deductions",
+                columns: new[] { "GlAccountCode", "DeductionType", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Deduction_IsActive",
                 schema: "hr",
                 table: "Deductions",
                 column: "IsActive");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Deduction_RecoveryMethod_Active",
+                schema: "hr",
+                table: "Deductions",
+                columns: new[] { "RecoveryMethod", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Deduction_Type_Active",
@@ -1905,10 +1989,16 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 columns: new[] { "DesignationId", "EffectiveDate", "EndDate" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_EDA_EmployeeHistory",
+                name: "IX_EDA_EmployeeActive",
                 schema: "hr",
                 table: "DesignationAssignments",
                 columns: new[] { "EmployeeId", "EffectiveDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EDA_PayrollLookup",
+                schema: "hr",
+                table: "DesignationAssignments",
+                columns: new[] { "EffectiveDate", "EndDate", "EmployeeId", "DesignationId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EDA_PayrollPeriod",
@@ -1929,11 +2019,23 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "Area");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Designations_Area_Active",
+                schema: "hr",
+                table: "Designations",
+                columns: new[] { "Area", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Designations_Code",
                 schema: "hr",
                 table: "Designations",
                 column: "Code",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Designations_Grade_Area_Active",
+                schema: "hr",
+                table: "Designations",
+                columns: new[] { "SalaryGrade", "Area", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Designations_IsActive",
@@ -1948,10 +2050,28 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "IsManagerial");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Designations_Manager_Active",
+                schema: "hr",
+                table: "Designations",
+                columns: new[] { "IsManagerial", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Designations_SalaryGrade",
                 schema: "hr",
                 table: "Designations",
                 column: "SalaryGrade");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Designations_Title_Active",
+                schema: "hr",
+                table: "Designations",
+                columns: new[] { "Title", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DocumentTemplate_Active_Name",
+                schema: "hr",
+                table: "DocumentTemplates",
+                columns: new[] { "IsActive", "TemplateName" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_DocumentTemplate_DocumentType",
@@ -1972,10 +2092,22 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "TemplateName");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DocumentTemplate_Type_Active",
+                schema: "hr",
+                table: "DocumentTemplates",
+                columns: new[] { "DocumentType", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EmployeeContacts_ContactType",
                 schema: "hr",
                 table: "EmployeeContacts",
                 column: "ContactType");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeContacts_Email_Active",
+                schema: "hr",
+                table: "EmployeeContacts",
+                columns: new[] { "Email", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeContacts_EmployeeId",
@@ -1996,10 +2128,46 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EmployeeContacts_Phone_Active",
+                schema: "hr",
+                table: "EmployeeContacts",
+                columns: new[] { "PhoneNumber", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeContacts_Priority_Active",
+                schema: "hr",
+                table: "EmployeeContacts",
+                columns: new[] { "Priority", "EmployeeId", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeContacts_Type_Active",
+                schema: "hr",
+                table: "EmployeeContacts",
+                columns: new[] { "ContactType", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeDependents_Beneficiary_Active",
+                schema: "hr",
+                table: "EmployeeDependents",
+                columns: new[] { "IsBeneficiary", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeDependents_Claimable_Active",
+                schema: "hr",
+                table: "EmployeeDependents",
+                columns: new[] { "IsClaimableDependent", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDependents_DependentType",
                 schema: "hr",
                 table: "EmployeeDependents",
                 column: "DependentType");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeDependents_Employee_Type_Active",
+                schema: "hr",
+                table: "EmployeeDependents",
+                columns: new[] { "EmployeeId", "DependentType", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDependents_EmployeeId",
@@ -2034,32 +2202,38 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_DocumentType",
                 schema: "hr",
-                table: "EmployeeDocument",
+                table: "EmployeeDocuments",
                 column: "DocumentType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_EmployeeId",
                 schema: "hr",
-                table: "EmployeeDocument",
+                table: "EmployeeDocuments",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_EmployeeId_DocumentType",
                 schema: "hr",
-                table: "EmployeeDocument",
+                table: "EmployeeDocuments",
                 columns: new[] { "EmployeeId", "DocumentType" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_ExpiryDate",
                 schema: "hr",
-                table: "EmployeeDocument",
+                table: "EmployeeDocuments",
                 column: "ExpiryDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDocuments_IsActive",
                 schema: "hr",
-                table: "EmployeeDocument",
+                table: "EmployeeDocuments",
                 column: "IsActive");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeEducations_Certificate_Active",
+                schema: "hr",
+                table: "EmployeeEducations",
+                columns: new[] { "CertificateNumber", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeEducations_EducationLevel",
@@ -2090,6 +2264,24 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "hr",
                 table: "EmployeeEducations",
                 column: "IsVerified");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeEducations_Level_Active",
+                schema: "hr",
+                table: "EmployeeEducations",
+                columns: new[] { "EducationLevel", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeEducations_Summary",
+                schema: "hr",
+                table: "EmployeeEducations",
+                columns: new[] { "EmployeeId", "EducationLevel", "IsVerified" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeEducations_Verified_Active",
+                schema: "hr",
+                table: "EmployeeEducations",
+                columns: new[] { "IsVerified", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeePayComponents_DateRange",
@@ -2128,6 +2320,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "Email");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employee_Email_Active",
+                schema: "hr",
+                table: "Employees",
+                columns: new[] { "Email", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Employee_EmployeeNumber",
                 schema: "hr",
                 table: "Employees",
@@ -2147,16 +2345,40 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employee_LastName_FirstName_Active",
+                schema: "hr",
+                table: "Employees",
+                columns: new[] { "LastName", "FirstName", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Employee_OrganizationalUnitId",
                 schema: "hr",
                 table: "Employees",
                 column: "OrganizationalUnitId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employee_OrgUnit_Status_Active",
+                schema: "hr",
+                table: "Employees",
+                columns: new[] { "OrganizationalUnitId", "Status", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Employee_Status",
                 schema: "hr",
                 table: "Employees",
                 column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employee_Status_Active",
+                schema: "hr",
+                table: "Employees",
+                columns: new[] { "Status", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneratedDocument_Entity_Date",
+                schema: "hr",
+                table: "GeneratedDocuments",
+                columns: new[] { "EntityId", "EntityType", "GeneratedDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_GeneratedDocument_EntityId",
@@ -2183,16 +2405,40 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GeneratedDocument_SignedBy_Date",
+                schema: "hr",
+                table: "GeneratedDocuments",
+                columns: new[] { "SignedBy", "GeneratedDate" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GeneratedDocument_Status",
                 schema: "hr",
                 table: "GeneratedDocuments",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GeneratedDocument_Status_Active",
+                schema: "hr",
+                table: "GeneratedDocuments",
+                columns: new[] { "Status", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneratedDocument_Status_Date",
+                schema: "hr",
+                table: "GeneratedDocuments",
+                columns: new[] { "Status", "GeneratedDate" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GeneratedDocuments_DocumentTemplateId",
                 schema: "hr",
                 table: "GeneratedDocuments",
                 column: "DocumentTemplateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Holiday_Date_Active",
+                schema: "hr",
+                table: "Holidays",
+                columns: new[] { "HolidayDate", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Holiday_HolidayDate",
@@ -2220,10 +2466,28 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_LeaveBalance_EmployeeYear",
+                schema: "hr",
+                table: "LeaveBalances",
+                columns: new[] { "EmployeeId", "Year" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LeaveBalance_LeaveType_Year",
+                schema: "hr",
+                table: "LeaveBalances",
+                columns: new[] { "LeaveTypeId", "Year" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LeaveBalance_LeaveTypeId",
                 schema: "hr",
                 table: "LeaveBalances",
                 column: "LeaveTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LeaveBalance_Period_Query",
+                schema: "hr",
+                table: "LeaveBalances",
+                columns: new[] { "EmployeeId", "Year", "LeaveTypeId" });
 
             migrationBuilder.CreateIndex(
                 name: "idx_leave_report_department_id",
@@ -2262,6 +2526,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "ReportType");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LeaveRequest_EmployeeHistory",
+                schema: "hr",
+                table: "LeaveRequests",
+                columns: new[] { "EmployeeId", "StartDate", "Status" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LeaveRequest_EmployeeId",
                 schema: "hr",
                 table: "LeaveRequests",
@@ -2286,10 +2556,28 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "LeaveTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LeaveRequest_Overlap_Detection",
+                schema: "hr",
+                table: "LeaveRequests",
+                columns: new[] { "EmployeeId", "StartDate", "EndDate", "Status" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LeaveRequest_Pending_Queue",
+                schema: "hr",
+                table: "LeaveRequests",
+                columns: new[] { "Status", "StartDate", "EmployeeId" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LeaveRequest_Status",
                 schema: "hr",
                 table: "LeaveRequests",
                 column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LeaveRequest_Workflow",
+                schema: "hr",
+                table: "LeaveRequests",
+                columns: new[] { "Status", "EmployeeId", "StartDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveType_IsActive",
@@ -2311,6 +2599,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrganizationalUnits_CostCenter_Active",
+                schema: "hr",
+                table: "OrganizationalUnits",
+                columns: new[] { "CostCenter", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrganizationalUnits_HierarchyPath",
                 schema: "hr",
                 table: "OrganizationalUnits",
@@ -2323,16 +2617,40 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrganizationalUnits_Location_Type_Active",
+                schema: "hr",
+                table: "OrganizationalUnits",
+                columns: new[] { "Location", "Type", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrganizationalUnits_Parent_Active",
+                schema: "hr",
+                table: "OrganizationalUnits",
+                columns: new[] { "ParentId", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrganizationalUnits_ParentId",
                 schema: "hr",
                 table: "OrganizationalUnits",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrganizationalUnits_Path_Active",
+                schema: "hr",
+                table: "OrganizationalUnits",
+                columns: new[] { "HierarchyPath", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrganizationalUnits_Type",
                 schema: "hr",
                 table: "OrganizationalUnits",
                 column: "Type");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrganizationalUnits_Type_Active",
+                schema: "hr",
+                table: "OrganizationalUnits",
+                columns: new[] { "Type", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayComponentRates_Component_Year_Range",
@@ -2351,6 +2669,30 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "hr",
                 table: "PayComponentRates",
                 column: "Year");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PayComponent_Calculation_Active",
+                schema: "hr",
+                table: "PayComponents",
+                columns: new[] { "CalculationMethod", "ComponentType", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PayComponent_GlAccount_Active",
+                schema: "hr",
+                table: "PayComponents",
+                columns: new[] { "GlAccountCode", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PayComponent_Mandatory_Active",
+                schema: "hr",
+                table: "PayComponents",
+                columns: new[] { "IsMandatory", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PayComponent_Type_Active",
+                schema: "hr",
+                table: "PayComponents",
+                columns: new[] { "ComponentType", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayComponents_Code",
@@ -2378,40 +2720,77 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "IsMandatory");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PayrollDeduction_Active_Employee",
+                schema: "hr",
+                table: "PayrollDeductions",
+                columns: new[] { "IsActive", "EmployeeId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PayrollDeduction_Component_Active",
+                schema: "hr",
+                table: "PayrollDeductions",
+                columns: new[] { "PayComponentId", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PayrollDeduction_DateRange",
                 schema: "hr",
-                table: "PayrollDeduction",
+                table: "PayrollDeductions",
                 columns: new[] { "StartDate", "EndDate" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollDeduction_EmployeeId",
                 schema: "hr",
-                table: "PayrollDeduction",
+                table: "PayrollDeductions",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollDeduction_IsActive",
                 schema: "hr",
-                table: "PayrollDeduction",
+                table: "PayrollDeductions",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollDeduction_OrganizationalUnitId",
                 schema: "hr",
-                table: "PayrollDeduction",
+                table: "PayrollDeductions",
                 column: "OrganizationalUnitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PayrollDeduction_OrgUnit_Active",
+                schema: "hr",
+                table: "PayrollDeductions",
+                columns: new[] { "OrganizationalUnitId", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollDeduction_PayComponentId",
                 schema: "hr",
-                table: "PayrollDeduction",
+                table: "PayrollDeductions",
                 column: "PayComponentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PayrollDeduction_Period_Active",
+                schema: "hr",
+                table: "PayrollDeductions",
+                columns: new[] { "EmployeeId", "StartDate", "EndDate", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PayrollDeduction_Reference_Active",
+                schema: "hr",
+                table: "PayrollDeductions",
+                columns: new[] { "ReferenceNumber", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollDeduction_ReferenceNumber",
                 schema: "hr",
-                table: "PayrollDeduction",
+                table: "PayrollDeductions",
                 column: "ReferenceNumber");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PayrollLine_Completion",
+                schema: "hr",
+                table: "PayrollLines",
+                columns: new[] { "PayrollId", "EmployeeId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PayrollLine_EmployeeId",
@@ -2420,17 +2799,16 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PayrollLine_PaymentMethod",
+                schema: "hr",
+                table: "PayrollLines",
+                column: "PaymentMethod");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PayrollLine_PayrollId",
                 schema: "hr",
                 table: "PayrollLines",
                 column: "PayrollId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PayrollLine_PayrollId_EmployeeId",
-                schema: "hr",
-                table: "PayrollLines",
-                columns: new[] { "PayrollId", "EmployeeId" },
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "idx_payroll_report_date_range",
@@ -2475,6 +2853,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "ReportType");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Payroll_Active_Period",
+                schema: "hr",
+                table: "Payrolls",
+                columns: new[] { "IsLocked", "StartDate" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Payroll_DateRange",
                 schema: "hr",
                 table: "Payrolls",
@@ -2486,6 +2870,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "hr",
                 table: "Payrolls",
                 column: "IsLocked");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payroll_Locked_Status",
+                schema: "hr",
+                table: "Payrolls",
+                columns: new[] { "IsLocked", "Status" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payroll_Period_Status",
+                schema: "hr",
+                table: "Payrolls",
+                columns: new[] { "StartDate", "EndDate", "Status" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payroll_StartDate",
@@ -2502,38 +2898,50 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
             migrationBuilder.CreateIndex(
                 name: "IX_PerformanceReview_Employee_Period",
                 schema: "hr",
-                table: "PerformanceReview",
+                table: "PerformanceReviews",
                 columns: new[] { "EmployeeId", "ReviewPeriodStart", "ReviewPeriodEnd" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PerformanceReview_EmployeeId",
                 schema: "hr",
-                table: "PerformanceReview",
+                table: "PerformanceReviews",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PerformanceReview_Reviewer_Period",
                 schema: "hr",
-                table: "PerformanceReview",
+                table: "PerformanceReviews",
                 columns: new[] { "ReviewerId", "ReviewPeriodStart", "ReviewPeriodEnd" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PerformanceReview_ReviewerId",
                 schema: "hr",
-                table: "PerformanceReview",
+                table: "PerformanceReviews",
                 column: "ReviewerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PerformanceReview_Status",
                 schema: "hr",
-                table: "PerformanceReview",
+                table: "PerformanceReviews",
                 column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShiftAssignment_DateRange_Active",
+                schema: "hr",
+                table: "ShiftAssignments",
+                columns: new[] { "StartDate", "EndDate", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShiftAssignment_EmployeeId",
                 schema: "hr",
                 table: "ShiftAssignments",
                 column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShiftAssignment_EmployeeId_Active",
+                schema: "hr",
+                table: "ShiftAssignments",
+                columns: new[] { "EmployeeId", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShiftAssignment_EmployeeId_Period",
@@ -2548,6 +2956,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ShiftAssignment_Period_Active",
+                schema: "hr",
+                table: "ShiftAssignments",
+                columns: new[] { "EmployeeId", "StartDate", "EndDate", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ShiftAssignment_ShiftId",
                 schema: "hr",
                 table: "ShiftAssignments",
@@ -2560,10 +2974,22 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "StartDate");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ShiftAssignment_Utilization",
+                schema: "hr",
+                table: "ShiftAssignments",
+                columns: new[] { "ShiftId", "StartDate", "EndDate", "IsActive" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ShiftBreak_ShiftId",
                 schema: "hr",
                 table: "ShiftBreaks",
                 column: "ShiftId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shift_Active_Name",
+                schema: "hr",
+                table: "Shifts",
+                columns: new[] { "IsActive", "ShiftName" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Shift_IsActive",
@@ -2576,6 +3002,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "hr",
                 table: "Shifts",
                 column: "ShiftName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shift_TimeSlot_Active",
+                schema: "hr",
+                table: "Shifts",
+                columns: new[] { "StartTime", "EndTime", "IsActive" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_TaxBracket_TaxType_Year",
@@ -2621,10 +3053,28 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 columns: new[] { "TaxType", "Jurisdiction", "EffectiveDate" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_TimesheetLine_Billable_Date",
+                schema: "hr",
+                table: "TimesheetLines",
+                columns: new[] { "IsBillable", "WorkDate" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TimesheetLine_Completion",
+                schema: "hr",
+                table: "TimesheetLines",
+                columns: new[] { "TimesheetId", "WorkDate", "IsBillable" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TimesheetLine_IsBillable",
                 schema: "hr",
                 table: "TimesheetLines",
                 column: "IsBillable");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TimesheetLine_Project_Tracking",
+                schema: "hr",
+                table: "TimesheetLines",
+                columns: new[] { "ProjectId", "WorkDate", "IsBillable" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_TimesheetLine_TimesheetId",
@@ -2664,6 +3114,18 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 column: "IsLocked");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Timesheet_Pending_Approvals",
+                schema: "hr",
+                table: "Timesheets",
+                columns: new[] { "IsApproved", "Status" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Timesheet_Period_Status",
+                schema: "hr",
+                table: "Timesheets",
+                columns: new[] { "StartDate", "EndDate", "EmployeeId", "Status" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Timesheet_StartDate",
                 schema: "hr",
                 table: "Timesheets",
@@ -2674,6 +3136,12 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "hr",
                 table: "Timesheets",
                 column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Timesheet_Status_Approval_Lock",
+                schema: "hr",
+                table: "Timesheets",
+                columns: new[] { "Status", "IsApproved", "IsLocked", "EmployeeId" });
         }
 
         /// <inheritdoc />
@@ -2712,7 +3180,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "hr");
 
             migrationBuilder.DropTable(
-                name: "EmployeeDocument",
+                name: "EmployeeDocuments",
                 schema: "hr");
 
             migrationBuilder.DropTable(
@@ -2748,7 +3216,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "hr");
 
             migrationBuilder.DropTable(
-                name: "PayrollDeduction",
+                name: "PayrollDeductions",
                 schema: "hr");
 
             migrationBuilder.DropTable(
@@ -2760,7 +3228,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                 schema: "hr");
 
             migrationBuilder.DropTable(
-                name: "PerformanceReview",
+                name: "PerformanceReviews",
                 schema: "hr");
 
             migrationBuilder.DropTable(

@@ -74,6 +74,18 @@ public class EmployeeDependentConfiguration : IEntityTypeConfiguration<EmployeeD
 
         builder.HasIndex(d => d.IsActive)
             .HasDatabaseName("IX_EmployeeDependents_IsActive");
+
+        // Optimized for beneficiary filtering
+        builder.HasIndex(d => new { d.IsBeneficiary, d.IsActive })
+            .HasDatabaseName("IX_EmployeeDependents_Beneficiary_Active");
+
+        // Claimable dependent tracking
+        builder.HasIndex(d => new { d.IsClaimableDependent, d.IsActive })
+            .HasDatabaseName("IX_EmployeeDependents_Claimable_Active");
+
+        // Employee dependent type enumeration
+        builder.HasIndex(d => new { d.EmployeeId, d.DependentType, d.IsActive })
+            .HasDatabaseName("IX_EmployeeDependents_Employee_Type_Active");
     }
 }
 

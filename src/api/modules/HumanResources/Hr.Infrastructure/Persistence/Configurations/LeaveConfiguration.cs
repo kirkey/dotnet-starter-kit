@@ -75,6 +75,18 @@ public class LeaveBalanceConfiguration : IEntityTypeConfiguration<LeaveBalance>
         builder.HasIndex(l => new { l.EmployeeId, l.LeaveTypeId, l.Year })
             .HasDatabaseName("IX_LeaveBalance_EmployeeId_LeaveTypeId_Year")
             .IsUnique();
+
+        // Optimized for year-specific balance lookups
+        builder.HasIndex(l => new { l.EmployeeId, l.Year })
+            .HasDatabaseName("IX_LeaveBalance_EmployeeYear");
+
+        // Period-based balance queries
+        builder.HasIndex(l => new { l.EmployeeId, l.Year, l.LeaveTypeId })
+            .HasDatabaseName("IX_LeaveBalance_Period_Query");
+
+        // Leave type browsing
+        builder.HasIndex(l => new { l.LeaveTypeId, l.Year })
+            .HasDatabaseName("IX_LeaveBalance_LeaveType_Year");
     }
 }
 
@@ -126,6 +138,22 @@ public class LeaveRequestConfiguration : IEntityTypeConfiguration<LeaveRequest>
 
         builder.HasIndex(l => l.IsActive)
             .HasDatabaseName("IX_LeaveRequest_IsActive");
+
+        // Optimized for approval queue filtering
+        builder.HasIndex(l => new { l.Status, l.StartDate, l.EmployeeId })
+            .HasDatabaseName("IX_LeaveRequest_Pending_Queue");
+
+        // Employee leave history with status
+        builder.HasIndex(l => new { l.EmployeeId, l.StartDate, l.Status })
+            .HasDatabaseName("IX_LeaveRequest_EmployeeHistory");
+
+        // Date overlap detection for leave balance updates
+        builder.HasIndex(l => new { l.EmployeeId, l.StartDate, l.EndDate, l.Status })
+            .HasDatabaseName("IX_LeaveRequest_Overlap_Detection");
+
+        // Approval workflow optimization
+        builder.HasIndex(l => new { l.Status, l.EmployeeId, l.StartDate })
+            .HasDatabaseName("IX_LeaveRequest_Workflow");
     }
 }
 

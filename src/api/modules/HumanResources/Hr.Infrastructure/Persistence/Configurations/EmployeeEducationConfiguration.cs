@@ -68,6 +68,22 @@ public class EmployeeEducationConfiguration : IEntityTypeConfiguration<EmployeeE
 
         builder.HasIndex(e => e.IsActive)
             .HasDatabaseName("IX_EmployeeEducations_IsActive");
+
+        // Optimized for verified education lookups
+        builder.HasIndex(e => new { e.IsVerified, e.IsActive })
+            .HasDatabaseName("IX_EmployeeEducations_Verified_Active");
+
+        // Education level statistics
+        builder.HasIndex(e => new { e.EducationLevel, e.IsActive })
+            .HasDatabaseName("IX_EmployeeEducations_Level_Active");
+
+        // Credential verification
+        builder.HasIndex(e => new { e.CertificateNumber, e.IsActive })
+            .HasDatabaseName("IX_EmployeeEducations_Certificate_Active");
+
+        // Employee education summary
+        builder.HasIndex(e => new { e.EmployeeId, e.EducationLevel, e.IsVerified })
+            .HasDatabaseName("IX_EmployeeEducations_Summary");
     }
 }
 
