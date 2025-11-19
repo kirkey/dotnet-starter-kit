@@ -23,7 +23,7 @@
                         @(Revenue.IsRecognized ? "Recognized" : "Pending")
                     </MudChip>
                 </MudItem>
-                @if (Revenue.IsRecognized && Revenue.RecognizedDate.HasValue)
+                @if (Revenue is { IsRecognized: true, RecognizedDate: not null })
                 {
                     <MudItem xs="12" sm="6">
                         <MudText Typo="Typo.subtitle2" Color="Color.Primary">Recognized Date</MudText>

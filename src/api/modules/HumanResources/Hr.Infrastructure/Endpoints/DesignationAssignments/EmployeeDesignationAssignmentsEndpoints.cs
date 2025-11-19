@@ -21,6 +21,7 @@ public static class DesignationAssignmentsEndpoints
         assignmentsGroup.MapAssignActingAsDesignationEndpoint();
         assignmentsGroup.MapGetDesignationAssignmentEndpoint();
         assignmentsGroup.MapEndDesignationAssignmentEndpoint();
+        assignmentsGroup.MapSearchEmployeeHistoryEndpoint();
 
         return app;
     }

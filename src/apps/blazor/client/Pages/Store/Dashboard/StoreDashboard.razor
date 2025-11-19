@@ -509,7 +509,7 @@ else
                                 <div>
                                     <MudText Typo="Typo.body2" Color="Color.Secondary">Inventory Turnover</MudText>
                                     <MudText Typo="Typo.h6" Color="Color.Default">
-                                        @(_metrics.TotalQuantitySold > 0 && _metrics.TotalItems > 0 
+                                        @(_metrics is { TotalQuantitySold: > 0, TotalItems: > 0 } 
                                             ? ((_metrics.TotalQuantitySold / (double)_metrics.TotalItems) * 100).ToString("F1") + "%"
                                             : "N/A")
                                     </MudText>

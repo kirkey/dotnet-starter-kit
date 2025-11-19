@@ -101,7 +101,7 @@
                 Complete
             </MudMenuItem>
         }
-        @if (reconciliation.Status is "Completed" && !reconciliation.IsReconciled)
+        @if (reconciliation is { Status: "Completed", IsReconciled: false })
         {
             <MudMenuItem Icon="@Icons.Material.Filled.ThumbUp" OnClick="@(() => OnApproveReconciliation(reconciliation.Id))">
                 Approve

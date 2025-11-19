@@ -1,0 +1,310 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.DesignationAssignments
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Designation Assignments Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Designation Assignments?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Employee Position Assignments</MudText>
+                        <MudText Typo="Typo.body2">
+                            Designation Assignments track which job title (designation) an employee holds and when they held it. 
+                            This creates a complete history of an employee's career progression within the organization, including 
+                            promotions, demotions, transfers, and temporary acting assignments.
+                        </MudText>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Concepts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Plantilla (Primary):</strong> The official/permanent position held by an employee<br/>
+                                • <strong>Acting As (Temporary):</strong> A temporary assignment to different duties/responsibilities<br/>
+                                • <strong>Effective Date:</strong> When the assignment becomes active<br/>
+                                • <strong>End Date:</strong> When the assignment concludes (can be blank for ongoing)<br/>
+                                • <strong>Tenure:</strong> How long the employee held the position<br/>
+                                • <strong>Assignment History:</strong> Complete record of all positions held
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Designation Assignments create the official record of an employee's career path!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Plantilla vs. Acting As Assignments">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Assignment Types</MudText>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Plantilla (Primary Position)</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • The official/permanent designation for the employee<br/>
+                                • Only ONE plantilla designation can be active at a time<br/>
+                                • Determines the employee's primary salary and benefits<br/>
+                                • Used for organizational reporting and career management<br/>
+                                • Example: "Senior Engineer" as the primary role
+                            </MudText>
+                        </div>
+
+                        <MudDivider />
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Acting As (Temporary Position)</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Temporary assignment to different duties/responsibilities<br/>
+                                • MULTIPLE acting assignments can be active simultaneously<br/>
+                                • Usually has a defined end date<br/>
+                                • Can include salary adjustment for the temporary role<br/>
+                                • Examples: "Acting Manager", "Interim Project Lead"<br/>
+                                • Does not replace the plantilla designation
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> An acting assignment doesn't replace the plantilla - it's in addition to it!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Assignments">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Create a New Assignment</MudText>
+
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            <strong>Step-by-Step Process:</strong>
+                        </MudText>
+
+                        <MudTimeline TimelineAlign="TimelineAlign.Start">
+                            <MudTimelineItem Icon="@Icons.Material.Filled.Add" Color="Color.Primary">
+                                <MudText Typo="Typo.body2">
+                                    <strong>Click "Create"</strong> - Open the new assignment form
+                                </MudText>
+                            </MudTimelineItem>
+
+                            <MudTimelineItem Icon="@Icons.Material.Filled.Person" Color="Color.Primary">
+                                <MudText Typo="Typo.body2">
+                                    <strong>Select Employee</strong> - Choose the employee to assign
+                                </MudText>
+                            </MudTimelineItem>
+
+                            <MudTimelineItem Icon="@Icons.Material.Filled.Work" Color="Color.Primary">
+                                <MudText Typo="Typo.body2">
+                                    <strong>Select Designation</strong> - Choose the job title/position
+                                </MudText>
+                            </MudTimelineItem>
+
+                            <MudTimelineItem Icon="@Icons.Material.Filled.DateRange" Color="Color.Primary">
+                                <MudText Typo="Typo.body2">
+                                    <strong>Set Effective Date</strong> - When should this assignment start?
+                                </MudText>
+                            </MudTimelineItem>
+
+                            <MudTimelineItem Icon="@Icons.Material.Filled.Assignment" Color="Color.Primary">
+                                <MudText Typo="Typo.body2">
+                                    <strong>Choose Type</strong> - Is this Plantilla or Acting As?
+                                </MudText>
+                            </MudTimelineItem>
+
+                            <MudTimelineItem Icon="@Icons.Material.Filled.Done" Color="Color.Success">
+                                <MudText Typo="Typo.body2">
+                                    <strong>Save Assignment</strong> - Click Save to create
+                                </MudText>
+                            </MudTimelineItem>
+                        </MudTimeline>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> The system will auto-populate employee name, number, and designation details!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Effective Date & End Date">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Date Tracking</MudText>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Effective Date (Start Date)</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                When this assignment becomes active in the organization.<br/>
+                                <strong>Examples:</strong><br/>
+                                • Promotion effective "January 1, 2025"<br/>
+                                • Transfer effective "February 15, 2025"<br/>
+                                • Acting role effective "March 1, 2025"
+                            </MudText>
+                        </div>
+
+                        <MudDivider />
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>End Date (Optional)</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                When the assignment concludes. Leave blank for ongoing assignments.<br/>
+                                <strong>When to use:</strong><br/>
+                                • Acting assignments: Set the end date (e.g., 3-month contract)<br/>
+                                • Promotions: Leave blank (ongoing until next change)<br/>
+                                • Demotions: Use the demotion date<br/>
+                                • Terminations: Use the last day worked
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tenure Calculation:</strong> Automatically calculated from Effective Date to End Date (or today if no end date)
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Salary Adjustments">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Adjusted Salary Field</MudText>
+
+                        <MudText Typo="Typo.body2">
+                            When an employee is assigned an "Acting As" position with different pay, you can record the 
+                            adjusted salary for that temporary assignment. This field is optional and typically only used for:
+                        </MudText>
+
+                        <MudText Typo="Typo.caption">
+                            • <strong>Acting Manager:</strong> May earn 10-15% more while acting<br/>
+                            • <strong>Temporary Downgrade:</strong> May earn less during transition period<br/>
+                            • <strong>Special Projects:</strong> May have project-specific compensation
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> This is just for tracking. Actual payroll would use the payroll component system.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Assignment Reason">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Recording the Reason for Change</MudText>
+
+                        <MudText Typo="Typo.body2">
+                            Use the Reason field to document WHY the assignment was made. This helps with HR analytics and history tracking:
+                        </MudText>
+
+                        <MudText Typo="Typo.caption">
+                            <strong>Examples:</strong><br/>
+                            • "Promotion - Performance Excellence"<br/>
+                            • "Acting Manager - Vacancy Coverage (3 months)"<br/>
+                            • "Lateral Transfer - Employee Request"<br/>
+                            • "Temporary Assignment - Project Needs"<br/>
+                            • "Demotion - Performance Issues"<br/>
+                            • "Succession Plan - Career Development"
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Clear reasons help with future reference and employee communications!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Viewing Assignment History">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Assignment History Tab</MudText>
+
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            The "Assignment History" tab shows all employees and their complete designation change history:
+                        </MudText>
+
+                        <MudText Typo="Typo.caption">
+                            <strong>Features:</strong><br/>
+                            • View complete history for all employees<br/>
+                            • Filter by specific employee<br/>
+                            • Filter by date range (From/To dates)<br/>
+                            • See current designation and start date<br/>
+                            • Count of total designation changes<br/>
+                            • Click "View Details" to see detailed history timeline
+                        </MudText>
+
+                        <MudDivider Class="my-2" />
+
+                        <MudText Typo="Typo.subtitle2">History Detail View Shows:</MudText>
+                        <MudText Typo="Typo.caption">
+                            • Full designation name<br/>
+                            • Effective date<br/>
+                            • End date (if applicable)<br/>
+                            • Tenure in months<br/>
+                            • Type (Plantilla/Acting As)<br/>
+                            • All in chronological order
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> This creates a complete career history for each employee!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Use Cases">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Typical Scenarios</MudText>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Scenario 1: Employee Promotion</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Create new plantilla assignment<br/>
+                                2. Set effective date to promotion date<br/>
+                                3. Leave end date blank (ongoing)<br/>
+                                4. Reason: "Promotion - Performance"<br/>
+                                5. System now shows new designation as current
+                            </MudText>
+                        </div>
+
+                        <MudDivider />
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Scenario 2: Temporary Acting Assignment</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Create acting designation assignment<br/>
+                                2. Set effective date (start of acting period)<br/>
+                                3. Set end date (3 months later)<br/>
+                                4. Add adjusted salary if different<br/>
+                                5. Reason: "Acting Manager - Vacancy Coverage"<br/>
+                                6. After end date, plantilla becomes current again
+                            </MudText>
+                        </div>
+
+                        <MudDivider />
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Scenario 3: Employee Transfer</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Create new plantilla assignment<br/>
+                                2. Set effective date to transfer date<br/>
+                                3. Reason: "Transfer to Sales Department"<br/>
+                                4. This becomes new current designation<br/>
+                                5. Previous designation remains in history
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>All scenarios create a complete audit trail for HR!</strong>
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+

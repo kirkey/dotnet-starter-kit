@@ -58,7 +58,7 @@
                 Approve Template
             </MudMenuItem>
         }
-        @if (template.Status == "Approved" && template.IsActive)
+        @if (template is { Status: "Approved", IsActive: true })
         {
             <MudMenuItem Icon="@Icons.Material.Filled.Pause" OnClick="@(() => OnSuspend(template))">
                 Suspend

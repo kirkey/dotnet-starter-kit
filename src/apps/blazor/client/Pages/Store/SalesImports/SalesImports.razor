@@ -35,7 +35,7 @@
                 <span>View Details</span>
             </div>
         </MudMenuItem>
-        @if (!context.IsReversed && context.Status == "COMPLETED")
+        @if (context is { IsReversed: false, Status: "COMPLETED" })
         {
             <MudMenuItem OnClick="@(() => ReverseImport(context.Id))">
                 <div class="d-flex align-center">

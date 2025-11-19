@@ -54,7 +54,7 @@
     </AdvancedSearchContent>
 
     <ExtraActions Context="expense">
-        @if (expense.Status == "Active" && !expense.IsFullyAmortized)
+        @if (expense is { Status: "Active", IsFullyAmortized: false })
         {
             <MudMenuItem Icon="@Icons.Material.Filled.Calculate" OnClick="@(() => OnAmortize(expense))">
                 Record Amortization
@@ -66,7 +66,7 @@
                 Close Prepaid Expense
             </MudMenuItem>
         }
-        @if (expense.Status == "Active" && expense.AmortizedAmount == 0)
+        @if (expense is { Status: "Active", AmortizedAmount: 0 })
         {
             <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => OnCancel(expense))">
                 Cancel

@@ -80,7 +80,7 @@
                 Post
             </MudMenuItem>
         }
-        @if (writeOff.Status == "Posted" && !writeOff.IsRecovered)
+        @if (writeOff is { Status: "Posted", IsRecovered: false })
         {
             <MudMenuItem Icon="@Icons.Material.Filled.MoneyOff" OnClick="@(() => OnRecordRecovery(writeOff))">
                 Record Recovery

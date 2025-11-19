@@ -18,6 +18,8 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.HRAnalytics;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDependents;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeEducations;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeePayComponents;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.GeneratedDocuments;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Holidays;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveBalances;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveRequests;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveReports;
@@ -26,14 +28,20 @@ using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalU
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollReports;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PerformanceReviews;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollLines;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.ShiftAssignments;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Taxes;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TaxBrackets;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TimesheetLines;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Timesheets;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.GeneratedDocuments;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Holidays;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
+using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure;
@@ -84,6 +92,10 @@ public static class HrModule
             app.MapPayrollDeductionsEndpoints();
             app.MapTaxBracketEndpoints();
             app.MapTaxEndpoints();
+            app.MapGeneratedDocumentsEndpoints();
+            app.MapHolidaysEndpoints();
+            app.MapPayComponentsEndpoints();
+            app.MapShiftsEndpoints();
         }
     }
 

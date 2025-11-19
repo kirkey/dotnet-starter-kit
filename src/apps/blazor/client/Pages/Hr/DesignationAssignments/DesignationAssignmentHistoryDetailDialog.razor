@@ -1,0 +1,94 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.DesignationAssignments
+
+<MudDialog>
+    <DialogContent>
+        @if (EmployeeHistory != null)
+        {
+            <MudStack Spacing="3">
+                <div>
+                    <MudText Typo="Typo.h6">@EmployeeHistory.FullName</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                        Employee #: @EmployeeHistory.EmployeeNumber
+                    </MudText>
+                </div>
+
+                <MudDivider />
+
+                <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap">
+                    <MudText Typo="Typo.subtitle2">
+                        <strong>Organization:</strong> @EmployeeHistory.OrganizationalUnitName
+                    </MudText>
+                    <MudSpacer />
+                    <MudText Typo="Typo.subtitle2">
+                        <strong>Total Changes:</strong> @EmployeeHistory.TotalDesignationChanges
+                    </MudText>
+                </MudStack>
+
+                <MudDivider />
+
+                <MudText Typo="Typo.subtitle2">Current Assignment</MudText>
+                <MudPaper Elevation="0" Class="pa-3" Style="background-color: #f0f4f8; border-left: 4px solid #2196f3;">
+                    <MudStack Spacing="1">
+                        <MudText Typo="Typo.body2">
+                            <strong>@EmployeeHistory.CurrentDesignation</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">
+                            Since: @EmployeeHistory.CurrentDesignationStart?.ToString("MMMM dd, yyyy")
+                        </MudText>
+                    </MudStack>
+                </MudPaper>
+
+                <MudDivider />
+
+                <MudText Typo="Typo.subtitle2">Assignment History Timeline</MudText>
+
+                @if (EmployeeHistory.DesignationHistory is { Count: > 0 })
+                {
+                    <MudTimeline TimelineAlign="TimelineAlign.Start">
+                        @foreach (var history in EmployeeHistory.DesignationHistory)
+                        {
+                            <MudTimelineItem Icon="@(history.IsPlantilla ? Icons.Material.Filled.Badge : Icons.Material.Filled.AssignmentTurnedIn)"
+                                             Color="@(history.IsPlantilla ? Color.Success : Color.Info)">
+                                <MudStack Spacing="1">
+                                    <div>
+                                        <MudText Typo="Typo.body2">
+                                            <strong>@history.Designation</strong>
+                                        </MudText>
+                                        <MudChip T="string" Size="Size.Small" Color="@(history.IsPlantilla ? Color.Success : Color.Info)" Icon="@Icons.Material.Filled.Tag">
+                                            @(history.IsPlantilla ? "Plantilla" : "Acting As")
+                                        </MudChip>
+                                    </div>
+
+                                    <MudText Typo="Typo.caption">
+                                        <strong>Period:</strong> @history.EffectiveDate.ToString("MMM dd, yyyy")
+                                        @if (history.EndDate.HasValue)
+                                        {
+                                            <text> - @history.EndDate.Value.ToString("MMM dd, yyyy")</text>
+                                        }
+                                        else
+                                        {
+                                            <text> - Present</text>
+                                        }
+                                    </MudText>
+
+                                    <MudText Typo="Typo.caption" Color="Color.Secondary">
+                                        <strong>Tenure:</strong> @history.TenureMonths months
+                                    </MudText>
+                                </MudStack>
+                            </MudTimelineItem>
+                        }
+                    </MudTimeline>
+                }
+                else
+                {
+                    <MudAlert Severity="Severity.Info">No assignment history available</MudAlert>
+                }
+            </MudStack>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Default">
+            Close
+        </MudButton>
+    </DialogActions>
+</MudDialog>

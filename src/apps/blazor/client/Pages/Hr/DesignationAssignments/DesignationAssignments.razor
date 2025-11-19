@@ -1,0 +1,226 @@
+@page "/human-resources/designation-assignments"
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.DesignationAssignments
+
+<PageHeader Title="Designation Assignments" Header="Designation Assignments" SubHeader="Manage employee designation assignments, history, and promotions." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowDesignationAssignmentsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<MudTabs Outlined="true" Rounded="true" Border="true" AlwaysShowScrollButtons="false">
+    
+    <!-- Tab 1: Current Assignments View -->
+    <MudTabPanel Text="Current Assignments" Icon="@Icons.Material.Filled.Assignment">
+        <MudPaper Elevation="0" Class="pa-4">
+            <EntityTable TEntity="DesignationAssignmentResponse" TId="DefaultIdType" TRequest="DesignationAssignmentViewModel" Context="Context">
+                <EditFormContent Context="context">
+                    @if (!Context.AddEditModal.IsCreate)
+                    {
+                        <MudItem xs="12" sm="6" md="4" lg="3">
+                            <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+                        </MudItem>
+                    }
+
+                    <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" GutterBottom="true">Assignment Details</MudText>
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudTextField @bind-Value="context.EmployeeIdString"
+                                      For="@(() => context.EmployeeIdString)"
+                                      Label="Employee ID"
+                                      Variant="Variant.Filled"
+                                      Required="true"
+                                      ReadOnly="@(!Context.AddEditModal.IsCreate)"
+                                      HelperText="Enter employee ID" />
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudTextField @bind-Value="context.EmployeeName"
+                                      For="@(() => context.EmployeeName)"
+                                      Label="Employee Name"
+                                      ReadOnly="true"
+                                      Variant="Variant.Filled" />
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudTextField @bind-Value="context.EmployeeNumber"
+                                      For="@(() => context.EmployeeNumber)"
+                                      Label="Employee Number"
+                                      ReadOnly="true"
+                                      Variant="Variant.Filled" />
+                    </MudItem>
+
+                    <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudTextField @bind-Value="context.DesignationIdString"
+                                      For="@(() => context.DesignationIdString)"
+                                      Label="Designation ID"
+                                      Variant="Variant.Filled"
+                                      Required="true"
+                                      HelperText="Enter designation ID" />
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudTextField @bind-Value="context.DesignationTitle"
+                                      For="@(() => context.DesignationTitle)"
+                                      Label="Designation Title"
+                                      ReadOnly="true"
+                                      Variant="Variant.Filled" />
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudSelect @bind-Value="context.AssignmentType"
+                                   For="@(() => context.AssignmentType)"
+                                   Label="Assignment Type"
+                                   T="string?"
+                                   Variant="Variant.Filled"
+                                   Disabled="true">
+                            <MudSelectItem Value="@("Plantilla")">Plantilla (Primary)</MudSelectItem>
+                            <MudSelectItem Value="@("Acting As")">Acting As (Temporary)</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+
+                    <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" GutterBottom="true">Date Range</MudText>
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudDatePicker @bind-Date="context.EffectiveDate"
+                                       For="@(() => context.EffectiveDate)"
+                                       Label="Effective Date"
+                                       Variant="Variant.Filled"
+                                       Required="true" />
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudDatePicker @bind-Date="context.EndDate"
+                                       For="@(() => context.EndDate)"
+                                       Label="End Date"
+                                       Variant="Variant.Filled"
+                                       HelperText="Leave blank for ongoing assignments" />
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">
+                            Tenure: @(context.TenureDisplay ?? "N/A")
+                        </MudText>
+                    </MudItem>
+
+                    <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" GutterBottom="true">Salary Information</MudText>
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudNumericField T="decimal?" 
+                                         @bind-Value="context.AdjustedSalary" 
+                                         For="@(() => context.AdjustedSalary)" 
+                                         Label="Adjusted Salary (Optional)"
+                                         Format="C"
+                                         HelperText="For acting designations with different pay" />
+                    </MudItem>
+
+                    <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+                    <MudItem xs="12">
+                        <MudTextField @bind-Value="context.Reason" 
+                                      For="@(() => context.Reason)" 
+                                      Label="Reason for Assignment" 
+                                      Placeholder="e.g., Promotion, Acting Manager, Temporary Assignment"
+                                      Lines="2"
+                                      Variant="Variant.Filled" />
+                    </MudItem>
+
+                    <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsActive" Color="Color.Primary">
+                            Active
+                        </MudSwitch>
+                    </MudItem>
+
+                </EditFormContent>
+            </EntityTable>
+        </MudPaper>
+    </MudTabPanel>
+
+    <!-- Tab 2: Assignment History View -->
+    <MudTabPanel Text="Assignment History" Icon="@Icons.Material.Filled.History">
+        <MudPaper Elevation="0" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Employee Assignment History</MudText>
+            
+            <MudGrid Spacing="2" Class="mb-4">
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField @bind-Value="_filterEmployeeId"
+                                  Label="Filter by Employee ID"
+                                  Variant="Variant.Filled"
+                                  HelperText="Leave blank to see all employees" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudDatePicker @bind-Date="_filterFromDate"
+                                   Label="From Date"
+                                   Variant="Variant.Filled" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudDatePicker @bind-Date="_filterToDate"
+                                   Label="To Date"
+                                   Variant="Variant.Filled" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@LoadHistoryAsync">
+                        Load History
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+
+            @if (_historyLoading)
+            {
+                <MudProgressCircular Indeterminate="true" />
+                <MudText>Loading history...</MudText>
+            }
+            else if (_historyRecords == null || _historyRecords.Count == 0)
+            {
+                <MudAlert Severity="Severity.Info">No assignment history found for the selected filters.</MudAlert>
+            }
+            else
+            {
+                <MudTable Items="_historyRecords" Striped="true" Bordered="true" Dense="true" Hover="true">
+                    <HeaderContent>
+                        <MudTh>Employee #</MudTh>
+                        <MudTh>Employee Name</MudTh>
+                        <MudTh>Organization</MudTh>
+                        <MudTh>Current Designation</MudTh>
+                        <MudTh>Since</MudTh>
+                        <MudTh>Total Changes</MudTh>
+                        <MudTh>Action</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Employee #">@context.EmployeeNumber</MudTd>
+                        <MudTd DataLabel="Name">@context.FullName</MudTd>
+                        <MudTd DataLabel="Organization">@context.OrganizationalUnitName</MudTd>
+                        <MudTd DataLabel="Current">@context.CurrentDesignation</MudTd>
+                        <MudTd DataLabel="Since">@context.CurrentDesignationStart?.ToString("MMM dd, yyyy")</MudTd>
+                        <MudTd DataLabel="Changes">@context.TotalDesignationChanges</MudTd>
+                        <MudTd DataLabel="Action">
+                            <MudButton Size="Size.Small" Variant="Variant.Text" OnClick="@(() => ShowHistoryDetail(context))">
+                                View Details
+                            </MudButton>
+                        </MudTd>
+                    </RowTemplate>
+                </MudTable>
+            }
+        </MudPaper>
+    </MudTabPanel>
+
+</MudTabs>
+
