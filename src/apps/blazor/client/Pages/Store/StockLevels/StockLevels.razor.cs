@@ -48,6 +48,19 @@ public partial class StockLevels
         
         await Task.CompletedTask;
     }
+
+    /// <summary>
+    /// Show stock levels help dialog.
+    /// </summary>
+    private async Task ShowStockLevelsHelp()
+    {
+        await DialogService.ShowAsync<StockLevelsHelpDialog>("Stock Levels Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 public class StockLevelViewModel

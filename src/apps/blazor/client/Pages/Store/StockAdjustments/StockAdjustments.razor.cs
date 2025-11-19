@@ -67,6 +67,19 @@ public partial class StockAdjustments
             await _table.ReloadDataAsync();
         }
     }
+
+    /// <summary>
+    /// Show stock adjustments help dialog.
+    /// </summary>
+    private async Task ShowStockAdjustmentsHelp()
+    {
+        await DialogService.ShowAsync<StockAdjustmentsHelpDialog>("Stock Adjustments Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

@@ -1,0 +1,176 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.StockAdjustments
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Stock Adjustments Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Stock Adjustments?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Inventory Corrections</MudText>
+                        <MudText Typo="Typo.body2">
+                            Stock adjustments are manual corrections to inventory quantities to reconcile system records with physical inventory. 
+                            They account for discrepancies caused by theft, damage, evaporation, or counting errors. Proper adjustments maintain 
+                            accurate inventory and financial records.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Adjust Stock?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Cycle count discrepancies • Damage found during picking • Theft/loss • Evaporation/shrinkage<br/>
+                                • Data entry errors • System errors • Inventory write-offs • Obsolete items
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Adjustment Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Increase:</strong> Found more than system shows<br/>
+                                • <strong>Decrease:</strong> Found less than system shows<br/>
+                                • <strong>Full Recount:</strong> Complete physical recount<br/>
+                                • <strong>Write-Off:</strong> Item no longer sellable
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Every adjustment requires a reason and approval!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Adjustments">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Adjust Stock</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Adjustment Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create Adjustment"</strong><br/>
+                                2. Select <strong>Item</strong> to adjust<br/>
+                                3. Enter <strong>Current System Qty</strong><br/>
+                                4. Enter <strong>Physical Count Qty</strong><br/>
+                                5. System calculates <strong>Variance</strong><br/>
+                                6. Select <strong>Reason</strong> (damage, theft, etc.)<br/>
+                                7. Enter <strong>Details/Comments</strong><br/>
+                                8. Specify <strong>Location</strong><br/>
+                                9. Click <strong>"Save & Approve"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example Adjustment:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Item: ABC-123<br/>
+                                System shows: 50 units<br/>
+                                Physical count: 47 units<br/>
+                                Variance: -3 units<br/>
+                                Reason: Damaged during receiving<br/>
+                                Cost impact: 3 × $10 = $30 loss
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Document reason clearly - helps prevent future issues!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Reasons & Tracking">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Adjustment Reasons & Analysis</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Adjustment Reasons:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Cycle Count Variance:</strong> Physical count doesn't match<br/>
+                                • <strong>Damage:</strong> Item broken/defective<br/>
+                                • <strong>Theft/Loss:</strong> Missing items<br/>
+                                • <strong>Evaporation:</strong> Liquid loss<br/>
+                                • <strong>System Error:</strong> Data entry mistake<br/>
+                                • <strong>Write-Off:</strong> Obsolete/unsellable
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Tracking Adjustments:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ All adjustments logged by user<br/>
+                                ✓ Reason documented<br/>
+                                ✓ Timestamp recorded<br/>
+                                ✓ Approval chain tracked<br/>
+                                ✓ Can review adjustment history<br/>
+                                ✓ Financial impact calculated
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Track adjustment patterns - high theft indicates security issue!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we reverse an adjustment?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No - create offsetting adjustment instead. Maintains audit trail.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Who can create adjustments?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Warehouse managers and supervisors typically. Check your permissions.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's the impact on accounting?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Adjustments create GL entries - may impact COGS or loss accounts.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How often should we count?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: At least annually for financial statements. Monthly or quarterly for control.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+}
+

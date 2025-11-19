@@ -169,6 +169,19 @@ public partial class Warehouses
             await _table.ReloadDataAsync();
         }
     }
+
+    /// <summary>
+    /// Show warehouses help dialog.
+    /// </summary>
+    private async Task ShowWarehousesHelp()
+    {
+        await DialogService.ShowAsync<WarehousesHelpDialog>("Warehouses Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

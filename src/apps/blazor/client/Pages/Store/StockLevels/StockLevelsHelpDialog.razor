@@ -1,0 +1,173 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.StockLevels
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Stock Levels Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="Understanding Stock Levels">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Inventory Metrics</MudText>
+                        <MudText Typo="Typo.body2">
+                            Stock levels represent the current quantity of each item in inventory. Monitoring stock levels is critical for 
+                            order fulfillment, purchasing decisions, and financial accuracy. Stock levels show on-hand, reserved, and 
+                            available quantities.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Stock Level Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>On-Hand:</strong> Physical units in warehouse<br/>
+                                • <strong>Reserved:</strong> Allocated to orders<br/>
+                                • <strong>Available:</strong> Free to sell (On-hand - Reserved)<br/>
+                                • <strong>Reorder Point:</strong> When to order more<br/>
+                                • <strong>Safety Stock:</strong> Minimum to maintain
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Stock Level Example:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Item ABC-123<br/>
+                                On-Hand: 100 units<br/>
+                                Reserved: 30 units<br/>
+                                Available: 70 units<br/>
+                                Reorder Point: 20 units<br/>
+                                Safety Stock: 10 units
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key:</strong> Available stock determines what you can sell!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Monitoring Stock">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Tracking Inventory Levels</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Stock Level Status:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Overstock:</strong> Too much inventory (obsolescence risk)<br/>
+                                • <strong>Optimal:</strong> Correct level for demand<br/>
+                                • <strong>Low Stock:</strong> Below reorder point<br/>
+                                • <strong>Out of Stock:</strong> Zero available
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Monitoring Actions:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Review daily for low stock items<br/>
+                                ✓ Set reorder alerts<br/>
+                                ✓ Identify overstock situations<br/>
+                                ✓ Plan purchasing based on levels<br/>
+                                ✓ Monitor trending items
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Use filters to find low-stock and overstock items quickly!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Reorder Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Inventory Replenishment</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reorder Parameters:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Reorder Point:</strong> Quantity to trigger order<br/>
+                                • <strong>Reorder Quantity:</strong> How much to order<br/>
+                                • <strong>Lead Time:</strong> Supplier delivery days<br/>
+                                • <strong>Safety Stock:</strong> Minimum buffer
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reorder Point Calculation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Daily demand: 10 units<br/>
+                                Lead time: 5 days<br/>
+                                Safety stock: 20 units<br/>
+                                <br/>
+                                Reorder Point = (Daily demand × Lead time) + Safety stock<br/>
+                                = (10 × 5) + 20 = 70 units
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Set reorder points correctly - prevents stockouts!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's the difference between on-hand and available?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: On-hand = total. Available = what you can sell (on-hand minus reserved).
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How often should we update levels?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Real-time with sales imports. System automatically updates on transactions.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if levels show negative?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Data error - investigate immediately. Check recent transactions and adjustments.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we set minimum stock alerts?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes - configure reorder points. System alerts when hitting minimums.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+}
+

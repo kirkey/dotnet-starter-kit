@@ -1,0 +1,184 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.Suppliers
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Suppliers Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Suppliers?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Vendor Management</MudText>
+                        <MudText Typo="Typo.body2">
+                            Suppliers are vendors or manufacturers who provide goods and services to your business. Managing supplier 
+                            relationships is critical for procurement, pricing, and supply chain reliability. Supplier data includes contact 
+                            information, payment terms, and performance metrics.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Supplier Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Name:</strong> Company name<br/>
+                                • <strong>Contact:</strong> Phone/email<br/>
+                                • <strong>Address:</strong> Physical location<br/>
+                                • <strong>Payment Terms:</strong> Net 30, COD, etc.<br/>
+                                • <strong>Account Manager:</strong> Main contact<br/>
+                                • <strong>Status:</strong> Active/inactive
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Supplier Categories:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Manufacturers:</strong> Make the products<br/>
+                                • <strong>Distributors:</strong> Resell products<br/>
+                                • <strong>Services:</strong> Non-product vendors<br/>
+                                • <strong>Import/Export:</strong> International vendors
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key:</strong> Multiple suppliers reduce dependency and improve negotiating power!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Adding Suppliers">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Add Suppliers</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Supplier Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Add Supplier"</strong><br/>
+                                2. Enter <strong>Company Name</strong><br/>
+                                3. Enter <strong>Contact Name</strong><br/>
+                                4. Enter <strong>Phone</strong><br/>
+                                5. Enter <strong>Email</strong><br/>
+                                6. Enter <strong>Address</strong><br/>
+                                7. Enter <strong>Payment Terms</strong><br/>
+                                8. Set <strong>Status</strong> (Active)<br/>
+                                9. Add <strong>Notes</strong><br/>
+                                10. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Information to Gather:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Legal company name<br/>
+                                ✓ Tax ID/VAT number<br/>
+                                ✓ Primary contact person<br/>
+                                ✓ Phone and email<br/>
+                                ✓ Billing address<br/>
+                                ✓ Shipping address<br/>
+                                ✓ Payment terms<br/>
+                                ✓ Account manager name
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Keep supplier info up-to-date - prevents communication issues!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Supplier Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Supplier Relationships</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Supplier Activities:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>View Details:</strong> See all supplier info<br/>
+                                • <strong>Edit Information:</strong> Update contact/terms<br/>
+                                • <strong>View Purchase Orders:</strong> All POs sent<br/>
+                                • <strong>Track Shipments:</strong> Incoming deliveries<br/>
+                                • <strong>View Invoices:</strong> All supplier invoices<br/>
+                                • <strong>Payment History:</strong> Paid amounts/dates
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Supplier Performance Review:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Quarterly review metrics:<br/>
+                                • On-time delivery %<br/>
+                                • Quality issues<br/>
+                                • Response time<br/>
+                                • Price competitiveness<br/>
+                                • Order accuracy<br/>
+                                • Communication quality
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Poor performers should be addressed - negotiate or find alternatives!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How many suppliers should we have?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: At least 2-3 per critical item. Reduces risk and improves negotiating power.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we deactivate or delete suppliers?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Always deactivate, never delete. Maintains transaction history for reference.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How often should we review suppliers?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Quarterly for active suppliers. Annual for backup suppliers.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we negotiate better terms?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes - especially with volume commitment. Always try 5-10% discount.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+}
+

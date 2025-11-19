@@ -1,0 +1,180 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.Warehouses
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Warehouses Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Warehouses?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Warehouse Organization</MudText>
+                        <MudText Typo="Typo.body2">
+                            Warehouses are physical or logical storage facilities where inventory is kept. Each warehouse has its own 
+                            locations, bins, and stock levels. Managing warehouses is essential for multi-location operations, enabling 
+                            distributed inventory and efficient fulfillment.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Warehouse Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Main Warehouse:</strong> Primary storage<br/>
+                                • <strong>Distribution Center:</strong> Fulfillment hub<br/>
+                                • <strong>Regional:</strong> Local market proximity<br/>
+                                • <strong>Specialized:</strong> Climate-controlled, hazmat<br/>
+                                • <strong>Virtual:</strong> Logical grouping
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Warehouse Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Name:</strong> Warehouse identifier<br/>
+                                • <strong>Code:</strong> Shorthand (WH-001)<br/>
+                                • <strong>Address:</strong> Physical location<br/>
+                                • <strong>Manager:</strong> Responsible person<br/>
+                                • <strong>Capacity:</strong> Max storage units<br/>
+                                • <strong>Status:</strong> Active/inactive
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key:</strong> Each warehouse maintains independent inventory!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Warehouses">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Add Warehouses</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Warehouse Setup Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Add Warehouse"</strong><br/>
+                                2. Enter <strong>Warehouse Name</strong><br/>
+                                3. Enter <strong>Warehouse Code</strong><br/>
+                                4. Enter <strong>Address</strong><br/>
+                                5. Select <strong>Manager</strong><br/>
+                                6. Enter <strong>Phone</strong><br/>
+                                7. Enter <strong>Email</strong><br/>
+                                8. Set <strong>Capacity</strong><br/>
+                                9. Mark as <strong>Active</strong><br/>
+                                10. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Warehouse Setup Sequence:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Create Warehouse<br/>
+                                2. Define Locations within warehouse<br/>
+                                3. Create Bins within locations<br/>
+                                4. Assign default warehouse for purchasing<br/>
+                                5. Receive initial inventory<br/>
+                                6. Run cycle count verification
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Plan location structure before receiving inventory!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Warehouse Operations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Warehouse Operations</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Warehouse Functions:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Receiving:</strong> Accept incoming shipments<br/>
+                                • <strong>Put Away:</strong> Store items in bins<br/>
+                                • <strong>Picking:</strong> Pull items for orders<br/>
+                                • <strong>Packing:</strong> Prepare for shipment<br/>
+                                • <strong>Shipping:</strong> Send to customers<br/>
+                                • <strong>Cycle Counts:</strong> Verify inventory
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Warehouse Metrics:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Total Inventory Value: $X<br/>
+                                Capacity Utilization: Y%<br/>
+                                Average Stock Age: Z days<br/>
+                                Accuracy Rate: A%<br/>
+                                Turnover: B times/year<br/>
+                                Cost per unit: $C
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Monitor utilization - overcrowded = inefficiency!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Multi-Warehouse Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Coordinating Multiple Warehouses</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Multi-Warehouse Strategy:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Decentralize inventory by region<br/>
+                                • Stock fast movers everywhere<br/>
+                                • Central warehouse for slow movers<br/>
+                                • Rebalance based on demand<br/>
+                                • Track transfers between warehouses<br/>
+                                • Optimize logistics costs
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Questions (FAQ)</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Q: How many warehouses do we need?</strong><br/>
+                                A: Depends on geography and volume. 1-3 typical, 5-10 for large distribution.<br/>
+                                <br/>
+                                <strong>Q: Can we share inventory across warehouses?</strong><br/>
+                                A: Yes - system shows total available. Can transfer between locations.<br/>
+                                <br/>
+                                <strong>Q: Should warehouses have same locations?</strong><br/>
+                                A: No - customize each for local operations. Flexibility improves efficiency.
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Benefit:</strong> Multi-warehouse reduces shipping time and costs!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+}
+
