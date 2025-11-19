@@ -156,7 +156,7 @@ Progress:      +10 endpoints implemented
 - ✅ `/employee-contacts` - Full CRUD + Search
 - ✅ `/employee-dependents` - Full CRUD + Search
 - ✅ `/employee-documents` - Full CRUD + Search
-- ✅ `/employee-educations` - Full CRUD + Search
+- ✅ `/employee-education` - Full CRUD + Search
 - ✅ `/performance-reviews` - Full CRUD + Submit/Complete/Acknowledge
 
 #### Workflow - Employee Lifecycle:
@@ -889,7 +889,7 @@ Progress:      +10 endpoints implemented
 2. `/employee-contacts` - Contact management
 3. `/employee-dependents` - Dependent management
 4. `/employee-documents` - Document management
-5. `/employee-educations` - Education records
+5. `/employee-education` - Education records
 6. `/employee-designations` - Designation assignments (temporal)
 7. `/designations` - Designation master
 8. `/organizational-units` - Org structure

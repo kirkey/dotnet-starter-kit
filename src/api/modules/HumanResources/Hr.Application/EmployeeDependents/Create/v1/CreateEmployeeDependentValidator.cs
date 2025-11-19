@@ -35,9 +35,8 @@ public class CreateEmployeeDependentValidator : AbstractValidator<CreateEmployee
             .WithMessage("Dependent type must be Spouse, Child, Parent, Sibling, or Other");
 
         RuleFor(x => x.DateOfBirth)
-            .NotEmpty()
-            .WithMessage("Date of birth is required")
             .Must(BeValidDateOfBirth)
+            .When(x => x.DateOfBirth.HasValue)
             .WithMessage("Date of birth cannot be in the future");
 
         RuleFor(x => x.Email)
@@ -68,9 +67,9 @@ public class CreateEmployeeDependentValidator : AbstractValidator<CreateEmployee
     /// <summary>
     /// Validates if the date of birth is not in the future.
     /// </summary>
-    private static bool BeValidDateOfBirth(DateTime dateOfBirth)
+    private static bool BeValidDateOfBirth(DateTime? dateOfBirth)
     {
-        return dateOfBirth <= DateTime.Today;
+        return !dateOfBirth.HasValue || dateOfBirth.Value <= DateTime.Today;
     }
 }
 

@@ -8,7 +8,7 @@ public sealed record CreateEmployeeDependentCommand(
     [property: DefaultValue("Jack")] string FirstName,
     [property: DefaultValue("Doe")] string LastName,
     [property: DefaultValue("Child")] string DependentType,
-    [property: DefaultValue("2015-01-01")] DateTime DateOfBirth,
+    [property: DefaultValue(null)] DateTime? DateOfBirth = null,
     [property: DefaultValue("Biological Child")] string? Relationship = null,
     [property: DefaultValue(null)] string? Email = null,
     [property: DefaultValue(null)] string? PhoneNumber = null) : IRequest<CreateEmployeeDependentResponse>;

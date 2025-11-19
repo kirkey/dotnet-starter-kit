@@ -1,6 +1,8 @@
 @page "/hr/employees"
 @namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees
 @using FSH.Starter.Blazor.Client.Pages.Hr.Employees.Contacts
+@using FSH.Starter.Blazor.Client.Pages.Hr.Employees.Dependents
+@using FSH.Starter.Blazor.Client.Pages.Hr.Employees.Educations
 
 <PageHeader Title="Employees" Header="Employees" SubHeader="Comprehensive profile management, onboarding, and lifecycle." />
 
@@ -220,6 +222,18 @@
             </MudItem>
             <MudItem xs="12" Class="mt-4">
                 <EmployeeContactsComponent EmployeeId="@context.Id" />
+            </MudItem>
+            <MudItem xs="12" Class="mt-6">
+                <MudDivider />
+            </MudItem>
+            <MudItem xs="12" Class="mt-4">
+                <EmployeeDependentsComponent EmployeeId="@context.Id" />
+            </MudItem>
+            <MudItem xs="12" Class="mt-6">
+                <MudDivider />
+            </MudItem>
+            <MudItem xs="12" Class="mt-4">
+                <EmployeeEducationsComponent EmployeeId="@context.Id" />
             </MudItem>
         }
 

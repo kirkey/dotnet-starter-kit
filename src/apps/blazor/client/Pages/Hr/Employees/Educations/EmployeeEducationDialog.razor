@@ -1,0 +1,209 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Educations
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">@(IsCreate ? "Add Education Record" : "Edit Education Record")</MudText>
+
+            <MudGrid Spacing="2">
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="_educationLevel"
+                                  Label="Education Level"
+                                  Variant="Variant.Filled"
+                                  Required="true"
+                                  HelperText="Bachelor, Master, Doctorate, etc." />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="_fieldOfStudy"
+                                  Label="Field of Study"
+                                  Variant="Variant.Filled"
+                                  Required="true"
+                                  HelperText="Computer Science, Business, etc." />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_institution"
+                                  Label="Institution Name"
+                                  Variant="Variant.Filled"
+                                  Required="true"
+                                  HelperText="University or school name" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudDatePicker @bind-Date="_graduationDate"
+                                   Label="Graduation Date"
+                                   DateFormat="MMMM dd, yyyy"
+                                   Variant="Variant.Filled"
+                                   Required="true"
+                                   HelperText="When graduated" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="_degree"
+                                  Label="Degree Name"
+                                  Variant="Variant.Filled"
+                                  HelperText="BS in Computer Science, MBA, etc." />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField T="decimal?"
+                                     @bind-Value="_gpa"
+                                     Label="GPA"
+                                     Min="0"
+                                     Max="5"
+                                     Format="N2"
+                                     Variant="Variant.Filled"
+                                     HelperText="e.g., 3.85" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="_certificateNumber"
+                                  Label="Certificate Number"
+                                  Variant="Variant.Filled"
+                                  HelperText="Optional certificate/license number" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudDatePicker @bind-Date="_certificationDate"
+                                   Label="Certification Date"
+                                   DateFormat="MMMM dd, yyyy"
+                                   Variant="Variant.Filled"
+                                   HelperText="Date of certification (if applicable)" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_notes"
+                                  Label="Notes"
+                                  Lines="3"
+                                  Variant="Variant.Filled"
+                                  HelperText="Additional information" />
+                </MudItem>
+            </MudGrid>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveEducation">
+            @(IsCreate ? "Add Education" : "Update Education")
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public bool IsCreate { get; set; } = true;
+
+    [Parameter]
+    public DefaultIdType EmployeeId { get; set; }
+
+    [Parameter]
+    public EmployeeEducationResponse? ExistingEducation { get; set; }
+
+    private string? _educationLevel;
+    private string? _fieldOfStudy;
+    private string? _institution;
+    private DateTime? _graduationDate;
+    private string? _degree;
+    private decimal? _gpa;
+    private string? _certificateNumber;
+    private DateTime? _certificationDate;
+    private string? _notes;
+
+    protected override void OnInitialized()
+    {
+        if (!IsCreate && ExistingEducation != null)
+        {
+            _educationLevel = ExistingEducation.EducationLevel;
+            _fieldOfStudy = ExistingEducation.FieldOfStudy;
+            _institution = ExistingEducation.Institution;
+            _graduationDate = ExistingEducation.GraduationDate;
+            _degree = ExistingEducation.Degree;
+            _gpa = ExistingEducation.Gpa;
+            _certificateNumber = ExistingEducation.CertificateNumber;
+            _certificationDate = ExistingEducation.CertificationDate;
+            _notes = ExistingEducation.Notes;
+        }
+    }
+
+    private async Task SaveEducation()
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(_educationLevel))
+            {
+                Snackbar?.Add("Education level is required", Severity.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(_fieldOfStudy))
+            {
+                Snackbar?.Add("Field of study is required", Severity.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(_institution))
+            {
+                Snackbar?.Add("Institution name is required", Severity.Warning);
+                return;
+            }
+
+            if (_graduationDate == null)
+            {
+                Snackbar?.Add("Graduation Date is required", Severity.Warning);
+                return;
+            }
+
+            if (IsCreate)
+            {
+                var educationData = new
+                {
+                    EmployeeId,
+                    EducationLevel = _educationLevel!,
+                    FieldOfStudy = _fieldOfStudy,
+                    Institution = _institution!,
+                    GraduationDate = _graduationDate,
+                    Degree = _degree,
+                    Gpa = _gpa,
+                    CertificateNumber = _certificateNumber,
+                    CertificationDate = _certificationDate,
+                    Notes = _notes
+                };
+
+                var command = educationData.Adapt<CreateEmployeeEducationCommand>();
+                await Client.CreateEmployeeEducationEndpointAsync("1", command);
+                Snackbar?.Add("Education record added successfully", Severity.Success);
+            }
+            else if (ExistingEducation != null)
+            {
+                var educationData = new
+                {
+                    Id = ExistingEducation.Id,
+                    FieldOfStudy = _fieldOfStudy,
+                    Degree = _degree,
+                    Gpa = _gpa,
+                    Notes = _notes
+                };
+
+                var command = educationData.Adapt<UpdateEmployeeEducationCommand>();
+                await Client.UpdateEmployeeEducationEndpointAsync("1", ExistingEducation.Id, command);
+                Snackbar?.Add("Education record updated successfully", Severity.Success);
+            }
+
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar?.Add($"Error saving education record: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private Task Cancel()
+    {
+        MudDialog.Cancel();
+        return Task.CompletedTask;
+    }
+}

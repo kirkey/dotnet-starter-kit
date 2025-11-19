@@ -29,7 +29,7 @@ public class EmployeeDependentConfiguration : IEntityTypeConfiguration<EmployeeD
             .HasMaxLength(50);
 
         builder.Property(d => d.DateOfBirth)
-            .IsRequired();
+            .IsRequired(false);
 
         builder.Property(d => d.Relationship)
             .HasMaxLength(100);

@@ -1,0 +1,163 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Dependents
+
+<MudPaper Elevation="0" Class="pa-4 mb-4">
+    <MudStack Spacing="3">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+            <MudText Typo="Typo.subtitle2">Dependents</MudText>
+            <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="AddDependent">
+                Add Dependent
+            </MudButton>
+        </MudStack>
+
+        @if (_dependents == null)
+        {
+            <MudProgressCircular IsIndeterminate="true" />
+        }
+        else if (_dependents.Count == 0)
+        {
+            <MudAlert Severity="Severity.Info">No dependents added yet. Click "Add Dependent" to add one.</MudAlert>
+        }
+        else
+        {
+            <MudList T="EmployeeDependentResponse" Dense="true">
+                @foreach (var dependent in _dependents)
+                {
+                    <MudListItem T="EmployeeDependentResponse">
+                        <MudStack Spacing="1" Class="full-width">
+                            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                                <MudStack Spacing="0">
+                                    <MudText Typo="Typo.body2">
+                                        <strong>@($"{dependent.FirstName} {dependent.LastName}")</strong>
+                                    </MudText>
+                                    <MudText Typo="Typo.caption">@dependent.Relationship</MudText>
+                                </MudStack>
+                                <MudStack Row="true" Spacing="1">
+                                    <MudButton Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditDependent(dependent))">
+                                        Edit
+                                    </MudButton>
+                                    <MudButton Size="Size.Small" Variant="Variant.Text" Color="Color.Error" OnClick="@(() => DeleteDependent(dependent.Id))">
+                                        Delete
+                                    </MudButton>
+                                </MudStack>
+                            </MudStack>
+
+                            <MudStack Spacing="0" Class="mt-2">
+                                @if (dependent.DateOfBirth != default)
+                                {
+                                    <MudText Typo="Typo.caption">
+                                        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Cake" Class="mr-1" />
+                                        @dependent.DateOfBirth.ToString("MMMM dd, yyyy") (@dependent.Age years old)
+                                    </MudText>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(dependent.DependentType))
+                                {
+                                    <MudText Typo="Typo.caption">
+                                        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Category" Class="mr-1" />
+                                        Type: @dependent.DependentType
+                                    </MudText>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(dependent.Relationship))
+                                {
+                                    <MudText Typo="Typo.caption">
+                                        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.People" Class="mr-1" />
+                                        @dependent.Relationship
+                                    </MudText>
+                                }
+                            </MudStack>
+                        </MudStack>
+                    </MudListItem>
+                    <MudDivider />
+                }
+            </MudList>
+        }
+    </MudStack>
+</MudPaper>
+
+@code {
+    [Parameter]
+    public DefaultIdType EmployeeId { get; set; }
+
+    private List<EmployeeDependentResponse> _dependents = new();
+    private bool _loading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDependents();
+    }
+
+    private async Task LoadDependents()
+    {
+        _loading = true;
+        try
+        {
+            // Load all dependents and filter by employee using Client API
+            var request = new SearchEmployeeDependentsRequest
+            {
+                PageNumber = 1,
+                PageSize = 100
+            };
+            var result = await Client.SearchEmployeeDependentsEndpointAsync("1", request);
+            _dependents = result?.Items?.Where(d => d.EmployeeId == EmployeeId).ToList() ?? new();
+        }
+        catch (Exception ex)
+        {
+            Snackbar?.Add($"Error loading dependents: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private async Task AddDependent()
+    {
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+        var result = await DialogService.ShowAsync<EmployeeDependentDialog>(
+            "Add Dependent",
+            new DialogParameters { { "EmployeeId", EmployeeId }, { "IsCreate", true } },
+            options);
+
+        if (result is not null)
+        {
+            await LoadDependents();
+        }
+    }
+
+    private async Task EditDependent(EmployeeDependentResponse dependent)
+    {
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+        var result = await DialogService.ShowAsync<EmployeeDependentDialog>(
+            "Edit Dependent",
+            new DialogParameters { { "EmployeeId", EmployeeId }, { "IsCreate", false }, { "ExistingDependent", dependent } },
+            options);
+
+        if (result is not null)
+        {
+            await LoadDependents();
+        }
+    }
+
+    private async Task DeleteDependent(DefaultIdType dependentId)
+    {
+        var confirmed = await DialogService.ShowMessageBox(
+            "Delete Dependent",
+            "Are you sure you want to delete this dependent?",
+            "Delete",
+            "Cancel");
+
+        if (confirmed == true)
+        {
+            try
+            {
+                await Client.DeleteEmployeeDependentEndpointAsync("1", dependentId);
+                Snackbar?.Add("Dependent deleted successfully", Severity.Success);
+                await LoadDependents();
+            }
+            catch (Exception ex)
+            {
+                Snackbar?.Add($"Error deleting dependent: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+}
+

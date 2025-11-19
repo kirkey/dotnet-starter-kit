@@ -38,12 +38,12 @@ public sealed record EmployeeDependentResponse
     /// <summary>
     /// Gets the date of birth.
     /// </summary>
-    public DateTime DateOfBirth { get; init; }
+    public DateTime? DateOfBirth { get; init; }
 
     /// <summary>
     /// Gets the age of the dependent.
     /// </summary>
-    public int Age { get; init; }
+    public int? Age { get; init; }
 
     /// <summary>
     /// Gets the relationship description.

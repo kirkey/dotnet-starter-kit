@@ -1,0 +1,80 @@
+@page "/hr/employee-dependents"
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Dependents
+
+<PageHeader Title="Employee Dependents" Header="Employee Dependents" SubHeader="Manage employee family members and dependents." />
+
+<EntityTable TEntity="EmployeeDependentResponse" TId="DefaultIdType" TRequest="EmployeeDependentViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Dependent ID" />
+            </MudItem>
+        }
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Dependent Information</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.FirstName"
+                          For="@(() => context.FirstName)"
+                          Label="First Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.LastName"
+                          For="@(() => context.LastName)"
+                          Label="Last Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="context.Relationship"
+                       For="@(() => context.Relationship)"
+                       Label="Relationship"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Spouse")">Spouse</MudSelectItem>
+                <MudSelectItem Value="@("Child")">Child</MudSelectItem>
+                <MudSelectItem Value="@("Parent")">Parent</MudSelectItem>
+                <MudSelectItem Value="@("Sibling")">Sibling</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.DateOfBirth"
+                           For="@(() => context.DateOfBirth)"
+                           Label="Date of Birth"
+                           DateFormat="MMMM dd, yyyy"
+                           MaxDate="@DateTime.Today"
+                           Variant="Variant.Filled"
+                           Required="true"
+                           HelperText="Must be a valid past date" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Relationship"
+                          For="@(() => context.Relationship)"
+                          Label="Relationship Description"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="context.IsClaimableDependent"
+                       Class="mt-3"
+                       For="@(() => context.IsClaimableDependent)"
+                       Label="Claim as Tax Dependent"
+                       Color="Color.Primary" />
+        </MudItem>
+
+    </EditFormContent>
+</EntityTable>
+

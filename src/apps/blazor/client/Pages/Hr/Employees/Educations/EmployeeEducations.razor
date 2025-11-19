@@ -1,0 +1,56 @@
+@page "/hr/employee-education"
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Educations
+
+<PageHeader Title="Employee Education" Header="Employee Education" SubHeader="Manage employee educational background and certifications." />
+
+<EntityTable TEntity="EmployeeEducationResponse" TId="DefaultIdType" TRequest="EmployeeEducationViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Education ID" />
+            </MudItem>
+        }
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Education Details</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.FieldOfStudy"
+                          For="@(() => context.FieldOfStudy)"
+                          Label="Field of Study"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Degree"
+                          For="@(() => context.Degree)"
+                          Label="Degree Name"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal?"
+                             @bind-Value="context.Gpa"
+                             For="@(() => context.Gpa)"
+                             Label="GPA"
+                             Min="0"
+                             Max="5"
+                             Format="N2"
+                             Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Lines="3"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+    </EditFormContent>
+</EntityTable>
+

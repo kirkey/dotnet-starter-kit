@@ -30,7 +30,7 @@ public class EmployeeDependent : AuditableEntity, IAggregateRoot
         string firstName,
         string lastName,
         string dependentType,
-        DateTime dateOfBirth,
+        DateTime? dateOfBirth,
         string? relationship = null,
         string? ssn = null,
         string? email = null,
@@ -82,12 +82,14 @@ public class EmployeeDependent : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Date of birth of the dependent.
     /// </summary>
-    public DateTime DateOfBirth { get; private set; }
+    public DateTime? DateOfBirth { get; private set; }
 
     /// <summary>
     /// Age of the dependent (read-only, computed).
     /// </summary>
-    public int Age => DateTime.Today.Year - DateOfBirth.Year - (DateOfBirth.Date > DateTime.Today.AddYears(-Age) ? 1 : 0);
+    public int? Age => DateOfBirth.HasValue 
+        ? DateTime.Today.Year - DateOfBirth.Value.Year - (DateOfBirth.Value.Date > DateTime.Today.AddYears(-(DateTime.Today.Year - DateOfBirth.Value.Year)) ? 1 : 0)
+        : null;
 
     /// <summary>
     /// Relationship description to employee (e.g., "Biological child", "Spouse").
@@ -137,7 +139,7 @@ public class EmployeeDependent : AuditableEntity, IAggregateRoot
         string firstName,
         string lastName,
         string dependentType,
-        DateTime dateOfBirth,
+        DateTime? dateOfBirth,
         string? relationship = null,
         string? ssn = null,
         string? email = null,

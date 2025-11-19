@@ -120,7 +120,7 @@ Approve/Reject → Update Balance → Notify Employee
 - `/employee-contacts`
 - `/employee-dependents`
 - `/employee-documents`
-- `/employee-educations`
+- `/employee-education`
 - `/employee-designations`
 - `/performance-reviews`
 

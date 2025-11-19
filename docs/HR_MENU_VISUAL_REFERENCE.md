@@ -26,7 +26,7 @@
 │  ├─ 📞 Employee Contacts (/hr/employee-contacts) [ComingSoon]
 │  ├─ 👨‍👩‍👧‍👦 Employee Dependents (/hr/employee-dependents) [ComingSoon]
 │  ├─ 📄 Employee Documents (/hr/employee-documents) [ComingSoon]
-│  ├─ 🎓 Employee Education (/hr/employee-educations) [ComingSoon]
+│  ├─ 🎓 Employee Education (/hr/employee-education) [ComingSoon]
 │  └─ 📊 Performance Reviews (/hr/performance-reviews) [ComingSoon]
 │
 ├─ 📋 TIME & ATTENDANCE
@@ -109,7 +109,7 @@ All routes follow the pattern: `/hr/{entity-plural}`
 - `/hr/employee-contacts` → EmployeeContacts.razor
 - `/hr/employee-dependents` → EmployeeDependents.razor
 - `/hr/employee-documents` → EmployeeDocuments.razor
-- `/hr/employee-educations` → EmployeeEducations.razor
+- `/hr/employee-education` → EmployeeEducations.razor
 - `/hr/performance-reviews` → PerformanceReviews.razor
 
 ### Time & Attendance Routes

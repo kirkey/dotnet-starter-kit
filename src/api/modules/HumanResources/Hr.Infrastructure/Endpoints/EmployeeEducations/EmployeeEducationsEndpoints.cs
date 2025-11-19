@@ -12,7 +12,7 @@ public static class EmployeeEducationsEndpoints
     /// </summary>
     internal static IEndpointRouteBuilder MapEmployeeEducationsEndpoints(this IEndpointRouteBuilder app)
     {
-        var educationsGroup = app.MapGroup("/employee-educations")
+        var educationsGroup = app.MapGroup("/employee-education")
             .WithTags("Employee Educations")
             .WithDescription("Endpoints for managing employee education records and qualifications");
 

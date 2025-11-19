@@ -42,11 +42,11 @@ The **EmployeeEducation domain** is **100% complete** and ready for production d
 
 | Operation | Endpoint | Status |
 |-----------|----------|--------|
-| **CREATE** | POST /employee-educations | ✅ Complete |
-| **GET** | GET /employee-educations/{id} | ✅ Complete |
-| **UPDATE** | PUT /employee-educations/{id} | ✅ Complete |
-| **DELETE** | DELETE /employee-educations/{id} | ✅ Complete |
-| **SEARCH** | POST /employee-educations/search | ✅ Complete |
+| **CREATE** | POST /employee-education | ✅ Complete |
+| **GET** | GET /employee-education/{id} | ✅ Complete |
+| **UPDATE** | PUT /employee-education/{id} | ✅ Complete |
+| **DELETE** | DELETE /employee-education/{id} | ✅ Complete |
+| **SEARCH** | POST /employee-education/search | ✅ Complete |
 
 ---
 
@@ -72,35 +72,35 @@ The **EmployeeEducation domain** is **100% complete** and ready for production d
 
 ### Create Education Record
 ```
-POST /api/v1/employee-educations
+POST /api/v1/employee-education
 Permission: Permissions.EmployeeEducations.Create
 Response: 201 Created with ID
 ```
 
 ### Get Education Record
 ```
-GET /api/v1/employee-educations/{id}
+GET /api/v1/employee-education/{id}
 Permission: Permissions.EmployeeEducations.View
 Response: 200 OK with full details
 ```
 
 ### Update Education Record
 ```
-PUT /api/v1/employee-educations/{id}
+PUT /api/v1/employee-education/{id}
 Permission: Permissions.EmployeeEducations.Update
 Response: 200 OK with ID
 ```
 
 ### Delete Education Record
 ```
-DELETE /api/v1/employee-educations/{id}
+DELETE /api/v1/employee-education/{id}
 Permission: Permissions.EmployeeEducations.Delete
 Response: 200 OK with ID
 ```
 
 ### Search Education Records
 ```
-POST /api/v1/employee-educations/search
+POST /api/v1/employee-education/search
 Permission: Permissions.EmployeeEducations.View
 Response: 200 OK with PagedList
 ```

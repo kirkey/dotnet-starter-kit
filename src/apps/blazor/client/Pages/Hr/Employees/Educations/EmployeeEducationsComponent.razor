@@ -1,0 +1,169 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Educations
+
+<MudPaper Elevation="0" Class="pa-4 mb-4">
+    <MudStack Spacing="3">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+            <MudText Typo="Typo.subtitle2">Education & Certifications</MudText>
+            <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="AddEducation">
+                Add Education
+            </MudButton>
+        </MudStack>
+
+        @if (_educations == null)
+        {
+            <MudProgressCircular IsIndeterminate="true" />
+        }
+        else if (_educations.Count == 0)
+        {
+            <MudAlert Severity="Severity.Info">No education records added yet. Click "Add Education" to add one.</MudAlert>
+        }
+        else
+        {
+            <MudList T="EmployeeEducationResponse" Dense="true">
+                @foreach (var education in _educations)
+                {
+                    <MudListItem T="EmployeeEducationResponse">
+                        <MudStack Spacing="1" Class="full-width">
+                            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                                <MudStack Spacing="0">
+                                    <MudText Typo="Typo.body2">
+                                        <strong>@education.EducationLevel</strong>
+                                    </MudText>
+                                    <MudText Typo="Typo.caption">@education.Institution</MudText>
+                                </MudStack>
+                                <MudStack Row="true" Spacing="1">
+                                    <MudButton Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditEducation(education))">
+                                        Edit
+                                    </MudButton>
+                                    <MudButton Size="Size.Small" Variant="Variant.Text" Color="Color.Error" OnClick="@(() => DeleteEducation(education.Id))">
+                                        Delete
+                                    </MudButton>
+                                </MudStack>
+                            </MudStack>
+
+                            <MudStack Spacing="0" Class="mt-2">
+                                @if (!string.IsNullOrWhiteSpace(education.FieldOfStudy))
+                                {
+                                    <MudText Typo="Typo.caption">
+                                        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.MenuBook" Class="mr-1" />
+                                        @education.FieldOfStudy
+                                    </MudText>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(education.Degree))
+                                {
+                                    <MudText Typo="Typo.caption">
+                                        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.School" Class="mr-1" />
+                                        @education.Degree
+                                    </MudText>
+                                }
+                                @if (education.GraduationDate != default)
+                                {
+                                    <MudText Typo="Typo.caption">
+                                        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.DateRange" Class="mr-1" />
+                                        Graduated: @education.GraduationDate.ToString("MMM yyyy")
+                                    </MudText>
+                                }
+                                @if (education.Gpa.HasValue)
+                                {
+                                    <MudText Typo="Typo.caption">
+                                        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Grade" Class="mr-1" />
+                                        GPA: @education.Gpa.Value.ToString("N2")
+                                    </MudText>
+                                }
+                            </MudStack>
+                        </MudStack>
+                    </MudListItem>
+                    <MudDivider />
+                }
+            </MudList>
+        }
+    </MudStack>
+</MudPaper>
+
+@code {
+    [Parameter]
+    public DefaultIdType EmployeeId { get; set; }
+
+    private List<EmployeeEducationResponse> _educations = new();
+    private bool _loading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadEducations();
+    }
+
+    private async Task LoadEducations()
+    {
+        _loading = true;
+        try
+        {
+            var request = new SearchEmployeeEducationsRequest
+            {
+                PageNumber = 1,
+                PageSize = 100
+            };
+            var result = await Client.SearchEmployeeEducationsEndpointAsync("1", request);
+            _educations = result?.Items?.Where(e => e.EmployeeId == EmployeeId).ToList() ?? new();
+        }
+        catch (Exception ex)
+        {
+            Snackbar?.Add($"Error loading education records: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private async Task AddEducation()
+    {
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+        var result = await DialogService.ShowAsync<EmployeeEducationDialog>(
+            "Add Education",
+            new DialogParameters { { "EmployeeId", EmployeeId }, { "IsCreate", true } },
+            options);
+
+        if (result is not null)
+        {
+            await LoadEducations();
+        }
+    }
+
+    private async Task EditEducation(EmployeeEducationResponse education)
+    {
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+        var result = await DialogService.ShowAsync<EmployeeEducationDialog>(
+            "Edit Education",
+            new DialogParameters { { "EmployeeId", EmployeeId }, { "IsCreate", false }, { "ExistingEducation", education } },
+            options);
+
+        if (result is not null)
+        {
+            await LoadEducations();
+        }
+    }
+
+    private async Task DeleteEducation(DefaultIdType educationId)
+    {
+        var confirmed = await DialogService.ShowMessageBox(
+            "Delete Education",
+            "Are you sure you want to delete this education record?",
+            "Delete",
+            "Cancel");
+
+        if (confirmed == true)
+        {
+            try
+            {
+                await Client.DeleteEmployeeEducationEndpointAsync("1", educationId);
+                Snackbar?.Add("Education record deleted successfully", Severity.Success);
+                await LoadEducations();
+            }
+            catch (Exception ex)
+            {
+                Snackbar?.Add($"Error deleting education record: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+}
+

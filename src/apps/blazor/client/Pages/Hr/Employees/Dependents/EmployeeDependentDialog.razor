@@ -1,0 +1,194 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Dependents
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">@(IsCreate ? "Add Dependent" : "Edit Dependent")</MudText>
+
+            <MudGrid Spacing="2">
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="_firstName"
+                                  Label="First Name"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="_lastName"
+                                  Label="Last Name"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudSelect T="string?"
+                               @bind-Value="_dependentType"
+                               Label="Dependent Type"
+                               Variant="Variant.Filled"
+                               Required="true">
+                        <MudSelectItem Value="@("Spouse")">Spouse</MudSelectItem>
+                        <MudSelectItem Value="@("Child")">Child</MudSelectItem>
+                        <MudSelectItem Value="@("Parent")">Parent</MudSelectItem>
+                        <MudSelectItem Value="@("Sibling")">Sibling</MudSelectItem>
+                        <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudDatePicker @bind-Date="_dateOfBirth"
+                                   Label="Date of Birth"
+                                   DateFormat="MMMM dd, yyyy"
+                                   Variant="Variant.Filled"
+                                   MaxDate="@DateTime.Today"
+                                   Required="true"
+                                   HelperText="Must be a valid past date" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_relationship"
+                                  Label="Relationship Description"
+                                  Variant="Variant.Filled"
+                                  HelperText="E.g., Biological Child, Stepchild, Adopted Child" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudSwitch @bind-Value="_isClaimableDependent"
+                               Class="mt-3"
+                               Label="Claim as Tax Dependent"
+                               Color="Color.Primary" />
+                </MudItem>
+
+                @if (_dateOfBirth.HasValue)
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            Age: @CalculateAge(_dateOfBirth.Value) years old
+                        </MudAlert>
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveDependent">
+            @(IsCreate ? "Add Dependent" : "Update Dependent")
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public bool IsCreate { get; set; } = true;
+
+    [Parameter]
+    public DefaultIdType EmployeeId { get; set; }
+
+    [Parameter]
+    public EmployeeDependentResponse? ExistingDependent { get; set; }
+
+    private string? _firstName;
+    private string? _lastName;
+    private string? _dependentType = "Child";
+    private string? _relationship;
+    private DateTime? _dateOfBirth;
+    private bool _isClaimableDependent = true;
+
+    protected override void OnInitialized()
+    {
+        if (!IsCreate && ExistingDependent != null)
+        {
+            _firstName = ExistingDependent.FirstName;
+            _lastName = ExistingDependent.LastName;
+            _dependentType = ExistingDependent.DependentType;
+            _relationship = ExistingDependent.Relationship;
+            _dateOfBirth = ExistingDependent.DateOfBirth;
+        }
+    }
+
+    private async Task SaveDependent()
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(_firstName) || string.IsNullOrWhiteSpace(_lastName))
+            {
+                Snackbar?.Add("First and last name are required", Severity.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(_dependentType))
+            {
+                Snackbar?.Add("Dependent type is required", Severity.Warning);
+                return;
+            }
+
+            if (!_dateOfBirth.HasValue)
+            {
+                Snackbar?.Add("Date of birth is required", Severity.Warning);
+                return;
+            }
+
+            if (_dateOfBirth.Value > DateTime.Today)
+            {
+                Snackbar?.Add("Birth date cannot be in the future", Severity.Warning);
+                return;
+            }
+
+            if (IsCreate)
+            {
+                var dependentData = new
+                {
+                    EmployeeId,
+                    FirstName = _firstName!,
+                    LastName = _lastName!,
+                    DependentType = _dependentType!,
+                    DateOfBirth = _dateOfBirth.Value,
+                    Relationship = _relationship
+                };
+
+                var command = dependentData.Adapt<CreateEmployeeDependentCommand>();
+                await Client.CreateEmployeeDependentEndpointAsync("1", command);
+                Snackbar?.Add("Dependent added successfully", Severity.Success);
+            }
+            else if (ExistingDependent != null)
+            {
+                var dependentData = new
+                {
+                    Id = ExistingDependent.Id,
+                    FirstName = _firstName,
+                    LastName = _lastName,
+                    Relationship = _relationship,
+                    IsClaimableDependent = _isClaimableDependent
+                };
+
+                var command = dependentData.Adapt<UpdateEmployeeDependentCommand>();
+                await Client.UpdateEmployeeDependentEndpointAsync("1", ExistingDependent.Id, command);
+                Snackbar?.Add("Dependent updated successfully", Severity.Success);
+            }
+
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar?.Add($"Error saving dependent: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private Task Cancel()
+    {
+        MudDialog.Cancel();
+        return Task.CompletedTask;
+    }
+
+    private int CalculateAge(DateTime birthDate)
+    {
+        var today = DateTime.Today;
+        var age = today.Year - birthDate.Year;
+        if (birthDate.Date > today.AddYears(-age)) age--;
+        return age;
+    }
+}
+
