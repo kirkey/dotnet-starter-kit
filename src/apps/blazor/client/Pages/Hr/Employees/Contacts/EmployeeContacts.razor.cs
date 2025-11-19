@@ -4,6 +4,13 @@ public partial class EmployeeContacts
 {
     protected EntityServerTableContext<EmployeeContactResponse, DefaultIdType, EmployeeContactViewModel> Context { get; set; } = null!;
 
+    [SupplyParameterFromQuery]
+    public string? EmployeeId { get; set; }
+
+    public string FilterEmployeeId => EmployeeId ?? string.Empty;
+
+    public string FilterSuffix => !string.IsNullOrEmpty(FilterEmployeeId) ? " (Filtered)" : string.Empty;
+
     protected override async Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<EmployeeContactResponse, DefaultIdType, EmployeeContactViewModel>(
@@ -31,11 +38,20 @@ public partial class EmployeeContacts
                     OrderBy = filter.OrderBy
                 };
                 var result = await Client.SearchEmployeeContactsEndpointAsync("1", request);
+                
+                // Filter by EmployeeId if provided
+                if (!string.IsNullOrEmpty(FilterEmployeeId) && Guid.TryParse(FilterEmployeeId, out var employeeGuid))
+                {
+                    result.Items = result.Items?.Where(c => c.EmployeeId == employeeGuid).ToList() ?? [];
+                    result.TotalCount = result.Items.Count;
+                }
+                
                 return result.Adapt<PaginationResponse<EmployeeContactResponse>>();
             },
             createFunc: async contact =>
             {
-                await Client.CreateEmployeeContactEndpointAsync("1", contact.Adapt<CreateEmployeeContactCommand>());
+                var command = contact.Adapt<CreateEmployeeContactCommand>();
+                await Client.CreateEmployeeContactEndpointAsync("1", command);
             },
             updateFunc: async (id, contact) =>
             {
@@ -48,12 +64,14 @@ public partial class EmployeeContacts
 
         await Task.CompletedTask;
     }
+
+    private void ClearFilter()
+    {
+        NavigationManager.NavigateTo("/human-resources/employees/contacts");
+    }
 }
 
 public class EmployeeContactViewModel : UpdateEmployeeContactCommand
 {
     // Properties inherited from UpdateEmployeeContactCommand
 }
-
-
-

@@ -4,6 +4,13 @@ public partial class EmployeeEducations
 {
     protected EntityServerTableContext<EmployeeEducationResponse, DefaultIdType, EmployeeEducationViewModel> Context { get; set; } = null!;
 
+    [SupplyParameterFromQuery]
+    public string? EmployeeId { get; set; }
+
+    public string FilterEmployeeId => EmployeeId ?? string.Empty;
+
+    public string FilterSuffix => !string.IsNullOrEmpty(FilterEmployeeId) ? " (Filtered)" : string.Empty;
+
     protected override async Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<EmployeeEducationResponse, DefaultIdType, EmployeeEducationViewModel>(
@@ -30,11 +37,20 @@ public partial class EmployeeEducations
                     OrderBy = filter.OrderBy
                 };
                 var result = await Client.SearchEmployeeEducationsEndpointAsync("1", request);
+                
+                // Filter by EmployeeId if provided
+                if (!string.IsNullOrEmpty(FilterEmployeeId) && Guid.TryParse(FilterEmployeeId, out var employeeGuid))
+                {
+                    result.Items = result.Items?.Where(e => e.EmployeeId == employeeGuid).ToList() ?? [];
+                    result.TotalCount = result.Items.Count;
+                }
+                
                 return result.Adapt<PaginationResponse<EmployeeEducationResponse>>();
             },
             createFunc: async education =>
             {
-                await Client.CreateEmployeeEducationEndpointAsync("1", education.Adapt<CreateEmployeeEducationCommand>());
+                var command = education.Adapt<CreateEmployeeEducationCommand>();
+                await Client.CreateEmployeeEducationEndpointAsync("1", command);
             },
             updateFunc: async (id, education) =>
             {
@@ -47,10 +63,14 @@ public partial class EmployeeEducations
 
         await Task.CompletedTask;
     }
+
+    private void ClearFilter()
+    {
+        NavigationManager.NavigateTo("/human-resources/employees/educations");
+    }
 }
 
 public class EmployeeEducationViewModel : UpdateEmployeeEducationCommand
 {
     // Properties inherited from UpdateEmployeeEducationCommand
 }
-

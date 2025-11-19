@@ -62,14 +62,14 @@ public partial class Employees
     {
         await DialogService.ShowAsync<EmployeeCreationWizard>("Hire New Employee", new DialogParameters(), _wizardDialogOptions);
     }
+
+    private void NavigateTo(string pageUrl, DefaultIdType employeeId)
+    {
+        NavigationManager.NavigateTo($"{pageUrl}?employeeId={employeeId}");
+    }
 }
 
 public class EmployeeViewModel : UpdateEmployeeCommand
 {
     // Properties inherited from UpdateEmployeeCommand
 }
-
-
-
-
-

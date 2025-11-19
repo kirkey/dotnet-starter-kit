@@ -4,6 +4,13 @@ public partial class EmployeeDependents
 {
     protected EntityServerTableContext<EmployeeDependentResponse, DefaultIdType, EmployeeDependentViewModel> Context { get; set; } = null!;
 
+    [SupplyParameterFromQuery]
+    public string? EmployeeId { get; set; }
+
+    public string FilterEmployeeId => EmployeeId ?? string.Empty;
+
+    public string FilterSuffix => !string.IsNullOrEmpty(FilterEmployeeId) ? " (Filtered)" : string.Empty;
+
     protected override async Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<EmployeeDependentResponse, DefaultIdType, EmployeeDependentViewModel>(
@@ -30,11 +37,20 @@ public partial class EmployeeDependents
                     OrderBy = filter.OrderBy
                 };
                 var result = await Client.SearchEmployeeDependentsEndpointAsync("1", request);
+                
+                // Filter by EmployeeId if provided
+                if (!string.IsNullOrEmpty(FilterEmployeeId) && Guid.TryParse(FilterEmployeeId, out var employeeGuid))
+                {
+                    result.Items = result.Items?.Where(d => d.EmployeeId == employeeGuid).ToList() ?? [];
+                    result.TotalCount = result.Items.Count;
+                }
+                
                 return result.Adapt<PaginationResponse<EmployeeDependentResponse>>();
             },
             createFunc: async dependent =>
             {
-                await Client.CreateEmployeeDependentEndpointAsync("1", dependent.Adapt<CreateEmployeeDependentCommand>());
+                var command = dependent.Adapt<CreateEmployeeDependentCommand>();
+                await Client.CreateEmployeeDependentEndpointAsync("1", command);
             },
             updateFunc: async (id, dependent) =>
             {
@@ -47,10 +63,14 @@ public partial class EmployeeDependents
 
         await Task.CompletedTask;
     }
+
+    private void ClearFilter()
+    {
+        NavigationManager.NavigateTo("/human-resources/employees/dependents");
+    }
 }
 
 public class EmployeeDependentViewModel : UpdateEmployeeDependentCommand
 {
     // Properties inherited from UpdateEmployeeDependentCommand
 }
-

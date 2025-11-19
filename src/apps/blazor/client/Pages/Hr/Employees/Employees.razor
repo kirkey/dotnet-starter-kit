@@ -21,6 +21,28 @@
 </MudPaper>
 
 <EntityTable TEntity="EmployeeResponse" TId="DefaultIdType" TRequest="EmployeeViewModel" Context="@Context">
+    <ExtraActions Context="employee">
+        <MudMenu Label="Actions" Variant="Variant.Filled"
+                 EndIcon="@Icons.Material.Filled.KeyboardArrowDown" IconColor="Color.Secondary" TransformOrigin="Origin.TopCenter">
+            <MudMenuItem Icon="@Icons.Material.Filled.Visibility"
+                         OnClick="@(() => {/* View employee */})">
+                View Profile
+            </MudMenuItem>
+            <MudDivider />
+            <MudMenuItem Icon="@Icons.Material.Filled.Contacts"
+                         OnClick="@(() => NavigateTo("/human-resources/employees/contacts", employee.Id))">
+                View Contacts
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.FamilyRestroom"
+                         OnClick="@(() => NavigateTo("/human-resources/employees/dependents", employee.Id))">
+                View Dependents
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.School"
+                         OnClick="@(() => NavigateTo("/human-resources/employees/educations", employee.Id))">
+                View Education
+            </MudMenuItem>
+        </MudMenu>
+    </ExtraActions>
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {

@@ -1,7 +1,15 @@
-@page "/hr/employee-education"
+@page "/human-resources/employees/educations"
 @namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Educations
 
-<PageHeader Title="Employee Education" Header="Employee Education" SubHeader="Manage employee educational background and certifications." />
+<PageHeader Title="@($"Employee Education{FilterSuffix}")" Header="Employee Education" SubHeader="Manage employee educational background and certifications." />
+
+@if (!string.IsNullOrEmpty(FilterEmployeeId))
+{
+    <MudAlert Severity="Severity.Info" Class="mb-4">
+        Viewing education for Employee ID: <strong>@FilterEmployeeId</strong>
+        <MudButton Size="Size.Small" Variant="Variant.Text" OnClick="ClearFilter" Class="float-right">Clear Filter</MudButton>
+    </MudAlert>
+}
 
 <EntityTable TEntity="EmployeeEducationResponse" TId="DefaultIdType" TRequest="EmployeeEducationViewModel" Context="@Context">
     <EditFormContent Context="context">
