@@ -1,0 +1,367 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.Categories
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Categories Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Product Categories?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Categories</MudText>
+                        <MudText Typo="Typo.body2">
+                            Product categories are groupings used to organize inventory items by type, function, or other logical classification. 
+                            Categories help with organization, reporting, and filtering. They enable better management of large product catalogs 
+                            and support different business operations like accounting, sales, and inventory management.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Use Categories?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Organization:</strong> Organize large product catalogs<br/>
+                                • <strong>Navigation:</strong> Users find items easily<br/>
+                                • <strong>Reporting:</strong> Sales/inventory by category<br/>
+                                • <strong>Pricing:</strong> Apply category-level discounts<br/>
+                                • <strong>Accounting:</strong> Different expense accounts by category<br/>
+                                • <strong>Filtering:</strong> Search and filter products<br/>
+                                • <strong>Stock Management:</strong> Manage inventory by type
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Category Examples:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Electronics:</strong><br/>
+                                • Computers<br/>
+                                • Phones<br/>
+                                • Accessories<br/>
+                                <br/>
+                                <strong>Retail:</strong><br/>
+                                • Clothing<br/>
+                                • Shoes<br/>
+                                • Accessories<br/>
+                                <br/>
+                                <strong>Manufacturing:</strong><br/>
+                                • Raw Materials<br/>
+                                • Components<br/>
+                                • Finished Goods
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Categories organize products - every item should belong to a category!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Categories">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Add Product Categories</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Category Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Category Code</strong> (e.g., "ELEC")<br/>
+                                3. Enter <strong>Category Name</strong> (e.g., "Electronics")<br/>
+                                4. Enter <strong>Description</strong><br/>
+                                5. Select <strong>Parent Category</strong> (if subcategory)<br/>
+                                6. Enter <strong>Display Order</strong> (sort sequence)<br/>
+                                7. Assign <strong>Accounting Account</strong> (COGS account)<br/>
+                                8. Select <strong>Tax Category</strong> (if applicable)<br/>
+                                9. Attach <strong>Category Image</strong><br/>
+                                10. Mark as <strong>Active</strong><br/>
+                                11. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Hierarchical Categories (Parent/Child):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Level 1: Electronics (Parent)<br/>
+                                &nbsp;&nbsp;Level 2: Computers (Child)<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Level 3: Laptops (Grandchild)<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Level 3: Desktops (Grandchild)<br/>
+                                &nbsp;&nbsp;Level 2: Phones (Child)<br/>
+                                &nbsp;&nbsp;Level 2: Accessories (Child)<br/>
+                                <br/>
+                                Enables drill-down navigation
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Keep hierarchy shallow (3-4 levels) to avoid confusion!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Category Structure">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Organizing Categories Effectively</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Structuring Considerations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Product Type:</strong> Group by what it is<br/>
+                                • <strong>Customer Segment:</strong> Group by who uses it<br/>
+                                • <strong>Department:</strong> Group by which dept manages<br/>
+                                • <strong>Price Range:</strong> Group by pricing tier<br/>
+                                • <strong>Supplier:</strong> Group by who provides it<br/>
+                                • <strong>Use Case:</strong> Group by application
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Category Naming Convention:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Use clear, descriptive names<br/>
+                                • Avoid abbreviations users won't understand<br/>
+                                • Keep names concise (2-4 words)<br/>
+                                • Use consistent capitalization<br/>
+                                • Avoid special characters<br/>
+                                <br/>
+                                <strong>Good Examples:</strong><br/>
+                                "Office Furniture"<br/>
+                                "IT Equipment"<br/>
+                                "Promotional Items"<br/>
+                                <br/>
+                                <strong>Avoid:</strong><br/>
+                                "Misc" (too vague)<br/>
+                                "A1-B2-C3" (confusing)<br/>
+                                "Stuff &amp; Things!" (unprofessional)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Review and refine categories periodically as business evolves!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Accounting Integration">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Category Accounting Settings</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Accounting Account Assignment:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Each category should have default accounts:<br/>
+                                <br/>
+                                • <strong>COGS Account:</strong> Where sales cost is recorded<br/>
+                                • <strong>Revenue Account:</strong> Where sales revenue posted<br/>
+                                • <strong>Inventory Account:</strong> Asset account for items<br/>
+                                • <strong>Expense Account:</strong> For shrinkage/adjustments
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Journal Entry Example:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Sale of Electronics item for $1,000<br/>
+                                (Cost: $600)<br/>
+                                <br/>
+                                Dr. Cash                    $1,000<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Sales Revenue (Electronics)  $1,000<br/>
+                                <br/>
+                                Dr. COGS (Electronics)      $600<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Inventory (Electronics)      $600
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Tax Categorization:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Categories can link to tax codes:<br/>
+                                • Taxable items (standard rate)<br/>
+                                • Tax-exempt items (0%)<br/>
+                                • Reduced rate items<br/>
+                                • Zone-specific taxes<br/>
+                                <br/>
+                                Enables automatic tax calculation
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Critical:</strong> Ensure accounting accounts are correct - affects all sales reporting!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Managing Categories">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Category Operations</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Operations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Add:</strong> Create new category<br/>
+                                • <strong>Edit:</strong> Change name, description, settings<br/>
+                                • <strong>Move:</strong> Change parent category<br/>
+                                • <strong>Deactivate:</strong> Hide from new items (keep existing)<br/>
+                                • <strong>Delete:</strong> Only if no items assigned<br/>
+                                • <strong>Merge:</strong> Combine similar categories<br/>
+                                • <strong>Report:</strong> View inventory/sales by category
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reassigning Items:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                If changing category structure:<br/>
+                                <br/>
+                                1. Identify items in old category<br/>
+                                2. Select new target category<br/>
+                                3. Bulk reassign items<br/>
+                                4. Verify accounting accounts correct<br/>
+                                5. Review inventory reports<br/>
+                                6. Deactivate old category (if empty)<br/>
+                                7. Document changes
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Category-Level Settings:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Default markup percentage<br/>
+                                ✓ Default profit margin<br/>
+                                ✓ Default tax treatment<br/>
+                                ✓ Display order for navigation<br/>
+                                ✓ Category image/thumbnail<br/>
+                                ✓ Description text<br/>
+                                ✓ Parent category link
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Review category performance quarterly - consolidate underperformers!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Reporting & Analysis">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Using Categories for Business Insights</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reports by Category:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Sales by Category:</strong> Which categories generate revenue<br/>
+                                • <strong>Inventory by Category:</strong> Stock levels and value<br/>
+                                • <strong>Margin by Category:</strong> Profitability analysis<br/>
+                                • <strong>Growth by Category:</strong> Trending up or down<br/>
+                                • <strong>Stock Turns:</strong> How fast items sell<br/>
+                                • <strong>Dead Stock:</strong> Slow movers by category
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Sample Category Analysis:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Category Report - November 2025<br/>
+                                <br/>
+                                Category          Sales    COGS    Margin%  Inv Value<br/>
+                                ============      =====    ====    =======  =========<br/>
+                                Electronics      $45,000   $27K     40%     $80,000<br/>
+                                Furniture        $12,000    $7K     42%     $25,000<br/>
+                                Office Supplies   $8,500    $5K     41%     $12,000<br/>
+                                Promotional       $2,100    $1.5K   29%      $3,500<br/>
+                                <br/>
+                                Action: Review Promotional category pricing
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Insight:</strong> Categories reveal where profits come from - use for pricing decisions!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can an item be in multiple categories?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Depends on system design. Typically one primary category per item. Use tags/attributes for cross-category grouping.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How many category levels should we have?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Typically 2-4 levels. Too many = confusing. Too few = cluttered. Test with users and adjust.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What happens if we delete a category?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Can only delete if no items assigned. Better to deactivate and keep historical data for reporting.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we handle subcategories?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Use parent-child relationship. Parent = Electronics, Child = Computers. Child inherits some parent settings.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should categories match accounting departments?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Ideally yes. Align to GL accounts so sales reports match financial reports automatically.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+}
+

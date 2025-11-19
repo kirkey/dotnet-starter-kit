@@ -49,6 +49,19 @@ public partial class Bins
 
     await Task.CompletedTask;
     }
+
+    /// <summary>
+    /// Show bins help dialog.
+    /// </summary>
+    private async Task ShowBinsHelp()
+    {
+        await DialogService.ShowAsync<BinsHelpDialog>("Bins Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

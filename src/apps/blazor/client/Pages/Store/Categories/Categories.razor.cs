@@ -62,6 +62,19 @@ public partial class Categories
         
         await Task.CompletedTask;
     }
+
+    /// <summary>
+    /// Show categories help dialog.
+    /// </summary>
+    private async Task ShowCategoriesHelp()
+    {
+        await DialogService.ShowAsync<CategoriesHelpDialog>("Categories Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

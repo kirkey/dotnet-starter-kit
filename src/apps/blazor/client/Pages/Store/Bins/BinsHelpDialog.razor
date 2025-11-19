@@ -1,0 +1,298 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.Bins
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Bins Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Storage Bins?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Bin Management</MudText>
+                        <MudText Typo="Typo.body2">
+                            Storage bins are physical locations in your warehouse or storage facility where inventory items are stored. 
+                            Each bin has a unique location code and tracks what items are stored there and in what quantities. 
+                            Proper bin management improves warehouse efficiency, reduces picking errors, and enables better inventory tracking.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Use Bins?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Organization:</strong> Know exactly where items are stored<br/>
+                                • <strong>Efficiency:</strong> Faster picking and packing<br/>
+                                • <strong>Accuracy:</strong> Reduced picking errors<br/>
+                                • <strong>Inventory Control:</strong> Track items by location<br/>
+                                • <strong>Space Optimization:</strong> Better use of warehouse space<br/>
+                                • <strong>Safety:</strong> Proper storage prevents damage
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Bin Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Shelving Bins:</strong> Standard shelf storage<br/>
+                                • <strong>Pallet Locations:</strong> Full pallet storage<br/>
+                                • <strong>Overstock:</strong> Backup inventory area<br/>
+                                • <strong>Damaged Goods:</strong> Hold for returns/disposal<br/>
+                                • <strong>Receiving:</strong> New items waiting processing<br/>
+                                • <strong>Picking Area:</strong> High-demand items for fast access
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Every item in inventory should be assigned to a specific bin location!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Bins">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Add Storage Bins</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Bin Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Enter <strong>Bin Code</strong> (e.g., "A-01-01")<br/>
+                                3. Enter <strong>Bin Name</strong> (e.g., "Shelf A, Row 1, Position 1")<br/>
+                                4. Select <strong>Warehouse</strong> location<br/>
+                                5. Select <strong>Aisle</strong> (if applicable)<br/>
+                                6. Select <strong>Shelf Level</strong><br/>
+                                7. Enter <strong>Position/Number</strong><br/>
+                                8. Select <strong>Bin Type</strong> (Shelving, Pallet, etc.)<br/>
+                                9. Enter <strong>Capacity</strong> (max units or weight)<br/>
+                                10. Enter <strong>Description</strong><br/>
+                                11. Mark as <strong>Active</strong><br/>
+                                12. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Bin Code Convention:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Format: Warehouse-Aisle-Shelf-Position<br/>
+                                Example: A-01-01-01<br/>
+                                <br/>
+                                A = Warehouse A<br/>
+                                01 = Aisle 1<br/>
+                                01 = Shelf level 1 (bottom)<br/>
+                                01 = Position 1 (left)<br/>
+                                <br/>
+                                Another example: B-03-02-05<br/>
+                                Warehouse B, Aisle 3, Shelf 2, Position 5
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Use consistent bin naming - makes picking faster and reduces errors!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Bin Assignment">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Assigning Items to Bins</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Assignment Strategy:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Popular Items:</strong> Closest to packing area<br/>
+                                • <strong>Slow-Moving:</strong> Back of warehouse<br/>
+                                • <strong>Heavy Items:</strong> Lower shelves<br/>
+                                • <strong>Light Items:</strong> Upper shelves<br/>
+                                • <strong>Fragile Items:</strong> Special protective bins<br/>
+                                • <strong>Hazardous:</strong> Separate secure area
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Primary vs. Overflow Bins:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Primary Bin:</strong><br/>
+                                • Where item is normally picked<br/>
+                                • High-traffic location<br/>
+                                • Most accessible<br/>
+                                • Smaller quantities<br/>
+                                <br/>
+                                <strong>Overflow Bin:</strong><br/>
+                                • Backup location for excess stock<br/>
+                                • Less accessible<br/>
+                                • Replenishment source<br/>
+                                • Larger quantities<br/>
+                                <br/>
+                                When primary empties, refill from overflow
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Items can be in multiple bins - primary and overflow locations!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Bin Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Bin Operations</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Bin Operations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Receive:</strong> New stock into bin<br/>
+                                • <strong>Pick:</strong> Remove items for orders<br/>
+                                • <strong>Transfer:</strong> Move between bins<br/>
+                                • <strong>Count:</strong> Physical verification<br/>
+                                • <strong>Replenish:</strong> Fill from overflow<br/>
+                                • <strong>Consolidate:</strong> Combine partial bins<br/>
+                                • <strong>Deep Clean:</strong> Maintenance
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Bin Maintenance Schedule:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ Daily: Check accessibility, report damage<br/>
+                                □ Weekly: Physical count verification<br/>
+                                □ Monthly: Deep clean shelving<br/>
+                                □ Quarterly: Bin capacity review<br/>
+                                □ Annually: Full bin reorganization<br/>
+                                □ As-needed: Repair damaged bins
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Bin Utilization Metrics:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Utilization Rate:</strong> % of capacity used<br/>
+                                • <strong>Fill Level:</strong> Current vs. optimal<br/>
+                                • <strong>Turnover Rate:</strong> How quickly items move<br/>
+                                • <strong>Empty Bins:</strong> Available capacity<br/>
+                                • <strong>Overstock:</strong> Bins exceeding capacity
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Critical:</strong> Never exceed bin capacity - causes damage and safety hazards!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Picking & Packing">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Using Bins for Order Fulfillment</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Picking Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Generate pick list from order<br/>
+                                2. Sort by bin location (minimize travel)<br/>
+                                3. Navigate to primary bin<br/>
+                                4. Pick required quantity<br/>
+                                5. If insufficient, check overflow bin<br/>
+                                6. Scan item to confirm<br/>
+                                7. Place in cart<br/>
+                                8. Move to next location<br/>
+                                9. Bring to packing area
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Bin Location Benefits:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Faster picking (know exact location)<br/>
+                                ✓ Reduced errors (organized storage)<br/>
+                                ✓ Less travel time (efficient layout)<br/>
+                                ✓ Better accuracy (barcode scanning)<br/>
+                                ✓ Easier inventory counts<br/>
+                                ✓ Better space utilization
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Optimization:</strong> Group fast-moving items near packing area for speed!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can multiple items be in the same bin?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes - bins often contain multiple items. However, best practice is one SKU per bin location when possible to reduce errors.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's the difference between bin and warehouse?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Warehouse is the building/facility. Bin is a specific location (shelf, pallet position) within the warehouse.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we handle damaged bins?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Mark as inactive. Transfer items to new bin. Schedule repair. Don't store items in damaged bins - risk of loss.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we reorganize bins?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes - periodically recommended for efficiency. Update all item bin assignments. Communicate changes to team.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How many bins should we have?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Depends on inventory volume. Plan for 20-30% excess capacity for growth. Too few = overcrowding. Too many = wasted space.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+}
+
