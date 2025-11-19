@@ -1,0 +1,216 @@
+@page "/human-resources/employees"
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees
+
+<PageHeader Title="Employees" Header="Employees" SubHeader="Comprehensive profile management, onboarding, and lifecycle." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@(() => ShowEmployeeCreationWizard())">
+                Wizard
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowEmployeesHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable TEntity="EmployeeResponse" TId="DefaultIdType" TRequest="EmployeeViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Employee ID" />
+            </MudItem>
+        }
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Personal Information</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.FirstName"
+                          For="@(() => context.FirstName)"
+                          Label="First Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.MiddleName"
+                          For="@(() => context.MiddleName)"
+                          Label="Middle Name"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.LastName"
+                          For="@(() => context.LastName)"
+                          Label="Last Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Email"
+                          For="@(() => context.Email)"
+                          Label="Email Address"
+                          InputType="InputType.Email"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.PhoneNumber"
+                          For="@(() => context.PhoneNumber)"
+                          Label="Phone Number"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.BirthDate"
+                           For="@(() => context.BirthDate)"
+                           Label="Date of Birth"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="context.Gender"
+                       For="@(() => context.Gender)"
+                       Label="Gender"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Male")">Male</MudSelectItem>
+                <MudSelectItem Value="@("Female")">Female</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.CivilStatus"
+                          For="@(() => context.CivilStatus)"
+                          Label="Civil Status"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Government IDs (Philippines)</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.SssNumber"
+                          For="@(() => context.SssNumber)"
+                          Label="SSS Number"
+                          Placeholder="XX-XXXXXXXXX-X"
+                          Variant="Variant.Filled"
+                          HelperText="Social Security System" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.PhilHealthNumber"
+                          For="@(() => context.PhilHealthNumber)"
+                          Label="PhilHealth Number"
+                          Placeholder="XX-XXXXXXXXX-XXX"
+                          Variant="Variant.Filled"
+                          HelperText="National Health Insurance" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.PagIbigNumber"
+                          For="@(() => context.PagIbigNumber)"
+                          Label="PagIbig Number"
+                          Placeholder="XXXX-XXXX-XXXX"
+                          Variant="Variant.Filled"
+                          HelperText="Home Development Fund" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Tin"
+                          For="@(() => context.Tin)"
+                          Label="TIN"
+                          Placeholder="XXX-XXX-XXX-XXX"
+                          Variant="Variant.Filled"
+                          HelperText="Tax Identification Number" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Employment Information</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="context.EmploymentClassification"
+                       For="@(() => context.EmploymentClassification)"
+                       Label="Employment Type"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Regular")">Regular</MudSelectItem>
+                <MudSelectItem Value="@("Probationary")">Probationary</MudSelectItem>
+                <MudSelectItem Value="@("Contract")">Contract</MudSelectItem>
+                <MudSelectItem Value="@("Temporary")">Temporary</MudSelectItem>
+                <MudSelectItem Value="@("Consultant")">Consultant</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.RegularizationDate"
+                           For="@(() => context.RegularizationDate)"
+                           Label="Regularization Date"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Filled"
+                           HelperText="Date when employee was regularized" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal?"
+                             @bind-Value="context.BasicMonthlySalary"
+                             For="@(() => context.BasicMonthlySalary)"
+                             Label="Basic Monthly Salary"
+                             Format="N2"
+                             Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Special Status (Philippines)</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudSwitch @bind-Value="context.IsPwd"
+                       Class="mt-3"
+                       For="@(() => context.IsPwd)"
+                       Label="Person with Disability (PWD)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudTextField @bind-Value="context.PwdIdNumber"
+                          For="@(() => context.PwdIdNumber)"
+                          Label="PWD ID Number"
+                          Variant="Variant.Filled"
+                          Disabled="@(context.IsPwd != true)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudSwitch @bind-Value="context.IsSoloParent"
+                       Class="mt-3"
+                       For="@(() => context.IsSoloParent)"
+                       Label="Solo Parent" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudTextField @bind-Value="context.SoloParentIdNumber"
+                          For="@(() => context.SoloParentIdNumber)"
+                          Label="Solo Parent ID Number"
+                          Variant="Variant.Filled"
+                          Disabled="@(context.IsSoloParent != true)" />
+        </MudItem>
+
+    </EditFormContent>
+</EntityTable>
+

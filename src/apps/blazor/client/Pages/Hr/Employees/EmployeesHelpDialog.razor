@@ -1,0 +1,120 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Employee Management Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="Employee Lifecycle">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2">
+                            <strong>HIRE → ONBOARD → PROBATION → REGULARIZE → ACTIVE → TERMINATE</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption">
+                            1. <strong>HIRE:</strong> Create employee record with personal info, government IDs, and compensation<br/>
+                            2. <strong>ONBOARD:</strong> Add contacts, assign department/designation, configure payroll<br/>
+                            3. <strong>PROBATION:</strong> 6-month trial period (Philippines Labor Code)<br/>
+                            4. <strong>REGULARIZE:</strong> Convert from probationary to regular status<br/>
+                            5. <strong>ACTIVE:</strong> Full-time employee with all benefits<br/>
+                            6. <strong>TERMINATE:</strong> Separation with final payroll calculation
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Employment Types">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2"><strong>Regular:</strong> Permanent, full-time with all benefits</MudText>
+                        <MudText Typo="Typo.body2"><strong>Probationary:</strong> 6-month trial period (non-extendable)</MudText>
+                        <MudText Typo="Typo.body2"><strong>Contract:</strong> Fixed-term with pro-rata benefits</MudText>
+                        <MudText Typo="Typo.body2"><strong>Temporary:</strong> Short-term, limited benefits</MudText>
+                        <MudText Typo="Typo.body2"><strong>Consultant:</strong> Service provider (no employee benefits)</MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Government IDs (Philippines)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2"><strong>SSS:</strong> Social Security System (XX-XXXXXXXXX-X)</MudText>
+                        <MudText Typo="Typo.caption" Class="mb-2">Employee contribution: 4.5% (2024 rate)</MudText>
+
+                        <MudText Typo="Typo.body2"><strong>PhilHealth:</strong> National Health Insurance (XX-XXXXXXXXX-XXX)</MudText>
+                        <MudText Typo="Typo.caption" Class="mb-2">Employee contribution: 2.75% (2024 rate)</MudText>
+
+                        <MudText Typo="Typo.body2"><strong>PagIbig:</strong> Home Development Fund (XXXX-XXXX-XXXX)</MudText>
+                        <MudText Typo="Typo.caption" Class="mb-2">Employee contribution: 1% (2024 rate)</MudText>
+
+                        <MudText Typo="Typo.body2"><strong>TIN:</strong> Tax Identification Number (XXX-XXX-XXX-XXX)</MudText>
+                        <MudText Typo="Typo.caption">For income tax withholding</MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Probation & Regularization">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2"><strong>6-Month Probation Period</strong></MudText>
+                        <MudText Typo="Typo.caption" Class="mb-2">
+                            • Maximum 6 months (non-extendable per Philippines Labor Code)<br/>
+                            • Employee receives full benefits<br/>
+                            • Can be terminated without severance if fails<br/>
+                            • Must be regularized or separated by Day 180
+                        </MudText>
+
+                        <MudText Typo="Typo.body2"><strong>Regularization Requirements</strong></MudText>
+                        <MudText Typo="Typo.caption">
+                            1. Monitor performance during 6 months<br/>
+                            2. Mid-probation review (Day 90)<br/>
+                            3. Final evaluation (Day 180)<br/>
+                            4. Issue regularization letter if passed<br/>
+                            5. Update employment type to "Regular"
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Compensation & Deductions">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2"><strong>Automatic Payroll Deductions (2024)</strong></MudText>
+                        <MudText Typo="Typo.caption" Class="mb-3">
+                            • SSS: 4.5% of gross salary<br/>
+                            • PhilHealth: 2.75% of gross salary<br/>
+                            • PagIbig: 1% of gross salary (max ₱100)<br/>
+                            • Income Tax: Based on tax brackets
+                        </MudText>
+
+                        <MudText Typo="Typo.body2"><strong>Benefits Provided</strong></MudText>
+                        <MudText Typo="Typo.caption">
+                            • 13th Month Pay (annual)<br/>
+                            • Service Incentive Leave (5 days/year for regulars)<br/>
+                            • Paid Leave (VL/SL per company policy)<br/>
+                            • SSS/PhilHealth/PagIbig coverage
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Operations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2"><strong>Hire New Employee:</strong> Click table "Create" button → Fill wizard (4 steps)</MudText>
+                        <MudText Typo="Typo.body2"><strong>View Details:</strong> Click employee row to open profile</MudText>
+                        <MudText Typo="Typo.body2"><strong>Edit Employee:</strong> Click "Edit" in action buttons</MudText>
+                        <MudText Typo="Typo.body2"><strong>Search:</strong> Use keyword search to find by name/email</MudText>
+                        <MudText Typo="Typo.body2"><strong>Salary Increase:</strong> Edit employee and update basic salary</MudText>
+                        <MudText Typo="Typo.body2"><strong>Terminate:</strong> Open employee record → Lifecycle Actions tab</MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private Task Close()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+        return Task.CompletedTask;
+    }
+}
+s

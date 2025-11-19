@@ -1,0 +1,303 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees
+
+<MudDialog>
+    <DialogContent>
+        <MudStepper Linear="false" @ref="_stepper">
+            
+            <!-- Step 1: Personal Information -->
+            <MudStep Title="Personal Info" Icon="@Icons.Material.Filled.Person">
+                <MudStack Spacing="3">
+                    <MudText Typo="Typo.subtitle1">Enter Employee Basic Information</MudText>
+
+                    <MudGrid Spacing="2">
+                        <MudItem xs="12" sm="6">
+                            <MudTextField @bind-Value="_firstName"
+                                          Label="First Name"
+                                          Required="true"
+                                          Variant="Variant.Outlined" />
+                        </MudItem>
+
+                        <MudItem xs="12" sm="6">
+                            <MudTextField @bind-Value="_middleName"
+                                          Label="Middle Name"
+                                          Variant="Variant.Outlined" />
+                        </MudItem>
+
+                        <MudItem xs="12" sm="6">
+                            <MudTextField @bind-Value="_lastName"
+                                          Label="Last Name"
+                                          Required="true"
+                                          Variant="Variant.Outlined" />
+                        </MudItem>
+
+                        <MudItem xs="12" sm="6">
+                            <MudDatePicker @bind-Date="_birthDate"
+                                           Label="Date of Birth"
+                                           Required="true"
+                                           Variant="Variant.Outlined" />
+                        </MudItem>
+
+                        <MudItem xs="12" sm="6">
+                            <MudSelect @bind-Value="_gender"
+                                       Label="Gender"
+                                       T="string?"
+                                       Variant="Variant.Outlined"
+                                       Required="true">
+                                <MudSelectItem Value="@("Male")">Male</MudSelectItem>
+                                <MudSelectItem Value="@("Female")">Female</MudSelectItem>
+                                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+                            </MudSelect>
+                        </MudItem>
+
+                        <MudItem xs="12" sm="6">
+                            <MudTextField @bind-Value="_civilStatus"
+                                          Label="Civil Status"
+                                          Variant="Variant.Outlined" />
+                        </MudItem>
+
+                        <MudItem xs="12">
+                            <MudTextField @bind-Value="_email"
+                                          Label="Email Address"
+                                          InputType="InputType.Email"
+                                          Required="true"
+                                          Variant="Variant.Outlined" />
+                        </MudItem>
+
+                        <MudItem xs="12">
+                            <MudTextField @bind-Value="_phoneNumber"
+                                          Label="Phone Number"
+                                          Variant="Variant.Outlined" />
+                        </MudItem>
+                    </MudGrid>
+                </MudStack>
+            </MudStep>
+
+            <!-- Step 2: Government IDs -->
+            <MudStep Title="Government IDs" Icon="@Icons.Material.Filled.VerifiedUser">
+                <MudStack Spacing="3">
+                    <MudText Typo="Typo.subtitle1">Philippines Government Identification Numbers</MudText>
+                    <MudAlert Severity="Severity.Info">All IDs required for payroll compliance</MudAlert>
+
+                    <MudGrid Spacing="2">
+                        <MudItem xs="12" sm="6">
+                            <MudTextField @bind-Value="_sssNumber"
+                                          Label="SSS Number"
+                                          Placeholder="XX-XXXXXXXXX-X"
+                                          Required="true"
+                                          Variant="Variant.Outlined"
+                                          HelperText="Format: XX-XXXXXXXXX-X" />
+                        </MudItem>
+
+                        <MudItem xs="12" sm="6">
+                            <MudTextField @bind-Value="_philhealthNumber"
+                                          Label="PhilHealth Number"
+                                          Placeholder="XX-XXXXXXXXX-XXX"
+                                          Required="true"
+                                          Variant="Variant.Outlined"
+                                          HelperText="Format: XX-XXXXXXXXX-XXX" />
+                        </MudItem>
+
+                        <MudItem xs="12" sm="6">
+                            <MudTextField @bind-Value="_pagibigNumber"
+                                          Label="PagIbig Number"
+                                          Placeholder="XXXX-XXXX-XXXX"
+                                          Required="true"
+                                          Variant="Variant.Outlined"
+                                          HelperText="Format: XXXX-XXXX-XXXX" />
+                        </MudItem>
+
+                        <MudItem xs="12" sm="6">
+                            <MudTextField @bind-Value="_tin"
+                                          Label="TIN"
+                                          Placeholder="XXX-XXX-XXX-XXX"
+                                          Variant="Variant.Outlined"
+                                          HelperText="Tax Identification Number (optional)" />
+                        </MudItem>
+                    </MudGrid>
+                </MudStack>
+            </MudStep>
+
+            <!-- Step 3: Employment Details -->
+            <MudStep Title="Employment" Icon="@Icons.Material.Filled.Work">
+                <MudStack Spacing="3">
+                    <MudText Typo="Typo.subtitle1">Employment Classification & Compensation</MudText>
+
+                    <MudGrid Spacing="2">
+                        <MudItem xs="12" sm="6">
+                            <MudSelect @bind-Value="_employmentClassification"
+                                       Label="Employment Type"
+                                       T="string?"
+                                       Required="true"
+                                       Variant="Variant.Outlined">
+                                <MudSelectItem Value="@("Regular")">Regular</MudSelectItem>
+                                <MudSelectItem Value="@("Probationary")">Probationary (6 months)</MudSelectItem>
+                                <MudSelectItem Value="@("Contract")">Contract</MudSelectItem>
+                                <MudSelectItem Value="@("Temporary")">Temporary</MudSelectItem>
+                                <MudSelectItem Value="@("Consultant")">Consultant</MudSelectItem>
+                            </MudSelect>
+                        </MudItem>
+
+                        <MudItem xs="12" sm="6">
+                            <MudDatePicker @bind-Date="_hireDate"
+                                           Label="Date of Joining"
+                                           Required="true"
+                                           Variant="Variant.Outlined" />
+                        </MudItem>
+
+                        <MudItem xs="12" sm="6">
+                            <MudNumericField T="decimal"
+                                             @bind-Value="_basicSalary"
+                                             Label="Monthly Basic Salary"
+                                             Format="F2"
+                                             Required="true"
+                                             Variant="Variant.Outlined" />
+                        </MudItem>
+                    </MudGrid>
+
+                    @if (_employmentClassification == "Probationary" && _hireDate.HasValue)
+                    {
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            Probation: @_hireDate.Value.ToString("MMM dd, yyyy") to @_hireDate.Value.AddMonths(6).ToString("MMM dd, yyyy")
+                        </MudAlert>
+                    }
+                </MudStack>
+            </MudStep>
+
+            <!-- Step 4: Review -->
+            <MudStep Title="Review" Icon="@Icons.Material.Filled.CheckCircle">
+                <MudStack Spacing="3">
+                    <MudText Typo="Typo.subtitle1">Review Employee Information</MudText>
+
+                    <MudPaper Elevation="0" Class="pa-3" Style="background-color: #f5f5f5;">
+                        <MudGrid Spacing="2">
+                            <MudItem xs="12">
+                                <MudText Typo="Typo.subtitle2">Personal Information</MudText>
+                            </MudItem>
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.caption">Full Name</MudText>
+                                <MudText Typo="Typo.body2">@($"{_firstName} {_middleName} {_lastName}".Trim())</MudText>
+                            </MudItem>
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.caption">Email</MudText>
+                                <MudText Typo="Typo.body2">@_email</MudText>
+                            </MudItem>
+
+                            <MudItem xs="12">
+                                <MudDivider />
+                            </MudItem>
+
+                            <MudItem xs="12">
+                                <MudText Typo="Typo.subtitle2">Employment</MudText>
+                            </MudItem>
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.caption">Employment Type</MudText>
+                                <MudText Typo="Typo.body2">@_employmentClassification</MudText>
+                            </MudItem>
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.caption">Hire Date</MudText>
+                                <MudText Typo="Typo.body2">@_hireDate?.ToString("MMM dd, yyyy")</MudText>
+                            </MudItem>
+                            <MudItem xs="12">
+                                <MudText Typo="Typo.caption">Monthly Salary</MudText>
+                                <MudText Typo="Typo.body2">₱ @string.Format("{0:N2}", _basicSalary)</MudText>
+                            </MudItem>
+                        </MudGrid>
+                    </MudPaper>
+
+                    <MudAlert Severity="Severity.Success">
+                        Ready to hire! Click "Create Employee" to proceed.
+                    </MudAlert>
+                </MudStack>
+            </MudStep>
+        </MudStepper>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton OnClick="PreviousStep" Variant="Variant.Text">Back</MudButton>
+        <MudButton OnClick="NextStep" Variant="Variant.Filled" Color="Color.Primary">Next</MudButton>
+        <MudButton OnClick="CreateEmployee" Variant="Variant.Filled" Color="Color.Success">Create Employee</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private MudStepper? _stepper;
+
+    // Personal Information
+    private string? _firstName;
+    private string? _middleName;
+    private string? _lastName;
+    private DateTime? _birthDate;
+    private string? _gender;
+    private string? _civilStatus;
+    private string? _email;
+    private string? _phoneNumber;
+
+    // Government IDs
+    private string? _sssNumber;
+    private string? _philhealthNumber;
+    private string? _pagibigNumber;
+    private string? _tin;
+
+    // Employment
+    private string? _employmentClassification = "Regular";
+    private DateTime? _hireDate;
+    private decimal _basicSalary;
+
+    private async Task NextStep() => await (_stepper?.NextStepAsync() ?? Task.CompletedTask);
+
+    private async Task PreviousStep() => await (_stepper?.PreviousStepAsync() ?? Task.CompletedTask);
+
+    private async Task CreateEmployee()
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(_firstName) || string.IsNullOrWhiteSpace(_lastName) ||
+                !_birthDate.HasValue || string.IsNullOrWhiteSpace(_email) ||
+                string.IsNullOrWhiteSpace(_sssNumber) || string.IsNullOrWhiteSpace(_philhealthNumber) ||
+                string.IsNullOrWhiteSpace(_pagibigNumber) || !_hireDate.HasValue || _basicSalary <= 0)
+            {
+                Snackbar?.Add("Please complete all required fields", Severity.Warning);
+                return;
+            }
+
+            var employee = new
+            {
+                FirstName = _firstName,
+                LastName = _lastName,
+                MiddleName = _middleName,
+                Email = _email,
+                PhoneNumber = _phoneNumber,
+                BirthDate = _birthDate,
+                Gender = _gender,
+                CivilStatus = _civilStatus,
+                SssNumber = _sssNumber,
+                PhilHealthNumber = _philhealthNumber,
+                PagIbigNumber = _pagibigNumber,
+                Tin = _tin,
+                HireDate = _hireDate,
+                EmploymentClassification = _employmentClassification ?? "Regular",
+                EmployeeNumber = $"EMP-{DateTime.Now:yyyyMMddHHmmss}",
+                OrganizationalUnitId = DefaultIdType.Empty
+            };
+
+            var command = employee.Adapt<CreateEmployeeCommand>();
+            await Client.CreateEmployeeEndpointAsync("1", command);
+            Snackbar?.Add($"Employee {_firstName} {_lastName} created successfully!", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar?.Add($"Error creating employee: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private Task Cancel()
+    {
+        MudDialog.Cancel();
+        return Task.CompletedTask;
+    }
+}
+
