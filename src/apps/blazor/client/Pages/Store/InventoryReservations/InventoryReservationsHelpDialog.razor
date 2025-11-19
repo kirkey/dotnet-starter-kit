@@ -1,0 +1,251 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.InventoryReservations
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Inventory Reservations Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Inventory Reservations?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Reservations</MudText>
+                        <MudText Typo="Typo.body2">
+                            An inventory reservation is a hold placed on stock items to allocate them for a specific order or customer. 
+                            Reservations prevent items from being sold or allocated to other orders while they're committed to a particular purpose. 
+                            They ensure items are available when needed without physically removing them from stock until fulfillment.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Use Reservations?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Order Management:</strong> Allocate items to specific orders<br/>
+                                • <strong>Prevent Overselling:</strong> Don't sell same item twice<br/>
+                                • <strong>Fulfillment Planning:</strong> Know what's committed<br/>
+                                • <strong>Available-to-Promise:</strong> Tell customers accurate dates<br/>
+                                • <strong>Inventory Visibility:</strong> Track allocated vs. free stock<br/>
+                                • <strong>Pick Planning:</strong> Know what to pick for orders
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reservation States:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Pending:</strong> Created but not yet confirmed<br/>
+                                • <strong>Reserved:</strong> Confirmed and allocated<br/>
+                                • <strong>Fulfilled:</strong> Items picked and shipped<br/>
+                                • <strong>Cancelled:</strong> No longer needed<br/>
+                                • <strong>Released:</strong> Returned to available stock
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Reservations are commitments - manage carefully to avoid stock issues!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Reservations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Reserve Inventory</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reservation Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create Reservation"</strong><br/>
+                                2. Select <strong>Order/Customer</strong><br/>
+                                3. Select <strong>Inventory Item</strong><br/>
+                                4. Enter <strong>Quantity</strong> to reserve<br/>
+                                5. Select <strong>Bin/Location</strong> if specific<br/>
+                                6. Enter <strong>Reservation Date</strong><br/>
+                                7. Enter <strong>Required Date</strong> (when needed)<br/>
+                                8. Add <strong>Priority</strong> (normal/urgent)<br/>
+                                9. Add <strong>Notes</strong><br/>
+                                10. Click <strong>"Confirm Reservation"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reservation Rules:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Cannot reserve more than available<br/>
+                                • Quantity must be positive<br/>
+                                • Required date is mandatory<br/>
+                                • Can only reserve in-stock items<br/>
+                                • Cannot reserve same item twice for same order<br/>
+                                • Reserved items reduce available-to-promise
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Create reservations when order is confirmed, not when entered!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Managing Reservations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Reservation Operations</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reservation Lifecycle:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Create:</strong> New reservation created<br/>
+                                2. <strong>Confirm:</strong> Officially allocated<br/>
+                                3. <strong>Review:</strong> Check before fulfillment<br/>
+                                4. <strong>Pick:</strong> Take items from bins<br/>
+                                5. <strong>Ship:</strong> Send to customer<br/>
+                                6. <strong>Fulfill:</strong> Mark as completed
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Reservation Actions:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Release:</strong> Return to available stock<br/>
+                                • <strong>Modify:</strong> Change quantity/date<br/>
+                                • <strong>Fulfill:</strong> Mark as picked/shipped<br/>
+                                • <strong>Cancel:</strong> Void reservation<br/>
+                                • <strong>Hold:</strong> Temporarily pause<br/>
+                                • <strong>View Details:</strong> Check reservation info
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Inventory Impact:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Total Stock: 100 units<br/>
+                                <br/>
+                                Reservations:<br/>
+                                Order #1: 30 units<br/>
+                                Order #2: 20 units<br/>
+                                <br/>
+                                Available: 100 - 50 = 50 units<br/>
+                                <br/>
+                                If Order #1 released:<br/>
+                                Available: 100 - 20 = 80 units
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Critical:</strong> Don't forget to release cancelled reservations!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Reservation Fulfillment">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Fulfilling Reserved Orders</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Fulfillment Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Generate pick list from reservations<br/>
+                                2. Locate items in bins (using reservation)<br/>
+                                3. Pick items from bins<br/>
+                                4. Perform quality check<br/>
+                                5. Pack into shipping box<br/>
+                                6. Generate packing slip<br/>
+                                7. Ship to customer<br/>
+                                8. Mark reservation as fulfilled<br/>
+                                9. Update inventory system
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Partial Fulfillment:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                If cannot fulfill full reservation:<br/>
+                                <br/>
+                                Option 1: Ship what available, backorder rest<br/>
+                                Option 2: Wait for full quantity available<br/>
+                                Option 3: Cancel and notify customer<br/>
+                                <br/>
+                                Always communicate with customer!
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Use reservation required dates to prioritize fulfillment!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's the difference between reservation and inventory?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Inventory = total in stock. Reservation = allocated to specific order. Both count toward inventory.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can I modify a reservation?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, usually before fulfillment. Verify changes don't violate stock levels before confirming.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What happens if reserved item is damaged?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Release reservation to return item to available stock. Create new reservation for replacement.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How long should we keep reservations?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Until fulfilled or cancelled. Set expiration dates to auto-release old reservations if needed.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if we oversold (more reservations than stock)?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: System prevents this. Must release or modify existing reservations before creating new ones.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+}
+

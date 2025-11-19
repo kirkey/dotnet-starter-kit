@@ -175,6 +175,19 @@ public partial class InventoryReservations
     {
         return expirationDate.HasValue && expirationDate.Value < DateTime.UtcNow;
     }
+
+    /// <summary>
+    /// Show inventory reservations help dialog.
+    /// </summary>
+    private async Task ShowInventoryReservationsHelp()
+    {
+        await DialogService.ShowAsync<InventoryReservationsHelpDialog>("Inventory Reservations Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

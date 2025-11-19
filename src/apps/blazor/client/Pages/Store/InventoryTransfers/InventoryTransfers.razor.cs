@@ -120,6 +120,19 @@ public partial class InventoryTransfers
             await _table.ReloadDataAsync();
         }
     }
+
+    /// <summary>
+    /// Show inventory transfers help dialog.
+    /// </summary>
+    private async Task ShowInventoryTransfersHelp()
+    {
+        await DialogService.ShowAsync<InventoryTransfersHelpDialog>("Inventory Transfers Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

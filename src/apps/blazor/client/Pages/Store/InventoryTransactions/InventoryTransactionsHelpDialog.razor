@@ -1,0 +1,254 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.InventoryTransactions
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Inventory Transactions Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Inventory Transactions?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Transactions</MudText>
+                        <MudText Typo="Typo.body2">
+                            An inventory transaction is a record of any movement of goods - purchase, sale, adjustment, damage, or transfer. 
+                            Transactions create an audit trail showing the complete history of every item from receipt through sale. 
+                            They're essential for inventory reconciliation and financial accuracy.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Types of Transactions:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Receipt:</strong> Items received from supplier<br/>
+                                • <strong>Sale:</strong> Items sold to customer<br/>
+                                • <strong>Adjustment:</strong> Quantity correction<br/>
+                                • <strong>Damage:</strong> Items damaged/broken<br/>
+                                • <strong>Transfer:</strong> Move between locations/warehouses<br/>
+                                • <strong>Return:</strong> Items returned by customer<br/>
+                                • <strong>Loss:</strong> Theft/shrinkage<br/>
+                                • <strong>Sample:</strong> Promotional samples
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Track Transactions?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Audit Trail:</strong> Complete history of items<br/>
+                                • <strong>Reconciliation:</strong> Find discrepancies<br/>
+                                • <strong>Analysis:</strong> Identify trends and issues<br/>
+                                • <strong>Accountability:</strong> Who did what when<br/>
+                                • <strong>Reporting:</strong> Detailed inventory reports<br/>
+                                • <strong>Fraud Detection:</strong> Spot unusual patterns
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Every inventory movement creates a transaction record!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Transaction Types">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Each Transaction Type</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Receipt Transactions:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                When: Goods received from supplier<br/>
+                                Effect: Increase inventory<br/>
+                                Impact: Assets increase (Inventory Dr., AP Cr.)<br/>
+                                Example: Receive 100 units of ABC-123
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Sale Transactions:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                When: Items shipped to customer<br/>
+                                Effect: Decrease inventory<br/>
+                                Impact: Record COGS (COGS Dr., Inventory Cr.)<br/>
+                                Example: Ship 50 units of ABC-123 to customer
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Adjustment Transactions:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                When: Correct system/actual discrepancy<br/>
+                                Effect: Increase or decrease inventory<br/>
+                                Impact: Adjust inventory, explain reason<br/>
+                                Example: Add 5 units found during count
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Damage Transactions:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                When: Items damaged/defective<br/>
+                                Effect: Decrease inventory<br/>
+                                Impact: Recognize loss/expense<br/>
+                                Example: 2 units damaged during receiving
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Each transaction should have a clear reason and approval!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Recording Transactions">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How Transactions are Recorded</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Transaction Components:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ <strong>Date:</strong> When transaction occurred<br/>
+                                □ <strong>Type:</strong> Receipt, Sale, Adjustment, etc.<br/>
+                                □ <strong>Item:</strong> Which product<br/>
+                                □ <strong>Quantity:</strong> How many units<br/>
+                                □ <strong>Unit Price:</strong> Per-unit cost<br/>
+                                □ <strong>Location:</strong> Which warehouse/bin<br/>
+                                □ <strong>Reference:</strong> PO/Order #<br/>
+                                □ <strong>Reason:</strong> Why transaction occurred<br/>
+                                □ <strong>User:</strong> Who recorded it
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Journal Entry Example:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Transaction: Sale 50 units ABC-123<br/>
+                                Unit Cost: $10<br/>
+                                Total: $500<br/>
+                                <br/>
+                                Dr. Cost of Goods Sold    $500<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Inventory            $500<br/>
+                                (To record sale)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>System Behavior:</strong> System automatically creates journal entries!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Transaction Reporting">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Analyzing Transactions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Reports:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Transaction History:</strong> All transactions for item<br/>
+                                • <strong>By Type:</strong> All sales, receipts, adjustments, etc.<br/>
+                                • <strong>By Date Range:</strong> Transactions in period<br/>
+                                • <strong>By Location:</strong> Transactions in warehouse<br/>
+                                • <strong>Aging:</strong> Items by time in inventory<br/>
+                                • <strong>Variance:</strong> Adjustments made
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reconciliation Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Review transaction history<br/>
+                                2. Calculate running balance<br/>
+                                3. Compare to system balance<br/>
+                                4. Identify discrepancies<br/>
+                                5. Create adjustment if needed<br/>
+                                6. Document reason<br/>
+                                7. Approve adjustment<br/>
+                                8. Record in system
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Review transactions regularly - catch errors early!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can I delete a transaction?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No - transactions are permanent audit trail. Create a reversing transaction instead.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if transaction was recorded wrong?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Create correcting transaction. Example: if added 5 units by mistake, remove 5 units.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How long do we keep transaction records?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Minimum 7 years for tax purposes. Many keep indefinitely for historical analysis.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can multiple people make transactions?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes - each user creates separate transactions with their ID logged. Maintains accountability.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's the difference between adjustment and damage?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Adjustment = any correction. Damage = specifically damaged goods. Different accounting treatment.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+}
+

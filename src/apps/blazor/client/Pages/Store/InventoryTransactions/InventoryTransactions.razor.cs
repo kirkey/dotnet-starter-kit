@@ -65,6 +65,19 @@ public partial class InventoryTransactions
             await _table.ReloadDataAsync();
         }
     }
+
+    /// <summary>
+    /// Show inventory transactions help dialog.
+    /// </summary>
+    private async Task ShowInventoryTransactionsHelp()
+    {
+        await DialogService.ShowAsync<InventoryTransactionsHelpDialog>("Inventory Transactions Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

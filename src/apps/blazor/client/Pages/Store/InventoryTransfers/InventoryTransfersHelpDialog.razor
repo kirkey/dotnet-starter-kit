@@ -1,0 +1,247 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.InventoryTransfers
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Inventory Transfers Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Inventory Transfers?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Transfers</MudText>
+                        <MudText Typo="Typo.body2">
+                            An inventory transfer is the movement of goods from one location to another within your organization - 
+                            from one warehouse to another, from one bin to another, or between departments. Transfers don't change 
+                            total inventory but redistribute it to where it's needed most.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Transfer Inventory?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Consolidation:</strong> Move slow items to overstock area<br/>
+                                • <strong>Replenishment:</strong> Move from overstock to picking area<br/>
+                                • <strong>Rebalancing:</strong> Move between warehouses for efficiency<br/>
+                                • <strong>Relocation:</strong> Temporary move during warehouse reorganization<br/>
+                                • <strong>Demand:</strong> Move to location with highest demand<br/>
+                                • <strong>Storage:</strong> Move to climate-controlled area
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Transfer Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Bin to Bin:</strong> Within same warehouse<br/>
+                                • <strong>Warehouse to Warehouse:</strong> Between facilities<br/>
+                                • <strong>Department Transfer:</strong> Between departments<br/>
+                                • <strong>Return to Stock:</strong> From holding back to available<br/>
+                                • <strong>Temporary Move:</strong> Maintenance/cleaning
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Transfers don't affect total inventory - just location!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Transfers">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Transfer Inventory</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Transfer Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create Transfer"</strong><br/>
+                                2. Select <strong>Item/SKU</strong> to transfer<br/>
+                                3. Enter <strong>Quantity</strong> to move<br/>
+                                4. Select <strong>Source Location</strong> (from where)<br/>
+                                5. Select <strong>Destination Location</strong> (to where)<br/>
+                                6. Enter <strong>Transfer Date</strong><br/>
+                                7. Add <strong>Reason</strong> for transfer<br/>
+                                8. Add <strong>Notes</strong> if needed<br/>
+                                9. Specify <strong>Priority</strong> (normal/urgent)<br/>
+                                10. Click <strong>"Confirm Transfer"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Transfer Requirements:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ Source location must have quantity available<br/>
+                                □ Destination location must have capacity<br/>
+                                □ Both locations must be active<br/>
+                                □ Item must be transferable (not obsolete)<br/>
+                                □ Reason is required<br/>
+                                □ Authorization may be required for large transfers
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Use transfers to balance stock - keep fast movers accessible!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Transfer Workflow">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Transfer States and Process</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Transfer Lifecycle:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Draft:</strong> Being prepared<br/>
+                                2. <strong>Pending:</strong> Awaiting approval<br/>
+                                3. <strong>Approved:</strong> Ready to execute<br/>
+                                4. <strong>In Transit:</strong> Being moved<br/>
+                                5. <strong>Received:</strong> Items arrived at destination<br/>
+                                6. <strong>Completed:</strong> Transfer finished and recorded
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Inventory Impact During Transfer:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Item ABC-123<br/>
+                                <br/>
+                                Before: Bin A (50 units), Bin B (30 units)<br/>
+                                Transfer: 20 units from Bin A to Bin B<br/>
+                                After: Bin A (30 units), Bin B (50 units)<br/>
+                                Total: Still 80 units (unchanged)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Multi-Location Transfers:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Warehouse A → Warehouse B<br/>
+                                <br/>
+                                Step 1: Pick from Warehouse A bin<br/>
+                                Step 2: Package for shipment<br/>
+                                Step 3: Transport to Warehouse B<br/>
+                                Step 4: Receive and putaway at B<br/>
+                                Step 5: Confirm receipt in system
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Confirm receipt at destination to complete transfer!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Transfer Optimization">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Best Practices for Transfers</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Optimization Strategies:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>ABC Analysis:</strong> Keep fast movers near picking area<br/>
+                                • <strong>Seasonal:</strong> Transfer heavy items before season<br/>
+                                • <strong>Demand:</strong> Move to warehouse with orders<br/>
+                                • <strong>Consolidation:</strong> Combine small quantities<br/>
+                                • <strong>Efficiency:</strong> Batch transfers together<br/>
+                                • <strong>Automation:</strong> System recommends optimal transfers
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Monthly Transfer Report:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                November 2025 Transfers<br/>
+                                <br/>
+                                Bin to Bin:       45 transfers<br/>
+                                Warehouse:        8 transfers<br/>
+                                Total Units:      1,250 units<br/>
+                                Avg Items/Txn:    27 units<br/>
+                                <br/>
+                                Top Item: ABC-123 (200 units)<br/>
+                                Most Active: Bin A-02
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Goal:</strong> Minimize transfer frequency while maintaining accessibility!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can I transfer more units than in source location?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No - system prevents transfers exceeding available quantity. Check bin first.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if destination location is full?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Choose different destination or increase capacity. System warns if transfer exceeds capacity.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can I cancel a transfer in progress?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, before received at destination. After received, must reverse transfer instead.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Do transfers affect accounting?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No - transfers don't create GL entries. Only location changes. Total inventory unchanged.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we track transfer history?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: All transfers logged. Run transfer report by date, item, or location to view history.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+}
+
