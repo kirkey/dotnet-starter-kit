@@ -16,8 +16,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\modules\HumanResources\HumanResources.Application\HumanResources.Application.csproj" />
-    <ProjectReference Include="..\modules\HumanResources\HumanResources.Infrastructure\HumanResources.Infrastructure.csproj" />
+    <ProjectReference Include="..\modules\HumanResources\Hr.Application\Hr.Application.csproj" />
+    <ProjectReference Include="..\modules\HumanResources\Hr.Infrastructure\Hr.Infrastructure.csproj" />
     <ProjectReference Include="..\modules\Store\Store.Application\Store.Application.csproj" />
     <ProjectReference Include="..\modules\Store\Store.Domain\Store.Domain.csproj" />
     <ProjectReference Include="..\modules\Store\Store.Infrastructure\Store.Infrastructure.csproj" />

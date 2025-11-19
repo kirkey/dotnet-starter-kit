@@ -1,0 +1,132 @@
+@page "/human-resources/designations"
+
+<PageHeader Title="Designations" Header="Designations" SubHeader="Manage job titles and salary ranges." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowDesignationsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="DesignationResponse" TId="DefaultIdType" TRequest="DesignationViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Code" 
+                          For="@(() => context.Code)" 
+                          @bind-Value="context.Code" 
+                          ReadOnly="@(!Context.AddEditModal.IsCreate)"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Title" 
+                          For="@(() => context.Title)" 
+                          @bind-Value="context.Title" 
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect @bind-Value="context.Area"
+                       For="@(() => context.Area)"
+                       Label="Area/Department"
+                       T="string"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Metro Manila")">Metro Manila</MudSelectItem>
+                <MudSelectItem Value="@("Visayas")">Visayas</MudSelectItem>
+                <MudSelectItem Value="@("Mindanao")">Mindanao</MudSelectItem>
+                <MudSelectItem Value="@("Luzon")">Luzon</MudSelectItem>
+                <MudSelectItem Value="@("National")">National</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudTextField Label="Title" 
+                          For="@(() => context.Title)" 
+                          @bind-Value="context.Title" 
+                          Placeholder="e.g., Senior Software Engineer"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField Label="Description" 
+                          For="@(() => context.Description)" 
+                          @bind-Value="context.Description" 
+                          Lines="3"
+                          Placeholder="Job responsibilities and requirements" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal?" 
+                             @bind-Value="context.MinimumSalary" 
+                             For="@(() => context.MinimumSalary)" 
+                             Label="Minimum Salary"
+                             Format="C"
+                             Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal?" 
+                             @bind-Value="context.MaximumSalary" 
+                             For="@(() => context.MaximumSalary)" 
+                             Label="Maximum Salary"
+                             Format="C"
+                             Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal?" 
+                             Value="context.MidpointSalary" 
+                             For="@(() => context.MidpointSalary)" 
+                             Label="Midpoint Salary"
+                             Format="C"
+                             ReadOnly="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect @bind-Value="context.SalaryGrade"
+                       For="@(() => context.SalaryGrade)"
+                       Label="Salary Grade"
+                       T="string"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Grade 1")">Grade 1</MudSelectItem>
+                <MudSelectItem Value="@("Grade 2")">Grade 2</MudSelectItem>
+                <MudSelectItem Value="@("Grade 3")">Grade 3</MudSelectItem>
+                <MudSelectItem Value="@("Grade 4")">Grade 4</MudSelectItem>
+                <MudSelectItem Value="@("Grade 5")">Grade 5</MudSelectItem>
+                <MudSelectItem Value="@("Executive")">Executive</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsActive" Color="Color.Primary">
+                Active
+            </MudSwitch>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsManagerial" Color="Color.Primary">
+                Managerial
+            </MudSwitch>
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+

@@ -31,7 +31,7 @@
 	   </ItemGroup>
 	 
    <ItemGroup>
-     <Folder Include="Pages\HumanResources\" />
+     <Folder Include="Pages\Hr\" />
      <Folder Include="Shared\" />
    </ItemGroup>
 

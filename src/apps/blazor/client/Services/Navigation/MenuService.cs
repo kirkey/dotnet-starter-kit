@@ -218,7 +218,7 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Organization & Setup", IsGroupHeader = true },
                         new MenuSectionSubItemModel { Title = "Organizational Units", Icon = Icons.Material.Filled.AccountTree, Href = "/human-resources/organizational-units", Action = FshActions.View, Resource = FshResources.Organization, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Departments", Icon = Icons.Material.Filled.Business, Href = "/hr/departments", Action = FshActions.View, Resource = FshResources.Organization, PageStatus = PageStatus.ComingSoon },
-                        new MenuSectionSubItemModel { Title = "Designations", Icon = Icons.Material.Filled.WorkOutline, Href = "/hr/designations", Action = FshActions.View, Resource = FshResources.Employees, PageStatus = PageStatus.Completed },
+                        new MenuSectionSubItemModel { Title = "Designations", Icon = Icons.Material.Filled.WorkOutline, Href = "/human-resources/designations", Action = FshActions.View, Resource = FshResources.Employees, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Shifts", Icon = Icons.Material.Filled.Schedule, Href = "/hr/shifts", Action = FshActions.View, Resource = FshResources.Attendance, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Holidays", Icon = Icons.Material.Filled.EventNote, Href = "/hr/holidays", Action = FshActions.View, Resource = FshResources.Attendance, PageStatus = PageStatus.Completed },
                         

@@ -1,0 +1,27 @@
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeDocuments.Update.v1;
+using Shared.Authorization;
+
+namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDocuments.v1;
+
+public static class UpdateEmployeeDocumentEndpoint
+{
+    internal static RouteHandlerBuilder MapUpdateEmployeeDocumentEndpoint(this IEndpointRouteBuilder endpoints)
+    {
+        return endpoints
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateEmployeeDocumentCommand request, ISender mediator) =>
+            {
+                if (id != request.Id)
+                    return Results.BadRequest("ID mismatch");
+
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(UpdateEmployeeDocumentEndpoint))
+            .WithSummary("Updates an employee document")
+            .WithDescription("Updates employee document information")
+            .Produces<UpdateEmployeeDocumentResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
+    }
+}
+

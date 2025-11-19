@@ -1,0 +1,441 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Designations
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Designations Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Designations?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Job Titles and Salary Structures</MudText>
+                        <MudText Typo="Typo.body2">
+                            Designations are job titles in your organization with associated salary ranges and area-specific configurations. 
+                            They define career paths, compensation levels, and reporting relationships. Each designation can have different salary 
+                            ranges based on geographical area due to cost-of-living variations.
+                        </MudText>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Designation Components:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Code:</strong> Unique identifier (e.g., "ENG-001", "MGR-001")<br/>
+                                • <strong>Title:</strong> Job title (e.g., "Senior Software Engineer")<br/>
+                                • <strong>Area:</strong> Region where applicable (Metro Manila, Visayas, Mindanao, Luzon, National)<br/>
+                                • <strong>Salary Range:</strong> Min-Max for the designation<br/>
+                                • <strong>Grade:</strong> Classification for comparison (Grade 1-5, Executive)<br/>
+                                • <strong>Managerial:</strong> Leadership indicator for reporting structure
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Designations define career progression and compensation levels across your organization!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Salary Range Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Area-Specific Salary Configuration</MudText>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Area-Specific Ranges?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Different regions have different cost-of-living indices. The same job may have different salary ranges 
+                                depending on location for competitive hiring and retention. This is compliant with Philippines regional salary standards.
+                            </MudText>
+                        </div>
+
+                        <MudDivider />
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Salary Components:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Minimum Salary:</strong> Lowest salary for new hires in this designation<br/>
+                                • <strong>Maximum Salary:</strong> Highest salary for experienced employees<br/>
+                                • <strong>Midpoint Salary:</strong> Average of min/max (auto-calculated, used for comparisons)<br/>
+                                • <strong>Salary Grade:</strong> Classification (Grade 1 = Entry-level, Grade 5 = Specialist, Executive = Management)
+                            </MudText>
+                        </div>
+
+                        <MudDivider />
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Senior Engineer in Metro Manila: ₱80,000 - ₱120,000<br/>
+                                Senior Engineer in Visayas: ₱65,000 - ₱100,000<br/>
+                                Senior Engineer in Mindanao: ₱60,000 - ₱95,000
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Salary ranges should reflect market rates and Philippine labor standards!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="How to Create Designations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Step-by-Step Creation Guide</MudText>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Step 1: Basic Information</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Click "Create" button<br/>
+                                • Enter Code (e.g., "ENG-001") - must be unique<br/>
+                                • Enter Title (e.g., "Senior Software Engineer")<br/>
+                                • Select Area (Metro Manila, Visayas, Mindanao, Luzon, National)
+                            </MudText>
+                        </div>
+
+                        <MudDivider />
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Step 2: Salary Configuration</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Enter Minimum Salary (hiring base rate)<br/>
+                                • Enter Maximum Salary (top of range)<br/>
+                                • Midpoint Salary auto-calculates (for reference)<br/>
+                                • Select Salary Grade (Grade 1-5 or Executive)
+                            </MudText>
+                        </div>
+
+                        <MudDivider />
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Step 3: Additional Details</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Add job description (responsibilities, requirements)<br/>
+                                • Check "Managerial" if leadership position<br/>
+                                • Check "Active" to enable for employee assignment<br/>
+                                • Click "Save"
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Create designations BEFORE hiring employees to establish compensation structure!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Field Reference">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Each Field</MudText>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Code:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Unique identifier (e.g., "ENG-001"). Immutable after creation. Use consistent format for easy identification.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Title:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Full job title (e.g., "Senior Software Engineer"). Use clear, descriptive titles that reflect industry standards.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Area:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Geographic region where this designation applies. Determines applicable salary range and cost-of-living adjustment.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Minimum/Maximum Salary:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Salary band for the designation. Must comply with minimum wage laws. Maximum should account for experience and performance.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Salary Grade:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Classification for compensation comparison. Grade 1 = Entry-level, Grade 5 = Senior specialist, Executive = Management positions.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Description:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Job responsibilities, qualifications, and requirements. Used for recruitment and job posting.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Active:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Only active designations can be assigned to employees. Deactivate to retire old positions while preserving history.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Managerial:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Check if this is a leadership/management position. Used for organizational reporting structure and hierarchy visualization.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Designation Workflows">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Common Designation Operations</MudText>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Creating New Positions</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Planning new role/team expansion<br/>
+                                • Create designation with appropriate salary band<br/>
+                                • Define area-specific rates if multi-regional<br/>
+                                • Document responsibilities in description<br/>
+                                • Activate when ready to hire
+                            </MudText>
+                        </div>
+
+                        <MudDivider />
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Promotion Paths</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Typical progression: Grade 1 → Grade 2 → Grade 3 → Grade 5 → Executive<br/>
+                                • Use salary grades to show career advancement<br/>
+                                • Updated salaries reflect promotion raises<br/>
+                                • Track promotion history through designation assignments
+                            </MudText>
+                        </div>
+
+                        <MudDivider />
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Salary Adjustments</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Annual market rate adjustments<br/>
+                                • Minimum wage compliance updates<br/>
+                                • Area-specific adjustments<br/>
+                                • Edit designation to update ranges<br/>
+                                • Use effective dating if not retroactive
+                            </MudText>
+                        </div>
+
+                        <MudDivider />
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Retiring Positions</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Position no longer needed in organization<br/>
+                                • Transition employees to new designations<br/>
+                                • Deactivate old designation<br/>
+                                • Preserves history for reporting
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Search and Filtering">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Finding Designations</MudText>
+
+                        <MudText Typo="Typo.body2">
+                            Use the search box to find designations by:
+                        </MudText>
+                        <MudText Typo="Typo.caption">
+                            • <strong>Code:</strong> Search by designation code (e.g., "ENG-001")<br/>
+                            • <strong>Title:</strong> Search by job title (e.g., "Engineer")<br/>
+                            • <strong>Area:</strong> Filter by geographic region<br/>
+                            • <strong>Grade:</strong> Filter by salary grade (Grade 1-5, Executive)<br/>
+                            • <strong>Active Status:</strong> Show only active/inactive designations
+                        </MudText>
+
+                        <MudDivider />
+
+                        <MudText Typo="Typo.body2" Class="mt-2">
+                            <strong>Sorting:</strong> Click any column header to sort ascending/descending.
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            Use Advanced Search for complex queries combining multiple criteria and salary range filters.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Tips for Success</MudText>
+
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            <strong>Naming Conventions:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption">
+                            • Use industry-standard job titles<br/>
+                            • Include level in title (Junior, Senior, Lead)<br/>
+                            • Use consistent code format (e.g., "ENG-001" for engineering)<br/>
+                            • Avoid abbreviations that are unclear
+                        </MudText>
+
+                        <MudDivider />
+
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            <strong>Salary Management:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption">
+                            • Ensure minimum wage compliance for each area<br/>
+                            • Base ranges on market research<br/>
+                            • Maintain reasonable spread (usually 20-40% difference)<br/>
+                            • Review annually for market adjustments<br/>
+                            • Consider area cost-of-living index
+                        </MudText>
+
+                        <MudDivider />
+
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            <strong>Designation Structure:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption">
+                            • Create clear career progression paths<br/>
+                            • Maintain consistency across similar roles<br/>
+                            • Document responsibilities clearly<br/>
+                            • Mark managerial positions appropriately<br/>
+                            • Review and update regularly
+                        </MudText>
+
+                        <MudDivider />
+
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            <strong>Area Configuration:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption">
+                            • Research regional salary standards<br/>
+                            • Align with cost-of-living indices<br/>
+                            • Ensure competitiveness in each area<br/>
+                            • Document area-specific requirements<br/>
+                            • Update when economic conditions change
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="FAQ">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Common Questions</MudText>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: Why do I need area-specific salary ranges?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Different areas have different cost-of-living. Metro Manila typically has higher salaries than provincial areas. 
+                                This ensures competitiveness and fairness across all regions.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: Can I change a designation code?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No, code is immutable for data integrity. If needed, create a new designation and deactivate the old one.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: What's the difference between salary grades?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Grades classify positions for compensation comparison. Grade 1 is entry-level, Grade 5 is specialist/senior, 
+                                Executive is for leadership. Used for career pathing and promotions.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: What does the "Managerial" flag do?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Marks positions with management responsibilities. Used for org chart display, reporting structure, and may affect 
+                                eligibility for certain policies (e.g., shift assignments).
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: Can I have multiple designations with the same title?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, but they should differ by area, grade, or responsibility. Use codes to distinguish them clearly.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: How often should I update salary ranges?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: At minimum annually for market adjustments and wage law compliance. Quarterly reviews recommended if doing promotions frequently.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-1">
+                                <strong>Q: Why can't I delete a designation with assigned employees?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: For data integrity. Instead, deactivate it to preserve history and reporting data for those employees.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Cancel();
+}
+
