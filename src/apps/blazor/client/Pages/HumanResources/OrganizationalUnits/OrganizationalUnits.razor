@@ -1,0 +1,95 @@
+@page "/human-resources/organizational-units"
+
+<PageHeader Title="Organizational Units" Header="Organizational Units" SubHeader="Manage your organizational structure." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowOrganizationalUnitsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="OrganizationalUnitResponse" TId="DefaultIdType" TRequest="OrganizationalUnitViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Code" 
+                          For="@(() => context.Code)" 
+                          @bind-Value="context.Code" 
+                          ReadOnly="@(!Context.AddEditModal.IsCreate)"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect @bind-Value="context.Type"
+                       For="@(() => context.Type)"
+                       Label="Type"
+                       T="OrganizationalUnitType"
+                       Variant="Variant.Filled"
+                       ReadOnly="@(!Context.AddEditModal.IsCreate)"
+                       Required="true">
+                <MudSelectItem Value="(OrganizationalUnitType)1">Department</MudSelectItem>
+                <MudSelectItem Value="(OrganizationalUnitType)2">Division</MudSelectItem>
+                <MudSelectItem Value="(OrganizationalUnitType)3">Section</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            @if (context.Type != (OrganizationalUnitType)1)
+            {
+                <MudSelect @bind-Value="context.ParentId"
+                           For="@(() => context.ParentId)"
+                           Label="Parent Unit"
+                           T="DefaultIdType?"
+                           Variant="Variant.Filled"
+                           HelperText="@GetParentTypeHelper(context.Type)">
+                    <MudSelectItem Value="@((DefaultIdType?)null)">- None -</MudSelectItem>
+                    @foreach (var parent in GetFilteredParents(context.Type, context.Id))
+                    {
+                        <MudSelectItem Value="@parent.Id">@parent.Name (@parent.Code)</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudTextField Label="Name" 
+                          For="@(() => context.Name)" 
+                          @bind-Value="context.Name" 
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Cost Center" 
+                          For="@(() => context.CostCenter)" 
+                          @bind-Value="context.CostCenter" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Location" 
+                          For="@(() => context.Location)" 
+                          @bind-Value="context.Location" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsActive" Color="Color.Primary">
+                Active
+            </MudSwitch>
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+
+
+
