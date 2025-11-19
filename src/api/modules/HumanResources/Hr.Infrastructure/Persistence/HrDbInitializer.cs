@@ -6,9 +6,9 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 /// <summary>
 /// Database initializer for HumanResources module.
 /// </summary>
-internal sealed class HumanResourcesDbInitializer(
-    ILogger<HumanResourcesDbInitializer> logger,
-    HumanResourcesDbContext context,
+internal sealed class HrDbInitializer(
+    ILogger<HrDbInitializer> logger,
+    HrDbContext context,
     ILogger<PhilippinePayrollSeeder> payrollLogger,
     ILogger<HrDemoDataSeeder> demoLogger) : IDbInitializer
 {

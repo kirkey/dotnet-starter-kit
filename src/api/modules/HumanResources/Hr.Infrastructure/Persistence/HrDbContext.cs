@@ -8,9 +8,9 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 /// <summary>
 /// Database context for HumanResources module.
 /// </summary>
-public sealed class HumanResourcesDbContext(
+public sealed class HrDbContext(
     IMultiTenantContextAccessor<FshTenantInfo> multiTenantContextAccessor,
-    DbContextOptions<HumanResourcesDbContext> options,
+    DbContextOptions<HrDbContext> options,
     IPublisher publisher,
     IOptions<DatabaseOptions> settings) : FshDbContext(multiTenantContextAccessor, options, publisher, settings)
 {
@@ -52,7 +52,7 @@ public sealed class HumanResourcesDbContext(
     {
         ArgumentNullException.ThrowIfNull(modelBuilder);
         base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(HumanResourcesDbContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(HrDbContext).Assembly);
         modelBuilder.HasDefaultSchema(SchemaNames.HumanResources);
     }
 

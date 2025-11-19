@@ -10,11 +10,11 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 internal sealed class PhilippinePayrollSeeder
 {
     private readonly ILogger<PhilippinePayrollSeeder> _logger;
-    private readonly HumanResourcesDbContext _context;
+    private readonly HrDbContext _context;
 
     public PhilippinePayrollSeeder(
         ILogger<PhilippinePayrollSeeder> logger,
-        HumanResourcesDbContext context)
+        HrDbContext context)
     {
         _logger = logger;
         _context = context;

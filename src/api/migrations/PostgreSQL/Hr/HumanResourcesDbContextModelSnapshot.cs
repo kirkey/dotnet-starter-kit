@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 {
-    [DbContext(typeof(HumanResourcesDbContext))]
+    [DbContext(typeof(HrDbContext))]
     partial class HumanResourcesDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 /// <summary>
 /// Repository implementation for HumanResources module.
 /// </summary>
-internal sealed class HumanResourcesRepository<T>(HumanResourcesDbContext context)
+internal sealed class HrRepository<T>(HrDbContext context)
     : RepositoryBase<T>(context), IReadRepository<T>, IRepository<T>
     where T : class, IAggregateRoot
 {

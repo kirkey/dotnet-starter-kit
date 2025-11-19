@@ -36,7 +36,7 @@ public static class Extensions
         builder.Services.AddCarter(configurator: config =>
         {
             config.WithModule<CatalogModule.Endpoints>();
-            config.WithModule<HumanResourcesModule.Endpoints>();
+            config.WithModule<HrModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
             config.WithModule<MessagingModule.Endpoints>();
         });

@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
 {
-    [DbContext(typeof(HumanResourcesDbContext))]
+    [DbContext(typeof(HrDbContext))]
     [Migration("20251119073236_InitialHrDb")]
     partial class InitialHrDb
     {
