@@ -2,6 +2,17 @@
 
 <PageHeader Title="Pick Lists" Header="Pick Lists" SubHeader="Manage warehouse picking tasks for order fulfillment with optimized pick paths." />
 
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowPickListsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
 <EntityTable @ref="_table" TEntity="PickListResponse" TId="DefaultIdType" TRequest="PickListViewModel" Context="@Context">
     
     <AdvancedSearchContent>

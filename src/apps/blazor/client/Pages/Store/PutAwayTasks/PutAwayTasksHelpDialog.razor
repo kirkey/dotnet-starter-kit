@@ -1,0 +1,250 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.PutAwayTasks
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Put Away Tasks Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Put Away Tasks?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Receiving to Storage</MudText>
+                        <MudText Typo="Typo.body2">
+                            A put away task directs warehouse staff where to place received items in storage. After goods are received and 
+                            inspected, they must be put away (stored) in designated bin locations. Efficient put away minimizes storage space use, 
+                            enables FIFO management, and organizes inventory for quick picking later.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Put Away Workflow:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Receive:</strong> Goods arrive from supplier<br/>
+                                2. <strong>Inspect:</strong> QA verifies quality/quantity<br/>
+                                3. <strong>Create Task:</strong> Assign put away location<br/>
+                                4. <strong>Stage:</strong> Items ready for storage<br/>
+                                5. <strong>Put Away:</strong> Staff places in bins<br/>
+                                6. <strong>Update System:</strong> Record location<br/>
+                                7. <strong>Confirm:</strong> Task complete<br/>
+                                8. <strong>Available:</strong> Items ready for picking
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Put Away Task Components:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Item:</strong> What to put away<br/>
+                                • <strong>Quantity:</strong> How many units<br/>
+                                • <strong>From Location:</strong> Receiving staging area<br/>
+                                • <strong>To Location:</strong> Destination bin<br/>
+                                • <strong>Lot Number:</strong> If applicable<br/>
+                                • <strong>Priority:</strong> Normal/Urgent<br/>
+                                • <strong>Instructions:</strong> Special handling if needed
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Good put away organization = efficient picking later!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Put Away Tasks">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Assigning Storage Locations</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Put Away Task Creation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Receive goods from supplier<br/>
+                                2. Complete goods receipt<br/>
+                                3. Click <strong>"Create Put Away Tasks"</strong><br/>
+                                4. System suggests optimal locations<br/>
+                                5. Review suggested bins<br/>
+                                6. Adjust if needed<br/>
+                                7. Click <strong>"Create Tasks"</strong><br/>
+                                8. Assign to warehouse staff<br/>
+                                9. Staff executes put away<br/>
+                                10. System tracks completion
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Location Assignment Strategy:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Primary Bin:</strong><br/>
+                                • Closest to picking area<br/>
+                                • For fast-moving items<br/>
+                                • Smaller quantities<br/>
+                                <br/>
+                                <strong>Overflow Bin:</strong><br/>
+                                • Backup storage<br/>
+                                • Less accessible<br/>
+                                • Larger quantities<br/>
+                                <br/>
+                                <strong>Special Storage:</strong><br/>
+                                • Climate-controlled areas<br/>
+                                • High-value secure storage<br/>
+                                • Hazmat locations
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> System-recommended locations optimize picking later!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Executing Put Away">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Putting Away Items</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Put Away Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Get Task:</strong> Pull from system or print<br/>
+                                2. <strong>Stage Items:</strong> Gather from receiving<br/>
+                                3. <strong>Navigate:</strong> Go to destination bin<br/>
+                                4. <strong>Verify Bin:</strong> Scan barcode to confirm<br/>
+                                5. <strong>Verify Item:</strong> Scan SKU matches task<br/>
+                                6. <strong>Place:</strong> Put items in bin<br/>
+                                7. <strong>Verify Qty:</strong> Count items placed<br/>
+                                8. <strong>Confirm Task:</strong> Mark complete in system<br/>
+                                9. <strong>Next Task:</strong> Repeat process
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Quality Control:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Verify items not damaged<br/>
+                                ✓ Check lot numbers match<br/>
+                                ✓ Confirm expiration dates<br/>
+                                ✓ Don't exceed bin capacity<br/>
+                                ✓ Follow FIFO (dates visible)<br/>
+                                ✓ Report any discrepancies<br/>
+                                ✓ Keep bins organized
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Incorrect put away creates picking errors later - be accurate!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Put Away Optimization">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Improving Efficiency</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Location Selection Factors:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>FIFO:</strong> Place older items in front<br/>
+                                • <strong>Accessibility:</strong> Easy-reach for fast movers<br/>
+                                • <strong>Weight:</strong> Heavy items lower shelves<br/>
+                                • <strong>Fragility:</strong> Protected locations for delicate<br/>
+                                • <strong>Size:</strong> Oversized items in dedicated area<br/>
+                                • <strong>Turnover:</strong> Fast items near picking<br/>
+                                • <strong>Capacity:</strong> Don't overload bins
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Performance Targets:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Put Away Metrics:<br/>
+                                <br/>
+                                Task Completion Rate:  95%+<br/>
+                                Accuracy Rate:         99%+<br/>
+                                Tasks per Hour:        15-20<br/>
+                                On-time Completion:    Same day receipt<br/>
+                                <br/>
+                                Track by employee<br/>
+                                Identify bottlenecks<br/>
+                                Improve process monthly
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Goal:</strong> All received items put away same day - no overnight staging!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if destination bin is full?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Alert supervisor immediately. Use overflow bin or move existing items. Don't force items in!
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we batch put away tasks?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes! Group by location/area to minimize walking. More efficient than scattered tasks.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we reassign after put away starts?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Avoid if possible - causes confusion. Only if urgent. Document changes for accuracy.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we handle different lot numbers?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Don't mix lots! Separate bins for each lot. Enables FIFO and recall management.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if item is fragile or hazardous?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Use special bins/areas with protective measures. Mark clearly with warnings/labels.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+}
+

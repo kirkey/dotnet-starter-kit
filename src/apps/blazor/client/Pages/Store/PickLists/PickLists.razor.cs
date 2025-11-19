@@ -206,6 +206,19 @@ public partial class PickLists
             }
         }
     }
+
+    /// <summary>
+    /// Show pick lists help dialog.
+    /// </summary>
+    private async Task ShowPickListsHelp()
+    {
+        await DialogService.ShowAsync<PickListsHelpDialog>("Pick Lists Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

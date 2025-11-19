@@ -2,6 +2,17 @@
 
 <PageHeader Title="Put Away Tasks" Header="Put Away Tasks" SubHeader="Manage warehouse put-away operations for received goods with optimized put-away strategies." />
 
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowPutAwayTasksHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
 <EntityTable @ref="_table" TEntity="PutAwayTaskResponse" TId="DefaultIdType" TRequest="PutAwayTaskViewModel" Context="@Context">
     
     <AdvancedSearchContent>

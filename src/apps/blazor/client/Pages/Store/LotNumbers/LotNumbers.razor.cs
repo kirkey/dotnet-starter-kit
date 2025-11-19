@@ -49,6 +49,19 @@ public partial class LotNumbers
         
         await Task.CompletedTask;
     }
+
+    /// <summary>
+    /// Show lot numbers help dialog.
+    /// </summary>
+    private async Task ShowLotNumbersHelp()
+    {
+        await DialogService.ShowAsync<LotNumbersHelpDialog>("Lot Numbers Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

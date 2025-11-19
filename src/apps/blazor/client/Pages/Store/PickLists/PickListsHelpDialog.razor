@@ -1,0 +1,241 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.PickLists
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Pick Lists Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Pick Lists?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Order Fulfillment</MudText>
+                        <MudText Typo="Typo.body2">
+                            A pick list is a document that tells warehouse staff which items to pick from inventory to fulfill an order. 
+                            It contains the order details, items needed, quantities, and bin locations. Efficient pick lists reduce errors, 
+                            speed up fulfillment, and enable accurate order delivery.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Pick List Components:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Order Number:</strong> Which order to pick<br/>
+                                • <strong>Customer Name:</strong> Who to ship to<br/>
+                                • <strong>Items List:</strong> What to pick<br/>
+                                • <strong>Quantities:</strong> How much of each<br/>
+                                • <strong>Bin Locations:</strong> Where to find items<br/>
+                                • <strong>Due Date:</strong> When order ships<br/>
+                                • <strong>Special Instructions:</strong> Gift wrap, expedite, etc.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Pick List Workflow:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Generate:</strong> Create from orders<br/>
+                                2. <strong>Print/View:</strong> Send to picking staff<br/>
+                                3. <strong>Pick:</strong> Retrieve items<br/>
+                                4. <strong>Verify:</strong> Confirm correct items/qty<br/>
+                                5. <strong>Pack:</strong> Place in shipping box<br/>
+                                6. <strong>Label:</strong> Add shipping label<br/>
+                                7. <strong>Ship:</strong> Hand-off to carrier<br/>
+                                8. <strong>Close:</strong> Mark order complete
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Organized pick lists = faster, more accurate fulfillment!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Pick Lists">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Generating Efficient Pick Lists</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Pick List Creation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Option 1: From Orders</strong><br/>
+                                1. Select orders to pick<br/>
+                                2. Click "Generate Pick List"<br/>
+                                3. System creates optimized list<br/>
+                                4. Print or view on device<br/>
+                                <br/>
+                                <strong>Option 2: Batch Pick</strong><br/>
+                                1. Set date range<br/>
+                                2. Generate all pending orders<br/>
+                                3. System groups by location<br/>
+                                4. Minimize walking distance<br/>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Optimization Strategies:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Zone Picking:</strong> Each zone picks their items<br/>
+                                • <strong>Wave Picking:</strong> Pick multiple orders together<br/>
+                                • <strong>Route Picking:</strong> Order by bin location (minimize travel)<br/>
+                                • <strong>Batch Picking:</strong> Group similar items<br/>
+                                • <strong>Priority:</strong> Rush orders first<br/>
+                                • <strong>ABC Items:</strong> Fast movers in efficient zones
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Sort by bin location to minimize picker walking distance!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Executing Picks">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Picking Process</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Picking Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Print/Scan:</strong> Get pick list<br/>
+                                2. <strong>Navigate:</strong> Go to first bin<br/>
+                                3. <strong>Scan Bin:</strong> Verify correct location<br/>
+                                4. <strong>Scan Item:</strong> Verify correct SKU<br/>
+                                5. <strong>Pick Qty:</strong> Take requested quantity<br/>
+                                6. <strong>Verify:</strong> Double-check quantity<br/>
+                                7. <strong>Place Cart:</strong> Put in shopping cart<br/>
+                                8. <strong>Next Location:</strong> Repeat for all items<br/>
+                                9. <strong>Packing Area:</strong> Bring to pack/ship station
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Error Prevention:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Use barcodes - don't rely on manual<br/>
+                                ✓ Verify each item before picking<br/>
+                                ✓ Count quantities carefully<br/>
+                                ✓ Use scale to verify weight<br/>
+                                ✓ Mark picked items off list<br/>
+                                ✓ Second-person verification<br/>
+                                ✓ System alerts for issues
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Critical:</strong> Pick accuracy directly affects customer satisfaction!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Pick Performance Metrics">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Measuring Picking Efficiency</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Metrics:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Pick Rate:</strong> Items per hour<br/>
+                                • <strong>Accuracy Rate:</strong> % correct picks<br/>
+                                • <strong>Error Rate:</strong> % wrong items/qty<br/>
+                                • <strong>Time per Order:</strong> Average minutes<br/>
+                                • <strong>Lines per Hour:</strong> Order lines picked<br/>
+                                • <strong>Picking Cost:</strong> $ per item picked
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Performance Targets:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Picking Goals:<br/>
+                                <br/>
+                                Accuracy:        99.5%+<br/>
+                                Pick Rate:       100-150 items/hour<br/>
+                                Lines/Hour:      60-80 lines<br/>
+                                Error Rate:      0.5% or less<br/>
+                                <br/>
+                                Track trends monthly<br/>
+                                Reward accuracy over speed
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Philosophy:</strong> Accuracy first, speed second - customers demand correct orders!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if item is out of stock during pick?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Alert supervisor immediately. Customer options: backorder, substitute, or cancel. Never skip!
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we pick all orders or batch?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Batch picking is more efficient. Batch by time, zone, or priority. 1-2 batches per day is typical.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How to handle damaged items while picking?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Set aside, get replacement from inventory. Inspect replacement before picking. Document damage.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we re-optimize after starting pick?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No - causes confusion and errors. Wait for next batch. System learns from history for optimization.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we use mobile devices for picking?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes! Mobile/RF devices enable real-time barcode scanning - dramatically improves accuracy.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+}
+

@@ -1,0 +1,212 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.LotNumbers
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Lot Numbers Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Lot Numbers?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Lot Tracking</MudText>
+                        <MudText Typo="Typo.body2">
+                            A lot number (or batch number) is a unique identifier assigned to a group of items produced or received together. 
+                            Lot tracking enables traceability - knowing exactly which items came from which production batch or supplier shipment. 
+                            This is critical for recalls, quality control, and expiration date management.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Track Lot Numbers?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Traceability:</strong> Know source of every item<br/>
+                                • <strong>Recalls:</strong> Quickly identify affected items if defect found<br/>
+                                • <strong>Quality Control:</strong> Group items by quality/condition<br/>
+                                • <strong>Expiration:</strong> Track shelf life by batch<br/>
+                                • <strong>Compliance:</strong> Regulatory requirements (pharma, food)<br/>
+                                • <strong>FIFO:</strong> First-In-First-Out usage by lot<br/>
+                                • <strong>Audit:</strong> Complete history of item movement
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Lot Number Components:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Lot Number:</strong> Unique batch identifier<br/>
+                                • <strong>Expiration Date:</strong> When lot expires<br/>
+                                • <strong>Quantity:</strong> How many units in lot<br/>
+                                • <strong>Source:</strong> Supplier or production run<br/>
+                                • <strong>Received Date:</strong> When received<br/>
+                                • <strong>Quality Status:</strong> OK, Hold, Rejected
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Every item with lot tracking must have lot number recorded at receipt!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating and Managing Lots">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Lot Number Operations</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Lot Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create Lot"</strong><br/>
+                                2. Enter <strong>Lot Number</strong> (from supplier or generate)<br/>
+                                3. Select <strong>Item</strong><br/>
+                                4. Enter <strong>Quantity</strong> received<br/>
+                                5. Enter <strong>Received Date</strong><br/>
+                                6. Enter <strong>Expiration Date</strong><br/>
+                                7. Select <strong>Quality Status</strong> (OK/Hold/Rejected)<br/>
+                                8. Add <strong>Notes</strong> if needed<br/>
+                                9. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Lot Tracking Workflow:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Receive:</strong> Create lot with all details<br/>
+                                2. <strong>Inspect:</strong> QA reviews quality<br/>
+                                3. <strong>Accept:</strong> Mark as OK and available<br/>
+                                4. <strong>Hold:</strong> Pending further review<br/>
+                                5. <strong>Reject:</strong> Return to supplier<br/>
+                                6. <strong>Pick:</strong> Use FIFO (oldest first)<br/>
+                                7. <strong>Expire:</strong> Remove when date passes<br/>
+                                8. <strong>Archive:</strong> Keep for compliance
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Use FIFO - always pick oldest lots first to prevent spoilage!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Expiration Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Lot Expiration</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Expiration Date Monitoring:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Stock Report:</strong> Show expiring soon<br/>
+                                • <strong>FIFO Alerts:</strong> Warn if not using oldest<br/>
+                                • <strong>Auto-Archive:</strong> Move expired to hold<br/>
+                                • <strong>Email Alerts:</strong> Notify of expiring lots<br/>
+                                • <strong>Disposal Process:</strong> Document removed items
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Expiration Timeline:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Lot ABC-123<br/>
+                                Received: Jan 1<br/>
+                                Expiration: Mar 31<br/>
+                                <br/>
+                                30 days before: Alert sent<br/>
+                                14 days before: Prevent new orders<br/>
+                                On expiration: Mark expired<br/>
+                                After expiration: Move to disposal
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Critical:</strong> Never sell expired lots - regulatory violation and liability!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Lot Recall Process">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Handling Recalls</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Recall Procedure:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Identify:</strong> Problem with specific lot<br/>
+                                2. <strong>Hold:</strong> Mark lot as recalled immediately<br/>
+                                3. <strong>Search:</strong> Find all items from that lot<br/>
+                                4. <strong>Locate:</strong> Where are they (in stock, shipped)<br/>
+                                5. <strong>Notify:</strong> Alert customers who received<br/>
+                                6. <strong>Recover:</strong> Get items back<br/>
+                                7. <strong>Document:</strong> Record full recall history<br/>
+                                8. <strong>Dispose:</strong> Destroy recalled items safely
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Important:</strong> Lot tracking enables rapid recalls - critical for safety!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if item doesn't have lot number?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Create lot number (date-based or sequential). Some items don't require tracking.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we change lot number after receiving?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: No - would break traceability. Deactivate and create new if needed. Keep audit trail.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we handle split lots?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Keep original lot number. Create secondary lots if moved to different bins. Track splits.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we keep expired lot records?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes - archive expired lots for compliance, recalls, and regulatory audit requirements.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+}
+

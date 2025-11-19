@@ -198,6 +198,19 @@ public partial class PutAwayTasks
             }
         }
     }
+
+    /// <summary>
+    /// Show put away tasks help dialog.
+    /// </summary>
+    private async Task ShowPutAwayTasksHelp()
+    {
+        await DialogService.ShowAsync<PutAwayTasksHelpDialog>("Put Away Tasks Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>
