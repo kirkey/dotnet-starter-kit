@@ -1,0 +1,87 @@
+@page "/hr/employees/contacts"
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Contacts
+
+<PageHeader Title="Employee Contacts" Header="Employee Contacts" SubHeader="Manage emergency and related contact information." />
+
+<EntityTable TEntity="EmployeeContactResponse" TId="DefaultIdType" TRequest="EmployeeContactViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Contact ID" />
+            </MudItem>
+        }
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Contact Information</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.FirstName"
+                          For="@(() => context.FirstName)"
+                          Label="First Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.LastName"
+                          For="@(() => context.LastName)"
+                          Label="Last Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Relationship"
+                          For="@(() => context.Relationship)"
+                          Label="Relationship"
+                          Variant="Variant.Filled"
+                          HelperText="E.g., Spouse, Parent, Sibling" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudTextField @bind-Value="context.PhoneNumber"
+                          For="@(() => context.PhoneNumber)"
+                          Label="Phone Number"
+                          InputType="InputType.Telephone"
+                          Variant="Variant.Filled"
+                          HelperText="+63 9xx xxx xxxx" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudTextField @bind-Value="context.Email"
+                          For="@(() => context.Email)"
+                          Label="Email Address"
+                          InputType="InputType.Email"
+                          Variant="Variant.Filled"
+                          HelperText="Valid email format" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Address"
+                          For="@(() => context.Address)"
+                          Label="Address"
+                          Lines="3"
+                          Variant="Variant.Filled"
+                          HelperText="Complete contact address" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="int?"
+                             @bind-Value="context.Priority"
+                             For="@(() => context.Priority)"
+                             Label="Priority"
+                             Min="1"
+                             Max="10"
+                             Variant="Variant.Filled"
+                             HelperText="1 = Highest, 10 = Lowest" />
+        </MudItem>
+
+    </EditFormContent>
+</EntityTable>
+

@@ -141,7 +141,7 @@ Detailed employee history timeline view showing:
 - **DialogService**: For help and detail dialogs
 
 ## Navigation
-- **URL**: `/human-resources/designation-assignments`
+- **URL**: `/hr/designation-assignments`
 - **Resource**: `FshResources.Employees`
 - **Menu**: Appears under HR menu with Designations and OrganizationalUnits
 

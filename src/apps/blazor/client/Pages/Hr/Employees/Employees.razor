@@ -1,5 +1,6 @@
-@page "/human-resources/employees"
+@page "/hr/employees"
 @namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees
+@using FSH.Starter.Blazor.Client.Pages.Hr.Employees.Contacts
 
 <PageHeader Title="Employees" Header="Employees" SubHeader="Comprehensive profile management, onboarding, and lifecycle." />
 
@@ -211,6 +212,19 @@
                           Disabled="@(context.IsSoloParent != true)" />
         </MudItem>
 
+        <!-- Employee Contacts Section (shown only in edit modal) -->
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" Class="mt-6">
+                <MudDivider />
+            </MudItem>
+            <MudItem xs="12" Class="mt-4">
+                <EmployeeContactsComponent EmployeeId="@context.Id" />
+            </MudItem>
+        }
+
     </EditFormContent>
 </EntityTable>
+
+
 

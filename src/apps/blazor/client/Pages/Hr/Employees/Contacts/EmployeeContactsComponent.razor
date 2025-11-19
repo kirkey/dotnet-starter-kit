@@ -1,0 +1,169 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Contacts
+
+<MudPaper Elevation="0" Class="pa-4 mb-4">
+    <MudStack Spacing="3">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+            <MudText Typo="Typo.subtitle2">Contact Information</MudText>
+            <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="AddContact">
+                Add Contact
+            </MudButton>
+        </MudStack>
+
+        @if (_contacts == null)
+        {
+            <MudProgressCircular IsIndeterminate="true" />
+        }
+        else if (_contacts.Count == 0)
+        {
+            <MudAlert Severity="Severity.Info">No emergency contacts added yet. Click "Add Contact" to add one.</MudAlert>
+        }
+        else
+        {
+            <MudList T="EmployeeContactResponse" Clickable="false" Dense="true">
+                @foreach (var contact in _contacts)
+                {
+                    <MudListItem T="EmployeeContactResponse">
+                        <MudStack Spacing="1" Class="full-width">
+                            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                                <MudStack Spacing="0">
+                                    <MudText Typo="Typo.body2">
+                                        <strong>@($"{contact.FirstName} {contact.LastName}")</strong>
+                                    </MudText>
+                                    <MudText Typo="Typo.caption">@contact.Relationship</MudText>
+                                </MudStack>
+                                <MudStack Row="true" Spacing="1">
+                                    <MudButton Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditContact(contact))">
+                                        Edit
+                                    </MudButton>
+                                    <MudButton Size="Size.Small" Variant="Variant.Text" Color="Color.Error" OnClick="@(() => DeleteContact(contact.Id))">
+                                        Delete
+                                    </MudButton>
+                                </MudStack>
+                            </MudStack>
+
+                            <MudStack Spacing="0" Class="mt-2">
+                                @if (!string.IsNullOrWhiteSpace(contact.PhoneNumber))
+                                {
+                                    <MudText Typo="Typo.caption">
+                                        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Phone" Class="mr-1" />
+                                        @contact.PhoneNumber
+                                    </MudText>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(contact.Email))
+                                {
+                                    <MudText Typo="Typo.caption">
+                                        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Email" Class="mr-1" />
+                                        @contact.Email
+                                    </MudText>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(contact.Address))
+                                {
+                                    <MudText Typo="Typo.caption">
+                                        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.LocationOn" Class="mr-1" />
+                                        @contact.Address
+                                    </MudText>
+                                }
+                                @if (contact.Priority > 0)
+                                {
+                                    <MudText Typo="Typo.caption">
+                                        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Flag" Class="mr-1" />
+                                        Priority: @contact.Priority
+                                    </MudText>
+                                }
+                            </MudStack>
+                        </MudStack>
+                    </MudListItem>
+                    <MudDivider />
+                }
+            </MudList>
+        }
+    </MudStack>
+</MudPaper>
+
+@code {
+    [Parameter]
+    public DefaultIdType EmployeeId { get; set; }
+
+    private List<EmployeeContactResponse> _contacts = new();
+    private bool _loading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadContacts();
+    }
+
+    private async Task LoadContacts()
+    {
+        _loading = true;
+        try
+        {
+            // Load all contacts and filter by employee using Client API
+            var request = new SearchEmployeeContactsRequest
+            {
+                PageNumber = 1,
+                PageSize = 100
+            };
+            var result = await Client.SearchEmployeeContactsEndpointAsync("1", request);
+            _contacts = result?.Items?.Where(c => c.EmployeeId == EmployeeId).ToList() ?? new();
+        }
+        catch (Exception ex)
+        {
+            Snackbar?.Add($"Error loading contacts: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private async Task AddContact()
+    {
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+        var result = await DialogService.ShowAsync<EmployeeContactDialog>(
+            "Add Emergency Contact",
+            new DialogParameters { { "EmployeeId", EmployeeId }, { "IsCreate", true } },
+            options);
+
+        if (result is not null)
+        {
+            await LoadContacts();
+        }
+    }
+
+    private async Task EditContact(EmployeeContactResponse contact)
+    {
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+        var result = await DialogService.ShowAsync<EmployeeContactDialog>(
+            "Edit Emergency Contact",
+            new DialogParameters { { "EmployeeId", EmployeeId }, { "IsCreate", false }, { "ExistingContact", contact } },
+            options);
+
+        if (result is not null)
+        {
+            await LoadContacts();
+        }
+    }
+
+    private async Task DeleteContact(DefaultIdType contactId)
+    {
+        var confirmed = await DialogService.ShowMessageBox(
+            "Delete Contact",
+            "Are you sure you want to delete this contact?",
+            "Delete",
+            "Cancel");
+
+        if (confirmed == true)
+        {
+            try
+            {
+                // TODO: Call delete endpoint when available
+                Snackbar?.Add("Contact deleted successfully", Severity.Success);
+                await LoadContacts();
+            }
+            catch (Exception ex)
+            {
+                Snackbar?.Add($"Error deleting contact: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+}

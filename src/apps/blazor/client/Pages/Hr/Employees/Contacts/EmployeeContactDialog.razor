@@ -1,0 +1,183 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Contacts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">@(IsCreate ? "Add Emergency Contact" : "Edit Contact")</MudText>
+
+            <MudGrid Spacing="2">
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="_firstName"
+                                  Label="First Name"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="_lastName"
+                                  Label="Last Name"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="_relationship"
+                                  Label="Relationship"
+                                  Variant="Variant.Filled"
+                                  HelperText="Spouse, Parent, Sibling, Child" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudSelect T="string?"
+                               @bind-Value="_contactType"
+                               Label="Contact Type"
+                               Variant="Variant.Filled">
+                        <MudSelectItem Value="@("Personal")">Personal</MudSelectItem>
+                        <MudSelectItem Value="@("Work")">Work</MudSelectItem>
+                        <MudSelectItem Value="@("Emergency")">Emergency</MudSelectItem>
+                        <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField T="int?"
+                                     @bind-Value="_priority"
+                                     Label="Priority"
+                                     Min="1"
+                                     Max="10"
+                                     Variant="Variant.Filled"
+                                     HelperText="1=Highest, 10=Lowest" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="_phoneNumber"
+                                  Label="Phone Number"
+                                  InputType="InputType.Telephone"
+                                  Variant="Variant.Filled"
+                                  HelperText="+63 9xx xxx xxxx" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="_email"
+                                  Label="Email Address"
+                                  InputType="InputType.Email"
+                                  Variant="Variant.Filled"
+                                  HelperText="Valid email format" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_address"
+                                  Label="Complete Address"
+                                  Lines="3"
+                                  Variant="Variant.Filled"
+                                  HelperText="Full address for emergency contact" />
+                </MudItem>
+            </MudGrid>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveContact">
+            @(IsCreate ? "Add Contact" : "Update Contact")
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public bool IsCreate { get; set; } = true;
+
+    [Parameter]
+    public DefaultIdType EmployeeId { get; set; }
+
+    [Parameter]
+    public EmployeeContactResponse? ExistingContact { get; set; }
+
+    private string? _firstName;
+    private string? _lastName;
+    private string? _relationship;
+    private string? _phoneNumber;
+    private string? _email;
+    private string? _address;
+    private int? _priority = 1;
+    private string? _contactType = "Emergency";
+
+    protected override void OnInitialized()
+    {
+        if (!IsCreate && ExistingContact != null)
+        {
+            _firstName = ExistingContact.FirstName;
+            _lastName = ExistingContact.LastName;
+            _relationship = ExistingContact.Relationship;
+            _phoneNumber = ExistingContact.PhoneNumber;
+            _email = ExistingContact.Email;
+            _address = ExistingContact.Address;
+            _priority = ExistingContact.Priority;
+        }
+    }
+
+    private async Task SaveContact()
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(_firstName) || string.IsNullOrWhiteSpace(_lastName))
+            {
+                Snackbar?.Add("First and last name are required", Severity.Warning);
+                return;
+            }
+
+            if (IsCreate)
+            {
+                var contactData = new
+                {
+                    EmployeeId,
+                    FirstName = _firstName!,
+                    LastName = _lastName!,
+                    ContactType = _contactType ?? "Emergency",
+                    Relationship = _relationship,
+                    PhoneNumber = _phoneNumber,
+                    Email = _email,
+                    Address = _address
+                };
+
+                var command = contactData.Adapt<CreateEmployeeContactCommand>();
+                await Client.CreateEmployeeContactEndpointAsync("1", command);
+                Snackbar?.Add("Contact added successfully", Severity.Success);
+            }
+            else if (ExistingContact != null)
+            {
+                var contactData = new
+                {
+                    Id = ExistingContact.Id,
+                    FirstName = _firstName,
+                    LastName = _lastName,
+                    Relationship = _relationship,
+                    PhoneNumber = _phoneNumber,
+                    Email = _email,
+                    Address = _address,
+                    Priority = _priority ?? 1
+                };
+
+                var command = contactData.Adapt<UpdateEmployeeContactCommand>();
+                await Client.UpdateEmployeeContactEndpointAsync("1", ExistingContact.Id, command);
+                Snackbar?.Add("Contact updated successfully", Severity.Success);
+            }
+
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar?.Add($"Error saving contact: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private Task Cancel()
+    {
+        MudDialog.Cancel();
+        return Task.CompletedTask;
+    }
+}
+
