@@ -163,5 +163,18 @@ public partial class Locations
 
         return Task.CompletedTask;
     }
+
+    /// <summary>
+    /// Show locations help dialog.
+    /// </summary>
+    private async Task ShowLocationsHelp()
+    {
+        await DialogService.ShowAsync<LocationsHelpDialog>("Locations Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 

@@ -1,0 +1,215 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.ItemSuppliers
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Item Suppliers Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Item Suppliers?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Supplier Relationships</MudText>
+                        <MudText Typo="Typo.body2">
+                            An Item Supplier relationship links a product item to a specific supplier who can provide it. Each item may have 
+                            multiple suppliers, each with their own supplier SKU, pricing, and terms. Managing supplier relationships is critical 
+                            for sourcing flexibility and achieving best pricing.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Manage Item Suppliers?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Multiple Sources:</strong> Don't rely on single supplier<br/>
+                                • <strong>Best Pricing:</strong> Compare suppliers, negotiate rates<br/>
+                                • <strong>Backup Plan:</strong> If primary unavailable<br/>
+                                • <strong>SKU Mapping:</strong> Each supplier has own part number<br/>
+                                • <strong>Lead Times:</strong> Different suppliers have different delivery<br/>
+                                • <strong>Quality Options:</strong> Choose supplier by quality level
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Supplier Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Supplier Name:</strong> Who we buy from<br/>
+                                • <strong>Supplier SKU:</strong> Their part number for item<br/>
+                                • <strong>Unit Cost:</strong> What they charge<br/>
+                                • <strong>Lead Time:</strong> Days to deliver<br/>
+                                • <strong>Minimum Order:</strong> Smallest order allowed<br/>
+                                • <strong>Priority:</strong> Primary/secondary/backup<br/>
+                                • <strong>Contract Terms:</strong> Payment, volume discounts
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Multiple suppliers = flexibility and better pricing!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Adding Suppliers to Items">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Linking Suppliers to Products</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Item Supplier Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Go to <strong>Items</strong> page<br/>
+                                2. Select <strong>Item</strong> to add supplier<br/>
+                                3. Click <strong>"Add Supplier"</strong><br/>
+                                4. Select <strong>Supplier</strong> from list<br/>
+                                5. Enter <strong>Supplier SKU</strong> (their part #)<br/>
+                                6. Enter <strong>Unit Cost</strong> they charge<br/>
+                                7. Enter <strong>Lead Time</strong> in days<br/>
+                                8. Enter <strong>Minimum Order</strong> quantity<br/>
+                                9. Set <strong>Priority</strong> (Primary/Secondary)<br/>
+                                10. Add <strong>Notes</strong> (discount terms, etc.)<br/>
+                                11. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Supplier Selection Strategy:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Primary Supplier:</strong><br/>
+                                • Best price normally<br/>
+                                • Reliable delivery<br/>
+                                • Good quality<br/>
+                                • Default for POs<br/>
+                                <br/>
+                                <strong>Secondary Supplier:</strong><br/>
+                                • Backup if primary unavailable<br/>
+                                • May have longer lead time<br/>
+                                • Slightly higher price acceptable<br/>
+                                • Used for urgent needs<br/>
+                                <br/>
+                                <strong>Tertiary Supplier:</strong><br/>
+                                • Emergency backup only<br/>
+                                • May be significantly higher cost<br/>
+                                • Important for critical items
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Have at least 2 suppliers per item for critical products!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Supplier Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Optimizing Supplier Relationships</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Supplier Performance Metrics:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>On-Time Delivery:</strong> % of orders on time<br/>
+                                • <strong>Quality:</strong> Defect rate<br/>
+                                • <strong>Responsiveness:</strong> Time to answer questions<br/>
+                                • <strong>Price Competitiveness:</strong> vs. alternatives<br/>
+                                • <strong>Order Accuracy:</strong> % correct items/qty<br/>
+                                • <strong>Minimum Order Flexibility:</strong> Negotiate down
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Price Negotiation Tips:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Volume Discounts:</strong> Ask for quantity breaks<br/>
+                                • <strong>Annual Contracts:</strong> Lock in pricing<br/>
+                                • <strong>Competitive Bids:</strong> Show other quotes<br/>
+                                • <strong>Long-Term Relationships:</strong> Loyalty discounts<br/>
+                                • <strong>Payment Terms:</strong> Early pay discounts<br/>
+                                • <strong>Seasonal:</strong> Buy off-season cheaper
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Quarterly Supplier Review:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ Review pricing - still competitive?<br/>
+                                □ Check lead times - still accurate?<br/>
+                                □ Performance metrics - on target?<br/>
+                                □ Any quality issues - address?<br/>
+                                □ Negotiation opportunities - volume increased?<br/>
+                                □ New suppliers available?<br/>
+                                □ Update system with latest pricing
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Keep supplier data current - affects purchasing decisions!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we have unlimited suppliers per item?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes, but 2-3 is optimal. More means harder to manage. Focus on primary, secondary, backup.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do we choose which supplier for a PO?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: System defaults to primary. Can override if secondary needed (faster delivery, etc.).
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if supplier SKU changes?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Update in system immediately. Keep old SKU in notes for reference during transition.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we negotiate volume discounts?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Absolutely - always ask! Suppliers expect negotiation. Can save 5-15% with commitment.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How to handle supplier price increases?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Compare with alternatives. Negotiate if possible. Update pricing. Pass to customers if needed.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

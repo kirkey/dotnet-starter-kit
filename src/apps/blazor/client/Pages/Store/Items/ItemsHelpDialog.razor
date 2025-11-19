@@ -1,0 +1,250 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.Items
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Items Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Items/SKUs?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Product Items</MudText>
+                        <MudText Typo="Typo.body2">
+                            An Item (Stock Keeping Unit or SKU) is the fundamental product record in inventory management. Each item represents a unique product 
+                            with its own specifications, pricing, and inventory tracking. Items are the basis of all inventory operations - purchases, sales, 
+                            transfers, and counts all revolve around managing individual items.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>What Makes an Item Unique?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>SKU Code:</strong> Unique identifier (e.g., ABC-123-BLK)<br/>
+                                • <strong>Description:</strong> Product name and details<br/>
+                                • <strong>Category:</strong> Product classification<br/>
+                                • <strong>Supplier:</strong> Who provides the item<br/>
+                                • <strong>Unit Cost:</strong> What we pay for it<br/>
+                                • <strong>Selling Price:</strong> What we charge<br/>
+                                • <strong>Specifications:</strong> Size, color, weight, etc.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Item Attributes:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Active/Inactive:</strong> Can be sold or archived<br/>
+                                • <strong>Unit of Measure:</strong> Pieces, boxes, pounds, etc.<br/>
+                                • <strong>Shelf Life:</strong> Expiration tracking<br/>
+                                • <strong>Lead Time:</strong> Days to receive from supplier<br/>
+                                • <strong>Reorder Point:</strong> Trigger for reordering<br/>
+                                • <strong>Reorder Quantity:</strong> How much to order<br/>
+                                • <strong>Image:</strong> Product photo
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Every item must have unique SKU - use consistent naming!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Items">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Add New Items</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Item Creation Steps (15 steps):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create Item"</strong><br/>
+                                2. Enter <strong>SKU Code</strong> (unique identifier)<br/>
+                                3. Enter <strong>Item Name</strong><br/>
+                                4. Enter <strong>Description</strong><br/>
+                                5. Select <strong>Category</strong><br/>
+                                6. Select <strong>Unit of Measure</strong><br/>
+                                7. Enter <strong>Unit Cost</strong> (supplier price)<br/>
+                                8. Enter <strong>Selling Price</strong> (customer price)<br/>
+                                9. Enter <strong>Reorder Point</strong><br/>
+                                10. Enter <strong>Reorder Quantity</strong><br/>
+                                11. Enter <strong>Lead Time</strong> (days)<br/>
+                                12. Add <strong>Specifications</strong> (size, color, etc.)<br/>
+                                13. Upload <strong>Product Image</strong><br/>
+                                14. Mark as <strong>Active</strong><br/>
+                                15. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>SKU Naming Convention:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Format: CATEGORY-TYPE-VARIANT<br/>
+                                <br/>
+                                Examples:<br/>
+                                ELEC-LAP-001 (Electronics-Laptop-Model 1)<br/>
+                                FURN-CHAIR-BLK (Furniture-Chair-Black)<br/>
+                                OFFICE-PEN-BLU (Office-Pen-Blue)<br/>
+                                <br/>
+                                Benefits: Easy to identify, systematic, trackable
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Create standard SKU format - helps everyone understand products!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Item Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Item Records</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Item Operations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Edit:</strong> Update pricing, specs, suppliers<br/>
+                                • <strong>Deactivate:</strong> Archive no longer sold<br/>
+                                • <strong>View History:</strong> See all transactions<br/>
+                                • <strong>Update Image:</strong> Change product photo<br/>
+                                • <strong>Manage Suppliers:</strong> Link to supplier SKUs<br/>
+                                • <strong>View Stock:</strong> Check inventory levels<br/>
+                                • <strong>See Pricing:</strong> Review cost and margin
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Item Status Lifecycle:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Active:</strong> Selling currently<br/>
+                                2. <strong>Slow Moving:</strong> Low sales (consider pricing)<br/>
+                                3. <strong>Discontinued:</strong> No longer produced<br/>
+                                4. <strong>Obsolete:</strong> Never sell again<br/>
+                                5. <strong>Inactive:</strong> Archived (no transactions)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Item Data Quality Checklist:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ SKU is unique (no duplicates)<br/>
+                                □ Name clearly describes product<br/>
+                                □ Cost and price accurate<br/>
+                                □ Category correct<br/>
+                                □ Image is clear/professional<br/>
+                                □ Specifications complete<br/>
+                                □ Suppliers linked<br/>
+                                □ Active status correct
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Critical:</strong> Keep item data current - impacts pricing and inventory!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Pricing & Profitability">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Item Economics</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Margin Calculation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Unit Cost:         $10.00<br/>
+                                Selling Price:     $19.99<br/>
+                                <br/>
+                                Gross Profit:      $19.99 - $10.00 = $9.99<br/>
+                                Margin %:          $9.99 / $19.99 = 50%<br/>
+                                Markup %:          $9.99 / $10.00 = 99.9%
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Pricing Strategy:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Cost-Plus:</strong> Cost + desired margin<br/>
+                                • <strong>Competitive:</strong> Match market prices<br/>
+                                • <strong>Value:</strong> Based on perceived value<br/>
+                                • <strong>Penetration:</strong> Low price to gain share<br/>
+                                • <strong>Premium:</strong> High price for quality
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Review pricing regularly - competition and costs change!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can I change a SKU?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Difficult once in use - creates history gaps. Better to deactivate old and create new with similar name.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if item has multiple colors/sizes?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Create separate SKU for each variant. Easier to track and price different colors/sizes separately.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we deactivate or delete old items?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Always deactivate, never delete - maintains transaction history for audits and analysis.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How often to update prices?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Review quarterly minimum, more often for competitive items. Update both cost and price.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we bulk import items?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes - use import feature with CSV. Verify data before importing to catch errors early.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

@@ -1,0 +1,261 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.Locations
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Locations Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Warehouse Locations?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Location Management</MudText>
+                        <MudText Typo="Typo.body2">
+                            A warehouse location represents a physical place where inventory is stored - could be a warehouse facility, 
+                            distribution center, retail store location, or department. Locations are the top-level organizational unit for 
+                            inventory, with bins/racks being subdivisions within each location. Managing multiple locations enables 
+                            decentralized inventory and optimization.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Have Multiple Locations?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Geographic Distribution:</strong> Closer to customers<br/>
+                                • <strong>Faster Delivery:</strong> Ship from nearby location<br/>
+                                • <strong>Risk Mitigation:</strong> Backup if one warehouse damaged<br/>
+                                • <strong>Specialization:</strong> Hazmat, climate-controlled, etc.<br/>
+                                • <strong>Demand:</strong> Stock in high-demand regions<br/>
+                                • <strong>Storage Types:</strong> Different types need different facilities
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Types of Locations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Warehouse:</strong> Main storage facility<br/>
+                                • <strong>Distribution Center:</strong> Sorting/fulfillment hub<br/>
+                                • <strong>Retail Store:</strong> Customer-facing location<br/>
+                                • <strong>Transit Hub:</strong> In-between storage<br/>
+                                • <strong>Climate Controlled:</strong> Temperature-sensitive items<br/>
+                                • <strong>Hazmat Storage:</strong> Dangerous materials
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Each location has its own bin structure and inventory!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Locations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Add Warehouse Locations</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Location Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create Location"</strong><br/>
+                                2. Enter <strong>Location Code</strong> (e.g., "MAIN-WH")<br/>
+                                3. Enter <strong>Location Name</strong> (e.g., "Main Warehouse")<br/>
+                                4. Enter <strong>Description</strong> (purpose/details)<br/>
+                                5. Select <strong>Location Type</strong> (warehouse, store, etc.)<br/>
+                                6. Enter <strong>Address</strong> (physical location)<br/>
+                                7. Select <strong>Manager</strong> (responsible person)<br/>
+                                8. Enter <strong>Phone</strong> (location contact)<br/>
+                                9. Enter <strong>Email</strong> (location email)<br/>
+                                10. Add <strong>Special Features</strong> (climate control, etc.)<br/>
+                                11. Set <strong>Operating Hours</strong><br/>
+                                12. Mark as <strong>Active</strong><br/>
+                                13. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Location Hierarchy Structure:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Organization<br/>
+                                ├── Location A: Main Warehouse<br/>
+                                │   ├── Bin A-01-01 (Aisle 1, Shelf 1, Pos 1)<br/>
+                                │   ├── Bin A-01-02<br/>
+                                │   └── Bin A-02-01<br/>
+                                ├── Location B: Distribution Center<br/>
+                                │   ├── Bin B-01-01<br/>
+                                │   └── Bin B-01-02<br/>
+                                └── Location C: Retail Store<br/>
+                                    └── Bin C-DISPLAY
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Best Practice:</strong> Create locations before creating bins - bins belong to locations!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Location Operations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Locations</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Location Management Tasks:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Edit:</strong> Update address, manager, contact<br/>
+                                • <strong>View Inventory:</strong> See total stock at location<br/>
+                                • <strong>Manage Bins:</strong> Create/edit bins within location<br/>
+                                • <strong>View Transfers:</strong> See inbound/outbound transfers<br/>
+                                • <strong>Reports:</strong> Inventory by location, receiving history<br/>
+                                • <strong>Cycle Counts:</strong> Schedule and run counts<br/>
+                                • <strong>Capacity:</strong> Monitor storage utilization
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Location Performance Metrics:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Total Inventory Value:</strong> $X at this location<br/>
+                                • <strong>Capacity Utilization:</strong> % of max storage<br/>
+                                • <strong>Average Stock Age:</strong> Days inventory sitting<br/>
+                                • <strong>Accuracy Rate:</strong> System vs. physical match %<br/>
+                                • <strong>Turnover Rate:</strong> How fast items move<br/>
+                                • <strong>Space Efficiency:</strong> $ per sq ft of storage
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Location-Based Transfers:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Transfer inventory between locations when:<br/>
+                                <br/>
+                                • Demand shifts to different region<br/>
+                                • One location running low<br/>
+                                • Consolidating overstock<br/>
+                                • Seasonal redistribution<br/>
+                                • Building new location<br/>
+                                • Warehouse closure/relocation
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Critical:</strong> Keep location data accurate - drives transfer and fulfillment decisions!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Multi-Location Strategy">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Optimizing Multi-Location Operations</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Inventory Distribution Strategy:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Fast-Moving Items:</strong><br/>
+                                • Stock at multiple locations<br/>
+                                • Closest to customers<br/>
+                                • Higher safety stock<br/>
+                                <br/>
+                                <strong>Slow-Moving Items:</strong><br/>
+                                • Stock at one central location<br/>
+                                • Transfer when needed<br/>
+                                • Lower total inventory<br/>
+                                <br/>
+                                <strong>High-Value Items:</strong><br/>
+                                • Limited to secure locations<br/>
+                                • Centralized control<br/>
+                                • Special handling
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Monthly Location Review:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                □ Check capacity utilization<br/>
+                                □ Review inventory accuracy<br/>
+                                □ Analyze turnover rates<br/>
+                                □ Identify overstock locations<br/>
+                                □ Check obsolete items<br/>
+                                □ Review transfer history<br/>
+                                □ Plan rebalancing needs<br/>
+                                □ Update forecasts
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Goal:</strong> Balance inventory across locations - minimize cost while meeting demand!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we have one item at multiple locations?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes! This is common for fast-moving items. System tracks quantity at each location separately.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do customers know which location has items?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: System shows total available across all locations. Fulfillment picks from nearest location.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if we want to close a location?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Transfer all inventory to other locations first, then mark as inactive. Keep for history.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Should we count each location separately?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes - each location has its own cycle count schedule. Some monthly, some quarterly.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How to handle inter-location transfers?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Use transfer order. System shows as in-transit until received at destination.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

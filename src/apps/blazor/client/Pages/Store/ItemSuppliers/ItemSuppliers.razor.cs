@@ -51,6 +51,19 @@ public partial class ItemSuppliers
             },
             deleteFunc: async id => await Client.DeleteItemSupplierEndpointAsync("1", id).ConfigureAwait(false));
     }
+
+    /// <summary>
+    /// Show item suppliers help dialog.
+    /// </summary>
+    private async Task ShowItemSuppliersHelp()
+    {
+        await DialogService.ShowAsync<ItemSuppliersHelpDialog>("Item Suppliers Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

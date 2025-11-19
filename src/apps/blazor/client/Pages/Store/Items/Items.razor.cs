@@ -107,5 +107,18 @@ public partial class Items
         
         await Task.CompletedTask;
     }
+
+    /// <summary>
+    /// Show items help dialog.
+    /// </summary>
+    private async Task ShowItemsHelp()
+    {
+        await DialogService.ShowAsync<ItemsHelpDialog>("Items Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
