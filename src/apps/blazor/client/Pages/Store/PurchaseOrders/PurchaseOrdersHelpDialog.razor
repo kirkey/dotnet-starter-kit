@@ -1,0 +1,261 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.PurchaseOrders
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Purchase Orders Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Purchase Orders?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Purchase Procurement</MudText>
+                        <MudText Typo="Typo.body2">
+                            A Purchase Order (PO) is a formal document requesting goods or services from a supplier at specified prices 
+                            and terms. POs are the foundation of procurement - they create a binding commitment to buy from the supplier 
+                            and their acknowledgment creates a contract. Proper PO management ensures inventory availability and cost control.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>PO Workflow:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Create:</strong> New PO from requisition<br/>
+                                2. <strong>Approve:</strong> Manager approval<br/>
+                                3. <strong>Send:</strong> To supplier<br/>
+                                4. <strong>Acknowledge:</strong> Supplier confirms<br/>
+                                5. <strong>Receive:</strong> Goods arrive<br/>
+                                6. <strong>Inspect:</strong> QA verification<br/>
+                                7. <strong>Invoice:</strong> Supplier invoice<br/>
+                                8. <strong>Pay:</strong> Settle payment<br/>
+                                9. <strong>Close:</strong> PO complete
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Use POs?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Legal Protection:</strong> Documented agreement<br/>
+                                • <strong>Budget Control:</strong> Track spending<br/>
+                                • <strong>Prevent Unauthorized:</strong> Only approved items<br/>
+                                • <strong>Supplier Accountability:</strong> Clear expectations<br/>
+                                • <strong>Dispute Resolution:</strong> Terms documented<br/>
+                                • <strong>Tax Records:</strong> Audit support
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> Never order without a PO - maintains control and compliance!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating Purchase Orders">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Create POs</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>PO Creation Steps (12 steps):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create PO"</strong><br/>
+                                2. Select <strong>Supplier</strong><br/>
+                                3. Enter <strong>PO Number</strong> (auto-generated)<br/>
+                                4. Enter <strong>PO Date</strong><br/>
+                                5. Enter <strong>Delivery Date</strong><br/>
+                                6. Enter <strong>Delivery Address</strong><br/>
+                                7. Add <strong>Line Items</strong> (click Add Item)<br/>
+                                8. For each item:<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;- Select Item<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;- Enter Quantity<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;- Supplier price auto-fills<br/>
+                                9. Review <strong>Total Amount</strong><br/>
+                                10. Add <strong>Notes</strong> if needed<br/>
+                                11. Attach <strong>Terms</strong> document<br/>
+                                12. Click <strong>"Save & Send"</strong>
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>PO Best Practices:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Use supplier's preferred SKU<br/>
+                                ✓ Confirm pricing before submitting<br/>
+                                ✓ Include delivery date (reasonable lead time)<br/>
+                                ✓ Specify quality requirements<br/>
+                                ✓ Include payment terms<br/>
+                                ✓ Request PO acknowledgment<br/>
+                                ✓ Track all amendments/changes
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> System auto-suggests supplier prices - verify before sending!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="PO Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Purchase Orders</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>PO Status Lifecycle:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Draft:</strong> Being prepared, not sent<br/>
+                                • <strong>Sent:</strong> Submitted to supplier<br/>
+                                • <strong>Acknowledged:</strong> Supplier confirmed<br/>
+                                • <strong>Partial Receipt:</strong> Some items received<br/>
+                                • <strong>Received:</strong> All items received<br/>
+                                • <strong>Invoiced:</strong> Supplier invoice matched<br/>
+                                • <strong>Paid:</strong> Payment complete<br/>
+                                • <strong>Closed:</strong> PO finished
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common PO Operations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Amend:</strong> Change quantity/price before delivery<br/>
+                                • <strong>Cancel:</strong> Stop order entirely<br/>
+                                • <strong>Expedite:</strong> Request faster delivery<br/>
+                                • <strong>Split:</strong> Partial shipments<br/>
+                                • <strong>Follow Up:</strong> Check status with supplier<br/>
+                                • <strong>Close Early:</strong> Finish even if pending receipts
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Amendments must be approved and confirmed with supplier!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Three-Way Matching">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">PO - Receipt - Invoice Reconciliation</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Three-Way Match Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Step 1: PO Created<br/>
+                                Item ABC: 100 units - P10/unit = P1,000<br/>
+                                <br/>
+                                Step 2: Goods Received<br/>
+                                Receipt shows: 100 units received OK<br/>
+                                <br/>
+                                Step 3: Invoice Received<br/>
+                                Invoice shows: 100 units - P10/unit = P1,000<br/>
+                                <br/>
+                                Match Check: ✅ All three match!<br/>
+                                Action: Approve for payment
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Discrepancy Resolution:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>If Quantity Mismatch:</strong><br/>
+                                • PO: 100 units<br/>
+                                • Receipt: 98 units<br/>
+                                • Invoice: 100 units<br/>
+                                → Action: Pay only for 98 received<br/>
+                                <br/>
+                                <strong>If Price Mismatch:</strong><br/>
+                                • PO: P10/unit<br/>
+                                • Invoice: P11/unit<br/>
+                                → Action: Contact supplier to confirm<br/>
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Goal:</strong> Resolve discrepancies before payment - saves money!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="PO Approval Workflow">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Authorization & Approval</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Approval Authorization Limits:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                                Up to P500:        Supervisor approval<br/>
+                                P500 - P2,000:     Manager approval<br/>
+                                P2,000 - P10,000:  Director approval<br/>
+                                Above P10,000:     VP/Executive approval<br/>
+                                <br/>
+                                All amounts: CFO can override<br/>
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Critical:</strong> Never approve POs outside your authorization level - financial control violation!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we buy without a PO?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Only for emergency purchases under set limit. Must create PO retroactively and document reason.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if supplier quantity doesn't match?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Create goods receipt for actual quantity. Don't force invoice to match PO. Adjust later.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we change PO after sending?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes - create amendment. Get supplier acknowledgment before changing anything.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How long do we keep POs?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Minimum 7 years for tax/audit. Many keep indefinitely for historical reference.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

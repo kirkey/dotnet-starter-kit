@@ -131,6 +131,19 @@ public partial class SalesImports
             await _table.ReloadDataAsync();
         }
     }
+
+    /// <summary>
+    /// Show sales imports help dialog.
+    /// </summary>
+    private async Task ShowSalesImportsHelp()
+    {
+        await DialogService.ShowAsync<SalesImportsHelpDialog>("Sales Imports Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

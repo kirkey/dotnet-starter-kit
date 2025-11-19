@@ -1,0 +1,110 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.SalesImports
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Sales Imports Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Sales Imports?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Sales Data Integration</MudText>
+                        <MudText Typo="Typo.body2">
+                            Sales Imports are records of sales transactions imported from external systems like POS and e-commerce platforms. 
+                            They integrate third-party sales data into the inventory system, ensuring all sales channels update inventory levels centrally.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Import Sources:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • POS Systems • E-commerce • Marketplaces • EDI • CSV Uploads • API Integration
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key Principle:</strong> All sales must be imported to keep inventory accurate!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Import Methods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Import Sales</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Methods:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                <strong>Automated API:</strong> Real-time, no manual action<br/>
+                                <strong>Scheduled Batch:</strong> Hourly/daily/weekly<br/>
+                                <strong>Manual Upload:</strong> Upload CSV file
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Real-time (API) ideal for accuracy!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Reconciliation">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Import Errors</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Issues:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Duplicate Sales • Wrong SKU • Wrong Date • Wrong Qty • Bad Data • Missing Returns
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Review imports daily to catch errors early!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Questions (FAQ)">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How often should we import?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Real-time (API) ideal. Minimum daily for accuracy.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we import returns?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Yes - import as negative quantities. Increases inventory.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What if import fails?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Check logs, fix issues, re-run. Don't assume it worked!
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

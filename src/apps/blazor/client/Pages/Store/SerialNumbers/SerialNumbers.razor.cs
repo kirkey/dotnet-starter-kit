@@ -48,6 +48,19 @@ public partial class SerialNumbers
         
         await Task.CompletedTask;
     }
+
+    /// <summary>
+    /// Show serial numbers help dialog.
+    /// </summary>
+    private async Task ShowSerialNumbersHelp()
+    {
+        await DialogService.ShowAsync<SerialNumbersHelpDialog>("Serial Numbers Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

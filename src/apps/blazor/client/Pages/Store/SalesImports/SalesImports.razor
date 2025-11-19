@@ -2,6 +2,17 @@
 
 <PageHeader Title="Sales Imports" Header="Sales Imports" SubHeader="Import and manage POS sales data to maintain inventory accuracy." />
 
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowSalesImportsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
 <EntityTable @ref="_table" TEntity="SalesImportResponse" TId="DefaultIdType" TRequest="SalesImportViewModel" Context="@Context">
     
     <AdvancedSearchContent>

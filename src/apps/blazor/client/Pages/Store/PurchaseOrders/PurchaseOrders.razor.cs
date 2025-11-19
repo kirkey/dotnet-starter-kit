@@ -291,6 +291,19 @@ public partial class PurchaseOrders
             Snackbar.Add($"Error downloading PDF: {ex.Message}", Severity.Error);
         }
     }
+
+    /// <summary>
+    /// Show purchase orders help dialog.
+    /// </summary>
+    private async Task ShowPurchaseOrdersHelp()
+    {
+        await DialogService.ShowAsync<PurchaseOrdersHelpDialog>("Purchase Orders Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

@@ -1,0 +1,109 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.SerialNumbers
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Serial Numbers Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Serial Numbers?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Individual Item Tracking</MudText>
+                        <MudText Typo="Typo.body2">
+                            A serial number uniquely identifies a specific product unit. Serial tracking is critical for 
+                            high-value items, warranty management, and asset tracking.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Why Track Serials?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Warranty tracking per unit • Recalls • Asset tracking • Service records • Theft prevention
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Key:</strong> Each serial tracks ONE physical unit!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Registration">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Recording Serial Numbers</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Receive Item 2. Locate Serial 3. Enter Serial Number<br/>
+                                4. Select Item/SKU 5. Enter Dates 6. Click Save
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Register serials immediately upon receipt!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Warranty">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Warranty Management by Serial</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Start Date • Expiration • Coverage • Service Records • Claims
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Keep serial history for warranty claims!
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="FAQ">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Frequently Asked Questions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: When to use serials?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: High-value items or warranty tracking.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can we change serials?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Never - serials are permanent.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Duplicate serials?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                A: Counterfeit - return immediately.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
