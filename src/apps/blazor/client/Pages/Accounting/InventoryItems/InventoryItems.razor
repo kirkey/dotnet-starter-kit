@@ -13,7 +13,7 @@
     </MudStack>
 </MudPaper>
 
-<EntityTable @ref="_table" TEntity="StockLevelResponse" TId="DefaultIdType" TRequest="InventoryItemViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="InventoryItemResponse" TId="DefaultIdType" TRequest="InventoryItemViewModel" Context="@Context">
     <AdvancedSearchContent>
         <MudItem xs="12" sm="6" md="4">
             <MudTextField @bind-Value="@SearchSku"

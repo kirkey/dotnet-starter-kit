@@ -14,15 +14,6 @@
                 Temperature Controlled
             </MudButton>
         </MudButtonGroup>
-        <MudSpacer />
-        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
-            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowLocationsHelp">
-                Help
-            </MudButton>
-        </MudButtonGroup>
-    </MudStack>
-</MudPaper>
-
         <MudButtonGroup Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small">
             <MudButton StartIcon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => { SearchIsActive = true; StateHasChanged(); })">
                 Active
@@ -31,13 +22,18 @@
                 Inactive
             </MudButton>
         </MudButtonGroup>
-
         <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
             <MudButton StartIcon="@Icons.Material.Filled.FileDownload">
                 Export
             </MudButton>
             <MudButton StartIcon="@Icons.Material.Filled.Settings">
                 Settings
+            </MudButton>
+        </MudButtonGroup>
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowLocationsHelp">
+                Help
             </MudButton>
         </MudButtonGroup>
     </MudStack>
