@@ -1,7 +1,7 @@
-using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollDeductions.Create.v1;
+using Shared.Authorization;
 
-namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
+namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions.v1;
 
 public static class CreatePayrollDeductionEndpoint
 {

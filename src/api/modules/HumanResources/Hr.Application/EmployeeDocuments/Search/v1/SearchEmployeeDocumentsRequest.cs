@@ -28,6 +28,21 @@ public class SearchEmployeeDocumentsRequest : PaginationFilter, IRequest<PagedLi
     public bool? IsExpired { get; set; }
 
     /// <summary>
+    /// Gets or sets a value indicating whether to show only expired documents.
+    /// </summary>
+    public bool? ExpiredOnly { get; set; }
+
+    /// <summary>
+    /// Gets or sets the start date for expiry date range filter.
+    /// </summary>
+    public DateTime? ExpiryDateStart { get; set; }
+
+    /// <summary>
+    /// Gets or sets the end date for expiry date range filter.
+    /// </summary>
+    public DateTime? ExpiryDateEnd { get; set; }
+
+    /// <summary>
     /// Gets or sets a value indicating whether to filter by active status.
     /// </summary>
     public bool? IsActive { get; set; }

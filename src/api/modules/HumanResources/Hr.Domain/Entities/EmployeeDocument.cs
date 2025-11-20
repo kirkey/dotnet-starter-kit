@@ -163,12 +163,16 @@ public class EmployeeDocument : AuditableEntity, IAggregateRoot
     /// Updates document metadata.
     /// </summary>
     public EmployeeDocument Update(
+        string? documentType = null,
         string? title = null,
         DateTime? expiryDate = null,
         string? issueNumber = null,
         DateTime? issueDate = null,
         string? notes = null)
     {
+        if (!string.IsNullOrWhiteSpace(documentType))
+            DocumentType = documentType;
+
         if (!string.IsNullOrWhiteSpace(title))
             Title = title;
 

@@ -21,6 +21,7 @@ public sealed class UpdateEmployeeDocumentHandler(
             throw new EmployeeDocumentNotFoundException(request.Id);
 
         document.Update(
+            request.DocumentType,
             request.Title,
             request.ExpiryDate,
             request.IssueNumber,

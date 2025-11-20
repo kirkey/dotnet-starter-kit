@@ -14,6 +14,11 @@ public class UpdateEmployeeDocumentValidator : AbstractValidator<UpdateEmployeeD
             .NotEmpty()
             .WithMessage("Document ID is required");
 
+        RuleFor(x => x.DocumentType)
+            .MaximumLength(50)
+            .WithMessage("Document type cannot exceed 50 characters")
+            .When(x => !string.IsNullOrWhiteSpace(x.DocumentType));
+
         RuleFor(x => x.Title)
             .MaximumLength(250)
             .WithMessage("Title cannot exceed 250 characters")

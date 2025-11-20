@@ -44,6 +44,15 @@ public class SearchEmployeeDocumentsSpec : Specification<EmployeeDocument>
         if (request.IsExpired.HasValue)
             Query.Where(x => x.IsExpired == request.IsExpired);
 
+        if (request.ExpiredOnly == true)
+            Query.Where(x => x.ExpiryDate.HasValue && x.ExpiryDate < DateTime.Today);
+
+        if (request.ExpiryDateStart.HasValue)
+            Query.Where(x => x.ExpiryDate >= request.ExpiryDateStart);
+
+        if (request.ExpiryDateEnd.HasValue)
+            Query.Where(x => x.ExpiryDate <= request.ExpiryDateEnd);
+
         if (request.IsActive.HasValue)
             Query.Where(x => x.IsActive == request.IsActive);
     }

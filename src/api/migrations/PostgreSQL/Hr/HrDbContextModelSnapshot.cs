@@ -1570,7 +1570,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Hr
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("DeletedBy")
