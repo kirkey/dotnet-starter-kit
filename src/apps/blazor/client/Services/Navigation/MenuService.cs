@@ -253,7 +253,7 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Payroll Deductions", Icon = Icons.Material.Filled.MoneyOff, Href = "/hr/payroll-deductions", Action = FshActions.View, Resource = FshResources.Payroll, PageStatus = PageStatus.ComingSoon },
                         new MenuSectionSubItemModel { Title = "Tax Brackets", Icon = Icons.Material.Filled.AccountBalance, Href = "/hr/tax-brackets", Action = FshActions.View, Resource = FshResources.Taxes, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Taxes", Icon = Icons.Material.Filled.Receipt, Href = "/hr/taxes", Action = FshActions.View, Resource = FshResources.Taxes, PageStatus = PageStatus.ComingSoon },
-                        new MenuSectionSubItemModel { Title = "Bank Accounts", Icon = Icons.Material.Filled.AccountBalance, Href = "/hr/bank-accounts", Action = FshActions.View, Resource = FshResources.Payroll, PageStatus = PageStatus.ComingSoon },
+                        new MenuSectionSubItemModel { Title = "Bank Accounts", Icon = Icons.Material.Filled.AccountBalance, Href = "/human-resources/employees/bank-accounts", Action = FshActions.View, Resource = FshResources.Payroll, PageStatus = PageStatus.Completed },
                         
                         // ========== BENEFITS ==========
                         new MenuSectionSubItemModel { Title = "Benefits & Enrollment", IsGroupHeader = true },
