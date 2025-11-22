@@ -1,0 +1,322 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.BankAccounts
+@using FSH.Starter.Blazor.Client.Components.Hr
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.AccountBalance" Class="me-2" />
+            @(IsEdit ? "Edit Bank Account" : "Add Bank Account")
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+        }
+        else
+        {
+            <MudGrid Spacing="2">
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Info" Dense="true">
+                        @(IsEdit 
+                            ? "Update the bank account details. Account number changes require re-verification."
+                            : "Add employee bank account for direct deposit payroll. All fields are required.")
+                    </MudAlert>
+                </MudItem>
+
+                @if (!IsEdit)
+                {
+                    <MudItem xs="12" md="6">
+                        <AutocompleteEmployee @bind-Value="_selectedEmployee"
+                                              Label="Employee *"
+                                              Required="true"
+                                              RequiredError="Employee is required"
+                                              Variant="Variant.Filled"
+                                              HelperText="Search employee by name" />
+                    </MudItem>
+                }
+
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_form.BankName"
+                                  Label="Bank Name *"
+                                  Variant="Variant.Filled"
+                                  Required="true"
+                                  RequiredError="Bank name is required"
+                                  HelperText="E.g., BDO, BPI, Metrobank, Bank of America"
+                                  Placeholder="Bank of America"
+                                  Clearable="true" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudSelect @bind-Value="_form.AccountType"
+                               Label="Account Type *"
+                               Required="true"
+                               RequiredError="Account type is required"
+                               Variant="Variant.Filled">
+                        <MudSelectItem Value="@("Checking")">Checking</MudSelectItem>
+                        <MudSelectItem Value="@("Savings")">Savings</MudSelectItem>
+                        <MudSelectItem Value="@("Money Market")">Money Market</MudSelectItem>
+                        <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_form.AccountHolderName"
+                                  Label="Account Holder Name *"
+                                  Variant="Variant.Filled"
+                                  Required="true"
+                                  RequiredError="Account holder name is required"
+                                  HelperText="Name exactly as it appears on bank account"
+                                  Placeholder="John Doe"
+                                  Clearable="true" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
+                    <MudText Typo="Typo.subtitle2" Class="mt-3 mb-2">Domestic Account (ACH)</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_form.AccountNumber"
+                                  Label="Account Number *"
+                                  Variant="Variant.Filled"
+                                  Required="true"
+                                  RequiredError="Account number is required"
+                                  InputType="InputType.Password"
+                                  HelperText="Full account number (will be masked)"
+                                  Placeholder="1234567890"
+                                  Counter="17"
+                                  MaxLength="17" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_form.RoutingNumber"
+                                  Label="Routing Number (ABA) *"
+                                  Variant="Variant.Filled"
+                                  Required="true"
+                                  RequiredError="Routing number is required"
+                                  HelperText="9-digit ACH routing code"
+                                  Placeholder="021000021"
+                                  Counter="9"
+                                  MaxLength="9"
+                                  InputType="InputType.Number" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_form.CurrencyCode"
+                                  Label="Currency Code"
+                                  Variant="Variant.Filled"
+                                  HelperText="ISO 4217 code (USD, PHP, EUR, etc.)"
+                                  Placeholder="USD"
+                                  Counter="3"
+                                  MaxLength="3" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
+                    <MudText Typo="Typo.subtitle2" Class="mt-3 mb-2">International Account (Optional - SWIFT/IBAN)</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_form.SwiftCode"
+                                  Label="SWIFT Code"
+                                  Variant="Variant.Filled"
+                                  HelperText="8-11 character bank identifier code"
+                                  Placeholder="DEUTDEDBBER"
+                                  Counter="11"
+                                  MaxLength="11" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_form.Iban"
+                                  Label="IBAN"
+                                  Variant="Variant.Filled"
+                                  HelperText="International Bank Account Number"
+                                  Placeholder="DE89370400440532013000"
+                                  Counter="34"
+                                  MaxLength="34" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
+                    <MudText Typo="Typo.subtitle2" Class="mt-3 mb-2">Account Settings</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCheckBox @bind-Value="_form.IsPrimary"
+                                 Label="Primary Account"
+                                 Color="Color.Primary"
+                                 HelperText="Default for payroll deposits"
+                                 Class="mt-2" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCheckBox @bind-Value="_form.IsActive"
+                                 Label="Active"
+                                 Color="Color.Success"
+                                 HelperText="Available for payroll use"
+                                 Class="mt-2" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    @if (IsEdit)
+                    {
+                        <MudCheckBox @bind-Value="_form.IsVerified"
+                                     Label="Verified"
+                                     Color="Color.Info"
+                                     HelperText="Account has been verified"
+                                     Class="mt-2"
+                                     Disabled="true" />
+                    }
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_form.Notes"
+                                  Label="Notes"
+                                  Variant="Variant.Filled"
+                                  Lines="3"
+                                  HelperText="Special instructions or notes (optional)"
+                                  Counter="500"
+                                  MaxLength="500" />
+                </MudItem>
+
+                @if (IsEdit && _originalAccount != null)
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Info:</strong> Last verified on @_originalAccount.VerificationDate?.ToString("MMMM dd, yyyy")
+                        </MudAlert>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" 
+                   OnClick="Save"
+                   Disabled="@(!CanSave || _saving)"
+                   Variant="Variant.Filled">
+            @if (_saving)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="me-2" />
+            }
+            @(IsEdit ? "Update" : "Create")
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType? EmployeeId { get; set; }
+
+    [Parameter]
+    public BankAccountResponse? BankAccount { get; set; }
+
+    private BankAccountFormModel _form = new();
+    private EmployeeResponse? _selectedEmployee;
+    private BankAccountResponse? _originalAccount;
+    private bool _loading = false;
+    private bool _saving = false;
+    private bool IsEdit => BankAccount != null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (IsEdit && BankAccount != null)
+        {
+            _originalAccount = BankAccount;
+            _form = new BankAccountFormModel
+            {
+                AccountNumber = string.Empty, // Don't pre-fill for security
+                RoutingNumber = BankAccount.Last4Digits ?? string.Empty,
+                BankName = BankAccount.BankName,
+                AccountType = BankAccount.AccountType,
+                AccountHolderName = BankAccount.AccountHolderName,
+                IsPrimary = BankAccount.IsPrimary,
+                IsActive = BankAccount.IsActive,
+                IsVerified = BankAccount.IsVerified,
+                SwiftCode = BankAccount.SwiftCode,
+                Iban = BankAccount.Iban,
+                CurrencyCode = BankAccount.CurrencyCode,
+                Notes = BankAccount.Notes
+            };
+        }
+        else if (EmployeeId.HasValue)
+        {
+            _form.EmployeeId = EmployeeId.Value;
+        }
+    }
+
+    private bool CanSave
+    {
+        get
+        {
+            return !string.IsNullOrWhiteSpace(_form.BankName)
+                && !string.IsNullOrWhiteSpace(_form.AccountHolderName)
+                && !string.IsNullOrWhiteSpace(_form.AccountType)
+                && !string.IsNullOrWhiteSpace(_form.AccountNumber)
+                && !string.IsNullOrWhiteSpace(_form.RoutingNumber)
+                && (_selectedEmployee != null || IsEdit);
+        }
+    }
+    
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private async Task Save()
+    {
+        if (!CanSave)
+            return;
+
+        _saving = true;
+
+        try
+        {
+            if (IsEdit && BankAccount != null)
+            {
+                var command = _form.Adapt<UpdateBankAccountCommand>();
+                await Client.UpdateBankAccountEndpointAsync("1", BankAccount.Id, command);
+                Snackbar?.Add("Bank account updated successfully.", Severity.Success);
+            }
+            else
+            {
+                var command = _form.Adapt<CreateBankAccountCommand>();
+                await Client.CreateBankAccountEndpointAsync("1", command);
+                Snackbar?.Add("Bank account created successfully.", Severity.Success);
+            }
+
+            MudDialog.Close(true);
+        }
+        catch (Exception ex)
+        {
+            Snackbar?.Add($"Error saving bank account: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private class BankAccountFormModel
+    {
+        public DefaultIdType EmployeeId { get; set; }
+        public string AccountNumber { get; set; } = string.Empty;
+        public string RoutingNumber { get; set; } = string.Empty;
+        public string BankName { get; set; } = string.Empty;
+        public string AccountType { get; set; } = string.Empty;
+        public string AccountHolderName { get; set; } = string.Empty;
+        public string? SwiftCode { get; set; }
+        public string? Iban { get; set; }
+        public string? Notes { get; set; }
+        public string? CurrencyCode { get; set; } = "USD";
+        public bool IsPrimary { get; set; }
+        public bool IsActive { get; set; } = true;
+        public bool IsVerified { get; set; }
+    }
+}
+

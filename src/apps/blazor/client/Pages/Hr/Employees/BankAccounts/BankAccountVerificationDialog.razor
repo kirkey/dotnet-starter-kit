@@ -1,0 +1,186 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.BankAccounts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Account Verification</MudText>
+
+            <MudAlert Severity="Severity.Info">
+                Verify the bank account details to enable it for payroll processing.
+            </MudAlert>
+
+            <MudDivider />
+
+            <div>
+                <MudText Typo="Typo.subtitle2" Class="mb-2">Account Details</MudText>
+                <MudSimpleTable Dense="true" Striped="true" Border="true">
+                    <tbody>
+                        <tr>
+                            <td><strong>Bank Name:</strong></td>
+                            <td>@BankName</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Account Holder:</strong></td>
+                            <td>@AccountHolderName</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Account Type:</strong></td>
+                            <td>@AccountType</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Last 4 Digits:</strong></td>
+                            <td>****@Last4Digits</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Account Number:</strong></td>
+                            <td>••••••••••••••••</td>
+                        </tr>
+                    </tbody>
+                </MudSimpleTable>
+            </div>
+
+            <MudDivider />
+
+            <MudText Typo="Typo.subtitle2">Verification Method</MudText>
+
+            <MudRadioGroup @bind-Value="_verificationMethod" Name="verificationMethod">
+                <MudRadio T="string" Option="@("manual")">
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.body2"><strong>Manual Verification</strong></MudText>
+                    </MudStack>
+                </MudRadio>
+                <MudText Typo="Typo.caption" Class="ms-8 mb-2">
+                    Verify using voided check, bank statement, or official documentation
+                </MudText>
+
+                <MudRadio T="string" Option="@("micro-deposit")">
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.body2"><strong>Micro-deposit Verification</strong></MudText>
+                    </MudStack>
+                </MudRadio>
+                <MudText Typo="Typo.caption" Class="ms-8 mb-3">
+                    System will deposit 2-3 small amounts. Employee confirms amounts from bank statement.
+                </MudText>
+            </MudRadioGroup>
+
+            @if (_verificationMethod == "manual")
+            {
+                <MudStack Spacing="2">
+                    <MudText Typo="Typo.subtitle2">Verification Confirmation</MudText>
+                    
+                    <MudTextField @bind-Value="_verificationNotes"
+                                  Label="Verification Method Used"
+                                  Variant="Variant.Filled"
+                                  Lines="3"
+                                  HelperText="E.g., 'Voided check received and verified', 'Bank statement provided and confirmed'"
+                                  Counter="250"
+                                  MaxLength="250" />
+
+                    <MudCheckBox @bind-Value="_confirmVerification"
+                                 Label="I confirm that account details have been verified and match bank records"
+                                 Color="Color.Primary" />
+
+                    <MudAlert Severity="Severity.Warning" Dense="true">
+                        <strong>Important:</strong> Only mark as verified after confirming details with employee documentation.
+                    </MudAlert>
+                </MudStack>
+            }
+            else if (_verificationMethod == "micro-deposit")
+            {
+                <MudStack Spacing="2">
+                    <MudText Typo="Typo.subtitle2">Micro-deposit Verification Process</MudText>
+                    
+                    <MudAlert Severity="Severity.Info" Dense="true">
+                        The system will initiate 2-3 small deposits (under $1 each). Employee should check their bank statement in 1-2 days.
+                    </MudAlert>
+
+                    <MudText Typo="Typo.body2" Class="mt-3">
+                        <strong>Expected Timeline:</strong>
+                    </MudText>
+                    <MudText Typo="Typo.caption">
+                        • <strong>Day 1:</strong> Deposits initiated<br/>
+                        • <strong>Day 2-3:</strong> Deposits appear in bank account<br/>
+                        • <strong>Day 3-5:</strong> Employee provides confirmation amounts<br/>
+                        • <strong>Day 5:</strong> Account marked as verified
+                    </MudText>
+
+                    <MudCheckBox @bind-Value="_confirmMicrodeposit"
+                                 Label="I acknowledge that micro-deposits will be initiated and the employee has been notified"
+                                 Color="Color.Primary"
+                                 Class="mt-3" />
+                </MudStack>
+            }
+
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Success" 
+                   OnClick="Verify"
+                   Disabled="@(!CanVerify)"
+                   Variant="Variant.Filled">
+            Verify Account
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public string BankName { get; set; } = string.Empty;
+
+    [Parameter]
+    public string AccountHolderName { get; set; } = string.Empty;
+
+    [Parameter]
+    public string AccountType { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Last4Digits { get; set; }
+
+    [Parameter]
+    public EventCallback OnVerifyCallback { get; set; }
+
+    private string _verificationMethod = "manual";
+    private string _verificationNotes = string.Empty;
+    private bool _confirmVerification = false;
+    private bool _confirmMicrodeposit = false;
+
+    private bool CanVerify
+    {
+        get
+        {
+            return _verificationMethod == "manual"
+                ? _confirmVerification && !string.IsNullOrWhiteSpace(_verificationNotes)
+                : _confirmMicrodeposit;
+        }
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private async Task Verify()
+    {
+        var verificationData = new AccountVerificationData
+        {
+            Method = _verificationMethod,
+            Notes = _verificationNotes,
+            VerificationDate = DateTime.UtcNow
+        };
+
+        await OnVerifyCallback.InvokeAsync(verificationData);
+        MudDialog.Close(verificationData);
+    }
+
+    public class AccountVerificationData
+    {
+        public string Method { get; set; } = string.Empty;
+        public string Notes { get; set; } = string.Empty;
+        public DateTime VerificationDate { get; set; }
+    }
+}
+

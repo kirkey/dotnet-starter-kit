@@ -6,7 +6,7 @@
     </TitleContent>
     <DialogContent>
         <EditForm Model="@Command" OnValidSubmit="@OnSubmit">
-            <FluentValidationValidator />
+            <DataAnnotationsValidator />
             <MudStack Spacing="3">
                 <MudAlert Severity="Severity.Info" Variant="Variant.Filled">
                     This will mark the reconciliation as completed. The balances must match before completion.

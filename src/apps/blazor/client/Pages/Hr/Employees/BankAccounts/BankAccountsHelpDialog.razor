@@ -1,0 +1,469 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.BankAccounts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Bank Accounts Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Bank Accounts Used For?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Bank Account Management in Payroll</MudText>
+                        <MudText Typo="Typo.body2">
+                            Bank account information is essential for direct deposit payroll processing. Each employee can maintain multiple accounts 
+                            for different purposes, but only one can be designated as the primary account for payroll deposits.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Primary Uses:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Direct Deposit:</strong> Automatic salary transfer to employee's bank account<br/>
+                                • <strong>Payroll Routing:</strong> Primary account used for monthly/semi-monthly payroll<br/>
+                                • <strong>Multi-Account Support:</strong> Split payroll between checking and savings<br/>
+                                • <strong>Account Verification:</strong> Verify accounts before first use<br/>
+                                • <strong>International Transfers:</strong> SWIFT/IBAN for overseas employees
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Always verify bank accounts before enabling for payroll to prevent failed transfers.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Adding Bank Accounts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Add Employee Bank Account</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Account Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Search and select <strong>Employee</strong> from autocomplete<br/>
+                                3. Enter <strong>Bank Name</strong> (BDO, BPI, Metrobank, etc.)<br/>
+                                4. Enter <strong>Account Holder Name</strong> (as shown in bank records)<br/>
+                                5. Select <strong>Account Type</strong> (Checking, Savings, Money Market)<br/>
+                                6. Enter <strong>Account Number</strong> (masked for security)<br/>
+                                7. Enter <strong>Routing Number</strong> (9-digit ACH/ABA code)<br/>
+                                8. Enter <strong>Currency Code</strong> (USD, PHP, etc.)<br/>
+                                9. Optional: Add SWIFT code and IBAN for international transfers<br/>
+                                10. Check <strong>"Primary Account"</strong> if this is main payroll account<br/>
+                                11. Click <strong>"Save"</strong> to create account<br/>
+                                12. Use <strong>"Verify Account"</strong> action before enabling for payroll
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Required Fields:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Employee (required)<br/>
+                            Bank Name (required)<br/>
+                            Account Holder Name (required)<br/>
+                            Account Type (required)<br/>
+                            Account Number (required)<br/>
+                            Routing Number (required)
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Security Note:</strong> Account numbers are never displayed in full after creation. Only last 4 digits are shown.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Account Verification Process">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Why Verify Bank Accounts?</MudText>
+                        <MudText Typo="Typo.caption" Class="mb-3">
+                            Bank account verification ensures that:<br/>
+                            • Account number is correct and active<br/>
+                            • Employee has control of the account<br/>
+                            • Payroll transfers won't fail due to invalid account<br/>
+                            • Account is ready for direct deposit processing
+                        </MudText>
+
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            <strong>Verification Methods:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Class="mb-3">
+                            <strong>1. Manual Verification (Recommended):</strong><br/>
+                            &nbsp;&nbsp;• Employee provides voided check or bank statement<br/>
+                            &nbsp;&nbsp;• Verify account details match bank records<br/>
+                            &nbsp;&nbsp;• Mark as verified in system<br/><br/>
+                            <strong>2. Micro-deposit Verification:</strong><br/>
+                            &nbsp;&nbsp;• System deposits 2-3 small amounts ($0.01-$0.99)<br/>
+                            &nbsp;&nbsp;• Employee confirms amounts in bank statement<br/>
+                            &nbsp;&nbsp;• Auto-completes verification after confirmation
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Always verify accounts before first payroll run to ensure smooth direct deposit processing.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Domestic vs International Accounts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Account Type Classifications</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>DOMESTIC ACCOUNTS (ACH/ABA):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                ✓ Used for US and local bank transfers<br/>
+                                ✓ Requires: Account Number + Routing Number<br/>
+                                ✓ Processing: 1-2 business days<br/>
+                                ✓ Cost: No additional fees (typically)<br/>
+                                ✓ Example: Standard employee checking account at BDO, BPI, Metrobank<br/>
+                                <br/>
+                                <strong>Example Routing Numbers:</strong><br/>
+                                Bank of America: 021000021<br/>
+                                Chase: 021000021<br/>
+                                Wells Fargo: 121000248
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>INTERNATIONAL ACCOUNTS (SWIFT/IBAN):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                ✓ Used for overseas employee payroll<br/>
+                                ✓ Requires: SWIFT Code + IBAN<br/>
+                                ✓ Processing: 3-5 business days<br/>
+                                ✓ Cost: International wire fees may apply<br/>
+                                ✓ Example: Expatriate with account in home country<br/>
+                                <br/>
+                                <strong>Example SWIFT Codes:</strong><br/>
+                                SWIFT: 8-11 alphanumeric code uniquely identifying banks<br/>
+                                Example: BPIIPHXM (BPI Philippines)<br/>
+                                IBAN: International standard account number (up to 34 characters)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> International transfers require both SWIFT and IBAN. Domestic only needs Account # + Routing #.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Primary vs Secondary Accounts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Account Designation</MudText>
+                        
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            <strong>PRIMARY ACCOUNT:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Class="mb-3">
+                            • Default account for payroll deposits<br/>
+                            • Used when no split payroll is configured<br/>
+                            • Only ONE primary per employee<br/>
+                            • Must be verified before use<br/>
+                            • Setting new primary updates automatically
+                        </MudText>
+
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            <strong>SECONDARY ACCOUNT:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Class="mb-3">
+                            • Used for split payroll setup<br/>
+                            • Example: Main salary to checking, bonus to savings<br/>
+                            • Can have multiple secondary accounts<br/>
+                            • Optional for most employees<br/>
+                            • Still requires verification if used in payroll
+                        </MudText>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Split Payroll Example:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Primary Account (Checking): 80% of salary<br/>
+                            Secondary Account (Savings): 20% of salary<br/>
+                            Result: ₱16,000 to checking, ₱4,000 to savings
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Account Activation & Deactivation">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Account Status Management</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>ACTIVATING ACCOUNTS:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                • New accounts are created in "Active" status by default<br/>
+                                • Reactivate deactivated accounts using "Activate" action<br/>
+                                • Only active accounts can be used for payroll<br/>
+                                • Verification is separate from activation status
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>DEACTIVATING ACCOUNTS:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                • Use "Deactivate" when account is no longer used<br/>
+                                • Example: Employee closes bank account<br/>
+                                • Example: Switching banks, keeping old account history<br/>
+                                • Deactivated accounts won't appear in payroll selection<br/>
+                                • Keeps historical record for audit trail
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Workflow Example:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption">
+                            1. Create new account (Active)<br/>
+                            2. Verify account details<br/>
+                            3. Set as primary if applicable<br/>
+                            4. Use in payroll processing<br/>
+                            5. Deactivate when employee closes account<br/>
+                            6. Account remains in system for historical reference
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Bank Account Scenarios">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Real-World Examples</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Scenario 1: New Employee Hire</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                1. Employee provides bank details on hire date<br/>
+                                2. Create account with BDO Checking account info<br/>
+                                3. Verify using voided check provided<br/>
+                                4. Set as Primary<br/>
+                                5. Ready for first payroll deposit<br/>
+                                <br/>
+                                ✓ Employee receives salary directly to account
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Scenario 2: Bank Account Change</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                1. Employee switches from BDO to BPI<br/>
+                                2. Create new BPI account<br/>
+                                3. Verify new account<br/>
+                                4. Set as Primary (automatically removes from old account)<br/>
+                                5. Deactivate old BDO account (keep for records)<br/>
+                                <br/>
+                                ✓ Future payrolls go to BPI account<br/>
+                                ✓ Old account retained for audit trail
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Scenario 3: Split Payroll (Savings Goal)</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                1. Create Primary account: BDO Checking<br/>
+                                2. Create Secondary account: BPI Savings<br/>
+                                3. Configure payroll split:<br/>
+                                   - 90% to BDO Checking (₱18,000)<br/>
+                                   - 10% to BPI Savings (₱2,000)<br/>
+                                <br/>
+                                ✓ Employee saves automatically each payday<br/>
+                                ✓ Enforces savings discipline
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Scenario 4: Overseas Employee</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                1. Create account with SWIFT/IBAN details<br/>
+                                2. Bank: Deutsche Bank, IBAN: DE89370400440532013000<br/>
+                                3. SWIFT: DEUTDEDBBER<br/>
+                                4. Currency: EUR<br/>
+                                5. Verify international account<br/>
+                                6. Set as Primary<br/>
+                                <br/>
+                                ✓ Monthly payroll transfers via SWIFT<br/>
+                                ✓ Processing takes 3-5 business days<br/>
+                                ✓ Employee receives in EUR
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Scenario 5: Account Verification Failed</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                1. Employee provides incorrect account number<br/>
+                                2. Attempt to verify → fails<br/>
+                                3. Contact employee for correct details<br/>
+                                4. Update account information<br/>
+                                5. Reverify with correct details<br/>
+                                6. Confirm verification before payroll<br/>
+                                <br/>
+                                ⚠️ DO NOT process payroll with unverified accounts
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Always maintain updated account records. Outdated information causes failed payroll transfers.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Security & Privacy">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Protecting Sensitive Bank Information</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Security Measures:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                • Full account numbers are masked in the system<br/>
+                                • Only last 4 digits displayed in lists and reports<br/>
+                                • Account details encrypted in database<br/>
+                                • Access restricted to HR and Payroll staff<br/>
+                                • All changes logged for audit trail<br/>
+                                • Account verification date tracked
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Best Practices:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                ✓ Always verify accounts before first use<br/>
+                                ✓ Don't share full account numbers via email/chat<br/>
+                                ✓ Use secure channels (in-person, encrypted email)<br/>
+                                ✓ Deactivate accounts when no longer needed<br/>
+                                ✓ Review account list for inactive/incorrect records<br/>
+                                ✓ Document verification method used<br/>
+                                ✓ Update records immediately on employee account changes
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Compliance:</strong> Bank account information is sensitive PII. Handle in accordance with data privacy regulations and company policy.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Troubleshooting">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Common Issues & Solutions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Payroll transfer failed. What went wrong?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                A: Common causes:<br/>
+                                • Account not verified in system<br/>
+                                • Account number or routing number incorrect<br/>
+                                • Employee closed the account<br/>
+                                • Account type mismatch (expecting checking, got savings)<br/>
+                                <br/>
+                                <strong>Solution:</strong> Verify account details with employee, update if needed, and reprocess payroll.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Employee has multiple accounts. Which one is used?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                A: The account marked as "Primary" is used by default. You can set different accounts as primary based on:<br/>
+                                • Employee preference change<br/>
+                                • Bank account closure<br/>
+                                • Split payroll configuration<br/>
+                                <br/>
+                                <strong>Solution:</strong> Use "Set as Primary" action to change the default account.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How do I verify international accounts?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                A: For international accounts (SWIFT/IBAN):<br/>
+                                • Request bank statement or official letter from bank<br/>
+                                • Verify SWIFT code matches bank<br/>
+                                • Confirm IBAN format is correct<br/>
+                                • Test with small transfer first if possible<br/>
+                                <br/>
+                                <strong>Solution:</strong> Manually verify and mark as verified. Consider test deposit before full payroll.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can I delete an account?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                A: No, accounts cannot be deleted. Instead:<br/>
+                                • Use "Deactivate" to mark as no longer in use<br/>
+                                • System keeps records for audit trail<br/>
+                                • Historical payroll references remain valid<br/>
+                                <br/>
+                                <strong>Solution:</strong> Deactivate old accounts to keep clean lists while maintaining records.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Operations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Quick Reference for Common Tasks</MudText>
+                        
+                        <MudText Typo="Typo.caption">
+                            <strong>Add Bank Account:</strong> Click table "Create" button → Fill form → Save<br/>
+                            <br/>
+                            <strong>Verify Account:</strong> Click account row → "Verify Account" → Confirm<br/>
+                            <br/>
+                            <strong>Set as Primary:</strong> Click account row → "Set as Primary" → Confirm<br/>
+                            <br/>
+                            <strong>Edit Account:</strong> Click account row → Edit button → Update details → Save<br/>
+                            <br/>
+                            <strong>Deactivate Account:</strong> Click account row → "Deactivate" → Confirm<br/>
+                            <br/>
+                            <strong>View Employee's Accounts:</strong> Employee → Actions → View Bank Accounts<br/>
+                            <br/>
+                            <strong>Search for Account:</strong> Use keyword search (bank name, account holder, last 4 digits)<br/>
+                            <br/>
+                            <strong>Filter by Employee:</strong> Use query parameter: ?employeeId=GUID or Actions menu from Employees page
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private Task Close()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+        return Task.CompletedTask;
+    }
+}

@@ -1,0 +1,118 @@
+@namespace FSH.Starter.Blazor.Client.Components.Hr
+
+<MudAutocomplete T="EmployeeResponse"
+                 @bind-Value="Value"
+                 SearchFunc="@SearchEmployees"
+                 ToStringFunc="@(employee => employee?.FullName ?? string.Empty)"
+                 Label="@Label"
+                 Required="@Required"
+                 RequiredError="@RequiredError"
+                 Variant="@Variant"
+                 AdornmentIcon="@Icons.Material.Filled.Person"
+                 AdornmentColor="@AdornmentColor"
+                 HelperText="@HelperText"
+                 Disabled="@Disabled"
+                 Dense="@Dense"
+                 Clearable="@Clearable"
+                 ResetValueOnEmptyText="@ResetValueOnEmptyText" />
+
+@code {
+    /// <summary>
+    /// Gets or sets the selected employee.
+    /// </summary>
+    [Parameter]
+    public EmployeeResponse? Value { get; set; }
+
+    /// <summary>
+    /// Gets or sets the callback when value changes.
+    /// </summary>
+    [Parameter]
+    public EventCallback<EmployeeResponse?> ValueChanged { get; set; }
+
+    /// <summary>
+    /// Gets or sets the label text.
+    /// </summary>
+    [Parameter]
+    public string Label { get; set; } = "Employee";
+
+    /// <summary>
+    /// Gets or sets whether the field is required.
+    /// </summary>
+    [Parameter]
+    public bool Required { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets the required field error message.
+    /// </summary>
+    [Parameter]
+    public string RequiredError { get; set; } = "Employee is required";
+
+    /// <summary>
+    /// Gets or sets the helper text.
+    /// </summary>
+    [Parameter]
+    public string HelperText { get; set; } = "Search and select employee";
+
+    /// <summary>
+    /// Gets or sets the variant style.
+    /// </summary>
+    [Parameter]
+    public Variant Variant { get; set; } = Variant.Filled;
+
+    /// <summary>
+    /// Gets or sets the adornment color.
+    /// </summary>
+    [Parameter]
+    public Color AdornmentColor { get; set; } = Color.Primary;
+
+    /// <summary>
+    /// Gets or sets whether the field is disabled.
+    /// </summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether to use dense spacing.
+    /// </summary>
+    [Parameter]
+    public bool Dense { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the field is clearable.
+    /// </summary>
+    [Parameter]
+    public bool Clearable { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether to reset value on empty text.
+    /// </summary>
+    [Parameter]
+    public bool ResetValueOnEmptyText { get; set; } = true;
+
+    private async Task<IEnumerable<EmployeeResponse>> SearchEmployees(string searchValue, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(searchValue))
+        {
+            return new List<EmployeeResponse>();
+        }
+
+        try
+        {
+            var request = new SearchEmployeesRequest
+            {
+                Keyword = searchValue,
+                PageNumber = 1,
+                PageSize = 20
+            };
+
+            var response = await Client.SearchEmployeesEndpointAsync("1", request);
+            var result = response.Adapt<PaginationResponse<EmployeeResponse>>();
+            return result.Items;
+        }
+        catch
+        {
+            return new List<EmployeeResponse>();
+        }
+    }
+}
+

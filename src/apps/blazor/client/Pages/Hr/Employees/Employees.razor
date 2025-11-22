@@ -3,6 +3,7 @@
 @using FSH.Starter.Blazor.Client.Pages.Hr.Employees.Contacts
 @using FSH.Starter.Blazor.Client.Pages.Hr.Employees.Dependents
 @using FSH.Starter.Blazor.Client.Pages.Hr.Employees.Educations
+@using FSH.Starter.Blazor.Client.Pages.Hr.Employees.BankAccounts
 
 <PageHeader Title="Employees" Header="Employees" SubHeader="Comprehensive profile management, onboarding, and lifecycle." />
 
@@ -40,6 +41,10 @@
             <MudMenuItem Icon="@Icons.Material.Filled.School"
                          OnClick="@(() => NavigateTo("/human-resources/employees/educations", employee.Id))">
                 View Education
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.AccountBalance"
+                         OnClick="@(() => NavigateTo("/human-resources/employees/bank-accounts", employee.Id))">
+                View Bank Accounts
             </MudMenuItem>
         </MudMenu>
     </ExtraActions>
@@ -256,6 +261,12 @@
             </MudItem>
             <MudItem xs="12" Class="mt-4">
                 <EmployeeEducationsComponent EmployeeId="@context.Id" />
+            </MudItem>
+            <MudItem xs="12" Class="mt-6">
+                <MudDivider />
+            </MudItem>
+            <MudItem xs="12" Class="mt-4">
+                <BankAccountsComponent EmployeeId="@context.Id" />
             </MudItem>
         }
 

@@ -1,0 +1,197 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.BankAccounts
+
+<MudPaper Elevation="0" Class="pa-4 mb-4">
+    <MudStack Spacing="3">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+            <MudText Typo="Typo.subtitle2">Bank Accounts for Payroll</MudText>
+            <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="AddBankAccount">
+                Add Bank Account
+            </MudButton>
+        </MudStack>
+
+        @if (_loading)
+        {
+            <MudProgressCircular IsIndeterminate="true" />
+        }
+        else if (_accounts == null || _accounts.Count == 0)
+        {
+            <MudAlert Severity="Severity.Info">No bank accounts added yet. Click "Add Bank Account" to add one.</MudAlert>
+        }
+        else
+        {
+            <MudList T="BankAccountResponse" Dense="true">
+                @foreach (var account in _accounts)
+                {
+                    <MudListItem T="BankAccountResponse">
+                        <MudStack Spacing="1" Class="full-width">
+                            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                                <MudStack Spacing="0">
+                                    <MudText Typo="Typo.body2">
+                                        <strong>@account.BankName</strong>
+                                    </MudText>
+                                    <MudText Typo="Typo.caption">@account.AccountHolderName</MudText>
+                                </MudStack>
+                                <MudStack Row="true" Spacing="1">
+                                    <MudButton Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditAccount(account.Id))">
+                                        Edit
+                                    </MudButton>
+                                    <MudButton Size="Size.Small" Variant="Variant.Text" Color="Color.Error" OnClick="@(() => DeleteAccount(account.Id))">
+                                        Delete
+                                    </MudButton>
+                                </MudStack>
+                            </MudStack>
+
+                            <MudStack Spacing="0" Class="mt-2">
+                                @if (!string.IsNullOrWhiteSpace(account.AccountType))
+                                {
+                                    <MudText Typo="Typo.caption">
+                                        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.CreditCard" Class="mr-1" />
+                                        @account.AccountType
+                                    </MudText>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(account.Last4Digits))
+                                {
+                                    <MudText Typo="Typo.caption">
+                                        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Lock" Class="mr-1" />
+                                        ****@account.Last4Digits
+                                    </MudText>
+                                }
+                                <MudStack Row="true" Spacing="2" Class="mt-2">
+                                    @if (account.IsPrimary)
+                                    {
+                                        <MudChip T="string" Size="Size.Small" Color="Color.Primary" Icon="@Icons.Material.Filled.Star">
+                                            Primary
+                                        </MudChip>
+                                    }
+                                    else
+                                    {
+                                        <MudChip T="string" Size="Size.Small" Color="Color.Default" Icon="@Icons.Material.Filled.Circle">
+                                            Secondary
+                                        </MudChip>
+                                    }
+                                    @if (account.IsVerified)
+                                    {
+                                        <MudChip T="string" Size="Size.Small" Color="Color.Success" Icon="@Icons.Material.Filled.CheckCircle">
+                                            Verified
+                                        </MudChip>
+                                    }
+                                    else
+                                    {
+                                        <MudChip T="string" Size="Size.Small" Color="Color.Warning" Icon="@Icons.Material.Filled.Info">
+                                            Unverified
+                                        </MudChip>
+                                    }
+                                    @if (!account.IsActive)
+                                    {
+                                        <MudChip T="string" Size="Size.Small" Color="Color.Error" Icon="@Icons.Material.Filled.Lock">
+                                            Inactive
+                                        </MudChip>
+                                    }
+                                </MudStack>
+                            </MudStack>
+                        </MudStack>
+                    </MudListItem>
+                    <MudDivider />
+                }
+            </MudList>
+        }
+    </MudStack>
+</MudPaper>
+
+@code {
+    [Parameter]
+    public DefaultIdType EmployeeId { get; set; }
+
+    private List<BankAccountResponse>? _accounts;
+    private bool _loading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAccounts();
+    }
+
+    private async Task LoadAccounts()
+    {
+        _loading = true;
+        try
+        {
+            var request = new SearchBankAccountsRequest
+            {
+                EmployeeId = EmployeeId,
+                PageNumber = 1,
+                PageSize = 100
+            };
+            var response = await Client.SearchBankAccountsEndpointAsync("1", request);
+            var result = response.Adapt<PaginationResponse<BankAccountResponse>>();
+            _accounts = result.Items.ToList();
+        }
+        catch (Exception ex)
+        {
+            Snackbar?.Add($"Error loading bank accounts: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private async Task AddBankAccount()
+    {
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+        var result = await DialogService.ShowAsync<BankAccountDialog>(
+            "Add Bank Account",
+            new DialogParameters { { "EmployeeId", EmployeeId } },
+            options);
+
+        if (result is not null)
+        {
+            await LoadAccounts();
+        }
+    }
+
+    private async Task EditAccount(DefaultIdType accountId)
+    {
+        try
+        {
+            var account = await Client.GetBankAccountEndpointAsync("1", accountId);
+            var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+            var result = await DialogService.ShowAsync<BankAccountDialog>(
+                "Edit Bank Account",
+                new DialogParameters { { "BankAccount", account } },
+                options);
+
+            if (result is not null)
+            {
+                await LoadAccounts();
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar?.Add($"Error loading bank account: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task DeleteAccount(DefaultIdType accountId)
+    {
+        var confirmed = await DialogService.ShowMessageBox(
+            "Delete Bank Account",
+            "Are you sure you want to delete this bank account?",
+            "Delete",
+            "Cancel");
+
+        if (confirmed == true)
+        {
+            try
+            {
+                await Client.DeleteBankAccountEndpointAsync("1", accountId);
+                Snackbar?.Add("Bank account deleted successfully.", Severity.Success);
+                await LoadAccounts();
+            }
+            catch (Exception ex)
+            {
+                Snackbar?.Add($"Error deleting bank account: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+}
+
