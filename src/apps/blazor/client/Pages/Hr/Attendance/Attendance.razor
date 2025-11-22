@@ -16,13 +16,54 @@
 </MudPaper>
 
 <EntityTable @ref="_table" TEntity="AttendanceResponse" TId="DefaultIdType" TRequest="AttendanceViewModel" Context="@Context">
-    <EditFormContent>
+    <ExtraActions Context="attendance">
+        <MudMenu Label="Actions" Variant="Variant.Filled"
+                 EndIcon="@Icons.Material.Filled.KeyboardArrowDown" IconColor="Color.Secondary" TransformOrigin="Origin.TopCenter">
+        </MudMenu>
+    </ExtraActions>
+    
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Attendance ID" />
+            </MudItem>
+        }
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Attendance Information</MudText>
+        </MudItem>
+
         <MudItem xs="12" sm="6" md="6">
-            <MudSelect @bind-Value="@Context.Request.Status"
-                      Label="Status *"
-                      Required="true"
-                      RequiredError="Status is required"
-                      Variant="Variant.Filled">
+            <AutocompleteEmployee @bind-Value="context.SelectedEmployee"
+                                   Label="Employee *"
+                                   Required="true"
+                                   RequiredError="Employee is required"
+                                   Variant="Variant.Filled"
+                                   HelperText="Search and select employee"
+                                   Disabled="@(!Context.AddEditModal.IsCreate)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudDatePicker @bind-Date="context.AttendanceDate"
+                          For="@(() => context.AttendanceDate)"
+                          Label="Attendance Date *"
+                          DateFormat="MMMM dd, yyyy"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Select attendance date"
+                          Disabled="@(!Context.AddEditModal.IsCreate)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?" @bind-Value="context.Status"
+                       For="@(() => context.Status)"
+                       Label="Status *"
+                       Variant="Variant.Filled"
+                       Required="true"
+                       RequiredError="Status is required">
                 <MudSelectItem Value="@("Present")">Present</MudSelectItem>
                 <MudSelectItem Value="@("Absent")">Absent</MudSelectItem>
                 <MudSelectItem Value="@("Late")">Late</MudSelectItem>
@@ -30,6 +71,63 @@
                 <MudSelectItem Value="@("Half-Day")">Half-Day</MudSelectItem>
             </MudSelect>
         </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTimePicker @bind-Time="context.InTime"
+                          For="@(() => context.InTime)"
+                          Label="In Time"
+                          Variant="Variant.Filled"
+                          HelperText="Clock in time" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTimePicker @bind-Time="context.OutTime"
+                          For="@(() => context.OutTime)"
+                          Label="Out Time"
+                          Variant="Variant.Filled"
+                          HelperText="Clock out time" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Additional Information</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <AutocompleteShift @bind-Value="context.SelectedShift"
+                              Label="Shift"
+                              Required="false"
+                              Variant="Variant.Filled"
+                              HelperText="Select assigned shift (optional)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          HelperText="Additional remarks (e.g., reason for absence)"
+                          Placeholder="Enter any notes or comments" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudSwitch @bind-Value="context.IsVerified"
+                      Class="mt-3"
+                      For="@(() => context.IsVerified)"
+                      Label="Verified"
+                      HelperText="HR has verified this record" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudSwitch @bind-Value="context.IsApproved"
+                      Class="mt-3"
+                      For="@(() => context.IsApproved)"
+                      Label="Approved"
+                      HelperText="Supervisor has approved" />
+        </MudItem>
+
     </EditFormContent>
 </EntityTable>
 
