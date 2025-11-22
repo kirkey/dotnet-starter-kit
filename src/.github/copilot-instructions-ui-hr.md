@@ -160,7 +160,7 @@
 
         @if (_contacts == null)
         {
-            <MudProgressCircular IsIndeterminate="true" />
+            <MudProgressCircular Indeterminate="true" />
         }
         else if (_contacts.Count == 0)
         {
@@ -589,7 +589,7 @@ private async Task OnSetPrimary(DefaultIdType accountId)
 ```razor
         @if (_loading)
         {
-            <MudProgressCircular IsIndeterminate="true" />
+            <MudProgressCircular Indeterminate="true" />
         }
         else if (_accounts == null || _accounts.Count == 0)
         {

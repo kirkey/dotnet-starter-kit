@@ -1,0 +1,118 @@
+@namespace FSH.Starter.Blazor.Client.Components.Hr
+
+<MudAutocomplete T="ShiftResponse"
+                 @bind-Value="Value"
+                 SearchFunc="@SearchShifts"
+                 ToStringFunc="@(shift => shift?.Id.ToString() ?? string.Empty)"
+                 Label="@Label"
+                 Required="@Required"
+                 RequiredError="@RequiredError"
+                 Variant="@Variant"
+                 AdornmentIcon="@Icons.Material.Filled.Schedule"
+                 AdornmentColor="@AdornmentColor"
+                 HelperText="@HelperText"
+                 Disabled="@Disabled"
+                 Dense="@Dense"
+                 Clearable="@Clearable"
+                 ResetValueOnEmptyText="@ResetValueOnEmptyText" />
+
+@code {
+    /// <summary>
+    /// Gets or sets the selected shift.
+    /// </summary>
+    [Parameter]
+    public ShiftResponse? Value { get; set; }
+
+    /// <summary>
+    /// Gets or sets the callback when value changes.
+    /// </summary>
+    [Parameter]
+    public EventCallback<ShiftResponse?> ValueChanged { get; set; }
+
+    /// <summary>
+    /// Gets or sets the label text.
+    /// </summary>
+    [Parameter]
+    public string Label { get; set; } = "Shift";
+
+    /// <summary>
+    /// Gets or sets whether the field is required.
+    /// </summary>
+    /// <summary>
+    /// Gets or sets whether the field is required.
+    /// </summary>
+    [Parameter]
+    public bool Required { get; set; }
+
+    /// <summary>
+    /// Gets or sets the required field error message.
+    /// </summary>
+    [Parameter]
+    public string RequiredError { get; set; } = "Shift is required";
+
+    /// <summary>
+    /// Gets or sets the helper text.
+    /// </summary>
+    [Parameter]
+    public string HelperText { get; set; } = "Search and select shift";
+
+    /// <summary>
+    /// Gets or sets the variant style.
+    /// </summary>
+    [Parameter]
+    public Variant Variant { get; set; } = Variant.Filled;
+
+    /// <summary>
+    /// Gets or sets the adornment color.
+    /// </summary>
+    [Parameter]
+    public Color AdornmentColor { get; set; } = Color.Primary;
+
+    /// <summary>
+    /// Gets or sets whether the field is disabled.
+    /// </summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether to use dense spacing.
+    /// </summary>
+    [Parameter]
+    public bool Dense { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the field is clearable.
+    /// </summary>
+    [Parameter]
+    public bool Clearable { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets whether to reset value on empty text.
+    /// </summary>
+    [Parameter]
+    public bool ResetValueOnEmptyText { get; set; } = true;
+
+    private async Task<IEnumerable<ShiftResponse>> SearchShifts(string searchValue, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(searchValue))
+            return [];
+
+        try
+        {
+            var request = new SearchShiftsRequest
+            {
+                Keyword = searchValue,
+                PageNumber = 1,
+                PageSize = 20
+            };
+
+            var result = await Client.SearchShiftsEndpointAsync("1", request);
+            return result.Items ?? [];
+        }
+        catch
+        {
+            return [];
+        }
+    }
+}
+

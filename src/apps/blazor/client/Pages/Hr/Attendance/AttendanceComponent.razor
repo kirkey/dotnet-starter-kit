@@ -1,0 +1,163 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Attendance
+
+<MudPaper Elevation="0" Class="pa-4 mb-4">
+    <MudStack Spacing="3">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+            <MudText Typo="Typo.subtitle2">Attendance Records</MudText>
+            <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="AddAttendance">
+                Mark Attendance
+            </MudButton>
+        </MudStack>
+
+        @if (_attendanceRecords == null)
+        {
+            <MudProgressCircular Indeterminate="true" />
+        }
+        else if (_attendanceRecords.Count == 0)
+        {
+            <MudAlert Severity="Severity.Info">No attendance records yet. Click "Mark Attendance" to add one.</MudAlert>
+        }
+        else
+        {
+            <MudList T="AttendanceResponse" Dense="true">
+                @foreach (var record in _attendanceRecords)
+                {
+                    <MudListItem T="AttendanceResponse">
+                        <MudStack Spacing="1" Class="full-width">
+                            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                                <MudStack Spacing="0">
+                                    <MudText Typo="Typo.body2">
+                                        <strong>@record.AttendanceDate.ToString("MMMM dd, yyyy")</strong>
+                                    </MudText>
+                                    <MudText Typo="Typo.caption">@record.Status</MudText>
+                                </MudStack>
+                                <MudStack Row="true" Spacing="1">
+                                    <MudButton Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditRecord(record))">
+                                        Edit
+                                    </MudButton>
+                                    <MudButton Size="Size.Small" Variant="Variant.Text" Color="Color.Error" OnClick="@(() => DeleteRecord(record.Id))">
+                                        Delete
+                                    </MudButton>
+                                </MudStack>
+                            </MudStack>
+
+                            <MudStack Spacing="0" Class="mt-2">
+                                <MudStack Row="true" Spacing="2" Class="mt-2">
+                                    <MudChip T="string" Size="Size.Small" Color="@GetStatusColor(record.Status ?? "Present")" Icon="@GetStatusIcon(record.Status ?? "Present")">
+                                        @(record.Status ?? "Unknown")
+                                    </MudChip>
+                                </MudStack>
+                            </MudStack>
+                        </MudStack>
+                    </MudListItem>
+                    <MudDivider />
+                }
+            </MudList>
+        }
+    </MudStack>
+</MudPaper>
+
+@code {
+    [Parameter]
+    public DefaultIdType EmployeeId { get; set; }
+
+    private List<AttendanceResponse>? _attendanceRecords;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAttendance();
+    }
+
+    private async Task LoadAttendance()
+    {
+        try
+        {
+            var request = new SearchAttendanceRequest
+            {
+                EmployeeId = EmployeeId,
+                PageNumber = 1,
+                PageSize = 30
+            };
+            var response = await Client.SearchAttendanceEndpointAsync("1", request);
+            var result = response.Adapt<PaginationResponse<AttendanceResponse>>();
+            _attendanceRecords = result.Items.OrderByDescending(x => x.AttendanceDate).ToList();
+        }
+        catch (Exception ex)
+        {
+            Snackbar?.Add($"Error loading attendance: {ex.Message}", Severity.Error);
+            _attendanceRecords = new();
+        }
+    }
+
+    private async Task AddAttendance()
+    {
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+        var result = await DialogService.ShowAsync<AttendanceDialog>(
+            "Mark Attendance",
+            new DialogParameters { { "EmployeeId", EmployeeId } },
+            options);
+
+        if (result is not null)
+        {
+            await LoadAttendance();
+        }
+    }
+
+    private async Task EditRecord(AttendanceResponse record)
+    {
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+        var result = await DialogService.ShowAsync<AttendanceDialog>(
+            "Edit Attendance",
+            new DialogParameters { { "AttendanceRecord", record } },
+            options);
+
+        if (result is not null)
+        {
+            await LoadAttendance();
+        }
+    }
+
+    private async Task DeleteRecord(DefaultIdType recordId)
+    {
+        var confirmed = await DialogService.ShowMessageBox(
+            "Delete Attendance",
+            "Are you sure you want to delete this attendance record?",
+            "Delete",
+            "Cancel");
+
+        if (confirmed == true)
+        {
+            try
+            {
+                await Client.DeleteAttendanceEndpointAsync("1", recordId);
+                Snackbar?.Add("Attendance record deleted successfully.", Severity.Success);
+                await LoadAttendance();
+            }
+            catch (Exception ex)
+            {
+                Snackbar?.Add($"Error deleting attendance: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+
+    private Color GetStatusColor(string status) => status switch
+    {
+        "Present" => Color.Success,
+        "Absent" => Color.Error,
+        "Late" => Color.Warning,
+        "Leave" => Color.Info,
+        "Half-Day" => Color.Secondary,
+        _ => Color.Default
+    };
+
+    private string GetStatusIcon(string status) => status switch
+    {
+        "Present" => Icons.Material.Filled.CheckCircle,
+        "Absent" => Icons.Material.Filled.Cancel,
+        "Late" => Icons.Material.Filled.Schedule,
+        "Leave" => Icons.Material.Filled.EventNote,
+        "Half-Day" => Icons.Material.Filled.Timer,
+        _ => Icons.Material.Filled.Info
+    };
+}
+

@@ -31,20 +31,25 @@
             </MudMenuItem>
             <MudDivider />
             <MudMenuItem Icon="@Icons.Material.Filled.Contacts"
-                         OnClick="@(() => NavigateTo("/human-resources/employees/contacts", employee.Id))">
+                         OnClick="@(() => NavigateTo("/hr/employee-contacts", employee.Id))">
                 View Contacts
             </MudMenuItem>
             <MudMenuItem Icon="@Icons.Material.Filled.FamilyRestroom"
-                         OnClick="@(() => NavigateTo("/human-resources/employees/dependents", employee.Id))">
+                         OnClick="@(() => NavigateTo("/hr/employee-dependents", employee.Id))">
                 View Dependents
             </MudMenuItem>
             <MudMenuItem Icon="@Icons.Material.Filled.School"
-                         OnClick="@(() => NavigateTo("/human-resources/employees/educations", employee.Id))">
+                         OnClick="@(() => NavigateTo("/hr/employee-education", employee.Id))">
                 View Education
             </MudMenuItem>
             <MudMenuItem Icon="@Icons.Material.Filled.AccountBalance"
-                         OnClick="@(() => NavigateTo("/human-resources/employees/bank-accounts", employee.Id))">
+                         OnClick="@(() => NavigateTo("/hr/employee-bank-accounts", employee.Id))">
                 View Bank Accounts
+            </MudMenuItem>
+            <MudDivider />
+            <MudMenuItem Icon="@Icons.Material.Filled.Fingerprint"
+                         OnClick="@(() => NavigateTo("/hr/attendance", employee.Id))">
+                View Attendance
             </MudMenuItem>
         </MudMenu>
     </ExtraActions>

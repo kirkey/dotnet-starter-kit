@@ -1,0 +1,346 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Attendance
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Attendance Management Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="Attendance Overview">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2">
+                            <strong>What is Attendance Tracking?</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption">
+                            Attendance tracking records when employees are present, absent, late, or on leave. 
+                            It's essential for:
+                            <br/>• Payroll calculations (absence deductions)
+                            <br/>• Performance evaluation
+                            <br/>• Leave balance tracking
+                            <br/>• Punctuality monitoring
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Attendance Status Types">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2"><strong>Present:</strong> Employee was at work during full working hours</MudText>
+                        <MudText Typo="Typo.body2"><strong>Absent:</strong> Employee did not come to work without leave approval</MudText>
+                        <MudText Typo="Typo.body2"><strong>Late:</strong> Employee arrived after scheduled shift start time</MudText>
+                        <MudText Typo="Typo.body2"><strong>Leave:</strong> Employee was on approved leave</MudText>
+                        <MudText Typo="Typo.body2"><strong>Half-Day:</strong> Employee worked partial day (morning or afternoon)</MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="How to Mark Attendance">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Manual Entry Process</MudText>
+                        <MudText Typo="Typo.caption">
+                            1. Click <strong>"Create"</strong> button<br/>
+                            2. Select <strong>Employee</strong> from the autocomplete<br/>
+                            3. Select <strong>Attendance Date</strong><br/>
+                            4. Choose <strong>Status</strong> (Present, Absent, Late, Leave, Half-Day)<br/>
+                            5. Enter <strong>In Time</strong> (clock in time)<br/>
+                            6. Enter <strong>Out Time</strong> (clock out time)<br/>
+                            7. Select assigned <strong>Shift</strong> (optional)<br/>
+                            8. Add <strong>Notes</strong> if needed (e.g., reason for absence)<br/>
+                            9. Check <strong>Verified</strong> if manually verified<br/>
+                            10. Check <strong>Approved</strong> after verification<br/>
+                            11. Click <strong>"Save"</strong>
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Quick Actions">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Fast Status Updates</MudText>
+                        <MudText Typo="Typo.caption">
+                            For existing records, use the quick action buttons:
+                        </MudText>
+                        <MudText Typo="Typo.body2">
+                            <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.CheckCircle" Class="mr-1" />
+                            <strong>Mark Present:</strong> Immediately set status to Present
+                        </MudText>
+                        <MudText Typo="Typo.body2">
+                            <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Cancel" Class="mr-1" />
+                            <strong>Mark Absent:</strong> Immediately set status to Absent
+                        </MudText>
+                        <MudText Typo="Typo.body2">
+                            <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Schedule" Class="mr-1" />
+                            <strong>Mark Late:</strong> Immediately set status to Late
+                        </MudText>
+                        <MudAlert Severity="Severity.Info" Dense="true" Class="mt-3">
+                            Quick actions require confirmation. No changes are made until confirmed.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Verification & Approval">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Record Approval Workflow</MudText>
+                        <MudText Typo="Typo.caption">
+                            <strong>Verified:</strong> HR has confirmed the attendance record is correct
+                            <br/>• Check box after validating clock-in/out times
+                            <br/>• Verify against biometric records if available
+                            <br/><br/>
+                            <strong>Approved:</strong> Supervisor has approved the record
+                            <br/>• Required before payroll processing
+                            <br/>• Ensures manager acknowledgment
+                            <br/>• Prevents unauthorized changes
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Shift Assignments">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Linking to Shifts</MudText>
+                        <MudText Typo="Typo.caption">
+                            Shifts define working hours and help calculate:
+                            <br/>• Expected working hours
+                            <br/>• Overtime eligibility
+                            <br/>• Break times
+                            <br/>• Shift differentials (if applicable)
+                            <br/><br/>
+                            <strong>To assign a shift:</strong>
+                            <br/>1. Open attendance record
+                            <br/>2. Select shift from autocomplete
+                            <br/>3. Save record
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Time Entry Guidelines">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Recording Clock Times</MudText>
+                        <MudText Typo="Typo.caption">
+                            <strong>In Time:</strong> When employee clocked in or arrived
+                            <br/>• Example: 08:30 (office time), 08:45 (late start)
+                            <br/>• Required for Present and Late status
+                            <br/><br/>
+                            <strong>Out Time:</strong> When employee clocked out or left
+                            <br/>• Example: 17:30 (regular), 18:00 (overtime)
+                            <br/>• Optional for some statuses
+                            <br/><br/>
+                            <strong>Time Format:</strong> HH:MM (24-hour format)
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Notes & Remarks">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">When to Add Notes</MudText>
+                        <MudText Typo="Typo.caption">
+                            Add notes for:
+                            <br/>• <strong>Absent:</strong> "Medical appointment", "Car accident", "Company leave"
+                            <br/>• <strong>Late:</strong> "Traffic", "Car breakdown", "Child illness"
+                            <br/>• <strong>Half-Day:</strong> "Doctor visit (afternoon)", "Training (morning)"
+                            <br/>• <strong>Leave:</strong> "Annual leave", "Sick leave", "Special leave"
+                            <br/>• <strong>Present:</strong> Special remarks or achievements
+                            <br/><br/>
+                            Notes help managers understand absence reasons and are useful for future reference.
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Scenarios">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Real-World Examples</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Scenario 1: Regular Work Day</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                Employee: John Doe<br/>
+                                Status: Present<br/>
+                                In Time: 08:30<br/>
+                                Out Time: 17:30<br/>
+                                Shift: 8-Hour Shift<br/>
+                                ✓ Result: Full day attendance recorded
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Scenario 2: Late Arrival</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                Employee: Jane Smith<br/>
+                                Status: Late<br/>
+                                In Time: 09:15 (30 minutes late)<br/>
+                                Out Time: 18:15 (made up time)<br/>
+                                Notes: "Traffic congestion"<br/>
+                                ✓ Result: Late attendance with reason recorded
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Scenario 3: Absence with Leave</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                Employee: Bob Johnson<br/>
+                                Status: Leave<br/>
+                                In Time: (not required)<br/>
+                                Out Time: (not required)<br/>
+                                Notes: "Annual leave"<br/>
+                                ✓ Result: Leave recorded (no attendance mark)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Scenario 4: Half-Day</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                Employee: Alice Brown<br/>
+                                Status: Half-Day<br/>
+                                In Time: 08:30<br/>
+                                Out Time: 12:30 (left after morning)<br/>
+                                Notes: "Medical appointment"<br/>
+                                ✓ Result: Half-day recorded, deduction applied
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Scenario 5: Unauthorized Absence</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                Employee: Charlie Wilson<br/>
+                                Status: Absent<br/>
+                                In Time: (not applicable)<br/>
+                                Out Time: (not applicable)<br/>
+                                Notes: "No leave approved"<br/>
+                                ✓ Result: Absence marked, salary deduction may apply
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Payroll Impact">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How Attendance Affects Payroll</MudText>
+                        <MudText Typo="Typo.caption">
+                            <strong>Present (Full Day):</strong>
+                            <br/>• 100% salary paid
+                            <br/>• Overtime hours calculated if > 8 hours
+                            <br/><br/>
+                            <strong>Absent (Unauthorized):</strong>
+                            <br/>• 0% salary paid for that day
+                            <br/>• No benefits accrual
+                            <br/>• May require explanation
+                            <br/><br/>
+                            <strong>Late Arrival:</strong>
+                            <br/>• Deduction for hours missed
+                            <br/>• Calculated based on shift hours
+                            <br/>• May trigger attendance warning
+                            <br/><br/>
+                            <strong>Leave (Approved):</strong>
+                            <br/>• 100% salary paid (if paid leave)
+                            <br/>• Leave balance deducted
+                            <br/>• No additional deductions
+                            <br/><br/>
+                            <strong>Half-Day:</strong>
+                            <br/>• 50% salary paid (or actual hours worked)
+                            <br/>• Difference calculated from shift hours
+                            <br/>• Overtime may apply if working late
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Troubleshooting">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Common Issues & Solutions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Employee not found in autocomplete?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                A: Possible reasons:
+                                <br/>• Employee record may be inactive
+                                <br/>• Incorrect employee name spelling
+                                <br/>• Employee hasn't been created yet
+                                <br/>• Solution: Create/activate employee record first
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: How to correct a previous attendance?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                A: Steps to update:
+                                <br/>1. Find the record in the table
+                                <br/>2. Click "Edit" button
+                                <br/>3. Modify status, times, or notes
+                                <br/>4. Add explanation in Notes field
+                                <br/>5. Verify and approve again
+                                <br/>6. Save changes
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: Can I bulk update attendance for multiple employees?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                A: Currently individual records must be updated separately.
+                                <br/>For bulk updates:
+                                <br/>1. Filter by date using search
+                                <br/>2. Update each record individually
+                                <br/>Or use quick action buttons for faster processing
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Q: What's the difference between Verified and Approved?</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                A: Two-step approval process:
+                                <br/><strong>Verified:</strong> HR confirmed times/dates are correct
+                                <br/><strong>Approved:</strong> Manager acknowledged and approved the record
+                                <br/>Both should be checked before payroll processing
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Attendance Management Tips</MudText>
+                        <MudText Typo="Typo.caption">
+                            ✓ Mark attendance daily (preferably by end of day)
+                            <br/>✓ Use consistent status naming conventions
+                            <br/>✓ Always add notes for absences or late arrivals
+                            <br/>✓ Verify attendance against biometric records if available
+                            <br/>✓ Approve records before payroll processing cycle
+                            <br/>✓ Review and correct records within 5 business days
+                            <br/>✓ Maintain audit trail of all changes
+                            <br/>✓ Communicate policy changes to all departments
+                            <br/>✓ Use shifts for accurate time calculations
+                            <br/>✓ Store supporting documents (leave approvals, medical certs)
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private Task Close()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+        return Task.CompletedTask;
+    }
+}
+

@@ -1,0 +1,41 @@
+@page "/hr/attendance"
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Attendance
+@using FSH.Starter.Blazor.Client.Components.Hr
+
+<PageHeader Title="Attendance" Header="Attendance" SubHeader="Track employee attendance, mark in/out times, and manage attendance records." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowAttendanceHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="AttendanceResponse" TId="DefaultIdType" TRequest="AttendanceViewModel" Context="@Context">
+    <EditFormContent>
+        <MudItem xs="12" sm="6" md="6">
+            <MudSelect @bind-Value="@Context.Request.Status"
+                      Label="Status *"
+                      Required="true"
+                      RequiredError="Status is required"
+                      Variant="Variant.Filled">
+                <MudSelectItem Value="@("Present")">Present</MudSelectItem>
+                <MudSelectItem Value="@("Absent")">Absent</MudSelectItem>
+                <MudSelectItem Value="@("Late")">Late</MudSelectItem>
+                <MudSelectItem Value="@("Leave")">Leave</MudSelectItem>
+                <MudSelectItem Value="@("Half-Day")">Half-Day</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+
+<AttendanceHelpDialog />
+
+@code {
+    private EntityTable<AttendanceResponse, DefaultIdType, AttendanceViewModel>? _table;
+}
+

@@ -1997,7 +1997,7 @@ new EntityField<TEntity>(
 
         @if (_contacts == null)
         {
-            <MudProgressCircular IsIndeterminate="true" />
+            <MudProgressCircular Indeterminate="true" />
         }
         else if (_contacts.Count == 0)
         {

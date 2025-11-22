@@ -1,0 +1,141 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Attendance
+@using FSH.Starter.Blazor.Client.Components.Hr
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Fingerprint" Class="me-2" />
+            @(IsEdit ? "Edit Attendance" : "Mark Attendance")
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+        }
+        else
+        {
+            <MudGrid Spacing="2">
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Info" Dense="true">
+                        @(IsEdit 
+                            ? "Update the attendance status."
+                            : "Record attendance status.")
+                    </MudAlert>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudSelect @bind-Value="_form.Status"
+                               Label="Status *"
+                               Required="true"
+                               RequiredError="Status is required"
+                               Variant="Variant.Filled">
+                        <MudSelectItem Value="@("Present")">Present</MudSelectItem>
+                        <MudSelectItem Value="@("Absent")">Absent</MudSelectItem>
+                        <MudSelectItem Value="@("Late")">Late</MudSelectItem>
+                        <MudSelectItem Value="@("Leave")">Leave</MudSelectItem>
+                        <MudSelectItem Value="@("Half-Day")">Half-Day</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" 
+                   OnClick="Save"
+                   Disabled="@(!CanSave || _saving)"
+                   Variant="Variant.Filled">
+            @if (_saving)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="me-2" />
+            }
+            @(IsEdit ? "Update" : "Create")
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public AttendanceResponse? AttendanceRecord { get; set; }
+
+    private AttendanceFormModel _form = new();
+    private bool _loading;
+    private bool _saving;
+
+    private bool IsEdit => AttendanceRecord != null;
+
+    private bool CanSave =>
+        (!string.IsNullOrWhiteSpace(_form.Status));
+
+    protected override Task OnInitializedAsync()
+    {
+        _loading = true;
+        try
+        {
+            if (IsEdit && AttendanceRecord != null)
+            {
+                _form = new AttendanceFormModel
+                {
+                    Status = AttendanceRecord.Status
+                };
+            }
+            else
+            {
+                _form.Status = "Present";
+            }
+        }
+        finally
+        {
+            _loading = false;
+        }
+        return Task.CompletedTask;
+    }
+
+    private async Task Save()
+    {
+        if (!CanSave || _saving)
+            return;
+
+        _saving = true;
+        try
+        {
+            if (IsEdit && AttendanceRecord != null)
+            {
+                var command = new UpdateAttendanceCommand();
+                await Client.UpdateAttendanceEndpointAsync("1", AttendanceRecord.Id, command);
+            }
+            else
+            {
+                var command = new CreateAttendanceCommand();
+                await Client.CreateAttendanceEndpointAsync("1", command);
+            }
+
+            Snackbar?.Add(IsEdit ? "Attendance updated successfully." : "Attendance created successfully.", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar?.Add($"Error: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private class AttendanceFormModel
+    {
+        public string? Status { get; set; }
+    }
+}
+

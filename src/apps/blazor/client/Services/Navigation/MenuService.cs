@@ -227,13 +227,13 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Employees", Icon = Icons.Material.Filled.Badge, Href = "/hr/employees", Action = FshActions.View, Resource = FshResources.Employees, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Employee Contacts", Icon = Icons.Material.Filled.Contacts, Href = "/hr/employee-contacts", Action = FshActions.View, Resource = FshResources.Employees, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Employee Dependents", Icon = Icons.Material.Filled.FamilyRestroom, Href = "/hr/employee-dependents", Action = FshActions.View, Resource = FshResources.Employees, PageStatus = PageStatus.InProgress },
-                        new MenuSectionSubItemModel { Title = "Employee Documents", Icon = Icons.Material.Filled.Description, Href = "/human-resources/employees/documents", Action = FshActions.View, Resource = FshResources.Employees, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Employee Documents", Icon = Icons.Material.Filled.Description, Href = "/hr/employee-documents", Action = FshActions.View, Resource = FshResources.Employees, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Employee Education", Icon = Icons.Material.Filled.School, Href = "/hr/employee-education", Action = FshActions.View, Resource = FshResources.Employees, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Performance Reviews", Icon = Icons.Material.Filled.Assessment, Href = "/hr/performance-reviews", Action = FshActions.View, Resource = FshResources.Employees, PageStatus = PageStatus.ComingSoon },
                         
                         // ========== TIME & ATTENDANCE ==========
                         new MenuSectionSubItemModel { Title = "Time & Attendance", IsGroupHeader = true },
-                        new MenuSectionSubItemModel { Title = "Attendance", Icon = Icons.Material.Filled.Fingerprint, Href = "/hr/attendances", Action = FshActions.View, Resource = FshResources.Attendance, PageStatus = PageStatus.ComingSoon },
+                        new MenuSectionSubItemModel { Title = "Attendance", Icon = Icons.Material.Filled.Fingerprint, Href = "/hr/attendance", Action = FshActions.View, Resource = FshResources.Attendance, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Timesheets", Icon = Icons.Material.Filled.AccessTime, Href = "/hr/timesheets", Action = FshActions.View, Resource = FshResources.Timesheets, PageStatus = PageStatus.ComingSoon },
                         new MenuSectionSubItemModel { Title = "Shift Assignments", Icon = Icons.Material.Filled.AssignmentInd, Href = "/hr/shift-assignments", Action = FshActions.View, Resource = FshResources.Attendance, PageStatus = PageStatus.ComingSoon },
                         
@@ -253,7 +253,7 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Payroll Deductions", Icon = Icons.Material.Filled.MoneyOff, Href = "/hr/payroll-deductions", Action = FshActions.View, Resource = FshResources.Payroll, PageStatus = PageStatus.ComingSoon },
                         new MenuSectionSubItemModel { Title = "Tax Brackets", Icon = Icons.Material.Filled.AccountBalance, Href = "/hr/tax-brackets", Action = FshActions.View, Resource = FshResources.Taxes, PageStatus = PageStatus.Completed },
                         new MenuSectionSubItemModel { Title = "Taxes", Icon = Icons.Material.Filled.Receipt, Href = "/hr/taxes", Action = FshActions.View, Resource = FshResources.Taxes, PageStatus = PageStatus.ComingSoon },
-                        new MenuSectionSubItemModel { Title = "Bank Accounts", Icon = Icons.Material.Filled.AccountBalance, Href = "/human-resources/employees/bank-accounts", Action = FshActions.View, Resource = FshResources.Payroll, PageStatus = PageStatus.Completed },
+                        new MenuSectionSubItemModel { Title = "Bank Accounts", Icon = Icons.Material.Filled.AccountBalance, Href = "/hr/employee-bank-accounts", Action = FshActions.View, Resource = FshResources.Payroll, PageStatus = PageStatus.Completed },
                         
                         // ========== BENEFITS ==========
                         new MenuSectionSubItemModel { Title = "Benefits & Enrollment", IsGroupHeader = true },
