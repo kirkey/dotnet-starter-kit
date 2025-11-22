@@ -78,14 +78,8 @@ protected override Task OnInitializedAsync()
         idFunc: response => response.Id,
         searchFunc: async filter =>
         {
-            var request = new SearchItemsRequest
-            {
-                PageNumber = filter.PageNumber,
-                PageSize = filter.PageSize,
-                Keyword = filter.Keyword,
-                OrderBy = filter.OrderBy
-            };
-            var result = await Client.SearchItemsEndpointAsync("1", request);
+            var paginationFilter = filter.Adapt<PaginationFilter>();
+            var result = await Client.SearchItemsEndpointAsync("1", paginationFilter);
             return result.Adapt<PaginationResponse<ItemResponse>>();
         },
         createFunc: async item =>
