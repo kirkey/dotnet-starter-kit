@@ -8,8 +8,8 @@ public sealed record UpdateEmployeeDependentCommand(
     [property: DefaultValue("Jack")] string? FirstName = null,
     [property: DefaultValue("Doe")] string? LastName = null,
     [property: DefaultValue("Biological Child")] string? Relationship = null,
+    [property: DefaultValue(null)] DateTime? DateOfBirth = null,
     [property: DefaultValue(null)] string? Email = null,
     [property: DefaultValue(null)] string? PhoneNumber = null,
     [property: DefaultValue(false)] bool? IsBeneficiary = null,
     [property: DefaultValue(true)] bool? IsClaimableDependent = null) : IRequest<UpdateEmployeeDependentResponse>;
-

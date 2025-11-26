@@ -167,6 +167,7 @@ public class EmployeeDependent : AuditableEntity, IAggregateRoot
         string? firstName = null,
         string? lastName = null,
         string? relationship = null,
+        DateTime? dateOfBirth = null,
         string? email = null,
         string? phoneNumber = null)
     {
@@ -178,6 +179,9 @@ public class EmployeeDependent : AuditableEntity, IAggregateRoot
 
         if (relationship != null)
             Relationship = relationship;
+
+        if (dateOfBirth.HasValue)
+            DateOfBirth = dateOfBirth.Value;
 
         if (email != null)
             Email = email;
@@ -251,4 +255,3 @@ public static class DependentType
     public const string Sibling = "Sibling";
     public const string Other = "Other";
 }
-

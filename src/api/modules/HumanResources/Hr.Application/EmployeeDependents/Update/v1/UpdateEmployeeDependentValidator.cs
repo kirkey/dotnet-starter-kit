@@ -26,6 +26,11 @@ public class UpdateEmployeeDependentValidator : AbstractValidator<UpdateEmployee
             .WithMessage("Last name cannot exceed 100 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.LastName));
 
+        RuleFor(x => x.DateOfBirth)
+            .LessThanOrEqualTo(DateTime.Today)
+            .WithMessage("Date of birth must be in the past")
+            .When(x => x.DateOfBirth.HasValue);
+
         RuleFor(x => x.Email)
             .EmailAddress()
             .When(x => !string.IsNullOrWhiteSpace(x.Email))

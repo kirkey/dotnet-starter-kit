@@ -46,7 +46,7 @@
                                 {
                                     <MudText Typo="Typo.caption">
                                         <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.Cake" Class="mr-1" />
-                                        @dependent.DateOfBirth.ToString("MMMM dd, yyyy") (@dependent.Age years old)
+                                        @($"{dependent.DateOfBirth:MMMM dd, yyyy}") (@dependent.Age years old)
                                     </MudText>
                                 }
                                 @if (!string.IsNullOrWhiteSpace(dependent.DependentType))

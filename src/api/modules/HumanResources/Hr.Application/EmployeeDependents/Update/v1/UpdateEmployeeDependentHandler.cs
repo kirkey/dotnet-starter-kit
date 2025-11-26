@@ -24,6 +24,7 @@ public sealed class UpdateEmployeeDependentHandler(
             request.FirstName,
             request.LastName,
             request.Relationship,
+            request.DateOfBirth,
             request.Email,
             request.PhoneNumber);
 
@@ -40,4 +41,3 @@ public sealed class UpdateEmployeeDependentHandler(
         return new UpdateEmployeeDependentResponse(dependent.Id);
     }
 }
-
