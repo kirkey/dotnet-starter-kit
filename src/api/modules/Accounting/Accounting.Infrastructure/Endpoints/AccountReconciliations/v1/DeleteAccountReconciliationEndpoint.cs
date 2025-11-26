@@ -1,6 +1,4 @@
 using Accounting.Application.AccountReconciliations.Delete.v1;
-
-using Accounting.Application.AccountReconciliations.Delete.v1;
 using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.AccountReconciliations.v1;
@@ -13,7 +11,7 @@ public static class DeleteAccountReconciliationEndpoint
     internal static RouteHandlerBuilder MapDeleteAccountReconciliationEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
+            .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
                 await mediator.Send(new DeleteAccountReconciliationCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();

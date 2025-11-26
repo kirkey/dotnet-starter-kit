@@ -5,23 +5,23 @@ namespace Accounting.Infrastructure.Endpoints.RegulatoryReports.v1;
 
 public static class RegulatoryReportUpdateEndpoint
 {
-    internal static RouteGroupBuilder MapRegulatoryReportUpdateEndpoint(this RouteGroupBuilder group)
+    internal static RouteHandlerBuilder MapRegulatoryReportUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateRegulatoryReportRequest request, ISender mediator) =>
-        {
-            if (id != request.Id)
-                return Results.BadRequest("ID in URL does not match ID in request body");
+        return endpoints
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateRegulatoryReportRequest request, ISender mediator) =>
+            {
+                if (id != request.Id)
+                    return Results.BadRequest("ID in URL does not match ID in request body");
 
-            var reportId = await mediator.Send(request);
-            return Results.Ok(reportId);
-        })
-        .WithName(nameof(UpdateRegulatoryReportRequest))
-        .WithSummary("Update regulatory report")
-        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
-        .Produces<DefaultIdType>()
-        .WithOpenApi();
-
-        return group;
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(RegulatoryReportUpdateEndpoint))
+            .WithSummary("Update regulatory report")
+            .WithDescription("Updates an existing regulatory report")
+            .Produces<DefaultIdType>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }
 

@@ -5,20 +5,19 @@ namespace Accounting.Infrastructure.Endpoints.RegulatoryReports.v1;
 
 public static class RegulatoryReportCreateEndpoint
 {
-    internal static RouteGroupBuilder MapRegulatoryReportCreateEndpoint(this RouteGroupBuilder group)
+    internal static RouteHandlerBuilder MapRegulatoryReportCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        group.MapPost("/", async (RegulatoryReportCreateRequest request, ISender mediator) =>
+        return endpoints
+            .MapPost("/", async (RegulatoryReportCreateRequest request, ISender mediator) =>
             {
-                var reportId = await mediator.Send(request);
-                return Results.Ok(reportId);
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
             })
-            .WithName(nameof(RegulatoryReportCreateRequest))
+            .WithName(nameof(RegulatoryReportCreateEndpoint))
             .WithSummary("Create a new regulatory report")
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .WithDescription("Creates a new regulatory report")
             .Produces<DefaultIdType>()
-            .WithOpenApi()
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
             .MapToApiVersion(1);
-
-        return group;
     }
 }

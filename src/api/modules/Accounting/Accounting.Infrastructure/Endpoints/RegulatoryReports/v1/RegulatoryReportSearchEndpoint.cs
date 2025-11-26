@@ -6,20 +6,20 @@ namespace Accounting.Infrastructure.Endpoints.RegulatoryReports.v1;
 
 public static class RegulatoryReportSearchEndpoint
 {
-    internal static RouteGroupBuilder MapRegulatoryReportSearchEndpoint(this RouteGroupBuilder group)
+    internal static RouteHandlerBuilder MapRegulatoryReportSearchEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        group.MapPost("/search", async (SearchRegulatoryReportsRequest request, ISender mediator) =>
-        {
-            var reports = await mediator.Send(request);
-            return Results.Ok(reports);
-        })
-        .WithName(nameof(SearchRegulatoryReportsRequest))
-        .WithSummary("Search regulatory reports")
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
-        .Produces<List<RegulatoryReportResponse>>()
-        .WithOpenApi();
-
-        return group;
+        return endpoints
+            .MapPost("/search", async (SearchRegulatoryReportsRequest request, ISender mediator) =>
+            {
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(RegulatoryReportSearchEndpoint))
+            .WithSummary("Search regulatory reports")
+            .WithDescription("Searches regulatory reports with filtering support")
+            .Produces<List<RegulatoryReportResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }
 

@@ -6,20 +6,20 @@ namespace Accounting.Infrastructure.Endpoints.RegulatoryReports.v1;
 
 public static class RegulatoryReportGetEndpoint
 {
-    internal static RouteGroupBuilder MapRegulatoryReportGetEndpoint(this RouteGroupBuilder group)
+    internal static RouteHandlerBuilder MapRegulatoryReportGetEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
-        {
-            var report = await mediator.Send(new GetRegulatoryReportRequest(id));
-            return Results.Ok(report);
-        })
-        .WithName(nameof(GetRegulatoryReportRequest))
-        .WithSummary("Get regulatory report by ID")
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
-        .Produces<RegulatoryReportResponse>()
-        .WithOpenApi();
-
-        return group;
+        return endpoints
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+            {
+                var response = await mediator.Send(new GetRegulatoryReportRequest(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(RegulatoryReportGetEndpoint))
+            .WithSummary("Get regulatory report by ID")
+            .WithDescription("Retrieves a regulatory report by its unique identifier")
+            .Produces<RegulatoryReportResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }
 

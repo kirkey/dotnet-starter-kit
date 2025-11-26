@@ -1,4 +1,5 @@
 using Accounting.Application.Meters.Get.v1;
+using Accounting.Application.Meters.Responses;
 using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Meter.v1;
@@ -8,21 +9,20 @@ namespace Accounting.Infrastructure.Endpoints.Meter.v1;
 /// </summary>
 public static class MeterGetEndpoint
 {
-    internal static RouteGroupBuilder MapMeterGetEndpoint(this RouteGroupBuilder group)
+    internal static RouteHandlerBuilder MapMeterGetEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        group.MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
-        {
-            var request = new GetMeterRequest(id);
-            var result = await mediator.Send(request).ConfigureAwait(false);
-            return Results.Ok(result);
-        })
-        .WithName(nameof(MeterGetEndpoint))
-        .WithSummary("Get meter")
-        .WithDescription("Retrieves a meter by ID")
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
-        .MapToApiVersion(1);
-
-        return group;
+        return endpoints
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+            {
+                var response = await mediator.Send(new GetMeterRequest(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(nameof(MeterGetEndpoint))
+            .WithSummary("Get meter")
+            .WithDescription("Retrieves a meter by ID")
+            .Produces<MeterResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }
 

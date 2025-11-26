@@ -16,7 +16,7 @@ public static class JournalEntryUpdateEndpoint
     internal static RouteHandlerBuilder MapJournalEntryUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, UpdateJournalEntryCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateJournalEntryCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var response = await mediator.Send(command).ConfigureAwait(false);

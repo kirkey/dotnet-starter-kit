@@ -16,10 +16,9 @@ public static class JournalEntryDeleteEndpoint
     internal static RouteHandlerBuilder MapJournalEntryDeleteEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
+            .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var command = new DeleteJournalEntryCommand(id);
-                await mediator.Send(command).ConfigureAwait(false);
+                await mediator.Send(new DeleteJournalEntryCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
             .WithName(nameof(JournalEntryDeleteEndpoint))

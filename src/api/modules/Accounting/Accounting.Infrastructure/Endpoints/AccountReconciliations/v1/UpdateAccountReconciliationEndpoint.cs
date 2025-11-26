@@ -1,6 +1,4 @@
 using Accounting.Application.AccountReconciliations.Update.v1;
-
-using Accounting.Application.AccountReconciliations.Update.v1;
 using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.AccountReconciliations.v1;
@@ -13,7 +11,7 @@ public static class UpdateAccountReconciliationEndpoint
     internal static RouteHandlerBuilder MapUpdateAccountReconciliationEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, ISender mediator, UpdateAccountReconciliationCommand command) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, ISender mediator, UpdateAccountReconciliationCommand command) =>
             {
                 await mediator.Send(command with { Id = id }).ConfigureAwait(false);
                 return Results.NoContent();

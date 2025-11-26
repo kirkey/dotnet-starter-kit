@@ -11,16 +11,15 @@ public static class DeleteBankAccountEndpoint
     internal static RouteHandlerBuilder MapDeleteBankAccountEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
+            .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var request = new DeleteBankAccountCommand(id);
-                var response = await mediator.Send(request).ConfigureAwait(false);
-                return Results.Ok(response);
+                await mediator.Send(new DeleteBankAccountCommand(id)).ConfigureAwait(false);
+                return Results.NoContent();
             })
             .WithName(nameof(DeleteBankAccountEndpoint))
             .WithSummary("Deletes a bank account")
             .WithDescription("Deletes a bank account. Cannot delete if it's the primary account.")
-            .Produces<DeleteBankAccountResponse>()
+            .Produces(StatusCodes.Status204NoContent)
             .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Payroll))
             .MapToApiVersion(1);
     }

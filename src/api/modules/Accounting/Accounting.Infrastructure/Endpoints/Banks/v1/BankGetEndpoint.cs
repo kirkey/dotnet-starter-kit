@@ -16,7 +16,7 @@ public static class BankGetEndpoint
     internal static RouteHandlerBuilder MapBankGetEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new BankGetRequest(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);

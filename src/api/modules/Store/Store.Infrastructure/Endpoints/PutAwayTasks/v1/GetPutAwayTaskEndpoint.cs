@@ -8,10 +8,9 @@ public static class GetPutAwayTaskEndpoint
     internal static RouteHandlerBuilder MapGetPutAwayTaskEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id}", async (DefaultIdType id, ISender sender) =>
+            .MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
-                var query = new GetPutAwayTaskQuery(id);
-                var response = await sender.Send(query).ConfigureAwait(false);
+                var response = await sender.Send(new GetPutAwayTaskQuery(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(GetPutAwayTaskEndpoint))

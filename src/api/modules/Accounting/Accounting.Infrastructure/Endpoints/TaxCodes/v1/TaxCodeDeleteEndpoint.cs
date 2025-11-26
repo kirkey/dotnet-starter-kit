@@ -8,7 +8,7 @@ public static class TaxCodeDeleteEndpoint
     internal static RouteHandlerBuilder MapTaxCodeDeleteEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
+            .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
                 await mediator.Send(new DeleteTaxCodeCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();

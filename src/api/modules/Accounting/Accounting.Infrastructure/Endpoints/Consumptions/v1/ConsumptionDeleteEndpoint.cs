@@ -8,21 +8,20 @@ namespace Accounting.Infrastructure.Endpoints.Consumptions.v1;
 /// </summary>
 public static class ConsumptionDeleteEndpoint
 {
-    internal static RouteGroupBuilder MapConsumptionDeleteEndpoint(this RouteGroupBuilder group)
+    internal static RouteHandlerBuilder MapConsumptionDeleteEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        group.MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
-        {
-            var command = new DeleteConsumptionCommand(id);
-            var result = await mediator.Send(command).ConfigureAwait(false);
-            return Results.Ok(result);
-        })
-        .WithName(nameof(ConsumptionDeleteEndpoint))
-        .WithSummary("Delete consumption record")
-        .WithDescription("Deletes a consumption record")
-        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
-        .MapToApiVersion(1);
-
-        return group;
+        return endpoints
+            .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+            {
+                await mediator.Send(new DeleteConsumptionCommand(id)).ConfigureAwait(false);
+                return Results.NoContent();
+            })
+            .WithName(nameof(ConsumptionDeleteEndpoint))
+            .WithSummary("Delete consumption record")
+            .WithDescription("Deletes a consumption record")
+            .Produces(StatusCodes.Status204NoContent)
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }
 

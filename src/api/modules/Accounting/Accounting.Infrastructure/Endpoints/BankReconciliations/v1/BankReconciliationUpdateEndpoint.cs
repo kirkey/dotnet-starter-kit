@@ -14,7 +14,7 @@ public static class UpdateBankReconciliationEndpoint
     internal static RouteHandlerBuilder MapUpdateBankReconciliationEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, UpdateBankReconciliationCommand command, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateBankReconciliationCommand command, ISender mediator) =>
             {
                 if (id != command.Id)
                     return Results.BadRequest("ID mismatch between URL parameter and request body.");

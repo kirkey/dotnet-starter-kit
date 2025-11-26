@@ -8,16 +8,15 @@ public static class DeletePutAwayTaskEndpoint
     internal static RouteHandlerBuilder MapDeletePutAwayTaskEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapDelete("/{id}", async (DefaultIdType id, ISender sender) =>
+            .MapDelete("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
-                var request = new DeletePutAwayTaskCommand { PutAwayTaskId = id };
-                var response = await sender.Send(request).ConfigureAwait(false);
-                return Results.Ok(response);
+                await sender.Send(new DeletePutAwayTaskCommand { PutAwayTaskId = id }).ConfigureAwait(false);
+                return Results.NoContent();
             })
             .WithName(nameof(DeletePutAwayTaskEndpoint))
             .WithSummary("Delete a put-away task")
             .WithDescription("Deletes a put-away task and all associated items.")
-            .Produces<DeletePutAwayTaskResponse>()
+            .Produces(StatusCodes.Status204NoContent)
             .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Warehouse))
             .MapToApiVersion(1);
     }
