@@ -1,0 +1,112 @@
+@page "/hr/leave-types"
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.LeaveTypes
+
+
+<PageHeader Title="Leave Types" Header="Leave Types" SubHeader="Manage leave types, accrual rules, and policies." />
+
+<EntityTable TEntity="LeaveTypeResponse" TId="DefaultIdType" TRequest="LeaveTypeViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="context.LeaveName"
+                          For="@(() => context.LeaveName)"
+                          Label="Leave Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="context.LeaveCode"
+                          For="@(() => context.LeaveCode)"
+                          Label="Leave Code"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <MudNumericField @bind-Value="context.AnnualAllowance"
+                             For="@(() => context.AnnualAllowance)"
+                             Label="Annual Allowance (Days)"
+                             Variant="Variant.Filled"
+                             Min="0" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <MudSelect T="string?"
+                       @bind-Value="context.AccrualFrequency"
+                       For="@(() => context.AccrualFrequency)"
+                       Label="Accrual Frequency"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Monthly")">Monthly</MudSelectItem>
+                <MudSelectItem Value="@("Quarterly")">Quarterly</MudSelectItem>
+                <MudSelectItem Value="@("Annually")">Annually</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <MudSelect T="string?"
+                       @bind-Value="context.ApplicableGender"
+                       For="@(() => context.ApplicableGender)"
+                       Label="Applicable Gender"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Both")">Both</MudSelectItem>
+                <MudSelectItem Value="@("Male")">Male</MudSelectItem>
+                <MudSelectItem Value="@("Female")">Female</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <MudNumericField @bind-Value="context.MinimumServiceDays"
+                             For="@(() => context.MinimumServiceDays)"
+                             Label="Min Service Days"
+                             Variant="Variant.Filled"
+                             Min="0" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="3" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudSwitch @bind-Value="context.IsPaid"
+                       Color="Color.Primary"
+                       Label="Paid Leave" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudSwitch @bind-Value="context.RequiresApproval"
+                       Color="Color.Primary"
+                       Label="Requires Approval" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudSwitch @bind-Value="context.IsConvertibleToCash"
+                       Color="Color.Primary"
+                       Label="Convertible to Cash" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudSwitch @bind-Value="context.IsCumulative"
+                       Color="Color.Primary"
+                       Label="Cumulative" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudSwitch @bind-Value="context.RequiresMedicalCertification"
+                       Color="Color.Primary"
+                       Label="Medical Cert Required" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField @bind-Value="context.MedicalCertificateAfterDays"
+                             For="@(() => context.MedicalCertificateAfterDays)"
+                             Label="Cert After (Days)"
+                             Variant="Variant.Filled"
+                             Disabled="@(context.RequiresMedicalCertification != true)"
+                             Min="0" />
+        </MudItem>
+
+    </EditFormContent>
+</EntityTable>

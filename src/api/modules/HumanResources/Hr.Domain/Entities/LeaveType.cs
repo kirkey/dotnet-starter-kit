@@ -20,6 +20,32 @@ namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
 /// </remarks>
 public class LeaveType : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the leave name field. (100)
+    /// </summary>
+    public const int LeaveNameMaxLength = 100;
+
+    /// <summary>
+    /// Maximum length for the accrual frequency field. (50)
+    /// </summary>
+    public const int AccrualFrequencyMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the leave code field. (50)
+    /// </summary>
+    public const int LeaveCodeMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the applicable gender field. (20)
+    /// </summary>
+    public const int ApplicableGenderMaxLength = 20;
+
+    /// <summary>
+    /// Maximum length for the description field. (2^11 = 2048)
+    /// </summary>
+    public const int DescriptionMaxLength = 2048;
+
     private LeaveType() { }
 
     private LeaveType(

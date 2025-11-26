@@ -23,6 +23,32 @@ namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
 /// </remarks>
 public class Attendance : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the clock in location field. (2^8 = 256)
+    /// </summary>
+    public const int ClockInLocationMaxLength = 256;
+
+    /// <summary>
+    /// Maximum length for the clock out location field. (2^8 = 256)
+    /// </summary>
+    public const int ClockOutLocationMaxLength = 256;
+
+    /// <summary>
+    /// Maximum length for the status field. (50)
+    /// </summary>
+    public const int StatusMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the reason field. (2^9 = 512)
+    /// </summary>
+    public const int ReasonMaxLength = 512;
+
+    /// <summary>
+    /// Maximum length for the manager comment field. (2^9 = 512)
+    /// </summary>
+    public const int ManagerCommentMaxLength = 512;
+
     private Attendance() { }
 
     private Attendance(

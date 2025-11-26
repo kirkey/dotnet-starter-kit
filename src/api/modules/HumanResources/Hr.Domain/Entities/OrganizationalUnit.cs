@@ -22,6 +22,27 @@ namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
 /// </remarks>
 public class OrganizationalUnit : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the organizational unit code field. (50)
+    /// </summary>
+    public const int CodeMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the organizational unit name field. (2^8 = 256)
+    /// </summary>
+    public const int NameMaxLength = 256;
+
+    /// <summary>
+    /// Maximum length for the cost center field. (50)
+    /// </summary>
+    public const int CostCenterMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the location field. (2^8 = 256)
+    /// </summary>
+    public const int LocationMaxLength = 256;
+
     private OrganizationalUnit() { }
 
     private OrganizationalUnit(

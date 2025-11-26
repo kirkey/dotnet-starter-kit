@@ -20,6 +20,32 @@ namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
 /// </remarks>
 public class Designation : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the designation code field. (50)
+    /// </summary>
+    public const int CodeMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the designation title field. (2^8 = 256)
+    /// </summary>
+    public const int TitleMaxLength = 256;
+
+    /// <summary>
+    /// Maximum length for the area field. (100)
+    /// </summary>
+    public const int AreaMaxLength = 100;
+
+    /// <summary>
+    /// Maximum length for the salary grade field. (50)
+    /// </summary>
+    public const int SalaryGradeMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the description field. (2^11 = 2048)
+    /// </summary>
+    public const int DescriptionMaxLength = 2048;
+
     private Designation() { }
 
     private Designation(

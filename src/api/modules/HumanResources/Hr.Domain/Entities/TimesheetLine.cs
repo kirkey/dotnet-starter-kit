@@ -6,6 +6,17 @@ namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
 /// </summary>
 public class TimesheetLine : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the project ID field. (50)
+    /// </summary>
+    public const int ProjectIdMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the task description field. (2^9 = 512)
+    /// </summary>
+    public const int TaskDescriptionMaxLength = 512;
+
     private TimesheetLine() { }
 
     private TimesheetLine(

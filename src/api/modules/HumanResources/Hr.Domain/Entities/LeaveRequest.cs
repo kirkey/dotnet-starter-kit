@@ -8,6 +8,27 @@ namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
 /// </summary>
 public class LeaveRequest : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the reason field. (2^9 = 512)
+    /// </summary>
+    public const int ReasonMaxLength = 512;
+
+    /// <summary>
+    /// Maximum length for the status field. (50)
+    /// </summary>
+    public const int StatusMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the approver comment field. (2^9 = 512)
+    /// </summary>
+    public const int ApproverCommentMaxLength = 512;
+
+    /// <summary>
+    /// Maximum length for the attachment path field. (2^11 = 2048)
+    /// </summary>
+    public const int AttachmentPathMaxLength = 2048;
+
     private LeaveRequest() { }
 
     private LeaveRequest(

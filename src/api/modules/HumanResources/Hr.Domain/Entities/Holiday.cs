@@ -8,6 +8,32 @@ namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
 /// </summary>
 public class Holiday : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the holiday name field. (100)
+    /// </summary>
+    public const int HolidayNameMaxLength = 100;
+
+    /// <summary>
+    /// Maximum length for the type field. (50)
+    /// </summary>
+    public const int TypeMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the moveable rule field. (100)
+    /// </summary>
+    public const int MoveableRuleMaxLength = 100;
+
+    /// <summary>
+    /// Maximum length for the applicable regions field. (2^8 = 256)
+    /// </summary>
+    public const int ApplicableRegionsMaxLength = 256;
+
+    /// <summary>
+    /// Maximum length for the description field. (2^11 = 2048)
+    /// </summary>
+    public const int DescriptionMaxLength = 2048;
+
     private Holiday() { }
 
     private Holiday(

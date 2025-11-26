@@ -23,6 +23,71 @@ namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
 /// </remarks>
 public class Employee : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the employee number field. (50)
+    /// </summary>
+    public const int EmployeeNumberMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the first name field. (100)
+    /// </summary>
+    public const int FirstNameMaxLength = 100;
+
+    /// <summary>
+    /// Maximum length for the middle name field. (100)
+    /// </summary>
+    public const int MiddleNameMaxLength = 100;
+
+    /// <summary>
+    /// Maximum length for the last name field. (100)
+    /// </summary>
+    public const int LastNameMaxLength = 100;
+
+    /// <summary>
+    /// Maximum length for the email field. (2^8 = 256)
+    /// </summary>
+    public const int EmailMaxLength = 256;
+
+    /// <summary>
+    /// Maximum length for the phone number field. (20)
+    /// </summary>
+    public const int PhoneMaxLength = 20;
+
+    /// <summary>
+    /// Maximum length for TIN (Tax Identification Number). (20)
+    /// Format: XXX-XXX-XXX-XXX
+    /// </summary>
+    public const int TinMaxLength = 20;
+
+    /// <summary>
+    /// Maximum length for SSS Number. (20)
+    /// Format: XX-XXXXXXX-X
+    /// </summary>
+    public const int SssNumberMaxLength = 20;
+
+    /// <summary>
+    /// Maximum length for PhilHealth Number. (20)
+    /// Format: XX-XXXXXXXXX-X
+    /// </summary>
+    public const int PhilHealthNumberMaxLength = 20;
+
+    /// <summary>
+    /// Maximum length for Pag-IBIG Number. (20)
+    /// Format: XXXX-XXXX-XXXX
+    /// </summary>
+    public const int PagIbigNumberMaxLength = 20;
+
+    /// <summary>
+    /// Maximum length for PWD ID Number. (50)
+    /// </summary>
+    public const int PwdIdNumberMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for Solo Parent ID Number. (50)
+    /// </summary>
+    public const int SoloParentIdNumberMaxLength = 50;
+
     private Employee() { }
 
     private Employee(

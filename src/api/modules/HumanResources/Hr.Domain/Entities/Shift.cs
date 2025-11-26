@@ -20,6 +20,17 @@ namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
 /// </remarks>
 public class Shift : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the shift name field. (100)
+    /// </summary>
+    public const int ShiftNameMaxLength = 100;
+
+    /// <summary>
+    /// Maximum length for the description field. (2^11 = 2048)
+    /// </summary>
+    public const int DescriptionMaxLength = 2048;
+
     private Shift() { }
 
     private Shift(

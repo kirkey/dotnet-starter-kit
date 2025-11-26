@@ -27,6 +27,27 @@ namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
 /// </remarks>
 public class Timesheet : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the period type field. (50)
+    /// </summary>
+    public const int PeriodTypeMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the status field. (50)
+    /// </summary>
+    public const int StatusMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the manager comment field. (2^9 = 512)
+    /// </summary>
+    public const int ManagerCommentMaxLength = 512;
+
+    /// <summary>
+    /// Maximum length for the rejection reason field. (2^9 = 512)
+    /// </summary>
+    public const int RejectionReasonMaxLength = 512;
+
     private Timesheet() { }
 
     private Timesheet(
