@@ -18,6 +18,67 @@ namespace Store.Domain.Entities;
 /// <seealso cref="Store.Domain.Exceptions.Supplier.SupplierNotFoundException"/>
 public sealed class Supplier : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the supplier name field. (2^8 = 256)
+    /// </summary>
+    public const int NameMaxLength = 256;
+
+    /// <summary>
+    /// Minimum length for the supplier name field.
+    /// </summary>
+    public const int NameMinLength = 2;
+
+    /// <summary>
+    /// Maximum length for the supplier description field. (2^11 = 2048)
+    /// </summary>
+    public const int DescriptionMaxLength = 2048;
+
+    /// <summary>
+    /// Maximum length for the supplier notes field. (2^12 = 4096)
+    /// </summary>
+    public const int NotesMaxLength = 4096;
+
+    /// <summary>
+    /// Maximum length for the supplier code field. (50)
+    /// </summary>
+    public const int CodeMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the contact person field. (100)
+    /// </summary>
+    public const int ContactPersonMaxLength = 100;
+
+    /// <summary>
+    /// Maximum length for the email field. (2^8 = 256)
+    /// </summary>
+    public const int EmailMaxLength = 256;
+
+    /// <summary>
+    /// Maximum length for the phone field. (50)
+    /// </summary>
+    public const int PhoneMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the address field. (500)
+    /// </summary>
+    public const int AddressMaxLength = 500;
+
+    /// <summary>
+    /// Maximum length for the postal code field. (20)
+    /// </summary>
+    public const int PostalCodeMaxLength = 20;
+
+    /// <summary>
+    /// Maximum length for the website field. (2^8 = 256)
+    /// </summary>
+    public const int WebsiteMaxLength = 256;
+
+    /// <summary>
+    /// Maximum length for the image URL field. (500)
+    /// </summary>
+    public const int ImageUrlMaxLength = 500;
+
     /// <summary>
     /// Short supplier code. Example: "SUP-001".
     /// Max length: 50.
@@ -121,42 +182,44 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         // Validate required fields and lengths
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name is required", nameof(name));
-        if (name.Length > 200)
-            throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
+        if (name.Length < NameMinLength)
+            throw new ArgumentException($"Name must be at least {NameMinLength} characters", nameof(name));
+        if (name.Length > NameMaxLength)
+            throw new ArgumentException($"Name must not exceed {NameMaxLength} characters", nameof(name));
 
         if (string.IsNullOrWhiteSpace(code))
             throw new ArgumentException("Code is required", nameof(code));
-        if (code.Length > 50)
-            throw new ArgumentException("Code must not exceed 50 characters", nameof(code));
+        if (code.Length > CodeMaxLength)
+            throw new ArgumentException($"Code must not exceed {CodeMaxLength} characters", nameof(code));
 
         if (string.IsNullOrWhiteSpace(contactPerson))
             throw new ArgumentException("Contact person is required", nameof(contactPerson));
-        if (contactPerson.Length > 100)
-            throw new ArgumentException("Contact person must not exceed 100 characters", nameof(contactPerson));
+        if (contactPerson.Length > ContactPersonMaxLength)
+            throw new ArgumentException($"Contact person must not exceed {ContactPersonMaxLength} characters", nameof(contactPerson));
 
         if (string.IsNullOrWhiteSpace(email))
             throw new ArgumentException("Email is required", nameof(email));
-        if (email.Length > 255)
-            throw new ArgumentException("Email must not exceed 255 characters", nameof(email));
+        if (email.Length > EmailMaxLength)
+            throw new ArgumentException($"Email must not exceed {EmailMaxLength} characters", nameof(email));
         if (!EmailRegex.IsMatch(email))
             throw new ArgumentException("Email format is invalid", nameof(email));
 
         if (string.IsNullOrWhiteSpace(phone))
             throw new ArgumentException("Phone is required", nameof(phone));
-        if (phone.Length > 50)
-            throw new ArgumentException("Phone must not exceed 50 characters", nameof(phone));
+        if (phone.Length > PhoneMaxLength)
+            throw new ArgumentException($"Phone must not exceed {PhoneMaxLength} characters", nameof(phone));
 
         if (string.IsNullOrWhiteSpace(address))
             throw new ArgumentException("Address is required", nameof(address));
-        if (address.Length > 500)
-            throw new ArgumentException("Address must not exceed 500 characters", nameof(address));
+        if (address.Length > AddressMaxLength)
+            throw new ArgumentException($"Address must not exceed {AddressMaxLength} characters", nameof(address));
 
 
-        if (postalCode is { Length: > 20 })
-            throw new ArgumentException("Postal code must not exceed 20 characters", nameof(postalCode));
+        if (postalCode is { Length: > PostalCodeMaxLength })
+            throw new ArgumentException($"Postal code must not exceed {PostalCodeMaxLength} characters", nameof(postalCode));
 
-        if (website is { Length: > 255 })
-            throw new ArgumentException("Website must not exceed 255 characters", nameof(website));
+        if (website is { Length: > WebsiteMaxLength })
+            throw new ArgumentException($"Website must not exceed {WebsiteMaxLength} characters", nameof(website));
 
         if (creditLimit is < 0m)
             throw new ArgumentException("Credit limit cannot be negative", nameof(creditLimit));
@@ -167,8 +230,8 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
         if (rating is < 0m or > 5m)
             throw new ArgumentException("Rating must be between 0 and 5", nameof(rating));
 
-        if (imageUrl is { Length: > 500 })
-            throw new ArgumentException("ImageUrl must not exceed 500 characters", nameof(imageUrl));
+        if (imageUrl is { Length: > ImageUrlMaxLength })
+            throw new ArgumentException($"ImageUrl must not exceed {ImageUrlMaxLength} characters", nameof(imageUrl));
 
         Id = id;
         Name = name;
@@ -281,7 +344,8 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(name) && !string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
         {
-            if (name.Length > 200) throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
+            if (name.Length < NameMinLength) throw new ArgumentException($"Name must be at least {NameMinLength} characters", nameof(name));
+            if (name.Length > NameMaxLength) throw new ArgumentException($"Name must not exceed {NameMaxLength} characters", nameof(name));
             Name = name;
             isUpdated = true;
         }
@@ -294,14 +358,14 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(contactPerson) && !string.Equals(ContactPerson, contactPerson, StringComparison.OrdinalIgnoreCase))
         {
-            if (contactPerson.Length > 100) throw new ArgumentException("Contact person must not exceed 100 characters", nameof(contactPerson));
+            if (contactPerson.Length > ContactPersonMaxLength) throw new ArgumentException($"Contact person must not exceed {ContactPersonMaxLength} characters", nameof(contactPerson));
             ContactPerson = contactPerson;
             isUpdated = true;
         }
 
         if (!string.IsNullOrWhiteSpace(email) && !string.Equals(Email, email, StringComparison.OrdinalIgnoreCase))
         {
-            if (email.Length > 255) throw new ArgumentException("Email must not exceed 255 characters", nameof(email));
+            if (email.Length > EmailMaxLength) throw new ArgumentException($"Email must not exceed {EmailMaxLength} characters", nameof(email));
             if (!EmailRegex.IsMatch(email)) throw new ArgumentException("Email format is invalid", nameof(email));
             Email = email;
             isUpdated = true;
@@ -309,28 +373,28 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(phone) && !string.Equals(Phone, phone, StringComparison.OrdinalIgnoreCase))
         {
-            if (phone.Length > 50) throw new ArgumentException("Phone must not exceed 50 characters", nameof(phone));
+            if (phone.Length > PhoneMaxLength) throw new ArgumentException($"Phone must not exceed {PhoneMaxLength} characters", nameof(phone));
             Phone = phone;
             isUpdated = true;
         }
 
         if (!string.IsNullOrWhiteSpace(address) && !string.Equals(Address, address, StringComparison.OrdinalIgnoreCase))
         {
-            if (address.Length > 500) throw new ArgumentException("Address must not exceed 500 characters", nameof(address));
+            if (address.Length > AddressMaxLength) throw new ArgumentException($"Address must not exceed {AddressMaxLength} characters", nameof(address));
             Address = address;
             isUpdated = true;
         }
 
         if (!string.Equals(PostalCode, postalCode, StringComparison.OrdinalIgnoreCase))
         {
-            if (postalCode is { Length: > 20 }) throw new ArgumentException("Postal code must not exceed 20 characters", nameof(postalCode));
+            if (postalCode is { Length: > PostalCodeMaxLength }) throw new ArgumentException($"Postal code must not exceed {PostalCodeMaxLength} characters", nameof(postalCode));
             PostalCode = postalCode;
             isUpdated = true;
         }
 
         if (!string.Equals(Website, website, StringComparison.OrdinalIgnoreCase))
         {
-            if (website is { Length: > 255 }) throw new ArgumentException("Website must not exceed 255 characters", nameof(website));
+            if (website is { Length: > WebsiteMaxLength }) throw new ArgumentException($"Website must not exceed {WebsiteMaxLength} characters", nameof(website));
             Website = website;
             isUpdated = true;
         }
@@ -358,14 +422,14 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
 
         if (!string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
         {
-            if (notes is { Length: > 2000 }) throw new ArgumentException("Notes must not exceed 2000 characters", nameof(notes));
+            if (notes is { Length: > NotesMaxLength }) throw new ArgumentException($"Notes must not exceed {NotesMaxLength} characters", nameof(notes));
             Notes = notes;
             isUpdated = true;
         }
 
         if (!string.Equals(ImageUrl, imageUrl, StringComparison.OrdinalIgnoreCase))
         {
-            if (imageUrl is { Length: > 500 }) throw new ArgumentException("ImageUrl must not exceed 500 characters", nameof(imageUrl));
+            if (imageUrl is { Length: > ImageUrlMaxLength }) throw new ArgumentException($"ImageUrl must not exceed {ImageUrlMaxLength} characters", nameof(imageUrl));
             ImageUrl = imageUrl;
             isUpdated = true;
         }

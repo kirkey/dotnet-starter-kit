@@ -56,6 +56,72 @@ namespace Store.Domain.Entities;
 /// <seealso cref="InvalidItemStockLevelException"/>
 public sealed class Item : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the SKU field. (100)
+    /// </summary>
+    public const int SkuMaxLength = 100;
+
+    /// <summary>
+    /// Maximum length for the Barcode field. (100)
+    /// </summary>
+    public const int BarcodeMaxLength = 100;
+
+    /// <summary>
+    /// Maximum length for the item name field. (200)
+    /// </summary>
+    public const int NameMaxLength = 200;
+
+    /// <summary>
+    /// Minimum length for the item name field.
+    /// </summary>
+    public const int NameMinLength = 2;
+
+    /// <summary>
+    /// Maximum length for the item description field. (2^11 = 2048)
+    /// </summary>
+    public const int DescriptionMaxLength = 2048;
+
+    /// <summary>
+    /// Maximum length for the item notes field. (2^11 = 2048)
+    /// </summary>
+    public const int NotesMaxLength = 2048;
+
+    /// <summary>
+    /// Maximum length for the brand field. (200)
+    /// </summary>
+    public const int BrandMaxLength = 200;
+
+    /// <summary>
+    /// Maximum length for the manufacturer field. (200)
+    /// </summary>
+    public const int ManufacturerMaxLength = 200;
+
+    /// <summary>
+    /// Maximum length for the manufacturer part number field. (100)
+    /// </summary>
+    public const int ManufacturerPartNumberMaxLength = 100;
+
+    /// <summary>
+    /// Maximum length for the unit of measure field. (20)
+    /// </summary>
+    public const int UnitOfMeasureMaxLength = 20;
+
+    /// <summary>
+    /// Maximum length for the weight unit field. (20)
+    /// </summary>
+    public const int WeightUnitMaxLength = 20;
+
+    /// <summary>
+    /// Maximum length for the dimension unit field. (20)
+    /// </summary>
+    public const int DimensionUnitMaxLength = 20;
+
+    /// <summary>
+    /// Maximum length for the image URL field. (500)
+    /// </summary>
+    public const int ImageUrlMaxLength = 500;
+
     /// <summary>
     /// Stock keeping unit: short unique identifier. Example: "ITEM-1234", "SKU-001".
     /// Max length: 100.
@@ -248,13 +314,14 @@ public sealed class Item : AuditableEntity, IAggregateRoot
     {
         // domain validations
         if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required", nameof(name));
-        if (name.Length > 200) throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
+        if (name.Length < NameMinLength) throw new ArgumentException($"Name must be at least {NameMinLength} characters", nameof(name));
+        if (name.Length > NameMaxLength) throw new ArgumentException($"Name must not exceed {NameMaxLength} characters", nameof(name));
 
         if (string.IsNullOrWhiteSpace(sku)) throw new ArgumentException("SKU is required", nameof(sku));
-        if (sku.Length > 100) throw new ArgumentException("SKU must not exceed 100 characters", nameof(sku));
+        if (sku.Length > SkuMaxLength) throw new ArgumentException($"SKU must not exceed {SkuMaxLength} characters", nameof(sku));
 
         if (string.IsNullOrWhiteSpace(barcode)) throw new ArgumentException("Barcode is required", nameof(barcode));
-        if (barcode.Length > 100) throw new ArgumentException("Barcode must not exceed 100 characters", nameof(barcode));
+        if (barcode.Length > BarcodeMaxLength) throw new ArgumentException($"Barcode must not exceed {BarcodeMaxLength} characters", nameof(barcode));
 
         if (unitPrice < 0m) throw new ArgumentException("UnitPrice must be zero or greater", nameof(unitPrice));
         if (cost < 0m) throw new ArgumentException("Cost must be zero or greater", nameof(cost));
@@ -275,27 +342,27 @@ public sealed class Item : AuditableEntity, IAggregateRoot
 
         if (weight < 0m) throw new ArgumentException("Weight must be zero or greater", nameof(weight));
         if (weight > 0 && string.IsNullOrWhiteSpace(weightUnit)) throw new ArgumentException("WeightUnit is required when Weight > 0", nameof(weightUnit));
-        if (weightUnit is { Length: > 20 }) throw new ArgumentException("WeightUnit must not exceed 20 characters", nameof(weightUnit));
+        if (weightUnit is { Length: > WeightUnitMaxLength }) throw new ArgumentException($"WeightUnit must not exceed {WeightUnitMaxLength} characters", nameof(weightUnit));
 
         if (length is < 0m) throw new ArgumentException("Length must be zero or greater", nameof(length));
         if (width is < 0m) throw new ArgumentException("Width must be zero or greater", nameof(width));
         if (height is < 0m) throw new ArgumentException("Height must be zero or greater", nameof(height));
         if ((length.HasValue || width.HasValue || height.HasValue) && string.IsNullOrWhiteSpace(dimensionUnit))
             throw new ArgumentException("DimensionUnit is required when dimensions are specified", nameof(dimensionUnit));
-        if (dimensionUnit is { Length: > 20 }) throw new ArgumentException("DimensionUnit must not exceed 20 characters", nameof(dimensionUnit));
+        if (dimensionUnit is { Length: > DimensionUnitMaxLength }) throw new ArgumentException($"DimensionUnit must not exceed {DimensionUnitMaxLength} characters", nameof(dimensionUnit));
 
-        if (brand is { Length: > 200 }) throw new ArgumentException("Brand must not exceed 200 characters", nameof(brand));
-        if (manufacturer is { Length: > 200 }) throw new ArgumentException("Manufacturer must not exceed 200 characters", nameof(manufacturer));
-        if (manufacturerPartNumber is { Length: > 100 }) throw new ArgumentException("ManufacturerPartNumber must not exceed 100 characters", nameof(manufacturerPartNumber));
+        if (brand is { Length: > BrandMaxLength }) throw new ArgumentException($"Brand must not exceed {BrandMaxLength} characters", nameof(brand));
+        if (manufacturer is { Length: > ManufacturerMaxLength }) throw new ArgumentException($"Manufacturer must not exceed {ManufacturerMaxLength} characters", nameof(manufacturer));
+        if (manufacturerPartNumber is { Length: > ManufacturerPartNumberMaxLength }) throw new ArgumentException($"ManufacturerPartNumber must not exceed {ManufacturerPartNumberMaxLength} characters", nameof(manufacturerPartNumber));
 
         if (categoryId == DefaultIdType.Empty) throw new ArgumentException("CategoryId is required", nameof(categoryId));
         if (supplierId == DefaultIdType.Empty) throw new ArgumentException("SupplierId is required", nameof(supplierId));
 
         if (string.IsNullOrWhiteSpace(unitOfMeasure)) unitOfMeasure = "EA";
-        if (unitOfMeasure.Length > 20) throw new ArgumentException("UnitOfMeasure must not exceed 20 characters", nameof(unitOfMeasure));
+        if (unitOfMeasure.Length > UnitOfMeasureMaxLength) throw new ArgumentException($"UnitOfMeasure must not exceed {UnitOfMeasureMaxLength} characters", nameof(unitOfMeasure));
 
-        if (imageUrl is { Length: > 500 })
-            throw new ArgumentException("ImageUrl must not exceed 500 characters", nameof(imageUrl));
+        if (imageUrl is { Length: > ImageUrlMaxLength })
+            throw new ArgumentException($"ImageUrl must not exceed {ImageUrlMaxLength} characters", nameof(imageUrl));
         
         Id = id;
         Name = name;
@@ -419,7 +486,8 @@ public sealed class Item : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(name) && !string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
         {
-            if (name.Length > 200) throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
+            if (name.Length < NameMinLength) throw new ArgumentException($"Name must be at least {NameMinLength} characters", nameof(name));
+            if (name.Length > NameMaxLength) throw new ArgumentException($"Name must not exceed {NameMaxLength} characters", nameof(name));
             Name = name;
             isUpdated = true;
         }
@@ -432,21 +500,21 @@ public sealed class Item : AuditableEntity, IAggregateRoot
 
         if (!string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
         {
-            if (notes?.Length > 2048) throw new ArgumentException("Notes must not exceed 2048 characters", nameof(notes));
+            if (notes?.Length > NotesMaxLength) throw new ArgumentException($"Notes must not exceed {NotesMaxLength} characters", nameof(notes));
             Notes = notes;
             isUpdated = true;
         }
 
         if (!string.IsNullOrWhiteSpace(sku) && !string.Equals(Sku, sku, StringComparison.OrdinalIgnoreCase))
         {
-            if (sku.Length > 100) throw new ArgumentException("SKU must not exceed 100 characters", nameof(sku));
+            if (sku.Length > SkuMaxLength) throw new ArgumentException($"SKU must not exceed {SkuMaxLength} characters", nameof(sku));
             Sku = sku;
             isUpdated = true;
         }
 
         if (!string.IsNullOrWhiteSpace(barcode) && !string.Equals(Barcode, barcode, StringComparison.OrdinalIgnoreCase))
         {
-            if (barcode.Length > 100) throw new ArgumentException("Barcode must not exceed 100 characters", nameof(barcode));
+            if (barcode.Length > BarcodeMaxLength) throw new ArgumentException($"Barcode must not exceed {BarcodeMaxLength} characters", nameof(barcode));
             Barcode = barcode;
             isUpdated = true;
         }
@@ -488,35 +556,35 @@ public sealed class Item : AuditableEntity, IAggregateRoot
 
         if (!string.Equals(Brand, brand, StringComparison.OrdinalIgnoreCase))
         {
-            if (brand is { Length: > 200 }) throw new ArgumentException("Brand must not exceed 200 characters", nameof(brand));
+            if (brand is { Length: > BrandMaxLength }) throw new ArgumentException($"Brand must not exceed {BrandMaxLength} characters", nameof(brand));
             Brand = brand;
             isUpdated = true;
         }
 
         if (!string.Equals(Manufacturer, manufacturer, StringComparison.OrdinalIgnoreCase))
         {
-            if (manufacturer is { Length: > 200 }) throw new ArgumentException("Manufacturer must not exceed 200 characters", nameof(manufacturer));
+            if (manufacturer is { Length: > ManufacturerMaxLength }) throw new ArgumentException($"Manufacturer must not exceed {ManufacturerMaxLength} characters", nameof(manufacturer));
             Manufacturer = manufacturer;
             isUpdated = true;
         }
 
         if (!string.Equals(ManufacturerPartNumber, manufacturerPartNumber, StringComparison.OrdinalIgnoreCase))
         {
-            if (manufacturerPartNumber is { Length: > 100 }) throw new ArgumentException("ManufacturerPartNumber must not exceed 100 characters", nameof(manufacturerPartNumber));
+            if (manufacturerPartNumber is { Length: > ManufacturerPartNumberMaxLength }) throw new ArgumentException($"ManufacturerPartNumber must not exceed {ManufacturerPartNumberMaxLength} characters", nameof(manufacturerPartNumber));
             ManufacturerPartNumber = manufacturerPartNumber;
             isUpdated = true;
         }
 
         if (!string.IsNullOrWhiteSpace(unitOfMeasure) && !string.Equals(UnitOfMeasure, unitOfMeasure, StringComparison.OrdinalIgnoreCase))
         {
-            if (unitOfMeasure.Length > 20) throw new ArgumentException("UnitOfMeasure must not exceed 20 characters", nameof(unitOfMeasure));
+            if (unitOfMeasure.Length > UnitOfMeasureMaxLength) throw new ArgumentException($"UnitOfMeasure must not exceed {UnitOfMeasureMaxLength} characters", nameof(unitOfMeasure));
             UnitOfMeasure = unitOfMeasure;
             isUpdated = true;
         }
 
         if (!string.Equals(ImageUrl, imageUrl, StringComparison.OrdinalIgnoreCase))
         {
-            if (imageUrl is { Length: > 500 }) throw new ArgumentException("ImageUrl must not exceed 500 characters", nameof(imageUrl));
+            if (imageUrl is { Length: > ImageUrlMaxLength }) throw new ArgumentException($"ImageUrl must not exceed {ImageUrlMaxLength} characters", nameof(imageUrl));
             ImageUrl = imageUrl;
             isUpdated = true;
         }
@@ -618,7 +686,7 @@ public sealed class Item : AuditableEntity, IAggregateRoot
 
         if (!string.Equals(WeightUnit, weightUnit, StringComparison.OrdinalIgnoreCase))
         {
-            if (weightUnit is { Length: > 20 }) throw new ArgumentException("WeightUnit must not exceed 20 characters", nameof(weightUnit));
+            if (weightUnit is { Length: > WeightUnitMaxLength }) throw new ArgumentException($"WeightUnit must not exceed {WeightUnitMaxLength} characters", nameof(weightUnit));
             WeightUnit = weightUnit;
             isUpdated = true;
         }
@@ -646,7 +714,7 @@ public sealed class Item : AuditableEntity, IAggregateRoot
 
         if (!string.Equals(DimensionUnit, dimensionUnit, StringComparison.OrdinalIgnoreCase))
         {
-            if (dimensionUnit is { Length: > 20 }) throw new ArgumentException("DimensionUnit must not exceed 20 characters", nameof(dimensionUnit));
+            if (dimensionUnit is { Length: > DimensionUnitMaxLength }) throw new ArgumentException($"DimensionUnit must not exceed {DimensionUnitMaxLength} characters", nameof(dimensionUnit));
             DimensionUnit = dimensionUnit;
             isUpdated = true;
         }

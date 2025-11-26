@@ -49,6 +49,37 @@ namespace Store.Domain.Entities;
 /// <seealso cref="Store.Domain.Exceptions.Category.CircularCategoryReferenceException"/>
 public sealed class Category : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the category name field. (2^8 = 256)
+    /// </summary>
+    public const int NameMaxLength = 256;
+
+    /// <summary>
+    /// Minimum length for the category name field.
+    /// </summary>
+    public const int NameMinLength = 2;
+
+    /// <summary>
+    /// Maximum length for the category description field. (2^11 = 2048)
+    /// </summary>
+    public const int DescriptionMaxLength = 2048;
+
+    /// <summary>
+    /// Maximum length for the category notes field. (2^12 = 4096)
+    /// </summary>
+    public const int NotesMaxLength = 4096;
+
+    /// <summary>
+    /// Maximum length for the category code field. (50)
+    /// </summary>
+    public const int CodeMaxLength = 50;
+
+    /// <summary>
+    /// Maximum length for the image URL field. (500)
+    /// </summary>
+    public const int ImageUrlMaxLength = 500;
+
     /// <summary>
     /// Short unique code for the category. Example: "FRUITS" or "CAT-001".
     /// Max length: 50.
@@ -104,14 +135,15 @@ public sealed class Category : AuditableEntity, IAggregateRoot
     {
         // domain validations
         if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required", nameof(name));
-        if (name.Length > 200) throw new ArgumentException("Name must not exceed 200 characters", nameof(name));
+        if (name.Length < NameMinLength) throw new ArgumentException($"Name must be at least {NameMinLength} characters", nameof(name));
+        if (name.Length > NameMaxLength) throw new ArgumentException($"Name must not exceed {NameMaxLength} characters", nameof(name));
 
         if (string.IsNullOrWhiteSpace(code)) throw new ArgumentException("Code is required", nameof(code));
-        if (code.Length > 50) throw new ArgumentException("Code must not exceed 50 characters", nameof(code));
+        if (code.Length > CodeMaxLength) throw new ArgumentException($"Code must not exceed {CodeMaxLength} characters", nameof(code));
 
         if (sortOrder < 0) throw new ArgumentException("SortOrder must be zero or greater", nameof(sortOrder));
 
-        if (imageUrl is { Length: > 500 }) throw new ArgumentException("ImageUrl must not exceed 500 characters", nameof(imageUrl));
+        if (imageUrl is { Length: > ImageUrlMaxLength }) throw new ArgumentException($"ImageUrl must not exceed {ImageUrlMaxLength} characters", nameof(imageUrl));
 
         Id = id;
         Name = name;
@@ -184,24 +216,29 @@ public sealed class Category : AuditableEntity, IAggregateRoot
 
         if (!string.IsNullOrWhiteSpace(name) && !string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
         {
+            if (name.Length < NameMinLength) throw new ArgumentException($"Name must be at least {NameMinLength} characters", nameof(name));
+            if (name.Length > NameMaxLength) throw new ArgumentException($"Name must not exceed {NameMaxLength} characters", nameof(name));
             Name = name;
             isUpdated = true;
         }
 
         if (!string.Equals(Description, description, StringComparison.OrdinalIgnoreCase))
         {
+            if (description is { Length: > DescriptionMaxLength }) throw new ArgumentException($"Description must not exceed {DescriptionMaxLength} characters", nameof(description));
             Description = description;
             isUpdated = true;
+        }
+
         if (!string.Equals(Notes, notes, StringComparison.OrdinalIgnoreCase))
         {
+            if (notes is { Length: > NotesMaxLength }) throw new ArgumentException($"Notes must not exceed {NotesMaxLength} characters", nameof(notes));
             Notes = notes;
             isUpdated = true;
         }
 
-        }
-
         if (!string.IsNullOrWhiteSpace(code) && !string.Equals(Code, code, StringComparison.OrdinalIgnoreCase))
         {
+            if (code.Length > CodeMaxLength) throw new ArgumentException($"Code must not exceed {CodeMaxLength} characters", nameof(code));
             Code = code;
             isUpdated = true;
         }
@@ -226,7 +263,7 @@ public sealed class Category : AuditableEntity, IAggregateRoot
 
         if (!string.Equals(ImageUrl, imageUrl, StringComparison.OrdinalIgnoreCase))
         {
-            if (imageUrl is { Length: > 500 }) throw new ArgumentException("ImageUrl must not exceed 500 characters", nameof(imageUrl));
+            if (imageUrl is { Length: > ImageUrlMaxLength }) throw new ArgumentException($"ImageUrl must not exceed {ImageUrlMaxLength} characters", nameof(imageUrl));
             ImageUrl = imageUrl;
             isUpdated = true;
         }
