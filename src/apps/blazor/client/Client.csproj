@@ -34,33 +34,5 @@
      <Folder Include="Pages\Hr\" />
      <Folder Include="Shared\" />
    </ItemGroup>
-
-   <ItemGroup>
-     <_ContentIncludedByDefault Remove="Pages\App\Settings.razor" />
-     <_ContentIncludedByDefault Remove="Pages\Accounting\Payments\PaymentAllocateDialog.razor" />
-     <_ContentIncludedByDefault Remove="Pages\Accounting\Payments\PaymentDetailsDialog.razor" />
-     <_ContentIncludedByDefault Remove="Pages\Accounting\Payments\Payments.razor" />
-     <_ContentIncludedByDefault Remove="Pages\Accounting\Vendors\Vendors.razor" />
-     <_ContentIncludedByDefault Remove="Pages\Warehouse\CycleCountDetailsDialog.razor" />
-     <_ContentIncludedByDefault Remove="Pages\Warehouse\CycleCountItemDialog.razor" />
-     <_ContentIncludedByDefault Remove="Pages\Warehouse\CycleCountItems.razor" />
-     <_ContentIncludedByDefault Remove="Pages\Warehouse\CycleCounts.razor" />
-     <_ContentIncludedByDefault Remove="Pages\Warehouse\WarehouseLocations.razor" />
-     <_ContentIncludedByDefault Remove="Pages\Warehouse\Warehouses.razor" />
-   </ItemGroup>
-
-   <ItemGroup>
-     <Compile Remove="Pages\Store\Items\ItemResponseExtension.cs" />
-     <Compile Remove="Pages\HumanResources\DesignationViewModel.cs" />
-     <Compile Remove="Pages\HumanResources\OrganizationalUnitViewModel.cs" />
-     <Compile Remove="Pages\HumanResources\TaxBracketViewModel.cs" />
-     <Compile Remove="Pages\HumanResources\Shifts.razor.cs" />
-   </ItemGroup>
-
-   <ItemGroup>
-     <Content Remove="Pages\HumanResources\Designations.razor" />
-     <Content Remove="Pages\HumanResources\OrganizationalUnits.razor" />
-     <Content Remove="Pages\HumanResources\TaxBrackets.razor" />
-     <Content Remove="Pages\HumanResources\Shifts.razor" />
-   </ItemGroup>
+  
  </Project>
