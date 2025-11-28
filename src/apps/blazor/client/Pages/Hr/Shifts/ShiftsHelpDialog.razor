@@ -1,0 +1,80 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Shifts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Understanding Work Shifts</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What is a Shift?">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        A shift defines a reusable work schedule template that can be assigned to employees. 
+                        Each shift specifies work hours, break times, and whether it spans overnight.
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        <strong>Common shift types:</strong>
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.WbSunny">Morning Shift (6:00 AM - 2:00 PM)</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.WbTwilight">Afternoon Shift (2:00 PM - 10:00 PM)</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.NightsStay">Night Shift (10:00 PM - 6:00 AM)</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Business">Standard Day (8:00 AM - 5:00 PM)</MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Overnight Shifts">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Enable "Overnight Shift" when the shift spans midnight (e.g., 10:00 PM to 6:00 AM).
+                    </MudText>
+                    <MudAlert Severity="Severity.Info" Dense="true">
+                        The system automatically calculates working hours correctly for overnight shifts.
+                    </MudAlert>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Break Duration">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Break duration is the total break time in minutes for the shift. This is subtracted 
+                        from the total shift duration to calculate working hours.
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        <strong>Example:</strong> 8-hour shift with 30-minute break = 7.5 working hours
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Managing Shifts">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        <strong>Creating a Shift:</strong>
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Add">Click "Add" to create a new shift</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Edit">Enter shift name, start/end times</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Coffee">Set break duration</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Check">Toggle overnight if applicable</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Save">Save the shift</MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Assigning Shifts to Employees">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        After creating shifts, you can assign them to employees through:
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Assignment">Shift Assignments page</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Person">Individual employee scheduling</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Group">Bulk assignment by department</MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close(DialogResult.Ok(true));
+}

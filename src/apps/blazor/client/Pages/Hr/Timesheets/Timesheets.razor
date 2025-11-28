@@ -1,0 +1,123 @@
+@page "/hr/timesheets"
+
+<PageHeader Title="Timesheets" Header="Timesheets" SubHeader="Manage employee timesheets and time tracking." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowTimesheetsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="TimesheetResponse" TId="DefaultIdType" TRequest="TimesheetViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Timesheet Period</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker Label="Start Date" 
+                           @bind-Date="context.StartDate" 
+                           Required="true"
+                           Variant="Variant.Filled"
+                           Editable="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker Label="End Date" 
+                           @bind-Date="context.EndDate" 
+                           Required="true"
+                           Variant="Variant.Filled"
+                           Editable="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect @bind-Value="context.PeriodType"
+                       For="@(() => context.PeriodType)"
+                       Label="Period Type"
+                       T="string"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Weekly")">Weekly</MudSelectItem>
+                <MudSelectItem Value="@("BiWeekly")">Bi-Weekly</MudSelectItem>
+                <MudSelectItem Value="@("SemiMonthly")">Semi-Monthly</MudSelectItem>
+                <MudSelectItem Value="@("Monthly")">Monthly</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Hours</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.RegularHours" 
+                             For="@(() => context.RegularHours)" 
+                             Label="Regular Hours"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             Max="500" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.OvertimeHours" 
+                             For="@(() => context.OvertimeHours)" 
+                             Label="Overtime Hours"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             Max="100" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.TotalHours" 
+                             For="@(() => context.TotalHours)" 
+                             Label="Total Hours"
+                             Variant="Variant.Filled"
+                             ReadOnly="true" />
+        </MudItem>
+
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField @bind-Value="context.Status" 
+                              Label="Status"
+                              ReadOnly="true"
+                              Variant="Variant.Filled" />
+            </MudItem>
+        }
+    </EditFormContent>
+
+    <ExtraActions>
+        @if (context.Status == "Draft")
+        {
+            <MudMenuItem OnClick="@(() => SubmitTimesheetAsync(context))" 
+                OnTouch="@(() => SubmitTimesheetAsync(context))">
+                Submit
+            </MudMenuItem>
+        }
+        @if (context.Status == "Submitted")
+        {
+            <MudMenuItem OnClick="@(() => ApproveTimesheetAsync(context))" 
+                OnTouch="@(() => ApproveTimesheetAsync(context))">
+                Approve
+            </MudMenuItem>
+            <MudMenuItem OnClick="@(() => RejectTimesheetAsync(context))" 
+                OnTouch="@(() => RejectTimesheetAsync(context))">
+                Reject
+            </MudMenuItem>
+        }
+    </ExtraActions>
+</EntityTable>

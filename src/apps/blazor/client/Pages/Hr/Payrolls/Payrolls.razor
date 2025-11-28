@@ -1,0 +1,112 @@
+@page "/hr/payrolls"
+
+<PageHeader Title="Payrolls" Header="Payrolls" SubHeader="Manage payroll periods and processing workflow." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowPayrollsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="PayrollResponse" TId="DefaultIdType" TRequest="PayrollViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Payroll Period</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker Label="Start Date" 
+                           @bind-Date="context.StartDate" 
+                           Required="true"
+                           Variant="Variant.Filled"
+                           Editable="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker Label="End Date" 
+                           @bind-Date="context.EndDate" 
+                           Required="true"
+                           Variant="Variant.Filled"
+                           Editable="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect @bind-Value="context.PayFrequency"
+                       For="@(() => context.PayFrequency)"
+                       Label="Pay Frequency"
+                       T="string"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Weekly")">Weekly</MudSelectItem>
+                <MudSelectItem Value="@("BiWeekly")">Bi-Weekly</MudSelectItem>
+                <MudSelectItem Value="@("SemiMonthly")">Semi-Monthly</MudSelectItem>
+                <MudSelectItem Value="@("Monthly")">Monthly</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField @bind-Value="context.Status" 
+                              Label="Status"
+                              ReadOnly="true"
+                              Variant="Variant.Filled" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Additional Information</MudText>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes" 
+                          For="@(() => context.Notes)" 
+                          Label="Notes"
+                          Lines="3"
+                          Variant="Variant.Filled" />
+        </MudItem>
+    </EditFormContent>
+
+    <ExtraActions>
+        @if (context.Status == "Draft")
+        {
+            <MudMenuItem OnClick="@(() => ProcessPayrollAsync(context))" 
+                OnTouch="@(() => ProcessPayrollAsync(context))">
+                Process
+            </MudMenuItem>
+        }
+        @if (context.Status == "Processing")
+        {
+            <MudMenuItem OnClick="@(() => CompleteProcessingAsync(context))" 
+                OnTouch="@(() => CompleteProcessingAsync(context))">
+                Complete Processing
+            </MudMenuItem>
+        }
+        @if (context.Status == "Processed")
+        {
+            <MudMenuItem OnClick="@(() => PostPayrollAsync(context))" 
+                OnTouch="@(() => PostPayrollAsync(context))">
+                Post to GL
+            </MudMenuItem>
+        }
+        @if (context.Status == "Posted")
+        {
+            <MudMenuItem OnClick="@(() => MarkAsPaidAsync(context))" 
+                OnTouch="@(() => MarkAsPaidAsync(context))">
+                Mark as Paid
+            </MudMenuItem>
+        }
+    </ExtraActions>
+</EntityTable>

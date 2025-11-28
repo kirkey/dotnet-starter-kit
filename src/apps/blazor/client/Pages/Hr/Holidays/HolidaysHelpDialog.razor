@@ -1,0 +1,153 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Holidays
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Holidays Management Help</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Holidays?">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Holidays are company-wide or regional non-working days defined per the Philippine Labor Code.
+                        They affect payroll calculations and attendance tracking.
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        <strong>Key Uses:</strong>
+                        <ul>
+                            <li>Payroll premium calculations for work on holidays</li>
+                            <li>Attendance tracking and leave management</li>
+                            <li>Scheduling and shift planning</li>
+                        </ul>
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Philippine Holiday Types">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Per the Philippine Labor Code, there are two main holiday types:
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        <strong>Regular Public Holidays (100% Premium):</strong>
+                        <ul>
+                            <li>New Year's Day (January 1)</li>
+                            <li>Maundy Thursday & Good Friday (moveable)</li>
+                            <li>Araw ng Kagitingan (April 9)</li>
+                            <li>Labor Day (May 1)</li>
+                            <li>Independence Day (June 12)</li>
+                            <li>National Heroes Day (Last Monday of August)</li>
+                            <li>Bonifacio Day (November 30)</li>
+                            <li>Christmas Day (December 25)</li>
+                            <li>Rizal Day (December 30)</li>
+                        </ul>
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="mt-2">
+                        <strong>Special Non-Working Days (30% Premium):</strong>
+                        <ul>
+                            <li>EDSA Revolution Anniversary (February 25)</li>
+                            <li>Black Saturday (moveable)</li>
+                            <li>Ninoy Aquino Day (August 21)</li>
+                            <li>All Saints' Day (November 1)</li>
+                            <li>All Souls' Day (November 2)</li>
+                            <li>Immaculate Conception (December 8)</li>
+                            <li>Christmas Eve (December 24)</li>
+                            <li>Last Day of the Year (December 31)</li>
+                        </ul>
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Pay Rate Multipliers">
+                    <MudText Typo="Typo.body2">
+                        <strong>Regular Public Holiday:</strong>
+                        <ul>
+                            <li>1.0 = 100% additional pay (200% total if worked)</li>
+                            <li>If rest day + holiday: 1.3 = 130% additional (230% total)</li>
+                            <li>If overtime on rest day + holiday: 2.0 = 200% additional (300% total)</li>
+                        </ul>
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="mt-2">
+                        <strong>Special Non-Working Day:</strong>
+                        <ul>
+                            <li>0.3 = 30% additional pay (130% total if worked)</li>
+                            <li>If rest day + special day: 0.5 = 50% additional (150% total)</li>
+                        </ul>
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Moveable Holidays">
+                    <MudText Typo="Typo.body2">
+                        Some holidays have dates that change each year based on calendar rules:
+                        <ul>
+                            <li><strong>Easter-based:</strong> Maundy Thursday, Good Friday, Black Saturday</li>
+                            <li><strong>Last Monday:</strong> National Heroes Day (last Monday of August)</li>
+                            <li><strong>Islamic Calendar:</strong> Eid'l Fitr, Eid'l Adha</li>
+                            <li><strong>Chinese Calendar:</strong> Chinese New Year</li>
+                        </ul>
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="mt-2">
+                        For moveable holidays, set "Moveable" to ON and specify the rule in "Moveable Rule".
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Regional Holidays">
+                    <MudText Typo="Typo.body2">
+                        Some holidays apply only to specific regions or provinces:
+                        <ul>
+                            <li><strong>Local Fiestas:</strong> Patron saint days specific to cities/municipalities</li>
+                            <li><strong>Charter Days:</strong> City/municipality founding anniversaries</li>
+                            <li><strong>BARMM Holidays:</strong> Islamic holidays specific to Bangsamoro region</li>
+                        </ul>
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="mt-2">
+                        For regional holidays, set "Nationwide" to OFF and list applicable regions in "Applicable Regions".
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Recurring Holidays">
+                    <MudText Typo="Typo.body2">
+                        Holidays that occur on the same date every year can be set as "Recurring Annually".
+                        This helps with automatic scheduling and planning.
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="mt-2">
+                        <strong>Examples:</strong>
+                        <ul>
+                            <li>New Year's Day - January 1 (recurring)</li>
+                            <li>Labor Day - May 1 (recurring)</li>
+                            <li>Christmas Day - December 25 (recurring)</li>
+                        </ul>
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="mt-2">
+                        Note: Moveable holidays like Easter cannot be set as recurring since their dates change.
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="How to Add a Holiday">
+                    <MudText Typo="Typo.body2">
+                        <ol>
+                            <li>Click the "Add" button</li>
+                            <li>Enter the holiday name (e.g., "New Year's Day")</li>
+                            <li>Select the holiday date</li>
+                            <li>Choose the holiday type (Regular or Special)</li>
+                            <li>Set the pay rate multiplier</li>
+                            <li>Configure settings (Paid, Recurring, Moveable)</li>
+                            <li>Set regional applicability if not nationwide</li>
+                            <li>Add description if needed</li>
+                            <li>Click "Save"</li>
+                        </ol>
+                    </MudText>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

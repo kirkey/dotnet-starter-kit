@@ -1,0 +1,129 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" />
+            Payrolls Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Overview">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    The Payrolls module manages payroll periods and the processing workflow.
+                    Each payroll represents a pay period (weekly, bi-weekly, semi-monthly, or monthly)
+                    and tracks gross pay, taxes, deductions, and net pay for all employees.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Payroll Lifecycle">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    Payrolls follow a defined workflow:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Edit">
+                        <b>Draft</b> - Initial state. Can add/remove employees and configure settings.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.PlayArrow">
+                        <b>Processing</b> - System is calculating pay. Cannot modify.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <b>Processed</b> - Calculations complete. Ready for review.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                        <b>Posted</b> - Posted to General Ledger. Journal entries created.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Paid">
+                        <b>Paid</b> - All employees have been paid. Payroll complete.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Creating a Payroll">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    To create a new payroll period:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Add">
+                        Click the Add button to open the create form.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.DateRange">
+                        Select the Start Date and End Date for the pay period.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Schedule">
+                        Choose the Pay Frequency (Weekly, Bi-Weekly, Semi-Monthly, Monthly).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Note">
+                        Add optional notes for reference.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Workflow Actions">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    Use the action menu (three dots) to perform workflow actions:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.PlayArrow">
+                        <b>Process</b> - Starts payroll calculation (from Draft).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <b>Complete Processing</b> - Finalizes calculations (from Processing).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                        <b>Post to GL</b> - Creates journal entries (from Processed).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Paid">
+                        <b>Mark as Paid</b> - Confirms payment complete (from Posted).
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Pay Frequency Options">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Event">
+                        <b>Weekly</b> - 52 pay periods per year.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Event">
+                        <b>Bi-Weekly</b> - 26 pay periods per year.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Event">
+                        <b>Semi-Monthly</b> - 24 pay periods per year (1st and 15th).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Event">
+                        <b>Monthly</b> - 12 pay periods per year.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Payroll Totals">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    The grid displays aggregated totals:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                        <b>Gross Pay</b> - Total earnings before deductions.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                        <b>Taxes</b> - Total tax withholdings (not shown in grid).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Remove">
+                        <b>Deductions</b> - Benefits, garnishments, etc. (not shown in grid).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Money">
+                        <b>Net Pay</b> - Final amount paid to employees.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@(() => MudDialog.Close())">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+}

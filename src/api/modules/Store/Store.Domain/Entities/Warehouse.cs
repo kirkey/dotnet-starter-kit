@@ -49,11 +49,63 @@ namespace Store.Domain.Entities;
 /// <seealso cref="Store.Domain.Exceptions.Warehouse.WarehouseCapacityExceededException"/>
 public sealed class Warehouse : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the warehouse name field. (2^8 = 256)
+    /// </summary>
+    public const int NameMaxLength = 256;
+
+    /// <summary>
+    /// Minimum length for the warehouse name field.
+    /// </summary>
+    public const int NameMinLength = 2;
+
+    /// <summary>
+    /// Maximum length for the warehouse code field. (2^6 = 64)
+    /// </summary>
+    public const int CodeMaxLength = 64;
+
+    /// <summary>
+    /// Maximum length for the warehouse address field. (2^9 = 512)
+    /// </summary>
+    public const int AddressMaxLength = 512;
+
+    /// <summary>
+    /// Maximum length for the manager name field. (2^7 = 128)
+    /// </summary>
+    public const int ManagerNameMaxLength = 128;
+
+    /// <summary>
+    /// Maximum length for the manager email field. (2^8 = 256)
+    /// </summary>
+    public const int ManagerEmailMaxLength = 256;
+
+    /// <summary>
+    /// Maximum length for the manager phone field. (2^6 = 64)
+    /// </summary>
+    public const int ManagerPhoneMaxLength = 64;
+
+    /// <summary>
+    /// Maximum length for the capacity unit field. (2^5 = 32)
+    /// </summary>
+    public const int CapacityUnitMaxLength = 32;
+
+    /// <summary>
+    /// Maximum length for the warehouse type field. (2^6 = 64)
+    /// </summary>
+    public const int WarehouseTypeMaxLength = 64;
+
+    /// <summary>
+    /// Maximum length for the warehouse notes field. (2^11 = 2048)
+    /// </summary>
+    public const int NotesMaxLength = 2048;
+
     /// <summary>
     /// Short warehouse code. Example: "WH-SEA", "WH-NYC".
     /// Max length: 50.
     /// </summary>
     public string Code { get; private set; } = null!;
+
 
     /// <summary>
     /// Street address for the warehouse.

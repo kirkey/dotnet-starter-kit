@@ -1,0 +1,46 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Cancel" Class="mr-2" Color="Color.Error" />
+            @Title
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">@ContentText</MudText>
+        <MudTextField @bind-Value="_reason" 
+                      Label="Reason"
+                      Lines="3"
+                      Variant="Variant.Filled"
+                      Required="true" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="Submit" Disabled="@(string.IsNullOrWhiteSpace(_reason))">
+            @ButtonText
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public string Title { get; set; } = "Reject Leave Request";
+
+    [Parameter]
+    public string ContentText { get; set; } = "Please provide a reason for rejection:";
+
+    [Parameter]
+    public string ButtonText { get; set; } = "Reject";
+
+    [Parameter]
+    public Color Color { get; set; } = Color.Error;
+
+    private string _reason = string.Empty;
+
+    private void Submit() => MudDialog.Close(DialogResult.Ok(_reason));
+    private void Cancel() => MudDialog.Cancel();
+}

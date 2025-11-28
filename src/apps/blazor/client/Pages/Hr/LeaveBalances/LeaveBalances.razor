@@ -1,0 +1,113 @@
+@page "/hr/leave-balances"
+
+<PageHeader Title="Leave Balances" Header="Leave Balances" SubHeader="Manage employee leave balances and entitlements." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowLeaveBalancesHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="LeaveBalanceResponse" TId="DefaultIdType" TRequest="LeaveBalanceViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Balance Period</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="int" 
+                             @bind-Value="context.Year" 
+                             For="@(() => context.Year)" 
+                             Label="Year"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Min="2000"
+                             Max="2100" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Leave Allocation</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.OpeningBalance" 
+                             For="@(() => context.OpeningBalance)" 
+                             Label="Opening Balance"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             Step="0.5M" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.AccruedDays" 
+                             For="@(() => context.AccruedDays)" 
+                             Label="Accrued Days"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             Step="0.5M" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.CarriedOverDays" 
+                             For="@(() => context.CarriedOverDays)" 
+                             Label="Carried Over Days"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             Step="0.5M" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Leave Usage</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.TakenDays" 
+                             For="@(() => context.TakenDays)" 
+                             Label="Taken Days"
+                             Variant="Variant.Filled"
+                             ReadOnly="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.PendingDays" 
+                             For="@(() => context.PendingDays)" 
+                             Label="Pending Days"
+                             Variant="Variant.Filled"
+                             ReadOnly="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.RemainingDays" 
+                             For="@(() => context.RemainingDays)" 
+                             Label="Remaining Days"
+                             Variant="Variant.Filled"
+                             ReadOnly="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker Label="Carryover Expiry Date" 
+                           @bind-Date="context.CarryoverExpiryDate" 
+                           Variant="Variant.Filled"
+                           Editable="true"
+                           HelperText="Date when carried over days expire" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

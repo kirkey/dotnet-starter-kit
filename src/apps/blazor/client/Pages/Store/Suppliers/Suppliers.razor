@@ -14,6 +14,27 @@
 </MudPaper>
 
 <EntityTable @ref="_table" TEntity="SupplierResponse" TId="DefaultIdType" TRequest="SupplierViewModel" Context="@Context">
+    <ExtraActions Context="context">
+        @if (context.IsActive == false)
+        {
+            <MudMenuItem OnClick="@(() => ActivateSupplier(context.Id ?? DefaultIdType.Empty))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" Color="Color.Success" />
+                    <span>Activate</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.IsActive == true)
+        {
+            <MudMenuItem OnClick="@(() => DeactivateSupplier(context.Id ?? DefaultIdType.Empty))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Block" Class="mr-2" Color="Color.Warning" />
+                    <span>Deactivate</span>
+                </div>
+            </MudMenuItem>
+        }
+    </ExtraActions>
+
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {

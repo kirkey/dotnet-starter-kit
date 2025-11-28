@@ -1,0 +1,86 @@
+@inject IClient Client
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.LockOpen" Class="mr-2" />
+            Release Stock
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Info" Class="mb-4">
+                    Releasing stock returns reserved or allocated quantity back to available stock.
+                </MudAlert>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudTextField Value="@ItemName" Label="Item" ReadOnly Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudTextField Value="@WarehouseName" Label="Warehouse" ReadOnly Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudNumericField T="int" Value="@ReservedQuantity" Label="Reserved Quantity" ReadOnly Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudNumericField T="int" Value="@AllocatedQuantity" Label="Allocated Quantity" ReadOnly Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudSelect T="string" @bind-Value="_releaseType" Label="Release Type" Variant="Variant.Filled" Required="true">
+                    <MudSelectItem T="string" Value="@("Reserved")">Release Reserved</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("Allocated")">Release Allocated</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudNumericField T="int" @bind-Value="_quantity" Label="Quantity to Release" 
+                                Min="1" Max="@MaxReleaseQuantity" Required="true" Variant="Variant.Filled" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit" Disabled="@(!IsValid)">
+            Release Stock
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    
+    [Parameter] public DefaultIdType StockLevelId { get; set; }
+    [Parameter] public string ItemName { get; set; } = string.Empty;
+    [Parameter] public string WarehouseName { get; set; } = string.Empty;
+    [Parameter] public int ReservedQuantity { get; set; }
+    [Parameter] public int AllocatedQuantity { get; set; }
+    
+    private int _quantity = 1;
+    private string _releaseType = "Reserved";
+    
+    private int MaxReleaseQuantity => _releaseType == "Reserved" ? ReservedQuantity : AllocatedQuantity;
+    private bool IsValid => _quantity > 0 && _quantity <= MaxReleaseQuantity && !string.IsNullOrEmpty(_releaseType);
+    
+    private void Cancel() => MudDialog.Cancel();
+    
+    private async Task Submit()
+    {
+        try
+        {
+            var command = new ReleaseStockCommand
+            {
+                StockLevelId = StockLevelId,
+                Quantity = _quantity
+            };
+            
+            await Client.ReleaseStockEndpointAsync("1", StockLevelId, command);
+            Snackbar.Add($"Successfully released {_quantity} units from {_releaseType.ToLower()}", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to release stock: {ex.Message}", Severity.Error);
+        }
+    }
+}

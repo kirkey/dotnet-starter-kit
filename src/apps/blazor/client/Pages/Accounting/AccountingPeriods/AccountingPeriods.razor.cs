@@ -8,6 +8,40 @@ public partial class AccountingPeriods
 
     private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
 
+    // Advanced search filters
+    private bool? _searchClosedOnly;
+    private bool? SearchClosedOnly
+    {
+        get => _searchClosedOnly;
+        set
+        {
+            _searchClosedOnly = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private string? _searchPeriodType;
+    private string? SearchPeriodType
+    {
+        get => _searchPeriodType;
+        set
+        {
+            _searchPeriodType = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private int? _searchFiscalYear;
+    private int? SearchFiscalYear
+    {
+        get => _searchFiscalYear;
+        set
+        {
+            _searchFiscalYear = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
     protected override Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<AccountingPeriodResponse, DefaultIdType, AccountingPeriodViewModel>(
@@ -19,11 +53,10 @@ public partial class AccountingPeriods
                 new EntityField<AccountingPeriodResponse>(response => response.Name, "Name", "Name"),
                 new EntityField<AccountingPeriodResponse>(response => response.StartDate, "Start Date", "StartDate", typeof(DateOnly)),
                 new EntityField<AccountingPeriodResponse>(response => response.EndDate, "End Date", "EndDate", typeof(DateOnly)),
+                new EntityField<AccountingPeriodResponse>(response => response.IsClosed, "Closed", "IsClosed", typeof(bool)),
                 new EntityField<AccountingPeriodResponse>(response => response.IsAdjustmentPeriod, "Adjustment Period", "IsAdjustmentPeriod", typeof(bool)),
                 new EntityField<AccountingPeriodResponse>(response => response.FiscalYear, "Fiscal Year", "FiscalYear"),
                 new EntityField<AccountingPeriodResponse>(response => response.PeriodType, "Period Type", "PeriodType"),
-                new EntityField<AccountingPeriodResponse>(response => response.Description, "Description", "Description"),
-                new EntityField<AccountingPeriodResponse>(response => response.Notes, "Notes", "Notes"),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
@@ -36,20 +69,56 @@ public partial class AccountingPeriods
                     Keyword = filter.Keyword,
                     OrderBy = filter.OrderBy
                 };
-                var result = await Client.AccountingPeriodSearchEndpointAsync("1", request);
+                var result = await Client.AccountingPeriodSearchEndpointAsync("1", request).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<AccountingPeriodResponse>>();
             },
             createFunc: async period =>
             {
-                await Client.AccountingPeriodCreateEndpointAsync("1", period.Adapt<CreateAccountingPeriodCommand>());
+                await Client.AccountingPeriodCreateEndpointAsync("1", period.Adapt<CreateAccountingPeriodCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, period) =>
             {
-                await Client.AccountingPeriodUpdateEndpointAsync("1", id, period.Adapt<UpdateAccountingPeriodCommand>());
+                await Client.AccountingPeriodUpdateEndpointAsync("1", id, period.Adapt<UpdateAccountingPeriodCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.AccountingPeriodDeleteEndpointAsync("1", id));
+            deleteFunc: async id => await Client.AccountingPeriodDeleteEndpointAsync("1", id).ConfigureAwait(false));
 
         return Task.CompletedTask;
+    }
+
+    private async Task OnClosePeriod(DefaultIdType id)
+    {
+        bool? confirmed = await DialogService.ShowMessageBox("Close Period", "Are you sure you want to close this accounting period? This will prevent further transactions.", yesText: "Close", cancelText: "Cancel");
+        if (confirmed == true)
+        {
+            try
+            {
+                await Client.AccountingPeriodCloseEndpointAsync("1", id, new()).ConfigureAwait(false);
+                Snackbar.Add("Accounting period closed successfully", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to close period: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task OnReopenPeriod(DefaultIdType id)
+    {
+        bool? confirmed = await DialogService.ShowMessageBox("Reopen Period", "Are you sure you want to reopen this accounting period? This will allow transactions to be posted again.", yesText: "Reopen", cancelText: "Cancel");
+        if (confirmed == true)
+        {
+            try
+            {
+                await Client.AccountingPeriodReopenEndpointAsync("1", id, new()).ConfigureAwait(false);
+                Snackbar.Add("Accounting period reopened successfully", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to reopen period: {ex.Message}", Severity.Error);
+            }
+        }
     }
 
     private async Task ShowAccountingPeriodsHelp()

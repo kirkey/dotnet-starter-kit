@@ -14,6 +14,37 @@
 </MudPaper>
 
 <EntityTable @ref="_table" TEntity="CustomerSearchResponse" TId="DefaultIdType" TRequest="CustomerViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchCustomerNumber"
+                          Label="Customer Number"
+                          Placeholder="Search by customer number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchCustomerName"
+                          Label="Customer Name"
+                          Placeholder="Search by name"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Person" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchCustomerType"
+                       Label="Customer Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Individual")">Individual</MudSelectItem>
+                <MudSelectItem Value="@("Business")">Business</MudSelectItem>
+                <MudSelectItem Value="@("Government")">Government</MudSelectItem>
+                <MudSelectItem Value="@("NonProfit")">Non-Profit</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {

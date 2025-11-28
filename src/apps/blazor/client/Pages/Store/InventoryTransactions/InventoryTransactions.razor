@@ -14,13 +14,39 @@
 </MudPaper>
 
 <EntityTable @ref="_table" TEntity="InventoryTransactionResponse" TId="DefaultIdType" TRequest="InventoryTransactionViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudSelect T="string?" Label="Transaction Type" @bind-Value="SearchTransactionType">
+            <MudSelectItem T="string?" Value="null">All Types</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("IN")">IN</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("OUT")">OUT</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("ADJUSTMENT")">ADJUSTMENT</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("TRANSFER")">TRANSFER</MudSelectItem>
+        </MudSelect>
+        <MudSelect T="bool?" Label="Approval Status" @bind-Value="SearchIsApproved">
+            <MudSelectItem T="bool?" Value="null">All</MudSelectItem>
+            <MudSelectItem T="bool?" Value="true">Approved</MudSelectItem>
+            <MudSelectItem T="bool?" Value="false">Pending Approval</MudSelectItem>
+        </MudSelect>
+        <MudDatePicker Label="Date From" Date="SearchDateFrom" DateChanged="value => SearchDateFrom = value" DateFormat="MMMM dd, yyyy" />
+        <MudDatePicker Label="Date To" Date="SearchDateTo" DateChanged="value => SearchDateTo = value" DateFormat="MMMM dd, yyyy" />
+    </AdvancedSearchContent>
+
     <ExtraActions Context="context">
-        <MudMenuItem OnClick="@(() => ApproveTransaction(context.Id))">
-            <div class="d-flex align-center">
-                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" />
-                <span>Approve Transaction</span>
-            </div>
-        </MudMenuItem>
+        @if (!context.IsApproved)
+        {
+            <MudMenuItem OnClick="@(() => ApproveTransaction(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" Color="Color.Success" />
+                    <span>Approve Transaction</span>
+                </div>
+            </MudMenuItem>
+            <MudMenuItem OnClick="@(() => RejectTransaction(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Cancel" Class="mr-2" Color="Color.Error" />
+                    <span>Reject Transaction</span>
+                </div>
+            </MudMenuItem>
+        }
     </ExtraActions>
 
     <EditFormContent Context="context">

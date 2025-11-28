@@ -1,0 +1,109 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" />
+            Leave Requests Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Overview">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    Leave Requests allow employees to request time off from work.
+                    Requests go through an approval workflow before being finalized
+                    and deducted from the employee's leave balance.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Request Lifecycle">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Edit">
+                        <b>Draft</b> - Initial state. Can be edited before submission.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Send">
+                        <b>Submitted/Pending</b> - Awaiting manager approval.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <b>Approved</b> - Manager approved the request.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Cancel">
+                        <b>Rejected</b> - Manager rejected with reason.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Block">
+                        <b>Cancelled</b> - Employee cancelled the request.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Creating a Leave Request">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    To create a new leave request:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Add">
+                        Click the Add button to open the create form.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.DateRange">
+                        Select the Start Date and End Date.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Numbers">
+                        Enter the Number of Days (supports half days).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Note">
+                        Provide a Reason for the leave request.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Save">
+                        Save as draft, then Submit when ready.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Workflow Actions">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    Use the action menu to perform workflow actions:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Send">
+                        <b>Submit</b> - Send request for manager approval.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <b>Approve</b> - Manager approves the request (managers only).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Cancel">
+                        <b>Reject</b> - Manager rejects with comment (managers only).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Block">
+                        <b>Cancel</b> - Cancel an unprocessed request.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Best Practices">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Schedule">
+                        Submit requests in advance when possible.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Note">
+                        Provide clear reasons for better approval chances.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                        Check your leave balance before submitting.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CalendarMonth">
+                        Coordinate with team members for coverage.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@(() => MudDialog.Close())">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+}

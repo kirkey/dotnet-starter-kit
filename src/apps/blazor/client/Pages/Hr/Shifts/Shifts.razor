@@ -1,0 +1,98 @@
+@page "/hr/shifts"
+
+<PageHeader Title="Shifts" Header="Shifts" SubHeader="Manage work shift templates and schedules." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowShiftsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="ShiftResponse" TId="DefaultIdType" TRequest="ShiftViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Shift Information</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Shift Name" 
+                          For="@(() => context.ShiftName)" 
+                          @bind-Value="context.ShiftName" 
+                          Required="true"
+                          Placeholder="e.g., Morning Shift, Night Shift" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTimePicker Label="Start Time" 
+                           @bind-Time="context.StartTime" 
+                           Required="true"
+                           Variant="Variant.Filled"
+                           AmPm="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTimePicker Label="End Time" 
+                           @bind-Time="context.EndTime" 
+                           Required="true"
+                           Variant="Variant.Filled"
+                           AmPm="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="int" 
+                             @bind-Value="context.BreakDurationMinutes" 
+                             For="@(() => context.BreakDurationMinutes)" 
+                             Label="Break Duration (minutes)"
+                             Min="0"
+                             Max="120"
+                             Step="5"
+                             HelperText="Total break time" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Shift Settings</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsOvernight" Color="Color.Primary">
+                Overnight Shift (spans midnight)
+            </MudSwitch>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsActive" Color="Color.Primary">
+                Active
+            </MudSwitch>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudText Typo="Typo.body2" Class="mt-3">
+                <strong>Working Hours:</strong> @context.WorkingHours.ToString("N2") hours
+            </MudText>
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudTextField Label="Description" 
+                          For="@(() => context.Description)" 
+                          @bind-Value="context.Description" 
+                          Lines="3"
+                          Placeholder="Additional notes about this shift" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

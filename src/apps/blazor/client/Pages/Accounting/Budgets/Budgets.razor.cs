@@ -2,17 +2,49 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Budgets;
 
 public partial class Budgets
 {
-    
-
     protected EntityServerTableContext<BudgetResponse, DefaultIdType, BudgetViewModel> Context { get; set; } = null!;
 
     private EntityTable<BudgetResponse, DefaultIdType, BudgetViewModel> _table = null!;
 
+    // Advanced search filters
+    private string? _searchStatus;
+    private string? SearchStatus
+    {
+        get => _searchStatus;
+        set
+        {
+            _searchStatus = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private string? _searchBudgetType;
+    private string? SearchBudgetType
+    {
+        get => _searchBudgetType;
+        set
+        {
+            _searchBudgetType = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private int? _searchFiscalYear;
+    private int? SearchFiscalYear
+    {
+        get => _searchFiscalYear;
+        set
+        {
+            _searchFiscalYear = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
     protected override Task OnInitializedAsync()
     {
         Context = new EntityServerTableContext<BudgetResponse, DefaultIdType, BudgetViewModel>(
-            entityName: "Accounting Period",
-            entityNamePlural: "Accounting Periods",
+            entityName: "Budget",
+            entityNamePlural: "Budgets",
             entityResource: FshResources.Accounting,
             fields:
             [
@@ -20,10 +52,9 @@ public partial class Budgets
                 new EntityField<BudgetResponse>(response => response.Name, "Name", "Name"),
                 new EntityField<BudgetResponse>(response => response.FiscalYear, "Fiscal Year", "FiscalYear"),
                 new EntityField<BudgetResponse>(response => response.BudgetType, "Type", "BudgetType"),
+                new EntityField<BudgetResponse>(response => response.Status, "Status", "Status"),
                 new EntityField<BudgetResponse>(response => response.TotalBudgetedAmount, "Total Budgeted", "TotalBudgetedAmount", typeof(decimal)),
                 new EntityField<BudgetResponse>(response => response.TotalActualAmount, "Total Actual", "TotalActualAmount", typeof(decimal)),
-                new EntityField<BudgetResponse>(response => response.Description, "Description", "Description"),
-                new EntityField<BudgetResponse>(response => response.Notes, "Notes", "Notes"),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
@@ -34,22 +65,62 @@ public partial class Budgets
                     PageNumber = filter.PageNumber,
                     PageSize = filter.PageSize,
                     Keyword = filter.Keyword,
-                    OrderBy = filter.OrderBy
+                    OrderBy = filter.OrderBy,
+                    Status = SearchStatus,
+                    FiscalYear = SearchFiscalYear
                 };
-                var result = await Client.BudgetSearchEndpointAsync("1", request);
+                var result = await Client.BudgetSearchEndpointAsync("1", request).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<BudgetResponse>>();
             },
             createFunc: async period =>
             {
-                await Client.BudgetCreateEndpointAsync("1", period.Adapt<CreateBudgetCommand>());
+                await Client.BudgetCreateEndpointAsync("1", period.Adapt<CreateBudgetCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, period) =>
             {
-                await Client.BudgetUpdateEndpointAsync("1", id, period.Adapt<UpdateBudgetCommand>());
+                await Client.BudgetUpdateEndpointAsync("1", id, period.Adapt<UpdateBudgetCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.BudgetDeleteEndpointAsync("1", id));
+            deleteFunc: async id => await Client.BudgetDeleteEndpointAsync("1", id).ConfigureAwait(false));
 
         return Task.CompletedTask;
+    }
+
+    private async Task OnApproveBudget(DefaultIdType id)
+    {
+        bool? confirmed = await DialogService.ShowMessageBox("Approve Budget", "Are you sure you want to approve this budget?", yesText: "Approve", cancelText: "Cancel");
+        if (confirmed == true)
+        {
+            try
+            {
+                var command = new ApproveBudgetCommand();
+                await Client.BudgetApproveEndpointAsync("1", id, command).ConfigureAwait(false);
+                Snackbar.Add("Budget approved successfully", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to approve budget: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task OnCloseBudget(DefaultIdType id)
+    {
+        bool? confirmed = await DialogService.ShowMessageBox("Close Budget", "Are you sure you want to close this budget? This action cannot be undone.", yesText: "Close", cancelText: "Cancel");
+        if (confirmed == true)
+        {
+            try
+            {
+                var command = new CloseBudgetCommand();
+                await Client.BudgetCloseEndpointAsync("1", id, command).ConfigureAwait(false);
+                Snackbar.Add("Budget closed successfully", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to close budget: {ex.Message}", Severity.Error);
+            }
+        }
     }
 
     /// <summary>

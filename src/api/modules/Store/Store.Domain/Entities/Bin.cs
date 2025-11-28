@@ -36,6 +36,37 @@ namespace Store.Domain.Entities;
 /// <seealso cref="Store.Domain.Exceptions.Bin.BinNotFoundException"/>
 public sealed class Bin : AuditableEntity, IAggregateRoot
 {
+    // Domain Constants - Binary Limits (Powers of 2)
+    /// <summary>
+    /// Maximum length for the bin name field. (2^8 = 256)
+    /// </summary>
+    public const int NameMaxLength = 256;
+
+    /// <summary>
+    /// Minimum length for the bin name field.
+    /// </summary>
+    public const int NameMinLength = 2;
+
+    /// <summary>
+    /// Maximum length for the bin description field. (2^11 = 2048)
+    /// </summary>
+    public const int DescriptionMaxLength = 2048;
+
+    /// <summary>
+    /// Maximum length for the bin notes field. (2^12 = 4096)
+    /// </summary>
+    public const int NotesMaxLength = 4096;
+
+    /// <summary>
+    /// Maximum length for the bin code field. (2^6 = 64)
+    /// </summary>
+    public const int CodeMaxLength = 64;
+
+    /// <summary>
+    /// Maximum length for the bin type field. (2^6 = 64)
+    /// </summary>
+    public const int BinTypeMaxLength = 64;
+
     /// <summary>
     /// Unique bin code within the warehouse location.
     /// Example: "A1-01-01", "RACK-5-SHELF-3", "PALLET-001".

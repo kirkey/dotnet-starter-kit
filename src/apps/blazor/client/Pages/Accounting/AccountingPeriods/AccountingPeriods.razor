@@ -1,8 +1,65 @@
 @page "/accounting/periods"
 
-<PageHeader Title="Accounting Periods" Header="Accounting Periods" SubHeader="Manage Accounting Periods." />
+<PageHeader Title="Accounting Periods" Header="Accounting Periods" SubHeader="Manage fiscal periods for financial reporting and transaction control." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowAccountingPeriodsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
 
 <EntityTable @ref="_table" TEntity="AccountingPeriodResponse" TId="DefaultIdType" TRequest="AccountingPeriodViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="@SearchClosedOnly"
+                       Label="Closed Periods Only"
+                       Color="Color.Primary" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchPeriodType"
+                       Label="Period Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Monthly")">Monthly</MudSelectItem>
+                <MudSelectItem Value="@("Quarterly")">Quarterly</MudSelectItem>
+                <MudSelectItem Value="@("Yearly")">Yearly</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="int?"
+                             @bind-Value="@SearchFiscalYear"
+                             Label="Fiscal Year"
+                             Variant="Variant.Outlined" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="period">
+        @if (!period.IsClosed)
+        {
+            <MudMenuItem OnClick="@(() => OnClosePeriod(period.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Lock" Class="mr-2" Color="Color.Warning" />
+                    <span>Close Period</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (period.IsClosed)
+        {
+            <MudMenuItem OnClick="@(() => OnReopenPeriod(period.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.LockOpen" Class="mr-2" Color="Color.Success" />
+                    <span>Reopen Period</span>
+                </div>
+            </MudMenuItem>
+        }
+    </ExtraActions>
+
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {

@@ -1,6 +1,6 @@
 @page "/accounting/projects"
 
-<PageHeader Title="Projects" Header="Projects" SubHeader="Manage Projects." />
+<PageHeader Title="Projects" Header="Project Management" SubHeader="Manage projects, track budgets, and analyze costs." />
 
 <MudPaper Elevation="2" Class="pa-4 mb-4">
     <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
@@ -14,6 +14,34 @@
 </MudPaper>
 
 <EntityTable @ref="_table" TEntity="ProjectResponse" TId="DefaultIdType" TRequest="ProjectViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchProjectName"
+                          Label="Project Name"
+                          Placeholder="Search by name"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchClientName"
+                          Label="Client Name"
+                          Placeholder="Search by client"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Business" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="project">
+        <MudMenuItem Href="@($"/accounting/project-costing/{project.Id}")">
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Class="mr-2" />
+                <span>View Costing</span>
+            </div>
+        </MudMenuItem>
+    </ExtraActions>
+
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {

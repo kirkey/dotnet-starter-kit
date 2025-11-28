@@ -1,0 +1,114 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" />
+            Timesheets Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Overview">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    Timesheets track employee work hours for payroll processing.
+                    Each timesheet covers a defined period (weekly, bi-weekly, etc.)
+                    and records regular and overtime hours worked.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Timesheet Lifecycle">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Edit">
+                        <b>Draft</b> - Initial state. Employee enters hours.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Send">
+                        <b>Submitted</b> - Sent for manager approval.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <b>Approved</b> - Manager approved. Ready for payroll.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Cancel">
+                        <b>Rejected</b> - Manager rejected. Needs correction.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Creating Timesheets">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    To create a new timesheet:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Add">
+                        Click the Add button to open the create form.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.DateRange">
+                        Select the Start Date and End Date for the period.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Schedule">
+                        Choose the Period Type (Weekly, Bi-Weekly, etc.).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Timer">
+                        Enter Regular Hours and Overtime Hours.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Period Types">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Event">
+                        <b>Weekly</b> - 7-day period (Sunday to Saturday).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Event">
+                        <b>Bi-Weekly</b> - 14-day period.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Event">
+                        <b>Semi-Monthly</b> - 1st-15th and 16th-end of month.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Event">
+                        <b>Monthly</b> - Full calendar month.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Hours Tracking">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.WorkOutline">
+                        <b>Regular Hours</b> - Standard work hours (typically up to 40/week).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.MoreTime">
+                        <b>Overtime Hours</b> - Hours beyond regular schedule.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Calculate">
+                        <b>Total Hours</b> - Sum of regular and overtime hours.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Best Practices">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Today">
+                        Submit timesheets promptly at period end.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Verified">
+                        Verify hours before submitting for approval.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Note">
+                        Keep records of any exceptions or special circumstances.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Lock">
+                        Approved timesheets are locked from editing.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@(() => MudDialog.Close())">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+}

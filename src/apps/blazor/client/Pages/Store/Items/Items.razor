@@ -14,6 +14,25 @@
 </MudPaper>
 
 <EntityTable @ref="_table" TEntity="ItemResponse" TId="DefaultIdType" TRequest="ItemViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <AutocompleteCategoryId @bind-Value="SearchCategoryId"
+                                For="@(() => SearchCategoryId)"
+                                Label="Category"
+                                Variant="Variant.Outlined" />
+        <AutocompleteSupplier Value="SearchSupplierId"
+                              ValueChanged="value => SearchSupplierId = value"
+                              For="@(() => SearchSupplierId)"
+                              Label="Supplier"
+                              Variant="Variant.Outlined" />
+        <MudSelect T="bool?" Label="Perishable" @bind-Value="SearchIsPerishable">
+            <MudSelectItem T="bool?" Value="null">All</MudSelectItem>
+            <MudSelectItem T="bool?" Value="true">Perishable Only</MudSelectItem>
+            <MudSelectItem T="bool?" Value="false">Non-Perishable Only</MudSelectItem>
+        </MudSelect>
+        <MudNumericField T="decimal?" Label="Min Price" @bind-Value="SearchMinPrice" Immediate="true" />
+        <MudNumericField T="decimal?" Label="Max Price" @bind-Value="SearchMaxPrice" Immediate="true" />
+    </AdvancedSearchContent>
+
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)
         {

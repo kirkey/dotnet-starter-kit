@@ -1,0 +1,90 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Benefits
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Understanding Employee Benefits</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Employee Benefits?">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Employee benefits are non-wage compensations provided to employees. 
+                        In the Philippines, certain benefits are mandatory per Labor Code.
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        <strong>Mandatory Benefits (Philippines):</strong>
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Security">SSS (Social Security System)</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.LocalHospital">PhilHealth (Health Insurance)</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Home">Pag-IBIG (Housing Fund)</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.AttachMoney">13th Month Pay</MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Benefit Types">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Benefits are categorized by type for easy management:
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.LocalHospital">Health - Medical, dental, vision</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Savings">Retirement - Pension, SSS</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Security">Life Insurance - Death benefits</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Home">Housing - Pag-IBIG fund</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.EventAvailable">Leave - Vacation, sick leave</MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Contributions">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Both employees and employers contribute to certain benefits:
+                    </MudText>
+                    <MudAlert Severity="Severity.Info" Dense="true" Class="mb-2">
+                        <strong>SSS:</strong> Employee 4.5% + Employer 9.5% (based on salary bracket)
+                    </MudAlert>
+                    <MudAlert Severity="Severity.Info" Dense="true" Class="mb-2">
+                        <strong>PhilHealth:</strong> Employee 2.25% + Employer 2.25% (total 4.5%)
+                    </MudAlert>
+                    <MudAlert Severity="Severity.Info" Dense="true">
+                        <strong>Pag-IBIG:</strong> Employee 2% + Employer 2%
+                    </MudAlert>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Coverage Types">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Benefits can cover different family configurations:
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Person">Individual - Employee only</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.People">Employee + Spouse</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.ChildCare">Employee + Children</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.FamilyRestroom">Family - All dependents</MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Managing Benefits">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        <strong>To create a benefit:</strong>
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Add">Click "Add" to create a new benefit</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Edit">Enter benefit name and type</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.AttachMoney">Set contribution amounts</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Security">Mark as mandatory if required by law</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Save">Save the benefit</MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close(DialogResult.Ok(true));
+}

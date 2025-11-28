@@ -1,0 +1,131 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" />
+            Tax Brackets Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Overview">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    Tax Brackets define the progressive tax rates applied to different income ranges.
+                    Each bracket specifies the minimum and maximum income thresholds and the applicable tax rate.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Tax Types">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                        <b>Federal</b> - Federal income tax brackets.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.LocationCity">
+                        <b>State</b> - State income tax brackets (varies by state).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Home">
+                        <b>Local</b> - Local/city income tax brackets.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Security">
+                        <b>FICA</b> - Social Security tax (6.2% up to wage base).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.LocalHospital">
+                        <b>Medicare</b> - Medicare tax (1.45%, additional 0.9% over threshold).
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Filing Status">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    Tax brackets vary by filing status:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Person">
+                        <b>Single</b> - Unmarried individuals.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.People">
+                        <b>Married Filing Jointly</b> - Married couples filing together.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.PersonOutline">
+                        <b>Married Filing Separately</b> - Married couples filing separately.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.FamilyRestroom">
+                        <b>Head of Household</b> - Unmarried with dependents.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Creating Tax Brackets">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    To create a new tax bracket:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Add">
+                        Click the Add button to open the create form.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Category">
+                        Select the Tax Type (Federal, State, etc.).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CalendarMonth">
+                        Enter the Tax Year this bracket applies to.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                        Set the income range (Min and Max Income).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Percent">
+                        Enter the Rate as a decimal (e.g., 0.22 for 22%).
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Progressive Taxation">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    Tax brackets work progressively - only income within each bracket is taxed at that rate.
+                </MudText>
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <b>Example (2024 Single Filer):</b>
+                </MudText>
+                <MudSimpleTable Dense="true" Bordered="true">
+                    <thead>
+                        <tr>
+                            <th>Income Range</th>
+                            <th>Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>$0 - $11,600</td><td>10%</td></tr>
+                        <tr><td>$11,601 - $47,150</td><td>12%</td></tr>
+                        <tr><td>$47,151 - $100,525</td><td>22%</td></tr>
+                        <tr><td>$100,526 - $191,950</td><td>24%</td></tr>
+                    </tbody>
+                </MudSimpleTable>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Best Practices">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Update">
+                        Update brackets annually when tax laws change.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Warning">
+                        Ensure brackets don't overlap (max of one = min of next).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Verified">
+                        Verify rates match official tax tables.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Description">
+                        Add descriptions for special brackets or rules.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@(() => MudDialog.Close())">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+}

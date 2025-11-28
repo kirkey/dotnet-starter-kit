@@ -1,0 +1,120 @@
+@page "/hr/leave-requests"
+
+<PageHeader Title="Leave Requests" Header="Leave Requests" SubHeader="Manage employee leave requests and approvals." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowLeaveRequestsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="LeaveRequestResponse" TId="DefaultIdType" TRequest="LeaveRequestViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Leave Period</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker Label="Start Date" 
+                           @bind-Date="context.StartDate" 
+                           Required="true"
+                           Variant="Variant.Filled"
+                           Editable="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker Label="End Date" 
+                           @bind-Date="context.EndDate" 
+                           Required="true"
+                           Variant="Variant.Filled"
+                           Editable="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.NumberOfDays" 
+                             For="@(() => context.NumberOfDays)" 
+                             Label="Number of Days"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Min="0.5M"
+                             Max="365"
+                             Step="0.5M" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Request Details</MudText>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Reason" 
+                          For="@(() => context.Reason)" 
+                          Label="Reason"
+                          Lines="3"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Provide a reason for your leave request" />
+        </MudItem>
+
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField @bind-Value="context.Status" 
+                              Label="Status"
+                              ReadOnly="true"
+                              Variant="Variant.Filled" />
+            </MudItem>
+
+            @if (!string.IsNullOrEmpty(context.ApproverComment))
+            {
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="context.ApproverComment" 
+                                  Label="Approver Comment"
+                                  ReadOnly="true"
+                                  Lines="2"
+                                  Variant="Variant.Filled" />
+                </MudItem>
+            }
+        }
+    </EditFormContent>
+
+    <ExtraActions>
+        @if (context.Status == "Draft")
+        {
+            <MudMenuItem OnClick="@(() => SubmitLeaveRequestAsync(context))" 
+                OnTouch="@(() => SubmitLeaveRequestAsync(context))">
+                Submit
+            </MudMenuItem>
+        }
+        @if (context.Status == "Submitted" || context.Status == "Pending")
+        {
+            <MudMenuItem OnClick="@(() => ApproveLeaveRequestAsync(context))" 
+                OnTouch="@(() => ApproveLeaveRequestAsync(context))">
+                Approve
+            </MudMenuItem>
+            <MudMenuItem OnClick="@(() => RejectLeaveRequestAsync(context))" 
+                OnTouch="@(() => RejectLeaveRequestAsync(context))">
+                Reject
+            </MudMenuItem>
+        }
+        @if (context.Status != "Cancelled" && context.Status != "Rejected" && context.Status != "Approved")
+        {
+            <MudMenuItem OnClick="@(() => CancelLeaveRequestAsync(context))" 
+                OnTouch="@(() => CancelLeaveRequestAsync(context))">
+                Cancel
+            </MudMenuItem>
+        }
+    </ExtraActions>
+</EntityTable>

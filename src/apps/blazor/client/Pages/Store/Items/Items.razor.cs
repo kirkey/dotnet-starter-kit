@@ -3,6 +3,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Items;
 /// <summary>
 /// Items page logic. Provides CRUD and search over Item entities using the generated API client.
 /// Mirrors the structure of Budgets and Categories pages for consistency.
+/// Supports advanced search filtering by category, supplier, perishability, and price range.
 /// </summary>
 public partial class Items
 {
@@ -10,6 +11,62 @@ public partial class Items
 
     protected EntityServerTableContext<ItemResponse, DefaultIdType, ItemViewModel> Context { get; set; } = null!;
     private EntityTable<ItemResponse, DefaultIdType, ItemViewModel> _table = null!;
+
+    // Advanced search filters
+    private DefaultIdType? _searchCategoryId;
+    private DefaultIdType? SearchCategoryId
+    {
+        get => _searchCategoryId;
+        set
+        {
+            _searchCategoryId = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private DefaultIdType? _searchSupplierId;
+    private DefaultIdType? SearchSupplierId
+    {
+        get => _searchSupplierId;
+        set
+        {
+            _searchSupplierId = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private bool? _searchIsPerishable;
+    private bool? SearchIsPerishable
+    {
+        get => _searchIsPerishable;
+        set
+        {
+            _searchIsPerishable = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private decimal? _searchMinPrice;
+    private decimal? SearchMinPrice
+    {
+        get => _searchMinPrice;
+        set
+        {
+            _searchMinPrice = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private decimal? _searchMaxPrice;
+    private decimal? SearchMaxPrice
+    {
+        get => _searchMaxPrice;
+        set
+        {
+            _searchMaxPrice = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -32,11 +89,6 @@ public partial class Items
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
-            // getDetailsFunc: async id =>
-            // {
-            //     var dto = await Client.GetItemEndpointAsync("1", id).ConfigureAwait(false);
-            //     return dto.Adapt<ItemViewModel>();
-            // },
             searchFunc: async filter =>
             {
                 var command = new SearchItemsCommand
@@ -44,7 +96,12 @@ public partial class Items
                     PageNumber = filter.PageNumber,
                     PageSize = filter.PageSize,
                     Keyword = filter.Keyword,
-                    OrderBy = filter.OrderBy
+                    OrderBy = filter.OrderBy,
+                    CategoryId = SearchCategoryId,
+                    SupplierId = SearchSupplierId,
+                    IsPerishable = SearchIsPerishable,
+                    MinPrice = SearchMinPrice,
+                    MaxPrice = SearchMaxPrice
                 };
                 var result = await Client.SearchItemsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<ItemResponse>>();
@@ -79,11 +136,11 @@ public partial class Items
                     Filter = new ItemExportFilter
                     {
                         SearchTerm = filter.Keyword,
-                        CategoryId = null, // Can be extended to include category filter from advanced search
-                        SupplierId = null, // Can be extended to include supplier filter from advanced search
-                        IsPerishable = null,
-                        MinPrice = null,
-                        MaxPrice = null
+                        CategoryId = SearchCategoryId,
+                        SupplierId = SearchSupplierId,
+                        IsPerishable = SearchIsPerishable,
+                        MinPrice = SearchMinPrice,
+                        MaxPrice = SearchMaxPrice
                     },
                     SheetName = "Items"
                 };

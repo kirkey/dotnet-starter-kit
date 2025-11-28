@@ -1,5 +1,8 @@
 namespace FSH.Starter.WebApi.Store.Application.Items.Search.v1;
 
+/// <summary>
+/// Command for searching items with advanced filtering.
+/// </summary>
 public class SearchItemsCommand : PaginationFilter, IRequest<PagedList<ItemResponse>>
 {
     public string? SearchTerm { get; set; }
@@ -13,4 +16,6 @@ public class SearchItemsCommand : PaginationFilter, IRequest<PagedList<ItemRespo
     public bool? IsActive { get; set; }
     public string? Brand { get; set; }
     public string? Manufacturer { get; set; }
+    public decimal? MinPrice { get; set; }
+    public decimal? MaxPrice { get; set; }
 }

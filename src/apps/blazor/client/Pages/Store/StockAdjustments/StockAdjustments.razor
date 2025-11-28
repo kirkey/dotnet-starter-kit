@@ -14,16 +14,37 @@
 </MudPaper>
 
 <EntityTable @ref="_table" TEntity="StockAdjustmentResponse" TId="DefaultIdType" TRequest="StockAdjustmentViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudSelect T="string?" Label="Adjustment Type" @bind-Value="SearchAdjustmentType">
+            <MudSelectItem T="string?" Value="null">All Types</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Increase")">Increase</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Decrease")">Decrease</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Correction")">Correction</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Damage")">Damage</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Loss")">Loss</MudSelectItem>
+        </MudSelect>
+        <MudSelect T="bool?" Label="Approval Status" @bind-Value="SearchIsApproved">
+            <MudSelectItem T="bool?" Value="null">All</MudSelectItem>
+            <MudSelectItem T="bool?" Value="true">Approved</MudSelectItem>
+            <MudSelectItem T="bool?" Value="false">Pending Approval</MudSelectItem>
+        </MudSelect>
+        <MudDatePicker Label="Date From" Date="SearchDateFrom" DateChanged="value => SearchDateFrom = value" DateFormat="MMMM dd, yyyy" />
+        <MudDatePicker Label="Date To" Date="SearchDateTo" DateChanged="value => SearchDateTo = value" DateFormat="MMMM dd, yyyy" />
+    </AdvancedSearchContent>
+
     <ExtraActions Context="context">
         @{
             var adjustmentId = context.Id ?? DefaultIdType.Empty;
         }
-        <MudMenuItem OnClick="@(() => ApproveAdjustment(adjustmentId))">
-            <div class="d-flex align-center">
-                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" />
-                <span>Approve Adjustment</span>
-            </div>
-        </MudMenuItem>
+        @if (!context.IsApproved)
+        {
+            <MudMenuItem OnClick="@(() => ApproveAdjustment(adjustmentId))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" Color="Color.Success" />
+                    <span>Approve Adjustment</span>
+                </div>
+            </MudMenuItem>
+        }
     </ExtraActions>
 
     <EditFormContent Context="context">

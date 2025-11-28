@@ -1,5 +1,8 @@
 namespace FSH.Starter.WebApi.Store.Application.StockAdjustments.Get.v1;
 
+/// <summary>
+/// Response for stock adjustment operations.
+/// </summary>
 public sealed record StockAdjustmentResponse(
     DefaultIdType? Id,
     DefaultIdType ItemId,
@@ -11,4 +14,7 @@ public sealed record StockAdjustmentResponse(
     string Reason,
     DateTime AdjustmentDate,
     string? Notes,
-    DefaultIdType? CreatedBy);
+    DefaultIdType? CreatedBy,
+    bool IsApproved,
+    string? ApprovedBy,
+    DateTime? ApprovalDate);

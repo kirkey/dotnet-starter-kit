@@ -13,6 +13,40 @@ public partial class Customers
 
     private EntityTable<CustomerSearchResponse, DefaultIdType, CustomerViewModel> _table = null!;
 
+    // Advanced search filters
+    private string? _searchCustomerNumber;
+    private string? SearchCustomerNumber
+    {
+        get => _searchCustomerNumber;
+        set
+        {
+            _searchCustomerNumber = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private string? _searchCustomerName;
+    private string? SearchCustomerName
+    {
+        get => _searchCustomerName;
+        set
+        {
+            _searchCustomerName = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private string? _searchCustomerType;
+    private string? SearchCustomerType
+    {
+        get => _searchCustomerType;
+        set
+        {
+            _searchCustomerType = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
     /// <summary>
     /// Initializes the table context with customer-specific configuration including fields, CRUD operations, and search functionality.
     /// </summary>
@@ -41,25 +75,20 @@ public partial class Customers
                     Keyword = filter.Keyword,
                     OrderBy = filter.OrderBy
                 };
-                var result = await Client.CustomerSearchEndpointAsync("1", request);
+                var result = await Client.CustomerSearchEndpointAsync("1", request).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<CustomerSearchResponse>>();
             },
             enableAdvancedSearch: true,
             idFunc: dto => dto.Id,
             createFunc: async viewModel =>
             {
-                await Client.CustomerCreateEndpointAsync("1", viewModel.Adapt<CustomerCreateCommand>());
+                await Client.CustomerCreateEndpointAsync("1", viewModel.Adapt<CustomerCreateCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Client.CustomerUpdateEndpointAsync("1", id, viewModel.Adapt<CustomerUpdateCommand>());
+                await Client.CustomerUpdateEndpointAsync("1", id, viewModel.Adapt<CustomerUpdateCommand>()).ConfigureAwait(false);
             },
             deleteFunc: null,
-            // getDetailsFunc: async id =>
-            // {
-            //     var details = await Client.CustomerGetEndpointAsync("1", id);
-            //     return details.Adapt<CustomerViewModel>();
-            // },
             entityName: "Customer",
             entityNamePlural: "Customers",
             entityResource: FshResources.Accounting);

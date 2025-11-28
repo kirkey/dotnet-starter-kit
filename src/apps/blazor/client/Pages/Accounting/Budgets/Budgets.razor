@@ -1,6 +1,6 @@
 @page "/accounting/budgets"
 
-<PageHeader Title="Accounting Periods" Header="Accounting Periods" SubHeader="Manage Accounting Periods." />
+<PageHeader Title="Budgets" Header="Budget Management" SubHeader="Manage budgets, track actuals vs planned, and analyze variances." />
 
 <MudPaper Elevation="2" Class="pa-4 mb-4">
     <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
@@ -14,10 +14,62 @@
 </MudPaper>
 
 <EntityTable @ref="_table" TEntity="BudgetResponse" TId="DefaultIdType" TRequest="BudgetViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Draft")">Draft</MudSelectItem>
+                <MudSelectItem Value="@("Pending")">Pending Approval</MudSelectItem>
+                <MudSelectItem Value="@("Approved")">Approved</MudSelectItem>
+                <MudSelectItem Value="@("Closed")">Closed</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchBudgetType"
+                       Label="Budget Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Operating Budget")">Operating Budget</MudSelectItem>
+                <MudSelectItem Value="@("Capital Budget")">Capital Budget</MudSelectItem>
+                <MudSelectItem Value="@("Cash Flow Budget")">Cash Flow Budget</MudSelectItem>
+                <MudSelectItem Value="@("Master Budget")">Master Budget</MudSelectItem>
+                <MudSelectItem Value="@("Project Budget")">Project Budget</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="int?"
+                             @bind-Value="@SearchFiscalYear"
+                             Label="Fiscal Year"
+                             Variant="Variant.Outlined" />
+        </MudItem>
+    </AdvancedSearchContent>
+
     <ExtraActions Context="context">
         <MudMenuItem Icon="@Icons.Material.Filled.List" Href="@($"/accounting-budgetdetails/{Context.IdFunc!(context)}")">
-            Details
+            View Details
         </MudMenuItem>
+        @if (context.Status is null or "Draft" or "Pending")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => OnApproveBudget(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" Color="Color.Success" />
+                    <span>Approve</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "Approved")
+        {
+            <MudMenuItem OnClick="@(() => OnCloseBudget(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Lock" Class="mr-2" Color="Color.Warning" />
+                    <span>Close Budget</span>
+                </div>
+            </MudMenuItem>
+        }
     </ExtraActions>
     <EditFormContent Context="context">
         @if (!Context.AddEditModal.IsCreate)

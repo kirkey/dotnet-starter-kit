@@ -2,14 +2,57 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.InventoryTransactions;
 
 /// <summary>
 /// InventoryTransactions page logic. Provides CRUD and search over InventoryTransaction entities using the generated API client.
+/// Supports workflow operations: Approve and Reject for pending transactions.
 /// </summary>
 public partial class InventoryTransactions
 {
-    
-    
-
     protected EntityServerTableContext<InventoryTransactionResponse, DefaultIdType, InventoryTransactionViewModel> Context { get; set; } = null!;
     private EntityTable<InventoryTransactionResponse, DefaultIdType, InventoryTransactionViewModel> _table = null!;
+
+    // Advanced search filters
+    private string? _searchTransactionType;
+    private string? SearchTransactionType
+    {
+        get => _searchTransactionType;
+        set
+        {
+            _searchTransactionType = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private bool? _searchIsApproved;
+    private bool? SearchIsApproved
+    {
+        get => _searchIsApproved;
+        set
+        {
+            _searchIsApproved = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private DateTime? _searchDateFrom;
+    private DateTime? SearchDateFrom
+    {
+        get => _searchDateFrom;
+        set
+        {
+            _searchDateFrom = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private DateTime? _searchDateTo;
+    private DateTime? SearchDateTo
+    {
+        get => _searchDateTo;
+        set
+        {
+            _searchDateTo = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -26,19 +69,19 @@ public partial class InventoryTransactions
                 new EntityField<InventoryTransactionResponse>(x => x.WarehouseName, "Warehouse", "WarehouseName"),
                 new EntityField<InventoryTransactionResponse>(x => x.Quantity, "Quantity", "Quantity", typeof(decimal)),
                 new EntityField<InventoryTransactionResponse>(x => x.UnitCost, "Unit Cost", "UnitCost", typeof(decimal?)),
-                new EntityField<InventoryTransactionResponse>(x => x.TransactionDate, "Date", "TransactionDate", typeof(DateTime))
+                new EntityField<InventoryTransactionResponse>(x => x.TransactionDate, "Date", "TransactionDate", typeof(DateTime)),
+                new EntityField<InventoryTransactionResponse>(x => x.IsApproved, "Approved", "IsApproved", typeof(bool))
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
-            // getDetailsFunc: async id =>
-            // {
-            //     var dto = await Client.GetInventoryTransactionEndpointAsync("1", id).ConfigureAwait(false);
-            //     return dto.Adapt<InventoryTransactionViewModel>();
-            // },
             searchFunc: async filter =>
             {
                 var paginationFilter = filter.Adapt<PaginationFilter>();
                 var command = paginationFilter.Adapt<SearchInventoryTransactionsCommand>();
+                command.TransactionType = SearchTransactionType;
+                command.TransactionDateFrom = SearchDateFrom;
+                command.TransactionDateTo = SearchDateTo;
+                command.IsApproved = SearchIsApproved;
                 var result = await Client.SearchInventoryTransactionsEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<InventoryTransactionResponse>>();
             },
@@ -50,6 +93,9 @@ public partial class InventoryTransactions
         await Task.CompletedTask;
     }
 
+    /// <summary>
+    /// Approves a pending inventory transaction.
+    /// </summary>
     private async Task ApproveTransaction(DefaultIdType id)
     {
         bool? result = await DialogService.ShowMessageBox(
@@ -60,9 +106,44 @@ public partial class InventoryTransactions
 
         if (result == true)
         {
-            var command = new ApproveInventoryTransactionCommand();
-            await Client.ApproveInventoryTransactionEndpointAsync("1", id, command);
-            await _table.ReloadDataAsync();
+            try
+            {
+                var command = new ApproveInventoryTransactionCommand();
+                await Client.ApproveInventoryTransactionEndpointAsync("1", id, command).ConfigureAwait(false);
+                Snackbar.Add("Transaction approved successfully", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to approve transaction: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Rejects a pending inventory transaction.
+    /// </summary>
+    private async Task RejectTransaction(DefaultIdType id)
+    {
+        bool? result = await DialogService.ShowMessageBox(
+            "Confirm Rejection",
+            "Are you sure you want to reject this transaction? This action cannot be undone.",
+            yesText: "Reject",
+            cancelText: "Cancel");
+
+        if (result == true)
+        {
+            try
+            {
+                var command = new RejectInventoryTransactionCommand();
+                await Client.RejectInventoryTransactionEndpointAsync("1", id, command).ConfigureAwait(false);
+                Snackbar.Add("Transaction rejected successfully", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to reject transaction: {ex.Message}", Severity.Error);
+            }
         }
     }
 

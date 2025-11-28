@@ -24,4 +24,7 @@ public sealed record InventoryTransactionResponse
     public DefaultIdType? ReferenceId { get; init; }
     public decimal? UnitCost { get; init; }
     public string? Notes { get; init; }
+    public bool IsApproved { get; init; }
+    public string? ApprovedBy { get; init; }
+    public DateTime? ApprovalDate { get; init; }
 }

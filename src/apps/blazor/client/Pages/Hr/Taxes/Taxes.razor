@@ -1,0 +1,120 @@
+@page "/hr/taxes"
+
+<PageHeader Title="Taxes" Header="Taxes" SubHeader="Manage tax configurations and rates." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowTaxesHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="TaxDto" TId="DefaultIdType" TRequest="TaxViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Tax Information</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Code" 
+                          For="@(() => context.Code)" 
+                          @bind-Value="context.Code" 
+                          Required="true"
+                          ReadOnly="@(!Context.AddEditModal.IsCreate)"
+                          Placeholder="e.g., VAT-STD, SALES-NCR" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Name" 
+                          For="@(() => context.Name)" 
+                          @bind-Value="context.Name" 
+                          Required="true"
+                          Placeholder="e.g., Standard VAT Rate" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect @bind-Value="context.TaxType"
+                       For="@(() => context.TaxType)"
+                       Label="Tax Type"
+                       T="string"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("VAT")">VAT (Value Added Tax)</MudSelectItem>
+                <MudSelectItem Value="@("SalesTax")">Sales Tax</MudSelectItem>
+                <MudSelectItem Value="@("GST")">GST (Goods & Services Tax)</MudSelectItem>
+                <MudSelectItem Value="@("Withholding")">Withholding Tax</MudSelectItem>
+                <MudSelectItem Value="@("Excise")">Excise Tax</MudSelectItem>
+                <MudSelectItem Value="@("Income")">Income Tax</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.Rate" 
+                             For="@(() => context.Rate)" 
+                             Label="Rate (as decimal)"
+                             Format="N4"
+                             Min="0"
+                             Max="1"
+                             Step="0.01m"
+                             HelperText="e.g., 0.12 = 12%" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Tax Settings</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Jurisdiction" 
+                          For="@(() => context.Jurisdiction)" 
+                          @bind-Value="context.Jurisdiction" 
+                          Placeholder="e.g., Philippines, NCR" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker Label="Effective Date" 
+                           @bind-Date="context.EffectiveDate" 
+                           Required="true"
+                           Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker Label="Expiry Date" 
+                           @bind-Date="context.ExpiryDate" 
+                           Variant="Variant.Filled"
+                           Clearable="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsCompound" Color="Color.Primary">
+                Compound Tax
+            </MudSwitch>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsActive" Color="Color.Primary">
+                Active
+            </MudSwitch>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudText Typo="Typo.body2" Class="mt-3">
+                <strong>Rate Display:</strong> @context.RatePercentage
+            </MudText>
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

@@ -1,0 +1,120 @@
+@page "/hr/tax-brackets"
+
+<PageHeader Title="Tax Brackets" Header="Tax Brackets" SubHeader="Manage tax brackets for income ranges and filing statuses." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowTaxBracketsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="TaxBracketResponse" TId="DefaultIdType" TRequest="TaxBracketViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Bracket Information</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect @bind-Value="context.TaxType"
+                       For="@(() => context.TaxType)"
+                       Label="Tax Type"
+                       T="string"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Federal")">Federal</MudSelectItem>
+                <MudSelectItem Value="@("State")">State</MudSelectItem>
+                <MudSelectItem Value="@("Local")">Local</MudSelectItem>
+                <MudSelectItem Value="@("FICA")">FICA</MudSelectItem>
+                <MudSelectItem Value="@("Medicare")">Medicare</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="int" 
+                             @bind-Value="context.Year" 
+                             For="@(() => context.Year)" 
+                             Label="Tax Year"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Min="2000"
+                             Max="2100" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect @bind-Value="context.FilingStatus"
+                       For="@(() => context.FilingStatus)"
+                       Label="Filing Status"
+                       T="string"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Single")">Single</MudSelectItem>
+                <MudSelectItem Value="@("Married")">Married Filing Jointly</MudSelectItem>
+                <MudSelectItem Value="@("MarriedSeparate")">Married Filing Separately</MudSelectItem>
+                <MudSelectItem Value="@("HeadOfHousehold")">Head of Household</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Income Range</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.MinIncome" 
+                             For="@(() => context.MinIncome)" 
+                             Label="Minimum Income"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Format="C"
+                             Min="0" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.MaxIncome" 
+                             For="@(() => context.MaxIncome)" 
+                             Label="Maximum Income"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Format="C"
+                             Min="0" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.Rate" 
+                             For="@(() => context.Rate)" 
+                             Label="Tax Rate"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Format="P2"
+                             Min="0"
+                             Max="1"
+                             Step="0.01M"
+                             HelperText="Enter as decimal (e.g., 0.22 for 22%)" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Additional Information</MudText>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description" 
+                          For="@(() => context.Description)" 
+                          Label="Description"
+                          Lines="2"
+                          Variant="Variant.Filled" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

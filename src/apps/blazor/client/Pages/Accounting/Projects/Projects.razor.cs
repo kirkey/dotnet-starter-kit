@@ -12,6 +12,29 @@ public partial class Projects
 
     private EntityTable<ProjectResponse, DefaultIdType, ProjectViewModel> _table = null!;
 
+    // Advanced search filters
+    private string? _searchProjectName;
+    private string? SearchProjectName
+    {
+        get => _searchProjectName;
+        set
+        {
+            _searchProjectName = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private string? _searchClientName;
+    private string? SearchClientName
+    {
+        get => _searchClientName;
+        set
+        {
+            _searchClientName = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
     /// <summary>
     /// Configure the EntityTable context: fields, search, create, update and delete functions.
     /// </summary>
@@ -30,11 +53,8 @@ public partial class Projects
                 new EntityField<ProjectResponse>(r => r.BudgetedAmount, "Budgeted Amount", "BudgetedAmount", typeof(decimal)),
                 new EntityField<ProjectResponse>(r => r.ClientName, "Client", "ClientName"),
                 new EntityField<ProjectResponse>(r => r.ProjectManager, "Manager", "ProjectManager"),
-                new EntityField<ProjectResponse>(r => r.Department, "Department", "Department"),
                 new EntityField<ProjectResponse>(r => r.ActualCost, "Actual Cost", "ActualCost", typeof(decimal)),
                 new EntityField<ProjectResponse>(r => r.ActualRevenue, "Actual Revenue", "ActualRevenue", typeof(decimal)),
-                new EntityField<ProjectResponse>(r => r.Description, "Description", "Description"),
-                new EntityField<ProjectResponse>(r => r.Notes, "Notes", "Notes"),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
@@ -47,7 +67,7 @@ public partial class Projects
                     Keyword = filter.Keyword,
                     OrderBy = filter.OrderBy
                 };
-                var result = await Client.ProjectSearchEndpointAsync("1", request);
+                var result = await Client.ProjectSearchEndpointAsync("1", request).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<ProjectResponse>>();
             },
             createFunc: async vm =>
@@ -59,7 +79,7 @@ public partial class Projects
                     Data = vm.Image?.Data,
                     Size = vm.Image?.Size,
                 };
-                await Client.ProjectCreateEndpointAsync("1", vm.Adapt<CreateProjectCommand>());
+                await Client.ProjectCreateEndpointAsync("1", vm.Adapt<CreateProjectCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, vm) =>
             {
@@ -70,9 +90,9 @@ public partial class Projects
                     Data = vm.Image?.Data,
                     Size = vm.Image?.Size,
                 };
-                await Client.ProjectUpdateEndpointAsync("1", id, vm.Adapt<UpdateProjectCommand>());
+                await Client.ProjectUpdateEndpointAsync("1", id, vm.Adapt<UpdateProjectCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.ProjectDeleteEndpointAsync("1", id));
+            deleteFunc: async id => await Client.ProjectDeleteEndpointAsync("1", id).ConfigureAwait(false));
 
         return Task.CompletedTask;
     }

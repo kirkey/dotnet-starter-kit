@@ -26,6 +26,8 @@ public sealed class SearchItemsSpec : EntitiesByPaginationFilterSpec<Item, ItemR
             .Where(i => i.IsLotTracked == request.IsLotTracked!.Value, request.IsLotTracked.HasValue)
             .Where(i => i.Brand != null && i.Brand.Contains(request.Brand!), !string.IsNullOrWhiteSpace(request.Brand))
             .Where(i => i.Manufacturer != null && i.Manufacturer.Contains(request.Manufacturer!), !string.IsNullOrWhiteSpace(request.Manufacturer))
+            .Where(i => i.UnitPrice >= request.MinPrice!.Value, request.MinPrice.HasValue)
+            .Where(i => i.UnitPrice <= request.MaxPrice!.Value, request.MaxPrice.HasValue)
             .OrderBy(i => i.Name, !request.HasOrderBy());
     }
 }

@@ -1,0 +1,137 @@
+@page "/hr/holidays"
+
+<PageHeader Title="Holidays" Header="Holidays" SubHeader="Manage company holidays and special days per Philippine Labor Code." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHolidaysHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="HolidayResponse" TId="DefaultIdType" TRequest="HolidayViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Basic Information</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Holiday Name" 
+                          For="@(() => context.HolidayName)" 
+                          @bind-Value="context.HolidayName" 
+                          Required="true"
+                          Placeholder="e.g., New Year's Day" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker Label="Holiday Date" 
+                           @bind-Date="context.HolidayDate" 
+                           Required="true"
+                           Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect @bind-Value="context.Type"
+                       For="@(() => context.Type)"
+                       Label="Holiday Type"
+                       T="string"
+                       Variant="Variant.Filled"
+                       Required="true"
+                       HelperText="Per Philippine Labor Code">
+                <MudSelectItem Value="@("RegularPublicHoliday")">Regular Public Holiday (100%)</MudSelectItem>
+                <MudSelectItem Value="@("SpecialNonWorkingDay")">Special Non-Working Day (30%)</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.PayRateMultiplier" 
+                             For="@(() => context.PayRateMultiplier)" 
+                             Label="Pay Rate Multiplier"
+                             Format="N2"
+                             Min="0.0m"
+                             Max="3.0m"
+                             Step="0.1m"
+                             HelperText="1.0 = 100% additional pay" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Holiday Settings</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsPaid" Color="Color.Primary">
+                Paid Holiday
+            </MudSwitch>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsRecurringAnnually" Color="Color.Primary">
+                Recurring Annually
+            </MudSwitch>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsMoveable" Color="Color.Primary">
+                Moveable (Date Changes Yearly)
+            </MudSwitch>
+        </MudItem>
+
+        @if (context.IsMoveable)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Label="Moveable Rule" 
+                              For="@(() => context.MoveableRule)" 
+                              @bind-Value="context.MoveableRule" 
+                              Placeholder="e.g., Easter-based, Last Monday of August"
+                              HelperText="How to calculate the date" />
+            </MudItem>
+        }
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Regional Applicability</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsNationwide" Color="Color.Primary">
+                Nationwide
+            </MudSwitch>
+        </MudItem>
+
+        @if (!context.IsNationwide)
+        {
+            <MudItem xs="12" sm="6">
+                <MudTextField Label="Applicable Regions" 
+                              For="@(() => context.ApplicableRegions)" 
+                              @bind-Value="context.ApplicableRegions" 
+                              Placeholder="e.g., BARMM, NCR, Davao City"
+                              HelperText="Comma-separated list of regions/provinces" />
+            </MudItem>
+        }
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudTextField Label="Description" 
+                          For="@(() => context.Description)" 
+                          @bind-Value="context.Description" 
+                          Lines="3"
+                          Placeholder="Additional notes about this holiday" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

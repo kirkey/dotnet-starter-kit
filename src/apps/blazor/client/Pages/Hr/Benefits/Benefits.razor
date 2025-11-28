@@ -1,0 +1,156 @@
+@page "/hr/benefits"
+
+<PageHeader Title="Benefits" Header="Benefits" SubHeader="Manage employee benefits per Philippine Labor Code." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowBenefitsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="BenefitAllocationResponse" TId="DefaultIdType" TRequest="BenefitViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Benefit Information</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Benefit Name" 
+                          For="@(() => context.BenefitName)" 
+                          @bind-Value="context.BenefitName" 
+                          Required="true"
+                          ReadOnly="@(!Context.AddEditModal.IsCreate)"
+                          Placeholder="e.g., SSS, PhilHealth, Health Insurance" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect @bind-Value="context.BenefitType"
+                       For="@(() => context.BenefitType)"
+                       Label="Benefit Type"
+                       T="string"
+                       Variant="Variant.Filled"
+                       Required="true"
+                       Disabled="@(!Context.AddEditModal.IsCreate)">
+                <MudSelectItem Value="@("Health")">Health</MudSelectItem>
+                <MudSelectItem Value="@("Retirement")">Retirement</MudSelectItem>
+                <MudSelectItem Value="@("Life Insurance")">Life Insurance</MudSelectItem>
+                <MudSelectItem Value="@("Housing")">Housing (Pag-IBIG)</MudSelectItem>
+                <MudSelectItem Value="@("Social Security")">Social Security (SSS)</MudSelectItem>
+                <MudSelectItem Value="@("Leave")">Leave Benefits</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsMandatory" Color="Color.Primary"
+                       Disabled="@(!Context.AddEditModal.IsCreate)">
+                Mandatory (Per Labor Code)
+            </MudSwitch>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsActive" Color="Color.Primary">
+                Active
+            </MudSwitch>
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Contributions</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.EmployeeContribution" 
+                             For="@(() => context.EmployeeContribution)" 
+                             Label="Employee Contribution"
+                             Format="N2"
+                             Min="0"
+                             HelperText="Monthly contribution" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.EmployerContribution" 
+                             For="@(() => context.EmployerContribution)" 
+                             Label="Employer Contribution"
+                             Format="N2"
+                             Min="0"
+                             HelperText="Monthly contribution" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudText Typo="Typo.body2" Class="mt-3">
+                <strong>Total Contribution:</strong> ₱@context.TotalContribution.ToString("N2")
+            </MudText>
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Coverage Details</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect @bind-Value="context.CoverageType"
+                       For="@(() => context.CoverageType)"
+                       Label="Coverage Type"
+                       T="string"
+                       Variant="Variant.Filled"
+                       Clearable="true">
+                <MudSelectItem Value="@("Individual")">Individual</MudSelectItem>
+                <MudSelectItem Value="@("Employee+Spouse")">Employee + Spouse</MudSelectItem>
+                <MudSelectItem Value="@("Employee+Children")">Employee + Children</MudSelectItem>
+                <MudSelectItem Value="@("Family")">Family</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Provider Name" 
+                          For="@(() => context.ProviderName)" 
+                          @bind-Value="context.ProviderName" 
+                          Placeholder="e.g., SSS, PhilHealth, Maxicare" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal?" 
+                             @bind-Value="context.CoverageAmount" 
+                             For="@(() => context.CoverageAmount)" 
+                             Label="Coverage Amount"
+                             Format="N2"
+                             HelperText="Maximum coverage limit" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="int?" 
+                             @bind-Value="context.WaitingPeriodDays" 
+                             For="@(() => context.WaitingPeriodDays)" 
+                             Label="Waiting Period (Days)"
+                             Min="0"
+                             HelperText="Days before benefit is available" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+
+        <MudItem xs="12">
+            <MudTextField Label="Description" 
+                          For="@(() => context.Description)" 
+                          @bind-Value="context.Description" 
+                          Lines="3"
+                          Placeholder="Additional notes about this benefit" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

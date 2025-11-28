@@ -1,0 +1,93 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" />
+            Leave Balances Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Overview">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    Leave Balances track employee leave entitlements by type and year.
+                    This includes opening balances, accruals, usage, and remaining days.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Balance Components">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.PlayCircle">
+                        <b>Opening Balance</b> - Initial leave days at start of period.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Add">
+                        <b>Accrued Days</b> - Leave days earned during the period.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Redo">
+                        <b>Carried Over</b> - Days brought forward from previous year.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Calculate">
+                        <b>Available Days</b> - Total entitlement (Opening + Accrued + Carried).
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Usage Tracking">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Check">
+                        <b>Taken Days</b> - Approved leave that has been used.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Pending">
+                        <b>Pending Days</b> - Leave requests awaiting approval.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                        <b>Remaining Days</b> - Available - Taken - Pending.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Carryover Rules">
+                <MudText Typo="Typo.body1" Class="mb-2">
+                    Unused leave may carry over to the next year with restrictions:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Warning">
+                        Carried over days may have an expiry date.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Info">
+                        Maximum carryover limits may apply.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Event">
+                        Expiry typically within Q1 of the new year.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Best Practices">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Verified">
+                        Review balances at start of each year.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Update">
+                        Update accruals regularly (monthly/quarterly).
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Schedule">
+                        Monitor carryover expiry dates.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Balance">
+                        Reconcile with leave requests periodically.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@(() => MudDialog.Close())">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+}

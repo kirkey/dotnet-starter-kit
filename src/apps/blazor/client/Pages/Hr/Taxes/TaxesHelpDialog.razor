@@ -1,0 +1,86 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Taxes
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Understanding Tax Configurations</MudText>
+
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="What are Tax Configurations?">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Tax configurations define the various tax rates and rules applicable to your organization. 
+                        This includes VAT, sales tax, withholding taxes, and other tax types.
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        <strong>Common Philippines Taxes:</strong>
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Receipt">VAT - 12% Value Added Tax</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.AccountBalance">Withholding Tax - Various rates</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.LocalGasStation">Excise Tax - Fuel, alcohol, tobacco</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.AccountBalanceWallet">Income Tax - Progressive rates</MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Tax Types">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Different tax types serve different purposes:
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Percent">VAT - Applied to goods and services</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Store">Sales Tax - Point-of-sale tax</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.MoneyOff">Withholding - Deducted at source</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.LocalDrink">Excise - Specific goods</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Person">Income - On salaries/wages</MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Tax Rates">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Tax rates are stored as decimals (0-1):
+                    </MudText>
+                    <MudAlert Severity="Severity.Info" Dense="true" Class="mb-2">
+                        <strong>0.12</strong> = 12% (Standard VAT in Philippines)
+                    </MudAlert>
+                    <MudAlert Severity="Severity.Info" Dense="true" Class="mb-2">
+                        <strong>0.05</strong> = 5% (Reduced rate)
+                    </MudAlert>
+                    <MudAlert Severity="Severity.Info" Dense="true">
+                        <strong>0.0</strong> = 0% (Zero-rated or exempt)
+                    </MudAlert>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Compound Taxes">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        A compound tax is calculated on the subtotal plus other taxes. 
+                        This is used when one tax is applied on top of another.
+                    </MudText>
+                    <MudAlert Severity="Severity.Warning" Dense="true">
+                        Most taxes are NOT compound. Only enable this if required by regulation.
+                    </MudAlert>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Effective Dates">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Tax rates can change over time. Use effective dates to:
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Event">Set when a tax rate becomes active</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.EventBusy">Set expiry for temporary rates</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.History">Track historical rate changes</MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close(DialogResult.Ok(true));
+}

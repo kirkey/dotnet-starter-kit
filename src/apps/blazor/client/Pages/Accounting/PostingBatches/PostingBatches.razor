@@ -1,0 +1,107 @@
+@page "/accounting/posting-batches"
+
+<PageHeader Title="Posting Batches" Header="Posting Batches" SubHeader="Manage posting batches for journal entries and posting workflows." />
+
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowPostingBatchesHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="PostingBatchResponse" TId="DefaultIdType" TRequest="PostingBatchViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudSelect T="string?" Label="Status" @bind-Value="SearchStatus">
+            <MudSelectItem T="string?" Value="null">All Statuses</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Draft")">Draft</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Submitted")">Submitted</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Approved")">Approved</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Posted")">Posted</MudSelectItem>
+            <MudSelectItem T="string?" Value="@("Rejected")">Rejected</MudSelectItem>
+        </MudSelect>
+        <MudTextField @bind-Value="SearchBatchNumber" Label="Batch Number" Variant="Variant.Outlined" />
+        <MudDatePicker Label="From" Date="SearchFromDate" DateChanged="value => SearchFromDate = value" DateFormat="MMMM dd, yyyy" />
+        <MudDatePicker Label="To" Date="SearchToDate" DateChanged="value => SearchToDate = value" DateFormat="MMMM dd, yyyy" />
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="context">
+        <MudMenuItem OnClick="@(() => ViewDetails(context.Id))">
+            <div class="d-flex align-center">
+                <MudIcon Icon="@Icons.Material.Filled.Visibility" Class="mr-2" />
+                <span>View Details</span>
+            </div>
+        </MudMenuItem>
+        @if (context.Status == "Draft")
+        {
+            <MudMenuItem OnClick="@(() => SubmitForApproval(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Send" Class="mr-2" />
+                    <span>Submit</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "Submitted")
+        {
+            <MudMenuItem OnClick="@(() => ApproveBatch(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" Color="Color.Success" />
+                    <span>Approve</span>
+                </div>
+            </MudMenuItem>
+            <MudMenuItem OnClick="@(() => RejectBatch(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Cancel" Class="mr-2" Color="Color.Error" />
+                    <span>Reject</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "Approved")
+        {
+            <MudMenuItem OnClick="@(() => PostBatch(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.PlayArrow" Class="mr-2" Color="Color.Primary" />
+                    <span>Post</span>
+                </div>
+            </MudMenuItem>
+        }
+        @if (context.Status == "Posted")
+        {
+            <MudMenuItem OnClick="@(() => ReverseBatch(context.Id))">
+                <div class="d-flex align-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Undo" Class="mr-2" Color="Color.Warning" />
+                    <span>Reverse</span>
+                </div>
+            </MudMenuItem>
+        }
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Batch Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Batch Number" For="@(() => context.BatchNumber)" @bind-Value="context.BatchNumber" Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Source Module" For="@(() => context.SourceModule)" @bind-Value="context.SourceModule" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker @bind-Date="context.PostingDate" For="@(() => context.PostingDate)" Label="Posting Date" DateFormat="MMMM dd, yyyy" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField Label="Notes" For="@(() => context.Notes)" @bind-Value="context.Notes" Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+
+@code {
+    // placeholder for any small inline helpers if needed
+}

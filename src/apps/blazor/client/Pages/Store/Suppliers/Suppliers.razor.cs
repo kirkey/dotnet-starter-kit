@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Suppliers;
 
 /// <summary>
 /// Suppliers page logic. Provides CRUD and server-side search over Supplier entities via the generated API client.
-/// Mirrors Budgets/Items patterns for consistent UX.
+/// Mirrors Budgets/Items patterns for consistent UX. Supports workflow actions for activation/deactivation.
 /// </summary>
 public partial class Suppliers
 {
@@ -30,11 +30,6 @@ public partial class Suppliers
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id ?? DefaultIdType.Empty,
-            // getDetailsFunc: async id =>
-            // {
-            //     var dto = await Client.GetSupplierEndpointAsync("1", id).ConfigureAwait(false);
-            //     return dto.Adapt<SupplierViewModel>();
-            // }
             searchFunc: async filter =>
             {
                 var command = new SearchSuppliersCommand
@@ -70,6 +65,60 @@ public partial class Suppliers
                 await Client.UpdateSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateSupplierCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteSupplierEndpointAsync("1", id).ConfigureAwait(false));
+    }
+
+    /// <summary>
+    /// Activates a deactivated supplier.
+    /// </summary>
+    private async Task ActivateSupplier(DefaultIdType id)
+    {
+        bool? result = await DialogService.ShowMessageBox(
+            "Confirm Activation",
+            "Are you sure you want to activate this supplier?",
+            yesText: "Activate",
+            cancelText: "Cancel");
+
+        if (result == true)
+        {
+            try
+            {
+                var command = new ActivateSupplierCommand();
+                await Client.ActivateSupplierEndpointAsync("1", id, command).ConfigureAwait(false);
+                Snackbar.Add("Supplier activated successfully", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to activate supplier: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Deactivates an active supplier.
+    /// </summary>
+    private async Task DeactivateSupplier(DefaultIdType id)
+    {
+        bool? result = await DialogService.ShowMessageBox(
+            "Confirm Deactivation",
+            "Are you sure you want to deactivate this supplier? Active purchase orders may be affected.",
+            yesText: "Deactivate",
+            cancelText: "Cancel");
+
+        if (result == true)
+        {
+            try
+            {
+                var command = new DeactivateSupplierCommand();
+                await Client.DeactivateSupplierEndpointAsync("1", id, command).ConfigureAwait(false);
+                Snackbar.Add("Supplier deactivated successfully", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to deactivate supplier: {ex.Message}", Severity.Error);
+            }
+        }
     }
 
     /// <summary>

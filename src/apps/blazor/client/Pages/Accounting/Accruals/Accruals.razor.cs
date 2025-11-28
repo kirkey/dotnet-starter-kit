@@ -6,8 +6,6 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Accruals;
 /// </summary>
 public partial class Accruals
 {
-    
-
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
     /// </summary>
@@ -16,6 +14,29 @@ public partial class Accruals
     private EntityTable<AccrualResponse, DefaultIdType, AccrualViewModel> _table = null!;
 
     private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+
+    // Advanced search filters
+    private string? _searchAccrualNumber;
+    private string? SearchAccrualNumber
+    {
+        get => _searchAccrualNumber;
+        set
+        {
+            _searchAccrualNumber = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
+
+    private bool? _searchReversedOnly;
+    private bool? SearchReversedOnly
+    {
+        get => _searchReversedOnly;
+        set
+        {
+            _searchReversedOnly = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
 
     protected override Task OnInitializedAsync()
     {
@@ -64,6 +85,63 @@ public partial class Accruals
             deleteFunc: async id => await Client.AccrualDeleteEndpointAsync("1", id).ConfigureAwait(false));
 
         return Task.CompletedTask;
+    }
+
+    private async Task OnApproveAccrual(DefaultIdType id)
+    {
+        bool? confirmed = await DialogService.ShowMessageBox("Approve Accrual", "Are you sure you want to approve this accrual?", yesText: "Approve", cancelText: "Cancel");
+        if (confirmed == true)
+        {
+            try
+            {
+                var command = new ApproveAccrualCommand();
+                await Client.AccrualApproveEndpointAsync("1", id, command).ConfigureAwait(false);
+                Snackbar.Add("Accrual approved successfully", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to approve accrual: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task OnRejectAccrual(DefaultIdType id)
+    {
+        bool? confirmed = await DialogService.ShowMessageBox("Reject Accrual", "Are you sure you want to reject this accrual?", yesText: "Reject", cancelText: "Cancel");
+        if (confirmed == true)
+        {
+            try
+            {
+                var command = new RejectAccrualCommand();
+                await Client.AccrualRejectEndpointAsync("1", id, command).ConfigureAwait(false);
+                Snackbar.Add("Accrual rejected", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to reject accrual: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task OnReverseAccrual(DefaultIdType id)
+    {
+        bool? confirmed = await DialogService.ShowMessageBox("Reverse Accrual", "Are you sure you want to reverse this accrual?", yesText: "Reverse", cancelText: "Cancel");
+        if (confirmed == true)
+        {
+            try
+            {
+                var command = new ReverseAccrualCommand { ReversalDate = DateTime.Today };
+                await Client.AccrualReverseEndpointAsync("1", id, command).ConfigureAwait(false);
+                Snackbar.Add("Accrual reversed successfully", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to reverse accrual: {ex.Message}", Severity.Error);
+            }
+        }
     }
 
     private async Task ShowAccrualsHelp()

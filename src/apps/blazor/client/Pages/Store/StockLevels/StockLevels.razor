@@ -75,19 +75,80 @@
 @code {
     private async Task ReserveStock(StockLevelResponse stockLevel)
     {
-        // TODO: Implement reserve stock dialog
-        Snackbar.Add("Reserve stock functionality - to be implemented", Severity.Info);
+        var parameters = new DialogParameters<ReserveStockDialog>
+        {
+            { x => x.StockLevelId, stockLevel.Id },
+            { x => x.ItemName, stockLevel.ItemName ?? string.Empty },
+            { x => x.WarehouseName, stockLevel.WarehouseName ?? string.Empty },
+            { x => x.AvailableQuantity, stockLevel.QuantityAvailable }
+        };
+
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = true,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+
+        var dialog = await DialogService.ShowAsync<ReserveStockDialog>("Reserve Stock", parameters, options);
+        var result = await dialog.Result;
+
+        if (result is not null && !result.Canceled)
+        {
+            await _table.ReloadDataAsync();
+        }
     }
 
     private async Task AllocateStock(StockLevelResponse stockLevel)
     {
-        // TODO: Implement allocate stock dialog
-        Snackbar.Add("Allocate stock functionality - to be implemented", Severity.Info);
+        var parameters = new DialogParameters<AllocateStockDialog>
+        {
+            { x => x.StockLevelId, stockLevel.Id },
+            { x => x.ItemName, stockLevel.ItemName ?? string.Empty },
+            { x => x.WarehouseName, stockLevel.WarehouseName ?? string.Empty },
+            { x => x.ReservedQuantity, stockLevel.QuantityReserved }
+        };
+
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = true,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+
+        var dialog = await DialogService.ShowAsync<AllocateStockDialog>("Allocate Stock", parameters, options);
+        var result = await dialog.Result;
+
+        if (result is not null && !result.Canceled)
+        {
+            await _table.ReloadDataAsync();
+        }
     }
 
     private async Task ReleaseStock(StockLevelResponse stockLevel)
     {
-        // TODO: Implement release stock dialog
-        Snackbar.Add("Release stock functionality - to be implemented", Severity.Info);
+        var parameters = new DialogParameters<ReleaseStockDialog>
+        {
+            { x => x.StockLevelId, stockLevel.Id },
+            { x => x.ItemName, stockLevel.ItemName ?? string.Empty },
+            { x => x.WarehouseName, stockLevel.WarehouseName ?? string.Empty },
+            { x => x.ReservedQuantity, stockLevel.QuantityReserved },
+            { x => x.AllocatedQuantity, stockLevel.QuantityAllocated }
+        };
+
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = true,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+
+        var dialog = await DialogService.ShowAsync<ReleaseStockDialog>("Release Stock", parameters, options);
+        var result = await dialog.Result;
+
+        if (result is not null && !result.Canceled)
+        {
+            await _table.ReloadDataAsync();
+        }
     }
 }
