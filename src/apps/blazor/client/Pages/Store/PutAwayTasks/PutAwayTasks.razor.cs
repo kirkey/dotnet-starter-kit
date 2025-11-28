@@ -37,7 +37,7 @@ public partial class PutAwayTasks
                 new EntityField<PutAwayTaskResponse>(x => x.PutAwayStrategy, "Strategy", "PutAwayStrategy"),
                 new EntityField<PutAwayTaskResponse>(x => x.TotalLines, "Total Items", "TotalLines", typeof(int)),
                 new EntityField<PutAwayTaskResponse>(x => x.CompletedLines, "Completed", "CompletedLines", typeof(int)),
-                new EntityField<PutAwayTaskResponse>(x => x.StartDate, "Started", "StartDate", typeof(DateTime?))
+                new EntityField<PutAwayTaskResponse>(x => x.StartDate, "Started", "StartDate", typeof(DateOnly?))
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,

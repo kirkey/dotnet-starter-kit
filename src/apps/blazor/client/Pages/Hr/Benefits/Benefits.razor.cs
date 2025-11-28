@@ -26,7 +26,7 @@ public partial class Benefits
                 new EntityField<BenefitAllocationResponse>(response => response.EmployeeName, "Employee", "EmployeeName"),
                 new EntityField<BenefitAllocationResponse>(response => response.BenefitName, "Benefit", "BenefitName"),
                 new EntityField<BenefitAllocationResponse>(response => response.AllocatedAmount, "Amount", "AllocatedAmount", typeof(decimal)),
-                new EntityField<BenefitAllocationResponse>(response => response.AllocationDate, "Date", "AllocationDate", typeof(DateTime)),
+                new EntityField<BenefitAllocationResponse>(response => response.AllocationDate, "Date", "AllocationDate", typeof(DateOnly)),
                 new EntityField<BenefitAllocationResponse>(response => response.Status, "Status", "Status"),
                 new EntityField<BenefitAllocationResponse>(response => response.AllocationType ?? "-", "Type", "AllocationType"),
             ],

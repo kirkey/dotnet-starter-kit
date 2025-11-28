@@ -22,7 +22,7 @@ public partial class EmployeeDependents
                 new EntityField<EmployeeDependentResponse>(response => response.FirstName, "First Name", "FirstName"),
                 new EntityField<EmployeeDependentResponse>(response => response.LastName, "Last Name", "LastName"),
                 new EntityField<EmployeeDependentResponse>(response => response.DependentType, "Type", "DependentType"),
-                new EntityField<EmployeeDependentResponse>(response => response.DateOfBirth, "Birth Date", "DateOfBirth", typeof(DateTime)),
+                new EntityField<EmployeeDependentResponse>(response => response.DateOfBirth, "Birth Date", "DateOfBirth", typeof(DateOnly)),
                 new EntityField<EmployeeDependentResponse>(response => response.Relationship, "Relationship", "Relationship"),
             ],
             enableAdvancedSearch: true,

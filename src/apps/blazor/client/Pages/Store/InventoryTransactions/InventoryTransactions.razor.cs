@@ -69,7 +69,7 @@ public partial class InventoryTransactions
                 new EntityField<InventoryTransactionResponse>(x => x.WarehouseName, "Warehouse", "WarehouseName"),
                 new EntityField<InventoryTransactionResponse>(x => x.Quantity, "Quantity", "Quantity", typeof(decimal)),
                 new EntityField<InventoryTransactionResponse>(x => x.UnitCost, "Unit Cost", "UnitCost", typeof(decimal?)),
-                new EntityField<InventoryTransactionResponse>(x => x.TransactionDate, "Date", "TransactionDate", typeof(DateTime)),
+                new EntityField<InventoryTransactionResponse>(x => x.TransactionDate, "Date", "TransactionDate", typeof(DateOnly)),
                 new EntityField<InventoryTransactionResponse>(x => x.IsApproved, "Approved", "IsApproved", typeof(bool))
             ],
             enableAdvancedSearch: true,

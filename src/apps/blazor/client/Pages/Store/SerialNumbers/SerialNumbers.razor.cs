@@ -18,8 +18,8 @@ public partial class SerialNumbers
                 new EntityField<SerialNumberResponse>(x => x.SerialNumberValue, "Serial Number", "SerialNumberValue"),
                 new EntityField<SerialNumberResponse>(x => x.ItemId, "Item", "ItemId"),
                 new EntityField<SerialNumberResponse>(x => x.Status, "Status", "Status"),
-                new EntityField<SerialNumberResponse>(x => x.ReceiptDate, "Receipt Date", "ReceiptDate", typeof(DateTime?)),
-                new EntityField<SerialNumberResponse>(x => x.WarrantyExpirationDate, "Warranty Exp", "WarrantyExpirationDate", typeof(DateTime?)),
+                new EntityField<SerialNumberResponse>(x => x.ReceiptDate, "Receipt Date", "ReceiptDate", typeof(DateOnly?)),
+                new EntityField<SerialNumberResponse>(x => x.WarrantyExpirationDate, "Warranty Exp", "WarrantyExpirationDate", typeof(DateOnly?)),
                 new EntityField<SerialNumberResponse>(x => x.ExternalReference, "External Ref", "ExternalReference")
             ],
             enableAdvancedSearch: true,

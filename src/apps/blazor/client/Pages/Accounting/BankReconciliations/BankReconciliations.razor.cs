@@ -83,7 +83,7 @@ public partial class BankReconciliations
                 new EntityField<BankReconciliationResponse>(r => r.AdjustedBalance, "Adjusted Balance", "AdjustedBalance", typeof(decimal)),
                 new EntityField<BankReconciliationResponse>(r => r.Status, "Status", "Status"),
                 new EntityField<BankReconciliationResponse>(r => r.IsReconciled, "Approved", "IsReconciled", typeof(bool)),
-                new EntityField<BankReconciliationResponse>(r => r.ReconciledDate, "Completed Date", "ReconciledDate", typeof(DateTime?)),
+                new EntityField<BankReconciliationResponse>(r => r.ReconciledDate, "Completed Date", "ReconciledDate", typeof(DateOnly?)),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,

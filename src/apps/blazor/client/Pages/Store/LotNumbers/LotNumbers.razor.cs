@@ -19,8 +19,8 @@ public partial class LotNumbers
                 new EntityField<LotNumberResponse>(x => x.ItemId, "Item", "ItemId"),
                 new EntityField<LotNumberResponse>(x => x.QuantityReceived, "Qty Received", "QuantityReceived", typeof(int)),
                 new EntityField<LotNumberResponse>(x => x.QuantityRemaining, "Qty Remaining", "QuantityRemaining", typeof(int)),
-                new EntityField<LotNumberResponse>(x => x.ManufactureDate, "Mfg Date", "ManufactureDate", typeof(DateTime?)),
-                new EntityField<LotNumberResponse>(x => x.ExpirationDate, "Exp Date", "ExpirationDate", typeof(DateTime?)),
+                new EntityField<LotNumberResponse>(x => x.ManufactureDate, "Mfg Date", "ManufactureDate", typeof(DateOnly?)),
+                new EntityField<LotNumberResponse>(x => x.ExpirationDate, "Exp Date", "ExpirationDate", typeof(DateOnly?)),
                 new EntityField<LotNumberResponse>(x => x.Status, "Status", "Status")
             ],
             enableAdvancedSearch: true,

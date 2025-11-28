@@ -23,7 +23,7 @@ public partial class EmployeeEducations
                 new EntityField<EmployeeEducationResponse>(response => response.FieldOfStudy, "Field of Study", "FieldOfStudy"),
                 new EntityField<EmployeeEducationResponse>(response => response.Institution, "Institution", "Institution"),
                 new EntityField<EmployeeEducationResponse>(response => response.Degree, "Degree", "Degree"),
-                new EntityField<EmployeeEducationResponse>(response => response.GraduationDate, "Graduation Date", "GraduationDate", typeof(DateTime)),
+                new EntityField<EmployeeEducationResponse>(response => response.GraduationDate, "Graduation Date", "GraduationDate", typeof(DateOnly)),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,

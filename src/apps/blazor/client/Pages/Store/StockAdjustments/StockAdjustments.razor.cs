@@ -65,7 +65,7 @@ public partial class StockAdjustments
                 new EntityField<StockAdjustmentResponse>(x => x.AdjustmentType, "Type", "AdjustmentType"),
                 new EntityField<StockAdjustmentResponse>(x => x.QuantityAdjusted, "Quantity", "QuantityAdjusted", typeof(int)),
                 new EntityField<StockAdjustmentResponse>(x => x.Reason, "Reason", "Reason"),
-                new EntityField<StockAdjustmentResponse>(x => x.AdjustmentDate, "Date", "AdjustmentDate", typeof(DateTime)),
+                new EntityField<StockAdjustmentResponse>(x => x.AdjustmentDate, "Date", "AdjustmentDate", typeof(DateOnly)),
                 new EntityField<StockAdjustmentResponse>(x => x.IsApproved, "Approved", "IsApproved", typeof(bool))
             ],
             enableAdvancedSearch: true,

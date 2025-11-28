@@ -37,7 +37,7 @@ public partial class PickLists
                 new EntityField<PickListResponse>(x => x.AssignedTo, "Assigned To", "AssignedTo"),
                 new EntityField<PickListResponse>(x => x.TotalLines, "Total Items", "TotalLines", typeof(int)),
                 new EntityField<PickListResponse>(x => x.CompletedLines, "Picked", "CompletedLines", typeof(int)),
-                new EntityField<PickListResponse>(x => x.StartDate, "Started", "StartDate", typeof(DateTime?))
+                new EntityField<PickListResponse>(x => x.StartDate, "Started", "StartDate", typeof(DateOnly?))
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,

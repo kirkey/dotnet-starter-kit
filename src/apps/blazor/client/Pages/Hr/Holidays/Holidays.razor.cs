@@ -24,7 +24,7 @@ public partial class Holidays
             fields:
             [
                 new EntityField<HolidayResponse>(response => response.HolidayName, "Holiday Name", "HolidayName"),
-                new EntityField<HolidayResponse>(response => response.HolidayDate.ToShortDateString(), "Date", "HolidayDate"),
+                new EntityField<HolidayResponse>(response => response.HolidayDate, "Date", "HolidayDate", typeof(DateOnly)),
                 new EntityField<HolidayResponse>(response => response.Type, "Type", "Type"),
                 new EntityField<HolidayResponse>(response => response.PayRateMultiplier, "Pay Rate", "PayRateMultiplier", typeof(decimal)),
                 new EntityField<HolidayResponse>(response => response.IsPaid, "Paid", "IsPaid", typeof(bool)),

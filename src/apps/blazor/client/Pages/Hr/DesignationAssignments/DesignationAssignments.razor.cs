@@ -27,7 +27,7 @@ public partial class DesignationAssignments
                 new EntityField<DesignationAssignmentResponse>(response => response.EmployeeNumber, "Employee #", "EmployeeNumber"),
                 new EntityField<DesignationAssignmentResponse>(response => response.EmployeeName, "Employee", "EmployeeName"),
                 new EntityField<DesignationAssignmentResponse>(response => response.DesignationTitle, "Designation", "DesignationTitle"),
-                new EntityField<DesignationAssignmentResponse>(response => response.EffectiveDate, "Effective Date", "EffectiveDate", typeof(DateTime)),
+                new EntityField<DesignationAssignmentResponse>(response => response.EffectiveDate, "Effective Date", "EffectiveDate", typeof(DateOnly)),
                 new EntityField<DesignationAssignmentResponse>(response => response.TenureDisplay, "Tenure", "TenureDisplay"),
                 new EntityField<DesignationAssignmentResponse>(response => response.IsCurrentlyActive, "Active", "IsCurrentlyActive", typeof(bool)),
             ],

@@ -75,6 +75,7 @@
             <MudDatePicker @bind-Date="context.EffectiveDate"
                            For="@(() => context.EffectiveDate)"
                            Label="Effective Date"
+                           DateFormat="MMMM dd, yyyy"
                            Variant="Variant.Filled"
                            HelperText="When this rate becomes active" />
         </MudItem>
@@ -82,6 +83,7 @@
             <MudDatePicker @bind-Date="context.ExpiryDate"
                            For="@(() => context.ExpiryDate)"
                            Label="Expiry Date"
+                           DateFormat="MMMM dd, yyyy"
                            Variant="Variant.Filled"
                            HelperText="Optional - leave blank for indefinite" />
         </MudItem>

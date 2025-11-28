@@ -19,8 +19,8 @@ public partial class StockLevels
                 new EntityField<StockLevelResponse>(x => x.QuantityAvailable, "Available", "QuantityAvailable", typeof(int)),
                 new EntityField<StockLevelResponse>(x => x.QuantityReserved, "Reserved", "QuantityReserved", typeof(int)),
                 new EntityField<StockLevelResponse>(x => x.QuantityAllocated, "Allocated", "QuantityAllocated", typeof(int)),
-                new EntityField<StockLevelResponse>(x => x.LastCountDate, "Last Count", "LastCountDate", typeof(DateTime?)),
-                new EntityField<StockLevelResponse>(x => x.LastMovementDate, "Last Movement", "LastMovementDate", typeof(DateTime?))
+                new EntityField<StockLevelResponse>(x => x.LastCountDate, "Last Count", "LastCountDate", typeof(DateOnly?)),
+                new EntityField<StockLevelResponse>(x => x.LastMovementDate, "Last Movement", "LastMovementDate", typeof(DateOnly?))
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,

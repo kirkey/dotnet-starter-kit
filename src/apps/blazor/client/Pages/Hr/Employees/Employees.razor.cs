@@ -20,7 +20,7 @@ public partial class Employees
                 new EntityField<EmployeeResponse>(response => response.Email, "Email", "Email"),
                 new EntityField<EmployeeResponse>(response => response.PhoneNumber, "Phone", "PhoneNumber"),
                 new EntityField<EmployeeResponse>(response => response.EmploymentClassification, "Type", "EmploymentClassification"),
-                new EntityField<EmployeeResponse>(response => response.HireDate, "Hire Date", "HireDate", typeof(DateTime)),
+                new EntityField<EmployeeResponse>(response => response.HireDate, "Hire Date", "HireDate", typeof(DateOnly)),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,

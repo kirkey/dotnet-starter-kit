@@ -67,7 +67,7 @@ public partial class FiscalPeriodClose
                 new EntityField<FiscalPeriodCloseResponse>(pc => pc.PeriodStartDate, "Start Date", "PeriodStartDate", typeof(DateOnly)),
                 new EntityField<FiscalPeriodCloseResponse>(pc => pc.PeriodEndDate, "End Date", "PeriodEndDate", typeof(DateOnly)),
                 new EntityField<FiscalPeriodCloseResponse>(pc => pc.Status, "Status", "Status"),
-                new EntityField<FiscalPeriodCloseResponse>(pc => pc.CloseDate, "Close Date", "CloseDate", typeof(DateTime?)),
+                new EntityField<FiscalPeriodCloseResponse>(pc => pc.CloseDate, "Close Date", "CloseDate", typeof(DateOnly?)),
             ],
             enableAdvancedSearch: true,
             idFunc: pc => pc.Id,
