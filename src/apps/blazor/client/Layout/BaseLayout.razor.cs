@@ -12,8 +12,7 @@ public partial class BaseLayout
 
     protected override async Task OnInitializedAsync()
     {
-        _themePreference = await ClientPreferences.GetPreference() as ClientPreference;
-        if (_themePreference == null) _themePreference = new ClientPreference();
+        _themePreference = await ClientPreferences.GetPreference() as ClientPreference ?? new ClientPreference();
         SetCurrentTheme(_themePreference);
 
         Snackbar.Add("Like this project? ", Severity.Info, config =>
@@ -52,7 +51,6 @@ public partial class BaseLayout
         _currentTheme.PaletteLight.Secondary = themePreference.SecondaryColor;
         _currentTheme.PaletteDark.Primary = themePreference.PrimaryColor;
         _currentTheme.PaletteDark.Secondary = themePreference.SecondaryColor;
-        _currentTheme.LayoutProperties.DefaultBorderRadius = $"{themePreference.BorderRadius}px";
         _currentTheme.LayoutProperties.DefaultBorderRadius = $"{themePreference.BorderRadius}px";
         _rightToLeft = themePreference.IsRtl;
     }

@@ -8,19 +8,22 @@
         <MudIconButton Color="Color.Default" Icon="@Icons.Material.Filled.Close"
             OnClick="@(() => ThemeDrawerOpenChanged.InvokeAsync(false))" Size="Size.Small" />
     </MudDrawerHeader>
-    <MudDivider Style="margin-bottom:10px!important" />
-    <div style="padding:20px!important">
-        <MudExpansionPanels Outlined>
+    <MudDivider Style="margin-bottom:0!important" />
+    <div style="display: flex; flex-direction: column; height: 100%; overflow: hidden;">
+        <MudExpansionPanels Outlined Style="padding:20px!important; overflow-y: auto; flex: 1;">
             <DarkModePanel OnIconClicked="ToggleDarkLightMode" />
             <ColorPanel OnColorClicked="UpdateThemePrimaryColor" Colors="_colors" ColorType="Primary Color"
                 CurrentColor="Color.Primary" />
             <ColorPanel OnColorClicked="UpdateThemeSecondaryColor" Colors="_colors" ColorType="Secondary Color"
                 CurrentColor="Color.Secondary" />
-            <RadiusPanel Radius="ThemePreference==null ? 0 : ThemePreference.BorderRadius"
+            <RadiusPanel Radius="ThemePreference!.BorderRadius"
                 OnSliderChanged="UpdateBorderRadius" />
+            <ElevationPanel Elevation="ThemePreference!.Elevation"
+                OnSliderChanged="UpdateElevation" />
             <TableCustomizationPanel OnDenseSwitchToggled="ToggleEntityTableDense"
-                OnStripedSwitchToggled="ToggleEntityTableStriped" OnBorderdedSwitchToggled="ToggleEntityTableBorder"
-                OnHoverableSwitchToggled="ToggleEntityTableHoverable" />
+                                     OnStripedSwitchToggled="ToggleEntityTableStriped" 
+                                     OnBorderdedSwitchToggled="ToggleEntityTableBorder"
+                                     OnHoverableSwitchToggled="ToggleEntityTableHoverable" />
         </MudExpansionPanels>
     </div>
 </MudDrawer>

@@ -47,6 +47,15 @@ public partial class ThemeDrawer
         }
     }
 
+    private async Task UpdateElevation(int elevation)
+    {
+        if (ThemePreference is not null)
+        {
+            ThemePreference.Elevation = elevation;
+            await ThemePreferenceChanged.InvokeAsync(ThemePreference);
+        }
+    }
+
     private async Task ToggleDarkLightMode(bool isDarkMode)
     {
         if (ThemePreference is not null)
