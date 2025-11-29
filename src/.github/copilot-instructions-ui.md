@@ -1,6 +1,6 @@
 # 🎨 COPILOT INSTRUCTIONS - UI BEST PRACTICES GUIDE
 
-**Last Updated**: November 22, 2025  
+**Last Updated**: November 22, 2025
 **Status**: ✅ Production Ready - UI Development Framework  
 **Compliance**: 100% - Blazor & UI Best Practices  
 **Scope**: Blazor Client, Mobile UI, Shared Components
@@ -34,41 +34,50 @@
    - CSS Variables for Theming
    - BEM CSS Naming
 
-5. [🔄 Data Binding & Forms](#-data-binding--forms)
-   - Form Handling
-   - Validation
-   - Custom Validators
-
-6. [🎭 Component Library Patterns](#-component-library-patterns)
-   - MudBlazor Components
-   - Custom Component Creation
-
-7. [📱 Responsive & Mobile](#-responsive--mobile)
+5. [📱 Responsive & Mobile](#-responsive--mobile)
    - Mobile-First Approach
    - Touch-Friendly UI
    - Breakpoint Management
 
+6. [🎨 Elevation & Border Radius Setup](#-elevation--border-radius-setup)
+   - Theme Management Implementation
+   - ClientPreference Model
+   - ElevationPanel & RadiusPanel Components
+   - ThemeDrawer Integration
+   - FshTheme Configuration
+   - Using Elevation in Components
+   - Real-Time Theme Updates
+
+7. [🔄 Data Binding & Forms](#-data-binding--forms)
+   - Form Handling
+   - Validation
+   - Custom Validators
+
+8. [🎭 Component Library Patterns](#-component-library-patterns)
+   - MudBlazor Components
+   - Custom Component Creation
+
 ### **PART II: CORE COMPONENTS**
-8. [🗂️ EntityTable Component Pattern](#-entitytable-component-pattern)
+9. [🗂️ EntityTable Component Pattern](#-entitytable-component-pattern)
    - EntityTable Architecture
    - EntityTableContext Configuration
    - EntityField Configuration
    - EntityTable Slots
 
-9. [🔍 Autocomplete Components](#-autocomplete-components)
-   - AutocompleteBase Pattern
-   - Implementing Custom Autocompletes
-   - Dictionary Caching Strategy
-   - Usage in Forms
+10. [🔍 Autocomplete Components](#-autocomplete-components)
+    - AutocompleteBase Pattern
+    - Implementing Custom Autocompletes
+    - Dictionary Caching Strategy
+    - Usage in Forms
 
-10. [💬 Dialog Patterns](#-dialog-patterns)
+11. [💬 Dialog Patterns](#-dialog-patterns)
     - AddEditModal Pattern
     - Details Dialog Pattern
     - Workflow Dialogs
     - Help Dialogs
 
 ### **PART III: MODULE-SPECIFIC PATTERNS**
-11. [💼 Accounting Module Patterns](#-accounting-module-specific-patterns)
+12. [💼 Accounting Module Patterns](#-accounting-module-specific-patterns)
     - Financial Data Display
     - Multi-Line Entry Components
     - Workflow Action Menus
@@ -76,12 +85,12 @@
     - Action Button Groups
     - Financial Statement Views
 
-12. [📦 Store Module Patterns](#-store-module-specific-patterns)
+13. [📦 Store Module Patterns](#-store-module-specific-patterns)
     - Inventory Management Workflows
     - Transfer Workflows
     - Stock Tracking
 
-13. [👥 Human Resources Module Patterns](#-human-resources-module-patterns)
+14. [👥 Human Resources Module Patterns](#-human-resources-module-patterns)
     - Employee Management Workflows
     - Wizard Pattern (Multi-Step Forms)
     - Sub-Component Architecture
@@ -90,35 +99,35 @@
     - **NEW**: Bank Accounts Management (Complete Implementation)
 
 ### **PART IV: SERVICES & UTILITIES**
-14. [🎯 MenuService & Navigation](#-menuservice--navigation)
+15. [🎯 MenuService & Navigation](#-menuservice--navigation)
     - MenuService Pattern
     - Hierarchical Structure
     - Permission-Based Items
     - Status Indicators
 
-15. [🛠️ Common Service Patterns](#-common-service-patterns)
+16. [🛠️ Common Service Patterns](#-common-service-patterns)
     - DialogService Extensions
     - ApiHelper Patterns
 
 ### **PART V: IMPLEMENTATION GUIDELINES**
-16. [📚 Best Practices Checklist](#-best-practices-checklist)
+17. [📚 Best Practices Checklist](#-best-practices-checklist)
     - Component Development
     - Styling
     - Performance
     - Forms & Validation
     - Accessibility
 
-17. [🎯 Implementation Checklist](#-implementation-checklist-for-new-ui-features)
+18. [🎯 Implementation Checklist](#-implementation-checklist-for-new-ui-features)
     - Page/Component Creation
     - CRUD Operations
     - Testing Requirements
 
-18. [📊 Module-Specific Checklists](#-module-specific-checklists)
+19. [📊 Module-Specific Checklists](#-module-specific-checklists)
     - Accounting UI Checklist
     - Store UI Checklist
     - HR UI Checklist
 
-19. [✅ Verification Status](#-verification-status)
+20. [✅ Verification Status](#-verification-status)
     - Production Readiness
     - Module Coverage
 
@@ -757,7 +766,382 @@ else
 
 ---
 
-## 📚 BEST PRACTICES CHECKLIST
+## 🎨 ELEVATION & BORDER RADIUS SETUP
+
+### **✅ Theme Management Implementation**
+
+Elevation and border radius are managed through a centralized **ClientPreference** system integrated with MudBlazor's theme infrastructure.
+
+**Architecture:**
+```
+ClientPreference (Model)
+    ├── Elevation (int, default: 1, max: 25)
+    ├── BorderRadius (double, default: 5)
+    └── INotificationMessage (for real-time updates)
+            ↓
+    ThemeDrawer (UI Component)
+        ├── ElevationPanel (Slider Control)
+        ├── RadiusPanel (Slider Control)
+        └── ThemePreferenceChanged (EventCallback)
+            ↓
+    FshTheme (MudTheme)
+        └── LayoutProperties.DefaultBorderRadius
+```
+
+### **✅ ClientPreference Model**
+
+Store theme preferences persistently:
+
+```csharp
+// /src/apps/blazor/infrastructure/Preferences/ClientPreference.cs
+public class ClientPreference : IPreference, INotificationMessage
+{
+    /// <summary>Gets or sets the elevation level (0-25)</summary>
+    public int Elevation { get; set; } = 1;
+    
+    /// <summary>Gets or sets the border radius in pixels</summary>
+    public double BorderRadius { get; set; } = 5;
+    
+    /// <summary>Gets or sets the primary theme color</summary>
+    public string PrimaryColor { get; set; } = CustomColors.Light.Primary;
+    
+    /// <summary>Gets or sets the secondary theme color</summary>
+    public string SecondaryColor { get; set; } = CustomColors.Light.Secondary;
+    
+    /// <summary>Gets or sets whether dark mode is enabled</summary>
+    public bool IsDarkMode { get; set; } = true;
+    
+    /// <summary>Gets or sets the table display preferences</summary>
+    public FshTablePreference TablePreference { get; set; } = new();
+    
+    /// <summary>Helper method to extract elevation from preference</summary>
+    public static int SetClientPreference(ClientPreference clientPreference)
+    {
+        return clientPreference.Elevation;
+    }
+    
+    /// <summary>Helper method to extract border radius from preference</summary>
+    public static double SetClientBorderRadius(ClientPreference clientPreference)
+    {
+        return clientPreference.BorderRadius;
+    }
+}
+```
+
+### **✅ Theme Drawer UI Components**
+
+Interactive sliders for real-time theme customization:
+
+**ElevationPanel.razor:**
+```csharp
+@using System.Globalization
+<MudExpansionPanel HideIcon="true">
+    <TitleContent>
+        <div class="d-flex align-content-center align-center justify-lg-space-between ml-4 mr-4">
+            <MudText>Elevation</MudText>
+            <MudAvatar Color="Color.Primary"
+                style="width: 30px; height: 30px; font-size: small!important">
+                @Elevation.ToString()
+            </MudAvatar>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudSlider @bind-Value="@Elevation" Min="0" Max="@MaxValue" 
+                   Immediate="false" Step="1" Color="Color.Primary"
+                   @oninput="@(ChangedSelection)">
+            @Elevation.ToString(CultureInfo.InvariantCulture)
+        </MudSlider>
+    </ChildContent>
+</MudExpansionPanel>
+
+@code {
+    private ClientPreference _clientPreference = new();
+    
+    [Parameter]
+    public int Elevation { get; set; }
+    
+    [Parameter]
+    public int MaxValue { get; set; } = 25;
+    
+    [Parameter]
+    public EventCallback<int> OnSliderChanged { get; set; }
+    
+    [Inject]
+    protected INotificationPublisher Notifications { get; set; } = default!;
+    
+    [Inject]
+    protected IClientPreferencesService ClientPreferences { get; set; } = default!;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference themePreference)
+        {
+            _clientPreference = themePreference;
+            Elevation = _clientPreference.Elevation;
+        }
+    }
+    
+    private async Task ChangedSelection(ChangeEventArgs args)
+    {
+        Elevation = int.Parse(args?.Value?.ToString() ?? "0");
+        _clientPreference.Elevation = Elevation;
+        
+        // Notify parent component via callback
+        await OnSliderChanged.InvokeAsync(Elevation);
+        
+        // Publish notification to all subscribers
+        await Notifications.PublishAsync(_clientPreference);
+        
+        StateHasChanged();
+    }
+}
+```
+
+**RadiusPanel.razor:**
+```csharp
+@using System.Globalization
+<MudExpansionPanel HideIcon="true">
+    <TitleContent>
+        <div class="d-flex align-content-center align-center justify-lg-space-between ml-4 mr-4">
+            <MudText>Border Radius</MudText>
+            <MudAvatar Color="Color.Primary"
+                style="width: 30px; height: 30px; font-size: small!important">
+                @Radius.ToString(CultureInfo.InvariantCulture)
+            </MudAvatar>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudSlider @bind-Value="@Radius" Min="0" Max="@MaxValue" 
+                   Immediate="false" Step="1" Color="Color.Primary"
+                   @oninput="@(ChangedSelection)">
+            @Radius.ToString(CultureInfo.InvariantCulture)
+        </MudSlider>
+    </ChildContent>
+</MudExpansionPanel>
+
+@code {
+    private ClientPreference _clientPreference = new();
+    
+    [Parameter]
+    public int Radius { get; set; }
+    
+    [Parameter]
+    public int MaxValue { get; set; } = 20;
+    
+    [Parameter]
+    public EventCallback<double> OnSliderChanged { get; set; }
+    
+    [Inject]
+    protected INotificationPublisher Notifications { get; set; } = default!;
+    
+    [Inject]
+    protected IClientPreferencesService ClientPreferences { get; set; } = default!;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference themePreference)
+        {
+            _clientPreference = themePreference;
+            Radius = (int)_clientPreference.BorderRadius;
+        }
+    }
+    
+    private async Task ChangedSelection(ChangeEventArgs args)
+    {
+        Radius = int.Parse(args?.Value?.ToString() ?? "0");
+        _clientPreference.BorderRadius = Radius;
+        
+        // Notify parent component via callback
+        await OnSliderChanged.InvokeAsync(Radius);
+        
+        // Publish notification to all subscribers
+        await Notifications.PublishAsync(_clientPreference);
+        
+        StateHasChanged();
+    }
+}
+```
+
+### **✅ ThemeDrawer Integration**
+
+**ThemeDrawer.razor:**
+```csharp
+<MudDrawer @bind-Open="@ThemeDrawerOpen" Anchor="Anchor.Right" Elevation="1" Width="300px">
+    <MudExpansionPanels>
+        <ColorPanel OnColorClicked="UpdateThemePrimaryColor" 
+                    Colors="_colors" ColorType="Primary Color"
+                    CurrentColor="Color.Primary" />
+        <ColorPanel OnColorClicked="UpdateThemeSecondaryColor" 
+                    Colors="_colors" ColorType="Secondary Color"
+                    CurrentColor="Color.Secondary" />
+        <RadiusPanel Radius="ThemePreference!.BorderRadius"
+                     OnSliderChanged="UpdateBorderRadius" />
+        <ElevationPanel Elevation="ThemePreference!.Elevation"
+                        OnSliderChanged="UpdateElevation" />
+    </MudExpansionPanels>
+</MudDrawer>
+
+@code {
+    [Parameter]
+    public bool ThemeDrawerOpen { get; set; }
+    
+    [Parameter]
+    public EventCallback<bool> ThemeDrawerOpenChanged { get; set; }
+    
+    [EditorRequired]
+    [Parameter]
+    public ClientPreference ThemePreference { get; set; } = null!;
+    
+    [EditorRequired]
+    [Parameter]
+    public EventCallback<ClientPreference> ThemePreferenceChanged { get; set; }
+    
+    private readonly List<string> _colors = CustomColors.ThemeColors;
+    
+    private async Task UpdateBorderRadius(double radius)
+    {
+        if (ThemePreference is not null)
+        {
+            ThemePreference.BorderRadius = radius;
+            await ThemePreferenceChanged.InvokeAsync(ThemePreference);
+        }
+    }
+    
+    private async Task UpdateElevation(int elevation)
+    {
+        if (ThemePreference is not null)
+        {
+            ThemePreference.Elevation = elevation;
+            await ThemePreferenceChanged.InvokeAsync(ThemePreference);
+        }
+    }
+}
+```
+
+### **✅ FshTheme Configuration**
+
+**FshTheme.cs:**
+```csharp
+// /src/apps/blazor/infrastructure/Themes/FshTheme.cs
+public class FshTheme : MudTheme
+{
+    public FshTheme()
+    {
+        PaletteLight = new PaletteLight
+        {
+            Primary = CustomColors.Light.Primary,
+            Secondary = CustomColors.Light.Secondary,
+            Background = CustomColors.Light.Background,
+            AppbarBackground = CustomColors.Light.AppbarBackground,
+            AppbarText = CustomColors.Light.AppbarText,
+            DrawerBackground = CustomColors.Light.Background,
+            DrawerText = "rgba(0,0,0, 0.7)",
+            Success = CustomColors.Light.Primary,
+            TableLines = "#e0e0e029",
+            OverlayDark = "hsl(0deg 0% 0% / 75%)"
+        };
+        
+        PaletteDark = new PaletteDark
+        {
+            Primary = CustomColors.Dark.Primary,
+            Secondary = CustomColors.Dark.Secondary,
+            Success = CustomColors.Dark.Primary,
+            Black = "#27272f",
+            Background = CustomColors.Dark.Background,
+            Surface = CustomColors.Dark.Surface,
+            DrawerBackground = CustomColors.Dark.DrawerBackground,
+            DrawerText = "rgba(255,255,255, 0.50)",
+            AppbarBackground = CustomColors.Dark.AppbarBackground,
+            AppbarText = "rgba(255,255,255, 0.70)",
+            ActionDefault = "#adadb1",
+            ActionDisabled = "rgba(255,255,255, 0.26)",
+            ActionDisabledBackground = "rgba(255,255,255, 0.12)",
+            DrawerIcon = "rgba(255,255,255, 0.50)",
+            TableLines = "#e0e0e036",
+            Divider = "#e0e0e036"
+        };
+        
+        // Default border radius (can be overridden by ClientPreference)
+        LayoutProperties = new LayoutProperties
+        {
+            DefaultBorderRadius = "5px"
+        };
+        
+        Typography = CustomTypography.FshTypography;
+        Shadows = new Shadow();
+        ZIndex = new ZIndex { Drawer = 1300 };
+    }
+}
+```
+
+### **✅ Using Elevation in MudBlazor Components**
+
+Apply elevation using MudBlazor's CSS classes:
+
+```csharp
+<!-- Elevation 0: No shadow -->
+<MudCard>Content</MudCard>
+
+<!-- Elevation 2: Standard card shadow -->
+<MudCard Class="mud-elevation-2">Content</MudCard>
+
+<!-- Elevation 5: Higher emphasis -->
+<MudCard Class="mud-elevation-5">Content</MudCard>
+
+<!-- Theme button with elevation -->
+<div class="mud-elevation-25" @onclick="OnThemeClick">
+    <MudIcon Icon="@Icons.Material.Filled.Brush" />
+</div>
+
+<!-- Dynamic elevation based on state -->
+<MudCard Class="@($"mud-elevation-{CurrentElevation}")">
+    Content with dynamic elevation
+</MudCard>
+```
+
+### **✅ Real-Time Theme Updates**
+
+Subscribe to theme preference changes:
+
+```csharp
+@code {
+    private ClientPreference? _currentPreference;
+    
+    [Inject]
+    protected INotificationSubscriber NotificationSubscriber { get; set; } = default!;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        // Subscribe to preference changes
+        NotificationSubscriber.Subscribe<ClientPreference>(
+            async clientPreference =>
+            {
+                _currentPreference = clientPreference;
+                // Apply new border radius and elevation
+                await ApplyThemeChanges(clientPreference);
+                StateHasChanged();
+            });
+    }
+    
+    private async Task ApplyThemeChanges(ClientPreference preference)
+    {
+        // Re-render components with new elevation/radius values
+        // MudBlazor components automatically use mud-elevation-{n} classes
+        await Task.CompletedTask;
+    }
+}
+```
+
+### **✅ Best Practices**
+
+- **Elevation Scale**: Use 1-5 for most components, 25 for floating theme button
+- **Border Radius**: Default 5px, configurable 0-20px via theme drawer
+- **Consistency**: Always use ClientPreference values for theme-aware styling
+- **Notifications**: Subscribe to ClientPreference changes for reactive updates
+- **Performance**: MudBlazor handles elevation rendering efficiently
+- **Persistence**: ClientPreference persists user selections via LocalStorage
+
+---
 
 ### **Component Development**
 - [ ] Component has single responsibility
