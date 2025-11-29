@@ -47,7 +47,44 @@ public partial class Todos
             {
                 await Client.UpdateTodoEndpointAsync("1", id, todo.Adapt<UpdateTodoCommand>());
             },
-            deleteFunc: async id => await Client.DeleteTodoEndpointAsync("1", id));
+            deleteFunc: async id => await Client.DeleteTodoEndpointAsync("1", id),
+            exportFunc: async filter =>
+            {
+                var exportQuery = new ExportTodosQuery
+                {
+                    Filter = new TodoExportFilter
+                    {
+                        SearchTerm = filter.Keyword
+                    },
+                    SheetName = "Todos"
+                };
+                
+                var result = await Client.ExportTodosEndpointAsync("1", exportQuery).ConfigureAwait(false);
+                var stream = new MemoryStream(result.Data);
+                return new Components.EntityTable.FileResponse(stream);
+            },
+            importFunc: async fileUpload =>
+            {
+                var command = new ImportTodosCommand
+                {
+                    File = fileUpload,
+                    SheetName = "Sheet1",
+                    ValidateStructure = true
+                };
+                
+                var result = await Client.ImportTodosEndpointAsync("1", command).ConfigureAwait(false);
+                return result;
+            });
+
+    private async Task ShowTodosHelp()
+    {
+        await DialogService.ShowAsync<TodosHelpDialog>("Todos Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 /// <summary>

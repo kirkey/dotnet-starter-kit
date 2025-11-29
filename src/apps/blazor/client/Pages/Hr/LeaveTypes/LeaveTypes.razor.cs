@@ -1,10 +1,3 @@
-using Mapster;
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
-using FSH.Starter.Blazor.Client.Components.EntityTable;
-using FSH.Starter.Blazor.Infrastructure.Api;
-
-
 namespace FSH.Starter.Blazor.Client.Pages.Hr.LeaveTypes;
 
 public partial class LeaveTypes

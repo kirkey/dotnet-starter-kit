@@ -22,7 +22,7 @@ public sealed class ExportItemsHandler(
 
         try
         {
-            // Build specification from filter
+                // Build specification from filter
             var specification = request.Filter != null 
                 ? new ExportItemsSpec(request.Filter) 
                 : null;

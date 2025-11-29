@@ -7,6 +7,8 @@ using FSH.Starter.WebApi.Todo.Features.Delete.v1;
 using FSH.Starter.WebApi.Todo.Features.Get.v1;
 using FSH.Starter.WebApi.Todo.Features.GetList.v1;
 using FSH.Starter.WebApi.Todo.Features.Update.v1;
+using FSH.Starter.WebApi.Todo.Features.Export.v1;
+using FSH.Starter.WebApi.Todo.Features.Import.v1;
 using FSH.Starter.WebApi.Todo.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -40,6 +42,8 @@ public static class TodoModule
             todoGroup.MapGetTodoListEndpoint();
             todoGroup.MapTodoItemUpdateEndpoint();
             todoGroup.MapTodoItemDeletionEndpoint();
+            todoGroup.MapExportTodosEndpoint();
+            todoGroup.MapImportTodosEndpoint();
         }
     }
 
