@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Models.NavigationMenu;
+namespace FSH.Starter.Blazor.Infrastructure.Navigation.Models;
 
 /// <summary>
 /// Represents a sub-menu item that appears under a parent menu item.
@@ -71,3 +71,4 @@ public class MenuSectionSubItemModel
     /// </summary>
     public string? Resource { get; set; }
 }
+

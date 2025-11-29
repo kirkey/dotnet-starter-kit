@@ -1,8 +1,8 @@
-﻿namespace FSH.Starter.Blazor.Client.Layout;
+﻿using FSH.Starter.Blazor.Infrastructure.Navigation;
+using FSH.Starter.Blazor.Infrastructure.Navigation.Models;
 
-using Models.NavigationMenu;
-using Services.Navigation;
-
+namespace FSH.Starter.Blazor.Client.Layout;
+ 
 /// <summary>
 /// Navigation menu component that renders the application's main navigation structure.
 /// Handles menu filtering based on user roles and permissions, and provides special handling for ComingSoon items.

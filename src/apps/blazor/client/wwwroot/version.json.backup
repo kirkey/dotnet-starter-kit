@@ -1,5 +1,5 @@
 {
-  "description": "Application version information",
-  "version": "1.0.2",
-  "buildDate": "2025-10-30T09:53:09Z"
+  "version": "1.0.5",
+  "buildDate": "2025-11-29T03:13:25Z",
+  "description": "Patch release#!/bin/bash"
 }

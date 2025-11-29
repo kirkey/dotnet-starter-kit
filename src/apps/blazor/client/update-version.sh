@@ -1,4 +1,4 @@
-update#!/bin/bash
+./update-version.sh -v 1.0.5 -d "Patch release"#!/bin/bash
 # Version Update Script
 # Updates the version.json file with a new version number and build timestamp
 
@@ -12,7 +12,7 @@ NC='\033[0m' # No Color
 
 # Default values
 VERSION_FILE="wwwroot/version.json"
-DEFAULT_VERSION="1.0.0"
+DEFAULT_VERSION="1.0.4"
 
 # Function to display usage
 usage() {

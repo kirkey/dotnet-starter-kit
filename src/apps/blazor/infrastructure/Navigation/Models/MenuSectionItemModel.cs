@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Models.NavigationMenu;
+namespace FSH.Starter.Blazor.Infrastructure.Navigation.Models;
 
 /// <summary>
 /// Represents a navigation menu item that can be either a standalone link or a parent containing sub-items.
@@ -73,3 +73,4 @@ public class MenuSectionItemModel
     /// </summary>
     public PageStatus PageStatus { get; set; } = PageStatus.None;
 }
+

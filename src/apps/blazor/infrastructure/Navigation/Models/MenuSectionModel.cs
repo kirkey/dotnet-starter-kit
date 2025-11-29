@@ -1,4 +1,4 @@
-namespace FSH.Starter.Blazor.Client.Models.NavigationMenu;
+namespace FSH.Starter.Blazor.Infrastructure.Navigation.Models;
 
 /// <summary>
 /// Represents a navigation menu section containing a collection of menu items.

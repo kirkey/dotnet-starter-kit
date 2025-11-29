@@ -1,6 +1,7 @@
-using FSH.Starter.Blazor.Client.Services.Navigation;
 using FSH.Starter.Blazor.Infrastructure;
+using FSH.Starter.Blazor.Infrastructure.Navigation;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MenuService = FSH.Starter.Blazor.Client.Services.Navigation.MenuService;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 

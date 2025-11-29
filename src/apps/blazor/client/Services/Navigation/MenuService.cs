@@ -1,4 +1,5 @@
-using FSH.Starter.Blazor.Client.Models.NavigationMenu;
+using FSH.Starter.Blazor.Infrastructure.Navigation;
+using FSH.Starter.Blazor.Infrastructure.Navigation.Models;
 
 namespace FSH.Starter.Blazor.Client.Services.Navigation;
 
@@ -363,3 +364,4 @@ public class MenuService : IMenuService
     /// </summary>
     public IEnumerable<MenuSectionModel> Features => _features;
 }
+
