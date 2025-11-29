@@ -94,6 +94,11 @@
                           @bind-Value="context.Description"
                           Placeholder="Primary storage facility" />
         </MudItem>
+        
+        <MudDivider Class="my-4" DividerType="DividerType.Middle" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2">Manager Information</MudText>
+        </MudItem>
 
         @* Manager Information *@
         <MudItem xs="12" sm="6">
@@ -128,6 +133,11 @@
                           AdornmentIcon="@Icons.Material.Filled.Phone" />
         </MudItem>
 
+        <MudDivider Class="my-4" DividerType="DividerType.Middle" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2">Capacity Information</MudText>
+        </MudItem>
+        
         @* Capacity Information *@
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField T="decimal" 
@@ -166,9 +176,10 @@
             </MudSelect>
         </MudItem>
 
-        <MudDivider DividerType="DividerType.Middle" Class="my-4">
+        <MudDivider Class="my-4" DividerType="DividerType.Middle" />
+        <MudItem xs="12">
             <MudText Typo="Typo.subtitle2">Status & Settings</MudText>
-        </MudDivider>
+        </MudItem>
 
         @* Status Switches *@
         <MudItem xs="12" sm="6" md="4" lg="3">
@@ -189,7 +200,10 @@
             </MudSwitch>
         </MudItem>
 
-        <MudDivider DividerType="DividerType.Middle" Class="my-4" />
+        <MudDivider Class="my-4" DividerType="DividerType.Middle" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2">Other Information</MudText>
+        </MudItem>
 
         @* Notes *@
         <MudItem xs="12">
