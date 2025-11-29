@@ -1,6 +1,6 @@
 ﻿namespace FSH.Starter.Blazor.Infrastructure.Preferences;
 
-public class ClientPreference : IPreference
+public class ClientPreference : IPreference, INotificationMessage
 {
     public bool IsDarkMode { get; set; } = true;
     public bool IsRtl { get; set; }
@@ -10,4 +10,12 @@ public class ClientPreference : IPreference
     public double BorderRadius { get; set; } = 5;
     public int Elevation { get; set; } = 1;
     public FshTablePreference TablePreference { get; set; } = new FshTablePreference();
+
+    /// <summary>
+    /// Helper method to extract elevation from preference for notification subscribers.
+    /// </summary>
+    public static int SetClientPreference(ClientPreference clientPreference)
+    {
+        return clientPreference.Elevation;
+    }
 }

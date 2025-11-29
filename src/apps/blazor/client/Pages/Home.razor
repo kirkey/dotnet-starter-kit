@@ -1,5 +1,4 @@
 ﻿@page "/"
-@using System.Security.Claims
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-4">
     @if (HasAccountingPermission)
@@ -33,7 +32,7 @@
 
             <!-- Feature Cards Row 1 -->
             <MudItem xs="12" sm="6" md="4">
-                <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCard Elevation="@_preference.Elevation" Style="height: 100%; border-radius: 12px;">
                     <MudCardContent>
                         <div class="d-flex align-center mb-3">
                             <MudIcon Icon="@Icons.Material.Filled.AccountBalance" Color="Color.Primary" Size="Size.Large" Class="mr-3"/>
@@ -47,7 +46,7 @@
             </MudItem>
 
             <MudItem xs="12" sm="6" md="4">
-                <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCard Elevation="@_preference.Elevation" Style="height: 100%; border-radius: 12px;">
                     <MudCardContent>
                         <div class="d-flex align-center mb-3">
                             <MudIcon Icon="@Icons.Material.Filled.Receipt" Color="Color.Secondary" Size="Size.Large" Class="mr-3"/>
@@ -125,7 +124,7 @@
             </MudItem>
 
             <MudItem xs="12" md="6">
-                <MudPaper Elevation="2" Class="pa-6" Style="border-radius: 12px; height: 100%;">
+                <MudPaper Elevation="@_preference.Elevation" Class="pa-6" Style="border-radius: 12px; height: 100%;">
                     <MudText Typo="Typo.h6" GutterBottom="true" Style="font-weight: 600;">
                         <MudIcon Icon="@Icons.Material.Filled.Speed" Class="mr-2" Color="Color.Primary"/>
                         Enhanced Financial Control
@@ -148,7 +147,7 @@
             </MudItem>
 
             <MudItem xs="12" md="6">
-                <MudPaper Elevation="2" Class="pa-6" Style="border-radius: 12px; height: 100%;">
+                <MudPaper Elevation="@_preference.Elevation" Class="pa-6" Style="border-radius: 12px; height: 100%;">
                     <MudText Typo="Typo.h6" GutterBottom="true" Style="font-weight: 600;">
                         <MudIcon Icon="@Icons.Material.Filled.Security" Class="mr-2" Color="Color.Secondary"/>
                         Compliance & Security
@@ -171,7 +170,7 @@
             </MudItem>
 
             <MudItem xs="12" md="6">
-                <MudPaper Elevation="2" Class="pa-6" Style="border-radius: 12px; height: 100%;">
+                <MudPaper Elevation="@_preference.Elevation" Class="pa-6" Style="border-radius: 12px; height: 100%;">
                     <MudText Typo="Typo.h6" GutterBottom="true" Style="font-weight: 600;">
                         <MudIcon Icon="@Icons.Material.Filled.Insights" Class="mr-2" Color="Color.Tertiary"/>
                         Financial Insights
@@ -194,7 +193,7 @@
             </MudItem>
 
             <MudItem xs="12" md="6">
-                <MudPaper Elevation="2" Class="pa-6" Style="border-radius: 12px; height: 100%;">
+                <MudPaper Elevation="@_preference.Elevation" Class="pa-6" Style="border-radius: 12px; height: 100%;">
                     <MudText Typo="Typo.h6" GutterBottom="true" Style="font-weight: 600;">
                         <MudIcon Icon="@Icons.Material.Filled.DeviceHub" Class="mr-2" Color="Color.Info"/>
                         Modern Technology Stack
@@ -218,7 +217,7 @@
 
             <!-- Quick Access Section -->
             <MudItem xs="12" Class="mt-8">
-                <MudPaper Elevation="4" Class="pa-6" Style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 12px;">
+                <MudPaper Elevation="@_preference.Elevation" Class="pa-6" Style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 12px;">
                     <MudText Typo="Typo.h5" Align="Align.Center" GutterBottom="true" Style="font-weight: 600; margin-bottom: 24px;">
                         Get Started Today
                     </MudText>
@@ -409,7 +408,7 @@
 
             <!-- Feature Cards Row 1 -->
             <MudItem xs="12" sm="6" md="4">
-                <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCard Elevation="@_preference.Elevation" Style="height: 100%; border-radius: 12px;">
                     <MudCardContent>
                         <div class="d-flex align-center mb-3">
                             <MudIcon Icon="@Icons.Material.Filled.Inventory" Color="Color.Primary" Size="Size.Large" Class="mr-3"/>
@@ -423,7 +422,7 @@
             </MudItem>
 
             <MudItem xs="12" sm="6" md="4">
-                <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCard Elevation="@_preference.Elevation" Style="height: 100%; border-radius: 12px;">
                     <MudCardContent>
                         <div class="d-flex align-center mb-3">
                             <MudIcon Icon="@Icons.Material.Filled.Warehouse" Color="Color.Secondary" Size="Size.Large" Class="mr-3"/>
@@ -437,7 +436,7 @@
             </MudItem>
 
             <MudItem xs="12" sm="6" md="4">
-                <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCard Elevation="@_preference.Elevation" Style="height: 100%; border-radius: 12px;">
                     <MudCardContent>
                         <div class="d-flex align-center mb-3">
                             <MudIcon Icon="@Icons.Material.Filled.ShoppingCart" Color="Color.Tertiary" Size="Size.Large" Class="mr-3"/>
@@ -452,7 +451,7 @@
 
             <!-- Feature Cards Row 2 -->
             <MudItem xs="12" sm="6" md="4">
-                <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCard Elevation="@_preference.Elevation" Style="height: 100%; border-radius: 12px;">
                     <MudCardContent>
                         <div class="d-flex align-center mb-3">
                             <MudIcon Icon="@Icons.Material.Filled.AssignmentTurnedIn" Color="Color.Success" Size="Size.Large" Class="mr-3"/>
@@ -466,7 +465,7 @@
             </MudItem>
 
             <MudItem xs="12" sm="6" md="4">
-                <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCard Elevation="@_preference.Elevation" Style="height: 100%; border-radius: 12px;">
                     <MudCardContent>
                         <div class="d-flex align-center mb-3">
                             <MudIcon Icon="@Icons.Material.Filled.Assessment" Color="Color.Info" Size="Size.Large" Class="mr-3"/>
@@ -480,7 +479,7 @@
             </MudItem>
 
             <MudItem xs="12" sm="6" md="4">
-                <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCard Elevation="@_preference.Elevation" Style="height: 100%; border-radius: 12px;">
                     <MudCardContent>
                         <div class="d-flex align-center mb-3">
                             <MudIcon Icon="@Icons.Material.Filled.ImportExport" Color="Color.Warning" Size="Size.Large" Class="mr-3"/>
@@ -501,7 +500,7 @@
             </MudItem>
 
             <MudItem xs="12" md="6">
-                <MudPaper Elevation="2" Class="pa-6" Style="border-radius: 12px; height: 100%;">
+                <MudPaper Elevation="@_preference.Elevation" Class="pa-6" Style="border-radius: 12px; height: 100%;">
                     <MudText Typo="Typo.h6" GutterBottom="true" Style="font-weight: 600;">
                         <MudIcon Icon="@Icons.Material.Filled.Speed" Class="mr-2" Color="Color.Primary"/>
                         Enhanced Efficiency
@@ -524,7 +523,7 @@
             </MudItem>
 
             <MudItem xs="12" md="6">
-                <MudPaper Elevation="2" Class="pa-6" Style="border-radius: 12px; height: 100%;">
+                <MudPaper Elevation="@_preference.Elevation" Class="pa-6" Style="border-radius: 12px; height: 100%;">
                     <MudText Typo="Typo.h6" GutterBottom="true" Style="font-weight: 600;">
                         <MudIcon Icon="@Icons.Material.Filled.Security" Class="mr-2" Color="Color.Secondary"/>
                         Enterprise-Grade Security
@@ -547,7 +546,7 @@
             </MudItem>
 
             <MudItem xs="12" md="6">
-                <MudPaper Elevation="2" Class="pa-6" Style="border-radius: 12px; height: 100%;">
+                <MudPaper Elevation="@_preference.Elevation" Class="pa-6" Style="border-radius: 12px; height: 100%;">
                     <MudText Typo="Typo.h6" GutterBottom="true" Style="font-weight: 600;">
                         <MudIcon Icon="@Icons.Material.Filled.Insights" Class="mr-2" Color="Color.Tertiary"/>
                         Data-Driven Insights
@@ -570,7 +569,7 @@
             </MudItem>
 
             <MudItem xs="12" md="6">
-                <MudPaper Elevation="2" Class="pa-6" Style="border-radius: 12px; height: 100%;">
+                <MudPaper Elevation="@_preference.Elevation" Class="pa-6" Style="border-radius: 12px; height: 100%;">
                     <MudText Typo="Typo.h6" GutterBottom="true" Style="font-weight: 600;">
                         <MudIcon Icon="@Icons.Material.Filled.DeviceHub" Class="mr-2" Color="Color.Info"/>
                         Modern Technology Stack
@@ -594,7 +593,7 @@
 
             <!-- Quick Access Section -->
             <MudItem xs="12" Class="mt-8">
-                <MudPaper Elevation="4" Class="pa-6" Style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 12px;">
+                <MudPaper Elevation="@_preference.Elevation" Class="pa-6" Style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 12px;">
                     <MudText Typo="Typo.h5" Align="Align.Center" GutterBottom="true" Style="font-weight: 600; margin-bottom: 24px;">
                         Get Started Today
                     </MudText>
@@ -779,40 +778,3 @@
         </MudGrid>
     }
 </MudContainer>
-
-@code {
-    /// <summary>
-    /// Gets or sets the cascading authentication state parameter for the current user.
-    /// </summary>
-    [CascadingParameter]
-    public Task<AuthenticationState> AuthState { get; set; } = null!;
-
-    /// <summary>
-    /// Gets or sets the collection of claims for the currently authenticated user.
-    /// </summary>
-    public IEnumerable<Claim>? Claims { get; set; }
-    
-    /// <summary>
-    /// Gets a value indicating whether the current user has Accounting Create permission.
-    /// </summary>
-    private bool HasAccountingPermission => Claims?.Any(c => 
-        c.Type == FshClaims.Permission && 
-        c.Value == FshPermission.NameFor(FshActions.Create, FshResources.Accounting)) ?? false;
-    
-    /// <summary>
-    /// Gets a value indicating whether the current user has Store Create permission.
-    /// </summary>
-    private bool HasStorePermission => Claims?.Any(c => 
-        c.Type == FshClaims.Permission && 
-        c.Value == FshPermission.NameFor(FshActions.Create, FshResources.Store)) ?? false;
-
-    /// <summary>
-    /// Initializes the component asynchronously by loading the user's claims.
-    /// </summary>
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await AuthState;
-        Claims = authState.User.Claims;
-    }
-}
-
