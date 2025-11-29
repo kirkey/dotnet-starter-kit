@@ -82,10 +82,8 @@ public partial class PutAwayTasks
                 await Client.CreatePutAwayTaskEndpointAsync("1", viewModel.Adapt<CreatePutAwayTaskCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeletePutAwayTaskEndpointAsync("1", id).ConfigureAwait(false));
-    }
 
-    protected override async Task OnInitializedAsync()
-    {
+        // Load warehouses for search filters
         await LoadWarehousesAsync();
     }
 

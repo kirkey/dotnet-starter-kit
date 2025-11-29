@@ -3,6 +3,13 @@
 
 <PageHeader Title="Products" Header="Products" SubHeader="Manage your Products." />
 
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        @* Future: Add Help, Export, Import buttons here *@
+    </MudStack>
+</MudPaper>
+
 <EntityTable @ref="_table" TEntity="ProductResponse" TId="DefaultIdType" TRequest="ProductViewModel" Context="@Context">
 
     <AdvancedSearchContent>

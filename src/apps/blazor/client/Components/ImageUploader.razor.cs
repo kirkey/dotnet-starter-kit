@@ -421,6 +421,4 @@ public partial class ImageUploader : ComponentBase
             return Task.CompletedTask;
         });
     }
-
-    #region Public Methods
-
+}

@@ -1,6 +1,6 @@
 @namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.BankAccounts
 
-<MudPaper Elevation="0" Class="pa-4 mb-4">
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
     <MudStack Spacing="3">
         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
             <MudText Typo="Typo.subtitle2">Bank Accounts for Payroll</MudText>
@@ -102,15 +102,32 @@
     [Parameter]
     public DefaultIdType EmployeeId { get; set; }
 
-    private List<BankAccountResponse>? _accounts;
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
+    private List<BankAccountResponse> _bankAccounts = new();
     private bool _loading;
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadAccounts();
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
+        await LoadBankAccounts();
     }
 
-    private async Task LoadAccounts()
+    private async Task LoadBankAccounts()
     {
         _loading = true;
         try

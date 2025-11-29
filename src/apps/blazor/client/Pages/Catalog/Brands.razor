@@ -3,6 +3,13 @@
 
 <PageHeader Title="Brands" Header="Brands" SubHeader="Manage your Brands." />
 
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        @* Future: Add Help, Export, Import buttons here *@
+    </MudStack>
+</MudPaper>
+
 <EntityTable @ref="_table" TEntity="BrandResponse" TId="DefaultIdType" TRequest="BrandViewModel" Context="@Context">
 
     <AdvancedSearchContent>

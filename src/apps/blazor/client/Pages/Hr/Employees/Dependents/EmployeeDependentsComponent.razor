@@ -1,6 +1,6 @@
 @namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Dependents
 
-<MudPaper Elevation="0" Class="pa-4 mb-4">
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
     <MudStack Spacing="3">
         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
             <MudText Typo="Typo.subtitle2">Dependents</MudText>
@@ -77,11 +77,28 @@
     [Parameter]
     public DefaultIdType EmployeeId { get; set; }
 
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     private List<EmployeeDependentResponse> _dependents = new();
     private bool _loading;
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         await LoadDependents();
     }
 

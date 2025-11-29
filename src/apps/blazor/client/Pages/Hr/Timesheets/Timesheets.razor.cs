@@ -6,9 +6,12 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Timesheets;
 /// </summary>
 public partial class Timesheets
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     protected EntityServerTableContext<TimesheetResponse, DefaultIdType, TimesheetViewModel> Context { get; set; } = null!;
 
     private EntityTable<TimesheetResponse, DefaultIdType, TimesheetViewModel>? _table;
+    private ClientPreference _preference = new();
 
     private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
 
@@ -17,6 +20,20 @@ public partial class Timesheets
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<TimesheetResponse, DefaultIdType, TimesheetViewModel>(
             entityName: "Timesheet",
             entityNamePlural: "Timesheets",

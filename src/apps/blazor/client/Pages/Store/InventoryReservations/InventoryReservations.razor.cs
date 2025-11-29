@@ -47,6 +47,8 @@ public partial class InventoryReservations
     }
 
     private void SetupContext()
+    {
+        Context = new EntityServerTableContext<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel>(
             entityName: "Inventory Reservation",
             entityNamePlural: "Inventory Reservations",
             entityResource: FshResources.Store,
@@ -85,12 +87,13 @@ public partial class InventoryReservations
                 await Client.CreateInventoryReservationEndpointAsync("1", viewModel.Adapt<CreateInventoryReservationCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteInventoryReservationEndpointAsync("1", id).ConfigureAwait(false));
-    }
 
-    protected override async Task OnInitializedAsync()
-    {
-        await LoadItemsAsync();
-        await LoadWarehousesAsync();
+        // Load items and warehouses for search filters
+        Task.Run(async () =>
+        {
+            await LoadItemsAsync();
+            await LoadWarehousesAsync();
+        });
     }
 
     /// <summary>

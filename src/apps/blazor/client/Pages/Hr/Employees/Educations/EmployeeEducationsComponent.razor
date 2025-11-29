@@ -1,9 +1,9 @@
 @namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Educations
 
-<MudPaper Elevation="0" Class="pa-4 mb-4">
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
     <MudStack Spacing="3">
         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-            <MudText Typo="Typo.subtitle2">Education & Certifications</MudText>
+            <MudText Typo="Typo.subtitle2">Education History</MudText>
             <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="AddEducation">
                 Add Education
             </MudButton>
@@ -27,7 +27,7 @@
                             <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
                                 <MudStack Spacing="0">
                                     <MudText Typo="Typo.body2">
-                                        <strong>@education.EducationLevel</strong>
+                                        <strong>@education.Degree</strong>
                                     </MudText>
                                     <MudText Typo="Typo.caption">@education.Institution</MudText>
                                 </MudStack>
@@ -45,22 +45,15 @@
                                 @if (!string.IsNullOrWhiteSpace(education.FieldOfStudy))
                                 {
                                     <MudText Typo="Typo.caption">
-                                        <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.MenuBook" Class="mr-1" />
-                                        @education.FieldOfStudy
-                                    </MudText>
-                                }
-                                @if (!string.IsNullOrWhiteSpace(education.Degree))
-                                {
-                                    <MudText Typo="Typo.caption">
                                         <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.School" Class="mr-1" />
-                                        @education.Degree
+                                        Field: @education.FieldOfStudy
                                     </MudText>
                                 }
-                                @if (education.GraduationDate != default)
+                                @if (education.StartDate != default || education.EndDate != default)
                                 {
                                     <MudText Typo="Typo.caption">
                                         <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.DateRange" Class="mr-1" />
-                                        Graduated: @education.GraduationDate.ToString("MMM yyyy")
+                                        @($"{education.StartDate:MMM yyyy}") - @(education.EndDate.HasValue ? $"{education.EndDate:MMM yyyy}" : "Present")
                                     </MudText>
                                 }
                                 @if (education.Gpa.HasValue)
@@ -84,11 +77,28 @@
     [Parameter]
     public DefaultIdType EmployeeId { get; set; }
 
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     private List<EmployeeEducationResponse> _educations = new();
     private bool _loading;
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         await LoadEducations();
     }
 
