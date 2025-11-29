@@ -18,4 +18,12 @@ public class ClientPreference : IPreference, INotificationMessage
     {
         return clientPreference.Elevation;
     }
+
+    /// <summary>
+    /// Helper method to extract border radius from preference for notification subscribers.
+    /// </summary>
+    public static double SetClientBorderRadius(ClientPreference clientPreference)
+    {
+        return clientPreference.BorderRadius;
+    }
 }
