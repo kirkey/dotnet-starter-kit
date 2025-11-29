@@ -8,7 +8,8 @@ public partial class Taxes
 {
     [Inject] protected ICourier Courier { get; set; } = null!;
 
-    protected EntityServerTableContext<TaxResponse, DefaultIdType, TaxViewModel> Context { get; set; } = null!;
+    // Changed TEntity generic from TaxResponse -> TaxDto to match field definitions and search pagination type.
+    protected EntityServerTableContext<TaxDto, DefaultIdType, TaxViewModel> Context { get; set; } = null!;
     
     private ClientPreference _preference = new();
 
@@ -36,7 +37,7 @@ public partial class Taxes
             return Task.CompletedTask;
         });
 
-        Context = new EntityServerTableContext<TaxResponse, DefaultIdType, TaxViewModel>(
+        Context = new EntityServerTableContext<TaxDto, DefaultIdType, TaxViewModel>(
             entityName: "Tax",
             entityNamePlural: "Taxes",
             entityResource: FshResources.Taxes,
@@ -47,7 +48,9 @@ public partial class Taxes
                 new EntityField<TaxDto>(response => response.TaxType, "Type", "TaxType"),
                 new EntityField<TaxDto>(response => $"{response.Rate * 100:N2}%", "Rate", "Rate"),
                 new EntityField<TaxDto>(response => response.Jurisdiction ?? "-", "Jurisdiction", "Jurisdiction"),
-                new EntityField<TaxDto>(response => response.EffectiveDate.ToShortDateString(), "Effective", "EffectiveDate"),
+                // Use DateOnly metadata for DateTime field per instruction.
+                new EntityField<TaxDto>(response => response.EffectiveDate, "Effective", "EffectiveDate", typeof(DateOnly)),
+                new EntityField<TaxDto>(response => response.ExpiryDate, "Expiry", "ExpiryDate", typeof(DateOnly)),
                 new EntityField<TaxDto>(response => response.IsCompound, "Compound", "IsCompound", typeof(bool)),
                 new EntityField<TaxDto>(response => response.IsActive, "Active", "IsActive", typeof(bool)),
             ],

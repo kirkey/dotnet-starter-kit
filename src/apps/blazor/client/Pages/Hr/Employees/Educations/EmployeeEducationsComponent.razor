@@ -49,11 +49,11 @@
                                         Field: @education.FieldOfStudy
                                     </MudText>
                                 }
-                                @if (education.StartDate != default || education.EndDate != default)
+                                @if (education.GraduationDate != default)
                                 {
                                     <MudText Typo="Typo.caption">
                                         <MudIcon Size="Size.Small" Icon="@Icons.Material.Filled.DateRange" Class="mr-1" />
-                                        @($"{education.StartDate:MMM yyyy}") - @(education.EndDate.HasValue ? $"{education.EndDate:MMM yyyy}" : "Present")
+                                        Graduated: @education.GraduationDate.ToString("MMMM yyyy")
                                     </MudText>
                                 }
                                 @if (education.Gpa.HasValue)

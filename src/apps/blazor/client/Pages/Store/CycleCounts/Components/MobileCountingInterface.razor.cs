@@ -107,7 +107,7 @@ public partial class MobileCountingInterface : IAsyncDisposable
     {
         try
         {
-            await JS.InvokeVoidAsync("cycleCounts.stopBarcodeScanner");
+            await Js.InvokeVoidAsync("cycleCounts.stopBarcodeScanner");
             _isScanning = false;
             StateHasChanged();
         }

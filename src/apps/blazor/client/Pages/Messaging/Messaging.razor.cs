@@ -658,7 +658,7 @@ public partial class Messaging : IDisposable
         try
         {
             await Task.Delay(100); // Give time for rendering
-            await JSRuntime.InvokeVoidAsync("scrollToElement", "chat-messages");
+            await Js.InvokeVoidAsync("scrollToElement", "chat-messages");
         }
         catch
         {

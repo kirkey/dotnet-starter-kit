@@ -13,14 +13,14 @@
         {
             <MudProgressCircular Indeterminate="true" />
         }
-        else if (_accounts == null || _accounts.Count == 0)
+        else if (_bankAccounts == null || _bankAccounts.Count == 0)
         {
             <MudAlert Severity="Severity.Info">No bank accounts added yet. Click "Add Bank Account" to add one.</MudAlert>
         }
         else
         {
             <MudList T="BankAccountResponse" Dense="true">
-                @foreach (var account in _accounts)
+                @foreach (var account in _bankAccounts)
                 {
                     <MudListItem T="BankAccountResponse">
                         <MudStack Spacing="1" Class="full-width">
@@ -140,7 +140,7 @@
             };
             var response = await Client.SearchBankAccountsEndpointAsync("1", request);
             var result = response.Adapt<PaginationResponse<BankAccountResponse>>();
-            _accounts = result.Items.ToList();
+            _bankAccounts = result.Items.ToList();
         }
         catch (Exception ex)
         {
@@ -162,7 +162,7 @@
 
         if (result is not null)
         {
-            await LoadAccounts();
+            await LoadBankAccounts();
         }
     }
 
@@ -179,7 +179,7 @@
 
             if (result is not null)
             {
-                await LoadAccounts();
+                await LoadBankAccounts();
             }
         }
         catch (Exception ex)
@@ -202,7 +202,7 @@
             {
                 await Client.DeleteBankAccountEndpointAsync("1", accountId);
                 Snackbar?.Add("Bank account deleted successfully.", Severity.Success);
-                await LoadAccounts();
+                await LoadBankAccounts();
             }
             catch (Exception ex)
             {
