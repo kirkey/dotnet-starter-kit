@@ -70,10 +70,10 @@
             <AutocompleteWarehouse @bind-Value="context.WarehouseId" For="@(() => context.WarehouseId)" Label="Warehouse" Required="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField @bind-Value="context.Quantity" For="@(() => context.Quantity)" Label="Quantity" Required="true" />
+            <MudNumericField @bind-Value="context.Quantity" For="@(() => context.Quantity)" Label="Quantity" Required="true" Format="N2" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField @bind-Value="context.UnitCost" For="@(() => context.UnitCost)" Label="Unit Cost" />
+            <MudNumericField @bind-Value="context.UnitCost" For="@(() => context.UnitCost)" Label="Unit Cost" Format="N2" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudDatePicker @bind-Date="context.TransactionDate" For="@(() => context.TransactionDate)" Label="Transaction Date" DateFormat="MMMM dd, yyyy" Required="true" />

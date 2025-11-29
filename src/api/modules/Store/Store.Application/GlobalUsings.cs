@@ -12,6 +12,7 @@ global using MediatR;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 global using Store.Domain;
+global using Store.Domain.Constants;
 global using Store.Domain.Entities;
 global using Store.Domain.Enums;
 global using Store.Domain.Exceptions.Warehouse;

@@ -15,11 +15,15 @@
             <MudExpansionPanel @bind-IsExpanded="_advancedSearchExpanded"
                                Class="mud-elevation-25" 
                                Style="padding:5px!important; margin-bottom:10px!important;border-radius: var(--mud-default-borderradius) !important;" 
-                               Text="Advanced Search and Settings">
-                <MudTextField @bind-Value="SearchString"
-                              Placeholder="@($"Search for {Context.EntityNamePlural}")" Adornment="Adornment.Start"
-                              AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Immediate=false
-                              Style="flex:none!important;margin:0px!important" TextChanged="OnSearchStringChanged">
+                               Text=" Advanced Search and Settings">
+                <MudTextField Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              @bind-Value="SearchString"
+                              IconSize="Size.Medium"
+                              Immediate=false
+                              Placeholder="@($"Search for {Context.EntityNamePlural}")"
+                              Style="flex:none!important;margin:0px!important"
+                              TextChanged="OnSearchStringChanged">
                 </MudTextField>
                 @if (Context.AdvancedSearchEnabled)
                 {

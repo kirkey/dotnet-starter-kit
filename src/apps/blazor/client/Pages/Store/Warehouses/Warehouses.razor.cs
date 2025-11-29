@@ -1,3 +1,5 @@
+using FSH.Starter.Blazor.Client.Constants;
+
 namespace FSH.Starter.Blazor.Client.Pages.Store.Warehouses;
 
 /// <summary>
@@ -38,6 +40,22 @@ public partial class Warehouses
     /// Search filter for main warehouse.
     /// </summary>
     private bool? SearchIsMainWarehouse { get; set; }
+
+    /// <summary>
+    /// Search string for warehouse type autocomplete.
+    /// </summary>
+    private string? _warehouseTypeSearchString { get; set; }
+
+    /// <summary>
+    /// Search function for warehouse type autocomplete filtering.
+    /// </summary>
+    private async Task<IEnumerable<string>> _warehouseTypeSearchFunc(string value)
+    {
+        await Task.Delay(0); // Ensure async behavior
+        return string.IsNullOrWhiteSpace(value)
+            ? WarehouseTypeConstants.WarehouseTypes
+            : WarehouseTypeConstants.WarehouseTypes.Where(x => x.Contains(value, StringComparison.OrdinalIgnoreCase));
+    }
 
     /// <summary>
     /// Dialog options for modal dialogs.
@@ -216,7 +234,7 @@ public class WarehouseViewModel
     public string? ManagerPhone { get; set; }
     public decimal TotalCapacity { get; set; }
     public string? CapacityUnit { get; set; }
-    public string? WarehouseType { get; set; }
+    public string WarehouseType { get; set; } = "Standard";
     public bool IsActive { get; set; } = true;
     public bool IsMainWarehouse { get; set; }
     public string? Notes { get; set; }

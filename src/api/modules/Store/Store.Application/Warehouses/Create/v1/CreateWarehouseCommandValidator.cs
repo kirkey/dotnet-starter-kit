@@ -63,7 +63,7 @@ public class CreateWarehouseCommandValidator : AbstractValidator<CreateWarehouse
             .WithMessage("Capacity unit is required")
             .MaximumLength(20)
             .WithMessage("Capacity unit must not exceed 20 characters")
-            .Must(unit => new[] { "sqft", "sqm", "cbft", "cbm", "tons", "kg", "pallets" }.Contains(unit.ToLower()))
+            .Must(unit => new[] { "sqft", "sqm", "cbft", "cbm", "tons", "kg", "pallets" }.Contains(unit.ToLowerInvariant()))
             .WithMessage("Capacity unit must be one of: sqft, sqm, cbft, cbm, tons, kg, pallets");
 
         RuleFor(x => x.WarehouseType)
@@ -71,8 +71,8 @@ public class CreateWarehouseCommandValidator : AbstractValidator<CreateWarehouse
             .WithMessage("Warehouse type is required")
             .MaximumLength(50)
             .WithMessage("Warehouse type must not exceed 50 characters")
-            .Must(type => new[] { "standard", "store", "cold storage", "frozen", "hazmat", "pharmaceutical", "automotive" }.Contains(type.ToLower()))
-            .WithMessage("Warehouse type must be one of: Standard, Store, Cold Storage, Frozen, Hazmat, Pharmaceutical, Automotive");
+            .Must(WarehouseTypes.Contains)
+            .WithMessage($"Warehouse type must be one of: {WarehouseTypes.AsDisplayList()}");
     }
 }
 

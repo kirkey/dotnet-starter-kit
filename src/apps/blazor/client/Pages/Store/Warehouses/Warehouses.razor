@@ -46,44 +46,6 @@
              TId="DefaultIdType" 
              TRequest="WarehouseViewModel" 
              Context="@Context">
-    <AdvancedSearchContent>
-        <MudItem xs="12" sm="6" md="4">
-            <MudTextField @bind-Value="@SearchCode"
-                          Label="Warehouse Code"
-                          Placeholder="Search by code"
-                          Variant="Variant.Outlined"
-                          Adornment="Adornment.Start"
-                          AdornmentIcon="@Icons.Material.Filled.Search" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudTextField @bind-Value="@SearchName"
-                          Label="Warehouse Name"
-                          Placeholder="Search by name"
-                          Variant="Variant.Outlined"
-                          Adornment="Adornment.Start"
-                          AdornmentIcon="@Icons.Material.Filled.Search" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudSelect T="bool?"
-                       @bind-Value="@SearchIsActive"
-                       Label="Status"
-                       Variant="Variant.Outlined"
-                       Clearable="true">
-                <MudSelectItem Value="@((bool?)true)">Active</MudSelectItem>
-                <MudSelectItem Value="@((bool?)false)">Inactive</MudSelectItem>
-            </MudSelect>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudSelect T="bool?"
-                       @bind-Value="@SearchIsMainWarehouse"
-                       Label="Warehouse Type"
-                       Variant="Variant.Outlined"
-                       Clearable="true">
-                <MudSelectItem Value="@((bool?)true)">Main Warehouse</MudSelectItem>
-                <MudSelectItem Value="@((bool?)false)">Standard Warehouse</MudSelectItem>
-            </MudSelect>
-        </MudItem>
-    </AdvancedSearchContent>
 
     <ExtraActions Context="context">
         <MudMenuItem OnClick="@(() => AssignManager(context.Id))"
@@ -101,7 +63,8 @@
         }
 
         @* Basic Information *@
-        <MudItem xs="12" sm="6" md="4">
+        <MudDivider/>
+        <MudItem xs="12" sm="6" md="3" lg="2">
             <MudTextField Label="Code" 
                           For="@(() => context.Code)" 
                           @bind-Value="context.Code" 
@@ -109,7 +72,7 @@
                           Placeholder="WH001" />
         </MudItem>
 
-        <MudItem xs="12" sm="6" md="8">
+        <MudItem xs="12" sm="6" md="9" lg="10">
             <MudTextField Label="Name" 
                           For="@(() => context.Name)" 
                           @bind-Value="context.Name" 
@@ -132,12 +95,8 @@
                           Placeholder="Primary storage facility" />
         </MudItem>
 
-        <MudDivider DividerType="DividerType.Middle" Class="my-4">
-            <MudText Typo="Typo.subtitle2">Manager Information</MudText>
-        </MudDivider>
-
         @* Manager Information *@
-        <MudItem xs="12" sm="6" md="4">
+        <MudItem xs="12" sm="6">
             <MudTextField Label="Manager Name" 
                           For="@(() => context.ManagerName)" 
                           @bind-Value="context.ManagerName" 
@@ -147,7 +106,7 @@
                           AdornmentIcon="@Icons.Material.Filled.Person" />
         </MudItem>
 
-        <MudItem xs="12" sm="6" md="4">
+        <MudItem xs="12" sm="6">
             <MudTextField Label="Manager Email" 
                           For="@(() => context.ManagerEmail)" 
                           @bind-Value="context.ManagerEmail" 
@@ -158,7 +117,7 @@
                           AdornmentIcon="@Icons.Material.Filled.Email" />
         </MudItem>
 
-        <MudItem xs="12" sm="6" md="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="Manager Phone" 
                           For="@(() => context.ManagerPhone)" 
                           @bind-Value="context.ManagerPhone" 
@@ -169,15 +128,12 @@
                           AdornmentIcon="@Icons.Material.Filled.Phone" />
         </MudItem>
 
-        <MudDivider DividerType="DividerType.Middle" Class="my-4">
-            <MudText Typo="Typo.subtitle2">Capacity & Configuration</MudText>
-        </MudDivider>
-
         @* Capacity Information *@
-        <MudItem xs="12" sm="6" md="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudNumericField T="decimal" 
                              @bind-Value="context.TotalCapacity" 
                              For="@(() => context.TotalCapacity)" 
+                             Format="N2"
                              Label="Total Capacity" 
                              Immediate="true" 
                              Required
@@ -186,7 +142,7 @@
                              AdornmentText="@context.CapacityUnit" />
         </MudItem>
 
-        <MudItem xs="12" sm="6" md="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="Capacity Unit" 
                           For="@(() => context.CapacityUnit)" 
                           @bind-Value="context.CapacityUnit" 
@@ -194,12 +150,20 @@
                           Placeholder="sqft" />
         </MudItem>
 
-        <MudItem xs="12" sm="6" md="4">
-            <MudTextField Label="Warehouse Type" 
-                          For="@(() => context.WarehouseType)" 
-                          @bind-Value="context.WarehouseType" 
-                          Required="true"
-                          Placeholder="Standard" />
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect T="string"
+                       @bind-Value="context.WarehouseType"
+                       For="@(() => context.WarehouseType)"
+                       Label="Warehouse Type"
+                       Placeholder="Select a warehouse type"
+                       AnchorOrigin="Origin.BottomCenter"
+                       TransformOrigin="Origin.TopCenter"
+                       Required="true">
+                @foreach (var warehouseType in WarehouseTypeConstants.WarehouseTypes)
+                {
+                    <MudSelectItem Value="@warehouseType">@warehouseType</MudSelectItem>
+                }
+            </MudSelect>
         </MudItem>
 
         <MudDivider DividerType="DividerType.Middle" Class="my-4">
@@ -207,22 +171,20 @@
         </MudDivider>
 
         @* Status Switches *@
-        <MudItem xs="12" sm="6" md="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSwitch Class="mt-3" 
                        T="bool" 
                        @bind-Value="context.IsActive" 
-                       Color="Color.Success"
-                       Label="Active Status">
+                       Color="Color.Success">
                 Active
             </MudSwitch>
         </MudItem>
 
-        <MudItem xs="12" sm="6" md="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSwitch Class="mt-3" 
                        T="bool" 
                        @bind-Value="context.IsMainWarehouse" 
-                       Color="Color.Primary"
-                       Label="Main Warehouse">
+                       Color="Color.Primary">
                 Main Warehouse
             </MudSwitch>
         </MudItem>

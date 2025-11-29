@@ -76,7 +76,7 @@
                 <MudDatePicker Date="@context.MemoDate" DateChanged="@(date => context.MemoDate = date ?? DateTime.UtcNow)" Label="Memo Date" Required Variant="Variant.Outlined" />
             </MudItem>
             <MudItem xs="12" md="6">
-                <MudNumericField @bind-Value="context.Amount" Label="Amount" Required Variant="Variant.Outlined" Format="F2" Min="0" />
+                <MudNumericField @bind-Value="context.Amount" Label="Amount" Required Variant="Variant.Outlined" Format="N2" Min="0" />
             </MudItem>
             <MudItem xs="12" md="6">
                 <MudSelect @bind-Value="context.ReferenceType" Label="Reference Type" Required Variant="Variant.Outlined">
@@ -161,7 +161,7 @@
     </TitleContent>
     <DialogContent>
         <MudNumericField @bind-Value="_applyCommand.AmountToApply" Label="Amount to Apply" Required Variant="Variant.Outlined" 
-                         Format="F2" Min="0" HelperText="Amount to apply from unapplied balance" />
+                         Format="N2" Min="0" HelperText="Amount to apply from unapplied balance" />
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="@(() => _applyDialogVisible = false)">Cancel</MudButton>
@@ -179,7 +179,7 @@
     </TitleContent>
     <DialogContent>
         <MudNumericField @bind-Value="_refundCommand.RefundAmount" Label="Refund Amount" Required Variant="Variant.Outlined" 
-                         Format="F2" Min="0" HelperText="Amount to refund from unapplied balance" />
+                         Format="N2" Min="0" HelperText="Amount to refund from unapplied balance" />
         <MudTextField @bind-Value="_refundCommand.RefundMethod" Label="Refund Method" Variant="Variant.Outlined" 
                       HelperText="e.g., Check, ACH, Credit Card Reversal" />
         <MudTextField @bind-Value="_refundCommand.RefundReference" Label="Refund Reference" Variant="Variant.Outlined" 

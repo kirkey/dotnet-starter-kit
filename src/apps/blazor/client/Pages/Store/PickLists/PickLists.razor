@@ -40,8 +40,8 @@
             <MudSelectItem T="string?" Value="@("Zone")">Zone</MudSelectItem>
         </MudSelect>
         <MudTextField T="string" Label="Assigned To" @bind-Value="SearchAssignedTo" />
-        <MudNumericField T="int?" Label="Min Priority" @bind-Value="SearchMinPriority" />
-        <MudNumericField T="int?" Label="Max Priority" @bind-Value="SearchMaxPriority" />
+        <MudNumericField T="int?" Label="Min Priority" @bind-Value="SearchMinPriority" Format="N2" />
+        <MudNumericField T="int?" Label="Max Priority" @bind-Value="SearchMaxPriority" Format="N2" />
         <MudDatePicker Label="Start Date From" Date="SearchStartDateFrom" DateChanged="value => SearchStartDateFrom = value" DateFormat="MMMM dd, yyyy" />
         <MudDatePicker Label="Start Date To" Date="SearchStartDateTo" DateChanged="value => SearchStartDateTo = value" DateFormat="MMMM dd, yyyy" />
     </AdvancedSearchContent>
@@ -115,7 +115,7 @@
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="int" @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority" Min="0" HelperText="Higher number = higher priority" />
+            <MudNumericField T="int" @bind-Value="context.Priority" For="@(() => context.Priority)" Label="Priority" Min="0" Format="N2" HelperText="Higher number = higher priority" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">

@@ -30,8 +30,8 @@
             <MudSelectItem T="bool?" Value="true">Perishable Only</MudSelectItem>
             <MudSelectItem T="bool?" Value="false">Non-Perishable Only</MudSelectItem>
         </MudSelect>
-        <MudNumericField T="decimal?" Label="Min Price" @bind-Value="SearchMinPrice" Immediate="true" />
-        <MudNumericField T="decimal?" Label="Max Price" @bind-Value="SearchMaxPrice" Immediate="true" />
+        <MudNumericField T="decimal?" Label="Min Price" @bind-Value="SearchMinPrice" Format="N2" Immediate="true" />
+        <MudNumericField T="decimal?" Label="Max Price" @bind-Value="SearchMaxPrice" Format="N2" Immediate="true" />
     </AdvancedSearchContent>
 
     <EditFormContent Context="context">
@@ -78,26 +78,26 @@
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="decimal?" @bind-Value="context.UnitPrice" For="@(() => context.UnitPrice)" Label="Unit Price" Immediate="true" Required />
+            <MudNumericField T="decimal?" @bind-Value="context.UnitPrice" For="@(() => context.UnitPrice)" Label="Unit Price" Format="N2" Immediate="true" Required />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="decimal?" @bind-Value="context.Cost" For="@(() => context.Cost)" Label="Cost" Immediate="true" Required />
+            <MudNumericField T="decimal?" @bind-Value="context.Cost" For="@(() => context.Cost)" Label="Cost" Format="N2" Immediate="true" Required />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="int?" @bind-Value="context.MinimumStock" For="@(() => context.MinimumStock)" Label="Min Stock" Immediate="true" />
+            <MudNumericField T="int?" @bind-Value="context.MinimumStock" For="@(() => context.MinimumStock)" Label="Min Stock" Format="N2" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="int?" @bind-Value="context.MaximumStock" For="@(() => context.MaximumStock)" Label="Max Stock" Immediate="true" />
+            <MudNumericField T="int?" @bind-Value="context.MaximumStock" For="@(() => context.MaximumStock)" Label="Max Stock" Format="N2" Immediate="true" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="int?" @bind-Value="context.ReorderPoint" For="@(() => context.ReorderPoint)" Label="Reorder Point" Immediate="true" />
+            <MudNumericField T="int?" @bind-Value="context.ReorderPoint" For="@(() => context.ReorderPoint)" Label="Reorder Point" Format="N2" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="int?" @bind-Value="context.ReorderQuantity" For="@(() => context.ReorderQuantity)" Label="Reorder Qty" Immediate="true" />
+            <MudNumericField T="int?" @bind-Value="context.ReorderQuantity" For="@(() => context.ReorderQuantity)" Label="Reorder Qty" Format="N2" Immediate="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudNumericField T="int?" @bind-Value="context.ShelfLifeDays" For="@(() => context.ShelfLifeDays)" Label="Shelf Life (Days)" Disabled="@(context.IsPerishable != true)" />
+            <MudNumericField T="int?" @bind-Value="context.ShelfLifeDays" For="@(() => context.ShelfLifeDays)" Label="Shelf Life (Days)" Format="N2" Disabled="@(context.IsPerishable != true)" />
         </MudItem>
         
         <MudDivider DividerType="DividerType.Middle"/>

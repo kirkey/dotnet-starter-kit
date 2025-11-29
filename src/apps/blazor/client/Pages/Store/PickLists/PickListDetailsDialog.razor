@@ -32,7 +32,7 @@
                                 <MudTextField Label="Picking Type" Value="@_pickList.PickingType" ReadOnly="true" Variant="Variant.Filled" />
                             </MudItem>
                             <MudItem xs="12" md="4">
-                                <MudNumericField Label="Priority" Value="@_pickList.Priority" ReadOnly="true" Variant="Variant.Filled" />
+                                <MudNumericField Label="Priority" Value="@_pickList.Priority" ReadOnly="true" Format="N2" Variant="Variant.Filled" />
                             </MudItem>
                             @if (!string.IsNullOrEmpty(_pickList.AssignedTo))
                             {
