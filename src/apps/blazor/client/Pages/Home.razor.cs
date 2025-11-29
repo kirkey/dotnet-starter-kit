@@ -4,38 +4,37 @@ namespace FSH.Starter.Blazor.Client.Pages;
 
 public partial class Home
 {
+    [Inject]
+    private ICourier Courier { get; set; } = default!;
+
+    [Inject]
+    private AuthenticationStateProvider AuthState { get; set; } = default!;
+
     private ClientPreference _preference = new();
-
-    [Inject] 
-    protected ICourier Courier { get; set; } = default!;
-    
-    /// <summary>
-    /// Gets or sets the cascading authentication state parameter for the current user.
-    /// </summary>
-    [CascadingParameter]
-    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    private IEnumerable<Claim>? Claims { get; set; }
 
     /// <summary>
-    /// Gets or sets the collection of claims for the currently authenticated user.
-    /// </summary>
-    public IEnumerable<Claim>? Claims { get; set; }
-    
-    /// <summary>
-    /// Gets a value indicating whether the current user has Accounting Create permission.
+    /// Gets a value indicating whether the current user has Accounting permission.
     /// </summary>
     private bool HasAccountingPermission => Claims?.Any(c => 
         c.Type == FshClaims.Permission && 
-        c.Value == FshPermission.NameFor(FshActions.Create, FshResources.Accounting)) ?? false;
-    
+        c.Value == FshPermission.NameFor(FshActions.View, FshResources.Accounting)) ?? false;
+
     /// <summary>
     /// Gets a value indicating whether the current user has Store Create permission.
     /// </summary>
     private bool HasStorePermission => Claims?.Any(c => 
         c.Type == FshClaims.Permission && 
         c.Value == FshPermission.NameFor(FshActions.Create, FshResources.Store)) ?? false;
-    
+
+    /// <summary>
+    /// Initializes the component asynchronously by loading the user's claims and theme preferences.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        var authState = await AuthState.GetAuthenticationStateAsync();
+        Claims = authState.User.Claims;
+
         // Load initial preference from localStorage
         if (await ClientPreferences.GetPreference() is ClientPreference preference)
         {
@@ -53,8 +52,18 @@ public partial class Home
             return Task.CompletedTask;
         });
 
-        var authState = await AuthState;
-        Claims = authState.User.Claims;
+        // Subscribe to border radius changes using weak subscription
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            // Extract border radius from notification
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            
+            // Trigger UI re-render
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
+        await base.OnInitializedAsync();
     }
 }
 

@@ -32,7 +32,7 @@
 
             <!-- Feature Cards Row 1 -->
             <MudItem xs="12" sm="6" md="4">
-                <MudCard Elevation="@_preference.Elevation" Style="height: 100%; border-radius: @(_preference.BorderRadius)px;">
+                <MudCard Elevation="@_preference.Elevation" Style="@($"height: 100%; border-radius: {_preference.BorderRadius}px;")">
                     <MudCardContent>
                         <div class="d-flex align-center mb-3">
                             <MudIcon Icon="@Icons.Material.Filled.AccountBalance" Color="Color.Primary" Size="Size.Large" Class="mr-3"/>
@@ -46,7 +46,7 @@
             </MudItem>
 
             <MudItem xs="12" sm="6" md="4">
-                <MudCard Elevation="@_preference.Elevation" Style="height: 100%; border-radius: @(_preference.BorderRadius)px;">
+                <MudCard Elevation="@_preference.Elevation" Style="@($"height: 100%; border-radius: {_preference.BorderRadius}px;")">
                     <MudCardContent>
                         <div class="d-flex align-center mb-3">
                             <MudIcon Icon="@Icons.Material.Filled.Receipt" Color="Color.Secondary" Size="Size.Large" Class="mr-3"/>
@@ -60,7 +60,7 @@
             </MudItem>
 
             <MudItem xs="12" sm="6" md="4">
-                <MudCard Elevation="3" Style="height: 100%; border-radius: @(_preference.BorderRadius)px;">
+                <MudCard Elevation="@_preference.Elevation" Style="@($"height: 100%; border-radius: {_preference.BorderRadius}px;")">
                     <MudCardContent>
                         <div class="d-flex align-center mb-3">
                             <MudIcon Icon="@Icons.Material.Filled.Payment" Color="Color.Tertiary" Size="Size.Large" Class="mr-3"/>
@@ -75,7 +75,7 @@
 
             <!-- Feature Cards Row 2 -->
             <MudItem xs="12" sm="6" md="4">
-                <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCard Elevation="@_preference.Elevation" Style="height: 100%; border-radius: 12px;">
                     <MudCardContent>
                         <div class="d-flex align-center mb-3">
                             <MudIcon Icon="@Icons.Material.Filled.AccountBalanceWallet" Color="Color.Success" Size="Size.Large" Class="mr-3"/>
@@ -89,7 +89,7 @@
             </MudItem>
 
             <MudItem xs="12" sm="6" md="4">
-                <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCard Elevation="@_preference.Elevation" Style="height: 100%; border-radius: 12px;">
                     <MudCardContent>
                         <div class="d-flex align-center mb-3">
                             <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Color="Color.Info" Size="Size.Large" Class="mr-3"/>
@@ -103,7 +103,7 @@
             </MudItem>
 
             <MudItem xs="12" sm="6" md="4">
-                <MudCard Elevation="3" Style="height: 100%; border-radius: 12px;">
+                <MudCard Elevation="@_preference.Elevation" Style="height: 100%; border-radius: 12px;">
                     <MudCardContent>
                         <div class="d-flex align-center mb-3">
                             <MudIcon Icon="@Icons.Material.Filled.BusinessCenter" Color="Color.Warning" Size="Size.Large" Class="mr-3"/>
