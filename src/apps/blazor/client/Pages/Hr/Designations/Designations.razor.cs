@@ -6,7 +6,11 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Designations;
 /// </summary>
 public partial class Designations
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     protected EntityServerTableContext<DesignationResponse, DefaultIdType, DesignationViewModel> Context { get; set; } = null!;
+    
+    private ClientPreference _preference = new();
 
     private EntityTable<DesignationResponse, DefaultIdType, DesignationViewModel> _table = null!;
 
@@ -17,6 +21,21 @@ public partial class Designations
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<DesignationResponse, DefaultIdType, DesignationViewModel>(
             entityName: "Designation",
             entityNamePlural: "Designations",

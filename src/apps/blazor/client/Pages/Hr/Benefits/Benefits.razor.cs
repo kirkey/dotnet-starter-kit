@@ -6,17 +6,36 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Benefits;
 /// </summary>
 public partial class Benefits
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     protected EntityServerTableContext<BenefitAllocationResponse, DefaultIdType, BenefitViewModel> Context { get; set; } = null!;
 
     private EntityTable<BenefitAllocationResponse, DefaultIdType, BenefitViewModel>? _table;
 
     private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
 
+    private ClientPreference _preference = new();
+
     /// <summary>
     /// Initializes the component and sets up the entity table context with CRUD operations.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<BenefitAllocationResponse, DefaultIdType, BenefitViewModel>(
             entityName: "Benefit",
             entityNamePlural: "Benefits",

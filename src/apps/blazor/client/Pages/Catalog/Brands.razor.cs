@@ -1,15 +1,40 @@
-﻿namespace FSH.Starter.Blazor.Client.Pages.Catalog;
+﻿﻿namespace FSH.Starter.Blazor.Client.Pages.Catalog;
 
 public partial class Brands
 {
     [Inject]
     protected IClient _client { get; set; } = null!;
+    [Inject]
+    protected ICourier Courier { get; set; } = null!;
 
     protected EntityServerTableContext<BrandResponse, DefaultIdType, BrandViewModel> Context { get; set; } = null!;
 
     private EntityTable<BrandResponse, DefaultIdType, BrandViewModel> _table = null!;
 
-    protected override void OnInitialized() =>
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
+        // Initialize context
+        SetupContext();
+    }
+
+    private void SetupContext() =>
         Context = new EntityServerTableContext<BrandResponse, DefaultIdType, BrandViewModel>(
             entityName: "Brand",
             entityNamePlural: "Brands",

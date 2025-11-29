@@ -6,8 +6,12 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.InventoryTransactions;
 /// </summary>
 public partial class InventoryTransactions
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     protected EntityServerTableContext<InventoryTransactionResponse, DefaultIdType, InventoryTransactionViewModel> Context { get; set; } = null!;
     private EntityTable<InventoryTransactionResponse, DefaultIdType, InventoryTransactionViewModel> _table = null!;
+
+    private ClientPreference _preference = new();
 
     // Advanced search filters
     private string? _searchTransactionType;
@@ -56,6 +60,21 @@ public partial class InventoryTransactions
 
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<InventoryTransactionResponse, DefaultIdType, InventoryTransactionViewModel>(
             entityName: "Inventory Transaction",
             entityNamePlural: "Inventory Transactions",

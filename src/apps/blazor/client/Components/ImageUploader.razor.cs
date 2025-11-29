@@ -13,7 +13,11 @@ public partial class ImageUploader : ComponentBase
     /// </summary>
     [Inject] private ImageUrlService ImageUrlService { get; set; } = null!;
     
+    [Inject] protected ICourier Courier { get; set; } = null!;
+    
     #endregion
+
+    private ClientPreference _preference = new();
 
     #region Parameters
 
@@ -400,4 +404,23 @@ public partial class ImageUploader : ComponentBase
 
     #endregion
 
-}
+    protected override async Task OnInitializedAsync()
+    {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+    }
+
+    #region Public Methods
+

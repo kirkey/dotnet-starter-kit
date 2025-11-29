@@ -6,9 +6,13 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.LeaveRequests;
 /// </summary>
 public partial class LeaveRequests
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     protected EntityServerTableContext<LeaveRequestResponse, DefaultIdType, LeaveRequestViewModel> Context { get; set; } = null!;
 
     private EntityTable<LeaveRequestResponse, DefaultIdType, LeaveRequestViewModel>? _table;
+
+    private ClientPreference _preference = new();
 
     private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
 
@@ -17,6 +21,21 @@ public partial class LeaveRequests
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<LeaveRequestResponse, DefaultIdType, LeaveRequestViewModel>(
             entityName: "Leave Request",
             entityNamePlural: "Leave Requests",

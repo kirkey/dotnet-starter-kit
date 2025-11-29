@@ -5,8 +5,12 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.AccountReconciliations;
 /// </summary>
 public partial class AccountReconciliations
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     protected EntityServerTableContext<AccountReconciliationResponse, DefaultIdType, AccountReconciliationViewModel> Context { get; set; } = null!;
     private EntityTable<AccountReconciliationResponse, DefaultIdType, AccountReconciliationViewModel> _table = null!;
+
+    private ClientPreference _preference = new();
 
     private string? ReconciliationStatus { get; set; }
     private string? SubsidiaryLedgerSource { get; set; }
@@ -14,8 +18,23 @@ public partial class AccountReconciliations
 
     private readonly DialogOptions _dialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<AccountReconciliationResponse, DefaultIdType, AccountReconciliationViewModel>(
             entityName: "Account Reconciliation",
             entityNamePlural: "Account Reconciliations",
@@ -81,8 +100,6 @@ public partial class AccountReconciliations
                 await Client.DeleteAccountReconciliationEndpointAsync(id);
                 Snackbar.Add("Account reconciliation deleted successfully", Severity.Success);
             });
-
-        return Task.CompletedTask;
     }
 
     private async Task OnViewDetails(DefaultIdType reconciliationId)

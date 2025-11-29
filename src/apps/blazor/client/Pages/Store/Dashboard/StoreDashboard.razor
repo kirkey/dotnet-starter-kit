@@ -287,7 +287,7 @@ else
                     @if (_stockItems.Count > 0)
                     {
                         <div style="height: 380px; overflow-y: auto;">
-                            <MudTable Items="@_stockItems" Dense="true" Hover="true" Striped="true" Elevation="0">
+                            <MudTable Items="@_stockItems" Dense="true" Hover="true" Striped="true" Elevation="@_preference.Elevation">
                                 <HeaderContent>
                                     <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">SKU</MudText></MudTh>
                                     <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Product</MudText></MudTh>
@@ -396,7 +396,7 @@ else
                     @if (_salesImports.Count > 0)
                     {
                         <div style="height: 380px; overflow-y: auto;">
-                            <MudTable Items="@_salesImports" Dense="true" Hover="true" Striped="true" Elevation="0">
+                            <MudTable Items="@_salesImports" Dense="true" Hover="true" Striped="true" Elevation="@_preference.Elevation">
                                 <HeaderContent>
                                     <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Import #</MudText></MudTh>
                                     <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Date</MudText></MudTh>
@@ -456,7 +456,7 @@ else
                     @if (_stockAdjustments.Count > 0)
                     {
                         <div style="height: 380px; overflow-y: auto;">
-                            <MudTable Items="@_stockAdjustments" Dense="true" Hover="true" Striped="true" Elevation="0">
+                            <MudTable Items="@_stockAdjustments" Dense="true" Hover="true" Striped="true" Elevation="@_preference.Elevation">
                                 <HeaderContent>
                                     <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Adjustment #</MudText></MudTh>
                                     <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Date</MudText></MudTh>
@@ -504,7 +504,7 @@ else
                     </MudText>
                     
                     <MudStack Spacing="3">
-                        <MudCard Elevation="0" Style="background: var(--mud-palette-surface);" Class="pa-3">
+                        <MudCard Elevation="@_preference.Elevation" Style="background: var(--mud-palette-surface);" Class="pa-3">
                             <div class="d-flex justify-space-between align-center">
                                 <div>
                                     <MudText Typo="Typo.body2" Color="Color.Secondary">Inventory Turnover</MudText>
@@ -518,7 +518,7 @@ else
                             </div>
                         </MudCard>
 
-                        <MudCard Elevation="0" Style="background: var(--mud-palette-surface);" Class="pa-3">
+                        <MudCard Elevation="@_preference.Elevation" Style="background: var(--mud-palette-surface);" Class="pa-3">
                             <div class="d-flex justify-space-between align-center">
                                 <div>
                                     <MudText Typo="Typo.body2" Color="Color.Secondary">PO Fulfillment Rate</MudText>

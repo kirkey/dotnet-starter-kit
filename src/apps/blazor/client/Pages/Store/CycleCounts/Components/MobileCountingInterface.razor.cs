@@ -6,9 +6,11 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.CycleCounts.Components;
 /// </summary>
 public partial class MobileCountingInterface : IAsyncDisposable
 {
-    [Inject] private IJSRuntime JS { get; set; } = null!;
+    [Inject] protected ICourier Courier { get; set; } = null!;
 
     private DotNetObjectReference<MobileCountingInterface>? _dotNetRef;
+
+    private ClientPreference _preference = new();
 
     private List<CycleCountItemDetailResponse> _allItems = [];
     private List<CycleCountItemDetailResponse> _recentItems = [];
@@ -30,6 +32,21 @@ public partial class MobileCountingInterface : IAsyncDisposable
 
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         await LoadCountItemsAsync();
     }
 
@@ -72,7 +89,7 @@ public partial class MobileCountingInterface : IAsyncDisposable
         try
         {
             _dotNetRef = DotNetObjectReference.Create(this);
-            await JS.InvokeVoidAsync("cycleCounts.startBarcodeScanner", _dotNetRef);
+            await Js.InvokeVoidAsync("cycleCounts.startBarcodeScanner", _dotNetRef);
             _isScanning = true;
             StateHasChanged();
         }

@@ -6,7 +6,11 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.PutAwayTasks;
 /// </summary>
 public partial class PutAwayTasks
 {
-    private EntityServerTableContext<PutAwayTaskResponse, DefaultIdType, PutAwayTaskViewModel> Context { get; set; } = null!;
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
+    protected EntityServerTableContext<PutAwayTaskResponse, DefaultIdType, PutAwayTaskViewModel> Context { get; set; } = null!;
+    
+    private ClientPreference _preference = new();
     private EntityTable<PutAwayTaskResponse, DefaultIdType, PutAwayTaskViewModel> _table = null!;
 
     private List<WarehouseResponse> _warehouses = [];
@@ -21,8 +25,23 @@ public partial class PutAwayTasks
     private DateTime? SearchStartDateFrom { get; set; }
     private DateTime? SearchStartDateTo { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<PutAwayTaskResponse, DefaultIdType, PutAwayTaskViewModel>(
             entityName: "Put Away Task",
             entityNamePlural: "Put Away Tasks",

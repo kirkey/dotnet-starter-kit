@@ -2,10 +2,32 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.FinancialStatements;
 
 public partial class FinancialStatements
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     private int _activeTab = 0;
     private BalanceSheetView? _balanceSheetView;
     private IncomeStatementView? _incomeStatementView;
     private CashFlowStatementView? _cashFlowStatementView;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+    }
 
     private async Task RefreshCurrentStatement()
     {
@@ -39,4 +61,3 @@ public partial class FinancialStatements
         });
     }
 }
-

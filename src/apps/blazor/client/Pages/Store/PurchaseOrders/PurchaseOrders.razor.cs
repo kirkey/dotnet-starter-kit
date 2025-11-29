@@ -6,6 +6,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.PurchaseOrders;
 /// </summary>
 public partial class PurchaseOrders
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     private EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> Context = null!;
     private EntityTable<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> _table = null!;
 
@@ -15,9 +17,49 @@ public partial class PurchaseOrders
     private DateTime? SearchFromDate { get; set; }
     private DateTime? SearchToDate { get; set; }
 
-    protected override void OnInitialized()
-    {
+    private ClientPreference _preference = new();
 
+    protected override async Task OnInitializedAsync()
+    {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
+        await LoadSuppliersAsync();
+        SetupContext();
+    }
+
+    private async Task LoadSuppliersAsync()
+    {
+        try
+        {
+            var command = new SearchSuppliersCommand
+            {
+                PageNumber = 1,
+                PageSize = 500,
+                OrderBy = ["Name"]
+            };
+            var result = await Client.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
+            _suppliers = result.Items?.ToList() ?? [];
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to load suppliers: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private void SetupContext() =>
         Context = new EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel>(
             entityName: "Purchase Order",
             entityNamePlural: "Purchase Orders",
@@ -50,11 +92,6 @@ public partial class PurchaseOrders
                 var result = await Client.SearchPurchaseOrdersEndpointAsync("1", command).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<PurchaseOrderResponse>>();
             },
-            // getDetailsFunc: async id =>
-            // {
-            //     var dto = await Client.GetPurchaseOrderEndpointAsync("1", id).ConfigureAwait(false);
-            //     return dto.Adapt<PurchaseOrderViewModel>();
-            // },
             createFunc: async viewModel =>
             {
                 await Client.CreatePurchaseOrderEndpointAsync("1", viewModel.Adapt<CreatePurchaseOrderCommand>()).ConfigureAwait(false);
@@ -64,34 +101,6 @@ public partial class PurchaseOrders
                 await Client.UpdatePurchaseOrderEndpointAsync("1", id, viewModel.Adapt<UpdatePurchaseOrderCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeletePurchaseOrderEndpointAsync("1", id).ConfigureAwait(false));
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await LoadSuppliersAsync();
-    }
-
-    /// <summary>
-    /// Loads suppliers for the search filter dropdown.
-    /// </summary>
-    private async Task LoadSuppliersAsync()
-    {
-        try
-        {
-            var command = new SearchSuppliersCommand
-            {
-                PageNumber = 1,
-                PageSize = 500,
-                OrderBy = ["Name"]
-            };
-            var result = await Client.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
-            _suppliers = result.Items?.ToList() ?? [];
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"Failed to load suppliers: {ex.Message}", Severity.Error);
-        }
-    }
 
     /// <summary>
     /// Views the full details of a purchase order in a dialog.
@@ -116,7 +125,6 @@ public partial class PurchaseOrders
 
         if (result is not null && !result.Canceled)
         {
-            // Reload the table to reflect any changes made in the dialog
             await _table.ReloadDataAsync();
         }
     }
@@ -136,7 +144,7 @@ public partial class PurchaseOrders
         {
             try
             {
-                var command = new SubmitPurchaseOrderCommand { Id = id };
+                var command = new SubmitPurchaseOrderCommand();
                 await Client.SubmitPurchaseOrderEndpointAsync("1", id, command).ConfigureAwait(false);
                 Snackbar.Add("Purchase order submitted successfully", Severity.Success);
                 await _table.ReloadDataAsync();
@@ -163,7 +171,7 @@ public partial class PurchaseOrders
         {
             try
             {
-                var request = new ApprovePurchaseOrderRequest { ApprovalNotes = null };
+                var request = new ApprovePurchaseOrderRequest();
                 await Client.ApprovePurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
                 Snackbar.Add("Purchase order approved successfully", Severity.Success);
                 await _table.ReloadDataAsync();
@@ -190,7 +198,7 @@ public partial class PurchaseOrders
         {
             try
             {
-                var request = new SendPurchaseOrderRequest { DeliveryInstructions = null };
+                var request = new SendPurchaseOrderRequest();
                 await Client.SendPurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
                 Snackbar.Add("Purchase order sent successfully", Severity.Success);
                 await _table.ReloadDataAsync();
@@ -217,7 +225,7 @@ public partial class PurchaseOrders
         {
             try
             {
-                var request = new ReceivePurchaseOrderRequest { ActualDeliveryDate = DateTime.Now, ReceiptNotes = null };
+                var request = new ReceivePurchaseOrderRequest();
                 await Client.ReceivePurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
                 Snackbar.Add("Purchase order marked as received", Severity.Success);
                 await _table.ReloadDataAsync();
@@ -236,15 +244,15 @@ public partial class PurchaseOrders
     {
         var confirmed = await DialogService.ShowMessageBox(
             "Cancel Purchase Order",
-            "Are you sure you want to cancel this purchase order? This action cannot be undone.",
-            yesText: "Cancel Order",
-            cancelText: "Keep Order");
+            "Are you sure you want to cancel this purchase order?",
+            yesText: "Cancel",
+            cancelText: "No");
 
         if (confirmed == true)
         {
             try
             {
-                var request = new CancelPurchaseOrderRequest { CancellationReason = null };
+                var request = new CancelPurchaseOrderRequest();
                 await Client.CancelPurchaseOrderEndpointAsync("1", id, request).ConfigureAwait(false);
                 Snackbar.Add("Purchase order cancelled", Severity.Success);
                 await _table.ReloadDataAsync();
@@ -259,32 +267,23 @@ public partial class PurchaseOrders
     /// <summary>
     /// Downloads a PDF report for the purchase order.
     /// </summary>
-    /// <remarks>
-    /// Uses the API client to generate and download a PDF report for the specified purchase order.
-    /// The endpoint returns a FileResponse containing the PDF file stream.
-    /// </remarks>
     private async Task DownloadPdf(DefaultIdType id)
     {
         try
         {
             Snackbar.Add("Generating PDF report...", Severity.Info);
-            
-            // Call the API endpoint to generate the PDF
             var fileResponse = await Client.GeneratePurchaseOrderPdfEndpointAsync("1", id).ConfigureAwait(false);
-            
-            // Create filename with timestamp
-            var fileName = $"PurchaseOrder_{id}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
-            
-            // Read the stream content
-            using var memoryStream = new MemoryStream();
-            await fileResponse.Stream.CopyToAsync(memoryStream);
-            var pdfBytes = memoryStream.ToArray();
-            
-            // Convert to base64 and use the fshDownload.saveFile method
-            var base64 = Convert.ToBase64String(pdfBytes);
-            await Js.InvokeVoidAsync("fshDownload.saveFile", fileName, base64);
-            
-            Snackbar.Add("PDF report downloaded successfully", Severity.Success);
+
+            if (fileResponse is not null && fileResponse.Stream is not null)
+            {
+                var fileName = $"PurchaseOrder_{id}_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+                using var ms = new MemoryStream();
+                await fileResponse.Stream.CopyToAsync(ms);
+                var fileData = ms.ToArray();
+                var base64 = Convert.ToBase64String(fileData);
+                await Js.InvokeVoidAsync("fshDownload.saveFile", fileName, base64);
+                Snackbar.Add("PDF report downloaded successfully", Severity.Success);
+            }
         }
         catch (Exception ex)
         {

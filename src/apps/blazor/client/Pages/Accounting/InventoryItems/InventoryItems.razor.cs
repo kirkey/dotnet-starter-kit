@@ -2,6 +2,9 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.InventoryItems;
 
 public partial class InventoryItems
 {
+    private ClientPreference _preference = new();
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     // Search filters
     private string? SearchSku;
     private string? SearchName;
@@ -10,8 +13,23 @@ public partial class InventoryItems
     protected EntityServerTableContext<InventoryItemResponse, DefaultIdType, InventoryItemViewModel> Context { get; set; } = null!;
     private EntityTable<InventoryItemResponse, DefaultIdType, InventoryItemViewModel>? _table;
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<InventoryItemResponse, DefaultIdType, InventoryItemViewModel>(
             entityName: "Inventory Item",
             entityNamePlural: "Inventory Items",
@@ -45,7 +63,6 @@ public partial class InventoryItems
             updateFunc: async (id, vm) => await UpdateInventoryItemAsync(id, vm),
             deleteFunc: null,
             hasExtraActionsFunc: () => true);
-        return Task.CompletedTask;
     }
 
     private async Task CreateInventoryItemAsync(InventoryItemViewModel vm)

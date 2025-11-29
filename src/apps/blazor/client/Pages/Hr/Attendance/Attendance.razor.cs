@@ -2,7 +2,11 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Attendance;
 
 public partial class Attendance
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     protected EntityServerTableContext<AttendanceResponse, DefaultIdType, AttendanceViewModel> Context { get; set; } = null!;
+    
+    private ClientPreference _preference = new();
 
     private readonly DialogOptions _helpDialogOptions = new() 
     { 
@@ -11,8 +15,23 @@ public partial class Attendance
         FullWidth = true 
     };
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<AttendanceResponse, DefaultIdType, AttendanceViewModel>(
             entityName: "Attendance",
             entityNamePlural: "Attendance Records",
@@ -50,8 +69,6 @@ public partial class Attendance
             {
                 await Client.DeleteAttendanceEndpointAsync("1", id);
             });
-
-        return Task.CompletedTask;
     }
 
     private async Task ShowAttendanceHelp()

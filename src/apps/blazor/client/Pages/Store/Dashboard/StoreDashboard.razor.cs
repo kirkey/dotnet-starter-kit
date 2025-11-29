@@ -5,8 +5,12 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Dashboard;
 /// </summary>
 public partial class StoreDashboard
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     /// <summary>Flag indicating whether the dashboard is still loading metrics.</summary>
     private bool _loading = true;
+
+    private ClientPreference _preference = new();
 
     /// <summary>Holds top-level KPI values displayed on the dashboard.</summary>
     private readonly StoreDashboardMetrics _metrics = new();
@@ -43,6 +47,21 @@ public partial class StoreDashboard
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         await LoadDashboardDataAsync();
     }
 

@@ -6,8 +6,12 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.InventoryReservations;
 /// </summary>
 public partial class InventoryReservations
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     private EntityServerTableContext<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel> Context { get; set; } = null!;
     private EntityTable<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel> _table = null!;
+
+    private ClientPreference _preference = new();
 
     private List<ItemResponse> _items = [];
     private List<WarehouseResponse> _warehouses = [];
@@ -22,9 +26,27 @@ public partial class InventoryReservations
     private bool? SearchIsExpired { get; set; }
     private bool? SearchIsActive { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        Context = new EntityServerTableContext<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel>(
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
+        SetupContext();
+    }
+
+    private void SetupContext()
             entityName: "Inventory Reservation",
             entityNamePlural: "Inventory Reservations",
             entityResource: FshResources.Store,

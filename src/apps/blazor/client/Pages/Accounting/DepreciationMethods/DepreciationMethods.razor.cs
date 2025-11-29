@@ -2,6 +2,9 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.DepreciationMethods;
 
 public partial class DepreciationMethods
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+    
+    private ClientPreference _preference = new();
     // Search filters
     private string? SearchMethodCode;
     private string? SearchMethodName;
@@ -10,8 +13,23 @@ public partial class DepreciationMethods
     protected EntityServerTableContext<DepreciationMethodResponse, DefaultIdType, DepreciationMethodViewModel> Context { get; set; } = null!;
     private EntityTable<DepreciationMethodResponse, DefaultIdType, DepreciationMethodViewModel>? _table;
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<DepreciationMethodResponse, DefaultIdType, DepreciationMethodViewModel>(
             entityName: "Depreciation Method",
             entityNamePlural: "Depreciation Methods",
@@ -45,7 +63,6 @@ public partial class DepreciationMethods
             updateFunc: async (id, vm) => await UpdateDepreciationMethodAsync(id, vm),
             deleteFunc: async id => await DeleteDepreciationMethodAsync(id),
             hasExtraActionsFunc: () => true);
-        return Task.CompletedTask;
     }
 
     private async Task CreateDepreciationMethodAsync(DepreciationMethodViewModel vm)

@@ -6,7 +6,11 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Taxes;
 /// </summary>
 public partial class Taxes
 {
-    protected EntityServerTableContext<TaxDto, DefaultIdType, TaxViewModel> Context { get; set; } = null!;
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
+    protected EntityServerTableContext<TaxResponse, DefaultIdType, TaxViewModel> Context { get; set; } = null!;
+    
+    private ClientPreference _preference = new();
 
     private EntityTable<TaxDto, DefaultIdType, TaxViewModel>? _table;
 
@@ -17,7 +21,22 @@ public partial class Taxes
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
-        Context = new EntityServerTableContext<TaxDto, DefaultIdType, TaxViewModel>(
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
+        Context = new EntityServerTableContext<TaxResponse, DefaultIdType, TaxViewModel>(
             entityName: "Tax",
             entityNamePlural: "Taxes",
             entityResource: FshResources.Taxes,
@@ -59,8 +78,6 @@ public partial class Taxes
             {
                 await Client.DeleteTaxEndpointAsync("1", id).ConfigureAwait(false);
             });
-
-        await base.OnInitializedAsync();
     }
 
     /// <summary>

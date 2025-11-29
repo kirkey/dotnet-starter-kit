@@ -2,13 +2,30 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.LotNumbers;
 
 public partial class LotNumbers
 {
-    
+    [Inject] protected ICourier Courier { get; set; } = null!;
 
     private EntityServerTableContext<LotNumberResponse, DefaultIdType, LotNumberViewModel> Context { get; set; } = null!;
     private EntityTable<LotNumberResponse, DefaultIdType, LotNumberViewModel> _table = null!;
 
+    private ClientPreference _preference = new();
+
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<LotNumberResponse, DefaultIdType, LotNumberViewModel>(
             entityName: "Lot Number",
             entityNamePlural: "Lot Numbers",

@@ -1,5 +1,6 @@
 @page "/store/cycle-counts"
 
+
 <PageHeader Title="Cycle Counts" Header="Cycle Counts" SubHeader="Manage inventory cycle counts with workflow operations and variance tracking.">
     <Actions>
         <MudTooltip Text="Switch to Mobile View">
@@ -10,7 +11,7 @@
     </Actions>
 </PageHeader>
 
-<MudPaper Elevation="2" Class="pa-4 mb-4">
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
     <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
         <MudSpacer />
         <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">

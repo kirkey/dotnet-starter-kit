@@ -5,6 +5,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Locations;
 /// </summary>
 public partial class Locations
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     /// <summary>
     /// The entity table context for managing warehouse locations with server-side operations.
     /// </summary>
@@ -14,6 +16,8 @@ public partial class Locations
     /// Reference to the EntityTable component for warehouse locations.
     /// </summary>
     private EntityTable<GetWarehouseLocationListResponse, DefaultIdType, WarehouseLocationViewModel> _table = null!;
+
+    private ClientPreference _preference = new();
 
     /// <summary>
     /// Search filter for location name.
@@ -68,8 +72,23 @@ public partial class Locations
     /// <summary>
     /// Initializes the component and sets up the entity table context with CRUD operations.
     /// </summary>
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<GetWarehouseLocationListResponse, DefaultIdType, WarehouseLocationViewModel>(
             entityName: "Warehouse Location",
             entityNamePlural: "Warehouse Locations",
@@ -160,8 +179,6 @@ public partial class Locations
                 await Client.DeleteWarehouseLocationEndpointAsync("1", id).ConfigureAwait(false);
                 Snackbar.Add("Warehouse location deleted successfully", Severity.Success);
             });
-
-        return Task.CompletedTask;
     }
 
     /// <summary>

@@ -2,11 +2,30 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.StockLevels;
 
 public partial class StockLevels
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     private EntityServerTableContext<StockLevelResponse, DefaultIdType, StockLevelViewModel> Context { get; set; } = null!;
     private EntityTable<StockLevelResponse, DefaultIdType, StockLevelViewModel> _table = null!;
 
+    private ClientPreference _preference = new();
+
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<StockLevelResponse, DefaultIdType, StockLevelViewModel>(
             entityName: "Stock Level",
             entityNamePlural: "Stock Levels",

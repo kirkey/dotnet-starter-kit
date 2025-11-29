@@ -5,6 +5,8 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Warehouses;
 /// </summary>
 public partial class Warehouses
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     /// <summary>
     /// The entity table context for managing warehouses with server-side operations.
     /// </summary>
@@ -14,6 +16,8 @@ public partial class Warehouses
     /// Reference to the EntityTable component for warehouses.
     /// </summary>
     private EntityTable<WarehouseResponse, DefaultIdType, WarehouseViewModel> _table = null!;
+
+    private ClientPreference _preference = new();
 
     /// <summary>
     /// Search filter for warehouse name.
@@ -53,8 +57,23 @@ public partial class Warehouses
     /// <summary>
     /// Initializes the component and sets up the entity table context with CRUD operations.
     /// </summary>
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<WarehouseResponse, DefaultIdType, WarehouseViewModel>(
             entityName: "Warehouse",
             entityNamePlural: "Warehouses",
@@ -136,8 +155,6 @@ public partial class Warehouses
                 await Client.DeleteWarehouseEndpointAsync("1", id).ConfigureAwait(false);
                 Snackbar.Add("Warehouse deleted successfully", Severity.Success);
             });
-
-        return Task.CompletedTask;
     }
 
     /// <summary>

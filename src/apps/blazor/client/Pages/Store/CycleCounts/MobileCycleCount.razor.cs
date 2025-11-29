@@ -6,9 +6,13 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.CycleCounts;
 /// </summary>
 public partial class MobileCycleCount
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     private bool _isLoading = true;
     private bool _isCountingMode = false;
     private CycleCountResponse? _selectedCount;
+    
+    private ClientPreference _preference = new();
     
     private List<CycleCountResponse> _todayCounts = [];
     private List<CycleCountResponse> _upcomingCounts = [];
@@ -16,6 +20,21 @@ public partial class MobileCycleCount
 
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         await LoadCountsAsync();
     }
 

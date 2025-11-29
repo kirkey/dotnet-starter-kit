@@ -6,8 +6,12 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.StockAdjustments;
 /// </summary>
 public partial class StockAdjustments
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     protected EntityServerTableContext<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel> Context { get; set; } = null!;
     private EntityTable<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel> _table = null!;
+
+    private ClientPreference _preference = new();
 
     // Advanced search filters
     private string? _searchAdjustmentType;
@@ -56,6 +60,21 @@ public partial class StockAdjustments
 
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel>(
             entityName: "Stock Adjustment",
             entityNamePlural: "Stock Adjustments",

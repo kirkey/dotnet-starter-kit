@@ -1,7 +1,7 @@
 <MudContainer MaxWidth="MaxWidth.Small" Class="pa-0" Style="min-height: 100vh; background-color: var(--mud-palette-background-grey);">
     
     <!-- Header with Exit Button -->
-    <MudAppBar Fixed="true" Elevation="1" Dense="true">
+    <MudAppBar Fixed="true" Elevation="@_preference.Elevation" Dense="true">
         <MudIconButton Icon="@Icons.Material.Filled.ArrowBack" Color="Color.Inherit" OnClick="@OnExit" />
         <MudText Typo="Typo.h6">@CycleCount.CountNumber</MudText>
         <MudSpacer />
@@ -12,7 +12,7 @@
     <div style="margin-top: 56px; margin-bottom: 120px;">
         
         <!-- Progress Section -->
-        <MudPaper Elevation="0" Class="pa-3 mb-2">
+        <MudPaper Elevation="@_preference.Elevation" Class="pa-3 mb-2">
             <div class="d-flex justify-space-between align-center mb-2">
                 <MudText Typo="Typo.body2" Color="Color.Secondary">Progress</MudText>
                 <MudText Typo="Typo.body1" Style="font-weight: 600;">@_progressPercentage%</MudText>
@@ -28,7 +28,7 @@
         </MudPaper>
 
         <!-- Barcode Scanner Section -->
-        <MudPaper Elevation="2" Class="pa-4 mb-2">
+        <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-2">
             <MudText Typo="Typo.h6" Class="mb-3">📱 Scan Item</MudText>
             
             @if (_isScanning)
@@ -79,7 +79,7 @@
         <!-- Current Item Entry -->
         @if (_currentItem != null)
         {
-            <MudPaper Elevation="3" Class="pa-4 mb-2">
+            <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-2">
                 <MudText Typo="Typo.h6" Class="mb-3">📦 Count This Item</MudText>
                 
                 <div class="mb-3">
@@ -168,7 +168,7 @@
         <!-- Recent Items List -->
         @if (_recentItems.Any())
         {
-            <MudPaper Elevation="1" Class="pa-3 mb-2">
+            <MudPaper Elevation="@_preference.Elevation" Class="pa-3 mb-2">
                 <MudText Typo="Typo.subtitle1" Class="mb-2">✅ Recently Counted (@_recentItems.Count)</MudText>
                 <MudList T="string" Dense="true">
                     @foreach (var item in _recentItems.Take(5))
@@ -201,7 +201,7 @@
     </div>
 
     <!-- Bottom Action Bar -->
-    <MudPaper Elevation="8" Class="pa-3" Style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;">
+    <MudPaper Elevation="@_preference.Elevation" Class="pa-3" Style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;">
         <MudButton 
             Variant="Variant.Filled" 
             Color="Color.Primary" 

@@ -4,6 +4,7 @@ namespace FSH.Starter.Blazor.Client.Pages;
 
 public partial class Home
 {
+
     [Inject]
     private ICourier Courier { get; set; } = default!;
 
@@ -46,7 +47,7 @@ public partial class Home
         {
             // Extract elevation from notification
             _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
-            
+
             // Trigger UI re-render
             StateHasChanged();
             return Task.CompletedTask;

@@ -2,13 +2,32 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees;
 
 public partial class Employees
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     protected EntityServerTableContext<EmployeeResponse, DefaultIdType, EmployeeViewModel> Context { get; set; } = null!;
+
+    private ClientPreference _preference = new();
 
     private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
     private readonly DialogOptions _wizardDialogOptions = new() { CloseOnEscapeKey = false, MaxWidth = MaxWidth.Medium, FullWidth = true };
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<EmployeeResponse, DefaultIdType, EmployeeViewModel>(
             entityName: "Employee",
             entityNamePlural: "Employees",
@@ -49,8 +68,6 @@ public partial class Employees
                 Snackbar?.Add("Use termination to end employment", Severity.Info);
                 await Task.CompletedTask;
             });
-
-        return Task.CompletedTask;
     }
 
     private async Task ShowEmployeesHelp()

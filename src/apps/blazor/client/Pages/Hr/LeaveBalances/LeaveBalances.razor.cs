@@ -6,7 +6,11 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.LeaveBalances;
 /// </summary>
 public partial class LeaveBalances
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     protected EntityServerTableContext<LeaveBalanceResponse, DefaultIdType, LeaveBalanceViewModel> Context { get; set; } = null!;
+    
+    private ClientPreference _preference = new();
 
     private EntityTable<LeaveBalanceResponse, DefaultIdType, LeaveBalanceViewModel>? _table;
 
@@ -17,6 +21,21 @@ public partial class LeaveBalances
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<LeaveBalanceResponse, DefaultIdType, LeaveBalanceViewModel>(
             entityName: "Leave Balance",
             entityNamePlural: "Leave Balances",

@@ -6,6 +6,9 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Banks;
 /// </summary>
 public partial class Banks
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+    
+    private ClientPreference _preference = new();
     [Inject] protected ImageUrlService ImageUrlService { get; set; } = null!;
 
     /// <summary>
@@ -15,7 +18,23 @@ public partial class Banks
 
     private EntityTable<BankResponse, DefaultIdType, BankViewModel> _table = null!;
 
-    protected override void OnInitialized() =>
+    protected override async Task OnInitializedAsync()
+    {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<BankResponse, DefaultIdType, BankViewModel>(
             entityName: "Bank",
             entityNamePlural: "Banks",
@@ -69,6 +88,7 @@ public partial class Banks
                 await Client.BankUpdateEndpointAsync("1", id, viewModel.Adapt<BankUpdateCommand>());
             },
             deleteFunc: async id => await Client.BankDeleteEndpointAsync("1", id));
+    }
 
     /// <summary>
     /// Show banks help dialog.

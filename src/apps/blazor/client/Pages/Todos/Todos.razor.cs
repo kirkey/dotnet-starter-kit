@@ -1,10 +1,12 @@
-﻿namespace FSH.Starter.Blazor.Client.Pages.Todos;
+﻿﻿namespace FSH.Starter.Blazor.Client.Pages.Todos;
 
 /// <summary>
 /// Todos page component for managing todo items.
 /// </summary>
 public partial class Todos
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     /// <summary>
     /// The entity table context for managing todos with server-side operations.
     /// </summary>
@@ -14,11 +16,43 @@ public partial class Todos
     /// Reference to the EntityTable component for todos.
     /// </summary>
     private EntityTable<GetTodoResponse, DefaultIdType, TodoViewModel> _table = null!;
+    
+    private ClientPreference _preference = new();
 
     /// <summary>
     /// Initializes the component and sets up the entity table context with CRUD operations.
     /// </summary>
-    protected override void OnInitialized() =>
+    protected override async Task OnInitializedAsync()
+    {
+        // Load initial preference from localStorage
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to elevation changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
+        // Subscribe to border radius changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
+        SetupTodosContext();
+    }
+
+    /// <summary>
+    /// Sets up the entity table context.
+    /// </summary>
+    private void SetupTodosContext() =>
         Context = new EntityServerTableContext<GetTodoResponse, DefaultIdType, TodoViewModel>(
             entityName: "Todos",
             entityNamePlural: "Todos",

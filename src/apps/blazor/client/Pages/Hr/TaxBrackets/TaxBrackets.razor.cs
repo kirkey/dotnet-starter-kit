@@ -6,7 +6,11 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.TaxBrackets;
 /// </summary>
 public partial class TaxBrackets
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     protected EntityServerTableContext<TaxBracketResponse, DefaultIdType, TaxBracketViewModel> Context { get; set; } = null!;
+    
+    private ClientPreference _preference = new();
 
     private EntityTable<TaxBracketResponse, DefaultIdType, TaxBracketViewModel>? _table;
 
@@ -17,6 +21,21 @@ public partial class TaxBrackets
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<TaxBracketResponse, DefaultIdType, TaxBracketViewModel>(
             entityName: "Tax Bracket",
             entityNamePlural: "Tax Brackets",

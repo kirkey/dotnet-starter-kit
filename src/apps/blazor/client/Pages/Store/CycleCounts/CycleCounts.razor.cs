@@ -9,12 +9,16 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.CycleCounts;
 /// </remarks>
 public partial class CycleCounts
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     private EntityServerTableContext<CycleCountResponse, DefaultIdType, CycleCountViewModel> Context = null!;
     private EntityTable<CycleCountResponse, DefaultIdType, CycleCountViewModel> _table = null!;
 
     private List<WarehouseResponse> _warehouses = [];
+
+    private ClientPreference _preference = new();
     
-    // Search filter properties - bound to UI controls in the razor file
+    // ...existing code...
     private DefaultIdType? SearchWarehouseId { get; set; }
     private string? SearchStatus { get; set; }
     private string? SearchCountType { get; set; }  // Available in UI but not yet in SearchCommand
@@ -66,6 +70,21 @@ public partial class CycleCounts
 
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         await LoadWarehousesAsync();
     }
 

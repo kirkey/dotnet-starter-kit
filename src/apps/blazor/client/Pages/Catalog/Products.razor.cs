@@ -3,15 +3,33 @@
 public partial class Products
 {
     [Inject] protected IClient _client { get; set; } = null!;
+    [Inject] protected ICourier Courier { get; set; } = null!;
 
     protected EntityServerTableContext<ProductResponse, DefaultIdType, ProductViewModel> Context { get; set; } = null!;
 
     private EntityTable<ProductResponse, DefaultIdType, ProductViewModel> _table = null!;
 
     private List<BrandResponse> _brands = [];
+    
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<ProductResponse, DefaultIdType, ProductViewModel>(
             entityName: "Product",
             entityNamePlural: "Products",

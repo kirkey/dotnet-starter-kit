@@ -6,9 +6,13 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.GeneralLedgers;
 /// </summary>
 public partial class GeneralLedgers
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+    
     /// <summary>
     /// The entity table context for managing general ledger entries.
     /// </summary>
+    
+    private ClientPreference _preference = new();
     protected EntityServerTableContext<GeneralLedgerSearchResponse, DefaultIdType, GeneralLedgerViewModel> Context { get; set; } = null!;
 
     /// <summary>
@@ -35,8 +39,23 @@ public partial class GeneralLedgers
     /// <summary>
     /// Initializes the component and sets up the entity table context.
     /// </summary>
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<GeneralLedgerSearchResponse, DefaultIdType, GeneralLedgerViewModel>(
             entityName: "General Ledger Entry",
             entityNamePlural: "General Ledger Entries",

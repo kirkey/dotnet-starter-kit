@@ -6,8 +6,12 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.GoodsReceipts;
 /// </summary>
 public partial class GoodsReceipts
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     private EntityServerTableContext<GoodsReceiptResponse, DefaultIdType, GoodsReceiptViewModel> Context = null!;
     private EntityTable<GoodsReceiptResponse, DefaultIdType, GoodsReceiptViewModel> _table = null!;
+
+    private ClientPreference _preference = new();
 
     private List<WarehouseResponse> _warehouses = [];
     private List<PurchaseOrderResponse> _purchaseOrders = [];
@@ -61,6 +65,21 @@ public partial class GoodsReceipts
 
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         await LoadWarehousesAsync();
         await LoadPurchaseOrdersAsync();
     }

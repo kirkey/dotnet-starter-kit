@@ -6,11 +6,13 @@ namespace FSH.Starter.Blazor.Client.Pages.Messaging;
 /// </summary>
 public partial class Messaging : IDisposable
 {
-    [Inject] private IJSRuntime JSRuntime { get; set; } = null!;
     [Inject] private IClient UsersClient { get; set; } = null!;
+    [Inject] protected ICourier Courier { get; set; } = null!;
     
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = null!;
+
+    private ClientPreference _preference = new();
 
     // State
     private List<ConversationDto>? _conversations;
@@ -35,6 +37,21 @@ public partial class Messaging : IDisposable
     {
         try
         {
+            // Load preference
+            if (await ClientPreferences.GetPreference() is ClientPreference preference)
+            {
+                _preference = preference;
+            }
+
+            // Subscribe to preference changes
+            Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+            {
+                _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+                _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+                StateHasChanged();
+                return Task.CompletedTask;
+            });
+
             // Get current user
             var authState = await AuthState;
             _currentUserId = DefaultIdType.Parse(authState.User.GetUserId());
@@ -663,4 +680,3 @@ public class UserDto
     public DefaultIdType Id { get; set; }
     public string Name { get; set; } = null!;
 }
-

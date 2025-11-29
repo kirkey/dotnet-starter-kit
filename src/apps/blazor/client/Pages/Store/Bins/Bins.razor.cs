@@ -5,11 +5,30 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Bins;
 /// </summary>
 public partial class Bins
 {
-    private EntityServerTableContext<BinResponse, DefaultIdType, BinViewModel> Context = null!;
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
+    protected EntityServerTableContext<BinResponse, DefaultIdType, BinViewModel> Context { get; set; } = null!;
+    
+    private ClientPreference _preference = new();
     private EntityTable<BinResponse, DefaultIdType, BinViewModel> _table = null!;
 
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<BinResponse, DefaultIdType, BinViewModel>(
             entityName: "Bin",
             entityNamePlural: "Bins",

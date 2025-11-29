@@ -1,11 +1,12 @@
 @page "/messaging"
 
+
 <PageHeader Title="Messaging" Header="Messaging" SubHeader="Chat with your team members." />
 
 <MudGrid>
     <!-- Conversations List -->
     <MudItem xs="12" md="3">
-        <MudPaper Elevation="2" Class="pa-4" Style="height: calc(100vh - 200px); overflow-y: auto;">
+        <MudPaper Elevation="@_preference.Elevation" Class="pa-4" Style="height: calc(100vh - 200px); overflow-y: auto;">
             <MudStack Spacing="2">
                 <!-- Header with New Chat Button -->
                 <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
@@ -77,7 +78,7 @@
     <MudItem xs="12" md="6">
         @if (_selectedConversation == null)
         {
-            <MudPaper Elevation="2" Class="pa-4 d-flex align-center justify-center" Style="height: calc(100vh - 200px);">
+            <MudPaper Elevation="@_preference.Elevation" Class="pa-4 d-flex align-center justify-center" Style="height: calc(100vh - 200px);">
                 <MudStack AlignItems="AlignItems.Center" Spacing="3">
                     <MudIcon Icon="@Icons.Material.Filled.ChatBubbleOutline" Size="Size.Large" Color="Color.Default" Style="font-size: 4rem;" />
                     <MudText Typo="Typo.h6" Color="Color.Default">Select a conversation to start messaging</MudText>
@@ -86,7 +87,7 @@
         }
         else
         {
-            <MudPaper Elevation="2" Style="height: calc(100vh - 200px); display: flex; flex-direction: column;">
+            <MudPaper Elevation="@_preference.Elevation" Style="height: calc(100vh - 200px); display: flex; flex-direction: column;">
                 <!-- Chat Header -->
                 <MudChatHeader>
                     <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="pa-3">
@@ -134,7 +135,7 @@
                             <div class="message-wrapper" style="display: flex; justify-content: @(isCurrentUser ? "flex-end" : "flex-start"); margin-bottom: 12px;">
                                 <MudChatBubble Position="@(isCurrentUser ? Position.End : Position.Start)"
                                                Color="@(isCurrentUser ? Color.Primary : Color.Default)"
-                                               Elevation="2"
+                                               Elevation="@_preference.Elevation"
                                                Style="max-width: 70%; position: relative;">
                                     <MudStack Spacing="1">
                                         @if (!isCurrentUser)
@@ -226,7 +227,7 @@
 
     <!-- Members/Online Users Panel -->
     <MudItem xs="12" md="3">
-        <MudPaper Elevation="2" Class="pa-4" Style="height: calc(100vh - 200px); overflow-y: auto;">
+        <MudPaper Elevation="@_preference.Elevation" Class="pa-4" Style="height: calc(100vh - 200px); overflow-y: auto;">
             <MudStack Spacing="2">
                 <MudText Typo="Typo.h6">
                     @(_selectedConversation != null ? "Members" : "Online Users")

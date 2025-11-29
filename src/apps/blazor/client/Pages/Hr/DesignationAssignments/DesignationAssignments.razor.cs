@@ -2,7 +2,11 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.DesignationAssignments;
 
 public partial class DesignationAssignments
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     protected EntityServerTableContext<DesignationAssignmentResponse, DefaultIdType, DesignationAssignmentViewModel> Context { get; set; } = null!;
+    
+    private ClientPreference _preference = new();
 
     private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
 
@@ -16,8 +20,23 @@ public partial class DesignationAssignments
 
     private DateTime? _filterToDate;
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<DesignationAssignmentResponse, DefaultIdType, DesignationAssignmentViewModel>(
             entityName: "Designation Assignment",
             entityNamePlural: "Designation Assignments",
@@ -65,8 +84,6 @@ public partial class DesignationAssignments
                 Snackbar?.Add("Use the 'End Assignment' action to end an assignment", Severity.Info);
                 await Task.CompletedTask;
             });
-
-        return Task.CompletedTask;
     }
 
     private async Task ShowDesignationAssignmentsHelp()

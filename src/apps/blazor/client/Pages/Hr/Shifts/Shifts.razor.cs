@@ -6,7 +6,11 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Shifts;
 /// </summary>
 public partial class Shifts
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     protected EntityServerTableContext<ShiftResponse, DefaultIdType, ShiftViewModel> Context { get; set; } = null!;
+    
+    private ClientPreference _preference = new();
 
     private EntityTable<ShiftResponse, DefaultIdType, ShiftViewModel>? _table;
 
@@ -17,6 +21,21 @@ public partial class Shifts
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<ShiftResponse, DefaultIdType, ShiftViewModel>(
             entityName: "Shift",
             entityNamePlural: "Shifts",

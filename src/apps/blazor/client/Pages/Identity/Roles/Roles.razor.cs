@@ -1,10 +1,11 @@
-﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Roles;
+﻿﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Roles;
 
 public partial class Roles
 {
     [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = null!;
     [Inject] protected IAuthorizationService AuthService { get; set; } = null!;
     [Inject] private IClient RolesClient { get; set; } = null!;
+    [Inject] protected ICourier Courier { get; set; } = null!;
 
     protected EntityClientTableContext<RoleDto, string?, CreateOrUpdateRoleCommand> Context { get; set; } = null!;
 

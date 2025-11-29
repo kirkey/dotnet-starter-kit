@@ -5,6 +5,9 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.FiscalPeriodClose;
 /// </summary>
 public partial class FiscalPeriodClose
 {
+    private ClientPreference _preference = new();
+    [Inject] protected ICourier Courier { get; set; } = null!;
+
     /// <summary>
     /// The entity table context for managing fiscal period closes.
     /// </summary>
@@ -54,8 +57,23 @@ public partial class FiscalPeriodClose
     /// <summary>
     /// Initializes the component and sets up the entity table context.
     /// </summary>
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<FiscalPeriodCloseResponse, DefaultIdType, FiscalPeriodCloseViewModel>(
             entityName: "Fiscal Period Close",
             entityNamePlural: "Fiscal Period Closes",

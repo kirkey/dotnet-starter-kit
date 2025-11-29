@@ -16,7 +16,7 @@
             </CardHeaderActions>
         </MudCardHeader>
         <MudCardContent>
-            <MudTabs Elevation="1" Rounded="true" Color="Color.Primary" @bind-ActivePanelIndex="_activeTab">
+            <MudTabs Elevation="@_preference.Elevation" Rounded="true" Color="Color.Primary" @bind-ActivePanelIndex="_activeTab">
                 <MudTabPanel Text="Balance Sheet" Icon="@Icons.Material.Filled.AccountBalance">
                     <BalanceSheetView @ref="_balanceSheetView" />
                 </MudTabPanel>

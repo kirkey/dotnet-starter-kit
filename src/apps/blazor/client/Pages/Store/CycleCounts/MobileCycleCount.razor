@@ -21,7 +21,7 @@ else
 {
     <MudContainer MaxWidth="MaxWidth.Small" Class="pa-2">
         <!-- Header with Layout Switcher -->
-        <MudPaper Elevation="2" Class="pa-3 mb-3">
+        <MudPaper Elevation="@_preference.Elevation" Class="pa-3 mb-3">
             <div class="d-flex justify-space-between align-center">
                 <div>
                     <MudText Typo="Typo.h6">📱 My Cycle Counts</MudText>
@@ -40,7 +40,7 @@ else
         
         @if (!_todayCounts.Any())
         {
-            <MudPaper Elevation="1" Class="pa-4 mb-3">
+            <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-3">
                 <MudText Align="Align.Center" Color="Color.Secondary">
                     No counts scheduled for today
                 </MudText>
@@ -50,7 +50,7 @@ else
         {
             foreach (var count in _todayCounts)
             {
-                <MudCard Elevation="2" Class="mb-3">
+                <MudCard Elevation="@_preference.Elevation" Class="mb-3">
                     <MudCardContent>
                         <div class="d-flex justify-space-between align-center mb-2">
                             <MudText Typo="Typo.subtitle1" Style="font-weight: 600;">
@@ -142,7 +142,7 @@ else
                 <MudExpansionPanel Text="@($"📅 Upcoming Counts ({_upcomingCounts.Count})")" Expanded="false">
                     @foreach (var count in _upcomingCounts)
                     {
-                        <MudCard Elevation="1" Class="mb-2">
+                        <MudCard Elevation="@_preference.Elevation" Class="mb-2">
                             <MudCardContent Class="pa-3">
                                 <div class="d-flex justify-space-between align-center mb-1">
                                     <MudText Typo="Typo.body1" Style="font-weight: 600;">@count.CountNumber</MudText>
@@ -168,7 +168,7 @@ else
                 <MudExpansionPanel Text="@($"✅ Completed ({_completedCounts.Count})")" IsExpanded="false">
                     @foreach (var count in _completedCounts.Take(5))
                     {
-                        <MudCard Elevation="1" Class="mb-2">
+                        <MudCard Elevation="@_preference.Elevation" Class="mb-2">
                             <MudCardContent Class="pa-3">
                                 <div class="d-flex justify-space-between align-center mb-1">
                                     <MudText Typo="Typo.body1" Style="font-weight: 600;">@count.CountNumber</MudText>

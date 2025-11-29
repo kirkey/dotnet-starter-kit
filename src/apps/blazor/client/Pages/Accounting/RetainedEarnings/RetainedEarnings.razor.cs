@@ -5,6 +5,9 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.RetainedEarnings;
 /// </summary>
 public partial class RetainedEarnings
 {
+    [Inject] protected ICourier Courier { get; set; } = null!;
+    
+    private ClientPreference _preference = new();
     /// <summary>
     /// The entity table context for managing retained earnings.
     /// </summary>
@@ -44,8 +47,23 @@ public partial class RetainedEarnings
     /// <summary>
     /// Initializes the component and sets up the entity table context.
     /// </summary>
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<RetainedEarningsResponse, DefaultIdType, RetainedEarningsViewModel>(
             entityName: "Retained Earnings",
             entityNamePlural: "Retained Earnings",
