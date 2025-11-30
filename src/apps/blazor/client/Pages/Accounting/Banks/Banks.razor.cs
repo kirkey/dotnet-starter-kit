@@ -67,25 +67,31 @@ public partial class Banks
             },
             createFunc: async viewModel =>
             {
-                viewModel.Image = new FileUploadCommand
+                var command = viewModel.Adapt<BankCreateCommand>();
+                command.BankCode = viewModel.BankCode!.ToUpperInvariant();
+                command.Name = viewModel.Name!.ToUpperInvariant();
+                command.Image = new FileUploadCommand
                 {
                     Name = viewModel.Image?.Name,
                     Extension = viewModel.Image?.Extension,
                     Data = viewModel.Image?.Data,
                     Size = viewModel.Image?.Size,
                 };
-                await Client.BankCreateEndpointAsync("1", viewModel.Adapt<BankCreateCommand>());
+                await Client.BankCreateEndpointAsync("1", command);
             },
             updateFunc: async (id, viewModel) =>
             {
-                viewModel.Image = new FileUploadCommand
+                var command = viewModel.Adapt<BankUpdateCommand>();
+                command.BankCode = viewModel.BankCode!.ToUpperInvariant();
+                command.Name = viewModel.Name!.ToUpperInvariant();
+                command.Image = new FileUploadCommand
                 {
                     Name = viewModel.Image?.Name,
                     Extension = viewModel.Image?.Extension,
                     Data = viewModel.Image?.Data,
                     Size = viewModel.Image?.Size,
                 };
-                await Client.BankUpdateEndpointAsync("1", id, viewModel.Adapt<BankUpdateCommand>());
+                await Client.BankUpdateEndpointAsync("1", id, command);
             },
             deleteFunc: async id => await Client.BankDeleteEndpointAsync("1", id));
     }

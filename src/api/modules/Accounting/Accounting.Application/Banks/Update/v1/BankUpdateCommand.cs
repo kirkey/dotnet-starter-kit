@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using FSH.Framework.Core.Storage.File.Features;
 
 namespace Accounting.Application.Banks.Update.v1;
 
@@ -84,4 +85,9 @@ public sealed record BankUpdateCommand : IRequest<BankUpdateResponse>
     /// </summary>
     [DefaultValue(null)]
     public string? ImageUrl { get; init; }
+
+    /// <summary>
+    /// Optional image payload uploaded by the client. When provided, the image will be saved to storage and ImageUrl will be set to the saved file URL.
+    /// </summary>
+    public FileUploadCommand? Image { get; init; }
 }

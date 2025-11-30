@@ -130,12 +130,12 @@ public partial class Locations
             {
                 var command = new CreateWarehouseLocationCommand
                 {
-                    Name = viewModel.Name!,
+                    Name = viewModel.Name!.ToUpperInvariant(),
                     Description = viewModel.Description,
-                    Code = viewModel.Code!,
-                    Aisle = viewModel.Aisle!,
-                    Section = viewModel.Section!,
-                    Shelf = viewModel.Shelf!,
+                    Code = viewModel.Code!.ToUpperInvariant(),
+                    Aisle = viewModel.Aisle!.ToUpperInvariant(),
+                    Section = viewModel.Section!.ToUpperInvariant(),
+                    Shelf = viewModel.Shelf!.ToUpperInvariant(),
                     Bin = viewModel.Bin,
                     WarehouseId = viewModel.WarehouseId!.Value,
                     LocationType = viewModel.LocationType!,
@@ -154,12 +154,12 @@ public partial class Locations
             {
                 var command = new UpdateWarehouseLocationCommand
                 {
-                    Name = viewModel.Name!,
+                    Name = viewModel.Name!.ToUpperInvariant(),
                     Description = viewModel.Description,
-                    Code = viewModel.Code!,
-                    Aisle = viewModel.Aisle!,
-                    Section = viewModel.Section!,
-                    Shelf = viewModel.Shelf!,
+                    Code = viewModel.Code!.ToUpperInvariant(),
+                    Aisle = viewModel.Aisle!.ToUpperInvariant(),
+                    Section = viewModel.Section!.ToUpperInvariant(),
+                    Shelf = viewModel.Shelf!.ToUpperInvariant(),
                     Bin = viewModel.Bin,
                     WarehouseId = viewModel.WarehouseId!.Value,
                     LocationType = viewModel.LocationType!,

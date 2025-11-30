@@ -63,8 +63,8 @@ public partial class Vendors
             {
                 var command = new VendorCreateCommand
                 {
-                    VendorCode = viewModel.VendorCode,
-                    Name = viewModel.Name,
+                    VendorCode = viewModel.VendorCode!.ToUpperInvariant(),
+                    Name = viewModel.Name!.ToUpperInvariant(),
                     Address = viewModel.Address,
                     BillingAddress = viewModel.BillingAddress,
                     ContactPerson = viewModel.ContactPerson,
@@ -86,8 +86,8 @@ public partial class Vendors
                 var command = new VendorUpdateCommand
                 {
                     Id = id,
-                    VendorCode = viewModel.VendorCode,
-                    Name = viewModel.Name,
+                    VendorCode = viewModel.VendorCode!.ToUpperInvariant(),
+                    Name = viewModel.Name!.ToUpperInvariant(),
                     Address = viewModel.Address,
                     BillingAddress = viewModel.BillingAddress,
                     ContactPerson = viewModel.ContactPerson,

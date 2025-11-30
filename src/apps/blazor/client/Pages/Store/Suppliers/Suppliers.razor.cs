@@ -62,25 +62,31 @@ public partial class Suppliers
             },
             createFunc: async viewModel =>
             {
-                viewModel.Image = new FileUploadCommand
+                var command = viewModel.Adapt<CreateSupplierCommand>();
+                command.Code = viewModel.Code!.ToUpperInvariant();
+                command.Name = viewModel.Name!.ToUpperInvariant();
+                command.Image = new FileUploadCommand
                 {
                     Name = viewModel.Image?.Name,
                     Extension = viewModel.Image?.Extension,
                     Data = viewModel.Image?.Data,
                     Size = viewModel.Image?.Size,
                 };
-                await Client.CreateSupplierEndpointAsync("1", viewModel.Adapt<CreateSupplierCommand>()).ConfigureAwait(false);
+                await Client.CreateSupplierEndpointAsync("1", command).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                viewModel.Image = new FileUploadCommand
+                var command = viewModel.Adapt<UpdateSupplierCommand>();
+                command.Code = viewModel.Code!.ToUpperInvariant();
+                command.Name = viewModel.Name!.ToUpperInvariant();
+                command.Image = new FileUploadCommand
                 {
                     Name = viewModel.Image?.Name,
                     Extension = viewModel.Image?.Extension,
                     Data = viewModel.Image?.Data,
                     Size = viewModel.Image?.Size,
                 };
-                await Client.UpdateSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateSupplierCommand>()).ConfigureAwait(false);
+                await Client.UpdateSupplierEndpointAsync("1", id, command).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteSupplierEndpointAsync("1", id).ConfigureAwait(false));
     }

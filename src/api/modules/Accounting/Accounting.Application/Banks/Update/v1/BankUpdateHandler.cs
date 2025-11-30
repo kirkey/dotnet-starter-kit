@@ -1,4 +1,6 @@
 using Accounting.Application.Banks.Specs;
+using FSH.Framework.Core.Storage;
+using FSH.Framework.Core.Storage.File;
 
 namespace Accounting.Application.Banks.Update.v1;
 
@@ -8,11 +10,13 @@ namespace Accounting.Application.Banks.Update.v1;
 /// </summary>
 public sealed class BankUpdateHandler(
     ILogger<BankUpdateHandler> logger,
-    [FromKeyedServices("accounting:banks")] IRepository<Bank> repository)
+    [FromKeyedServices("accounting:banks")] IRepository<Bank> repository,
+    IStorageService storageService)
     : IRequestHandler<BankUpdateCommand, BankUpdateResponse>
 {
     /// <summary>
     /// Handles the update of an existing bank entity.
+    /// If the client uploaded an image, saves it to storage and sets ImageUrl to the returned public URI.
     /// </summary>
     /// <param name="request">The update bank command containing all updated information.</param>
     /// <param name="cancellationToken">Cancellation token for the operation.</param>
@@ -26,6 +30,19 @@ public sealed class BankUpdateHandler(
         var bank = await repository.FirstOrDefaultAsync(new BankByIdSpec(request.Id), cancellationToken).ConfigureAwait(false);
         _ = bank ?? throw new BankNotFoundException(request.Id);
 
+        string? imageUrl = request.ImageUrl;
+        if (request.Image is not null && !string.IsNullOrWhiteSpace(request.Image.Data))
+        {
+            var uri = await storageService.UploadAsync<Bank>(request.Image, FileType.Image, cancellationToken).ConfigureAwait(false);
+            if (uri is null)
+            {
+                throw new InvalidOperationException("Image upload failed: storage provider returned no URI.");
+            }
+
+            // Persist the full absolute URI returned by the storage provider so clients can load images directly.
+            imageUrl = uri.IsAbsoluteUri ? uri.AbsoluteUri : uri.ToString();
+        }
+
         bank.Update(
             request.BankCode,
             request.Name,
@@ -38,10 +55,10 @@ public sealed class BankUpdateHandler(
             request.Website,
             request.Description,
             request.Notes,
-            request.ImageUrl);
+            imageUrl);
 
         await repository.UpdateAsync(bank, cancellationToken).ConfigureAwait(false);
-        logger.LogInformation("Bank updated with ID {BankId} and code {BankCode}", bank.Id, bank.BankCode);
+        logger.LogInformation("Bank updated with ID {BankId} and code {BankCode}. ImageUrl: {ImageUrl}", bank.Id, bank.BankCode, imageUrl);
 
         return new BankUpdateResponse(bank.Id);
     }

@@ -130,8 +130,8 @@ public partial class Warehouses
             {
                 var command = new CreateWarehouseCommand
                 {
-                    Code = viewModel.Code!,
-                    Name = viewModel.Name!,
+                    Code = viewModel.Code!.ToUpperInvariant(),
+                    Name = viewModel.Name!.ToUpperInvariant(),
                     Description = viewModel.Description,
                     Address = viewModel.Address!,
                     ManagerName = viewModel.ManagerName!,
@@ -151,8 +151,8 @@ public partial class Warehouses
             {
                 var command = new UpdateWarehouseCommand
                 {
-                    Code = viewModel.Code!,
-                    Name = viewModel.Name!,
+                    Code = viewModel.Code!.ToUpperInvariant(),
+                    Name = viewModel.Name!.ToUpperInvariant(),
                     Description = viewModel.Description,
                     Address = viewModel.Address!,
                     ManagerName = viewModel.ManagerName!,
