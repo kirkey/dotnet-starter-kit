@@ -1,5 +1,6 @@
 @inject IClient Client
 @inject ISnackbar Snackbar
+@inject IClientPreferenceManager ClientPreferences
 
 <MudDialog>
     <DialogContent>
@@ -16,7 +17,7 @@
                 </MudItem>
 
                 <MudItem xs="12" sm="6" md="4">
-                    <MudCard Elevation="0" Class="pa-4">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-4">
                         <MudStack Spacing="1">
                             <MudText Typo="Typo.caption">Account Type</MudText>
                             <MudText Typo="Typo.body1">@_account.AccountType</MudText>
@@ -25,7 +26,7 @@
                 </MudItem>
 
                 <MudItem xs="12" sm="6" md="4">
-                    <MudCard Elevation="0" Class="pa-4">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-4">
                         <MudStack Spacing="1">
                             <MudText Typo="Typo.caption">Current Balance</MudText>
                             <MudText Typo="Typo.h6" Color="Color.Primary">@_account.CurrentBalance.ToString("N2")</MudText>
@@ -34,7 +35,7 @@
                 </MudItem>
 
                 <MudItem xs="12" sm="6" md="4">
-                    <MudCard Elevation="0" Class="pa-4">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-4">
                         <MudStack Spacing="1">
                             <MudText Typo="Typo.caption">Status</MudText>
                             <MudChip T="string"
@@ -77,12 +78,18 @@
     private ApAccountResponse? _account;
     private bool _loading;
     private string? _error;
+    private ClientPreference _preference = new();
 
     /// <summary>
     /// Load data when dialog opens.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
         await LoadDataAsync();
     }
 

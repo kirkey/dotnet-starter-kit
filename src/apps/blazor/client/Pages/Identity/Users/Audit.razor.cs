@@ -14,6 +14,7 @@ public partial class Audit
     private readonly bool _searchInOldValues;
     private readonly bool _searchInNewValues;
     private List<AuditTrailExtension> _trails = [];
+    private ClientPreference _preference = new();
 
     // Configure Automapper
     static Audit() =>
@@ -21,10 +22,13 @@ public partial class Audit
             dest => dest.UtcTime,
             src => DateTime.SpecifyKind(src.DateTime, DateTimeKind.Utc).ToLocalTime());
 
-
-
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+        
         if (Id == DefaultIdType.Empty)
         {
             var state = await AuthState;

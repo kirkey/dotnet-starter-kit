@@ -1,4 +1,4 @@
-﻿﻿namespace FSH.Starter.WebApi.Todo.Features.GetList.v1;
+﻿namespace FSH.Starter.WebApi.Todo.Features.GetList.v1;
 
 /// <summary>
 /// DTO for displaying a todo item in list views.

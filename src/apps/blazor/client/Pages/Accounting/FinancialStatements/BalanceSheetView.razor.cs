@@ -2,6 +2,16 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.FinancialStatements;
 
 public partial class BalanceSheetView
 {
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
     private DateTime? _asOfDate = DateTime.Today;
     private string _reportFormat = "Standard";
     private bool _includeComparative = false;

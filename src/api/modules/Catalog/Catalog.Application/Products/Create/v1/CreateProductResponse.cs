@@ -1,4 +1,4 @@
-﻿﻿namespace FSH.Starter.WebApi.Catalog.Application.Products.Create.v1;
+﻿namespace FSH.Starter.WebApi.Catalog.Application.Products.Create.v1;
 
 /// <summary>
 /// Response for creating a new product.

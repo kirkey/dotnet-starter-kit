@@ -13,9 +13,15 @@ public partial class Tenants
 
     private bool _canUpgrade;
     private bool _canModify;
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+        
         Context = new EntityClientTableContext<TenantViewModel, DefaultIdType, CreateTenantCommand>(
             entityName: "Tenant",
             entityNamePlural: "Tenants",

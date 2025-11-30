@@ -5,7 +5,7 @@
         @if (Reconciliation != null)
         {
             <MudStack Spacing="3">
-                <MudPaper Elevation="0" Class="pa-3 mud-background-gray">
+                <MudPaper Elevation="@_preference.Elevation" Class="pa-3 mud-background-gray">
                     <MudGrid>
                         <MudItem xs="12" sm="6">
                             <MudText Typo="Typo.caption" Color="Color.Secondary">Statement Number</MudText>
@@ -147,9 +147,15 @@
     public DefaultIdType Id { get; set; }
 
     private BankReconciliationResponse? Reconciliation { get; set; }
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+        
         Reconciliation = await Client.GetBankReconciliationEndpointAsync("1", Id);
     }
 

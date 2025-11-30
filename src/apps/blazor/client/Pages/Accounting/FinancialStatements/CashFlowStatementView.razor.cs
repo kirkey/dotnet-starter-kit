@@ -2,6 +2,16 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.FinancialStatements;
 
 public partial class CashFlowStatementView
 {
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
     private DateTime? _startDate = DateTime.Today.AddMonths(-1);
     private DateTime? _endDate = DateTime.Today;
     private string _method = "Indirect";

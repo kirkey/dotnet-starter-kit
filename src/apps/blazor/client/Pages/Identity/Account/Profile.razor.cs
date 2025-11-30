@@ -1,4 +1,4 @@
-﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Account;
+﻿﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Account;
 
 public partial class Profile
 {
@@ -10,7 +10,7 @@ public partial class Profile
     protected IClient PersonalClient { get; set; } = null!;
 
     private readonly UpdateUserCommand _profileModel = new();
-
+    private ClientPreference _preference = new();
     private string? _imageUrl;
     private string? _userId;
     private char _firstLetterOfName;
@@ -19,6 +19,11 @@ public partial class Profile
 
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
         if ((await AuthState).User is { } user)
         {
             _userId = user.GetUserId();

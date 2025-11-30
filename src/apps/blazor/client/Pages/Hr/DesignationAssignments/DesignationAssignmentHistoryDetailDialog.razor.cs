@@ -12,6 +12,16 @@ public partial class DesignationAssignmentHistoryDetailDialog
     [Parameter]
     public EmployeeHistoryDto? EmployeeHistory { get; set; }
 
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
     private Task Close()
     {
         MudDialog.Close(DialogResult.Ok(true));

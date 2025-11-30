@@ -9,7 +9,7 @@
             <MudGrid>
                 <!-- Header with Status -->
                 <MudItem xs="12">
-                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
                         <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
                             <MudText Typo="Typo.h6">@_import.ImportNumber</MudText>
                             <MudStack Row="true" Spacing="2">
@@ -25,7 +25,7 @@
 
                 <!-- Import Information -->
                 <MudItem xs="12" md="6">
-                    <MudPaper Elevation="0" Class="pa-4">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-4">
                         <MudText Typo="Typo.h6" Class="mb-2">Import Information</MudText>
                         <MudStack Spacing="2">
                             <MudText Typo="Typo.body2"><strong>Import Date:</strong> @_import.ImportDate.ToString("MMM dd, yyyy HH:mm")</MudText>
@@ -42,66 +42,20 @@
 
                 <!-- Statistics -->
                 <MudItem xs="12" md="6">
-                    <MudPaper Elevation="0" Class="pa-4">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-4">
                         <MudText Typo="Typo.h6" Class="mb-2">Statistics</MudText>
                         <MudGrid>
                             <MudItem xs="6">
-                                <MudCard Elevation="0" Style="background-color: var(--mud-palette-info-lighten);">
+                                <MudCard Elevation="@_preference.Elevation" Style="background-color: var(--mud-palette-info-lighten);">
                                     <MudCardContent Class="pa-2">
                                         <MudText Typo="Typo.caption">Total Records</MudText>
-                                        <MudText Typo="Typo.h5">@_import.TotalRecords</MudText>
+                                        <MudText Typo="Typo.h6">@_import.TotalRecords</MudText>
                                     </MudCardContent>
                                 </MudCard>
                             </MudItem>
-                            <MudItem xs="6">
-                                <MudCard Elevation="0" Style="background-color: var(--mud-palette-success-lighten);">
-                                    <MudCardContent Class="pa-2">
-                                        <MudText Typo="Typo.caption">Processed</MudText>
-                                        <MudText Typo="Typo.h5">@_import.ProcessedRecords</MudText>
-                                    </MudCardContent>
-                                </MudCard>
-                            </MudItem>
-                            <MudItem xs="6">
-                                <MudCard Elevation="0" Style="background-color: var(--mud-palette-error-lighten);">
-                                    <MudCardContent Class="pa-2">
-                                        <MudText Typo="Typo.caption">Errors</MudText>
-                                        <MudText Typo="Typo.h5">@_import.ErrorRecords</MudText>
-                                    </MudCardContent>
-                                </MudCard>
-                            </MudItem>
-                            <MudItem xs="6">
-                                <MudCard Elevation="0" Style="background-color: var(--mud-palette-primary-lighten);">
-                                    <MudCardContent Class="pa-2">
-                                        <MudText Typo="Typo.caption">Quantity Sold</MudText>
-                                        <MudText Typo="Typo.h5">@_import.TotalQuantity</MudText>
-                                    </MudCardContent>
-                                </MudCard>
-                            </MudItem>
-                            @if (_import.TotalValue.HasValue)
-                            {
-                                <MudItem xs="12">
-                                    <MudCard Elevation="0" Style="background-color: var(--mud-palette-secondary-lighten);">
-                                        <MudCardContent Class="pa-2">
-                                            <MudText Typo="Typo.caption">Total Sales Value</MudText>
-                                            <MudText Typo="Typo.h5">@_import.TotalValue.Value.ToString("C")</MudText>
-                                        </MudCardContent>
-                                    </MudCard>
-                                </MudItem>
-                            }
                         </MudGrid>
                     </MudPaper>
                 </MudItem>
-
-                <!-- Reversal Information -->
-                @if (_import.IsReversed)
-                {
-                    <MudItem xs="12">
-                        <MudAlert Severity="Severity.Warning" Dense="true">
-                            <MudText Typo="Typo.body2"><strong>Reversed:</strong> @_import.ReversalReason</MudText>
-                            <MudText Typo="Typo.caption">Reversed by: @_import.ReversedBy on @_import.ReversedDate?.ToString("MMM dd, yyyy HH:mm")</MudText>
-                        </MudAlert>
-                    </MudItem>
-                }
 
                 <!-- Import Items Table -->
                 <MudItem xs="12">
@@ -165,7 +119,7 @@
                 @if (!string.IsNullOrWhiteSpace(_import.Notes))
                 {
                     <MudItem xs="12">
-                        <MudPaper Elevation="0" Class="pa-4">
+                        <MudPaper Elevation="@_preference.Elevation" Class="pa-4">
                             <MudText Typo="Typo.h6" Class="mb-2">Notes</MudText>
                             <MudText Typo="Typo.body2">@_import.Notes</MudText>
                         </MudPaper>
@@ -178,4 +132,5 @@
         <MudButton OnClick="@(() => MudDialog.Close())">Close</MudButton>
     </DialogActions>
 </MudDialog>
+
 

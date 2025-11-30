@@ -18,7 +18,15 @@ public partial class AddPutAwayTaskItemDialog
     private bool _loading;
     private bool _adding;
     private string? _errorMessage;
+    private ClientPreference _preference = new();
 
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
     /// <summary>
     /// Searches for items based on the provided search value.
     /// </summary>

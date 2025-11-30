@@ -20,7 +20,7 @@
 
                 <!-- Status and Balance Information -->
                 <MudItem xs="12" sm="6" md="3">
-                    <MudCard Elevation="0" Class="pa-4">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-4">
                         <MudStack Spacing="1">
                             <MudText Typo="Typo.caption">Status</MudText>
                             <MudChip T="string"
@@ -33,7 +33,7 @@
                 </MudItem>
 
                 <MudItem xs="12" sm="6" md="3">
-                    <MudCard Elevation="0" Class="pa-4">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-4">
                         <MudStack Spacing="1">
                             <MudText Typo="Typo.caption">Total Debits</MudText>
                             <MudText Typo="Typo.h6" Color="Color.Primary">@_trialBalance.TotalDebits.ToString("N2")</MudText>
@@ -42,7 +42,7 @@
                 </MudItem>
 
                 <MudItem xs="12" sm="6" md="3">
-                    <MudCard Elevation="0" Class="pa-4">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-4">
                         <MudStack Spacing="1">
                             <MudText Typo="Typo.caption">Total Credits</MudText>
                             <MudText Typo="Typo.h6" Color="Color.Secondary">@_trialBalance.TotalCredits.ToString("N2")</MudText>
@@ -51,7 +51,7 @@
                 </MudItem>
 
                 <MudItem xs="12" sm="6" md="3">
-                    <MudCard Elevation="0" Class="pa-4">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-4">
                         <MudStack Spacing="1">
                             <MudText Typo="Typo.caption">Balance Status</MudText>
                             @if (_trialBalance.IsBalanced)
@@ -227,6 +227,7 @@
 </MudDialog>
 
 @code {
+
     /// <summary>
     /// Gets or sets the trial balance ID to display.
     /// </summary>
@@ -237,6 +238,16 @@
     private bool _loading;
     private string? _error;
     private IDialogReference? _dialogReference;
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+        await base.OnInitializedAsync();
+    }
 
     /// <summary>
     /// Shows the dialog for the specified trial balance.

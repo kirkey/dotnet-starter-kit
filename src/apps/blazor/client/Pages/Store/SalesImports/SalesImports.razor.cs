@@ -126,7 +126,7 @@ public partial class SalesImports
     {
         var parameters = new DialogParameters<SalesImportDetailsDialog>
         {
-            { x => x.Id, id }
+            { x => x.ImportId, id }
         };
 
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };

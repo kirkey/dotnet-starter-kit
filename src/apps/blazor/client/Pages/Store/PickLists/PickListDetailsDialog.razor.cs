@@ -12,9 +12,15 @@ public partial class PickListDetailsDialog
     private GetPickListResponse? _pickList;
     private bool _loading = true;
     private string? _errorMessage;
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
         await LoadPickListAsync();
     }
 

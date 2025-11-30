@@ -14,6 +14,7 @@ public partial class AddPickListItemDialog
     private bool _loading = true;
     private bool _saving;
     private string? _errorMessage;
+    private ClientPreference _preference = new();
 
     private ItemResponse? _selectedItem;
     private BinResponse? _selectedBin;
@@ -22,6 +23,11 @@ public partial class AddPickListItemDialog
 
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
         _loading = false;
         await Task.CompletedTask;
     }

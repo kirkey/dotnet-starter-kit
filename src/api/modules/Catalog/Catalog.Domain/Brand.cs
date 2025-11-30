@@ -1,4 +1,4 @@
-﻿﻿using FSH.Framework.Core.Domain;
+﻿using FSH.Framework.Core.Domain;
 using FSH.Framework.Core.Domain.Contracts;
 using FSH.Starter.WebApi.Catalog.Domain.Events;
 

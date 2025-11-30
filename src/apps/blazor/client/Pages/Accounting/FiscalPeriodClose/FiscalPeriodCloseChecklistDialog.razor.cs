@@ -15,12 +15,18 @@ public partial class FiscalPeriodCloseChecklistDialog
     private FiscalPeriodCloseDetailsDto? _periodClose;
     private DefaultIdType _periodCloseId;
     private bool _loading;
+    private ClientPreference _preference = new();
 
     /// <summary>
     /// Shows the checklist dialog for the specified period close.
     /// </summary>
     public async Task ShowAsync(DefaultIdType periodCloseId)
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+        
         _periodCloseId = periodCloseId;
         _loading = true;
         _periodClose = null;

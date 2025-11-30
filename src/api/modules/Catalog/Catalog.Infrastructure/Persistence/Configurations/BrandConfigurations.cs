@@ -1,4 +1,4 @@
-﻿﻿namespace FSH.Starter.WebApi.Catalog.Infrastructure.Persistence.Configurations;
+﻿namespace FSH.Starter.WebApi.Catalog.Infrastructure.Persistence.Configurations;
 
 /// <summary>
 /// Entity Framework configuration for the Brand entity.

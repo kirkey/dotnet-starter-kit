@@ -14,7 +14,7 @@
         {
             <MudGrid>
                 <MudItem xs="12">
-                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
                         <MudText Typo="Typo.h6" Class="mb-2">General Information</MudText>
                         <MudDivider Class="mb-3" />
                         
@@ -51,7 +51,7 @@
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
                         <MudText Typo="Typo.h6" Class="mb-2">Progress</MudText>
                         <MudDivider Class="mb-3" />
                         
@@ -75,7 +75,7 @@
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
                         <MudText Typo="Typo.h6" Class="mb-2">Dates & Timeline</MudText>
                         <MudDivider Class="mb-3" />
                         
@@ -105,7 +105,7 @@
                 @if (!string.IsNullOrEmpty(_pickList.Notes))
                 {
                     <MudItem xs="12">
-                        <MudPaper Elevation="0" Class="pa-4 mb-4">
+                        <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
                             <MudText Typo="Typo.h6" Class="mb-2">Notes</MudText>
                             <MudDivider Class="mb-3" />
                             <MudTextField Value="@_pickList.Notes" ReadOnly="true" Variant="Variant.Filled" Lines="3" />
@@ -114,7 +114,7 @@
                 }
 
                 <MudItem xs="12">
-                    <MudPaper Elevation="0" Class="pa-4">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-4">
                         <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="mb-3">
                             <MudText Typo="Typo.h6">Pick List Items</MudText>
                             @if (_pickList.Status == "Created")

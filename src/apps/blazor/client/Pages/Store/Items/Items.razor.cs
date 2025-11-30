@@ -164,7 +164,7 @@ public partial class Items
                 };
                 
                 var result = await Client.ExportItemsEndpointAsync("1", exportQuery).ConfigureAwait(false);
-                var stream = new MemoryStream(result.Data);
+                var stream = new MemoryStream(result.Data ?? []);
                 return new Components.EntityTable.FileResponse(stream);
             },
             importFunc: async fileUpload =>

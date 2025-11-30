@@ -1,4 +1,4 @@
-﻿﻿namespace FSH.Starter.WebApi.Todo.Features.Update.v1;
+﻿namespace FSH.Starter.WebApi.Todo.Features.Update.v1;
 
 /// <summary>
 /// Response for updating an existing todo item.

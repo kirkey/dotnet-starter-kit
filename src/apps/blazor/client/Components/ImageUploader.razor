@@ -4,7 +4,7 @@
         <!-- Image Preview Section -->
         <MudItem xs="12" md="4">
             <MudText Typo="Typo.subtitle2" Class="mb-2">Image Preview</MudText>
-            <MudCard Class="d-flex justify-center image-preview-card" Style="min-height:180px; max-height:220px;" Elevation="0">
+            <MudCard Elevation="@_preference.Elevation" Class="d-flex justify-center image-preview-card" Style="min-height:180px; max-height:220px;">
                 <MudCardContent Class="d-flex flex-column align-center justify-center" Style="width:100%;">
                     @if (GetImagePreviewUrl() is { } previewUrl)
                     {
@@ -45,7 +45,7 @@
                 <ActivatorContent>
                     <!-- Wrap the drop zone in a label; place a native InputFile as a transparent overlay inside so clicks always open the picker -->
                     <label style="display:block;cursor:pointer;position:relative;" @onclick="TriggerNativeInputClick">
-                        <MudPaper Class="@($"{_dragClass} image-drop-zone d-flex flex-column align-center justify-center pa-4")"
+                        <MudPaper Elevation="@_preference.Elevation" Class="@($"{_dragClass} image-drop-zone d-flex flex-column align-center justify-center pa-4")"
                                   Outlined="true"
                                   Style="cursor: pointer;"
                                   OnClick="OpenFilePicker"

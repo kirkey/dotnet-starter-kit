@@ -13,12 +13,18 @@ public partial class RetainedEarningsDetailsDialog
 
     private RetainedEarningsDetailsResponse? _retainedEarnings;
     private bool _loading;
+    private ClientPreference _preference = new();
 
     /// <summary>
     /// Initializes the dialog and loads data.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+        
         await LoadDataAsync();
     }
 

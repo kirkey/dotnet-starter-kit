@@ -1,4 +1,4 @@
-﻿﻿using Carter;
+﻿using Carter;
 using FSH.Starter.WebApi.Catalog.Infrastructure.Endpoints.v1;
 using FSH.Starter.WebApi.Catalog.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;

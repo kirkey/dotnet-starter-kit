@@ -8,7 +8,7 @@
         @if (Summary != null)
         {
             <MudStack Spacing="3">
-                <MudPaper Elevation="0" Class="pa-3 mud-background-gray">
+                <MudPaper Elevation="@_preference.Elevation" Class="pa-3 mud-background-gray">
                     <MudGrid>
                         <MudItem xs="12" sm="6" md="3">
                             <MudStack Spacing="1">
@@ -117,58 +117,4 @@
     </DialogActions>
 </MudDialog>
 
-@code {
-    [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; } = null!;
-
-    private ReconciliationSummary? Summary { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await LoadSummary();
-    }
-
-    private async Task LoadSummary()
-    {
-        try
-        {
-            // This would call an API endpoint to get summary data
-            // For now, we'll create a mock summary
-            Summary = new ReconciliationSummary();
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"Error loading summary: {ex.Message}", Severity.Error);
-        }
-    }
-
-    private Color GetStatusColor(string? status) => status switch
-    {
-        "Pending" => Color.Default,
-        "InProgress" => Color.Info,
-        "Completed" => Color.Warning,
-        "Approved" => Color.Success,
-        _ => Color.Default
-    };
-
-    private void Cancel() => MudDialog.Cancel();
-
-    private class ReconciliationSummary
-    {
-        public int TotalReconciliations { get; set; }
-        public int PendingCount { get; set; }
-        public int InProgressCount { get; set; }
-        public int ApprovedCount { get; set; }
-        public List<BankReconciliationResponse> RecentReconciliations { get; set; } = [];
-        public List<BankAccountSummaryItem> BankAccountSummaries { get; set; } = [];
-    }
-
-    private class BankAccountSummaryItem
-    {
-        public string AccountName { get; set; } = string.Empty;
-        public DateTime? LastReconciliationDate { get; set; }
-        public decimal CurrentBalance { get; set; }
-        public bool IsCurrentlyReconciled { get; set; }
-    }
-}
 

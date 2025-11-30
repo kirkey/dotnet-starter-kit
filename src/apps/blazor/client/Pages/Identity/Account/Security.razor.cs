@@ -1,4 +1,4 @@
-﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Account;
+﻿﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Account;
 
 public partial class Security
 {
@@ -6,8 +6,16 @@ public partial class Security
     public IClient PersonalClient { get; set; } = null!;
 
     private readonly ChangePasswordCommand _passwordModel = new();
-
+    private ClientPreference _preference = new();
     private FshValidation? _customValidation;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
 
     private async Task ChangePasswordAsync()
     {

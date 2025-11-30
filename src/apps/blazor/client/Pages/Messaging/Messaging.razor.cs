@@ -577,7 +577,7 @@ public partial class Messaging : IDisposable
         await DialogService.ShowAsync<ConversationInfoDialog>("Conversation Info", parameters, options);
     }
 
-    private async Task OpenConversationMenu()
+    private void OpenConversationMenu()
     {
         // TODO: Implement conversation menu (mute, archive, delete)
         Snackbar.Add("Conversation menu coming soon!", Severity.Info);

@@ -91,10 +91,13 @@ public partial class DeferredRevenues
             [nameof(DeferredRevenueRecognizeDialog.DeferredRevenueNumber)] = revenue.DeferredRevenueNumber
         };
         var options = new DialogOptions { MaxWidth = MaxWidth.Small, FullWidth = true, CloseButton = true };
-        var dialog = await DialogService.ShowAsync<DeferredRevenueRecognizeDialog>("Recognize Revenue", parameters, options);
+        var dialog =
+            await DialogService.ShowAsync<DeferredRevenueRecognizeDialog>("Recognize Revenue", parameters, options);
         var result = await dialog.Result;
-        if (!result.Canceled && _table is not null) 
+        if (!result.Canceled && _table is not null)
+        {
             await _table.ReloadDataAsync();
+        }
     }
 
     private async Task OnViewDetails(DeferredRevenueResponse revenue)

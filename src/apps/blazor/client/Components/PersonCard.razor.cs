@@ -1,4 +1,4 @@
-﻿﻿namespace FSH.Starter.Blazor.Client.Components;
+﻿namespace FSH.Starter.Blazor.Client.Components;
 
 public partial class PersonCard
 {

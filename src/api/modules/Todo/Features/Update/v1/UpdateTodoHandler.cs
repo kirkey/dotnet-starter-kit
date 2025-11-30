@@ -1,4 +1,4 @@
-﻿﻿using FSH.Framework.Core.Persistence;
+﻿using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.Todo.Domain;
 using FSH.Starter.WebApi.Todo.Exceptions;
 using MediatR;

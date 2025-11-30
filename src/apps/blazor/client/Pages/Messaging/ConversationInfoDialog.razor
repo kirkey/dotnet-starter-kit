@@ -28,7 +28,7 @@
                         <MudText Typo="Typo.subtitle2">Members (@Conversation.Members.Count(m => m.IsActive))</MudText>
                         @foreach (var member in Conversation.Members.Where(m => m.IsActive))
                         {
-                            <MudCard Class="pa-2">
+                            <MudCard Elevation="@_preference.Elevation" Class="pa-2">
                                 <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
                                     <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
                                         <MudAvatar Color="Color.Secondary" Size="Size.Small">
@@ -68,28 +68,4 @@
     </DialogActions>
 </MudDialog>
 
-@code {
-    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
-    [Parameter] public GetConversationResponse? Conversation { get; set; }
-
-    private string GetTitle() =>
-        Conversation?.ConversationType == "group"
-            ? Conversation.Title ?? "Group Chat"
-            : "Direct Message";
-
-    private string GetInitials()
-    {
-        var title = GetTitle();
-        var words = title.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        return words.Length > 1 ? $"{words[0][0]}{words[1][0]}" : title[..Math.Min(2, title.Length)];
-    }
-
-    private string GetMemberInitials(DefaultIdType userId)
-    {
-        var name = $"User {userId}";
-        return name[..Math.Min(2, name.Length)];
-    }
-
-    private void Close() => MudDialog.Close();
-}
 

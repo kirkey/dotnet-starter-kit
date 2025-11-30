@@ -1,4 +1,4 @@
-﻿﻿namespace FSH.Starter.Blazor.Client.Pages.Todos;
+﻿namespace FSH.Starter.Blazor.Client.Pages.Todos;
 
 /// <summary>
 /// Todos page component for managing todo items.

@@ -6,16 +6,23 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.SalesImports;
 public partial class SalesImportDetailsDialog
 {
     [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
-    [Parameter] public DefaultIdType Id { get; set; }
+    [Parameter] public DefaultIdType ImportId { get; set; }
 
     private SalesImportDetailResponse? _import;
     private bool _loading = true;
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
+        // Load elevation preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
         try
         {
-            _import = await Client.GetSalesImportEndpointAsync("1", Id);
+            _import = await Client.GetSalesImportEndpointAsync("1", ImportId);
         }
         catch (Exception ex)
         {

@@ -10,7 +10,7 @@
             <EditForm Model="@UpdateModel" OnValidSubmit="@OnSubmit">
                 <DataAnnotationsValidator />
                 <MudStack Spacing="3">
-                    <MudPaper Elevation="0" Class="pa-3 mud-background-gray">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-3 mud-background-gray">
                         <MudGrid>
                             <MudItem xs="12" sm="6">
                                 <MudNumericField @bind-Value="Reconciliation.StatementBalance"
@@ -67,7 +67,7 @@
 
                     <MudDivider />
 
-                    <MudPaper Elevation="0" Class="@($"{BalancePaperClass} pa-3")">
+                    <MudPaper Elevation="@_preference.Elevation" Class="@($"{BalancePaperClass} pa-3")">
                         <MudStack>
                             <MudText Typo="Typo.subtitle2">Reconciliation Summary</MudText>
                             <MudGrid Spacing="1">
@@ -152,9 +152,15 @@
 
     private BankReconciliationResponse? Reconciliation { get; set; }
     private UpdateBankReconciliationCommand UpdateModel { get; set; } = new();
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+        
         Reconciliation = await Client.GetBankReconciliationEndpointAsync("1", Id);
         if (Reconciliation != null)
         {

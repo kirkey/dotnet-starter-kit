@@ -1,4 +1,4 @@
-﻿﻿using FluentValidation;
+﻿using FluentValidation;
 using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.Catalog.Application.Products.Specifications;
 using FSH.Starter.WebApi.Catalog.Domain;

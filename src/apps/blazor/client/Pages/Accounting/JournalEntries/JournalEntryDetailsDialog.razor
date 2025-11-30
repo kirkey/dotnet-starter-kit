@@ -15,7 +15,7 @@
             <MudGrid>
                 <!-- Header Section -->
                 <MudItem xs="12">
-                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
                         <div class="d-flex justify-space-between align-center mb-2">
                             <MudText Typo="Typo.h5">@_entry.ReferenceNumber</MudText>
                             <div>
@@ -177,15 +177,20 @@
     [Parameter]
     public DefaultIdType JournalEntryId { get; set; }
 
-
     private bool _loading = true;
     private JournalEntryResponse? _entry;
+    private ClientPreference _preference = new();
 
     /// <summary>
     /// Loads the journal entry details on initialization.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+        
         await LoadEntry();
     }
 

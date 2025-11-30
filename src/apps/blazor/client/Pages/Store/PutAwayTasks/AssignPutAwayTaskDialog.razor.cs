@@ -14,9 +14,15 @@ public partial class AssignPutAwayTaskDialog
     private bool _loading = true;
     private bool _assigning;
     private string? _errorMessage;
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
         await LoadPutAwayTaskAsync();
     }
 

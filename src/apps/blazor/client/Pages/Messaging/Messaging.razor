@@ -41,7 +41,7 @@
                     @foreach (var conversation in FilteredConversations)
                     {
                         var selectedClass = IsSelectedConversation(conversation.Id) ? "conversation-card selected" : "conversation-card";
-                        <MudCard Class="@selectedClass"
+                        <MudCard Elevation="@_preference.Elevation" Class="@selectedClass"
                                  @onclick="@(() => SelectConversation(conversation))">
                             <MudCardContent Class="pa-2">
                                 <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
@@ -241,7 +241,7 @@
                     {
                         @foreach (var member in _conversationDetails.Members.Where(m => m.IsActive))
                         {
-                            <MudCard Class="pa-2">
+                            <MudCard Elevation="@_preference.Elevation" Class="pa-2">
                                 <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
                                     <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
                                         <MudBadge Color="@(IsUserOnline(member.UserId) ? Color.Success : Color.Default)" 
@@ -290,7 +290,7 @@
                         @foreach (var user in _allUsers)
                         {
                             var isOnline = _onlineUserIds.Contains(user.Id.ToString());
-                            <MudCard Class="pa-2 cursor-pointer" @onclick="@(() => StartDirectConversation(user))">
+                            <MudCard Elevation="@_preference.Elevation" Class="pa-2 cursor-pointer" @onclick="@(() => StartDirectConversation(user))">
                                 <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
                                     <MudBadge Color="@(isOnline ? Color.Success : Color.Default)" Overlap="true" Dot="true">
                                         <MudAvatar Color="Color.Secondary" Size="Size.Small">

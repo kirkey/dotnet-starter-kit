@@ -14,7 +14,7 @@
         {
             <MudGrid>
                 <MudItem xs="12">
-                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
                         <MudText Typo="Typo.h6" Class="mb-2">General Information</MudText>
                         <MudDivider Class="mb-3" />
                         
@@ -36,7 +36,7 @@
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
                         <MudText Typo="Typo.h6" Class="mb-2">Quantity & Type</MudText>
                         <MudDivider Class="mb-3" />
                         
@@ -58,7 +58,7 @@
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudPaper Elevation="0" Class="pa-4 mb-4">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
                         <MudText Typo="Typo.h6" Class="mb-2">Dates & Timeline</MudText>
                         <MudDivider Class="mb-3" />
                         
@@ -84,7 +84,7 @@
                 @if (!string.IsNullOrEmpty(_reservation.Name) || !string.IsNullOrEmpty(_reservation.Description) || !string.IsNullOrEmpty(_reservation.Notes))
                 {
                     <MudItem xs="12">
-                        <MudPaper Elevation="0" Class="pa-4">
+                        <MudPaper Elevation="@_preference.Elevation" Class="pa-4">
                             <MudText Typo="Typo.h6" Class="mb-2">Additional Information</MudText>
                             <MudDivider Class="mb-3" />
                             

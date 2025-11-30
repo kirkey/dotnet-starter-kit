@@ -13,7 +13,7 @@ else
             @if (_canToggleUserStatus)
             {
                 <MudItem xs="12" sm="12" md="12">
-                    <MudCard Outlined>
+                    <MudCard Elevation="@_preference.Elevation" Outlined>
                         <MudCardHeader>
                             <CardHeaderContent>
                                 <MudText Typo="Typo.body1">Administrator Settings.</MudText>
@@ -34,7 +34,7 @@ else
             }
         </AuthorizeView>
         <MudItem xs="12" sm="4" md="4">
-            <MudCard Outlined>
+            <MudCard Elevation="@_preference.Elevation" Outlined>
                 <MudCardContent Style="padding:0px!important">
                     <div class="d-flex justify-center mb-4">
                         @if (_imageUrl != null)
@@ -68,7 +68,7 @@ else
             </MudCard>
         </MudItem>
         <MudItem xs="12" sm="8" md="8">
-            <MudCard Outlined>
+            <MudCard Elevation="@_preference.Elevation" Outlined>
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudText>Public Profile</MudText>

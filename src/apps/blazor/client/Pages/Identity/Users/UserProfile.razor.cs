@@ -26,6 +26,7 @@ public partial class UserProfile
     private Uri? _imageUrl;
     private bool _loaded;
     private bool _canToggleUserStatus;
+    private ClientPreference _preference = new();
 
     private async Task ToggleUserStatus()
     {
@@ -39,6 +40,12 @@ public partial class UserProfile
 
     protected override async Task OnInitializedAsync()
     {
+        // Load elevation preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
         if (await ApiHelper.ExecuteCallGuardedAsync(
                 () => UsersClient.GetUserEndpointAsync(Id!))
             is { } user)

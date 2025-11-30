@@ -1,4 +1,4 @@
-﻿﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Roles;
+﻿namespace FSH.Starter.Blazor.Client.Pages.Identity.Roles;
 
 public partial class Roles
 {

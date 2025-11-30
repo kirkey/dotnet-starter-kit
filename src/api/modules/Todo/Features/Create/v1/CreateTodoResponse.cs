@@ -1,4 +1,4 @@
-﻿﻿namespace FSH.Starter.WebApi.Todo.Features.Create.v1;
+﻿namespace FSH.Starter.WebApi.Todo.Features.Create.v1;
 
 /// <summary>
 /// Response for creating a new todo item.

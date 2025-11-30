@@ -28,7 +28,7 @@ public partial class WriteOffDetailsDialog
 
     private void Cancel() => MudDialog?.Close();
 
-    private Color GetApprovalColor(string status) => status switch
+    private Color GetApprovalColor(string? status) => status switch
     {
         "Approved" => Color.Success,
         "Rejected" => Color.Error,

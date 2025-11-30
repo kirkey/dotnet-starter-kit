@@ -166,7 +166,9 @@ public partial class RetainedEarnings
         var result = await dialog.Result;
         if (!result.Canceled && _table is not null)
         {
+
             await _table.ReloadDataAsync();
+
         }
     }
 
@@ -195,7 +197,9 @@ public partial class RetainedEarnings
         var result = await dialog.Result;
         if (!result.Canceled && _table is not null)
         {
+
             await _table.ReloadDataAsync();
+
         }
     }
 
