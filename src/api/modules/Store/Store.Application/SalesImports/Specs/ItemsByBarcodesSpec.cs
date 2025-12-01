@@ -7,7 +7,7 @@ public class ItemsByBarcodesSpec : Specification<Item>
 {
     public ItemsByBarcodesSpec(List<string> barcodes)
     {
-        Query.Where(x => barcodes.Contains(x.Barcode.ToLower()));
+        Query.Where(x => barcodes.Contains(x.Barcode.ToLowerInvariant()));
     }
 }
 

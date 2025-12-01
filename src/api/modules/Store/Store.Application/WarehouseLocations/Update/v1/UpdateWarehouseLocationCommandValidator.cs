@@ -88,8 +88,8 @@ public class UpdateWarehouseLocationCommandValidator : AbstractValidator<UpdateW
             .WithMessage("Capacity unit is required")
             .MaximumLength(20)
             .WithMessage("Capacity unit must not exceed 20 characters")
-            .Must(unit => new[] { "sqft", "sqm", "cbft", "cbm", "tons", "kg", "units" }.Contains(unit?.ToLower()))
-            .WithMessage("Capacity unit must be one of: sqft, sqm, cbft, cbm, tons, kg, units");
+            .Must(unit => new[] { "sqft", "sqm", "cuft", "cum", "pallets", "units", "kg", "lbs", "tons" }.Contains(unit?.ToLowerInvariant()))
+            .WithMessage("Capacity unit must be one of: sqft (Square Feet), sqm (Square Meters), cuft (Cubic Feet), cum (Cubic Meters), pallets, units, kg (Kilograms), lbs (Pounds), tons (Metric Tons)");
 
         When(x => x.RequiresTemperatureControl, () =>
         {

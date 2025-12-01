@@ -153,11 +153,21 @@
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField Label="Capacity Unit" 
-                          For="@(() => context.CapacityUnit)" 
-                          @bind-Value="context.CapacityUnit" 
-                          Required="true"
-                          Placeholder="sqft" />
+            <MudSelect T="string"
+                       @bind-Value="context.CapacityUnit"
+                       For="@(() => context.CapacityUnit)"
+                       Label="Capacity Unit"
+                       Placeholder="Select capacity unit"
+                       AnchorOrigin="Origin.BottomCenter"
+                       TransformOrigin="Origin.TopCenter"
+                       Required="true">
+                @foreach (var unit in CapacityUnitConstants.All)
+                {
+                    <MudSelectItem Value="@unit">
+                        @CapacityUnitConstants.GetDisplayName(unit)
+                    </MudSelectItem>
+                }
+            </MudSelect>
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4" lg="3">

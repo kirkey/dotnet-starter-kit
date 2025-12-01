@@ -45,7 +45,7 @@ public class SearchSalesImportsSpec : Specification<SalesImport, SalesImportResp
 
         if (!string.IsNullOrWhiteSpace(request.Status))
         {
-            Query.Where(x => x.Status == request.Status.ToUpper());
+            Query.Where(x => x.Status == request.Status.ToUpperInvariant());
         }
 
         if (request.IsReversed.HasValue)

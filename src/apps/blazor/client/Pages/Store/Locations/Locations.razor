@@ -46,68 +46,192 @@
              TRequest="WarehouseLocationViewModel" 
              Context="@Context">
     <AdvancedSearchContent>
-        <MudItem xs="12" sm="6" md="4">
-            <MudTextField @bind-Value="@SearchCode"
-                          Label="Location Code"
-                          Placeholder="Search by code"
-                          Variant="Variant.Outlined"
-                          Adornment="Adornment.Start"
-                          AdornmentIcon="@Icons.Material.Filled.Search" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudTextField @bind-Value="@SearchName"
-                          Label="Location Name"
-                          Placeholder="Search by name"
-                          Variant="Variant.Outlined"
-                          Adornment="Adornment.Start"
-                          AdornmentIcon="@Icons.Material.Filled.Search" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <AutocompleteWarehouseId @bind-Value="@SearchWarehouseId"
-                                     Label="Warehouse"
-                                     Placeholder="Filter by warehouse"
-                                     Variant="Variant.Outlined"
-                                     Clearable="true" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudTextField @bind-Value="@SearchAisle"
-                          Label="Aisle"
-                          Placeholder="Filter by aisle"
-                          Variant="Variant.Outlined" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudSelect T="string?"
-                       @bind-Value="@SearchLocationType"
-                       Label="Location Type"
-                       Variant="Variant.Outlined"
-                       Clearable="true">
-                <MudSelectItem Value="@((string?)"Floor")">Floor</MudSelectItem>
-                <MudSelectItem Value="@((string?)"Rack")">Rack</MudSelectItem>
-                <MudSelectItem Value="@((string?)"Cold Storage")">Cold Storage</MudSelectItem>
-                <MudSelectItem Value="@((string?)"Dock")">Dock</MudSelectItem>
-                <MudSelectItem Value="@((string?)"Staging")">Staging</MudSelectItem>
-            </MudSelect>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudSelect T="bool?"
-                       @bind-Value="@SearchIsActive"
-                       Label="Status"
-                       Variant="Variant.Outlined"
-                       Clearable="true">
-                <MudSelectItem Value="@((bool?)true)">Active</MudSelectItem>
-                <MudSelectItem Value="@((bool?)false)">Inactive</MudSelectItem>
-            </MudSelect>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudSelect T="bool?"
-                       @bind-Value="@SearchRequiresTemperatureControl"
-                       Label="Temperature Control"
-                       Variant="Variant.Outlined"
-                       Clearable="true">
-                <MudSelectItem Value="@((bool?)true)">Required</MudSelectItem>
-                <MudSelectItem Value="@((bool?)false)">Not Required</MudSelectItem>
-            </MudSelect>
-        </MudItem>
+        <!-- ...existing search filters... -->
     </AdvancedSearchContent>
-</EntityTable>
 
+    <EditFormContent Context="context">
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Location Id" />
+            </MudItem>
+        }
+
+        <!-- Location Information -->
+        <MudDivider />
+        <MudItem xs="12" sm="6" md="3" lg="2">
+            <MudTextField Label="Code" 
+                          For="@(() => context.Code)" 
+                          @bind-Value="context.Code" 
+                          Required="true"
+                          Placeholder="LOC001" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="9" lg="10">
+            <MudTextField Label="Name" 
+                          For="@(() => context.Name)" 
+                          @bind-Value="context.Name" 
+                          Required="true"
+                          Placeholder="Floor Location 1" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField Label="Description" 
+                          For="@(() => context.Description)" 
+                          @bind-Value="context.Description"
+                          Placeholder="Optional location description" />
+        </MudItem>
+
+        <!-- Location Structure -->
+        <MudDivider Class="my-4" DividerType="DividerType.Middle" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2">Location Structure</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3" lg="2">
+            <MudTextField Label="Aisle" 
+                          For="@(() => context.Aisle)" 
+                          @bind-Value="context.Aisle" 
+                          Required="true"
+                          Placeholder="A" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3" lg="2">
+            <MudTextField Label="Section" 
+                          For="@(() => context.Section)" 
+                          @bind-Value="context.Section" 
+                          Required="true"
+                          Placeholder="1" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3" lg="2">
+            <MudTextField Label="Shelf" 
+                          For="@(() => context.Shelf)" 
+                          @bind-Value="context.Shelf" 
+                          Required="true"
+                          Placeholder="1" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3" lg="2">
+            <MudTextField Label="Bin" 
+                          For="@(() => context.Bin)" 
+                          @bind-Value="context.Bin" 
+                          Placeholder="A1" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <AutocompleteWarehouseId @bind-Value="@context.WarehouseId"
+                                     Label="Warehouse"
+                                     Placeholder="Select warehouse"
+                                     Variant="Variant.Outlined"
+                                     Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <MudSelect T="string"
+                       @bind-Value="context.LocationType"
+                       For="@(() => context.LocationType!)"
+                       Label="Location Type"
+                       Placeholder="Select location type"
+                       AnchorOrigin="Origin.BottomCenter"
+                       TransformOrigin="Origin.TopCenter"
+                       Required="true">
+                <MudSelectItem Value="@("Floor")">Floor</MudSelectItem>
+                <MudSelectItem Value="@("Rack")">Rack</MudSelectItem>
+                <MudSelectItem Value="@("Cold Storage")">Cold Storage</MudSelectItem>
+                <MudSelectItem Value="@("Dock")">Dock</MudSelectItem>
+                <MudSelectItem Value="@("Staging")">Staging</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <!-- Capacity Information -->
+        <MudDivider Class="my-4" DividerType="DividerType.Middle" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2">Capacity Information</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.Capacity" 
+                             For="@(() => context.Capacity)" 
+                             Format="N2"
+                             Label="Capacity" 
+                             Immediate="true" 
+                             Required
+                             Min="0"
+                             Adornment="Adornment.End"
+                             AdornmentText="@context.CapacityUnit" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect T="string"
+                       @bind-Value="context.CapacityUnit"
+                       For="@(() => context.CapacityUnit)"
+                       Label="Capacity Unit"
+                       Placeholder="Select capacity unit"
+                       AnchorOrigin="Origin.BottomCenter"
+                       TransformOrigin="Origin.TopCenter"
+                       Required="true">
+                @foreach (var unit in CapacityUnitConstants.All)
+                {
+                    <MudSelectItem Value="@unit">
+                        @CapacityUnitConstants.GetDisplayName(unit)
+                    </MudSelectItem>
+                }
+            </MudSelect>
+        </MudItem>
+
+        <!-- Temperature Control -->
+        <MudDivider Class="my-4" DividerType="DividerType.Middle" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2">Temperature Control</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" 
+                       T="bool" 
+                       @bind-Value="context.RequiresTemperatureControl" 
+                       Color="Color.Primary">
+                Requires Temperature Control
+            </MudSwitch>
+        </MudItem>
+
+        @if (context.RequiresTemperatureControl)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudNumericField T="decimal?" 
+                                 @bind-Value="context.MinTemperature" 
+                                 Format="N1"
+                                 Label="Min Temperature (°C)" 
+                                 Immediate="true" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudNumericField T="decimal?" 
+                                 @bind-Value="context.MaxTemperature" 
+                                 Format="N1"
+                                 Label="Max Temperature (°C)" 
+                                 Immediate="true" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Label="Temperature Unit" 
+                              For="@(() => context.TemperatureUnit)" 
+                              @bind-Value="context.TemperatureUnit" 
+                              Placeholder="°C"
+                              ReadOnly />
+            </MudItem>
+        }
+
+        <!-- Status -->
+        <MudDivider Class="my-4" DividerType="DividerType.Middle" />
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSwitch Class="mt-3" 
+                       T="bool" 
+                       @bind-Value="context.IsActive" 
+                       Color="Color.Success">
+                Active
+            </MudSwitch>
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
