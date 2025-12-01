@@ -58,20 +58,44 @@ public partial class NavMenu
 
                     if (filteredSubs.Count > 0)
                     {
+                        // Check if item has authorization requirements and if user lacks permission
+                        bool hasPermission = await HasPermissionAsync(item.Action, item.Resource).ConfigureAwait(false);
+                        bool isDisabled = !hasPermission && (!string.IsNullOrWhiteSpace(item.Action) || !string.IsNullOrWhiteSpace(item.Resource));
+
                         filteredSection.SectionItems.Add(new MenuSectionItemModel
                         {
                             Title = item.Title,
                             Icon = item.Icon,
                             IsParent = true,
                             MenuItems = filteredSubs,
-                            PageStatus = item.PageStatus
+                            PageStatus = item.PageStatus,
+                            Disabled = isDisabled || item.PageStatus == PageStatus.ComingSoon,
+                            Action = item.Action,
+                            Resource = item.Resource
                         });
                     }
                 }
                 else
                 {
-                    if (!await HasPermissionAsync(item.Action, item.Resource).ConfigureAwait(false)) continue;
-                    filteredSection.SectionItems.Add(item);
+                    bool hasPermission = await HasPermissionAsync(item.Action, item.Resource).ConfigureAwait(false);
+                    bool isDisabled = !hasPermission && (!string.IsNullOrWhiteSpace(item.Action) || !string.IsNullOrWhiteSpace(item.Resource));
+                    
+                    var menuItem = new MenuSectionItemModel
+                    {
+                        Title = item.Title,
+                        Icon = item.Icon,
+                        Href = item.Href,
+                        Target = item.Target,
+                        Disabled = isDisabled || item.PageStatus == PageStatus.ComingSoon,
+                        IsParent = item.IsParent,
+                        MenuItems = item.MenuItems,
+                        Roles = item.Roles,
+                        Action = item.Action,
+                        Resource = item.Resource,
+                        PageStatus = item.PageStatus
+                    };
+                    
+                    filteredSection.SectionItems.Add(menuItem);
                 }
             }
 

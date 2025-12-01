@@ -86,6 +86,8 @@ public class MenuService : IMenuService
                     Title = "Accounting",
                     Icon = Icons.Material.Filled.AddBox,
                     IsParent = true,
+                    Action = FshActions.View,
+                    Resource = FshResources.Accounting,
                     MenuItems =
                     [
                         // ========== GENERAL LEDGER & CHART OF ACCOUNTS ==========
@@ -148,6 +150,8 @@ public class MenuService : IMenuService
                     Title = "Store",
                     Icon = Icons.Material.Filled.AddBox,
                     IsParent = true,
+                    Action = FshActions.View,
+                    Resource = FshResources.Store,
                     MenuItems =
                     [
                         // ========== DASHBOARD & OVERVIEW ==========
@@ -189,6 +193,8 @@ public class MenuService : IMenuService
                     Title = "Warehouse",
                     Icon = Icons.Material.Filled.AddBox,
                     IsParent = true,
+                    Action = FshActions.View,
+                    Resource = FshResources.Warehouse,
                     MenuItems =
                     [
                         // ========== WAREHOUSE SETUP ==========
@@ -213,6 +219,8 @@ public class MenuService : IMenuService
                     Title = "Human Resource",
                     Icon = Icons.Material.Filled.People,
                     IsParent = true,
+                    Action = FshActions.View,
+                    Resource = FshResources.Employees,
                     MenuItems =
                     [
                         // ========== ORGANIZATION & SETUP ==========
