@@ -6,14 +6,14 @@
             OnClick="@((e) => DrawerToggle())" />
     </MudTooltip>
     <MudButton Color="Color.Transparent" Href="/" DropShadow="false">
-         fullstackhero
+         Home
      </MudButton>
     <MudSpacer />
     <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
-        <MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Primary"
+        @*<MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Primary"
             Href="https://opencollective.com/fullstackhero" Target="_blank" StartIcon="@Icons.Material.Filled.Favorite">
             Sponsor
-        </MudButton>
+        </MudButton>*@
         <ConnectionStatus />
         <MudToggleIconButton @bind-Toggled="@_isDarkMode" Icon="@Icons.Material.Filled.WbSunny"
                              Color="@Color.Warning" title="off" Class="d-flex ml-auto" ToggledIcon="@Icons.Material.Filled.DarkMode"
