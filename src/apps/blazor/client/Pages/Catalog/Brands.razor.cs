@@ -2,11 +2,6 @@
 
 public partial class Brands
 {
-    [Inject]
-    protected IClient _client { get; set; } = null!;
-    [Inject]
-    protected ICourier Courier { get; set; } = null!;
-
     protected EntityServerTableContext<BrandResponse, DefaultIdType, BrandViewModel> Context { get; set; } = null!;
 
     private EntityTable<BrandResponse, DefaultIdType, BrandViewModel> _table = null!;
@@ -50,18 +45,18 @@ public partial class Brands
             searchFunc: async filter =>
             {
                 var brandFilter = filter.Adapt<SearchBrandsCommand>();
-                var result = await _client.SearchBrandsEndpointAsync("1", brandFilter);
+                var result = await Client.SearchBrandsEndpointAsync("1", brandFilter);
                 return result.Adapt<PaginationResponse<BrandResponse>>();
             },
             createFunc: async brand =>
             {
-                await _client.CreateBrandEndpointAsync("1", brand.Adapt<CreateBrandCommand>());
+                await Client.CreateBrandEndpointAsync("1", brand.Adapt<CreateBrandCommand>());
             },
             updateFunc: async (id, brand) =>
             {
-                await _client.UpdateBrandEndpointAsync("1", id, brand.Adapt<UpdateBrandCommand>());
+                await Client.UpdateBrandEndpointAsync("1", id, brand.Adapt<UpdateBrandCommand>());
             },
-            deleteFunc: async id => await _client.DeleteBrandEndpointAsync("1", id));
+            deleteFunc: async id => await Client.DeleteBrandEndpointAsync("1", id));
 }
 
 public partial class BrandViewModel : UpdateBrandCommand;

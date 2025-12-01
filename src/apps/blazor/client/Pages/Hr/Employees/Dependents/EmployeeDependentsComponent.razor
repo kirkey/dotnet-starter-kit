@@ -4,7 +4,7 @@
     <MudStack Spacing="3">
         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
             <MudText Typo="Typo.subtitle2">Dependents</MudText>
-            <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="AddDependent">
+            <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => AddDependent())">
                 Add Dependent
             </MudButton>
         </MudStack>
@@ -77,7 +77,7 @@
     [Parameter]
     public DefaultIdType EmployeeId { get; set; }
 
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     private List<EmployeeDependentResponse> _dependents = new();
     private bool _loading;

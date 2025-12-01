@@ -18,8 +18,8 @@
     </DialogContent>
 
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Approve" Variant="Variant.Filled">Approve</MudButton>
+        <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="@(() => Approve())" Variant="Variant.Filled">Approve</MudButton>
     </DialogActions>
 </MudDialog>
 

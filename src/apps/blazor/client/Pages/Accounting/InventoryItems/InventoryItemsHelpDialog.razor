@@ -5,7 +5,7 @@
         <MudStack Spacing="3">
             <MudText Typo="Typo.h6">Inventory Items Help</MudText>
 
-            <MudExpansionPanels>
+            <MudExpansionPanels Elevation="@_preference.Elevation">
                 <MudExpansionPanel Text="What is Inventory Management?">
                     <MudStack Spacing="2">
                         <MudText Typo="Typo.subtitle2">Understanding Inventory</MudText>
@@ -419,6 +419,6 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+        <MudButton Color="Color.Primary" OnClick="@(() => MudDialog.Close())">Close</MudButton>
     </DialogActions>
 </MudDialog>

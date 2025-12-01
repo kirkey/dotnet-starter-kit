@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.StockAdjustments;
 /// </summary>
 public partial class StockAdjustments
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel> Context { get; set; } = null!;
     private EntityTable<StockAdjustmentResponse, DefaultIdType, StockAdjustmentViewModel> _table = null!;

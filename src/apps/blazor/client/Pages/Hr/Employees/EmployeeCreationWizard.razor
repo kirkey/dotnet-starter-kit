@@ -212,10 +212,10 @@
         </MudStepper>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton OnClick="PreviousStep" Variant="Variant.Text">Back</MudButton>
-        <MudButton OnClick="NextStep" Variant="Variant.Filled" Color="Color.Primary">Next</MudButton>
-        <MudButton OnClick="CreateEmployee" Variant="Variant.Filled" Color="Color.Success">Create Employee</MudButton>
+        <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
+        <MudButton OnClick="@(() => PreviousStep())" Variant="Variant.Text">Back</MudButton>
+        <MudButton OnClick="@(() => NextStep())" Variant="Variant.Filled" Color="Color.Primary">Next</MudButton>
+        <MudButton OnClick="@(() => CreateEmployee())" Variant="Variant.Filled" Color="Color.Success">Create Employee</MudButton>
     </DialogActions>
 </MudDialog>
 

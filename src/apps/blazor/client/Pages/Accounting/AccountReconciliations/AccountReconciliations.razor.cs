@@ -5,8 +5,6 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.AccountReconciliations;
 /// </summary>
 public partial class AccountReconciliations
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
-
     protected EntityServerTableContext<AccountReconciliationResponse, DefaultIdType, AccountReconciliationViewModel> Context { get; set; } = null!;
     private EntityTable<AccountReconciliationResponse, DefaultIdType, AccountReconciliationViewModel> _table = null!;
 

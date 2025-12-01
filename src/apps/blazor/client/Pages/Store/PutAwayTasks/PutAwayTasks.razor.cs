@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.PutAwayTasks;
 /// </summary>
 public partial class PutAwayTasks
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<PutAwayTaskResponse, DefaultIdType, PutAwayTaskViewModel> Context { get; set; } = null!;
     

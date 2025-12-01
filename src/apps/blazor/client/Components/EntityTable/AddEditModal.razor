@@ -36,7 +36,7 @@
         <DialogActions>
             @if (!IsViewMode)
             {
-                <MudButton OnClick="MudDialog.Cancel" StartIcon="@Icons.Material.Filled.Cancel" Variant="Variant.Filled">
+                <MudButton OnClick="@(() => MudDialog.Cancel())" StartIcon="@Icons.Material.Filled.Cancel" Variant="Variant.Filled">
                    Cancel
                 </MudButton>
                 @if (IsCreate)
@@ -54,7 +54,7 @@
             }
             else
             {
-                <MudButton OnClick="MudDialog.Cancel" StartIcon="@Icons.Material.Filled.Close" Variant="Variant.Filled" Color="Color.Primary">
+                <MudButton OnClick="@(() => MudDialog.Cancel())" StartIcon="@Icons.Material.Filled.Close" Variant="Variant.Filled" Color="Color.Primary">
                    Close
                 </MudButton>
             }

@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Timesheets;
 /// </summary>
 public partial class Timesheets
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<TimesheetResponse, DefaultIdType, TimesheetViewModel> Context { get; set; } = null!;
 

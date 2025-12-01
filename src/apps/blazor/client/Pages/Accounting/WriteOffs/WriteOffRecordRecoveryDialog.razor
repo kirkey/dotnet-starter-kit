@@ -21,7 +21,7 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
-        <MudButton OnClick="Record" Color="Color.Success" Variant="Variant.Filled" Disabled="@(_recoveryAmount <= 0)">
+        <MudButton OnClick="@(() => Record())" Color="Color.Success" Variant="Variant.Filled" Disabled="@(_recoveryAmount <= 0)">
             Record Recovery
         </MudButton>
     </DialogActions>

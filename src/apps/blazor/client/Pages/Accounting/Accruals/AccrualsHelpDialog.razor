@@ -5,7 +5,7 @@
         <MudStack Spacing="3">
             <MudText Typo="Typo.h6">Accruals Management Help</MudText>
 
-            <MudExpansionPanels>
+            <MudExpansionPanels Elevation="@_preference.Elevation">
                 <MudExpansionPanel Text="What Are Accruals?">
                     <MudStack Spacing="2">
                         <MudText Typo="Typo.subtitle2">Understanding Accrual Accounting</MudText>
@@ -424,7 +424,7 @@
     </DialogContent>
 
     <DialogActions>
-        <MudButton OnClick="Close">Close</MudButton>
+        <MudButton OnClick="@(() => MudDialog.Close())">Close</MudButton>
     </DialogActions>
 </MudDialog>
 

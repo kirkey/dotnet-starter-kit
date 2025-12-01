@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.LeaveBalances;
 /// </summary>
 public partial class LeaveBalances
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<LeaveBalanceResponse, DefaultIdType, LeaveBalanceViewModel> Context { get; set; } = null!;
     

@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.GeneralLedgers;
 /// </summary>
 public partial class GeneralLedgers
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
     
     /// <summary>
     /// The entity table context for managing general ledger entries.

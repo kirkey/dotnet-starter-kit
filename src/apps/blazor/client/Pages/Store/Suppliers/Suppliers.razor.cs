@@ -7,7 +7,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Suppliers;
 public partial class Suppliers
 {
     [Inject] protected ImageUrlService ImageUrlService { get; set; } = null!;
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<SupplierResponse, DefaultIdType, SupplierViewModel> Context { get; set; } = null!;
 

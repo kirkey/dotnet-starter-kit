@@ -5,7 +5,7 @@
         <MudStack Spacing="3">
             <MudText Typo="Typo.h6">Account Reconciliation Help</MudText>
 
-            <MudExpansionPanels>
+            <MudExpansionPanels Elevation="@_preference.Elevation">
                 <MudExpansionPanel Text="What is Account Reconciliation?">
                     <MudStack Spacing="2">
                         <MudText Typo="Typo.body2">
@@ -119,14 +119,6 @@
     </DialogContent>
 
     <DialogActions>
-        <MudButton OnClick="Close">Close</MudButton>
+        <MudButton OnClick="@(() => MudDialog.Close())">Close</MudButton>
     </DialogActions>
 </MudDialog>
-
-@code {
-    [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; } = null!;
-
-    private void Close() => MudDialog.Close();
-}
-

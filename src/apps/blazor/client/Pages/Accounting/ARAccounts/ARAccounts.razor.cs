@@ -5,7 +5,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.ArAccounts;
 /// </summary>
 public partial class ArAccounts
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     /// <summary>
     /// The entity table context for managing AR accounts.

@@ -5,7 +5,7 @@
         <MudStack Spacing="3">
             <MudText Typo="Typo.h6">Retained Earnings Help</MudText>
 
-            <MudExpansionPanels>
+            <MudExpansionPanels Elevation="@_preference.Elevation">
                 <MudExpansionPanel Text="What is Retained Earnings?">
                     <MudStack Spacing="2">
                         <MudText Typo="Typo.subtitle2">Understanding Retained Earnings</MudText>
@@ -305,6 +305,6 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+        <MudButton Color="Color.Primary" OnClick="@(() => MudDialog.Close())">Close</MudButton>
     </DialogActions>
 </MudDialog>

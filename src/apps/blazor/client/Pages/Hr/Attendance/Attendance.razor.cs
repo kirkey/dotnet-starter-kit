@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Attendance;
 
 public partial class Attendance
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<AttendanceResponse, DefaultIdType, AttendanceViewModel> Context { get; set; } = null!;
     

@@ -5,7 +5,7 @@
         <MudStack Spacing="3">
             <MudText Typo="Typo.h6">Organizational Units Help</MudText>
 
-            <MudExpansionPanels>
+            <MudExpansionPanels Elevation="@_preference.Elevation">
                 <MudExpansionPanel Text="What are Organizational Units?">
                     <MudStack Spacing="2">
                         <MudText Typo="Typo.subtitle2">Understanding Your Organization Structure</MudText>
@@ -333,13 +333,6 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Close">Close</MudButton>
+        <MudButton OnClick="@(() => MudDialog.Close())">Close</MudButton>
     </DialogActions>
 </MudDialog>
-
-@code {
-    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
-
-    private void Close() => MudDialog.Cancel();
-}
-

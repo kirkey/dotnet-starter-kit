@@ -56,7 +56,7 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">@(IsEdit ? "Update" : "Add")</MudButton>
+        <MudButton Color="Color.Primary" OnClick="@(() => Submit())">@(IsEdit ? "Update" : "Add")</MudButton>
     </DialogActions>
 </MudDialog>
 

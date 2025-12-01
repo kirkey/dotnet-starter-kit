@@ -7,7 +7,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Messaging;
 public partial class Messaging : IDisposable
 {
     [Inject] private IClient UsersClient { get; set; } = null!;
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
     
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = null!;

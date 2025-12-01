@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Holidays;
 /// </summary>
 public partial class Holidays
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<HolidayResponse, DefaultIdType, HolidayViewModel> Context { get; set; } = null!;
     

@@ -257,7 +257,7 @@
         }
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Close">Close</MudButton>
+        <MudButton OnClick="@(() => MudDialog.Close())">Close</MudButton>
         @if (_periodClose != null && _periodClose.Status != "Completed")
         {
             <MudButton Variant="Variant.Filled" 

@@ -22,10 +22,6 @@ public partial class DesignationAssignmentHistoryDetailDialog
         }
     }
 
-    private Task Close()
-    {
-        MudDialog.Close(DialogResult.Ok(true));
-        return Task.CompletedTask;
-    }
+    
 }
 

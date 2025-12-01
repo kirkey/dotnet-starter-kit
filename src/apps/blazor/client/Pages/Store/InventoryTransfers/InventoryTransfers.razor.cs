@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.InventoryTransfers;
 /// </summary>
 public partial class InventoryTransfers
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<GetInventoryTransferListResponse, DefaultIdType, InventoryTransferViewModel> Context { get; set; } = null!;
     private EntityTable<GetInventoryTransferListResponse, DefaultIdType, InventoryTransferViewModel> _table = null!;

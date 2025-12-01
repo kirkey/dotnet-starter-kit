@@ -27,7 +27,7 @@
     </DialogContent>
 
     <DialogActions>
-        <MudButton Color="Color.Primary" OnClick="Allocate">Allocate</MudButton>
-        <MudButton OnClick="MudDialog.Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="@(() => Allocate())">Allocate</MudButton>
+        <MudButton OnClick="@(() => MudDialog.Cancel())">Cancel</MudButton>
     </DialogActions>
 </MudDialog>

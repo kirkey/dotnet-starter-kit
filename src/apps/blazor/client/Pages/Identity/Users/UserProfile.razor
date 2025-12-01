@@ -25,7 +25,7 @@ else
                                     <MudSwitch Class="mt-3" T="bool" @bind-Value="@_active" Color="Color.Primary" Label="Active?"></MudSwitch>
                                 <MudSwitch Class="mt-3" T="bool" ReadOnly @bind-Value="@_emailConfirmed" Disabled Label="Email Confirmed?" Color="Color.Secondary"></MudSwitch>
                                 <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto"
-                            OnClick="ToggleUserStatus" ButtonType="ButtonType.Submit">Save Changes
+                            OnClick="@(() => ToggleUserStatus())" ButtonType="ButtonType.Submit">Save Changes
                                 </MudButton>
                             </MudGrid>
                         </MudCardContent>

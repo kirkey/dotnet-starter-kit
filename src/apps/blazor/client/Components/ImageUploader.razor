@@ -48,7 +48,7 @@
                         <MudPaper Elevation="@_preference.Elevation" Class="@($"{_dragClass} image-drop-zone d-flex flex-column align-center justify-center pa-4")"
                                   Outlined="true"
                                   Style="cursor: pointer;"
-                                  OnClick="OpenFilePicker"
+                                  OnClick="@(() => OpenFilePicker())"
                                   OnKeyDown="@(async (KeyboardEventArgs args) => { if (args.Key is "Enter" or " ") await OpenFilePicker(); })"
                                   TabIndex="0"
                                   Role="button">
@@ -118,7 +118,7 @@
                     </MudButton>
                     <!-- Visible debug button to directly trigger native input click (reliable test) -->
                     <MudButton Color="Color.Secondary"
-                               OnClick="TriggerNativeInputClick"
+                               OnClick="@((MouseEventArgs e) => TriggerNativeInputClick(e))"
                                Variant="Variant.Outlined"
                                StartIcon="@Icons.Material.Outlined.TouchApp"
                                Size="Size.Small">

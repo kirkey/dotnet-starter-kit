@@ -137,10 +137,10 @@
         }
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Close">Close</MudButton>
+        <MudButton OnClick="@(() => Close())">Close</MudButton>
         @if (_entry?.EntryId != null)
         {
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ViewJournalEntry">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => ViewJournalEntry())">
                 View Journal Entry
             </MudButton>
         }

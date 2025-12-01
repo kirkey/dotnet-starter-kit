@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.ItemSuppliers;
 
 public partial class ItemSuppliers
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     private EntityServerTableContext<ItemSupplierResponse, DefaultIdType, ItemSupplierViewModel> Context { get; set; } =
         null!;

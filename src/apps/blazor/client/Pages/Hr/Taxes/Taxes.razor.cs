@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Taxes;
 /// </summary>
 public partial class Taxes
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     // Changed TEntity generic from TaxResponse -> TaxDto to match field definitions and search pagination type.
     protected EntityServerTableContext<TaxDto, DefaultIdType, TaxViewModel> Context { get; set; } = null!;

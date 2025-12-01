@@ -3,7 +3,7 @@
 public partial class Products
 {
     [Inject] protected IClient _client { get; set; } = null!;
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<ProductResponse, DefaultIdType, ProductViewModel> Context { get; set; } = null!;
 

@@ -23,7 +23,7 @@
                 <MudButton 
                     Variant="Variant.Filled" 
                     Color="Color.Primary" 
-                    OnClick="HandleUpdateClick"
+                    OnClick="@(() => HandleUpdateClick())"
                     Disabled="_isUpdating"
                     StartIcon="@Icons.Material.Filled.Refresh">
                     @if (_isUpdating)
@@ -39,7 +39,7 @@
                 <MudButton 
                     Variant="Variant.Outlined" 
                     Color="Color.Default" 
-                    OnClick="HandleLaterClick"
+                    OnClick="@(() => HandleLaterClick())"
                     Disabled="_isUpdating">
                     Later
                 </MudButton>

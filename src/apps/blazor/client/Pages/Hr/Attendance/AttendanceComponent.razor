@@ -4,7 +4,7 @@
     <MudStack Spacing="3">
         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
             <MudText Typo="Typo.subtitle2">Attendance Records</MudText>
-            <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="AddAttendance">
+            <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => AddAttendance())">
                 Mark Attendance
             </MudButton>
         </MudStack>
@@ -61,7 +61,7 @@
     [Parameter]
     public DefaultIdType EmployeeId { get; set; }
 
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     private List<AttendanceResponse> _attendanceRecords = new();
     private bool _loading;

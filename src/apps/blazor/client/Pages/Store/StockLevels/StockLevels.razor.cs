@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.StockLevels;
 
 public partial class StockLevels
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     private EntityServerTableContext<StockLevelResponse, DefaultIdType, StockLevelViewModel> Context { get; set; } = null!;
     private EntityTable<StockLevelResponse, DefaultIdType, StockLevelViewModel> _table = null!;

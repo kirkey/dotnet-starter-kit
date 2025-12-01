@@ -22,7 +22,7 @@
             </MudGrid>
         </DialogContent>
         <DialogActions>
-            <MudButton DropShadow="false" Variant="Variant.Filled" OnClick="Cancel">Cancel</MudButton>
+            <MudButton DropShadow="false" Variant="Variant.Filled" OnClick="@(() => Cancel())">Cancel</MudButton>
              <MudButton DropShadow="false" Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Secondary">Upgrade</MudButton>
         </DialogActions>
     </MudDialog>
@@ -41,7 +41,7 @@
     {
         Request.ExtendedExpiryDate = date ?? Request.ExtendedExpiryDate;
         if (await ApiHelper.ExecuteCallGuardedAsync(
-            () => TenantsClient.UpgradeSubscriptionEndpointAsync(Request), successMessage: "Upgraded Subscription.") is not null)
+            () => Client.UpgradeSubscriptionEndpointAsync(Request), successMessage: "Upgraded Subscription.") is not null)
         {
             MudDialog.Close();
         }

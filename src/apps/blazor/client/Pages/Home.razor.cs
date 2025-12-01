@@ -4,10 +4,6 @@ namespace FSH.Starter.Blazor.Client.Pages;
 
 public partial class Home
 {
-
-    [Inject]
-    private ICourier Courier { get; set; } = default!;
-
     [Inject]
     private AuthenticationStateProvider AuthState { get; set; } = default!;
 

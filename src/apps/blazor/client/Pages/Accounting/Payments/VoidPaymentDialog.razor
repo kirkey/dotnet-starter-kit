@@ -8,7 +8,7 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Error" OnClick="Void">Void</MudButton>
-        <MudButton OnClick="MudDialog.Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" OnClick="@(() => Void())">Void</MudButton>
+        <MudButton OnClick="@(() => MudDialog.Cancel())">Cancel</MudButton>
     </DialogActions>
 </MudDialog>

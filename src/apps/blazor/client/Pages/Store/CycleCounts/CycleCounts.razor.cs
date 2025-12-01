@@ -9,7 +9,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.CycleCounts;
 /// </remarks>
 public partial class CycleCounts
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     private EntityServerTableContext<CycleCountResponse, DefaultIdType, CycleCountViewModel> Context = null!;
     private EntityTable<CycleCountResponse, DefaultIdType, CycleCountViewModel> _table = null!;

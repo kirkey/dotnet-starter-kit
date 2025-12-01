@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.PickLists;
 /// </summary>
 public partial class PickLists
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     private EntityServerTableContext<PickListResponse, DefaultIdType, PickListViewModel> Context { get; set; } = null!;
     private EntityTable<PickListResponse, DefaultIdType, PickListViewModel> _table = null!;

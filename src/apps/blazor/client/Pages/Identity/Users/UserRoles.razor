@@ -16,7 +16,7 @@ else
                 </MudButton>
                 @if (_canEditUsers)
                 {
-                    <MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Primary" Class="ml-auto" OnClick="SaveAsync" StartIcon="@Icons.Material.Filled.Save"
+                    <MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Primary" Class="ml-auto" OnClick="@(() => SaveAsync())" StartIcon="@Icons.Material.Filled.Save"
                         ButtonType="ButtonType.Submit" Style="margin-left: 5px!important;">
                         Update
                     </MudButton>

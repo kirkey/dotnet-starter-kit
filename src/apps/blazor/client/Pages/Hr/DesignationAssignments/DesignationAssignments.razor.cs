@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.DesignationAssignments;
 
 public partial class DesignationAssignments
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<DesignationAssignmentResponse, DefaultIdType, DesignationAssignmentViewModel> Context { get; set; } = null!;
     

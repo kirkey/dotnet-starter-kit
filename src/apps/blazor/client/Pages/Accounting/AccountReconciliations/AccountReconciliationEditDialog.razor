@@ -90,8 +90,8 @@
     </DialogContent>
 
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Save" Variant="Variant.Filled">Save</MudButton>
+        <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="@(() => Save())" Variant="Variant.Filled">Save</MudButton>
     </DialogActions>
 </MudDialog>
 

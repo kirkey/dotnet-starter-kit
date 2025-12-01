@@ -7,7 +7,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Warehouses;
 /// </summary>
 public partial class Warehouses
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     /// <summary>
     /// The entity table context for managing warehouses with server-side operations.

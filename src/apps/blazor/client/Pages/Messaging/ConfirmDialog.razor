@@ -11,12 +11,12 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel" StartIcon="@Icons.Material.Filled.Close">
+        <MudButton OnClick="@(() => Cancel())" StartIcon="@Icons.Material.Filled.Close">
             Cancel
         </MudButton>
         <MudButton Color="@Color" 
                    Variant="Variant.Filled" 
-                   OnClick="Confirm"
+                   OnClick="@(() => Confirm())"
                    StartIcon="@Icons.Material.Filled.Check">
             @ButtonText
         </MudButton>

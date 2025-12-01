@@ -4,8 +4,8 @@
         <MudTextField @bind-Value="_inputText" Label="Input" Variant="Variant.Outlined" Class="mt-3" />
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="Submit">@ButtonText</MudButton>
+        <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
+        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="@(() => Submit())">@ButtonText</MudButton>
     </DialogActions>
 </MudDialog>
 

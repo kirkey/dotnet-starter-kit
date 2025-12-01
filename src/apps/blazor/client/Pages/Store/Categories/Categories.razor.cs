@@ -7,7 +7,7 @@ public partial class Categories
 {
     
     [Inject] protected ImageUrlService ImageUrlService { get; set; } = null!;
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<CategoryResponse, DefaultIdType, CategoryViewModel> Context { get; set; } = null!;
     private EntityTable<CategoryResponse, DefaultIdType, CategoryViewModel> _table = null!;

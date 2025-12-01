@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.SerialNumbers;
 
 public partial class SerialNumbers
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     private EntityServerTableContext<SerialNumberResponse, DefaultIdType, SerialNumberViewModel> Context { get; set; } = null!;
     private EntityTable<SerialNumberResponse, DefaultIdType, SerialNumberViewModel> _table = null!;

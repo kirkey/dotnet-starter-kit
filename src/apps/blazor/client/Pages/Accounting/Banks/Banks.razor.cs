@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Banks;
 /// </summary>
 public partial class Banks
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
     
     private ClientPreference _preference = new();
     [Inject] protected ImageUrlService ImageUrlService { get; set; } = null!;

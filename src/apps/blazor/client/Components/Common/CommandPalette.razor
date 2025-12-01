@@ -6,28 +6,28 @@
         <MudText Typo="Typo.h6">Command Palette</MudText>
     </TitleContent>
     <DialogContent>
-        <DialogContent Class="pa-4">
+        <MudStack Class="pa-4">
             <MudTextField @bind-Value="_search" Placeholder="Type to search commands..." Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Immediate="true" OnKeyDown="HandleKey" />
             <MudList T="CommandDescriptor" Dense Class="mt-2" Style="max-height:300px;overflow:auto;">
-                @if(_filtered.Count==0)
+            @if(_filtered.Count==0)
+            {
+                <MudListItem T="CommandDescriptor" Disabled>No matching commands</MudListItem>
+            }
+            else
+            {
+                @foreach(var cmd in _filtered)
                 {
-                    <MudListItem T="CommandDescriptor" Disabled>No matching commands</MudListItem>
+                    <MudListItem T="CommandDescriptor" Class="d-flex justify-space-between" @onclick="(()=>Execute(cmd))" Style="cursor:pointer;">
+                        <span>@cmd.Title</span>
+                        <MudChip Size="Size.Small" Variant="Variant.Outlined">@cmd.Category</MudChip>
+                    </MudListItem>
                 }
-                else
-                {
-                    @foreach(var cmd in _filtered)
-                    {
-                        <MudListItem T="CommandDescriptor" Class="d-flex justify-space-between" @onclick="(()=>Execute(cmd))" Style="cursor:pointer;">
-                            <span>@cmd.Title</span>
-                            <MudChip Size="Size.Small" Variant="Variant.Outlined">@cmd.Category</MudChip>
-                        </MudListItem>
-                    }
-                }
-            </MudList>
-        </DialogContent>
+            }
+        </MudList>
+        </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Close">Close</MudButton>
+        <MudButton OnClick="@(() => Close())">Close</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -43,6 +43,7 @@
         Filter();
         StateHasChanged();
     }
+
     private void Close(){ _open=false; }
 
     private void Filter()

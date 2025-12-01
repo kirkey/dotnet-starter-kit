@@ -5,7 +5,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.SalesImports;
 /// </summary>
 public partial class SalesImports
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<SalesImportResponse, DefaultIdType, SalesImportViewModel> Context { get; set; } = null!;
     

@@ -5,7 +5,7 @@
         <MudStack Spacing="3">
             <MudText Typo="Typo.h6">Employee Management Help</MudText>
 
-            <MudExpansionPanels>
+            <MudExpansionPanels Elevation="@_preference.Elevation">
                 <MudExpansionPanel Text="Employee Lifecycle">
                     <MudStack Spacing="2">
                         <MudText Typo="Typo.body2">
@@ -103,18 +103,6 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Close">Close</MudButton>
+        <MudButton OnClick="@(() => MudDialog.Close())">Close</MudButton>
     </DialogActions>
 </MudDialog>
-
-@code {
-    [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; } = null!;
-
-    private Task Close()
-    {
-        MudDialog.Close(DialogResult.Ok(true));
-        return Task.CompletedTask;
-    }
-}
-s

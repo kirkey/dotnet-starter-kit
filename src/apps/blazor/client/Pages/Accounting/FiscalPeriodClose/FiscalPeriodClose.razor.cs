@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.FiscalPeriodClose;
 public partial class FiscalPeriodClose
 {
     private ClientPreference _preference = new();
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     /// <summary>
     /// The entity table context for managing fiscal period closes.

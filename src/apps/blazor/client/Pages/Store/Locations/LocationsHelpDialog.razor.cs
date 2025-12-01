@@ -8,10 +8,26 @@ public partial class LocationsHelpDialog
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    private Task Close()
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
     {
-        MudDialog.Close(DialogResult.Ok(true));
-        return Task.CompletedTask;
+        // Load preference
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        // Subscribe to preference changes
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
     }
+
+    
 }
 

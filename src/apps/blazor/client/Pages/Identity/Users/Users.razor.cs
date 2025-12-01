@@ -5,7 +5,7 @@ public partial class Users : ComponentBase
     [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; } = null!;
     [Inject] protected IAuthorizationService AuthService { get; set; } = null!;
     [Inject] protected IClient UsersClient { get; set; } = null!;
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityClientTableContext<UserDetail, DefaultIdType, UserDetailViewModel> Context { get; set; } = null!;
 

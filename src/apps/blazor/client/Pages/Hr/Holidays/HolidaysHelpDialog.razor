@@ -5,7 +5,7 @@
         <MudStack Spacing="3">
             <MudText Typo="Typo.h6">Holidays Management Help</MudText>
 
-            <MudExpansionPanels>
+            <MudExpansionPanels Elevation="@_preference.Elevation">
                 <MudExpansionPanel Text="What are Holidays?">
                     <MudText Typo="Typo.body2" Class="mb-2">
                         Holidays are company-wide or regional non-working days defined per the Philippine Labor Code.
@@ -138,16 +138,6 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Close">Close</MudButton>
+        <MudButton OnClick="@(() => MudDialog.Close())">Close</MudButton>
     </DialogActions>
 </MudDialog>
-
-@code {
-    [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; } = null!;
-
-    private void Close()
-    {
-        MudDialog.Close(DialogResult.Ok(true));
-    }
-}

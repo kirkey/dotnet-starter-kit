@@ -213,13 +213,13 @@
         }
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Close">Close</MudButton>
+        <MudButton OnClick="@(() => Close())">Close</MudButton>
         @if (_trialBalance != null)
         {
             <MudButton Variant="Variant.Filled" 
                        Color="Color.Primary" 
                        StartIcon="@Icons.Material.Filled.Download"
-                       OnClick="OnExport">
+                       OnClick="@(() => OnExport())">
                 Export
             </MudButton>
         }

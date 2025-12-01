@@ -4,7 +4,7 @@
     <MudStack Spacing="3">
         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
             <MudText Typo="Typo.subtitle2">Employee Documents</MudText>
-            <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="AddDocument">
+            <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => AddDocument())">
                 Upload Document
             </MudButton>
         </MudStack>
@@ -124,7 +124,7 @@
     [Parameter]
     public DefaultIdType EmployeeId { get; set; }
 
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     private List<EmployeeDocumentResponse> _documents = new();
     private bool _loading;

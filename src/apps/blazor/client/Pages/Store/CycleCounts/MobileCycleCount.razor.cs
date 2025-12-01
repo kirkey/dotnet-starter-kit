@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.CycleCounts;
 /// </summary>
 public partial class MobileCycleCount
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     private bool _isLoading = true;
     private bool _isCountingMode = false;

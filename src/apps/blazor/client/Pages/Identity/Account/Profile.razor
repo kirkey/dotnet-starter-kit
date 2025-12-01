@@ -32,7 +32,7 @@
                     </MudButton>
 
                     <MudButton HtmlTag="label" DropShadow="false" Variant="Variant.Filled" Color="Color.Error" Size="Size.Small"
-                                   StartIcon="@Icons.Material.Filled.Delete" OnClick="RemoveImageAsync" Style="margin-left: 5px;">
+                                   StartIcon="@Icons.Material.Filled.Delete" OnClick="@(() => RemoveImageAsync())" Style="margin-left: 5px;">
                         Delete
                     </MudButton>
                 }

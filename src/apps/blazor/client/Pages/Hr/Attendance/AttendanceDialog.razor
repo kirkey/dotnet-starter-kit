@@ -41,9 +41,9 @@
         }
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
         <MudButton Color="Color.Primary" 
-                   OnClick="Save"
+                   OnClick="@(() => Save())"
                    Disabled="@(!CanSave || _saving)"
                    Variant="Variant.Filled">
             @if (_saving)

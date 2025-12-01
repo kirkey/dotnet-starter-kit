@@ -3,7 +3,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.InventoryItems;
 public partial class InventoryItems
 {
     private ClientPreference _preference = new();
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     // Search filters
     private string? SearchSku;

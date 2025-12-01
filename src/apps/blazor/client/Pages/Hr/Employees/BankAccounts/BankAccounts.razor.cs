@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.BankAccounts;
 
 public partial class BankAccounts
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     [SupplyParameterFromQuery]
     public string? FilterEmployeeId { get; set; }

@@ -6,7 +6,7 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudExpansionPanels MultiExpansion="true">
+        <MudExpansionPanels Elevation="@_preference.Elevation" MultiExpansion="true">
             <MudExpansionPanel Text="Overview">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     Leave Balances track employee leave entitlements by type and year.
@@ -85,7 +85,3 @@
     </DialogActions>
 </MudDialog>
 
-@code {
-    [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; } = default!;
-}

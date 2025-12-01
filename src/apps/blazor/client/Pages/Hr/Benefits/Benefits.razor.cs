@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Benefits;
 /// </summary>
 public partial class Benefits
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<BenefitAllocationResponse, DefaultIdType, BenefitViewModel> Context { get; set; } = null!;
 

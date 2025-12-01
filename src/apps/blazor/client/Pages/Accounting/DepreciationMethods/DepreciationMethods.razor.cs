@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.DepreciationMethods;
 
 public partial class DepreciationMethods
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
     
     private ClientPreference _preference = new();
     // Search filters

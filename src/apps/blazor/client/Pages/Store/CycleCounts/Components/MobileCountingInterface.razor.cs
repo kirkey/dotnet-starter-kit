@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.CycleCounts.Components;
 /// </summary>
 public partial class MobileCountingInterface : IAsyncDisposable
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     private DotNetObjectReference<MobileCountingInterface>? _dotNetRef;
 

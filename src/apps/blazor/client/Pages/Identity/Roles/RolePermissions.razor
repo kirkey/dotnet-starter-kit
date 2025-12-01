@@ -23,7 +23,7 @@ else
                             </MudButton>
                             @if (_canEditRoleClaims)
                             {
-                                <MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Primary" Class="ml-auto" OnClick="SaveAsync"
+                                <MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Primary" Class="ml-auto" OnClick="@(() => SaveAsync())"
                                     ButtonType="ButtonType.Submit" Style="margin-left: 5px!important;" StartIcon="@Icons.Material.Filled.Save">Update Permissions
                                 </MudButton>
                             }

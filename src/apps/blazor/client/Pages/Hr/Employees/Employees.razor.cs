@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees;
 
 public partial class Employees
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<EmployeeResponse, DefaultIdType, EmployeeViewModel> Context { get; set; } = null!;
 

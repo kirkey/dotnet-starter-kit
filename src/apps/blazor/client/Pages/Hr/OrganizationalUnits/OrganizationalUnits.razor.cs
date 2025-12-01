@@ -7,7 +7,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.OrganizationalUnits;
 /// </summary>
 public partial class OrganizationalUnits
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<OrganizationalUnitResponse, DefaultIdType, OrganizationalUnitViewModel> Context { get; set; } = null!;
     

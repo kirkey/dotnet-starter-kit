@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.TaxBrackets;
 /// </summary>
 public partial class TaxBrackets
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<TaxBracketResponse, DefaultIdType, TaxBracketViewModel> Context { get; set; } = null!;
     

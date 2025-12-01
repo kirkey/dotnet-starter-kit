@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.LotNumbers;
 
 public partial class LotNumbers
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     private EntityServerTableContext<LotNumberResponse, DefaultIdType, LotNumberViewModel> Context { get; set; } = null!;
     private EntityTable<LotNumberResponse, DefaultIdType, LotNumberViewModel> _table = null!;

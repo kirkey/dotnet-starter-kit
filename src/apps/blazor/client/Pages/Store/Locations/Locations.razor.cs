@@ -5,7 +5,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Locations;
 /// </summary>
 public partial class Locations
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     /// <summary>
     /// The entity table context for managing warehouse locations with server-side operations.

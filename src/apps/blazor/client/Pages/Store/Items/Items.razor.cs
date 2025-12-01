@@ -8,7 +8,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Items;
 public partial class Items
 {
     [Inject] protected ImageUrlService ImageUrlService { get; set; } = null!;
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<ItemResponse, DefaultIdType, ItemViewModel> Context { get; set; } = null!;
     private EntityTable<ItemResponse, DefaultIdType, ItemViewModel> _table = null!;

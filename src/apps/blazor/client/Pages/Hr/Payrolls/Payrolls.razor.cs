@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Payrolls;
 /// </summary>
 public partial class Payrolls
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<PayrollResponse, DefaultIdType, PayrollViewModel> Context { get; set; } = null!;
 

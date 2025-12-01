@@ -5,7 +5,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Bins;
 /// </summary>
 public partial class Bins
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<BinResponse, DefaultIdType, BinViewModel> Context { get; set; } = null!;
     

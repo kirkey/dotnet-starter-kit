@@ -9,7 +9,7 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Primary" OnClick="Refund">Refund</MudButton>
-        <MudButton OnClick="MudDialog.Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="@(() => Refund())">Refund</MudButton>
+        <MudButton OnClick="@(() => MudDialog.Cancel())">Cancel</MudButton>
     </DialogActions>
 </MudDialog>

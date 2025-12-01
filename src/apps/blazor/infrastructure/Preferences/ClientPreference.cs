@@ -9,7 +9,7 @@ public class ClientPreference : IPreference, INotificationMessage
     public string SecondaryColor { get; set; } = CustomColors.Light.Secondary;
     public double BorderRadius { get; set; } = 5;
     public int Elevation { get; set; } = 1;
-    public FshTablePreference TablePreference { get; set; } = new FshTablePreference();
+    public FshTablePreference TablePreference { get; set; } = new();
 
     /// <summary>
     /// Helper method to extract elevation from preference for notification subscribers.

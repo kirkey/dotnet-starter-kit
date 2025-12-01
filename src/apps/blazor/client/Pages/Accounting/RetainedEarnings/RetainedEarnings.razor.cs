@@ -5,7 +5,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.RetainedEarnings;
 /// </summary>
 public partial class RetainedEarnings
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
     
     private ClientPreference _preference = new();
     /// <summary>

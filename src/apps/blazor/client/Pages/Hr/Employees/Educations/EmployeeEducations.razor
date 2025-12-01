@@ -7,7 +7,7 @@
 {
     <MudAlert Severity="Severity.Info" Class="mb-4">
         Viewing education for Employee ID: <strong>@FilterEmployeeId</strong>
-        <MudButton Size="Size.Small" Variant="Variant.Text" OnClick="ClearFilter" Class="float-right">Clear Filter</MudButton>
+        <MudButton Size="Size.Small" Variant="Variant.Text" OnClick="@(() => ClearFilter())" Class="float-right">Clear Filter</MudButton>
     </MudAlert>
 }
 

@@ -5,7 +5,7 @@
 /// </summary>
 public partial class Todos
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     /// <summary>
     /// The entity table context for managing todos with server-side operations.

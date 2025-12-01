@@ -114,9 +114,9 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
         <MudButton Color="Color.Success" 
-                   OnClick="Verify"
+                   OnClick="@(() => Verify())"
                    Disabled="@(!CanVerify)"
                    Variant="Variant.Filled">
             Verify Account

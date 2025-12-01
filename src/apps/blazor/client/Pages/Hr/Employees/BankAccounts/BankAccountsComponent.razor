@@ -4,7 +4,7 @@
     <MudStack Spacing="3">
         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
             <MudText Typo="Typo.subtitle2">Bank Accounts for Payroll</MudText>
-            <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="AddBankAccount">
+            <MudButton StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => AddBankAccount())">
                 Add Bank Account
             </MudButton>
         </MudStack>
@@ -102,7 +102,7 @@
     [Parameter]
     public DefaultIdType EmployeeId { get; set; }
 
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     private List<BankAccountResponse> _bankAccounts = new();
     private bool _loading;

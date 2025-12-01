@@ -6,7 +6,7 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudExpansionPanels MultiExpansion="true">
+        <MudExpansionPanels Elevation="@_preference.Elevation" MultiExpansion="true">
             <MudExpansionPanel Text="Overview">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     Timesheets track employee work hours for payroll processing.
@@ -105,8 +105,3 @@
         <MudButton Color="Color.Primary" OnClick="@(() => MudDialog.Close())">Close</MudButton>
     </DialogActions>
 </MudDialog>
-
-@code {
-    [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; } = default!;
-}

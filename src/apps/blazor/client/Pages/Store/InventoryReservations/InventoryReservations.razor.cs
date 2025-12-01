@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.InventoryReservations;
 /// </summary>
 public partial class InventoryReservations
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     private EntityServerTableContext<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel> Context { get; set; } = null!;
     private EntityTable<InventoryReservationResponse, DefaultIdType, InventoryReservationViewModel> _table = null!;

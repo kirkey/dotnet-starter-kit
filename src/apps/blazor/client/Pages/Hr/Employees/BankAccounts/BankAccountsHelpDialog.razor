@@ -5,7 +5,7 @@
         <MudStack Spacing="3">
             <MudText Typo="Typo.h6">Bank Accounts Help</MudText>
 
-            <MudExpansionPanels>
+            <MudExpansionPanels Elevation="@_preference.Elevation">
                 <MudExpansionPanel Text="What are Bank Accounts Used For?">
                     <MudStack Spacing="2">
                         <MudText Typo="Typo.subtitle2">Bank Account Management in Payroll</MudText>
@@ -453,17 +453,6 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Close">Close</MudButton>
+        <MudButton OnClick="@(() => MudDialog.Close())">Close</MudButton>
     </DialogActions>
 </MudDialog>
-
-@code {
-    [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; } = null!;
-
-    private Task Close()
-    {
-        MudDialog.Close(DialogResult.Ok(true));
-        return Task.CompletedTask;
-    }
-}

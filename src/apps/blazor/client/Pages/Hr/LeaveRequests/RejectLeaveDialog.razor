@@ -14,8 +14,8 @@
                       Required="true" />
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="Submit" Disabled="@(string.IsNullOrWhiteSpace(_reason))">
+        <MudButton OnClick="@(() => Cancel())">Cancel</MudButton>
+        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="@(() => Submit())" Disabled="@(string.IsNullOrWhiteSpace(_reason))">
             @ButtonText
         </MudButton>
     </DialogActions>

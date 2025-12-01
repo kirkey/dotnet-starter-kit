@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Shifts;
 /// </summary>
 public partial class Shifts
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<ShiftResponse, DefaultIdType, ShiftViewModel> Context { get; set; } = null!;
     

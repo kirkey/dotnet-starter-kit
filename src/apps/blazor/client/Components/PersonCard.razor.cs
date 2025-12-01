@@ -2,7 +2,7 @@
 
 public partial class PersonCard
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     [Parameter]
     public string? Class { get; set; }

@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.LeaveRequests;
 /// </summary>
 public partial class LeaveRequests
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     protected EntityServerTableContext<LeaveRequestResponse, DefaultIdType, LeaveRequestViewModel> Context { get; set; } = null!;
 

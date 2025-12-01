@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.FinancialStatements;
 
 public partial class FinancialStatements
 {
-    [Inject] protected ICourier Courier { get; set; } = null!;
+    
 
     private int _activeTab = 0;
     private BalanceSheetView? _balanceSheetView;
