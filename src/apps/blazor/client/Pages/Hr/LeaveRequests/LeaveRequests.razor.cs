@@ -6,8 +6,6 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.LeaveRequests;
 /// </summary>
 public partial class LeaveRequests
 {
-    
-
     protected EntityServerTableContext<LeaveRequestResponse, DefaultIdType, LeaveRequestViewModel> Context { get; set; } = null!;
 
     private EntityTable<LeaveRequestResponse, DefaultIdType, LeaveRequestViewModel>? _table;

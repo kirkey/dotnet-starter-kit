@@ -28,7 +28,7 @@
             <MudMenuItem OnClick="@(() => ViewUpgradeSubscriptionModalAsync(context.Id))">Upgrade Subscription</MudMenuItem>
         }
         <MudMenuItem OnClick="@(() => ViewTenantDetails(context.Id))">
-            @((context.ShowDetails == true) ? "Hide" : "Show") Tenant Details
+            @(context.ShowDetails ? "Hide" : "Show") Tenant Details
         </MudMenuItem>
         @if (_canModify)
         {

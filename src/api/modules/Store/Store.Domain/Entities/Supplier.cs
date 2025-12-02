@@ -313,6 +313,7 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
     /// </summary>
     /// <param name="name">New name for the supplier. Max length: 200.</param>
     /// <param name="description">New description for the supplier. Max length: 2000.</param>
+    /// <param name="code">New code for the supplier. Max length: 50.</param>
     /// <param name="contactPerson">New contact person for the supplier. Max length: 100.</param>
     /// <param name="email">New email for the supplier. Max length: 255.</param>
     /// <param name="phone">New phone number for the supplier. Max length: 50.</param>
@@ -326,6 +327,7 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
     /// <returns>The updated <see cref="Supplier"/> instance.</returns>
     /// <exception cref="ArgumentException">Thrown when any of the updated fields are invalid.</exception>
     public Supplier Update(
+        string? code,
         string? name,
         string? description,
         string? contactPerson,
@@ -342,6 +344,13 @@ public sealed class Supplier : AuditableEntity, IAggregateRoot
     {
         bool isUpdated = false;
 
+        if (!string.IsNullOrWhiteSpace(code) && !string.Equals(Code, code, StringComparison.OrdinalIgnoreCase))
+        {
+            if (code.Length > CodeMaxLength) throw new ArgumentException($"Code must not exceed {CodeMaxLength} characters", nameof(code));
+            Code = code;
+            isUpdated = true;
+        }
+        
         if (!string.IsNullOrWhiteSpace(name) && !string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
         {
             if (name.Length < NameMinLength) throw new ArgumentException($"Name must be at least {NameMinLength} characters", nameof(name));

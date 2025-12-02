@@ -13,6 +13,12 @@ public record UpdateSupplierCommand : IRequest<UpdateSupplierResponse>
     public DefaultIdType Id { get; set; }
 
     /// <summary>
+    /// Gets or sets the supplier code.
+    /// </summary>
+    [DefaultValue("SUP-001")]
+    public string Code { get; set; } = string.Empty;
+    
+    /// <summary>
     /// Gets or sets the supplier name.
     /// </summary>
     [DefaultValue("ABC Supplies Inc.")]
@@ -23,12 +29,6 @@ public record UpdateSupplierCommand : IRequest<UpdateSupplierResponse>
     /// </summary>
     [DefaultValue("Reliable supplier of industrial goods")]
     public string? Description { get; set; }
-
-    /// <summary>
-    /// Gets or sets the supplier code.
-    /// </summary>
-    [DefaultValue("SUP-001")]
-    public string Code { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the main contact person at the supplier.

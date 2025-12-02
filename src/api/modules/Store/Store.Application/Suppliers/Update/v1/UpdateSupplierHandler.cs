@@ -35,6 +35,7 @@ public sealed class UpdateSupplierHandler(
         }
 
         var updated = supplier.Update(
+            request.Code,
             request.Name,
             request.Description,
             request.ContactPerson,

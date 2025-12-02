@@ -15,7 +15,7 @@
 
 <EntityTable @ref="_table" TEntity="SupplierResponse" TId="DefaultIdType" TRequest="SupplierViewModel" Context="@Context">
     <ExtraActions Context="context">
-        @if (context.IsActive == false)
+        @if (!context.IsActive)
         {
             <MudMenuItem OnClick="@(() => ActivateSupplier(context.Id ?? DefaultIdType.Empty))">
                 <div class="d-flex align-center">
@@ -24,7 +24,7 @@
                 </div>
             </MudMenuItem>
         }
-        @if (context.IsActive == true)
+        @if (context.IsActive)
         {
             <MudMenuItem OnClick="@(() => DeactivateSupplier(context.Id ?? DefaultIdType.Empty))">
                 <div class="d-flex align-center">
@@ -43,30 +43,29 @@
             </MudItem>
         }
 
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField Label="Code" For="@(() => context.Code)" @bind-Value="context.Code" Required="true" Variant="Variant.Filled" />
+        </MudItem>
         <MudItem xs="12">
             <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" Required="true" Variant="Variant.Filled" />
         </MudItem>
-
-        <MudItem xs="12" sm="6" md="6" lg="4">
-            <MudTextField Label="Code" For="@(() => context.Code)" @bind-Value="context.Code" Required="true" Variant="Variant.Filled" />
-        </MudItem>
+        
         <MudItem xs="12" sm="6" md="6" lg="4">
             <MudTextField Label="Contact Person" For="@(() => context.ContactPerson)" @bind-Value="context.ContactPerson" Required="true" Variant="Variant.Filled" />
         </MudItem>
         <MudItem xs="12" sm="6" md="6" lg="4">
             <MudTextField Label="Email" For="@(() => context.Email)" @bind-Value="context.Email" Required="true" Variant="Variant.Filled" />
         </MudItem>
-
         <MudItem xs="12" sm="6" md="6" lg="4">
             <MudTextField Label="Phone" For="@(() => context.Phone)" @bind-Value="context.Phone" Required="true" Variant="Variant.Filled" />
         </MudItem>
         <MudItem xs="12" lg="10">
             <MudTextField Label="Address" For="@(() => context.Address)" @bind-Value="context.Address" Required="true" Variant="Variant.Filled" />
         </MudItem>
-        <MudItem xs="6" sm="4" md="3" lg="2">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="Postal Code" For="@(() => context.PostalCode)" @bind-Value="context.PostalCode" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="6" lg="4">
+        <MudItem xs="12" sm="6" md="4" lg="3">
             <MudTextField Label="Website" For="@(() => context.Website)" @bind-Value="context.Website" />
         </MudItem>
         <MudDivider/>
