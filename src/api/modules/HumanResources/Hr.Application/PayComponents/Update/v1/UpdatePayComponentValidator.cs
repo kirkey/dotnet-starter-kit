@@ -11,15 +11,15 @@ public class UpdatePayComponentValidator : AbstractValidator<UpdatePayComponentC
             .NotEmpty().WithMessage("Pay component ID is required.");
 
         RuleFor(x => x.ComponentName)
-            .MaximumLength(100).WithMessage("Component name must not exceed 100 characters.")
+            .MaximumLength(128).WithMessage("Component name must not exceed 100 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.ComponentName));
 
         RuleFor(x => x.GlAccountCode)
-            .MaximumLength(50).WithMessage("GL account code must not exceed 50 characters.")
+            .MaximumLength(64).WithMessage("GL account code must not exceed 50 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.GlAccountCode));
 
         RuleFor(x => x.Description)
-            .MaximumLength(500).WithMessage("Description must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Description must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }
 }

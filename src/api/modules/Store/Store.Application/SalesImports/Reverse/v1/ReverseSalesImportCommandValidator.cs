@@ -12,7 +12,7 @@ public class ReverseSalesImportCommandValidator : AbstractValidator<ReverseSales
 
         RuleFor(x => x.Reason)
             .NotEmpty().WithMessage("Reversal reason is required")
-            .MaximumLength(500).WithMessage("Reversal reason must not exceed 500 characters");
+            .MaximumLength(512).WithMessage("Reversal reason must not exceed 500 characters");
     }
 }
 

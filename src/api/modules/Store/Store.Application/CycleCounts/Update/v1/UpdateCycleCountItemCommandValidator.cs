@@ -12,7 +12,7 @@ public sealed class UpdateCycleCountItemCommandValidator : AbstractValidator<Upd
             .WithMessage("Actual quantity must be zero or greater.");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .When(x => !string.IsNullOrWhiteSpace(x.Notes))
             .WithMessage("Notes cannot exceed 1000 characters.");
     }

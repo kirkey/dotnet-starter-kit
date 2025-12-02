@@ -6,7 +6,7 @@ public class CreateTaxBracketValidator : AbstractValidator<CreateTaxBracketComma
     {
         RuleFor(cmd => cmd.TaxType)
             .NotEmpty().WithMessage("Tax type is required.")
-            .MaximumLength(50).WithMessage("Tax type must not exceed 50 characters.");
+            .MaximumLength(64).WithMessage("Tax type must not exceed 50 characters.");
 
         RuleFor(cmd => cmd.Year)
             .GreaterThanOrEqualTo(2000).WithMessage("Year must be 2000 or later.")
@@ -22,9 +22,9 @@ public class CreateTaxBracketValidator : AbstractValidator<CreateTaxBracketComma
             .InclusiveBetween(0m, 1m).WithMessage("Tax rate must be between 0 and 1 (0-100%).");
 
         RuleFor(cmd => cmd.FilingStatus)
-            .MaximumLength(50).WithMessage("Filing status must not exceed 50 characters.");
+            .MaximumLength(64).WithMessage("Filing status must not exceed 50 characters.");
 
         RuleFor(cmd => cmd.Description)
-            .MaximumLength(500).WithMessage("Description must not exceed 500 characters.");
+            .MaximumLength(512).WithMessage("Description must not exceed 500 characters.");
     }
 }

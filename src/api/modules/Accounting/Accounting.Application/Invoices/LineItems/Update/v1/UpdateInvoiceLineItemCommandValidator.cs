@@ -20,7 +20,7 @@ public sealed class UpdateInvoiceLineItemCommandValidator : AbstractValidator<Up
             RuleFor(x => x.Description!)
                 .MinimumLength(3)
                 .WithMessage("Description must be at least 3 characters.")
-                .MaximumLength(500)
+                .MaximumLength(512)
                 .WithMessage("Description cannot exceed 500 characters.");
         });
 

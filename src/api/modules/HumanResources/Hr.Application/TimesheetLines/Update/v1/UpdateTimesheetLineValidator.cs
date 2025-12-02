@@ -24,11 +24,11 @@ public sealed class UpdateTimesheetLineValidator : AbstractValidator<UpdateTimes
         });
 
         RuleFor(x => x.ProjectId)
-            .MaximumLength(50).WithMessage("Project ID cannot exceed 50 characters.")
+            .MaximumLength(64).WithMessage("Project ID cannot exceed 50 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.ProjectId));
 
         RuleFor(x => x.TaskDescription)
-            .MaximumLength(500).WithMessage("Task description cannot exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Task description cannot exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.TaskDescription));
 
         RuleFor(x => x.BillingRate)

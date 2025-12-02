@@ -61,7 +61,7 @@ public class UpdatePayrollLineValidator : AbstractValidator<UpdatePayrollLineCom
             .When(x => !string.IsNullOrWhiteSpace(x.BankAccountLast4));
 
         RuleFor(x => x.CheckNumber)
-            .MaximumLength(20)
+            .MaximumLength(32)
             .WithMessage("Check number cannot exceed 20 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.CheckNumber));
     }

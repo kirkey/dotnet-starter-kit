@@ -11,7 +11,7 @@ public class GenerateTrialBalanceQueryValidator : AbstractValidator<GenerateTria
             .WithMessage("As of date cannot be in the future");
 
         RuleFor(x => x.AccountTypeFilter)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Account type filter cannot exceed 50 characters");
     }
 }

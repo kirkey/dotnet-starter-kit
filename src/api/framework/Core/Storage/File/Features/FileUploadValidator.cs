@@ -8,11 +8,11 @@ public class FileUploadRequestValidator : AbstractValidator<FileUploadCommand>
     {
         RuleFor(p => p.Name)
             .NotEmpty()
-            .MaximumLength(150);
+            .MaximumLength(256);
 
         RuleFor(p => p.Extension)
             .NotEmpty()
-            .MaximumLength(5);
+            .MaximumLength(8);
 
         RuleFor(p => p.Data)
             .NotEmpty();  

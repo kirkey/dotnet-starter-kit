@@ -18,7 +18,7 @@ public sealed class ReceivePurchaseOrderCommandValidator : AbstractValidator<Rec
             .WithMessage("Actual delivery date cannot be in the future");
 
         RuleFor(x => x.ReceiptNotes)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .WithMessage("Receipt notes must not exceed 1000 characters");
     }
 }

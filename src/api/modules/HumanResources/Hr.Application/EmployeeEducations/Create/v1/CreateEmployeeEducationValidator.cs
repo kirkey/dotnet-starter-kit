@@ -17,19 +17,19 @@ public class CreateEmployeeEducationValidator : AbstractValidator<CreateEmployee
         RuleFor(x => x.EducationLevel)
             .NotEmpty()
             .WithMessage("Education level is required")
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Education level cannot exceed 50 characters");
 
         RuleFor(x => x.FieldOfStudy)
             .NotEmpty()
             .WithMessage("Field of study is required")
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Field of study cannot exceed 100 characters");
 
         RuleFor(x => x.Institution)
             .NotEmpty()
             .WithMessage("Institution name is required")
-            .MaximumLength(150)
+            .MaximumLength(256)
             .WithMessage("Institution name cannot exceed 150 characters");
 
         RuleFor(x => x.GraduationDate)
@@ -46,17 +46,17 @@ public class CreateEmployeeEducationValidator : AbstractValidator<CreateEmployee
             .When(x => x.Gpa.HasValue);
 
         RuleFor(x => x.Degree)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Degree cannot exceed 100 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Degree));
 
         RuleFor(x => x.CertificateNumber)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Certificate number cannot exceed 50 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.CertificateNumber));
 
         RuleFor(x => x.Notes)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Notes cannot exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }

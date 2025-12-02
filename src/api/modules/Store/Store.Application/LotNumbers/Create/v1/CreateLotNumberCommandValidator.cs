@@ -10,7 +10,7 @@ public sealed class CreateLotNumberCommandValidator : AbstractValidator<CreateLo
         RuleFor(x => x.LotCode)
             .NotEmpty()
             .WithMessage("LotCode is required")
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("LotCode must not exceed 100 characters");
 
         RuleFor(x => x.ItemId)
@@ -27,7 +27,7 @@ public sealed class CreateLotNumberCommandValidator : AbstractValidator<CreateLo
             .When(x => x.ManufactureDate.HasValue && x.ExpirationDate.HasValue);
 
         RuleFor(x => x.QualityNotes)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .WithMessage("QualityNotes must not exceed 1000 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.QualityNotes));
 

@@ -13,7 +13,7 @@ public sealed class UpdateDeferredRevenueCommandValidator : AbstractValidator<Up
             .When(x => x.Amount.HasValue);
 
         RuleFor(x => x.Description)
-            .MaximumLength(500).WithMessage("Description must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Description must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }
 }

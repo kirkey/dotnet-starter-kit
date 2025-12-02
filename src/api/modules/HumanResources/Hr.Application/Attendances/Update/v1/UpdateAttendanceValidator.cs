@@ -15,7 +15,7 @@ public class UpdateAttendanceValidator : AbstractValidator<UpdateAttendanceComma
             .WithMessage("Attendance ID is required");
 
         RuleFor(x => x.ClockOutLocation)
-            .MaximumLength(250)
+            .MaximumLength(256)
             .WithMessage("Clock out location cannot exceed 250 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.ClockOutLocation));
 
@@ -25,7 +25,7 @@ public class UpdateAttendanceValidator : AbstractValidator<UpdateAttendanceComma
             .WithMessage("Status must be Present, Late, Absent, or LeaveApproved");
 
         RuleFor(x => x.ManagerComment)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Manager comment cannot exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.ManagerComment));
     }

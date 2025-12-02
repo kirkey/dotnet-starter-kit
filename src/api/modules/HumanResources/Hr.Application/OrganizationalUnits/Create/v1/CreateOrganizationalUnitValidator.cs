@@ -10,7 +10,7 @@ public class CreateOrganizationalUnitValidator : AbstractValidator<CreateOrganiz
 
         RuleFor(x => x.Code)
             .NotEmpty().WithMessage("Code is required.")
-            .MaximumLength(50).WithMessage("Code must not exceed 50 characters.")
+            .MaximumLength(64).WithMessage("Code must not exceed 50 characters.")
             .Matches(@"^[A-Z0-9-]+$").WithMessage("Code must contain only uppercase letters, numbers, and hyphens.");
 
         RuleFor(x => x.Name)
@@ -39,11 +39,11 @@ public class CreateOrganizationalUnitValidator : AbstractValidator<CreateOrganiz
             .WithMessage("Section must have a Division parent.");
 
         RuleFor(x => x.CostCenter)
-            .MaximumLength(50).WithMessage("Cost center must not exceed 50 characters.")
+            .MaximumLength(64).WithMessage("Cost center must not exceed 50 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.CostCenter));
 
         RuleFor(x => x.Location)
-            .MaximumLength(200).WithMessage("Location must not exceed 200 characters.")
+            .MaximumLength(256).WithMessage("Location must not exceed 200 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Location));
     }
 }

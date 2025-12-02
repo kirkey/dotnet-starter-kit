@@ -9,13 +9,13 @@ public class CreateStockAdjustmentCommandValidator : AbstractValidator<CreateSto
         RuleFor(x => x.Name)
             .NotEmpty()
             .WithMessage("Adjustment name is required")
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Adjustment name must not exceed 100 characters");
 
         RuleFor(x => x.AdjustmentNumber)
             .NotEmpty()
             .WithMessage("Adjustment number is required")
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Adjustment number must not exceed 50 characters");
 
         RuleFor(x => x.ItemId)
@@ -52,7 +52,7 @@ public class CreateStockAdjustmentCommandValidator : AbstractValidator<CreateSto
         RuleFor(x => x.Reason)
             .NotEmpty()
             .WithMessage("Adjustment reason is required")
-            .MaximumLength(200)
+            .MaximumLength(256)
             .WithMessage("Adjustment reason must not exceed 200 characters");
 
         RuleFor(x => x.QuantityBefore)
@@ -68,15 +68,15 @@ public class CreateStockAdjustmentCommandValidator : AbstractValidator<CreateSto
             .WithMessage("Unit cost must be zero or greater");
 
         RuleFor(x => x.Reference)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrEmpty(x.Reference));
 
         RuleFor(x => x.AdjustedBy)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrEmpty(x.AdjustedBy));
 
         RuleFor(x => x.BatchNumber)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .When(x => !string.IsNullOrEmpty(x.BatchNumber));
 
         RuleFor(x => x.ExpiryDate)

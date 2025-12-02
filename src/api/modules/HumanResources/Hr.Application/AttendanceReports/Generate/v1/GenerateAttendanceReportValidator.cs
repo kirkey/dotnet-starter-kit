@@ -16,7 +16,7 @@ public sealed class GenerateAttendanceReportValidator : AbstractValidator<Genera
 
         RuleFor(x => x.Title)
             .NotEmpty().WithMessage("Report title is required")
-            .MaximumLength(200).WithMessage("Report title cannot exceed 200 characters");
+            .MaximumLength(256).WithMessage("Report title cannot exceed 200 characters");
 
         RuleFor(x => x.FromDate)
             .NotNull().WithMessage("From date is required");
@@ -26,7 +26,7 @@ public sealed class GenerateAttendanceReportValidator : AbstractValidator<Genera
             .GreaterThanOrEqualTo(x => x.FromDate).WithMessage("To date must be after from date");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000).WithMessage("Notes cannot exceed 1000 characters");
+            .MaximumLength(1024).WithMessage("Notes cannot exceed 1000 characters");
     }
 
     /// <summary>

@@ -33,17 +33,17 @@ public class UpdateTaxCodeCommandValidator : AbstractValidator<UpdateTaxCodeComm
 
         // TaxRegistrationNumber validation
         RuleFor(x => x.TaxRegistrationNumber)
-            .MaximumLength(50).WithMessage("Tax registration number must not exceed 50 characters.")
+            .MaximumLength(64).WithMessage("Tax registration number must not exceed 50 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.TaxRegistrationNumber));
 
         // ReportingCategory validation
         RuleFor(x => x.ReportingCategory)
-            .MaximumLength(100).WithMessage("Reporting category must not exceed 100 characters.")
+            .MaximumLength(128).WithMessage("Reporting category must not exceed 100 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.ReportingCategory));
 
         // Description validation
         RuleFor(x => x.Description)
-            .MaximumLength(2000).WithMessage("Description must not exceed 2000 characters.")
+            .MaximumLength(2048).WithMessage("Description must not exceed 2000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }
 }

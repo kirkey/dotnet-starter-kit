@@ -9,7 +9,7 @@ public class UpdateShiftValidator : AbstractValidator<UpdateShiftCommand>
             .WithMessage("Shift ID is required");
 
         RuleFor(x => x.ShiftName)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Shift name cannot exceed 100 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.ShiftName));
 
@@ -19,7 +19,7 @@ public class UpdateShiftValidator : AbstractValidator<UpdateShiftCommand>
             .When(x => x.BreakDurationMinutes.HasValue);
 
         RuleFor(x => x.Description)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Description cannot exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }

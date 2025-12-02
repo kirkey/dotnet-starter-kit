@@ -10,7 +10,7 @@ public sealed class BillCreateCommandValidator : AbstractValidator<BillCreateCom
         RuleFor(x => x.BillNumber)
             .NotEmpty()
             .WithMessage("Bill number is required.")
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Bill number cannot exceed 50 characters.")
             .Must(BeValidBillNumber)
             .WithMessage("Bill number contains invalid characters.");
@@ -38,22 +38,22 @@ public sealed class BillCreateCommandValidator : AbstractValidator<BillCreateCom
             .WithMessage("Due date cannot be before bill date.");
 
         RuleFor(x => x.Description)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .When(x => !string.IsNullOrWhiteSpace(x.Description))
             .WithMessage("Description cannot exceed 500 characters.");
 
         RuleFor(x => x.PaymentTerms)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrWhiteSpace(x.PaymentTerms))
             .WithMessage("Payment terms cannot exceed 100 characters.");
 
         RuleFor(x => x.PurchaseOrderNumber)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .When(x => !string.IsNullOrWhiteSpace(x.PurchaseOrderNumber))
             .WithMessage("Purchase order number cannot exceed 50 characters.");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(2000)
+            .MaximumLength(2048)
             .When(x => !string.IsNullOrWhiteSpace(x.Notes))
             .WithMessage("Notes cannot exceed 2000 characters.");
 
@@ -121,7 +121,7 @@ public sealed class BillLineItemDtoValidator : AbstractValidator<BillLineItemDto
         RuleFor(x => x.Description)
             .NotEmpty()
             .WithMessage("Line item description is required.")
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Line item description cannot exceed 500 characters.");
 
         RuleFor(x => x.Quantity)
@@ -155,7 +155,7 @@ public sealed class BillLineItemDtoValidator : AbstractValidator<BillLineItemDto
             .WithMessage("Tax amount cannot exceed 999,999,999.");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .When(x => !string.IsNullOrWhiteSpace(x.Notes))
             .WithMessage("Line item notes cannot exceed 1000 characters.");
 

@@ -15,17 +15,17 @@ public class UpdateWarehouseLocationCommandValidator : AbstractValidator<UpdateW
         RuleFor(x => x.Name)
             .NotEmpty()
             .WithMessage("Location name is required")
-            .MaximumLength(200)
+            .MaximumLength(256)
             .WithMessage("Location name must not exceed 200 characters");
 
         RuleFor(x => x.Description)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .WithMessage("Description must not exceed 1000 characters");
 
         RuleFor(x => x.Code)
             .NotEmpty()
             .WithMessage("Location code is required")
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Location code must not exceed 50 characters")
             .Matches(@"^[A-Z0-9\-]+$")
             .WithMessage("Location code must contain only uppercase letters, numbers and hyphens")
@@ -38,23 +38,23 @@ public class UpdateWarehouseLocationCommandValidator : AbstractValidator<UpdateW
         RuleFor(x => x.Aisle)
             .NotEmpty()
             .WithMessage("Aisle is required")
-            .MaximumLength(20)
+            .MaximumLength(32)
             .WithMessage("Aisle must not exceed 20 characters");
 
         RuleFor(x => x.Section)
             .NotEmpty()
             .WithMessage("Section is required")
-            .MaximumLength(20)
+            .MaximumLength(32)
             .WithMessage("Section must not exceed 20 characters");
 
         RuleFor(x => x.Shelf)
             .NotEmpty()
             .WithMessage("Shelf is required")
-            .MaximumLength(20)
+            .MaximumLength(32)
             .WithMessage("Shelf must not exceed 20 characters");
 
         RuleFor(x => x.Bin)
-            .MaximumLength(20)
+            .MaximumLength(32)
             .WithMessage("Bin must not exceed 20 characters");
 
         RuleFor(x => x.WarehouseId)
@@ -69,7 +69,7 @@ public class UpdateWarehouseLocationCommandValidator : AbstractValidator<UpdateW
         RuleFor(x => x.LocationType)
             .NotEmpty()
             .WithMessage("Location type is required")
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Location type must not exceed 50 characters")
             .Must(type => new[] { "Floor", "Rack", "Cold Storage", "Freezer", "Dock", "Office" }.Contains(type))
             .WithMessage("Location type must be one of: Floor, Rack, Cold Storage, Freezer, Dock, Office");
@@ -86,7 +86,7 @@ public class UpdateWarehouseLocationCommandValidator : AbstractValidator<UpdateW
         RuleFor(x => x.CapacityUnit)
             .NotEmpty()
             .WithMessage("Capacity unit is required")
-            .MaximumLength(20)
+            .MaximumLength(32)
             .WithMessage("Capacity unit must not exceed 20 characters")
             .Must(unit => new[] { "sqft", "sqm", "cuft", "cum", "pallets", "units", "kg", "lbs", "tons" }.Contains(unit?.ToLowerInvariant()))
             .WithMessage("Capacity unit must be one of: sqft (Square Feet), sqm (Square Meters), cuft (Cubic Feet), cum (Cubic Meters), pallets, units, kg (Kilograms), lbs (Pounds), tons (Metric Tons)");

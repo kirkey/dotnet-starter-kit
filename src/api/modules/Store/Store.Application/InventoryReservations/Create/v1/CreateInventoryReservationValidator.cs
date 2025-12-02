@@ -6,7 +6,7 @@ public class CreateInventoryReservationValidator : AbstractValidator<CreateInven
     {
         RuleFor(x => x.ReservationNumber)
             .NotEmpty().WithMessage("Reservation number is required.")
-            .MaximumLength(100).WithMessage("Reservation number must not exceed 100 characters.");
+            .MaximumLength(128).WithMessage("Reservation number must not exceed 100 characters.");
 
         RuleFor(x => x.ItemId)
             .NotEmpty().WithMessage("Item ID is required.");
@@ -24,11 +24,11 @@ public class CreateInventoryReservationValidator : AbstractValidator<CreateInven
             .WithMessage("Reservation type must be one of: Order, Transfer, Production, Assembly, Other.");
 
         RuleFor(x => x.ReferenceNumber)
-            .MaximumLength(100).WithMessage("Reference number must not exceed 100 characters.")
+            .MaximumLength(128).WithMessage("Reference number must not exceed 100 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.ReferenceNumber));
 
         RuleFor(x => x.ReservedBy)
-            .MaximumLength(100).WithMessage("Reserved by must not exceed 100 characters.")
+            .MaximumLength(128).WithMessage("Reserved by must not exceed 100 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.ReservedBy));
 
         RuleFor(x => x.ExpirationDate)

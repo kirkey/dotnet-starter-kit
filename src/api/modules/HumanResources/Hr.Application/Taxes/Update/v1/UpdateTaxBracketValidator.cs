@@ -24,11 +24,11 @@ public class UpdateTaxBracketValidator : AbstractValidator<UpdateTaxBracketComma
             .When(x => x.Rate.HasValue);
 
         RuleFor(x => x.FilingStatus)
-            .MaximumLength(50).WithMessage("Filing status must not exceed 50 characters.")
+            .MaximumLength(64).WithMessage("Filing status must not exceed 50 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.FilingStatus));
 
         RuleFor(x => x.Description)
-            .MaximumLength(500).WithMessage("Description must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Description must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }
 }

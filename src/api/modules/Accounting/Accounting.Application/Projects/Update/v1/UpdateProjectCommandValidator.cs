@@ -56,12 +56,12 @@ public class UpdateProjectCommandValidator : AbstractValidator<UpdateProjectComm
             .When(x => !string.IsNullOrWhiteSpace(x.Department));
 
         RuleFor(x => x.Description)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .WithMessage("Project description cannot exceed 1000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
 
         RuleFor(x => x.Notes)
-            .MaximumLength(2000)
+            .MaximumLength(2048)
             .WithMessage("Project notes cannot exceed 2000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
 

@@ -8,7 +8,7 @@ public sealed class CreateBudgetDetailValidator : AbstractValidator<CreateBudget
         RuleFor(x => x.AccountId).NotEmpty();
         RuleFor(x => x.BudgetedAmount).GreaterThanOrEqualTo(0m);
         RuleFor(x => x.Description)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }
 }

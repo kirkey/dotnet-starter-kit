@@ -14,11 +14,11 @@ public class UpdateSerialNumberValidator : AbstractValidator<UpdateSerialNumberC
             .WithMessage("Status must be one of: Available, Allocated, Shipped, Sold, Defective, Returned, InRepair, Scrapped.");
 
         RuleFor(x => x.ExternalReference)
-            .MaximumLength(100).WithMessage("External reference must not exceed 100 characters.")
+            .MaximumLength(128).WithMessage("External reference must not exceed 100 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.ExternalReference));
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000).WithMessage("Notes must not exceed 1000 characters.")
+            .MaximumLength(1024).WithMessage("Notes must not exceed 1000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
 
         RuleFor(x => x.WarrantyExpirationDate)

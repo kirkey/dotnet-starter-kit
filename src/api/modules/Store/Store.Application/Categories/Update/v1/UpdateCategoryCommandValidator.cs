@@ -10,7 +10,7 @@ public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCo
         RuleFor(x => x.Id).NotEmpty();
 
         RuleFor(x => x.Name)
-            .MaximumLength(200)
+            .MaximumLength(256)
             .Must(n => n is null || n.Trim().Length == n.Length)
             .WithMessage("Name cannot start or end with whitespace.")
             .MustAsync(async (request, name, ct) =>
@@ -23,7 +23,7 @@ public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCo
             .When(x => x.Name is not null);
 
         RuleFor(x => x.Code)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .Matches(@"^[A-Z0-9]+$")
             .WithMessage("Category code must contain only uppercase letters and numbers")
             .MustAsync(async (request, code, ct) =>

@@ -13,7 +13,7 @@ public class UpdateLeaveRequestValidator : AbstractValidator<UpdateLeaveRequestC
             .WithMessage("Status must be Approved, Rejected, or Cancelled");
 
         RuleFor(x => x.ApproverComment)
-            .MaximumLength(500).WithMessage("Approver comment cannot exceed 500 characters")
+            .MaximumLength(512).WithMessage("Approver comment cannot exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.ApproverComment));
     }
 

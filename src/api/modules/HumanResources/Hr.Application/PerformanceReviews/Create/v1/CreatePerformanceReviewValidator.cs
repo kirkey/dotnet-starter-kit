@@ -22,30 +22,30 @@ public class CreatePerformanceReviewValidator : AbstractValidator<CreatePerforma
 
         RuleFor(x => x.ReviewType)
             .NotEmpty().WithMessage("Review type is required.")
-            .MaximumLength(50).WithMessage("Review type must not exceed 50 characters.");
+            .MaximumLength(64).WithMessage("Review type must not exceed 50 characters.");
 
         RuleFor(x => x.OverallRating)
             .InclusiveBetween(0, 5).WithMessage("Overall rating must be between 0 and 5.")
             .When(x => x.OverallRating > 0);
 
         RuleFor(x => x.Strengths)
-            .MaximumLength(2000).WithMessage("Strengths must not exceed 2000 characters.")
+            .MaximumLength(2048).WithMessage("Strengths must not exceed 2000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Strengths));
 
         RuleFor(x => x.AreasForImprovement)
-            .MaximumLength(2000).WithMessage("Areas for improvement must not exceed 2000 characters.")
+            .MaximumLength(2048).WithMessage("Areas for improvement must not exceed 2000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.AreasForImprovement));
 
         RuleFor(x => x.Goals)
-            .MaximumLength(2000).WithMessage("Goals must not exceed 2000 characters.")
+            .MaximumLength(2048).WithMessage("Goals must not exceed 2000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Goals));
 
         RuleFor(x => x.ReviewerComments)
-            .MaximumLength(2000).WithMessage("Reviewer comments must not exceed 2000 characters.")
+            .MaximumLength(2048).WithMessage("Reviewer comments must not exceed 2000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.ReviewerComments));
 
         RuleFor(x => x.EmployeeComments)
-            .MaximumLength(2000).WithMessage("Employee comments must not exceed 2000 characters.")
+            .MaximumLength(2048).WithMessage("Employee comments must not exceed 2000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.EmployeeComments));
     }
 }

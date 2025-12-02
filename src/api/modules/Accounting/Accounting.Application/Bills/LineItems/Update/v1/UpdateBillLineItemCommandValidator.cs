@@ -28,7 +28,7 @@ public sealed class UpdateBillLineItemCommandValidator : AbstractValidator<Updat
         RuleFor(x => x.Description)
             .NotEmpty()
             .WithMessage("Description is required.")
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Description cannot exceed 500 characters.");
 
         RuleFor(x => x.Quantity)
@@ -62,7 +62,7 @@ public sealed class UpdateBillLineItemCommandValidator : AbstractValidator<Updat
             .WithMessage("Tax amount cannot exceed 999,999,999.");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .When(x => !string.IsNullOrWhiteSpace(x.Notes))
             .WithMessage("Notes cannot exceed 1000 characters.");
 

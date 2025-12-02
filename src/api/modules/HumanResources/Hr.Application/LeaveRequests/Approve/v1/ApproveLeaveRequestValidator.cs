@@ -11,7 +11,7 @@ public class ApproveLeaveRequestValidator : AbstractValidator<ApproveLeaveReques
             .NotEmpty().WithMessage("Leave request ID is required.");
 
         RuleFor(x => x.Comment)
-            .MaximumLength(500).WithMessage("Comment must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Comment must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Comment));
     }
 }

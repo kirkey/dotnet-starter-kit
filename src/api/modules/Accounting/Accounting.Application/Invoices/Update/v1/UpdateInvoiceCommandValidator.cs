@@ -42,21 +42,21 @@ public class UpdateInvoiceCommandValidator : AbstractValidator<UpdateInvoiceComm
         When(x => !string.IsNullOrWhiteSpace(x.RateSchedule), () =>
         {
             RuleFor(x => x.RateSchedule!)
-                .MaximumLength(100)
+                .MaximumLength(128)
                 .WithMessage("Rate schedule cannot exceed 100 characters");
         });
 
         When(x => !string.IsNullOrWhiteSpace(x.Description), () =>
         {
             RuleFor(x => x.Description!)
-                .MaximumLength(500)
+                .MaximumLength(512)
                 .WithMessage("Description cannot exceed 500 characters");
         });
 
         When(x => !string.IsNullOrWhiteSpace(x.Notes), () =>
         {
             RuleFor(x => x.Notes!)
-                .MaximumLength(1000)
+                .MaximumLength(1024)
                 .WithMessage("Notes cannot exceed 1000 characters");
         });
     }

@@ -28,7 +28,7 @@ public sealed class CreateItemSupplierCommandValidator : AbstractValidator<Creat
             .WithMessage("MinimumOrderQuantity must be positive");
 
         RuleFor(x => x.SupplierPartNumber)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("SupplierPartNumber must not exceed 100 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.SupplierPartNumber));
 

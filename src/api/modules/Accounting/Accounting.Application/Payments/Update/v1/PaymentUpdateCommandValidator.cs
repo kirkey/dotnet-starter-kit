@@ -15,22 +15,22 @@ public sealed class PaymentUpdateCommandValidator : AbstractValidator<PaymentUpd
             .WithMessage("Payment ID is required.");
 
         RuleFor(x => x.ReferenceNumber)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Reference number must not exceed 100 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.ReferenceNumber));
 
         RuleFor(x => x.DepositToAccountCode)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Deposit account code must not exceed 50 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.DepositToAccountCode));
 
         RuleFor(x => x.Description)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Description must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
 
         RuleFor(x => x.Notes)
-            .MaximumLength(2000)
+            .MaximumLength(2048)
             .WithMessage("Notes must not exceed 2000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }

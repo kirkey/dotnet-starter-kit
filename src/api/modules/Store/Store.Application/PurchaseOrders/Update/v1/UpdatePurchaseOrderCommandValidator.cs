@@ -18,7 +18,7 @@ public class UpdatePurchaseOrderCommandValidator : AbstractValidator<UpdatePurch
         RuleFor(x => x.OrderNumber)
             .NotEmpty().WithMessage("Order number is required.")
             .MinimumLength(3).WithMessage("Order number must be at least 3 characters.")
-            .MaximumLength(100).WithMessage("Order number must not exceed 100 characters.")
+            .MaximumLength(128).WithMessage("Order number must not exceed 100 characters.")
             .Matches(@"^[A-Z0-9\-_]+$").WithMessage("Order number must contain only uppercase letters, numbers, hyphens, and underscores.");
 
         RuleFor(x => x.Status)
@@ -63,13 +63,13 @@ public class UpdatePurchaseOrderCommandValidator : AbstractValidator<UpdatePurch
             .WithMessage("Actual delivery date cannot be in the future.");
 
         RuleFor(x => x.ContactPerson)
-            .MaximumLength(100).When(x => !string.IsNullOrWhiteSpace(x.ContactPerson))
+            .MaximumLength(128).When(x => !string.IsNullOrWhiteSpace(x.ContactPerson))
             .WithMessage("Contact person must not exceed 100 characters.")
             .MinimumLength(2).When(x => !string.IsNullOrWhiteSpace(x.ContactPerson))
             .WithMessage("Contact person must be at least 2 characters.");
 
         RuleFor(x => x.ContactPhone)
-            .MaximumLength(50).When(x => !string.IsNullOrWhiteSpace(x.ContactPhone))
+            .MaximumLength(64).When(x => !string.IsNullOrWhiteSpace(x.ContactPhone))
             .WithMessage("Contact phone must not exceed 50 characters.")
             .MinimumLength(7).When(x => !string.IsNullOrWhiteSpace(x.ContactPhone))
             .WithMessage("Contact phone must be at least 7 characters.")
@@ -77,13 +77,13 @@ public class UpdatePurchaseOrderCommandValidator : AbstractValidator<UpdatePurch
             .WithMessage("Contact phone must contain only numbers, spaces, hyphens, plus signs, and parentheses.");
 
         RuleFor(x => x.DeliveryAddress)
-            .MaximumLength(500).When(x => !string.IsNullOrWhiteSpace(x.DeliveryAddress))
+            .MaximumLength(512).When(x => !string.IsNullOrWhiteSpace(x.DeliveryAddress))
             .WithMessage("Delivery address must not exceed 500 characters.")
             .MinimumLength(10).When(x => !string.IsNullOrWhiteSpace(x.DeliveryAddress))
             .WithMessage("Delivery address must be at least 10 characters.");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(2000).When(x => !string.IsNullOrWhiteSpace(x.Notes))
+            .MaximumLength(2048).When(x => !string.IsNullOrWhiteSpace(x.Notes))
             .WithMessage("Notes must not exceed 2000 characters.");
 
         RuleFor(x => x.TaxAmount)

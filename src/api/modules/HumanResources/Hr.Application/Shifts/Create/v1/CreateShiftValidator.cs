@@ -7,7 +7,7 @@ public class CreateShiftValidator : AbstractValidator<CreateShiftCommand>
         RuleFor(x => x.ShiftName)
             .NotEmpty()
             .WithMessage("Shift name is required")
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Shift name cannot exceed 100 characters");
 
         RuleFor(x => x.StartTime)
@@ -25,7 +25,7 @@ public class CreateShiftValidator : AbstractValidator<CreateShiftCommand>
             .WithMessage("Break duration cannot be negative");
 
         RuleFor(x => x.Description)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Description cannot exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }

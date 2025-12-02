@@ -16,7 +16,7 @@ public sealed class SearchDeductionsValidator : AbstractValidator<SearchDeductio
             .WithMessage("PageSize must be between 1 and 100.");
 
         RuleFor(x => x.SearchTerm)
-            .MaximumLength(200)
+            .MaximumLength(256)
             .When(x => !string.IsNullOrWhiteSpace(x.SearchTerm));
     }
 }

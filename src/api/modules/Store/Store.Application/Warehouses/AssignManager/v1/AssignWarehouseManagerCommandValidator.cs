@@ -16,13 +16,13 @@ public class AssignWarehouseManagerCommandValidator : AbstractValidator<AssignWa
         RuleFor(x => x.ManagerName)
             .NotEmpty()
             .WithMessage("Manager name is required")
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Manager name must not exceed 100 characters");
 
         RuleFor(x => x.ManagerEmail)
             .NotEmpty()
             .WithMessage("Manager email is required")
-            .MaximumLength(255)
+            .MaximumLength(256)
             .WithMessage("Manager email must not exceed 255 characters")
             .EmailAddress()
             .WithMessage("Manager email must be a valid email address");
@@ -30,7 +30,7 @@ public class AssignWarehouseManagerCommandValidator : AbstractValidator<AssignWa
         RuleFor(x => x.ManagerPhone)
             .NotEmpty()
             .WithMessage("Manager phone is required")
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Manager phone must not exceed 50 characters");
     }
 }

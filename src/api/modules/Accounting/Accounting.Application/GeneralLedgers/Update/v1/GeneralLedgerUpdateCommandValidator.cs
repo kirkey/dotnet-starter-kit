@@ -29,29 +29,29 @@ public sealed class GeneralLedgerUpdateCommandValidator : AbstractValidator<Gene
             .When(x => x.Credit.HasValue);
 
         RuleFor(x => x.Memo)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Memo must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Memo));
 
         RuleFor(x => x.UsoaClass)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("USOA class must not exceed 100 characters.")
             .Must(BeValidUsoaClass)
             .WithMessage("Invalid USOA class. Valid values: Generation, Transmission, Distribution, Customer Service, Sales, Administrative, General, Maintenance.")
             .When(x => !string.IsNullOrWhiteSpace(x.UsoaClass));
 
         RuleFor(x => x.ReferenceNumber)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Reference number must not exceed 100 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.ReferenceNumber));
 
         RuleFor(x => x.Description)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Description must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
 
         RuleFor(x => x.Notes)
-            .MaximumLength(2000)
+            .MaximumLength(2048)
             .WithMessage("Notes must not exceed 2000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
 

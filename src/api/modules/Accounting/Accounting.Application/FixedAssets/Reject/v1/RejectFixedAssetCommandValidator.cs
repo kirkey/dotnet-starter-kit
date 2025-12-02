@@ -12,7 +12,7 @@ public sealed class RejectFixedAssetCommandValidator : AbstractValidator<RejectF
             .NotEmpty()
             .MaximumLength(256);
         RuleFor(x => x.Reason)
-            .MaximumLength(500);
+            .MaximumLength(512);
     }
 }
 

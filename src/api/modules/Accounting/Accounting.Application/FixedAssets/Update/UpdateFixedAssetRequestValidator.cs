@@ -20,7 +20,7 @@ public class UpdateFixedAssetRequestValidator : AbstractValidator<UpdateFixedAss
             .When(x => x.SalvageValue.HasValue);
 
         RuleFor(x => x.SerialNumber)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrEmpty(x.SerialNumber));
 
         RuleFor(x => x.Location)
@@ -28,27 +28,27 @@ public class UpdateFixedAssetRequestValidator : AbstractValidator<UpdateFixedAss
             .When(x => !string.IsNullOrEmpty(x.Location));
 
         RuleFor(x => x.Department)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrEmpty(x.Department));
 
         RuleFor(x => x.Description)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .When(x => !string.IsNullOrEmpty(x.Description));
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .When(x => !string.IsNullOrEmpty(x.Notes));
 
         RuleFor(x => x.GpsCoordinates)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrEmpty(x.GpsCoordinates));
 
         RuleFor(x => x.SubstationName)
-            .MaximumLength(200)
+            .MaximumLength(256)
             .When(x => !string.IsNullOrEmpty(x.SubstationName));
 
         RuleFor(x => x.RegulatoryClassification)
-            .MaximumLength(200)
+            .MaximumLength(256)
             .When(x => !string.IsNullOrEmpty(x.RegulatoryClassification));
 
         RuleFor(x => x.VoltageRating)
@@ -60,11 +60,11 @@ public class UpdateFixedAssetRequestValidator : AbstractValidator<UpdateFixedAss
             .When(x => x.Capacity.HasValue);
 
         RuleFor(x => x.Manufacturer)
-            .MaximumLength(200)
+            .MaximumLength(256)
             .When(x => !string.IsNullOrEmpty(x.Manufacturer));
 
         RuleFor(x => x.ModelNumber)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrEmpty(x.ModelNumber));
     }
 }

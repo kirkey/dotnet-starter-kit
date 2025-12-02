@@ -15,11 +15,11 @@ public class UpdateOrganizationalUnitValidator : AbstractValidator<UpdateOrganiz
             .MaximumLength(256).WithMessage("Name must not exceed 256 characters.");
 
         RuleFor(x => x.CostCenter)
-            .MaximumLength(50).WithMessage("Cost center must not exceed 50 characters.")
+            .MaximumLength(64).WithMessage("Cost center must not exceed 50 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.CostCenter));
 
         RuleFor(x => x.Location)
-            .MaximumLength(200).WithMessage("Location must not exceed 200 characters.")
+            .MaximumLength(256).WithMessage("Location must not exceed 200 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Location));
     }
 }

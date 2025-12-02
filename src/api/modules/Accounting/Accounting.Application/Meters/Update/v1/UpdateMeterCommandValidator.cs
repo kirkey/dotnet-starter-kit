@@ -12,12 +12,12 @@ public sealed class UpdateMeterCommandValidator : AbstractValidator<UpdateMeterC
             .WithMessage("Meter ID is required.");
 
         RuleFor(x => x.Location)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .When(x => !string.IsNullOrWhiteSpace(x.Location))
             .WithMessage("Location cannot exceed 500 characters.");
 
         RuleFor(x => x.CommunicationProtocol)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .When(x => !string.IsNullOrWhiteSpace(x.CommunicationProtocol))
             .WithMessage("Communication protocol cannot exceed 50 characters.");
     }

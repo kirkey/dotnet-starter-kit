@@ -10,7 +10,7 @@ public sealed class CreateMeterCommandValidator : AbstractValidator<CreateMeterC
         RuleFor(x => x.MeterNumber)
             .NotEmpty()
             .WithMessage("Meter number is required.")
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Meter number cannot exceed 50 characters.");
 
         RuleFor(x => x.MeterType)
@@ -23,13 +23,13 @@ public sealed class CreateMeterCommandValidator : AbstractValidator<CreateMeterC
         RuleFor(x => x.Manufacturer)
             .NotEmpty()
             .WithMessage("Manufacturer is required.")
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Manufacturer cannot exceed 100 characters.");
 
         RuleFor(x => x.ModelNumber)
             .NotEmpty()
             .WithMessage("Model number is required.")
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Model number cannot exceed 100 characters.");
 
         RuleFor(x => x.InstallationDate)
@@ -43,7 +43,7 @@ public sealed class CreateMeterCommandValidator : AbstractValidator<CreateMeterC
             .WithMessage("Multiplier must be greater than 0.");
 
         RuleFor(x => x.CommunicationProtocol)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .When(x => !string.IsNullOrWhiteSpace(x.CommunicationProtocol))
             .WithMessage("Communication protocol cannot exceed 50 characters.");
     }

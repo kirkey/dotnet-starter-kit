@@ -8,7 +8,7 @@ public class UpdateHolidayValidator : AbstractValidator<UpdateHolidayCommand>
             .NotEmpty().WithMessage("ID is required.");
 
         RuleFor(x => x.HolidayName)
-            .MaximumLength(100).WithMessage("Holiday name must not exceed 100 characters.")
+            .MaximumLength(128).WithMessage("Holiday name must not exceed 100 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.HolidayName));
 
         RuleFor(x => x.HolidayDate)
@@ -17,7 +17,7 @@ public class UpdateHolidayValidator : AbstractValidator<UpdateHolidayCommand>
             .When(x => x.HolidayDate.HasValue);
 
         RuleFor(x => x.Description)
-            .MaximumLength(500).WithMessage("Description must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Description must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }
 }

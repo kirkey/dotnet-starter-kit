@@ -6,7 +6,7 @@ public sealed class CreateAccrualCommandValidator : AbstractValidator<CreateAccr
     {
         RuleFor(x => x.AccrualNumber)
             .NotEmpty()
-            .MaximumLength(50);
+            .MaximumLength(64);
 
         RuleFor(x => x.AccrualDate)
             .NotEmpty();
@@ -15,6 +15,6 @@ public sealed class CreateAccrualCommandValidator : AbstractValidator<CreateAccr
             .GreaterThan(0);
 
         RuleFor(x => x.Description)
-            .MaximumLength(200);
+            .MaximumLength(256);
     }
 }

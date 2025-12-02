@@ -9,7 +9,7 @@ public sealed class PostingBatchRejectCommandValidator : AbstractValidator<Posti
             .WithMessage("Posting batch ID is required.");
 
         RuleFor(x => x.Reason)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .When(x => !string.IsNullOrWhiteSpace(x.Reason))
             .WithMessage("Reason must not exceed 500 characters.");
     }

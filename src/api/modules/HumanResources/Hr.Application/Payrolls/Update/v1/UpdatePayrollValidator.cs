@@ -25,12 +25,12 @@ public class UpdatePayrollValidator : AbstractValidator<UpdatePayrollCommand>
             .When(x => !string.IsNullOrWhiteSpace(x.Status) && x.Status.Equals("posted", StringComparison.OrdinalIgnoreCase));
 
         RuleFor(x => x.JournalEntryId)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Journal entry ID cannot exceed 50 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.JournalEntryId));
 
         RuleFor(x => x.Notes)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Notes cannot exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }

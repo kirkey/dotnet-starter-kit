@@ -27,7 +27,7 @@ public class CreatePayrollValidator : AbstractValidator<CreatePayrollCommand>
             .WithMessage("Pay frequency must be Weekly, BiWeekly, SemiMonthly, or Monthly");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Notes cannot exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }

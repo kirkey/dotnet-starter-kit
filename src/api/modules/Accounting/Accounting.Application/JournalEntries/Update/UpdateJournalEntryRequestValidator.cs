@@ -20,11 +20,11 @@ public class UpdateJournalEntryRequestValidator : AbstractValidator<UpdateJourna
             .When(x => x.OriginalAmount.HasValue);
 
         RuleFor(x => x.Description)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .When(x => !string.IsNullOrEmpty(x.Description));
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .When(x => !string.IsNullOrEmpty(x.Notes));
     }
 }

@@ -36,7 +36,7 @@ public sealed class UpdateItemSupplierCommandValidator : AbstractValidator<Updat
             .When(x => x.MinimumOrderQuantity.HasValue);
 
         RuleFor(x => x.SupplierPartNumber)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("SupplierPartNumber must not exceed 100 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.SupplierPartNumber));
 

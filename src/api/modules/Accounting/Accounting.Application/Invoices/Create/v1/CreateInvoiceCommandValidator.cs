@@ -14,7 +14,7 @@ public sealed class CreateInvoiceCommandValidator : AbstractValidator<CreateInvo
         RuleFor(x => x.InvoiceNumber)
             .NotEmpty()
             .WithMessage("Invoice number is required.")
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Invoice number cannot exceed 50 characters.")
             .Matches(@"^[A-Z0-9\-]+$")
             .WithMessage("Invoice number can only contain uppercase letters, numbers, and hyphens.");
@@ -70,7 +70,7 @@ public sealed class CreateInvoiceCommandValidator : AbstractValidator<CreateInvo
         RuleFor(x => x.BillingPeriod)
             .NotEmpty()
             .WithMessage("Billing period is required.")
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Billing period cannot exceed 50 characters.");
 
         RuleFor(x => x.LateFee)
@@ -102,17 +102,17 @@ public sealed class CreateInvoiceCommandValidator : AbstractValidator<CreateInvo
             .When(x => x.DemandCharge.HasValue);
 
         RuleFor(x => x.RateSchedule)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Rate schedule cannot exceed 100 characters.")
             .When(x => !string.IsNullOrEmpty(x.RateSchedule));
 
         RuleFor(x => x.Description)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Description cannot exceed 500 characters.")
             .When(x => !string.IsNullOrEmpty(x.Description));
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .WithMessage("Notes cannot exceed 1000 characters.")
             .When(x => !string.IsNullOrEmpty(x.Notes));
     }

@@ -41,13 +41,13 @@ public sealed class CreateFixedAssetCommandValidator : AbstractValidator<CreateF
             .WithMessage(_ => $"AssetType must be one of: {FixedAssetTypes.AsDisplayList()}");
 
         RuleFor(x => x.SerialNumber)
-            .MaximumLength(100);
+            .MaximumLength(128);
 
         RuleFor(x => x.Location)
             .MaximumLength(256);
 
         RuleFor(x => x.Department)
-            .MaximumLength(100);
+            .MaximumLength(128);
 
         RuleFor(x => x.Description)
             .MaximumLength(1024);
@@ -56,13 +56,13 @@ public sealed class CreateFixedAssetCommandValidator : AbstractValidator<CreateF
             .MaximumLength(1024);
 
         RuleFor(x => x.GpsCoordinates)
-            .MaximumLength(100);
+            .MaximumLength(128);
 
         RuleFor(x => x.SubstationName)
-            .MaximumLength(200);
+            .MaximumLength(256);
 
         RuleFor(x => x.RegulatoryClassification)
-            .MaximumLength(200);
+            .MaximumLength(256);
 
         RuleFor(x => x.VoltageRating)
             .GreaterThan(0)
@@ -73,9 +73,9 @@ public sealed class CreateFixedAssetCommandValidator : AbstractValidator<CreateF
             .When(x => x.Capacity.HasValue);
 
         RuleFor(x => x.Manufacturer)
-            .MaximumLength(200);
+            .MaximumLength(256);
 
         RuleFor(x => x.ModelNumber)
-            .MaximumLength(100);
+            .MaximumLength(128);
     }
 }

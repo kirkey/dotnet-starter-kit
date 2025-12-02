@@ -11,18 +11,18 @@ public class CreateEmployeeValidator : AbstractValidator<CreateEmployeeCommand>
         // Basic Required Fields
         RuleFor(x => x.EmployeeNumber)
             .NotEmpty().WithMessage("Employee number is required.")
-            .MaximumLength(50).WithMessage("Employee number must not exceed 50 characters.");
+            .MaximumLength(64).WithMessage("Employee number must not exceed 50 characters.");
 
         RuleFor(x => x.FirstName)
             .NotEmpty().WithMessage("First name is required.")
-            .MaximumLength(100).WithMessage("First name must not exceed 100 characters.");
+            .MaximumLength(128).WithMessage("First name must not exceed 100 characters.");
 
         RuleFor(x => x.LastName)
             .NotEmpty().WithMessage("Last name is required.")
-            .MaximumLength(100).WithMessage("Last name must not exceed 100 characters.");
+            .MaximumLength(128).WithMessage("Last name must not exceed 100 characters.");
 
         RuleFor(x => x.MiddleName)
-            .MaximumLength(100).WithMessage("Middle name must not exceed 100 characters.")
+            .MaximumLength(128).WithMessage("Middle name must not exceed 100 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.MiddleName));
 
         RuleFor(x => x.OrganizationalUnitId)
@@ -30,11 +30,11 @@ public class CreateEmployeeValidator : AbstractValidator<CreateEmployeeCommand>
 
         RuleFor(x => x.Email)
             .EmailAddress().WithMessage("Email must be a valid email address.")
-            .MaximumLength(200).WithMessage("Email must not exceed 200 characters.")
+            .MaximumLength(256).WithMessage("Email must not exceed 200 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Email));
 
         RuleFor(x => x.PhoneNumber)
-            .MaximumLength(20).WithMessage("Phone number must not exceed 20 characters.")
+            .MaximumLength(32).WithMessage("Phone number must not exceed 20 characters.")
             .Matches(@"^\+?639\d{9}$").WithMessage("Phone number must be valid Philippines mobile format (+639XXXXXXXXX).")
             .When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber));
 
@@ -104,13 +104,13 @@ public class CreateEmployeeValidator : AbstractValidator<CreateEmployeeCommand>
         // Philippines-Specific: PWD ID Validation
         RuleFor(x => x.PwdIdNumber)
             .NotEmpty().WithMessage("PWD ID Number is required when IsPWD is true.")
-            .MaximumLength(50).WithMessage("PWD ID Number must not exceed 50 characters.")
+            .MaximumLength(64).WithMessage("PWD ID Number must not exceed 50 characters.")
             .When(x => x.IsPwd);
 
         // Philippines-Specific: Solo Parent ID Validation
         RuleFor(x => x.SoloParentIdNumber)
             .NotEmpty().WithMessage("Solo Parent ID Number is required when IsSoloParent is true.")
-            .MaximumLength(50).WithMessage("Solo Parent ID Number must not exceed 50 characters.")
+            .MaximumLength(64).WithMessage("Solo Parent ID Number must not exceed 50 characters.")
             .When(x => x.IsSoloParent);
     }
 }

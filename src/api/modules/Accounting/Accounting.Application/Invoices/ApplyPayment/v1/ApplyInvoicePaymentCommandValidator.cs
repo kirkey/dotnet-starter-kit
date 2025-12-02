@@ -24,7 +24,7 @@ public class ApplyInvoicePaymentCommandValidator : AbstractValidator<ApplyInvoic
         When(x => !string.IsNullOrWhiteSpace(x.PaymentMethod), () =>
         {
             RuleFor(x => x.PaymentMethod!)
-                .MaximumLength(50)
+                .MaximumLength(64)
                 .WithMessage("Payment method cannot exceed 50 characters");
         });
     }

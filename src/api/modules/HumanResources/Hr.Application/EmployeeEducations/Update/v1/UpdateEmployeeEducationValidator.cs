@@ -15,12 +15,12 @@ public class UpdateEmployeeEducationValidator : AbstractValidator<UpdateEmployee
             .WithMessage("Education record ID is required");
 
         RuleFor(x => x.FieldOfStudy)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Field of study cannot exceed 100 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.FieldOfStudy));
 
         RuleFor(x => x.Degree)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Degree cannot exceed 100 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Degree));
 
@@ -32,7 +32,7 @@ public class UpdateEmployeeEducationValidator : AbstractValidator<UpdateEmployee
             .When(x => x.Gpa.HasValue);
 
         RuleFor(x => x.Notes)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Notes cannot exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }

@@ -17,7 +17,7 @@ public sealed class UpdateLotNumberCommandValidator : AbstractValidator<UpdateLo
             .When(x => !string.IsNullOrWhiteSpace(x.Status));
 
         RuleFor(x => x.QualityNotes)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .WithMessage("QualityNotes must not exceed 1000 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.QualityNotes));
 

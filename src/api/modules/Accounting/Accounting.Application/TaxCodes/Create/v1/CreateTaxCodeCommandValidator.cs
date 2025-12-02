@@ -18,7 +18,7 @@ public class CreateTaxCodeCommandValidator : AbstractValidator<CreateTaxCodeComm
         // Code validation
         RuleFor(x => x.Code)
             .NotEmpty().WithMessage("Tax code is required.")
-            .MaximumLength(20).WithMessage("Tax code must not exceed 20 characters.")
+            .MaximumLength(32).WithMessage("Tax code must not exceed 20 characters.")
             .MinimumLength(2).WithMessage("Tax code must be at least 2 characters long.")
             .Matches(@"^[A-Z0-9\-_]+$").WithMessage("Tax code must contain only uppercase letters, numbers, hyphens, and underscores.")
             .MustAsync(async (code, cancellationToken) =>
@@ -71,17 +71,17 @@ public class CreateTaxCodeCommandValidator : AbstractValidator<CreateTaxCodeComm
 
         // TaxRegistrationNumber validation
         RuleFor(x => x.TaxRegistrationNumber)
-            .MaximumLength(50).WithMessage("Tax registration number must not exceed 50 characters.")
+            .MaximumLength(64).WithMessage("Tax registration number must not exceed 50 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.TaxRegistrationNumber));
 
         // ReportingCategory validation
         RuleFor(x => x.ReportingCategory)
-            .MaximumLength(100).WithMessage("Reporting category must not exceed 100 characters.")
+            .MaximumLength(128).WithMessage("Reporting category must not exceed 100 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.ReportingCategory));
 
         // Description validation
         RuleFor(x => x.Description)
-            .MaximumLength(2000).WithMessage("Description must not exceed 2000 characters.")
+            .MaximumLength(2048).WithMessage("Description must not exceed 2000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }
 }

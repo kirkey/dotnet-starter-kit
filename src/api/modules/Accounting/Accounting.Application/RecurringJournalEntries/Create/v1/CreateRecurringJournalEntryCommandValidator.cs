@@ -5,11 +5,11 @@ public sealed class CreateRecurringJournalEntryCommandValidator : AbstractValida
     public CreateRecurringJournalEntryCommandValidator()
     {
         RuleFor(x => x.TemplateCode).NotEmpty().WithMessage("Template code is required.")
-            .MaximumLength(50).WithMessage("Template code must not exceed 50 characters.")
+            .MaximumLength(64).WithMessage("Template code must not exceed 50 characters.")
             .Matches(@"^[a-zA-Z0-9\-_]+$").WithMessage("Template code can only contain letters, numbers, hyphens, and underscores.");
         
         RuleFor(x => x.Description).NotEmpty().WithMessage("Description is required.")
-            .MaximumLength(500).WithMessage("Description must not exceed 500 characters.");
+            .MaximumLength(512).WithMessage("Description must not exceed 500 characters.");
         
         RuleFor(x => x.Frequency).NotEmpty().WithMessage("Frequency is required.")
             .Must(f => new[] { "Monthly", "Quarterly", "Annually", "Custom" }.Contains(f))
@@ -28,7 +28,7 @@ public sealed class CreateRecurringJournalEntryCommandValidator : AbstractValida
         RuleFor(x => x.EndDate).GreaterThan(x => x.StartDate).WithMessage("End date must be after start date.")
             .When(x => x.EndDate.HasValue);
         
-        RuleFor(x => x.Memo).MaximumLength(500).WithMessage("Memo must not exceed 500 characters.")
+        RuleFor(x => x.Memo).MaximumLength(512).WithMessage("Memo must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Memo));
     }
 }

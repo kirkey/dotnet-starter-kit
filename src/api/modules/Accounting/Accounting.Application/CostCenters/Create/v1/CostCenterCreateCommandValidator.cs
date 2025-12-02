@@ -9,7 +9,7 @@ public class CostCenterCreateCommandValidator : AbstractValidator<CostCenterCrea
     {
         RuleFor(x => x.Code)
             .NotEmpty().WithMessage("Cost center code is required")
-            .MaximumLength(50).WithMessage("Cost center code cannot exceed 50 characters");
+            .MaximumLength(64).WithMessage("Cost center code cannot exceed 50 characters");
 
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Cost center name is required")

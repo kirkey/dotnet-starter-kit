@@ -5,7 +5,7 @@ public class CancelInventoryTransferCommandValidator : AbstractValidator<CancelI
     public CancelInventoryTransferCommandValidator()
     {
         RuleFor(x => x.Id).NotEmpty().WithMessage("Inventory transfer id is required");
-        RuleFor(x => x.Reason).MaximumLength(1000).When(x => !string.IsNullOrWhiteSpace(x.Reason)).WithMessage("Reason must not exceed 1000 characters");
+        RuleFor(x => x.Reason).MaximumLength(1024).When(x => !string.IsNullOrWhiteSpace(x.Reason)).WithMessage("Reason must not exceed 1000 characters");
     }
 }
 

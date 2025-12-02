@@ -49,7 +49,7 @@ public class PayeeUpdateCommandValidator : AbstractValidator<PayeeUpdateCommand>
             .WithMessage("Payee Name '{PropertyValue}' already exists for another payee.");
 
         RuleFor(p => p.Address)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Address cannot exceed 500 characters.")
             .Matches(@"^[a-zA-Z0-9\s\.\-#,]+$")
             .WithMessage("Address contains invalid characters.")
@@ -70,17 +70,17 @@ public class PayeeUpdateCommandValidator : AbstractValidator<PayeeUpdateCommand>
             .When(p => !string.IsNullOrEmpty(p.Tin));
 
         RuleFor(p => p.Description)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .WithMessage("Description cannot exceed 1000 characters.")
             .When(p => !string.IsNullOrEmpty(p.Description));
 
         RuleFor(p => p.Notes)
-            .MaximumLength(2000)
+            .MaximumLength(2048)
             .WithMessage("Notes cannot exceed 2000 characters.")
             .When(p => !string.IsNullOrEmpty(p.Notes));
 
         RuleFor(p => p.ImageUrl)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .When(p => !string.IsNullOrEmpty(p.ImageUrl));
     }
 }

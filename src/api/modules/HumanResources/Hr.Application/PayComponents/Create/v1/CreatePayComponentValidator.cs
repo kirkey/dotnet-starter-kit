@@ -6,11 +6,11 @@ public class CreatePayComponentValidator : AbstractValidator<CreatePayComponentC
     {
         RuleFor(x => x.Code)
             .NotEmpty().WithMessage("Code is required.")
-            .MaximumLength(50).WithMessage("Code must not exceed 50 characters.");
+            .MaximumLength(64).WithMessage("Code must not exceed 50 characters.");
 
         RuleFor(x => x.ComponentName)
             .NotEmpty().WithMessage("Component name is required.")
-            .MaximumLength(200).WithMessage("Component name must not exceed 200 characters.");
+            .MaximumLength(256).WithMessage("Component name must not exceed 200 characters.");
 
         RuleFor(x => x.ComponentType)
             .NotEmpty().WithMessage("Component type is required.")
@@ -24,10 +24,10 @@ public class CreatePayComponentValidator : AbstractValidator<CreatePayComponentC
 
         RuleFor(x => x.GlAccountCode)
             .NotEmpty().WithMessage("GL account code is required.")
-            .MaximumLength(50).WithMessage("GL account code must not exceed 50 characters.");
+            .MaximumLength(64).WithMessage("GL account code must not exceed 50 characters.");
 
         RuleFor(x => x.CalculationFormula)
-            .MaximumLength(500).WithMessage("Calculation formula must not exceed 500 characters.");
+            .MaximumLength(512).WithMessage("Calculation formula must not exceed 500 characters.");
 
         RuleFor(x => x.Rate)
             .GreaterThanOrEqualTo(0).WithMessage("Rate must be greater than or equal to 0.")
@@ -38,10 +38,10 @@ public class CreatePayComponentValidator : AbstractValidator<CreatePayComponentC
             .When(x => x.FixedAmount.HasValue);
 
         RuleFor(x => x.Description)
-            .MaximumLength(1000).WithMessage("Description must not exceed 1000 characters.");
+            .MaximumLength(1024).WithMessage("Description must not exceed 1000 characters.");
 
         RuleFor(x => x.LaborLawReference)
-            .MaximumLength(200).WithMessage("Labor law reference must not exceed 200 characters.");
+            .MaximumLength(256).WithMessage("Labor law reference must not exceed 200 characters.");
     }
 }
 

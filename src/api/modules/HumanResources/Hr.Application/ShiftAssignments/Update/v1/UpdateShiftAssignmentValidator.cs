@@ -22,7 +22,7 @@ public sealed class UpdateShiftAssignmentValidator : AbstractValidator<UpdateShi
             .When(x => x.IsRecurring == true && x.RecurringDayOfWeek.HasValue);
 
         RuleFor(x => x.Notes)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Notes cannot exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }

@@ -6,7 +6,7 @@ public class CreateInventoryTransactionValidator : AbstractValidator<CreateInven
     {
         RuleFor(x => x.TransactionNumber)
             .NotEmpty().WithMessage("Transaction number is required.")
-            .MaximumLength(100).WithMessage("Transaction number must not exceed 100 characters.");
+            .MaximumLength(128).WithMessage("Transaction number must not exceed 100 characters.");
 
         RuleFor(x => x.ItemId)
             .NotEmpty().WithMessage("Item ID is required.");
@@ -18,7 +18,7 @@ public class CreateInventoryTransactionValidator : AbstractValidator<CreateInven
 
         RuleFor(x => x.Reason)
             .NotEmpty().WithMessage("Reason is required.")
-            .MaximumLength(200).WithMessage("Reason must not exceed 200 characters.");
+            .MaximumLength(256).WithMessage("Reason must not exceed 200 characters.");
 
         RuleFor(x => x.Quantity)
             .GreaterThan(0).WithMessage("Quantity must be greater than zero.");

@@ -30,7 +30,7 @@ public sealed class CreateShiftAssignmentValidator : AbstractValidator<CreateShi
             .When(x => x.IsRecurring && x.RecurringDayOfWeek.HasValue);
 
         RuleFor(x => x.Notes)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Notes cannot exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }

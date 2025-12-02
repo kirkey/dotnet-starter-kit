@@ -20,12 +20,12 @@ public sealed class RecordCycleCountItemCommandValidator : AbstractValidator<Rec
             .WithMessage("CountedQuantity must be zero or greater");
 
         RuleFor(x => x.CountedBy)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrWhiteSpace(x.CountedBy))
             .WithMessage("CountedBy must not exceed 100 characters");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .When(x => !string.IsNullOrWhiteSpace(x.Notes))
             .WithMessage("Notes must not exceed 500 characters");
     }

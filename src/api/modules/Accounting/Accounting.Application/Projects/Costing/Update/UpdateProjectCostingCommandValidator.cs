@@ -30,27 +30,27 @@ public sealed class UpdateProjectCostingCommandValidator : AbstractValidator<Upd
             .WithMessage("Cost description must be between 2 and 500 characters.");
 
         RuleFor(x => x.Category)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrWhiteSpace(x.Category))
             .WithMessage("Category cannot exceed 100 characters.");
 
         RuleFor(x => x.CostCenter)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .When(x => !string.IsNullOrWhiteSpace(x.CostCenter))
             .WithMessage("Cost center cannot exceed 50 characters.");
 
         RuleFor(x => x.WorkOrderNumber)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .When(x => !string.IsNullOrWhiteSpace(x.WorkOrderNumber))
             .WithMessage("Work order number cannot exceed 50 characters.");
 
         RuleFor(x => x.Vendor)
-            .MaximumLength(200)
+            .MaximumLength(256)
             .When(x => !string.IsNullOrWhiteSpace(x.Vendor))
             .WithMessage("Vendor name cannot exceed 200 characters.");
 
         RuleFor(x => x.InvoiceNumber)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .When(x => !string.IsNullOrWhiteSpace(x.InvoiceNumber))
             .WithMessage("Invoice number cannot exceed 50 characters.");
     }

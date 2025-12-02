@@ -9,6 +9,6 @@ public sealed class AssignPutAwayTaskValidator : AbstractValidator<AssignPutAway
 
         RuleFor(x => x.AssignedTo)
             .NotEmpty().WithMessage("Assigned to is required")
-            .MaximumLength(100).WithMessage("Assigned to must not exceed 100 characters");
+            .MaximumLength(128).WithMessage("Assigned to must not exceed 100 characters");
     }
 }

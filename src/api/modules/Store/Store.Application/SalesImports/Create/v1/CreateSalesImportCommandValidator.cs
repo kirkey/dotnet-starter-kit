@@ -9,7 +9,7 @@ public class CreateSalesImportCommandValidator : AbstractValidator<CreateSalesIm
     {
         RuleFor(x => x.ImportNumber)
             .NotEmpty().WithMessage("Import number is required")
-            .MaximumLength(100).WithMessage("Import number must not exceed 100 characters");
+            .MaximumLength(128).WithMessage("Import number must not exceed 100 characters");
 
         RuleFor(x => x.ImportDate)
             .NotEmpty().WithMessage("Import date is required");
@@ -27,13 +27,13 @@ public class CreateSalesImportCommandValidator : AbstractValidator<CreateSalesIm
 
         RuleFor(x => x.FileName)
             .NotEmpty().WithMessage("File name is required")
-            .MaximumLength(255).WithMessage("File name must not exceed 255 characters");
+            .MaximumLength(256).WithMessage("File name must not exceed 255 characters");
 
         RuleFor(x => x.CsvData)
             .NotEmpty().WithMessage("CSV data is required");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000).WithMessage("Notes must not exceed 1000 characters")
+            .MaximumLength(1024).WithMessage("Notes must not exceed 1000 characters")
             .When(x => !string.IsNullOrEmpty(x.Notes));
     }
 }

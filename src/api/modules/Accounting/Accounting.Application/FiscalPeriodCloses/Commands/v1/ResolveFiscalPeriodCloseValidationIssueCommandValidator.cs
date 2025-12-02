@@ -14,7 +14,7 @@ public sealed class ResolveFiscalPeriodCloseValidationIssueCommandValidator : Ab
         RuleFor(x => x.IssueDescription)
             .NotEmpty()
             .WithMessage("Issue description is required.")
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Issue description must not exceed 500 characters.");
 
         RuleFor(x => x.Resolution)
@@ -22,7 +22,7 @@ public sealed class ResolveFiscalPeriodCloseValidationIssueCommandValidator : Ab
             .WithMessage("Resolution is required.")
             .MinimumLength(10)
             .WithMessage("Resolution must be at least 10 characters.")
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Resolution must not exceed 500 characters.");
     }
 }

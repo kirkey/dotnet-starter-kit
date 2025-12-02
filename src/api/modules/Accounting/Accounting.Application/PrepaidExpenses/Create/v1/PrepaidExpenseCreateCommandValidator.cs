@@ -9,7 +9,7 @@ public class PrepaidExpenseCreateCommandValidator : AbstractValidator<PrepaidExp
     {
         RuleFor(x => x.PrepaidNumber)
             .NotEmpty().WithMessage("Prepaid number is required")
-            .MaximumLength(50).WithMessage("Prepaid number cannot exceed 50 characters");
+            .MaximumLength(64).WithMessage("Prepaid number cannot exceed 50 characters");
 
         RuleFor(x => x.Description)
             .NotEmpty().WithMessage("Description is required")

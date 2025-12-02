@@ -16,7 +16,7 @@ public class EndDesignationAssignmentValidator : AbstractValidator<EndDesignatio
             .WithMessage("End date cannot be in the past.");
 
         RuleFor(x => x.Reason)
-            .MaximumLength(500).WithMessage("Reason must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Reason must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Reason));
     }
 }

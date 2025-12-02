@@ -13,7 +13,7 @@ public sealed class CancelPurchaseOrderCommandValidator : AbstractValidator<Canc
             .WithMessage("Purchase order ID is required");
 
         RuleFor(x => x.CancellationReason)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Cancellation reason must not exceed 500 characters");
     }
 }

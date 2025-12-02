@@ -32,18 +32,18 @@ public class UpdateCycleCountCommandValidator : AbstractValidator<UpdateCycleCou
         RuleFor(x => x.CountType)
             .NotEmpty()
             .WithMessage("Count type is required")
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Count type must not exceed 50 characters")
             .Must(ct => AllowedCountTypes.Contains(ct))
             .WithMessage($"CountType must be one of: {string.Join(", ", AllowedCountTypes)}");
 
         RuleFor(x => x.CounterName)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Counter name must not exceed 100 characters")
             .When(x => !string.IsNullOrEmpty(x.CounterName));
 
         RuleFor(x => x.SupervisorName)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Supervisor name must not exceed 100 characters")
             .When(x => !string.IsNullOrEmpty(x.SupervisorName));
 

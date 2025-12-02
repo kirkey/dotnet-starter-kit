@@ -8,7 +8,7 @@ public class CreateCycleCountCommandValidator : AbstractValidator<CreateCycleCou
     {
         RuleFor(x => x.CountNumber)
             .NotEmpty()
-            .MaximumLength(200)
+            .MaximumLength(256)
             .Matches(@"^[A-Z0-9\-]+$")
             .WithMessage("CountNumber must contain only uppercase letters, numbers or hyphens");
 
@@ -29,11 +29,11 @@ public class CreateCycleCountCommandValidator : AbstractValidator<CreateCycleCou
             .WithMessage($"CountType must be one of: {string.Join(", ", AllowedCountTypes)}");
 
         RuleFor(x => x.CounterName)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrEmpty(x.CounterName));
 
         RuleFor(x => x.SupervisorName)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrEmpty(x.SupervisorName));
 
         RuleFor(x => x.Name)

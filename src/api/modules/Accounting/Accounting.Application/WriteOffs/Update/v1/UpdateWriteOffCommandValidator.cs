@@ -5,7 +5,7 @@ public sealed class UpdateWriteOffCommandValidator : AbstractValidator<UpdateWri
     public UpdateWriteOffCommandValidator()
     {
         RuleFor(x => x.Id).NotEmpty().WithMessage("Write-off ID is required.");
-        RuleFor(x => x.Reason).MaximumLength(500).WithMessage("Reason must not exceed 500 characters.")
+        RuleFor(x => x.Reason).MaximumLength(512).WithMessage("Reason must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Reason));
         RuleFor(x => x.Description).MaximumLength(2048).WithMessage("Description must not exceed 2048 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));

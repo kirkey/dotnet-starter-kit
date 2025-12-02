@@ -31,7 +31,7 @@ public class CreateEnrollmentValidator : AbstractValidator<CreateEnrollmentComma
             .WithMessage("Effective date must be on or after enrollment date");
 
         RuleFor(x => x.CoverageLevel)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Coverage level cannot exceed 50 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.CoverageLevel));
 

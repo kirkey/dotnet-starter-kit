@@ -11,7 +11,7 @@ public class DeactivateBankAccountValidator : AbstractValidator<DeactivateBankAc
             .NotEmpty().WithMessage("Bank account ID is required.");
 
         RuleFor(x => x.Reason)
-            .MaximumLength(500).WithMessage("Reason must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Reason must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Reason));
     }
 }

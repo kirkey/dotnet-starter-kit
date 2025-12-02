@@ -13,12 +13,12 @@ public sealed class ExportPayeesQueryValidator : AbstractValidator<ExportPayeesQ
     public ExportPayeesQueryValidator()
     {
         RuleFor(x => x.ExpenseAccountCode)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .When(x => !string.IsNullOrWhiteSpace(x.ExpenseAccountCode))
             .WithMessage("Expense account code cannot exceed 50 characters");
 
         RuleFor(x => x.SearchTerm)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrWhiteSpace(x.SearchTerm))
             .WithMessage("Search term cannot exceed 100 characters");
     }

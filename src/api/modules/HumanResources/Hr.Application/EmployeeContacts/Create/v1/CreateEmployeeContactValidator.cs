@@ -19,13 +19,13 @@ public class CreateEmployeeContactValidator : AbstractValidator<CreateEmployeeCo
         RuleFor(x => x.FirstName)
             .NotEmpty()
             .WithMessage("First name is required")
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("First name cannot exceed 100 characters");
 
         RuleFor(x => x.LastName)
             .NotEmpty()
             .WithMessage("Last name is required")
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Last name cannot exceed 100 characters");
 
         RuleFor(x => x.ContactType)
@@ -35,7 +35,7 @@ public class CreateEmployeeContactValidator : AbstractValidator<CreateEmployeeCo
             .WithMessage("Contact type must be Emergency, NextOfKin, Reference, or Family");
 
         RuleFor(x => x.PhoneNumber)
-            .MaximumLength(20)
+            .MaximumLength(32)
             .WithMessage("Phone number cannot exceed 20 characters")
             .Matches(@"^\+?[0-9\s\-\(\)]*$", RegexOptions.IgnoreCase)
             .When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber))
@@ -47,7 +47,7 @@ public class CreateEmployeeContactValidator : AbstractValidator<CreateEmployeeCo
             .WithMessage("Email format is invalid");
 
         RuleFor(x => x.Address)
-            .MaximumLength(250)
+            .MaximumLength(256)
             .WithMessage("Address cannot exceed 250 characters");
     }
 

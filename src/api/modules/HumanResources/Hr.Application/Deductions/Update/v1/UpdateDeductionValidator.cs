@@ -8,7 +8,7 @@ public sealed class UpdateDeductionValidator : AbstractValidator<UpdateDeduction
     public UpdateDeductionValidator()
     {
         RuleFor(x => x.DeductionName)
-            .MaximumLength(100).WithMessage("Deduction name must not exceed 100 characters.")
+            .MaximumLength(128).WithMessage("Deduction name must not exceed 100 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.DeductionName));
 
         RuleFor(x => x.DeductionType)
@@ -36,11 +36,11 @@ public sealed class UpdateDeductionValidator : AbstractValidator<UpdateDeduction
             .When(x => x.MaxRecoveryPercentage.HasValue);
 
         RuleFor(x => x.GlAccountCode)
-            .MaximumLength(20).WithMessage("GL account code must not exceed 20 characters.")
+            .MaximumLength(32).WithMessage("GL account code must not exceed 20 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.GlAccountCode));
 
         RuleFor(x => x.Description)
-            .MaximumLength(500).WithMessage("Description must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Description must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }
 

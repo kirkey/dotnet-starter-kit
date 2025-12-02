@@ -15,11 +15,11 @@ public class ClockOutAttendanceValidator : AbstractValidator<ClockOutAttendanceC
             .GreaterThan(TimeSpan.Zero).WithMessage("Clock out time must be greater than zero.");
 
         RuleFor(x => x.ClockOutLocation)
-            .MaximumLength(250).WithMessage("Clock out location must not exceed 250 characters.")
+            .MaximumLength(256).WithMessage("Clock out location must not exceed 250 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.ClockOutLocation));
 
         RuleFor(x => x.Notes)
-            .MaximumLength(500).WithMessage("Notes must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Notes must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }
 }

@@ -10,7 +10,7 @@ public class CreateLeaveTypeValidator : AbstractValidator<CreateLeaveTypeCommand
         // Basic Required Fields
         RuleFor(x => x.LeaveName)
             .NotEmpty().WithMessage("Leave name is required")
-            .MaximumLength(100).WithMessage("Leave name cannot exceed 100 characters");
+            .MaximumLength(128).WithMessage("Leave name cannot exceed 100 characters");
 
         RuleFor(x => x.AnnualAllowance)
             .GreaterThan(0).WithMessage("Annual allowance must be greater than 0")
@@ -27,7 +27,7 @@ public class CreateLeaveTypeValidator : AbstractValidator<CreateLeaveTypeCommand
             .When(x => x.MinimumNoticeDay.HasValue);
 
         RuleFor(x => x.Description)
-            .MaximumLength(500).WithMessage("Description cannot exceed 500 characters")
+            .MaximumLength(512).WithMessage("Description cannot exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
 
         // Philippines-Specific: Leave Code Validation

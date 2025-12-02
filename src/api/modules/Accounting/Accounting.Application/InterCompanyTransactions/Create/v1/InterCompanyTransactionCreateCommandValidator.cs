@@ -9,7 +9,7 @@ public class InterCompanyTransactionCreateCommandValidator : AbstractValidator<I
     {
         RuleFor(x => x.TransactionNumber)
             .NotEmpty().WithMessage("Transaction number is required")
-            .MaximumLength(50).WithMessage("Transaction number cannot exceed 50 characters");
+            .MaximumLength(64).WithMessage("Transaction number cannot exceed 50 characters");
 
         RuleFor(x => x.FromEntityId)
             .NotEmpty().WithMessage("From entity ID is required");
@@ -34,7 +34,7 @@ public class InterCompanyTransactionCreateCommandValidator : AbstractValidator<I
 
         RuleFor(x => x.TransactionType)
             .NotEmpty().WithMessage("Transaction type is required")
-            .MaximumLength(50).WithMessage("Transaction type cannot exceed 50 characters")
+            .MaximumLength(64).WithMessage("Transaction type cannot exceed 50 characters")
             .Must(type => new[] { "Billing", "Loan", "Advance", "Allocation", "Dividend", "CapitalContribution", "Settlement", "Other" }.Contains(type))
             .WithMessage("Transaction type must be one of: Billing, Loan, Advance, Allocation, Dividend, CapitalContribution, Settlement, Other");
 
@@ -49,7 +49,7 @@ public class InterCompanyTransactionCreateCommandValidator : AbstractValidator<I
             .When(x => x.DueDate.HasValue);
 
         RuleFor(x => x.ReferenceNumber)
-            .MaximumLength(100).WithMessage("Reference number cannot exceed 100 characters")
+            .MaximumLength(128).WithMessage("Reference number cannot exceed 100 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.ReferenceNumber));
 
         RuleFor(x => x.Description)

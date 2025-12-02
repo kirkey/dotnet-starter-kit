@@ -11,7 +11,7 @@ public class CancelLeaveRequestValidator : AbstractValidator<CancelLeaveRequestC
             .NotEmpty().WithMessage("Leave request ID is required.");
 
         RuleFor(x => x.Reason)
-            .MaximumLength(500).WithMessage("Cancellation reason must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Cancellation reason must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Reason));
     }
 }

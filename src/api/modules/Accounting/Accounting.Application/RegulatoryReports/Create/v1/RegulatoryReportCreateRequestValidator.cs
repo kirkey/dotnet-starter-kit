@@ -6,7 +6,7 @@ public class RegulatoryReportCreateRequestValidator : AbstractValidator<Regulato
     {
         RuleFor(x => x.ReportName)
             .NotEmpty()
-            .MaximumLength(200)
+            .MaximumLength(256)
             .WithMessage("Report name is required and must not exceed 200 characters");
 
         RuleFor(x => x.ReportType)
@@ -34,7 +34,7 @@ public class RegulatoryReportCreateRequestValidator : AbstractValidator<Regulato
             .WithMessage("Due date must be on or after the period end date");
 
         RuleFor(x => x.RegulatoryBody)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrEmpty(x.RegulatoryBody))
             .WithMessage("Regulatory body must not exceed 100 characters");
     }

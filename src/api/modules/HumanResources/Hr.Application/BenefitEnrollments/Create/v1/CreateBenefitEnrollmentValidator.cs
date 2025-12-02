@@ -15,7 +15,7 @@ public class CreateBenefitEnrollmentValidator : AbstractValidator<CreateBenefitE
 
         RuleFor(x => x.CoverageLevel)
             .NotEmpty().WithMessage("Coverage level is required.")
-            .MaximumLength(50).WithMessage("Coverage level must not exceed 50 characters.");
+            .MaximumLength(64).WithMessage("Coverage level must not exceed 50 characters.");
 
         RuleFor(x => x.EmployeeContributionAmount)
             .GreaterThanOrEqualTo(0).WithMessage("Employee contribution cannot be negative.");

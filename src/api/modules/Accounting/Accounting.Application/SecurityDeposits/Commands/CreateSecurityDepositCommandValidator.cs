@@ -28,7 +28,7 @@ public sealed class CreateSecurityDepositCommandValidator : AbstractValidator<Cr
             .WithMessage("Deposit date cannot be in the future.");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(2000)
+            .MaximumLength(2048)
             .WithMessage("Notes cannot exceed 2000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }

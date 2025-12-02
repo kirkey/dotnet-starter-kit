@@ -18,7 +18,7 @@ public sealed class UpdatePostingBatchCommandValidator : AbstractValidator<Updat
             .WithMessage("Batch date cannot be more than 30 days in the future.");
 
         RuleFor(x => x.Description)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .When(x => !string.IsNullOrWhiteSpace(x.Description))
             .WithMessage("Description cannot exceed 500 characters.");
     }

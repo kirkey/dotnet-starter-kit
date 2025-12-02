@@ -9,11 +9,11 @@ public class CreateBenefitValidator : AbstractValidator<CreateBenefitCommand>
     {
         RuleFor(x => x.BenefitName)
             .NotEmpty().WithMessage("Benefit name is required.")
-            .MaximumLength(100).WithMessage("Benefit name must not exceed 100 characters.");
+            .MaximumLength(128).WithMessage("Benefit name must not exceed 100 characters.");
 
         RuleFor(x => x.BenefitType)
             .NotEmpty().WithMessage("Benefit type is required.")
-            .MaximumLength(50).WithMessage("Benefit type must not exceed 50 characters.");
+            .MaximumLength(64).WithMessage("Benefit type must not exceed 50 characters.");
 
         RuleFor(x => x.EmployeeContribution)
             .GreaterThanOrEqualTo(0).WithMessage("Employee contribution cannot be negative.");
@@ -22,11 +22,11 @@ public class CreateBenefitValidator : AbstractValidator<CreateBenefitCommand>
             .GreaterThanOrEqualTo(0).WithMessage("Employer contribution cannot be negative.");
 
         RuleFor(x => x.CoverageType)
-            .MaximumLength(50).WithMessage("Coverage type must not exceed 50 characters.")
+            .MaximumLength(64).WithMessage("Coverage type must not exceed 50 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.CoverageType));
 
         RuleFor(x => x.ProviderName)
-            .MaximumLength(100).WithMessage("Provider name must not exceed 100 characters.")
+            .MaximumLength(128).WithMessage("Provider name must not exceed 100 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.ProviderName));
 
         RuleFor(x => x.CoverageAmount)
@@ -38,7 +38,7 @@ public class CreateBenefitValidator : AbstractValidator<CreateBenefitCommand>
             .When(x => x.WaitingPeriodDays.HasValue);
 
         RuleFor(x => x.Description)
-            .MaximumLength(500).WithMessage("Description must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Description must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }
 }

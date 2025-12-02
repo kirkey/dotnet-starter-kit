@@ -9,7 +9,7 @@ public class WriteOffCreateCommandValidator : AbstractValidator<WriteOffCreateCo
     {
         RuleFor(x => x.ReferenceNumber)
             .NotEmpty().WithMessage("Reference number is required")
-            .MaximumLength(50).WithMessage("Reference number cannot exceed 50 characters");
+            .MaximumLength(64).WithMessage("Reference number cannot exceed 50 characters");
 
         RuleFor(x => x.WriteOffDate)
             .NotEmpty().WithMessage("Write-off date is required");
@@ -33,11 +33,11 @@ public class WriteOffCreateCommandValidator : AbstractValidator<WriteOffCreateCo
             .When(x => !string.IsNullOrWhiteSpace(x.CustomerName));
 
         RuleFor(x => x.InvoiceNumber)
-            .MaximumLength(50).WithMessage("Invoice number cannot exceed 50 characters")
+            .MaximumLength(64).WithMessage("Invoice number cannot exceed 50 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.InvoiceNumber));
 
         RuleFor(x => x.Reason)
-            .MaximumLength(500).WithMessage("Reason cannot exceed 500 characters")
+            .MaximumLength(512).WithMessage("Reason cannot exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Reason));
 
         RuleFor(x => x.Description)

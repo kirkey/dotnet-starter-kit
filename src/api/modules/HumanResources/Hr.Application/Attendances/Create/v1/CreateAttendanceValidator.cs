@@ -19,7 +19,7 @@ public class CreateAttendanceValidator : AbstractValidator<CreateAttendanceComma
             .WithMessage("Clock in time is required");
 
         RuleFor(x => x.ClockInLocation)
-            .MaximumLength(250)
+            .MaximumLength(256)
             .WithMessage("Clock in location cannot exceed 250 characters");
     }
 }

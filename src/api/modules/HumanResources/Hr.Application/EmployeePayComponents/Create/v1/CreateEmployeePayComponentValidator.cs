@@ -32,13 +32,13 @@ public class CreateEmployeePayComponentValidator : AbstractValidator<CreateEmplo
             .When(cmd => cmd.InstallmentCount.HasValue);
 
         RuleFor(cmd => cmd.CustomFormula)
-            .MaximumLength(500).WithMessage("Custom formula must not exceed 500 characters.");
+            .MaximumLength(512).WithMessage("Custom formula must not exceed 500 characters.");
 
         RuleFor(cmd => cmd.ReferenceNumber)
-            .MaximumLength(100).WithMessage("Reference number must not exceed 100 characters.");
+            .MaximumLength(128).WithMessage("Reference number must not exceed 100 characters.");
 
         RuleFor(cmd => cmd.Remarks)
-            .MaximumLength(1000).WithMessage("Remarks must not exceed 1000 characters.");
+            .MaximumLength(1024).WithMessage("Remarks must not exceed 1000 characters.");
     }
 }
 

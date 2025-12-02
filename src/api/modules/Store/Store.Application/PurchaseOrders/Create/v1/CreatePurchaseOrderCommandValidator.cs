@@ -8,7 +8,7 @@ public class CreatePurchaseOrderCommandValidator : AbstractValidator<CreatePurch
     {
         RuleFor(x => x.OrderNumber)
             .NotEmpty().WithMessage("Order number is required")
-            .MaximumLength(100).WithMessage("Order number must not exceed 100 characters")
+            .MaximumLength(128).WithMessage("Order number must not exceed 100 characters")
             .Matches("^[A-Z0-9-]+$").WithMessage("Order number must contain only uppercase letters, numbers and hyphens");
 
         RuleFor(x => x.Status)
@@ -34,9 +34,9 @@ public class CreatePurchaseOrderCommandValidator : AbstractValidator<CreatePurch
             return existing is null;
         }).WithMessage("A purchase order with the same OrderNumber already exists.");
 
-        RuleFor(x => x.ContactPerson).MaximumLength(100);
-        RuleFor(x => x.ContactPhone).MaximumLength(50);
-        RuleFor(x => x.DeliveryAddress).MaximumLength(500);
+        RuleFor(x => x.ContactPerson).MaximumLength(128);
+        RuleFor(x => x.ContactPhone).MaximumLength(64);
+        RuleFor(x => x.DeliveryAddress).MaximumLength(512);
 
         RuleFor(x => x.Name)
             .MaximumLength(1024)

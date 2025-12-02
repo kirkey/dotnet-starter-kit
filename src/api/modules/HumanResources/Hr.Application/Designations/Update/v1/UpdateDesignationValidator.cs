@@ -23,7 +23,7 @@ public class UpdateDesignationValidator : AbstractValidator<UpdateDesignationCom
             .When(x => !string.IsNullOrWhiteSpace(x.Area));
 
         RuleFor(x => x.Description)
-            .MaximumLength(2000).WithMessage("Description must not exceed 2000 characters.")
+            .MaximumLength(2048).WithMessage("Description must not exceed 2000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
 
         RuleFor(x => x.SalaryGrade)

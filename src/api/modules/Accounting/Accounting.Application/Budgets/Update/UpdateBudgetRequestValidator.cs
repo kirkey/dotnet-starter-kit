@@ -20,9 +20,9 @@ public sealed class UpdateBudgetCommandValidator : AbstractValidator<UpdateBudge
             .MaximumLength(16);
 
         RuleFor(x => x.Description)
-            .MaximumLength(1000);
+            .MaximumLength(1024);
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000);
+            .MaximumLength(1024);
     }
 }

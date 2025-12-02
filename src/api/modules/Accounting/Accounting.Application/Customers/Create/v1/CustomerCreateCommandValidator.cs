@@ -9,7 +9,7 @@ public class CustomerCreateCommandValidator : AbstractValidator<CustomerCreateCo
     {
         RuleFor(x => x.CustomerNumber)
             .NotEmpty().WithMessage("Customer number is required")
-            .MaximumLength(50).WithMessage("Customer number cannot exceed 50 characters")
+            .MaximumLength(64).WithMessage("Customer number cannot exceed 50 characters")
             .Matches(@"^[a-zA-Z0-9\-_]+$").WithMessage("Customer number can only contain alphanumeric characters, hyphens, and underscores");
 
         RuleFor(x => x.CustomerName)
@@ -24,10 +24,10 @@ public class CustomerCreateCommandValidator : AbstractValidator<CustomerCreateCo
 
         RuleFor(x => x.BillingAddress)
             .NotEmpty().WithMessage("Billing address is required")
-            .MaximumLength(500).WithMessage("Billing address cannot exceed 500 characters");
+            .MaximumLength(512).WithMessage("Billing address cannot exceed 500 characters");
 
         RuleFor(x => x.ShippingAddress)
-            .MaximumLength(500).WithMessage("Shipping address cannot exceed 500 characters")
+            .MaximumLength(512).WithMessage("Shipping address cannot exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.ShippingAddress));
 
         RuleFor(x => x.Email)
@@ -36,7 +36,7 @@ public class CustomerCreateCommandValidator : AbstractValidator<CustomerCreateCo
             .When(x => !string.IsNullOrWhiteSpace(x.Email));
 
         RuleFor(x => x.Phone)
-            .MaximumLength(50).WithMessage("Phone cannot exceed 50 characters")
+            .MaximumLength(64).WithMessage("Phone cannot exceed 50 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Phone));
 
         RuleFor(x => x.ContactName)
@@ -48,10 +48,10 @@ public class CustomerCreateCommandValidator : AbstractValidator<CustomerCreateCo
 
         RuleFor(x => x.PaymentTerms)
             .NotEmpty().WithMessage("Payment terms are required")
-            .MaximumLength(100).WithMessage("Payment terms cannot exceed 100 characters");
+            .MaximumLength(128).WithMessage("Payment terms cannot exceed 100 characters");
 
         RuleFor(x => x.TaxId)
-            .MaximumLength(50).WithMessage("Tax ID cannot exceed 50 characters")
+            .MaximumLength(64).WithMessage("Tax ID cannot exceed 50 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.TaxId));
 
         RuleFor(x => x.DiscountPercentage)

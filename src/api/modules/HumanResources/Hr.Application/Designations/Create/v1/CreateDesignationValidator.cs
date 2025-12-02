@@ -12,7 +12,7 @@ public class CreateDesignationValidator : AbstractValidator<CreateDesignationCom
     {
         RuleFor(x => x.Code)
             .NotEmpty().WithMessage("Code is required.")
-            .MaximumLength(50).WithMessage("Code must not exceed 50 characters.")
+            .MaximumLength(64).WithMessage("Code must not exceed 50 characters.")
             .Matches(@"^[A-Z0-9-]+$").WithMessage("Code must contain only uppercase letters, numbers, and hyphens.");
 
         RuleFor(x => x.Title)
@@ -25,7 +25,7 @@ public class CreateDesignationValidator : AbstractValidator<CreateDesignationCom
             .When(x => !string.IsNullOrWhiteSpace(x.Area));
 
         RuleFor(x => x.Description)
-            .MaximumLength(2000).WithMessage("Description must not exceed 2000 characters.")
+            .MaximumLength(2048).WithMessage("Description must not exceed 2000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
 
         RuleFor(x => x.SalaryGrade)

@@ -11,7 +11,7 @@ public class UpdateMessageValidator : AbstractValidator<UpdateMessageCommand>
         RuleFor(m => m.Content)
             .NotEmpty()
             .WithMessage("message content is required")
-            .MaximumLength(5000)
+            .MaximumLength(8192)
             .WithMessage("message content must not exceed 5000 characters");
     }
 }

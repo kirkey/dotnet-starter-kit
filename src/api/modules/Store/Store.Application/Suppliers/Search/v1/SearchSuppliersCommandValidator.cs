@@ -9,8 +9,8 @@ public sealed class SearchSuppliersCommandValidator : AbstractValidator<SearchSu
     {
         RuleFor(x => x.PageNumber).GreaterThanOrEqualTo(1);
         RuleFor(x => x.PageSize).GreaterThan(0).LessThanOrEqualTo(500);
-        RuleFor(x => x.Name).MaximumLength(200).When(x => !string.IsNullOrWhiteSpace(x.Name));
-        RuleFor(x => x.Code).MaximumLength(50).When(x => !string.IsNullOrWhiteSpace(x.Code));
+        RuleFor(x => x.Name).MaximumLength(256).When(x => !string.IsNullOrWhiteSpace(x.Name));
+        RuleFor(x => x.Code).MaximumLength(64).When(x => !string.IsNullOrWhiteSpace(x.Code));
     }
 }
 

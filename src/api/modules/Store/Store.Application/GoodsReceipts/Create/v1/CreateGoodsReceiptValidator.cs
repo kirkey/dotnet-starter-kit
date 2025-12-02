@@ -10,7 +10,7 @@ public sealed class CreateGoodsReceiptValidator : AbstractValidator<CreateGoodsR
         RuleFor(x => x.ReceiptNumber)
             .NotEmpty().WithMessage("Receipt number is required")
             .NotNull().WithMessage("Receipt number cannot be null")
-            .MaximumLength(100).WithMessage("Receipt number must not exceed 100 characters");
+            .MaximumLength(128).WithMessage("Receipt number must not exceed 100 characters");
 
         RuleFor(x => x.WarehouseId)
             .NotEmpty().WithMessage("Warehouse is required")

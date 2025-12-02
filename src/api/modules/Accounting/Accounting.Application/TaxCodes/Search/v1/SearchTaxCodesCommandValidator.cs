@@ -22,7 +22,7 @@ public class SearchTaxCodesCommandValidator : AbstractValidator<SearchTaxCodesCo
 
         // Code validation
         RuleFor(x => x.Code)
-            .MaximumLength(20).WithMessage("Tax code search term must not exceed 20 characters.")
+            .MaximumLength(32).WithMessage("Tax code search term must not exceed 20 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Code));
 
         // TaxType validation

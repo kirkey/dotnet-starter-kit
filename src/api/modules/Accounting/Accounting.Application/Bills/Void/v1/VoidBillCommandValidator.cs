@@ -16,7 +16,7 @@ public sealed class VoidBillCommandValidator : AbstractValidator<VoidBillCommand
         RuleFor(x => x.Reason)
             .NotEmpty()
             .WithMessage("Void reason is required.")
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Void reason cannot exceed 500 characters.");
     }
 }

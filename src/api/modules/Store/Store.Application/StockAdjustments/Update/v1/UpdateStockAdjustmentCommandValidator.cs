@@ -19,7 +19,7 @@ public class UpdateStockAdjustmentCommandValidator : AbstractValidator<UpdateSto
 
         RuleFor(x => x.Reason)
             .NotEmpty().WithMessage("Reason is required")
-            .MaximumLength(200).WithMessage("Reason must not exceed 200 characters");
+            .MaximumLength(256).WithMessage("Reason must not exceed 200 characters");
 
         RuleFor(x => x.Notes)
             .MaximumLength(2048).WithMessage("Notes must not exceed 2048 characters")

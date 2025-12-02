@@ -28,7 +28,7 @@ public class UpdatePayrollDeductionValidator : AbstractValidator<UpdatePayrollDe
             .When(x => x.MaxDeductionLimit.HasValue);
 
         RuleFor(x => x.Remarks)
-            .MaximumLength(500).WithMessage("Remarks must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Remarks must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Remarks));
     }
 }

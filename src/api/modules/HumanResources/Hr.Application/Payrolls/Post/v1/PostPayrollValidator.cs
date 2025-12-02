@@ -12,7 +12,7 @@ public sealed class PostPayrollValidator : AbstractValidator<PostPayrollCommand>
 
         RuleFor(x => x.JournalEntryId)
             .NotEmpty().WithMessage("Journal Entry ID is required.")
-            .MaximumLength(100).WithMessage("Journal Entry ID cannot exceed 100 characters.");
+            .MaximumLength(128).WithMessage("Journal Entry ID cannot exceed 100 characters.");
     }
 }
 

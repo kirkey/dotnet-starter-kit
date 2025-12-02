@@ -6,7 +6,7 @@ public sealed class CreatePickListValidator : AbstractValidator<CreatePickListCo
     {
         RuleFor(x => x.PickListNumber)
             .NotEmpty().WithMessage("Pick list number is required")
-            .MaximumLength(100).WithMessage("Pick list number must not exceed 100 characters");
+            .MaximumLength(128).WithMessage("Pick list number must not exceed 100 characters");
 
         RuleFor(x => x.WarehouseId)
             .NotEmpty().WithMessage("Warehouse ID is required");
@@ -17,7 +17,7 @@ public sealed class CreatePickListValidator : AbstractValidator<CreatePickListCo
             .WithMessage("Picking type must be one of: Order, Wave, Batch, Zone");
 
         RuleFor(x => x.ReferenceNumber)
-            .MaximumLength(100).WithMessage("Reference number must not exceed 100 characters")
+            .MaximumLength(128).WithMessage("Reference number must not exceed 100 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.ReferenceNumber));
 
         RuleFor(x => x.Name)

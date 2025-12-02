@@ -14,7 +14,7 @@ public sealed class AddFiscalPeriodCloseValidationIssueCommandValidator : Abstra
         RuleFor(x => x.IssueDescription)
             .NotEmpty()
             .WithMessage("Issue description is required.")
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Issue description must not exceed 500 characters.");
 
         RuleFor(x => x.Severity)
@@ -24,7 +24,7 @@ public sealed class AddFiscalPeriodCloseValidationIssueCommandValidator : Abstra
             .WithMessage("Severity must be one of: Critical, High, Medium, Low.");
 
         RuleFor(x => x.Resolution)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Resolution must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Resolution));
     }

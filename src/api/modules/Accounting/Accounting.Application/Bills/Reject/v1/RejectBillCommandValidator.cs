@@ -16,13 +16,13 @@ public sealed class RejectBillCommandValidator : AbstractValidator<RejectBillCom
         RuleFor(x => x.RejectedBy)
             .NotEmpty()
             .WithMessage("Rejected by is required.")
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Rejected by cannot exceed 100 characters.");
 
         RuleFor(x => x.Reason)
             .NotEmpty()
             .WithMessage("Rejection reason is required.")
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Rejection reason cannot exceed 500 characters.");
     }
 }

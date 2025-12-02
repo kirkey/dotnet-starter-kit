@@ -37,7 +37,7 @@ public sealed class CreateBankReconciliationRequestValidator : AbstractValidator
             .WithMessage("Book balance exceeds maximum allowed value.");
 
         RuleFor(x => x.StatementNumber)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Statement number cannot exceed 100 characters.")
             .Matches(@"^[a-zA-Z0-9\-._/]{1,}$")
             .WithMessage("Statement number contains invalid characters.")

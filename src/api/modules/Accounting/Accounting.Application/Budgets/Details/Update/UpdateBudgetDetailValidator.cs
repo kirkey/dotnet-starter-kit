@@ -9,7 +9,7 @@ public sealed class UpdateBudgetDetailValidator : AbstractValidator<UpdateBudget
             .GreaterThanOrEqualTo(0)
             .When(x => x.BudgetedAmount.HasValue);
         RuleFor(x => x.Description)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }
 }

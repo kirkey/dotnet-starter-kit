@@ -16,7 +16,7 @@ public sealed class TrialBalanceReopenCommandValidator : AbstractValidator<Trial
             .WithMessage("Reason is required to reopen a trial balance.")
             .MinimumLength(10)
             .WithMessage("Reason must be at least 10 characters.")
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Reason must not exceed 500 characters.");
     }
 }

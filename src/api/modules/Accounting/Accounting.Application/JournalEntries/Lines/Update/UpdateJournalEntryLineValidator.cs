@@ -22,12 +22,12 @@ public sealed class UpdateJournalEntryLineValidator : AbstractValidator<UpdateJo
             .WithMessage("Credit amount must be non-negative.");
 
         RuleFor(x => x.Memo)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .When(x => !string.IsNullOrEmpty(x.Memo))
             .WithMessage("Memo cannot exceed 500 characters.");
 
         RuleFor(x => x.Reference)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrEmpty(x.Reference))
             .WithMessage("Reference cannot exceed 100 characters.");
     }

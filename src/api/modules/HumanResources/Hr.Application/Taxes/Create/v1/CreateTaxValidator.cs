@@ -13,12 +13,12 @@ public sealed class CreateTaxValidator : AbstractValidator<CreateTaxCommand>
     {
         RuleFor(x => x.Code)
             .NotEmpty().WithMessage("Tax code is required")
-            .MaximumLength(50).WithMessage("Tax code cannot exceed 50 characters")
+            .MaximumLength(64).WithMessage("Tax code cannot exceed 50 characters")
             .Matches(@"^[A-Z0-9\-_]+$").WithMessage("Tax code must be uppercase alphanumeric with hyphens/underscores only");
 
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Tax name is required")
-            .MaximumLength(200).WithMessage("Tax name cannot exceed 200 characters");
+            .MaximumLength(256).WithMessage("Tax name cannot exceed 200 characters");
 
         RuleFor(x => x.TaxType)
             .NotEmpty().WithMessage("Tax type is required")
@@ -37,16 +37,16 @@ public sealed class CreateTaxValidator : AbstractValidator<CreateTaxCommand>
             .When(x => x.ExpiryDate.HasValue && x.EffectiveDate.HasValue);
 
         RuleFor(x => x.Jurisdiction)
-            .MaximumLength(100).WithMessage("Jurisdiction cannot exceed 100 characters");
+            .MaximumLength(128).WithMessage("Jurisdiction cannot exceed 100 characters");
 
         RuleFor(x => x.TaxAuthority)
-            .MaximumLength(200).WithMessage("Tax authority cannot exceed 200 characters");
+            .MaximumLength(256).WithMessage("Tax authority cannot exceed 200 characters");
 
         RuleFor(x => x.TaxRegistrationNumber)
-            .MaximumLength(100).WithMessage("Tax registration number cannot exceed 100 characters");
+            .MaximumLength(128).WithMessage("Tax registration number cannot exceed 100 characters");
 
         RuleFor(x => x.ReportingCategory)
-            .MaximumLength(100).WithMessage("Reporting category cannot exceed 100 characters");
+            .MaximumLength(128).WithMessage("Reporting category cannot exceed 100 characters");
     }
 
     /// <summary>

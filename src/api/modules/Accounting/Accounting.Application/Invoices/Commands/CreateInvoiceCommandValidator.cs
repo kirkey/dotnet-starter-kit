@@ -10,7 +10,7 @@ public class CreateInvoiceCommandValidator : AbstractValidator<CreateInvoiceComm
         RuleFor(x => x.InvoiceNumber)
             .NotEmpty()
             .WithMessage("Invoice number is required")
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Invoice number cannot exceed 50 characters");
 
         RuleFor(x => x.MemberId)
@@ -52,7 +52,7 @@ public class CreateInvoiceCommandValidator : AbstractValidator<CreateInvoiceComm
         RuleFor(x => x.BillingPeriod)
             .NotEmpty()
             .WithMessage("Billing period is required")
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Billing period cannot exceed 50 characters");
 
         When(x => x.LateFee.HasValue, () =>
@@ -86,21 +86,21 @@ public class CreateInvoiceCommandValidator : AbstractValidator<CreateInvoiceComm
         When(x => !string.IsNullOrWhiteSpace(x.RateSchedule), () =>
         {
             RuleFor(x => x.RateSchedule!)
-                .MaximumLength(100)
+                .MaximumLength(128)
                 .WithMessage("Rate schedule cannot exceed 100 characters");
         });
 
         When(x => !string.IsNullOrWhiteSpace(x.Description), () =>
         {
             RuleFor(x => x.Description!)
-                .MaximumLength(500)
+                .MaximumLength(512)
                 .WithMessage("Description cannot exceed 500 characters");
         });
 
         When(x => !string.IsNullOrWhiteSpace(x.Notes), () =>
         {
             RuleFor(x => x.Notes!)
-                .MaximumLength(1000)
+                .MaximumLength(1024)
                 .WithMessage("Notes cannot exceed 1000 characters");
         });
     }

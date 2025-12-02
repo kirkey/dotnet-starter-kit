@@ -23,7 +23,7 @@ public sealed class ExportChartOfAccountsQueryValidator : AbstractValidator<Expo
             .WithMessage("USOA category must be one of: Production, Transmission, Distribution, Customer, Administrative, General");
 
         RuleFor(x => x.SearchTerm)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrWhiteSpace(x.SearchTerm))
             .WithMessage("Search term cannot exceed 100 characters");
 

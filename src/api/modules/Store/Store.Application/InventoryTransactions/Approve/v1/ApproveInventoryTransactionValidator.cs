@@ -9,6 +9,6 @@ public class ApproveInventoryTransactionValidator : AbstractValidator<ApproveInv
 
         RuleFor(x => x.ApprovedBy)
             .NotEmpty().WithMessage("Approved by is required.")
-            .MaximumLength(100).WithMessage("Approved by must not exceed 100 characters.");
+            .MaximumLength(128).WithMessage("Approved by must not exceed 100 characters.");
     }
 }

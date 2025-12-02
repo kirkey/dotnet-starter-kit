@@ -16,7 +16,7 @@ public class UpdateLeaveTypeValidator : AbstractValidator<UpdateLeaveTypeCommand
             .When(x => x.MaxCarryoverDays.HasValue);
 
         RuleFor(x => x.Description)
-            .MaximumLength(500).WithMessage("Description cannot exceed 500 characters")
+            .MaximumLength(512).WithMessage("Description cannot exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }
 }

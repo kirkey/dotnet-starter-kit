@@ -20,7 +20,7 @@ public class CreateConversationValidator : AbstractValidator<CreateConversationC
                 .WithMessage("title is required for group conversations")
                 .MinimumLength(2)
                 .WithMessage("title must be at least 2 characters")
-                .MaximumLength(200)
+                .MaximumLength(256)
                 .WithMessage("title must not exceed 200 characters");
         });
 
@@ -32,12 +32,12 @@ public class CreateConversationValidator : AbstractValidator<CreateConversationC
         });
 
         RuleFor(c => c.Description)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .When(c => !string.IsNullOrWhiteSpace(c.Description))
             .WithMessage("description must not exceed 1000 characters");
 
         RuleFor(c => c.ImageUrl)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .When(c => !string.IsNullOrWhiteSpace(c.ImageUrl))
             .WithMessage("image URL must not exceed 500 characters");
 

@@ -9,7 +9,7 @@ public class CreateInventoryTransferCommandValidator : AbstractValidator<CreateI
         RuleFor(x => x.TransferNumber)
             .NotEmpty()
             .WithMessage("Transfer number is required")
-            .MaximumLength(20)
+            .MaximumLength(32)
             .WithMessage("Transfer number must not exceed 20 characters")
             .Matches(@"^[A-Z0-9]+$")
             .WithMessage("Transfer number must contain only uppercase letters and numbers");
@@ -56,7 +56,7 @@ public class CreateInventoryTransferCommandValidator : AbstractValidator<CreateI
             .WithMessage("Priority must be one of: Low, Normal, High, Urgent");
 
         RuleFor(x => x.TransportMethod)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Transport method must not exceed 100 characters")
             .When(x => !string.IsNullOrEmpty(x.TransportMethod));
 
@@ -75,7 +75,7 @@ public class CreateInventoryTransferCommandValidator : AbstractValidator<CreateI
             .When(x => !string.IsNullOrEmpty(x.Notes));
 
         RuleFor(x => x.RequestedBy)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrEmpty(x.RequestedBy));
     }
 }

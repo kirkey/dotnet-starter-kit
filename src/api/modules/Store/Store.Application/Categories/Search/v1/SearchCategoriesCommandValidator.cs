@@ -9,11 +9,11 @@ public class SearchCategoriesCommandValidator : AbstractValidator<SearchCategori
             .LessThanOrEqualTo(100);
 
         RuleFor(x => x.Name)
-            .MaximumLength(200)
+            .MaximumLength(256)
             .When(x => !string.IsNullOrEmpty(x.Name));
 
         RuleFor(x => x.Code)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .Matches(@"^[A-Z0-9]+$")
             .WithMessage("Code filter must be uppercase alphanumeric.")
             .When(x => !string.IsNullOrEmpty(x.Code));

@@ -13,7 +13,7 @@ public sealed class SendPurchaseOrderCommandValidator : AbstractValidator<SendPu
             .WithMessage("Purchase order ID is required");
 
         RuleFor(x => x.DeliveryInstructions)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .WithMessage("Delivery instructions must not exceed 1000 characters");
     }
 }

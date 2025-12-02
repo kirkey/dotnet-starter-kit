@@ -15,7 +15,7 @@ public class UpdateEnrollmentValidator : AbstractValidator<UpdateEnrollmentComma
             .WithMessage("Enrollment ID is required");
 
         RuleFor(x => x.CoverageLevel)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Coverage level cannot exceed 50 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.CoverageLevel));
 

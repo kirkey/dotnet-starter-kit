@@ -13,7 +13,7 @@ public sealed class ApprovePurchaseOrderCommandValidator : AbstractValidator<App
             .WithMessage("Purchase order ID is required");
 
         RuleFor(x => x.ApprovalNotes)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Approval notes must not exceed 500 characters");
     }
 }

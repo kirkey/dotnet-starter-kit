@@ -5,7 +5,7 @@ public class ApproveInventoryTransferCommandValidator : AbstractValidator<Approv
     public ApproveInventoryTransferCommandValidator()
     {
         RuleFor(x => x.Id).NotEmpty().WithMessage("Inventory transfer id is required");
-        RuleFor(x => x.ApprovedBy).NotEmpty().MaximumLength(100).WithMessage("ApprovedBy is required and must not exceed 100 characters");
+        RuleFor(x => x.ApprovedBy).NotEmpty().MaximumLength(128).WithMessage("ApprovedBy is required and must not exceed 100 characters");
     }
 }
 

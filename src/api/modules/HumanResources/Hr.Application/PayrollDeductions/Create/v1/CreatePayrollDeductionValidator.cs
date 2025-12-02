@@ -32,10 +32,10 @@ public class CreatePayrollDeductionValidator : AbstractValidator<CreatePayrollDe
             .When(x => x.EndDate.HasValue && x.StartDate.HasValue);
 
         RuleFor(x => x.ReferenceNumber)
-            .MaximumLength(100).WithMessage("Reference number must not exceed 100 characters.");
+            .MaximumLength(128).WithMessage("Reference number must not exceed 100 characters.");
 
         RuleFor(x => x.Remarks)
-            .MaximumLength(1000).WithMessage("Remarks must not exceed 1000 characters.");
+            .MaximumLength(1024).WithMessage("Remarks must not exceed 1000 characters.");
     }
 }
 

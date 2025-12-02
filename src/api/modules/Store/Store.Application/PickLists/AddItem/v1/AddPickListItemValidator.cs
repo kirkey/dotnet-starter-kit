@@ -14,7 +14,7 @@ public sealed class AddPickListItemValidator : AbstractValidator<AddPickListItem
             .GreaterThan(0).WithMessage("Quantity to pick must be positive");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(500).WithMessage("Notes must not exceed 500 characters")
+            .MaximumLength(512).WithMessage("Notes must not exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }
 }

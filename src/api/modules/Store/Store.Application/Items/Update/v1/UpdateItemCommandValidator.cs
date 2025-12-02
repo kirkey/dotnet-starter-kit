@@ -13,22 +13,22 @@ public class UpdateItemCommandValidator : AbstractValidator<UpdateItemCommand>
 
         RuleFor(c => c.Name)
             .NotEmpty().WithMessage("Name is required.")
-            .MaximumLength(200).WithMessage("Name must not exceed 200 characters.")
+            .MaximumLength(256).WithMessage("Name must not exceed 200 characters.")
             .MinimumLength(2).WithMessage("Name must be at least 2 characters.");
 
         RuleFor(c => c.Description)
-            .MaximumLength(1000).When(c => !string.IsNullOrWhiteSpace(c.Description))
+            .MaximumLength(1024).When(c => !string.IsNullOrWhiteSpace(c.Description))
             .WithMessage("Description must not exceed 1000 characters.");
 
         RuleFor(c => c.Sku)
             .NotEmpty().WithMessage("SKU is required.")
-            .MaximumLength(100).WithMessage("SKU must not exceed 100 characters.")
+            .MaximumLength(128).WithMessage("SKU must not exceed 100 characters.")
             .MinimumLength(1).WithMessage("SKU must be at least 1 character.")
             .Matches(@"^[A-Z0-9\-_]+$").WithMessage("SKU must contain only uppercase letters, numbers, hyphens, and underscores.");
 
         RuleFor(c => c.Barcode)
             .NotEmpty().WithMessage("Barcode is required.")
-            .MaximumLength(100).WithMessage("Barcode must not exceed 100 characters.")
+            .MaximumLength(128).WithMessage("Barcode must not exceed 100 characters.")
             .MinimumLength(1).WithMessage("Barcode must be at least 1 character.")
             .Matches(@"^[A-Z0-9]+$").WithMessage("Barcode must contain only uppercase letters and numbers.");
 
@@ -95,15 +95,15 @@ public class UpdateItemCommandValidator : AbstractValidator<UpdateItemCommand>
             .WithMessage("Shelf Life Days is required for perishable items.");
 
         RuleFor(c => c.Brand)
-            .MaximumLength(200).When(c => !string.IsNullOrWhiteSpace(c.Brand))
+            .MaximumLength(256).When(c => !string.IsNullOrWhiteSpace(c.Brand))
             .WithMessage("Brand must not exceed 200 characters.");
 
         RuleFor(c => c.Manufacturer)
-            .MaximumLength(200).When(c => !string.IsNullOrWhiteSpace(c.Manufacturer))
+            .MaximumLength(256).When(c => !string.IsNullOrWhiteSpace(c.Manufacturer))
             .WithMessage("Manufacturer must not exceed 200 characters.");
 
         RuleFor(c => c.ManufacturerPartNumber)
-            .MaximumLength(100).When(c => !string.IsNullOrWhiteSpace(c.ManufacturerPartNumber))
+            .MaximumLength(128).When(c => !string.IsNullOrWhiteSpace(c.ManufacturerPartNumber))
             .WithMessage("Manufacturer Part Number must not exceed 100 characters.");
 
         RuleFor(c => c.Weight)
@@ -113,7 +113,7 @@ public class UpdateItemCommandValidator : AbstractValidator<UpdateItemCommand>
             .WithMessage("Weight must not exceed 100,000.");
 
         RuleFor(c => c.WeightUnit)
-            .MaximumLength(10).When(c => !string.IsNullOrWhiteSpace(c.WeightUnit))
+            .MaximumLength(16).When(c => !string.IsNullOrWhiteSpace(c.WeightUnit))
             .WithMessage("Weight Unit must not exceed 10 characters.");
 
         RuleFor(c => c.Length)
@@ -135,12 +135,12 @@ public class UpdateItemCommandValidator : AbstractValidator<UpdateItemCommand>
             .WithMessage("Height must not exceed 100,000.");
 
         RuleFor(c => c.DimensionUnit)
-            .MaximumLength(10).When(c => !string.IsNullOrWhiteSpace(c.DimensionUnit))
+            .MaximumLength(16).When(c => !string.IsNullOrWhiteSpace(c.DimensionUnit))
             .WithMessage("Dimension Unit must not exceed 10 characters.");
 
         RuleFor(c => c.UnitOfMeasure)
             .NotEmpty().WithMessage("Unit of Measure is required.")
-            .MaximumLength(20).WithMessage("Unit of Measure must not exceed 20 characters.");
+            .MaximumLength(32).WithMessage("Unit of Measure must not exceed 20 characters.");
 
         RuleFor(c => c.CategoryId)
             .NotEmpty().WithMessage("Category is required.");

@@ -23,15 +23,15 @@ public class CreateEmployeeDocumentValidator : AbstractValidator<CreateEmployeeD
         RuleFor(x => x.Title)
             .NotEmpty()
             .WithMessage("Title is required")
-            .MaximumLength(250)
+            .MaximumLength(256)
             .WithMessage("Title cannot exceed 250 characters");
 
         RuleFor(x => x.FileName)
-            .MaximumLength(255)
+            .MaximumLength(256)
             .WithMessage("File name cannot exceed 255 characters");
 
         RuleFor(x => x.FilePath)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("File path cannot exceed 500 characters");
 
         RuleFor(x => x.FileSize)
@@ -45,7 +45,7 @@ public class CreateEmployeeDocumentValidator : AbstractValidator<CreateEmployeeD
             .WithMessage("Expiry date must be in the future");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .WithMessage("Notes cannot exceed 1000 characters");
     }
 

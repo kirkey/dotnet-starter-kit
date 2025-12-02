@@ -9,7 +9,7 @@ public sealed class DisposeFixedAssetCommandValidator : AbstractValidator<Dispos
         RuleFor(x => x.DisposalAmount).GreaterThanOrEqualTo(0).WithMessage("Disposal amount must be non-negative.")
             .LessThanOrEqualTo(999999999.99m).WithMessage("Disposal amount must not exceed 999,999,999.99.")
             .When(x => x.DisposalAmount.HasValue);
-        RuleFor(x => x.DisposalReason).MaximumLength(500).WithMessage("Disposal reason must not exceed 500 characters.")
+        RuleFor(x => x.DisposalReason).MaximumLength(512).WithMessage("Disposal reason must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.DisposalReason));
     }
 }

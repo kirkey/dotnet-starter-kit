@@ -10,7 +10,7 @@ public class CreateHolidayValidator : AbstractValidator<CreateHolidayCommand>
         // Basic Required Fields
         RuleFor(x => x.HolidayName)
             .NotEmpty().WithMessage("Holiday name is required.")
-            .MaximumLength(100).WithMessage("Holiday name must not exceed 100 characters.");
+            .MaximumLength(128).WithMessage("Holiday name must not exceed 100 characters.");
 
         RuleFor(x => x.HolidayDate)
             .NotEmpty().WithMessage("Holiday date is required.")
@@ -18,7 +18,7 @@ public class CreateHolidayValidator : AbstractValidator<CreateHolidayCommand>
             .LessThanOrEqualTo(DateTime.Today.AddYears(5)).WithMessage("Holiday date cannot be more than 5 years in the future.");
 
         RuleFor(x => x.Description)
-            .MaximumLength(500).WithMessage("Description must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Description must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
 
         // Philippines-Specific: Holiday Type Validation
@@ -40,13 +40,13 @@ public class CreateHolidayValidator : AbstractValidator<CreateHolidayCommand>
         // Philippines-Specific: Moveable Rule Validation
         RuleFor(x => x.MoveableRule)
             .NotEmpty().WithMessage("Moveable rule is required when holiday is moveable.")
-            .MaximumLength(200).WithMessage("Moveable rule must not exceed 200 characters.")
+            .MaximumLength(256).WithMessage("Moveable rule must not exceed 200 characters.")
             .When(x => x.IsMoveable);
 
         // Philippines-Specific: Regional Applicability Validation
         RuleFor(x => x.ApplicableRegions)
             .NotEmpty().WithMessage("Applicable regions are required when holiday is not nationwide.")
-            .MaximumLength(500).WithMessage("Applicable regions must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Applicable regions must not exceed 500 characters.")
             .When(x => !x.IsNationwide);
     }
 

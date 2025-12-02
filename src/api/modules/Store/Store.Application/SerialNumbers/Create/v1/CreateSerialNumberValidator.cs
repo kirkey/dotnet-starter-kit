@@ -6,17 +6,17 @@ public class CreateSerialNumberValidator : AbstractValidator<CreateSerialNumberC
     {
         RuleFor(x => x.SerialNumberValue)
             .NotEmpty().WithMessage("Serial number value is required.")
-            .MaximumLength(100).WithMessage("Serial number value must not exceed 100 characters.");
+            .MaximumLength(128).WithMessage("Serial number value must not exceed 100 characters.");
 
         RuleFor(x => x.ItemId)
             .NotEmpty().WithMessage("Item ID is required.");
 
         RuleFor(x => x.ExternalReference)
-            .MaximumLength(100).WithMessage("External reference must not exceed 100 characters.")
+            .MaximumLength(128).WithMessage("External reference must not exceed 100 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.ExternalReference));
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000).WithMessage("Notes must not exceed 1000 characters.")
+            .MaximumLength(1024).WithMessage("Notes must not exceed 1000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
 
         RuleFor(x => x.WarrantyExpirationDate)

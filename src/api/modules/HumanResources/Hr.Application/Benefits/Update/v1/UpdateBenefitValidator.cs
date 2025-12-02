@@ -20,15 +20,15 @@ public sealed class UpdateBenefitValidator : AbstractValidator<UpdateBenefitComm
             .When(x => x.CoverageAmount.HasValue);
 
         RuleFor(x => x.CoverageType)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .When(x => !string.IsNullOrWhiteSpace(x.CoverageType));
 
         RuleFor(x => x.ProviderName)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .When(x => !string.IsNullOrWhiteSpace(x.ProviderName));
 
         RuleFor(x => x.Description)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
     }
 }

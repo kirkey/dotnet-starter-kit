@@ -19,7 +19,7 @@ public class ReverseJournalEntryValidator : AbstractValidator<ReverseJournalEntr
         RuleFor(x => x.ReversalReason)
             .NotEmpty()
             .WithMessage("Reversal reason is required.")
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Reversal reason must not exceed 500 characters.");
     }
 }

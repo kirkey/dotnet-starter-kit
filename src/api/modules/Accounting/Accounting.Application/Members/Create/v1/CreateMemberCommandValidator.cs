@@ -10,19 +10,19 @@ public sealed class CreateMemberCommandValidator : AbstractValidator<CreateMembe
         RuleFor(x => x.MemberNumber)
             .NotEmpty()
             .WithMessage("Member number is required.")
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Member number cannot exceed 50 characters.");
 
         RuleFor(x => x.MemberName)
             .NotEmpty()
             .WithMessage("Member name is required.")
-            .MaximumLength(200)
+            .MaximumLength(256)
             .WithMessage("Member name cannot exceed 200 characters.");
 
         RuleFor(x => x.ServiceAddress)
             .NotEmpty()
             .WithMessage("Service address is required.")
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Service address cannot exceed 500 characters.");
 
         RuleFor(x => x.MembershipDate)
@@ -42,7 +42,7 @@ public sealed class CreateMemberCommandValidator : AbstractValidator<CreateMembe
             .WithMessage("Invalid email address format.");
 
         RuleFor(x => x.PhoneNumber)
-            .MaximumLength(20)
+            .MaximumLength(32)
             .When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber))
             .WithMessage("Phone number cannot exceed 20 characters.");
     }

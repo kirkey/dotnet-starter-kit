@@ -16,7 +16,7 @@ public sealed class CancelCycleCountCommandValidator : AbstractValidator<CancelC
             .WithMessage("Cancellation reason is required")
             .MinimumLength(5)
             .WithMessage("Cancellation reason must be at least 5 characters")
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Cancellation reason must not exceed 500 characters");
     }
 }

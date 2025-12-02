@@ -21,14 +21,14 @@ public sealed class CreateAccountReconciliationCommandValidator : AbstractValida
 
         RuleFor(x => x.SubsidiaryLedgerSource)
             .NotEmpty().WithMessage("Subsidiary ledger source is required.")
-            .MaximumLength(100).WithMessage("Source cannot exceed 100 characters.");
+            .MaximumLength(128).WithMessage("Source cannot exceed 100 characters.");
 
         RuleFor(x => x.ReconciliationDate)
             .NotEmpty().WithMessage("Reconciliation date is required.")
             .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("Reconciliation date cannot be in the future.");
 
         RuleFor(x => x.VarianceExplanation)
-            .MaximumLength(1000).WithMessage("Variance explanation cannot exceed 1000 characters.");
+            .MaximumLength(1024).WithMessage("Variance explanation cannot exceed 1000 characters.");
     }
 }
 

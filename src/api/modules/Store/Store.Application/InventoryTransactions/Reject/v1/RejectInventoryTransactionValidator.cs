@@ -14,11 +14,11 @@ public class RejectInventoryTransactionValidator : AbstractValidator<RejectInven
         RuleFor(x => x.RejectedBy)
             .NotEmpty()
             .WithMessage("Rejected by is required.")
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Rejected by must not exceed 100 characters.");
 
         RuleFor(x => x.RejectionReason)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .When(x => !string.IsNullOrWhiteSpace(x.RejectionReason))
             .WithMessage("Rejection reason must not exceed 500 characters.");
     }

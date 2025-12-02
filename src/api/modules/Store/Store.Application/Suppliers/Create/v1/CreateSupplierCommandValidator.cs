@@ -9,17 +9,17 @@ namespace FSH.Starter.WebApi.Store.Application.Suppliers.Create.v1;
 public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCommand>
 {
     private static readonly Regex EmailRegex = new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    private static readonly Regex PhoneRegex = new(@"^[0-9+()\-\s]{5,50}$", RegexOptions.Compiled);
+    private static readonly Regex PhoneRegex = new(@"^[0-9+()\-\s]{5,64}$", RegexOptions.Compiled);
 
     public CreateSupplierCommandValidator([FromKeyedServices("store:suppliers")] IReadRepository<Supplier> repository)
     {
         RuleFor(x => x.Name)
             .NotEmpty()
-            .MaximumLength(200);
+            .MaximumLength(256);
 
         RuleFor(x => x.Code)
             .NotEmpty()
-            .MaximumLength(50)
+            .MaximumLength(64)
             .Matches(@"^[A-Z0-9-]+$")
             .WithMessage("Code must contain only uppercase letters, numbers, and hyphens")
             .MustAsync(async (code, ct) =>
@@ -31,11 +31,11 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
 
         RuleFor(x => x.ContactPerson)
             .NotEmpty()
-            .MaximumLength(100);
+            .MaximumLength(128);
 
         RuleFor(x => x.Email)
             .NotEmpty()
-            .MaximumLength(255)
+            .MaximumLength(256)
             .Must(e => EmailRegex.IsMatch(e)).WithMessage("Invalid email address")
             .MustAsync(async (email, ct) =>
             {
@@ -45,20 +45,20 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
 
         RuleFor(x => x.Phone)
             .NotEmpty()
-            .MaximumLength(50)
+            .MaximumLength(64)
             .Matches(PhoneRegex).WithMessage("Invalid phone number format");
 
         RuleFor(x => x.Address)
             .NotEmpty()
-            .MaximumLength(500);
+            .MaximumLength(512);
 
 
         RuleFor(x => x.PostalCode)
-            .MaximumLength(20)
+            .MaximumLength(32)
             .When(x => !string.IsNullOrEmpty(x.PostalCode));
 
         RuleFor(x => x.Website)
-            .MaximumLength(255)
+            .MaximumLength(256)
             .When(x => !string.IsNullOrEmpty(x.Website))
             .Must(uri => Uri.TryCreate(uri!, UriKind.Absolute, out _))
             .When(x => !string.IsNullOrWhiteSpace(x.Website))
@@ -76,7 +76,7 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
             .InclusiveBetween(0m, 5m);
 
         RuleFor(x => x.Notes)
-            .MaximumLength(2000)
+            .MaximumLength(2048)
             .When(x => !string.IsNullOrEmpty(x.Notes));
     }
 }

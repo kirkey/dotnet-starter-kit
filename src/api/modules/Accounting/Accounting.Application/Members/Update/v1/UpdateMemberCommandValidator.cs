@@ -12,12 +12,12 @@ public sealed class UpdateMemberCommandValidator : AbstractValidator<UpdateMembe
             .WithMessage("Member ID is required.");
 
         RuleFor(x => x.MemberName)
-            .MaximumLength(200)
+            .MaximumLength(256)
             .When(x => !string.IsNullOrWhiteSpace(x.MemberName))
             .WithMessage("Member name cannot exceed 200 characters.");
 
         RuleFor(x => x.ServiceAddress)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .When(x => !string.IsNullOrWhiteSpace(x.ServiceAddress))
             .WithMessage("Service address cannot exceed 500 characters.");
 
@@ -33,7 +33,7 @@ public sealed class UpdateMemberCommandValidator : AbstractValidator<UpdateMembe
             .WithMessage("Invalid email address format.");
 
         RuleFor(x => x.PhoneNumber)
-            .MaximumLength(20)
+            .MaximumLength(32)
             .When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber))
             .WithMessage("Phone number cannot exceed 20 characters.");
     }

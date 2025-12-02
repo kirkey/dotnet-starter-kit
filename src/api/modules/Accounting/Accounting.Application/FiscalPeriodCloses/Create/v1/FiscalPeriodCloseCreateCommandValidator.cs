@@ -9,7 +9,7 @@ public class FiscalPeriodCloseCreateCommandValidator : AbstractValidator<FiscalP
     {
         RuleFor(x => x.CloseNumber)
             .NotEmpty().WithMessage("Close number is required")
-            .MaximumLength(50).WithMessage("Close number cannot exceed 50 characters");
+            .MaximumLength(64).WithMessage("Close number cannot exceed 50 characters");
 
         RuleFor(x => x.PeriodId)
             .NotEmpty().WithMessage("Period ID is required");

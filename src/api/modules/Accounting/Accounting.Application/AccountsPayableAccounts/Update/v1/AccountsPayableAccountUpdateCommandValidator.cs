@@ -14,19 +14,19 @@ public sealed class AccountsPayableAccountUpdateCommandValidator : AbstractValid
             .WithMessage("ID is required");
 
         RuleFor(x => x.AccountNumber)
-            .MaximumLength(50)
+            .MaximumLength(64)
             .WithMessage("Account number cannot exceed 50 characters");
 
         RuleFor(x => x.AccountName)
-            .MaximumLength(200)
+            .MaximumLength(256)
             .WithMessage("Account name cannot exceed 200 characters");
 
         RuleFor(x => x.Description)
-            .MaximumLength(500)
+            .MaximumLength(512)
             .WithMessage("Description cannot exceed 500 characters");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .WithMessage("Notes cannot exceed 1000 characters");
     }
 }

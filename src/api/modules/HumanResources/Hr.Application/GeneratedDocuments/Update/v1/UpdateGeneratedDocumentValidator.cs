@@ -12,15 +12,15 @@ public class UpdateGeneratedDocumentValidator : AbstractValidator<UpdateGenerate
             .When(x => !string.IsNullOrWhiteSpace(x.Status));
 
         RuleFor(x => x.FilePath)
-            .MaximumLength(1000).WithMessage("File path must not exceed 1000 characters.")
+            .MaximumLength(1024).WithMessage("File path must not exceed 1000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.FilePath));
 
         RuleFor(x => x.SignedBy)
-            .MaximumLength(200).WithMessage("Signed by must not exceed 200 characters.")
+            .MaximumLength(256).WithMessage("Signed by must not exceed 200 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.SignedBy));
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000).WithMessage("Notes must not exceed 1000 characters.")
+            .MaximumLength(1024).WithMessage("Notes must not exceed 1000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }
 

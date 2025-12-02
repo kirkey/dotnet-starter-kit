@@ -18,11 +18,11 @@ public class ReconcileGeneralLedgerAccountCommandValidator : AbstractValidator<R
             .WithMessage("Reconciliation date cannot be in the future");
 
         RuleFor(x => x.ReconciliationReference)
-            .MaximumLength(100)
+            .MaximumLength(128)
             .WithMessage("Reconciliation reference cannot exceed 100 characters");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .WithMessage("Notes cannot exceed 1000 characters");
 
         RuleForEach(x => x.ReconciliationLines)
@@ -44,7 +44,7 @@ public class ReconciliationLineDtoValidator : AbstractValidator<ReconciliationLi
         RuleFor(x => x.Description)
             .NotEmpty()
             .WithMessage("Description is required")
-            .MaximumLength(200)
+            .MaximumLength(256)
             .WithMessage("Description cannot exceed 200 characters");
 
         RuleFor(x => x.Amount)

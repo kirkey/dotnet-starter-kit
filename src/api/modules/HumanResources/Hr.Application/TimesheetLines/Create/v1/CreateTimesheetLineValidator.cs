@@ -19,10 +19,10 @@ public sealed class CreateTimesheetLineValidator : AbstractValidator<CreateTimes
             .Must(x => x.RegularHours + x.OvertimeHours <= 24)
             .WithMessage("Total hours (regular + overtime) cannot exceed 24 hours per day.");
         RuleFor(x => x.ProjectId)
-            .MaximumLength(50).WithMessage("Project ID cannot exceed 50 characters.")
+            .MaximumLength(64).WithMessage("Project ID cannot exceed 50 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.ProjectId));
         RuleFor(x => x.TaskDescription)
-            .MaximumLength(500).WithMessage("Task description cannot exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Task description cannot exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.TaskDescription));
         RuleFor(x => x.BillingRate)
             .GreaterThanOrEqualTo(0).WithMessage("Billing rate cannot be negative.")

@@ -19,7 +19,7 @@ public class CreateLeaveRequestValidator : AbstractValidator<CreateLeaveRequestC
             .GreaterThanOrEqualTo(x => x.StartDate).WithMessage("End date must be after or equal to start date");
 
         RuleFor(x => x.Reason)
-            .MaximumLength(500).WithMessage("Reason cannot exceed 500 characters")
+            .MaximumLength(512).WithMessage("Reason cannot exceed 500 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.Reason));
     }
 }

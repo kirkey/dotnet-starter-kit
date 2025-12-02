@@ -16,21 +16,21 @@ public class UpdateJournalEntryValidator : AbstractValidator<UpdateJournalEntryC
         When(x => !string.IsNullOrEmpty(x.ReferenceNumber), () =>
         {
             RuleFor(x => x.ReferenceNumber)
-                .MaximumLength(50)
+                .MaximumLength(64)
                 .WithMessage("Reference number cannot exceed 50 characters");
         });
 
         When(x => !string.IsNullOrEmpty(x.Source), () =>
         {
             RuleFor(x => x.Source)
-                .MaximumLength(100)
+                .MaximumLength(128)
                 .WithMessage("Source cannot exceed 100 characters");
         });
 
         When(x => !string.IsNullOrEmpty(x.Description), () =>
         {
             RuleFor(x => x.Description)
-                .MaximumLength(500)
+                .MaximumLength(512)
                 .WithMessage("Description cannot exceed 500 characters");
         });
     }

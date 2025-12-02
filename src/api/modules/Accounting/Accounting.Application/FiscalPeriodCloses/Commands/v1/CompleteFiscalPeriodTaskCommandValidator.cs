@@ -14,7 +14,7 @@ public sealed class CompleteFiscalPeriodTaskCommandValidator : AbstractValidator
         RuleFor(x => x.TaskName)
             .NotEmpty()
             .WithMessage("Task name is required.")
-            .MaximumLength(200)
+            .MaximumLength(256)
             .WithMessage("Task name must not exceed 200 characters.");
     }
 }

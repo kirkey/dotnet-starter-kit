@@ -17,7 +17,7 @@ public class CreateJournalEntryRequestValidator : AbstractValidator<CreateJourna
         RuleFor(x => x.Description)
             .NotEmpty()
             .WithMessage("Description is required.")
-            .MaximumLength(1000)
+            .MaximumLength(1024)
             .WithMessage("Description cannot exceed 1000 characters.");
 
         RuleFor(x => x.Source)
@@ -62,12 +62,12 @@ public class CreateJournalEntryRequestValidator : AbstractValidator<CreateJourna
                     .WithMessage("A line cannot have both debit and credit amounts.");
 
                 line.RuleFor(l => l.Description)
-                    .MaximumLength(500)
+                    .MaximumLength(512)
                     .When(l => !string.IsNullOrEmpty(l.Description))
                     .WithMessage("Line description cannot exceed 500 characters.");
 
                 line.RuleFor(l => l.Reference)
-                    .MaximumLength(100)
+                    .MaximumLength(128)
                     .When(l => !string.IsNullOrEmpty(l.Reference))
                     .WithMessage("Line reference cannot exceed 100 characters.");
             });

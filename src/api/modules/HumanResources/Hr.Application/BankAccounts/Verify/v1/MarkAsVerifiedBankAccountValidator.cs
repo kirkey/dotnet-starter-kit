@@ -11,7 +11,7 @@ public class MarkAsVerifiedBankAccountValidator : AbstractValidator<MarkAsVerifi
             .NotEmpty().WithMessage("Bank account ID is required.");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(500).WithMessage("Notes must not exceed 500 characters.")
+            .MaximumLength(512).WithMessage("Notes must not exceed 500 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }
 }

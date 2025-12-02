@@ -8,11 +8,11 @@ public class UpdateBinCommandValidator : AbstractValidator<UpdateBinCommand>
             .NotEmpty().WithMessage("Id is required.");
 
         RuleFor(c => c.Name)
-            .MaximumLength(200).When(c => !string.IsNullOrWhiteSpace(c.Name))
+            .MaximumLength(256).When(c => !string.IsNullOrWhiteSpace(c.Name))
             .WithMessage("Name must not exceed 200 characters.");
 
         RuleFor(c => c.BinType)
-            .MaximumLength(50).When(c => !string.IsNullOrWhiteSpace(c.BinType))
+            .MaximumLength(64).When(c => !string.IsNullOrWhiteSpace(c.BinType))
             .WithMessage("BinType must not exceed 50 characters.");
 
         RuleFor(c => c.Capacity)

@@ -6,13 +6,13 @@ public sealed class CreatePutAwayTaskValidator : AbstractValidator<CreatePutAway
     {
         RuleFor(x => x.TaskNumber)
             .NotEmpty().WithMessage("Task number is required")
-            .MaximumLength(100).WithMessage("Task number must not exceed 100 characters");
+            .MaximumLength(128).WithMessage("Task number must not exceed 100 characters");
 
         RuleFor(x => x.WarehouseId)
             .NotEmpty().WithMessage("Warehouse ID is required");
 
         RuleFor(x => x.PutAwayStrategy)
-            .MaximumLength(50).WithMessage("Put-away strategy must not exceed 50 characters")
+            .MaximumLength(64).WithMessage("Put-away strategy must not exceed 50 characters")
             .When(x => !string.IsNullOrWhiteSpace(x.PutAwayStrategy));
 
         RuleFor(x => x.Name)

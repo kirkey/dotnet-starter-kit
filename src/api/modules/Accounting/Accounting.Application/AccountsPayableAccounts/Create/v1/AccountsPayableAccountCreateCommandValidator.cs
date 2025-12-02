@@ -9,7 +9,7 @@ public class AccountsPayableAccountCreateCommandValidator : AbstractValidator<Ac
     {
         RuleFor(x => x.AccountNumber)
             .NotEmpty().WithMessage("Account number is required")
-            .MaximumLength(50).WithMessage("Account number cannot exceed 50 characters");
+            .MaximumLength(64).WithMessage("Account number cannot exceed 50 characters");
 
         RuleFor(x => x.AccountName)
             .NotEmpty().WithMessage("Account name is required")

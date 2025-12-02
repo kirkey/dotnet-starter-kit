@@ -12,13 +12,13 @@ public class CreateGeneratedDocumentValidator : AbstractValidator<CreateGenerate
 
         RuleFor(x => x.EntityType)
             .NotEmpty().WithMessage("Entity type is required.")
-            .MaximumLength(100).WithMessage("Entity type must not exceed 100 characters.");
+            .MaximumLength(128).WithMessage("Entity type must not exceed 100 characters.");
 
         RuleFor(x => x.GeneratedContent)
             .NotEmpty().WithMessage("Generated content is required.");
 
         RuleFor(x => x.Notes)
-            .MaximumLength(1000).WithMessage("Notes must not exceed 1000 characters.")
+            .MaximumLength(1024).WithMessage("Notes must not exceed 1000 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Notes));
     }
 }
