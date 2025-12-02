@@ -25,8 +25,6 @@ public class MenuService : IMenuService
                     Icon = Icons.Material.Filled.Engineering,
                     Href = "https://localhost:7000/jobs",
                     Target = "_blank",
-                    Action = FshActions.View,
-                    Resource = FshResources.Hangfire
                 },
 
                 new MenuSectionItemModel
@@ -34,8 +32,6 @@ public class MenuService : IMenuService
                     Title = "Audit Trail",
                     Icon = Icons.Material.Filled.WorkHistory,
                     Href = "/identity/audit-trail",
-                    Action = FshActions.View,
-                    Resource = FshResources.AuditTrails
                 }
             ]
         },
@@ -86,8 +82,6 @@ public class MenuService : IMenuService
                     Title = "Accounting",
                     Icon = Icons.Material.Filled.AddBox,
                     IsParent = true,
-                    Action = FshActions.View,
-                    Resource = FshResources.Accounting,
                     MenuItems =
                     [
                         // ========== GENERAL LEDGER & CHART OF ACCOUNTS ==========
@@ -150,8 +144,6 @@ public class MenuService : IMenuService
                     Title = "Store",
                     Icon = Icons.Material.Filled.AddBox,
                     IsParent = true,
-                    Action = FshActions.View,
-                    Resource = FshResources.Store,
                     MenuItems =
                     [
                         // ========== DASHBOARD & OVERVIEW ==========
@@ -193,8 +185,6 @@ public class MenuService : IMenuService
                     Title = "Warehouse",
                     Icon = Icons.Material.Filled.AddBox,
                     IsParent = true,
-                    Action = FshActions.View,
-                    Resource = FshResources.Warehouse,
                     MenuItems =
                     [
                         // ========== WAREHOUSE SETUP ==========
@@ -219,8 +209,6 @@ public class MenuService : IMenuService
                     Title = "Human Resource",
                     Icon = Icons.Material.Filled.People,
                     IsParent = true,
-                    Action = FshActions.View,
-                    Resource = FshResources.Employees,
                     MenuItems =
                     [
                         // ========== ORGANIZATION & SETUP ==========
@@ -290,8 +278,6 @@ public class MenuService : IMenuService
                     Title = "Todos",
                     Icon = Icons.Material.Filled.Checklist,
                     Href = "/todos",
-                    Action = FshActions.View,
-                    Resource = FshResources.Todos
                 },
                 
                 new MenuSectionItemModel
@@ -299,8 +285,6 @@ public class MenuService : IMenuService
                     Title = "Messaging",
                     Icon = Icons.Material.Filled.Chat,
                     Href = "/messaging",
-                    Action = FshActions.View,
-                    Resource = FshResources.Messaging
                 },
                 
                 new MenuSectionItemModel
@@ -308,8 +292,6 @@ public class MenuService : IMenuService
                     Title = "Analytics",
                     Icon = Icons.Material.Filled.Analytics,
                     Href = "/analytics",
-                    Action = FshActions.View,
-                    Resource = FshResources.Analytics,
                     PageStatus = PageStatus.ComingSoon
                 },
                 

@@ -73,4 +73,3 @@ public class MenuSectionItemModel
     /// </summary>
     public PageStatus PageStatus { get; set; } = PageStatus.None;
 }
-
