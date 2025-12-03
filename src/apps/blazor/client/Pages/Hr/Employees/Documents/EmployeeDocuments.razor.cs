@@ -91,6 +91,16 @@ public partial class EmployeeDocuments
         NavigationManager.NavigateTo("/human-resources/employees/documents");
     }
 
+    private async Task ShowDocumentsHelp()
+    {
+        await DialogService.ShowAsync<EmployeeDocumentsHelpDialog>("Employee Documents Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
+
     private async Task ViewDocument(EmployeeDocumentResponse document)
     {
         if (!string.IsNullOrWhiteSpace(document.FilePath))
@@ -120,4 +130,3 @@ public class EmployeeDocumentViewModel
     public DateRange? ExpiryDateRange { get; set; }
     public bool ExpiredOnly { get; set; }
 }
-

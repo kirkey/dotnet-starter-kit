@@ -1,7 +1,22 @@
 @page "/hr/employee-dependents"
 @namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Dependents
 
-<PageHeader Title="@($"Employee Dependents{FilterSuffix}")" Header="Employee Dependents" SubHeader="Manage employee family members and dependents." />
+<PageHeader Title="@($"Employee Dependents{FilterSuffix}")" Header="Employee Dependents" SubHeader="Manage employee family members and dependents.">
+    <Actions>
+        <MudButton Variant="Variant.Outlined" 
+                   Color="Color.Primary" 
+                   StartIcon="@Icons.Material.Filled.ArrowBack"
+                   Href="/hr/employees">
+            Back to Employees
+        </MudButton>
+        <MudButton Variant="Variant.Outlined" 
+                   Color="Color.Info" 
+                   StartIcon="@Icons.Material.Filled.Help"
+                   OnClick="@ShowDependentsHelp">
+            Help
+        </MudButton>
+    </Actions>
+</PageHeader>
 
 @if (!string.IsNullOrEmpty(FilterEmployeeId))
 {

@@ -1,7 +1,22 @@
 @page "/hr/employee-documents"
 @namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Documents
 
-<PageHeader Title="@($"Employee Documents{FilterSuffix}")" Header="Employee Documents" SubHeader="Manage employee documents, certifications, licenses, and contracts." />
+<PageHeader Title="@($"Employee Documents{FilterSuffix}")" Header="Employee Documents" SubHeader="Manage employee documents, certifications, licenses, and contracts.">
+    <Actions>
+        <MudButton Variant="Variant.Outlined" 
+                   Color="Color.Primary" 
+                   StartIcon="@Icons.Material.Filled.ArrowBack"
+                   Href="/hr/employees">
+            Back to Employees
+        </MudButton>
+        <MudButton Variant="Variant.Outlined" 
+                   Color="Color.Info" 
+                   StartIcon="@Icons.Material.Filled.Help"
+                   OnClick="@ShowDocumentsHelp">
+            Help
+        </MudButton>
+    </Actions>
+</PageHeader>
 
 @if (!string.IsNullOrEmpty(FilterEmployeeId))
 {

@@ -67,6 +67,16 @@ public partial class EmployeeEducations
     {
         NavigationManager.NavigateTo("/human-resources/employees/educations");
     }
+
+    private async Task ShowEducationsHelp()
+    {
+        await DialogService.ShowAsync<EmployeeEducationsHelpDialog>("Employee Education Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 public class EmployeeEducationViewModel : UpdateEmployeeEducationCommand

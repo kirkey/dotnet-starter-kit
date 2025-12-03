@@ -1,0 +1,196 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Contacts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Employee Contacts Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Employee Contacts Used For?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Emergency Contact Management</MudText>
+                        <MudText Typo="Typo.body2">
+                            Employee contacts store emergency and related contact information for use in critical situations,
+                            notifications, and employee relationship management.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Primary Uses:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Emergency Notifications:</strong> Contact persons in case of workplace emergencies<br/>
+                                • <strong>Medical Situations:</strong> Notify family members during health emergencies<br/>
+                                • <strong>Benefits Administration:</strong> Designated beneficiaries and contacts<br/>
+                                • <strong>Next of Kin:</strong> Legal and administrative purposes<br/>
+                                • <strong>Communication:</strong> Secondary contact channels for employee matters
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Encourage employees to keep contact information updated and verify contacts annually.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Adding Employee Contacts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Add Contact Information</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Contact Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Search and select <strong>Employee</strong><br/>
+                                3. Select <strong>Contact Type</strong> (Emergency, Family, Reference, etc.)<br/>
+                                4. Enter <strong>First Name</strong> and <strong>Last Name</strong><br/>
+                                5. Enter <strong>Phone Number</strong> (primary contact method)<br/>
+                                6. Enter <strong>Email</strong> (optional)<br/>
+                                7. Specify <strong>Relationship</strong> (Spouse, Parent, Sibling, Friend, etc.)<br/>
+                                8. Add <strong>Address</strong> information if needed<br/>
+                                9. Check <strong>"Primary Contact"</strong> if this is the main emergency contact<br/>
+                                10. Add any additional <strong>Notes</strong><br/>
+                                11. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Required Fields:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Employee (required)<br/>
+                            Contact Type (required)<br/>
+                            First Name (required)<br/>
+                            Last Name (required)<br/>
+                            Phone Number (required)<br/>
+                            Relationship (required)
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Privacy Note:</strong> Contact information is confidential and should only be accessed when necessary.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Contact Types">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Contact Categories</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>EMERGENCY CONTACT:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                ✓ First person to notify in workplace emergencies<br/>
+                                ✓ Should be immediately reachable during work hours<br/>
+                                ✓ Typically spouse, parent, or adult sibling<br/>
+                                ✓ Multiple emergency contacts can be designated with priority
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>FAMILY MEMBER:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                ✓ Relatives for general communication<br/>
+                                ✓ Used for benefits and insurance purposes<br/>
+                                ✓ May be contacted for verification or notifications<br/>
+                                ✓ Not necessarily emergency contacts
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>REFERENCE:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                ✓ Professional or personal references<br/>
+                                ✓ Used for employment verification<br/>
+                                ✓ May be contacted during background checks<br/>
+                                ✓ Should not be family members
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Recommendation:</strong> Every employee should have at least one emergency contact with current phone number.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Managing Primary Contacts">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Primary Contact Designation</MudText>
+                        <MudText Typo="Typo.body2">
+                            The primary contact is the first person contacted in emergencies. Only one contact can be marked as primary.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Setting Primary Contact:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Check "Primary Contact" when creating or editing a contact<br/>
+                                • System automatically removes primary flag from other contacts<br/>
+                                • Primary contact should be the most reliable and accessible person<br/>
+                                • Update primary contact when circumstances change (marriage, relocation, etc.)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Remind employees to update contacts when life events occur (marriage, divorce, relocation).
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Privacy and Security">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Protecting Contact Information</MudText>
+                        <MudText Typo="Typo.body2">
+                            Employee contact information is highly sensitive and must be handled according to data privacy regulations.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Security Guidelines:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Access limited to authorized HR personnel only<br/>
+                                ✓ Contact information not shared without employee consent<br/>
+                                ✓ Contacts only used for legitimate business purposes<br/>
+                                ✓ Regular audits of who accesses contact data<br/>
+                                ✓ Employees can update their own contacts through self-service
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Compliance:</strong> Contact data handling must comply with GDPR, PDPA, and local privacy laws.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Submit">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+}
+

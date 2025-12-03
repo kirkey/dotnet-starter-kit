@@ -1,0 +1,207 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Dependents
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Employee Dependents Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Employee Dependents Used For?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Dependent Management</MudText>
+                        <MudText Typo="Typo.body2">
+                            Employee dependents record information about family members who rely on the employee for support.
+                            This information is crucial for benefits administration, tax purposes, and insurance coverage.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Primary Uses:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Health Insurance:</strong> Add dependents to employee health coverage<br/>
+                                • <strong>Tax Benefits:</strong> Calculate withholding allowances and deductions<br/>
+                                • <strong>Life Insurance:</strong> Designate beneficiaries and coverage amounts<br/>
+                                • <strong>Family Leave:</strong> Determine eligibility for family medical leave<br/>
+                                • <strong>Tuition Assistance:</strong> Educational benefits for dependent children
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Verify dependent relationships with proper documentation (birth certificates, marriage certificates).
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Adding Employee Dependents">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Add Dependent Information</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Dependent Creation Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Search and select <strong>Employee</strong><br/>
+                                3. Enter <strong>First Name</strong> and <strong>Last Name</strong><br/>
+                                4. Enter <strong>Date of Birth</strong> (required for age verification)<br/>
+                                5. Select <strong>Gender</strong><br/>
+                                6. Specify <strong>Relationship</strong> (Spouse, Child, Parent, etc.)<br/>
+                                7. Enter <strong>SSN/Tax ID</strong> (for tax purposes)<br/>
+                                8. Select <strong>Dependent Type</strong> (Tax Dependent, Insurance Dependent, etc.)<br/>
+                                9. Check <strong>"Student Status"</strong> if applicable<br/>
+                                10. Add any special <strong>Notes</strong> or conditions<br/>
+                                11. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Required Fields:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Employee (required)<br/>
+                            First Name (required)<br/>
+                            Last Name (required)<br/>
+                            Date of Birth (required)<br/>
+                            Relationship (required)<br/>
+                            Dependent Type (required)
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Documentation:</strong> Keep copies of birth certificates, marriage licenses, and adoption papers for verification.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Dependent Types and Relationships">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Dependent Categories</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>TAX DEPENDENT:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                ✓ Eligible for tax deductions and credits<br/>
+                                ✓ Must meet IRS dependency requirements<br/>
+                                ✓ Affects employee's tax withholding calculations<br/>
+                                ✓ Includes qualifying children and relatives
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>INSURANCE DEPENDENT:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                ✓ Eligible for employee health insurance coverage<br/>
+                                ✓ Usually includes spouse and unmarried children<br/>
+                                ✓ May have age limits (typically 26 for children)<br/>
+                                ✓ Requires valid dependent documentation
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>BENEFICIARY:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                ✓ Designated to receive life insurance or retirement benefits<br/>
+                                ✓ Can be primary or contingent beneficiary<br/>
+                                ✓ Must specify percentage of benefits<br/>
+                                ✓ Can be anyone, not limited to family
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> One dependent can have multiple types (e.g., both Tax Dependent and Insurance Dependent).
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Student Status and Age Limits">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Student Dependents</MudText>
+                        <MudText Typo="Typo.body2">
+                            Student status can extend insurance coverage beyond standard age limits and affects tax dependency eligibility.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Student Dependent Rules:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Full-time students may remain on insurance until age 26<br/>
+                                • Must provide proof of enrollment each semester<br/>
+                                • Student status affects tax dependency qualification<br/>
+                                • Graduate students may have different age limits<br/>
+                                • Verify coverage limits with specific insurance plan
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3 mb-2">
+                            <strong>Age Verification:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption">
+                            System automatically calculates dependent age and flags when:
+                            <br/>• Child reaches insurance coverage age limit
+                            <br/>• Dependent no longer qualifies as tax dependent
+                            <br/>• Student status needs verification/renewal
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Set reminders to verify student status each academic year and update insurance coverage.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Privacy and Compliance">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Protecting Dependent Information</MudText>
+                        <MudText Typo="Typo.body2">
+                            Dependent information includes sensitive personal data of minors and family members, requiring special protection.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Security Requirements:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Access restricted to HR and benefits administrators<br/>
+                                ✓ SSN/Tax IDs encrypted and masked in displays<br/>
+                                ✓ Documentation stored securely with limited access<br/>
+                                ✓ Audit trail of all dependent record access<br/>
+                                ✓ Automatic deletion of expired dependent records per policy
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Compliance:</strong> Dependent data handling must comply with COPPA, HIPAA, and data privacy regulations.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Submit">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+}
+

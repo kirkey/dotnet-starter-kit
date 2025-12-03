@@ -2,7 +2,22 @@
 @namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.BankAccounts
 @using FSH.Starter.Blazor.Client.Components.Hr
 
-<PageHeader Title="@($"Bank Accounts{FilterSuffix}")" Header="Bank Accounts" SubHeader="Manage employee bank details for payroll routing and direct deposit." />
+<PageHeader Title="@($"Bank Accounts{FilterSuffix}")" Header="Bank Accounts" SubHeader="Manage employee bank details for payroll routing and direct deposit.">
+    <Actions>
+        <MudButton Variant="Variant.Outlined" 
+                   Color="Color.Primary" 
+                   StartIcon="@Icons.Material.Filled.ArrowBack"
+                   Href="/hr/employees">
+            Back to Employees
+        </MudButton>
+        <MudButton Variant="Variant.Outlined" 
+                   Color="Color.Info" 
+                   StartIcon="@Icons.Material.Filled.Help"
+                   OnClick="@ShowBankAccountsHelp">
+            Help
+        </MudButton>
+    </Actions>
+</PageHeader>
 
 @if (!string.IsNullOrEmpty(FilterEmployeeId))
 {
@@ -11,17 +26,6 @@
         <MudButton Size="Size.Small" Variant="Variant.Text" OnClick="@(() => ClearFilter())" Class="float-right">Clear Filter</MudButton>
     </MudAlert>
 }
-
-<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
-    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
-        <MudSpacer />
-        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
-            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowBankAccountsHelp">
-                Help
-            </MudButton>
-        </MudButtonGroup>
-    </MudStack>
-</MudPaper>
 
 <EntityTable @ref="_table" TEntity="BankAccountResponse" TId="DefaultIdType" TRequest="BankAccountViewModel" Context="@Context">
     

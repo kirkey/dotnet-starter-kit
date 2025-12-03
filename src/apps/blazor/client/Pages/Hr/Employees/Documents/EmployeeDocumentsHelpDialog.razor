@@ -1,0 +1,141 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Documents
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Employee Documents Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Employee Documents?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Document Management System</MudText>
+                        <MudText Typo="Typo.body2">
+                            Employee documents module manages all important employee files including certifications, licenses,
+                            contracts, and other business-critical documentation required for employment and compliance.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Document Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Employment Contracts:</strong> Offer letters, employment agreements<br/>
+                                • <strong>Certifications:</strong> Professional licenses and certifications<br/>
+                                • <strong>Training Records:</strong> Completed training and development<br/>
+                                • <strong>Performance Reviews:</strong> Annual evaluations and assessments<br/>
+                                • <strong>Compliance Documents:</strong> I-9, W-4, direct deposit forms<br/>
+                                • <strong>Policies:</strong> Signed policy acknowledgments
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Maintain digital copies of all critical documents with proper version control.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Adding Documents">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Upload and Manage Documents</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Document Upload Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Select <strong>Employee</strong><br/>
+                                3. Choose <strong>Document Type</strong><br/>
+                                4. Enter <strong>Document Title</strong><br/>
+                                5. Add <strong>Description</strong><br/>
+                                6. Set <strong>Issue Date</strong><br/>
+                                7. Set <strong>Expiration Date</strong> (if applicable)<br/>
+                                8. Upload <strong>File</strong> (PDF, DOC, JPG, PNG)<br/>
+                                9. Add <strong>Document Number</strong> or ID<br/>
+                                10. Mark as <strong>Confidential</strong> if needed<br/>
+                                11. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>File Limits:</strong> Maximum 10MB per document. Use PDF format for official documents.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Document Expiration Tracking">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Expiration Dates</MudText>
+                        <MudText Typo="Typo.body2">
+                            Many documents like certifications and licenses have expiration dates that require renewal tracking.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Expiration Alerts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • System sends alerts 90, 60, and 30 days before expiration<br/>
+                                • Expired documents flagged in red<br/>
+                                • Reports show all expiring documents<br/>
+                                • Automatic notifications to employee and HR<br/>
+                                • Track renewal status and submission
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Set up dashboard widgets to monitor expiring certifications and licenses.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Security and Access Control">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Document Security</MudText>
+                        <MudText Typo="Typo.body2">
+                            Employee documents often contain sensitive personal information requiring strict access controls.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Security Features:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Role-based access control<br/>
+                                ✓ Confidential documents restricted to authorized users<br/>
+                                ✓ Audit trail of all document access and downloads<br/>
+                                ✓ Encrypted file storage<br/>
+                                ✓ Watermarking for printed copies<br/>
+                                ✓ Automatic deletion per retention policy
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Compliance:</strong> Document retention must comply with labor laws and industry regulations.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Submit">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+}
+

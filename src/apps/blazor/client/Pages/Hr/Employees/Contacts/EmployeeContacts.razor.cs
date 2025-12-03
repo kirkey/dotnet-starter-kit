@@ -68,6 +68,16 @@ public partial class EmployeeContacts
     {
         NavigationManager.NavigateTo("/human-resources/employees/contacts");
     }
+
+    private async Task ShowContactsHelp()
+    {
+        await DialogService.ShowAsync<EmployeeContactsHelpDialog>("Employee Contacts Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 public class EmployeeContactViewModel : UpdateEmployeeContactCommand

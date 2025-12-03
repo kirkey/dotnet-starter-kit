@@ -1,0 +1,199 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Educations
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Employee Education Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What is Employee Education?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Educational Background Tracking</MudText>
+                        <MudText Typo="Typo.body2">
+                            Employee education records track formal education, degrees, certifications, and ongoing professional
+                            development to support career planning, qualifications verification, and compliance requirements.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Primary Uses:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Qualification Verification:</strong> Confirm educational requirements for positions<br/>
+                                • <strong>Career Development:</strong> Track professional growth and advancement<br/>
+                                • <strong>Succession Planning:</strong> Identify candidates for promotion<br/>
+                                • <strong>Training ROI:</strong> Monitor effectiveness of education investments<br/>
+                                • <strong>Compliance:</strong> Meet industry certification and licensing requirements
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Verify all degrees and certifications with issuing institutions.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Adding Education Records">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How to Record Educational Background</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Education Entry Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Click <strong>"Create"</strong> button<br/>
+                                2. Select <strong>Employee</strong><br/>
+                                3. Enter <strong>Institution Name</strong> (University, College, etc.)<br/>
+                                4. Select <strong>Education Level</strong> (High School, Bachelor's, Master's, PhD)<br/>
+                                5. Enter <strong>Field of Study</strong> (Computer Science, Business, etc.)<br/>
+                                6. Enter <strong>Degree/Diploma</strong> name<br/>
+                                7. Set <strong>Start Date</strong> and <strong>End Date</strong><br/>
+                                8. Enter <strong>GPA</strong> if applicable<br/>
+                                9. Check <strong>"Currently Enrolled"</strong> if ongoing<br/>
+                                10. Add <strong>Honors/Awards</strong> received<br/>
+                                11. Upload <strong>Transcript/Certificate</strong><br/>
+                                12. Click <strong>"Save"</strong>
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3">
+                            <strong>Required Fields:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption" Style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">
+                            Employee (required)<br/>
+                            Institution Name (required)<br/>
+                            Education Level (required)<br/>
+                            Field of Study (required)<br/>
+                            Start Date (required)
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Verification:</strong> Request official transcripts or certificates for degree verification.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Education Levels">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Education Categories</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>FORMAL EDUCATION:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                • <strong>High School:</strong> Secondary education diploma<br/>
+                                • <strong>Associate Degree:</strong> 2-year college degree<br/>
+                                • <strong>Bachelor's Degree:</strong> 4-year undergraduate degree<br/>
+                                • <strong>Master's Degree:</strong> Graduate degree (1-2 years)<br/>
+                                • <strong>Doctorate (PhD):</strong> Highest academic degree<br/>
+                                • <strong>Professional Degree:</strong> JD, MD, MBA, etc.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>PROFESSIONAL CERTIFICATIONS:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption" Class="mb-3">
+                                • <strong>Industry Certifications:</strong> PMP, CPA, CISSP, AWS, etc.<br/>
+                                • <strong>Trade Licenses:</strong> Electrician, Plumber, etc.<br/>
+                                • <strong>Professional Licenses:</strong> CPA, PE, RN, etc.<br/>
+                                • Track expiration dates and renewal requirements
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Professional certifications should also be tracked in the Documents module.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Ongoing Education">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Supporting Continuous Learning</MudText>
+                        <MudText Typo="Typo.body2">
+                            Many employees pursue education while employed. Track their progress and provide support.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Currently Enrolled Support:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Mark education as "Currently Enrolled" for ongoing studies<br/>
+                                • Track tuition reimbursement eligibility<br/>
+                                • Monitor progress toward degree completion<br/>
+                                • Adjust work schedules for class attendance<br/>
+                                • Update record when degree is completed
+                            </MudText>
+                        </div>
+
+                        <MudText Typo="Typo.body2" Class="mt-3 mb-2">
+                            <strong>Tuition Reimbursement:</strong>
+                        </MudText>
+                        <MudText Typo="Typo.caption">
+                            Link education records to tuition reimbursement programs:
+                            <br/>• Verify alignment with company's educational assistance policy
+                            <br/>• Track reimbursement amounts and limits
+                            <br/>• Require grade verification (typically B or higher)
+                            <br/>• Monitor service commitment agreements
+                        </MudText>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Tip:</strong> Encourage employees to update education records for accurate succession planning.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Verification and Compliance">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Educational Background Checks</MudText>
+                        <MudText Typo="Typo.body2">
+                            Proper verification of educational credentials protects the company from resume fraud and ensures qualifications.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Verification Process:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                ✓ Request official transcripts from institution<br/>
+                                ✓ Verify degree through National Student Clearinghouse<br/>
+                                ✓ Confirm professional licenses with issuing boards<br/>
+                                ✓ Check accreditation status of institutions<br/>
+                                ✓ Document verification in personnel file<br/>
+                                ✓ Flag discrepancies for investigation
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Legal:</strong> Educational verification must comply with FCRA if using third-party services.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Submit">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+}
+

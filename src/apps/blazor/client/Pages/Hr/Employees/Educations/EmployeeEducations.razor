@@ -1,7 +1,22 @@
 @page "/hr/employee-education"
 @namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees.Educations
 
-<PageHeader Title="@($"Employee Education{FilterSuffix}")" Header="Employee Education" SubHeader="Manage employee educational background and certifications." />
+<PageHeader Title="@($"Employee Education{FilterSuffix}")" Header="Employee Education" SubHeader="Manage employee educational background and certifications.">
+    <Actions>
+        <MudButton Variant="Variant.Outlined" 
+                   Color="Color.Primary" 
+                   StartIcon="@Icons.Material.Filled.ArrowBack"
+                   Href="/hr/employees">
+            Back to Employees
+        </MudButton>
+        <MudButton Variant="Variant.Outlined" 
+                   Color="Color.Info" 
+                   StartIcon="@Icons.Material.Filled.Help"
+                   OnClick="@ShowEducationsHelp">
+            Help
+        </MudButton>
+    </Actions>
+</PageHeader>
 
 @if (!string.IsNullOrEmpty(FilterEmployeeId))
 {

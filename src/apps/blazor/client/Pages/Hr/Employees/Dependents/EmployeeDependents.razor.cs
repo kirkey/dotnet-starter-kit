@@ -67,6 +67,16 @@ public partial class EmployeeDependents
     {
         NavigationManager.NavigateTo("/human-resources/employees/dependents");
     }
+
+    private async Task ShowDependentsHelp()
+    {
+        await DialogService.ShowAsync<EmployeeDependentsHelpDialog>("Employee Dependents Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
 
 public class EmployeeDependentViewModel : UpdateEmployeeDependentCommand
