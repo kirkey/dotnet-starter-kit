@@ -49,8 +49,7 @@ public partial class EmployeeEducations
             },
             createFunc: async education =>
             {
-                var command = education.Adapt<CreateEmployeeEducationCommand>();
-                await Client.CreateEmployeeEducationEndpointAsync("1", command);
+                await Client.CreateEmployeeEducationEndpointAsync("1", education.Adapt<CreateEmployeeEducationCommand>());
             },
             updateFunc: async (id, education) =>
             {

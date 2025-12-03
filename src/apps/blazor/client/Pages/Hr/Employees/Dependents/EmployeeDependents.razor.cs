@@ -49,8 +49,7 @@ public partial class EmployeeDependents
             },
             createFunc: async dependent =>
             {
-                var command = dependent.Adapt<CreateEmployeeDependentCommand>();
-                await Client.CreateEmployeeDependentEndpointAsync("1", command);
+                await Client.CreateEmployeeDependentEndpointAsync("1", dependent.Adapt<CreateEmployeeDependentCommand>());
             },
             updateFunc: async (id, dependent) =>
             {

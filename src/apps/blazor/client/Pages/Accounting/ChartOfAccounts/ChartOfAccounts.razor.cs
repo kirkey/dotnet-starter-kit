@@ -39,17 +39,15 @@ public partial class ChartOfAccounts
             },
             createFunc: async account =>
             {
-                var command = account.Adapt<CreateChartOfAccountCommand>();
-                command.AccountCode = account.AccountCode!.ToUpperInvariant();
-                command.Name = account.Name!.ToUpperInvariant();
-                await Client.ChartOfAccountCreateEndpointAsync("1", command);
+                account.AccountCode = account.AccountCode?.ToUpperInvariant() ?? account.AccountCode;
+                account.Name = account.Name?.ToUpperInvariant() ?? account.Name;
+                await Client.ChartOfAccountCreateEndpointAsync("1", account.Adapt<CreateChartOfAccountCommand>());
             },
             updateFunc: async (id, account) =>
             {
-                var command = account.Adapt<UpdateChartOfAccountCommand>();
-                command.AccountCode = account.AccountCode!.ToUpperInvariant();
-                command.Name = account.Name!.ToUpperInvariant();
-                await Client.ChartOfAccountUpdateEndpointAsync("1", id, command);
+                account.AccountCode = account.AccountCode?.ToUpperInvariant() ?? account.AccountCode;
+                account.Name = account.Name?.ToUpperInvariant() ?? account.Name;
+                await Client.ChartOfAccountUpdateEndpointAsync("1", id, account.Adapt<UpdateChartOfAccountCommand>());
             },
             deleteFunc: async id => await Client.ChartOfAccountDeleteEndpointAsync("1", id));
 

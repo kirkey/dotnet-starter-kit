@@ -47,24 +47,15 @@ public partial class TaxCodes
             idFunc: dto => dto.Id,
             createFunc: async viewModel =>
             {
-                var command = viewModel.Adapt<CreateTaxCodeCommand>();
                 // Convert percentage to decimal (e.g., 8.25 -> 0.0825)
-                command.Rate = viewModel.Rate / 100m;
-                await Client.TaxCodeCreateEndpointAsync("1", command);
+                viewModel.Rate /= 100m;
+                await Client.TaxCodeCreateEndpointAsync("1", viewModel.Adapt<CreateTaxCodeCommand>());
             },
             updateFunc: async (id, viewModel) =>
             {
-                var command = new UpdateTaxCodeCommand
-                {
-                    Id = id,
-                    Name = viewModel.Name,
-                    Jurisdiction = viewModel.Jurisdiction,
-                    TaxAuthority = viewModel.TaxAuthority,
-                    TaxRegistrationNumber = viewModel.TaxRegistrationNumber,
-                    ReportingCategory = viewModel.ReportingCategory,
-                    Description = viewModel.Description
-                };
-                await Client.TaxCodeUpdateEndpointAsync("1", id, command);
+                // Convert percentage to decimal (e.g., 8.25 -> 0.0825)
+                viewModel.Rate /= 100m;
+                await Client.TaxCodeUpdateEndpointAsync("1", id, viewModel.Adapt<UpdateTaxCodeCommand>());
             },
             deleteFunc: async id => await Client.TaxCodeDeleteEndpointAsync("1", id),
             // getDetailsFunc: async id =>

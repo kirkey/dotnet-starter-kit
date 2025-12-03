@@ -50,8 +50,7 @@ public partial class EmployeeContacts
             },
             createFunc: async contact =>
             {
-                var command = contact.Adapt<CreateEmployeeContactCommand>();
-                await Client.CreateEmployeeContactEndpointAsync("1", command);
+                await Client.CreateEmployeeContactEndpointAsync("1", contact.Adapt<CreateEmployeeContactCommand>());
             },
             updateFunc: async (id, contact) =>
             {
