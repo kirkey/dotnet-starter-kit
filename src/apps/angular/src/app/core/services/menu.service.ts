@@ -80,7 +80,7 @@ export class MenuService {
           {
             title: 'Identity',
             icon: 'admin_panel_settings',
-            expanded: false,
+            expanded: true,
             children: [
               {
                 title: 'Users',

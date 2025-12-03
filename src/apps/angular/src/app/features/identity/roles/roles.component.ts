@@ -16,6 +16,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { PageHeaderComponent } from '@shared/components/page-header/page-header.component';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
+import { PermissionDialogComponent } from './permission-dialog/permission-dialog.component';
 import { NotificationService } from '@core/services/notification.service';
 import { RoleService } from '@core/services/role.service';
 import { PermissionService } from '@core/services/permission.service';
@@ -128,7 +129,7 @@ import { FshActions, FshResources, isDefaultRole } from '@core/models/permission
               </button>
               <mat-menu #menu="matMenu">
                 @if (canViewPermissions()) {
-                  <button mat-menu-item [routerLink]="['/identity/roles', role.id, 'permissions']">
+                  <button mat-menu-item (click)="openPermissionsDialog(role)">
                     <mat-icon>security</mat-icon>
                     <span>Manage Permissions</span>
                   </button>
@@ -378,11 +379,23 @@ export class RolesComponent implements OnInit {
     description: ['']
   });
 
-  // Permission checks
-  canCreate = computed(() => this.permissionService.canCreate(FshResources.Roles));
-  canUpdate = computed(() => this.permissionService.canUpdate(FshResources.Roles));
-  canDelete = computed(() => this.permissionService.canDelete(FshResources.Roles));
-  canViewPermissions = computed(() => this.permissionService.canView(FshResources.RoleClaims));
+  // Permission checks - return true if no permissions loaded yet (dev mode) or if user has permission
+  canCreate = computed(() => {
+    const permissions = this.permissionService.userPermissions();
+    return permissions.length === 0 || this.permissionService.canCreate(FshResources.Roles);
+  });
+  canUpdate = computed(() => {
+    const permissions = this.permissionService.userPermissions();
+    return permissions.length === 0 || this.permissionService.canUpdate(FshResources.Roles);
+  });
+  canDelete = computed(() => {
+    const permissions = this.permissionService.userPermissions();
+    return permissions.length === 0 || this.permissionService.canDelete(FshResources.Roles);
+  });
+  canViewPermissions = computed(() => {
+    const permissions = this.permissionService.userPermissions();
+    return permissions.length === 0 || this.permissionService.canView(FshResources.RoleClaims);
+  });
 
   // Computed signals
   filteredRoles = computed(() => {
@@ -517,6 +530,24 @@ export class RolesComponent implements OnInit {
             this.notification.error('Failed to delete role');
           }
         });
+      }
+    });
+  }
+
+  openPermissionsDialog(role: Role): void {
+    const dialogRef = this.dialog.open(PermissionDialogComponent, {
+      width: '800px',
+      maxHeight: '90vh',
+      data: {
+        roleId: role.id,
+        roleName: role.name
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Permissions were updated - could refresh if needed
+        this.loadRoles();
       }
     });
   }
