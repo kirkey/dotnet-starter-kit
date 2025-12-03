@@ -1,6 +1,7 @@
 import { Component, inject, signal, OnInit, computed, ViewChild, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSortModule, Sort } from '@angular/material/sort';
@@ -19,7 +20,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { PageHeaderComponent } from '@shared/components/page-header/page-header.component';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
 import { NotificationService } from '@core/services/notification.service';
-import { ApiService } from '@core/services/api.service';
+import { UserService } from '@core/services/user.service';
 import { User, CreateUserRequest, UpdateUserRequest } from '@core/models/user.model';
 
 @Component({
@@ -173,13 +174,17 @@ import { User, CreateUserRequest, UpdateUserRequest } from '@core/models/user.mo
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="viewUserProfile(user)">
+                  <mat-icon>person</mat-icon>
+                  <span>View Profile</span>
+                </button>
+                <button mat-menu-item (click)="manageUserRoles(user)">
+                  <mat-icon>admin_panel_settings</mat-icon>
+                  <span>Manage Roles</span>
+                </button>
                 <button mat-menu-item (click)="openUserDialog(user)">
                   <mat-icon>edit</mat-icon>
                   <span>Edit</span>
-                </button>
-                <button mat-menu-item (click)="viewUser(user)">
-                  <mat-icon>visibility</mat-icon>
-                  <span>View Details</span>
                 </button>
                 <button mat-menu-item (click)="toggleUserStatus(user)">
                   <mat-icon>{{ user.isActive ? 'block' : 'check_circle' }}</mat-icon>
@@ -477,7 +482,8 @@ export class UsersComponent implements OnInit {
   private fb = inject(FormBuilder);
   private dialog = inject(MatDialog);
   private notification = inject(NotificationService);
-  private apiService = inject(ApiService);
+  private userService = inject(UserService);
+  private router = inject(Router);
 
   // State signals
   users = signal<User[]>([]);
@@ -537,18 +543,9 @@ export class UsersComponent implements OnInit {
     this.isLoading.set(true);
     
     try {
-      // Simulated data - replace with actual API call
-      const mockUsers: User[] = [
-        { id: '1', firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com', userName: 'johndoe', phoneNumber: '+1234567890', isActive: true, roles: ['Admin', 'Manager'] },
-        { id: '2', firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@example.com', userName: 'janesmith', phoneNumber: '+0987654321', isActive: true, roles: ['User'] },
-        { id: '3', firstName: 'Bob', lastName: 'Wilson', email: 'bob.wilson@example.com', userName: 'bobwilson', isActive: false, roles: ['Viewer'] },
-        { id: '4', firstName: 'Alice', lastName: 'Brown', email: 'alice.brown@example.com', userName: 'alicebrown', phoneNumber: '+1122334455', isActive: true, roles: ['Manager'] },
-        { id: '5', firstName: 'Charlie', lastName: 'Davis', email: 'charlie.davis@example.com', userName: 'charlied', isActive: true, roles: ['User', 'Viewer'] }
-      ];
-      
-      await new Promise(resolve => setTimeout(resolve, 500));
-      this.users.set(mockUsers);
-      this.totalUsers.set(mockUsers.length);
+      const users = await this.userService.getUsers().toPromise();
+      this.users.set(users || []);
+      this.totalUsers.set(users?.length || 0);
     } catch (error) {
       this.notification.error('Failed to load users');
     } finally {
@@ -558,6 +555,14 @@ export class UsersComponent implements OnInit {
 
   refreshUsers(): void {
     this.loadUsers();
+  }
+
+  viewUserProfile(user: User): void {
+    this.router.navigate(['/identity/users', user.id, 'profile']);
+  }
+
+  manageUserRoles(user: User): void {
+    this.router.navigate(['/identity/users', user.id, 'roles']);
   }
 
   onSearch(event: Event): void {
@@ -632,11 +637,29 @@ export class UsersComponent implements OnInit {
     this.isSaving.set(true);
     
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const formData = this.userForm.value;
       
       if (this.editingUser()) {
+        const updateRequest: UpdateUserRequest = {
+          id: this.editingUser()!.id,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phoneNumber: formData.phoneNumber,
+          email: formData.email
+        };
+        await this.userService.updateUser(this.editingUser()!.id, updateRequest).toPromise();
         this.notification.success('User updated successfully');
       } else {
+        const createRequest: CreateUserRequest = {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          userName: formData.userName,
+          password: formData.password,
+          confirmPassword: formData.password,
+          phoneNumber: formData.phoneNumber
+        };
+        await this.userService.createUser(createRequest).toPromise();
         this.notification.success('User created successfully');
       }
       
@@ -649,13 +672,9 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  viewUser(user: User): void {
-    // Implement view details
-    console.log('View user:', user);
-  }
-
   async toggleUserStatus(user: User): Promise<void> {
     try {
+      await this.userService.toggleUserStatus(user.id, !user.isActive).toPromise();
       user.isActive = !user.isActive;
       this.notification.success(`User ${user.isActive ? 'activated' : 'deactivated'} successfully`);
     } catch (error) {
@@ -676,7 +695,7 @@ export class UsersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async result => {
       if (result) {
         try {
-          await new Promise(resolve => setTimeout(resolve, 500));
+          await this.userService.deleteUser(user.id).toPromise();
           this.users.update(users => users.filter(u => u.id !== user.id));
           this.notification.success('User deleted successfully');
         } catch (error) {

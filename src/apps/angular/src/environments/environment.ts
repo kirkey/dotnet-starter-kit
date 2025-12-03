@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: '/api/v1',
+  apiUrl: '/api',
   appName: 'FSH Starter Kit',
   defaultTenant: 'root'
 };

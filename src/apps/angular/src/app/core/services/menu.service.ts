@@ -15,17 +15,14 @@ export class MenuService {
         title: 'Start',
         items: [
           {
+            title: 'Dashboard',
+            icon: 'dashboard',
+            route: '/dashboard'
+          },
+          {
             title: 'Home',
             icon: 'home',
             route: '/home'
-          },
-          {
-            title: 'Dashboard',
-            icon: 'dashboard',
-            route: '/dashboard',
-            disabled: true,
-            badge: 'Soon',
-            badgeColor: 'accent'
           }
         ]
       },
@@ -76,6 +73,11 @@ export class MenuService {
         title: 'Administration',
         items: [
           {
+            title: 'Tenants',
+            icon: 'business',
+            route: '/tenants'
+          },
+          {
             title: 'Identity',
             icon: 'admin_panel_settings',
             expanded: false,
@@ -88,16 +90,9 @@ export class MenuService {
               {
                 title: 'Roles',
                 icon: 'security',
-                route: '/identity/roles',
-                disabled: true
+                route: '/identity/roles'
               }
             ]
-          },
-          {
-            title: 'Tenants',
-            icon: 'apartment',
-            route: '/multitenancy/tenants',
-            disabled: true
           }
         ]
       }

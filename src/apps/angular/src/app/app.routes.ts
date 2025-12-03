@@ -9,8 +9,13 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'dashboard',
         pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent),
+        title: 'Dashboard'
       },
       {
         path: 'home',
@@ -18,14 +23,14 @@ export const routes: Routes = [
         title: 'Home'
       },
       {
+        path: 'tenants',
+        loadChildren: () => import('./features/multitenancy/multitenancy.routes').then(m => m.MULTITENANCY_ROUTES),
+        title: 'Tenants'
+      },
+      {
         path: 'identity',
-        children: [
-          {
-            path: 'users',
-            loadComponent: () => import('./features/identity/users/users.component').then(m => m.UsersComponent),
-            title: 'Users'
-          }
-        ]
+        loadChildren: () => import('./features/identity/identity.routes').then(m => m.IDENTITY_ROUTES),
+        title: 'Identity'
       },
       {
         path: 'catalog',
