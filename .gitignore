@@ -40,17 +40,44 @@ bld/
 #wwwroot/
 
 .vscode/
+## Simplified patterns for generated/build/deploy files
 
-# Visual Studio 2017 auto generated files
-Generated\ Files/
+# Node & front-end
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# MSTest test Results
-[Tt]est[Rr]esult*/
-[Bb]uild[Ll]og.*
+# Angular / front-end build and cache
+**/dist/
+**/.angular/
+**/.cache/
+**/.vite/
+*.tsbuildinfo
+angular-compiler.db*
 
-# NUnit
-*.VisualState.xml
+# .NET build output
+**/bin/
+**/obj/
+
+# Deployment artifacts
+**/deploy/
+**/publish/
+
+# Ignore generated files under source trees (e.g. compiled deploy outputs)
+src/**/deploy/
+src/**/dist/
+
+# IDEs and OS
+.idea/
+.DS_Store
+.vscode/
+
+# Logs
 TestResult.xml
+
+# Keep other explicit ignores from earlier if needed
+# (Add per-directory exceptions here)
 nunit-*.xml
 
 # Build Results of an ATL Project
