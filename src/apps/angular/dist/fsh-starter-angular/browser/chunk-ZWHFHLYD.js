@@ -1,1 +1,0 @@
-import"./chunk-4CLCTAJ7.js";var n=[{path:"tenants",loadComponent:()=>import("./chunk-TPZ46OXH.js").then(t=>t.TenantsComponent)},{path:"",redirectTo:"tenants",pathMatch:"full"}];export{n as MULTITENANCY_ROUTES};

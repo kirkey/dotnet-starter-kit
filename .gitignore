@@ -291,6 +291,14 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 
+# Angular app build/cache/dist artifacts (generated files)
+# Ignore the Angular app's build output, compiler cache, and local node modules
+/src/apps/angular/dist/
+/src/apps/angular/.angular/
+/src/apps/angular/node_modules/
+/src/apps/angular/.cache/
+/src/apps/angular/.typescript/
+
 # Visual Studio 6 build log
 *.plg
 
