@@ -62,53 +62,29 @@ public partial class Suppliers
             },
             createFunc: async viewModel =>
             {
-                var command = viewModel.Adapt<CreateSupplierCommand>();
-                command.Code = command.Code!.ToUpperInvariant();
-                command.Name = command.Name!.ToUpperInvariant();
-                if (viewModel.Image != null)
+                viewModel.Code = viewModel.Code?.ToUpperInvariant() ?? viewModel.Code;
+                viewModel.Name = viewModel.Name?.ToUpperInvariant() ?? viewModel.Name;
+                viewModel.Image = new FileUploadCommand
                 {
-                    command.Image = new FileUploadCommand
-                    {
-                        Name = viewModel.Image.Name,
-                        Extension = viewModel.Image.Extension,
-                        Data = viewModel.Image.Data,
-                        Size = viewModel.Image.Size,
-                    };
-                }
-                await Client.CreateSupplierEndpointAsync("1", command).ConfigureAwait(false);
+                    Name = viewModel.Image?.Name,
+                    Extension = viewModel.Image?.Extension,
+                    Data = viewModel.Image?.Data,
+                    Size = viewModel.Image?.Size,
+                };
+                await Client.CreateSupplierEndpointAsync("1", viewModel.Adapt<CreateSupplierCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                // Create a new command with uppercase Code and Name, and formatted Image
-                var command = new UpdateSupplierCommand
+                viewModel.Code = viewModel.Code?.ToUpperInvariant() ?? viewModel.Code;
+                viewModel.Name = viewModel.Name?.ToUpperInvariant() ?? viewModel.Name;
+                viewModel.Image = new FileUploadCommand
                 {
-                    Id = id,
-                    Code = viewModel.Code?.ToUpperInvariant() ?? string.Empty,
-                    Name = viewModel.Name?.ToUpperInvariant() ?? string.Empty,
-                    Description = viewModel.Description,
-                    ContactPerson = viewModel.ContactPerson ?? string.Empty,
-                    Email = viewModel.Email ?? string.Empty,
-                    Phone = viewModel.Phone ?? string.Empty,
-                    Address = viewModel.Address ?? string.Empty,
-                    PostalCode = viewModel.PostalCode,
-                    Website = viewModel.Website,
-                    CreditLimit = viewModel.CreditLimit,
-                    PaymentTermsDays = viewModel.PaymentTermsDays,
-                    IsActive = viewModel.IsActive,
-                    Rating = viewModel.Rating,
-                    Notes = viewModel.Notes,
-                    ImageUrl = viewModel.ImageUrl,
-                    Image = viewModel.Image != null
-                        ? new FileUploadCommand
-                        {
-                            Name = viewModel.Image.Name,
-                            Extension = viewModel.Image.Extension,
-                            Data = viewModel.Image.Data,
-                            Size = viewModel.Image.Size,
-                        }
-                        : null
+                    Name = viewModel.Image?.Name,
+                    Extension = viewModel.Image?.Extension,
+                    Data = viewModel.Image?.Data,
+                    Size = viewModel.Image?.Size,
                 };
-                await Client.UpdateSupplierEndpointAsync("1", id, command).ConfigureAwait(false);
+                await Client.UpdateSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateSupplierCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteSupplierEndpointAsync("1", id).ConfigureAwait(false));
     }
