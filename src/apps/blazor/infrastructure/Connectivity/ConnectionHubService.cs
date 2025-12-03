@@ -121,12 +121,20 @@ public class ConnectionHubService : IConnectionHubService
             await _notificationPublisher.PublishAsync(
                 new ConnectionStateChanged(ConnectionState.Connected, _hubConnection.ConnectionId ?? "Connected"));
         }
+        catch (HttpRequestException ex)
+        {
+            // SignalR hub connection failed - this is non-fatal, the app can continue without real-time features
+            _logger.LogWarning(ex, "Failed to connect to SignalR hub. Real-time features will be unavailable. Error: {Message}", ex.Message);
+            await _notificationPublisher.PublishAsync(
+                new ConnectionStateChanged(ConnectionState.Disconnected, "SignalR connection unavailable"));
+            // Don't throw - allow the app to continue functioning without real-time updates
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error starting connection hub");
             await _notificationPublisher.PublishAsync(
                 new ConnectionStateChanged(ConnectionState.Disconnected, ex.Message));
-            throw;
+            // Don't throw - allow the app to continue functioning without real-time updates
         }
     }
 
