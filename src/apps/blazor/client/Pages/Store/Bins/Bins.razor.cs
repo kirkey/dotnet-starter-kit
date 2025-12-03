@@ -58,17 +58,15 @@ public partial class Bins
             },
             createFunc: async viewModel =>
             {
-                var command = viewModel.Adapt<CreateBinCommand>();
-                command.Code = viewModel.Code!.ToUpperInvariant();
-                command.Name = viewModel.Name!.ToUpperInvariant();
-                await Client.CreateBinEndpointAsync("1", command).ConfigureAwait(false);
+                viewModel.Code = viewModel.Code?.ToUpperInvariant() ?? viewModel.Code;
+                viewModel.Name = viewModel.Name?.ToUpperInvariant() ?? viewModel.Name;
+                await Client.CreateBinEndpointAsync("1", viewModel.Adapt<CreateBinCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                var command = viewModel.Adapt<UpdateBinCommand>();
-                command.Code = viewModel.Code!.ToUpperInvariant();
-                command.Name = viewModel.Name!.ToUpperInvariant();
-                await Client.UpdateBinEndpointAsync("1", id, command).ConfigureAwait(false);
+                viewModel.Code = viewModel.Code?.ToUpperInvariant() ?? viewModel.Code;
+                viewModel.Name = viewModel.Name?.ToUpperInvariant() ?? viewModel.Name;
+                await Client.UpdateBinEndpointAsync("1", id, viewModel.Adapt<UpdateBinCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteBinEndpointAsync("1", id).ConfigureAwait(false));
 

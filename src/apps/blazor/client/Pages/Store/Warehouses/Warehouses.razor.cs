@@ -128,44 +128,16 @@ public partial class Warehouses
             },
             createFunc: async viewModel =>
             {
-                var command = new CreateWarehouseCommand
-                {
-                    Code = viewModel.Code!.ToUpperInvariant(),
-                    Name = viewModel.Name!.ToUpperInvariant(),
-                    Description = viewModel.Description,
-                    Address = viewModel.Address!,
-                    ManagerName = viewModel.ManagerName!,
-                    ManagerEmail = viewModel.ManagerEmail!,
-                    ManagerPhone = viewModel.ManagerPhone!,
-                    TotalCapacity = viewModel.TotalCapacity,
-                    CapacityUnit = viewModel.CapacityUnit!,
-                    WarehouseType = viewModel.WarehouseType!,
-                    IsActive = viewModel.IsActive,
-                    IsMainWarehouse = viewModel.IsMainWarehouse,
-                    Notes = viewModel.Notes
-                };
-                await Client.CreateWarehouseEndpointAsync("1", command).ConfigureAwait(false);
+                viewModel.Code = viewModel.Code?.ToUpperInvariant() ?? viewModel.Code;
+                viewModel.Name = viewModel.Name?.ToUpperInvariant() ?? viewModel.Name;
+                await Client.CreateWarehouseEndpointAsync("1", viewModel.Adapt<CreateWarehouseCommand>()).ConfigureAwait(false);
                 Snackbar.Add("Warehouse created successfully", Severity.Success);
             },
             updateFunc: async (id, viewModel) =>
             {
-                var command = new UpdateWarehouseCommand
-                {
-                    Code = viewModel.Code!.ToUpperInvariant(),
-                    Name = viewModel.Name!.ToUpperInvariant(),
-                    Description = viewModel.Description,
-                    Address = viewModel.Address!,
-                    ManagerName = viewModel.ManagerName!,
-                    ManagerEmail = viewModel.ManagerEmail!,
-                    ManagerPhone = viewModel.ManagerPhone!,
-                    TotalCapacity = viewModel.TotalCapacity,
-                    CapacityUnit = viewModel.CapacityUnit!,
-                    WarehouseType = viewModel.WarehouseType!,
-                    IsActive = viewModel.IsActive,
-                    IsMainWarehouse = viewModel.IsMainWarehouse,
-                    Notes = viewModel.Notes
-                };
-                await Client.UpdateWarehouseEndpointAsync("1", id, command).ConfigureAwait(false);
+                viewModel.Code = viewModel.Code?.ToUpperInvariant() ?? viewModel.Code;
+                viewModel.Name = viewModel.Name?.ToUpperInvariant() ?? viewModel.Name;
+                await Client.UpdateWarehouseEndpointAsync("1", id, viewModel.Adapt<UpdateWarehouseCommand>()).ConfigureAwait(false);
                 Snackbar.Add("Warehouse updated successfully", Severity.Success);
             },
             deleteFunc: async id =>

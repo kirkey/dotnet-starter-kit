@@ -77,12 +77,7 @@ public partial class SalesImports
             },
             createFunc: async viewModel =>
             {
-                var command = viewModel.Adapt<CreateSalesImportCommand>();
-                if (!string.IsNullOrWhiteSpace(_fileContent))
-                {
-                    // The file content will be handled by the server
-                }
-                await Client.CreateSalesImportEndpointAsync("1", command).ConfigureAwait(false);
+                await Client.CreateSalesImportEndpointAsync("1", viewModel.Adapt<CreateSalesImportCommand>()).ConfigureAwait(false);
             },
             deleteAction: null);
     }

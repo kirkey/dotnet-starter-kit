@@ -56,31 +56,29 @@ public partial class Categories
             },
             createFunc: async viewModel =>
             {
-                var command = viewModel.Adapt<CreateCategoryCommand>();
-                command.Code = viewModel.Code!.ToUpperInvariant();
-                command.Name = viewModel.Name!.ToUpperInvariant();
-                command.Image = new FileUploadCommand
+                viewModel.Code = viewModel.Code?.ToUpperInvariant() ?? viewModel.Code;
+                viewModel.Name = viewModel.Name?.ToUpperInvariant() ?? viewModel.Name;
+                viewModel.Image = new FileUploadCommand
                 {
                     Name = viewModel.Image?.Name,
                     Extension = viewModel.Image?.Extension,
                     Data = viewModel.Image?.Data,
                     Size = viewModel.Image?.Size,
                 };
-                await Client.CreateCategoryEndpointAsync("1", command).ConfigureAwait(false);
+                await Client.CreateCategoryEndpointAsync("1", viewModel.Adapt<CreateCategoryCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                var command = viewModel.Adapt<UpdateCategoryCommand>();
-                command.Code = viewModel.Code!.ToUpperInvariant();
-                command.Name = viewModel.Name!.ToUpperInvariant();
-                command.Image = new FileUploadCommand
+                viewModel.Code = viewModel.Code?.ToUpperInvariant() ?? viewModel.Code;
+                viewModel.Name = viewModel.Name?.ToUpperInvariant() ?? viewModel.Name;
+                viewModel.Image = new FileUploadCommand
                 {
                     Name = viewModel.Image?.Name,
                     Extension = viewModel.Image?.Extension,
                     Data = viewModel.Image?.Data,
                     Size = viewModel.Image?.Size,
                 };
-                await Client.UpdateCategoryEndpointAsync("1", id, command).ConfigureAwait(false);
+                await Client.UpdateCategoryEndpointAsync("1", id, viewModel.Adapt<UpdateCategoryCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeleteCategoryEndpointAsync("1", id).ConfigureAwait(false));
         

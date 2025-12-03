@@ -128,50 +128,22 @@ public partial class Locations
             },
             createFunc: async viewModel =>
             {
-                var command = new CreateWarehouseLocationCommand
-                {
-                    Name = viewModel.Name!.ToUpperInvariant(),
-                    Description = viewModel.Description,
-                    Code = viewModel.Code!.ToUpperInvariant(),
-                    Aisle = viewModel.Aisle!.ToUpperInvariant(),
-                    Section = viewModel.Section!.ToUpperInvariant(),
-                    Shelf = viewModel.Shelf!.ToUpperInvariant(),
-                    Bin = viewModel.Bin,
-                    WarehouseId = viewModel.WarehouseId!.Value,
-                    LocationType = viewModel.LocationType!,
-                    Capacity = viewModel.Capacity,
-                    CapacityUnit = viewModel.CapacityUnit!,
-                    IsActive = viewModel.IsActive,
-                    RequiresTemperatureControl = viewModel.RequiresTemperatureControl,
-                    MinTemperature = viewModel.MinTemperature,
-                    MaxTemperature = viewModel.MaxTemperature,
-                    TemperatureUnit = viewModel.TemperatureUnit
-                };
-                await Client.CreateWarehouseLocationEndpointAsync("1", command).ConfigureAwait(false);
+                viewModel.Name = viewModel.Name?.ToUpperInvariant() ?? viewModel.Name;
+                viewModel.Code = viewModel.Code?.ToUpperInvariant() ?? viewModel.Code;
+                viewModel.Aisle = viewModel.Aisle?.ToUpperInvariant() ?? viewModel.Aisle;
+                viewModel.Section = viewModel.Section?.ToUpperInvariant() ?? viewModel.Section;
+                viewModel.Shelf = viewModel.Shelf?.ToUpperInvariant() ?? viewModel.Shelf;
+                await Client.CreateWarehouseLocationEndpointAsync("1", viewModel.Adapt<CreateWarehouseLocationCommand>()).ConfigureAwait(false);
                 Snackbar.Add("Warehouse location created successfully", Severity.Success);
             },
             updateFunc: async (id, viewModel) =>
             {
-                var command = new UpdateWarehouseLocationCommand
-                {
-                    Name = viewModel.Name!.ToUpperInvariant(),
-                    Description = viewModel.Description,
-                    Code = viewModel.Code!.ToUpperInvariant(),
-                    Aisle = viewModel.Aisle!.ToUpperInvariant(),
-                    Section = viewModel.Section!.ToUpperInvariant(),
-                    Shelf = viewModel.Shelf!.ToUpperInvariant(),
-                    Bin = viewModel.Bin,
-                    WarehouseId = viewModel.WarehouseId!.Value,
-                    LocationType = viewModel.LocationType!,
-                    Capacity = viewModel.Capacity,
-                    CapacityUnit = viewModel.CapacityUnit!,
-                    IsActive = viewModel.IsActive,
-                    RequiresTemperatureControl = viewModel.RequiresTemperatureControl,
-                    MinTemperature = viewModel.MinTemperature,
-                    MaxTemperature = viewModel.MaxTemperature,
-                    TemperatureUnit = viewModel.TemperatureUnit
-                };
-                await Client.UpdateWarehouseLocationEndpointAsync("1", id, command).ConfigureAwait(false);
+                viewModel.Name = viewModel.Name?.ToUpperInvariant() ?? viewModel.Name;
+                viewModel.Code = viewModel.Code?.ToUpperInvariant() ?? viewModel.Code;
+                viewModel.Aisle = viewModel.Aisle?.ToUpperInvariant() ?? viewModel.Aisle;
+                viewModel.Section = viewModel.Section?.ToUpperInvariant() ?? viewModel.Section;
+                viewModel.Shelf = viewModel.Shelf?.ToUpperInvariant() ?? viewModel.Shelf;
+                await Client.UpdateWarehouseLocationEndpointAsync("1", id, viewModel.Adapt<UpdateWarehouseLocationCommand>()).ConfigureAwait(false);
                 Snackbar.Add("Warehouse location updated successfully", Severity.Success);
             },
             deleteFunc: async id =>
