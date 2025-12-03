@@ -10,12 +10,28 @@ public partial class FixedAssets
     private bool SearchOnlyActive;
 
     protected EntityServerTableContext<FixedAssetResponse, DefaultIdType, FixedAssetViewModel> Context { get; set; } = null!;
-    private EntityTable<FixedAssetResponse, DefaultIdType, FixedAssetViewModel>? _table;
+    private EntityTable<FixedAssetResponse, DefaultIdType, FixedAssetViewModel> _table = null!;
 
-    private string UserId => "system"; // TODO: Get from current user context
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
 
-    protected override Task OnInitializedAsync()
+    private string? SearchAssetCode { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+            _preference = preference;
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<FixedAssetResponse, DefaultIdType, FixedAssetViewModel>(
             entityName: "Fixed Asset",
             entityNamePlural: "Fixed Assets",
@@ -53,7 +69,8 @@ public partial class FixedAssets
             updateFunc: async (id, vm) => await UpdateFixedAssetAsync(id, vm),
             deleteFunc: async id => await DeleteFixedAssetAsync(id),
             hasExtraActionsFunc: () => true);
-        return Task.CompletedTask;
+        
+        await Task.CompletedTask;
     }
 
     private async Task CreateFixedAssetAsync(FixedAssetViewModel vm)

@@ -8,6 +8,9 @@ public partial class AccountReconciliations
     protected EntityServerTableContext<AccountReconciliationResponse, DefaultIdType, AccountReconciliationViewModel> Context { get; set; } = null!;
     private EntityTable<AccountReconciliationResponse, DefaultIdType, AccountReconciliationViewModel> _table = null!;
 
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
     private ClientPreference _preference = new();
 
     private string? ReconciliationStatus { get; set; }
@@ -191,4 +194,3 @@ public partial class AccountReconciliations
             new DialogParameters(), new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true });
     }
 }
-

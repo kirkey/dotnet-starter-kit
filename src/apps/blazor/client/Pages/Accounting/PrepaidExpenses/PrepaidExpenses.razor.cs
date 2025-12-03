@@ -12,8 +12,24 @@ public partial class PrepaidExpenses
     protected EntityServerTableContext<PrepaidExpenseResponse, DefaultIdType, PrepaidExpenseViewModel> Context { get; set; } = null!;
     private EntityTable<PrepaidExpenseResponse, DefaultIdType, PrepaidExpenseViewModel>? _table;
 
-    protected override Task OnInitializedAsync()
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+            _preference = preference;
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<PrepaidExpenseResponse, DefaultIdType, PrepaidExpenseViewModel>(
             entityName: "Prepaid Expense",
             entityNamePlural: "Prepaid Expenses",
@@ -50,7 +66,8 @@ public partial class PrepaidExpenses
             createFunc: async vm => await CreatePrepaidExpenseAsync(vm),
             updateFunc: async (id, vm) => await UpdatePrepaidExpenseAsync(id, vm),
             hasExtraActionsFunc: () => true);
-        return Task.CompletedTask;
+        
+        await Task.CompletedTask;
     }
 
     private async Task CreatePrepaidExpenseAsync(PrepaidExpenseViewModel vm)

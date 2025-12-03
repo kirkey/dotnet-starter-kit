@@ -13,6 +13,11 @@ public partial class Customers
 
     private EntityTable<CustomerSearchResponse, DefaultIdType, CustomerViewModel> _table = null!;
 
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
     // Advanced search filters
     private string? _searchCustomerNumber;
     private string? SearchCustomerNumber
@@ -50,7 +55,22 @@ public partial class Customers
     /// <summary>
     /// Initializes the table context with customer-specific configuration including fields, CRUD operations, and search functionality.
     /// </summary>
-    protected override void OnInitialized() =>
+    protected override async Task OnInitializedAsync()
+    {
+        // Load initial preference from localStorage
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<CustomerSearchResponse, DefaultIdType, CustomerViewModel>(
             fields:
             [
@@ -92,6 +112,9 @@ public partial class Customers
             entityName: "Customer",
             entityNamePlural: "Customers",
             entityResource: FshResources.Accounting);
+
+        await Task.CompletedTask;
+    }
 
     /// <summary>
     /// Show customers help dialog.

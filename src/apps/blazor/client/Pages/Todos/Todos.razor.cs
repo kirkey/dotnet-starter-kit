@@ -30,17 +30,9 @@ public partial class Todos
             _preference = preference;
         }
 
-        // Subscribe to elevation changes
         Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
         {
             _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
-            StateHasChanged();
-            return Task.CompletedTask;
-        });
-
-        // Subscribe to border radius changes
-        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
-        {
             _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
             StateHasChanged();
             return Task.CompletedTask;

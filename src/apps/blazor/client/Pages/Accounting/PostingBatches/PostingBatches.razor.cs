@@ -5,6 +5,11 @@ public partial class PostingBatches
     protected EntityServerTableContext<PostingBatchResponse, DefaultIdType, PostingBatchViewModel> Context { get; set; } = null!;
     private EntityTable<PostingBatchResponse, DefaultIdType, PostingBatchViewModel> _table = null!;
 
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
     // Advanced search filters
     private string? _searchStatus;
     private string? SearchStatus
@@ -50,8 +55,19 @@ public partial class PostingBatches
         }
     }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+            _preference = preference;
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<PostingBatchResponse, DefaultIdType, PostingBatchViewModel>(
             entityName: "Posting Batch",
             entityNamePlural: "Posting Batches",

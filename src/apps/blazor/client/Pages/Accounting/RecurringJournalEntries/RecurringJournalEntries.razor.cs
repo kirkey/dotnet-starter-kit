@@ -11,8 +11,24 @@ public partial class RecurringJournalEntries
     protected EntityServerTableContext<RecurringJournalEntryResponse, DefaultIdType, RecurringJournalEntryViewModel> Context { get; set; } = null!;
     private EntityTable<RecurringJournalEntryResponse, DefaultIdType, RecurringJournalEntryViewModel>? _table;
 
-    protected override Task OnInitializedAsync()
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+            _preference = preference;
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<RecurringJournalEntryResponse, DefaultIdType, RecurringJournalEntryViewModel>(
             entityName: "Recurring Journal Entry",
             entityNamePlural: "Recurring Journal Entries",
@@ -49,7 +65,8 @@ public partial class RecurringJournalEntries
             updateFunc: async (id, vm) => await UpdateRecurringJournalEntryAsync(id, vm),
             deleteFunc: async id => await DeleteRecurringJournalEntryAsync(id),
             hasExtraActionsFunc: () => true);
-        return Task.CompletedTask;
+        
+        await Task.CompletedTask;
     }
 
     private async Task CreateRecurringJournalEntryAsync(RecurringJournalEntryViewModel vm)

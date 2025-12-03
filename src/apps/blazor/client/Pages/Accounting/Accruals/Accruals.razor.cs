@@ -13,6 +13,11 @@ public partial class Accruals
 
     private EntityTable<AccrualResponse, DefaultIdType, AccrualViewModel> _table = null!;
 
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
     private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
 
     // Advanced search filters
@@ -38,8 +43,22 @@ public partial class Accruals
         }
     }
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load initial preference from localStorage
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<AccrualResponse, DefaultIdType, AccrualViewModel>(
             entityName: "Accrual",
             entityNamePlural: "Accruals",
@@ -84,7 +103,7 @@ public partial class Accruals
             },
             deleteFunc: async id => await Client.AccrualDeleteEndpointAsync("1", id).ConfigureAwait(false));
 
-        return Task.CompletedTask;
+        await Task.CompletedTask;
     }
 
     private async Task OnApproveAccrual(DefaultIdType id)

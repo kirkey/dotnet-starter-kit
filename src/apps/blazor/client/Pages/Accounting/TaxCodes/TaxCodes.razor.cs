@@ -14,9 +14,26 @@ public partial class TaxCodes
     private EntityTable<TaxCodeResponse, DefaultIdType, TaxCodeViewModel> _table = null!;
 
     /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
+    /// <summary>
     /// Initializes the table context with tax code-specific configuration including fields, CRUD operations, and search functionality.
     /// </summary>
-    protected override void OnInitialized() =>
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+            _preference = preference;
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<TaxCodeResponse, DefaultIdType, TaxCodeViewModel>(
             fields:
             [
@@ -69,6 +86,9 @@ public partial class TaxCodes
             entityName: "Tax Code",
             entityNamePlural: "Tax Codes",
             entityResource: FshResources.Accounting);
+
+        await Task.CompletedTask;
+    }
 
     /// <summary>
     /// Show tax codes help dialog.

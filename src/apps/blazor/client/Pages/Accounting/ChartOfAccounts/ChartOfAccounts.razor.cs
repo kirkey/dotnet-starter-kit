@@ -6,10 +6,26 @@ public partial class ChartOfAccounts
 
     private EntityTable<ChartOfAccountResponse, DefaultIdType, ChartOfAccountViewModel> _table = null!;
 
+    private ClientPreference _preference = new();
+
     private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load initial preference from localStorage
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<ChartOfAccountResponse, DefaultIdType, ChartOfAccountViewModel>(
             entityName: "Chart Of Account",
             entityNamePlural: "Chart Of Accounts",
@@ -51,7 +67,7 @@ public partial class ChartOfAccounts
             },
             deleteFunc: async id => await Client.ChartOfAccountDeleteEndpointAsync("1", id));
 
-        return Task.CompletedTask;
+        await Task.CompletedTask;
     }
 
     private async Task ShowChartOfAccountsHelp()

@@ -3,7 +3,7 @@
 
 <PageHeader Title="Bill Management" Header="Bill Management" SubHeader="Manage vendor bills, track payables, and process payments." />
 
-<MudPaper Elevation="2" Class="pa-4 mb-4">
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
     <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap">
         <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small">
             <MudButton StartIcon="@Icons.Material.Filled.Assessment" OnClick="@ShowBillReports">

@@ -16,6 +16,11 @@ public partial class Bills
     private EntityTable<BillSearchResponse, DefaultIdType, BillViewModel> _table = null!;
 
     /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
+    /// <summary>
     /// Search filter for bill number.
     /// </summary>
     private string? BillNumber { get; set; }
@@ -128,8 +133,22 @@ public partial class Bills
     /// <summary>
     /// Initializes the component and sets up the entity table context with CRUD operations.
     /// </summary>
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load initial preference from localStorage
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<BillSearchResponse, DefaultIdType, BillViewModel>(
             entityName: "Bill",
             entityNamePlural: "Bills",
@@ -243,7 +262,7 @@ public partial class Bills
             }),
             hasExtraActionsFunc: () => true);
 
-        return Task.CompletedTask;
+        await Task.CompletedTask;
     }
 
     // Approve Bill Dialog

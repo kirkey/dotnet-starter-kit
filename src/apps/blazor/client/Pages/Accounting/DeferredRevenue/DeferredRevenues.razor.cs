@@ -11,8 +11,24 @@ public partial class DeferredRevenues
     protected EntityServerTableContext<DeferredRevenueResponse, DefaultIdType, DeferredRevenueViewModel> Context { get; set; } = null!;
     private EntityTable<DeferredRevenueResponse, DefaultIdType, DeferredRevenueViewModel>? _table;
 
-    protected override Task OnInitializedAsync()
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+            _preference = preference;
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<DeferredRevenueResponse, DefaultIdType, DeferredRevenueViewModel>(
             entityName: "Deferred Revenue",
             entityNamePlural: "Deferred Revenues",
@@ -48,7 +64,8 @@ public partial class DeferredRevenues
             updateFunc: async (id, vm) => await UpdateDeferredRevenueAsync(id, vm),
             deleteFunc: async id => await DeleteDeferredRevenueAsync(id),
             hasExtraActionsFunc: () => true);
-        return Task.CompletedTask;
+
+        await Task.CompletedTask;
     }
 
     private async Task CreateDeferredRevenueAsync(DeferredRevenueViewModel vm)

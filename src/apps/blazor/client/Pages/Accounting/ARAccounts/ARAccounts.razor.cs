@@ -17,6 +17,11 @@ public partial class ArAccounts
     /// </summary>
     private EntityTable<ArAccountResponse, DefaultIdType, ArAccountViewModel> _table = null!;
 
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
     private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
 
     // Search filters
@@ -27,8 +32,22 @@ public partial class ArAccounts
     /// <summary>
     /// Initializes the component and sets up the entity table context.
     /// </summary>
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load initial preference from localStorage
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<ArAccountResponse, DefaultIdType, ArAccountViewModel>(
             entityName: "AR Account",
             entityNamePlural: "AR Accounts",
@@ -63,7 +82,7 @@ public partial class ArAccounts
             deleteFunc: null, // AR accounts should not be deleted
             hasExtraActionsFunc: () => true);
 
-        return Task.CompletedTask;
+        await Task.CompletedTask;
     }
 
     /// <summary>

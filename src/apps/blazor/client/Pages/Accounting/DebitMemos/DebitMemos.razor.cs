@@ -6,7 +6,12 @@ public partial class DebitMemos
 
     private EntityTable<DebitMemoResponse, DefaultIdType, DebitMemoViewModel> _table = null!;
 
-    // Dialog visibility flags
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
+    /// <summary>
     private bool _approveDialogVisible;
     private bool _applyDialogVisible;
     private bool _voidDialogVisible;
@@ -38,8 +43,19 @@ public partial class DebitMemos
         _ => Color.Default
     };
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+            _preference = preference;
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<DebitMemoResponse, DefaultIdType, DebitMemoViewModel>(
             entityName: "Debit Memo",
             entityNamePlural: "Debit Memos",
@@ -105,7 +121,7 @@ public partial class DebitMemos
             // },
             hasExtraActionsFunc: () => true);
 
-        return Task.CompletedTask;
+        await Task.CompletedTask;
     }
 
     // Approve Debit Memo Dialog

@@ -12,6 +12,11 @@ public partial class Projects
 
     private EntityTable<ProjectResponse, DefaultIdType, ProjectViewModel> _table = null!;
 
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
     // Advanced search filters
     private string? _searchProjectName;
     private string? SearchProjectName
@@ -38,8 +43,19 @@ public partial class Projects
     /// <summary>
     /// Configure the EntityTable context: fields, search, create, update and delete functions.
     /// </summary>
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+            _preference = preference;
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<ProjectResponse, DefaultIdType, ProjectViewModel>(
             entityName: "Project",
             entityNamePlural: "Projects",
@@ -94,7 +110,7 @@ public partial class Projects
             },
             deleteFunc: async id => await Client.ProjectDeleteEndpointAsync("1", id).ConfigureAwait(false));
 
-        return Task.CompletedTask;
+        await Task.CompletedTask;
     }
 
     /// <summary>

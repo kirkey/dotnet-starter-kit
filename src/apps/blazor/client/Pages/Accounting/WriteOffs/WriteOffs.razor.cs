@@ -12,10 +12,29 @@ public partial class WriteOffs
     protected EntityServerTableContext<WriteOffResponse, DefaultIdType, WriteOffViewModel> Context { get; set; } = null!;
     private EntityTable<WriteOffResponse, DefaultIdType, WriteOffViewModel>? _table;
 
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
     private string UserId => "system"; // TODO: Get from current user context
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load initial preference from localStorage
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<WriteOffResponse, DefaultIdType, WriteOffViewModel>(
             entityName: "Write-Off",
             entityNamePlural: "Write-Offs",
@@ -55,7 +74,7 @@ public partial class WriteOffs
             updateFunc: async (id, vm) => await UpdateWriteOffAsync(id, vm),
             deleteFunc: null,
             hasExtraActionsFunc: () => true);
-        return Task.CompletedTask;
+         await Task.CompletedTask;
     }
 
     private async Task CreateWriteOffAsync(WriteOffViewModel vm)

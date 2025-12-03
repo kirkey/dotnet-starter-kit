@@ -15,7 +15,27 @@ public partial class Payees
 
     private EntityTable<PayeeResponse, DefaultIdType, PayeeViewModel> _table = null!;
 
-    protected override void OnInitialized() =>
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load initial preference from localStorage
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<PayeeResponse, DefaultIdType, PayeeViewModel>(
             entityName: "Payee",
             entityNamePlural: "Payees",
@@ -69,6 +89,9 @@ public partial class Payees
                 await Client.PayeeUpdateEndpointAsync("1", id, viewModel.Adapt<PayeeUpdateCommand>());
             },
             deleteFunc: async id => await Client.PayeeDeleteEndpointAsync("1", id));
+
+        await Task.CompletedTask;
+    }
 
     /// <summary>
     /// Show payees help dialog.

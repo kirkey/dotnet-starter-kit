@@ -9,6 +9,11 @@ public partial class Payments
     protected EntityServerTableContext<PaymentSearchResponse, DefaultIdType, PaymentViewModel> Context { get; set; } = null!;
     private EntityTable<PaymentSearchResponse, DefaultIdType, PaymentViewModel> _table = null!;
 
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
     private string? PaymentNumber { get; set; }
     private string? PaymentMethod { get; set; }
     private DateTime? StartDate { get; set; }
@@ -17,8 +22,22 @@ public partial class Payments
 
     private readonly DialogOptions _dialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load initial preference from localStorage
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<PaymentSearchResponse, DefaultIdType, PaymentViewModel>(
             entityName: "Payment",
             entityNamePlural: "Payments",
@@ -88,7 +107,7 @@ public partial class Payments
                 Snackbar.Add("Payment deleted successfully", Severity.Success);
             });
 
-        return Task.CompletedTask;
+        await Task.CompletedTask;
     }
 
     /// <summary>

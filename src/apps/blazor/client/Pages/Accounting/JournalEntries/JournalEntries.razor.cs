@@ -16,6 +16,11 @@ public partial class JournalEntries
     private EntityTable<JournalEntryResponse, DefaultIdType, JournalEntryViewModel> _table = null!;
 
     /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
+    /// <summary>
     /// Search filter for reference number.
     /// </summary>
     private string? ReferenceNumber { get; set; }
@@ -70,8 +75,22 @@ public partial class JournalEntries
     /// <summary>
     /// Initializes the component and sets up the entity table context with CRUD operations.
     /// </summary>
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load initial preference from localStorage
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<JournalEntryResponse, DefaultIdType, JournalEntryViewModel>(
             entityName: "Journal Entry",
             entityNamePlural: "Journal Entries",
@@ -182,7 +201,7 @@ public partial class JournalEntries
                 Lines = []
             }));
 
-        return base.OnInitializedAsync();
+        await base.OnInitializedAsync();
     }
 
     /// <summary>

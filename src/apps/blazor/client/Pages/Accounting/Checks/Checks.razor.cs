@@ -6,6 +6,11 @@ public partial class Checks
 
     private EntityTable<CheckSearchResponse, DefaultIdType, CheckViewModel> _table = null!;
 
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
     // Dialog visibility flags
     private bool _issueDialogVisible;
     private bool _voidDialogVisible;
@@ -68,8 +73,19 @@ public partial class Checks
         _ => Color.Default
     };
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+            _preference = preference;
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<CheckSearchResponse, DefaultIdType, CheckViewModel>(
             entityName: "Check",
             entityNamePlural: "Checks",
@@ -131,7 +147,7 @@ public partial class Checks
             // },
             hasExtraActionsFunc: () => true);
 
-        return Task.CompletedTask;
+        await Task.CompletedTask;
     }
 
     // Issue Check Dialog

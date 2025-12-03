@@ -15,6 +15,11 @@ public partial class ApAccounts
     /// </summary>
     private EntityTable<ApAccountResponse, DefaultIdType, ApAccountViewModel> _table = null!;
 
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
     private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, FullWidth = true };
 
     // Search filters
@@ -30,8 +35,22 @@ public partial class ApAccounts
     /// <summary>
     /// Initializes the component and sets up the entity table context.
     /// </summary>
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        // Load initial preference from localStorage
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<ApAccountResponse, DefaultIdType, ApAccountViewModel>(
             entityName: "AP Account",
             entityNamePlural: "AP Accounts",

@@ -6,6 +6,11 @@ public partial class AccountingPeriods
 
     private EntityTable<AccountingPeriodResponse, DefaultIdType, AccountingPeriodViewModel> _table = null!;
 
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
+
     private readonly DialogOptions _helpDialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
 
     // Advanced search filters
@@ -42,8 +47,22 @@ public partial class AccountingPeriods
         }
     }
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        // Load initial preference from localStorage
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<AccountingPeriodResponse, DefaultIdType, AccountingPeriodViewModel>(
             entityName: "Accounting Period",
             entityNamePlural: "Accounting Periods",
@@ -80,9 +99,9 @@ public partial class AccountingPeriods
             {
                 await Client.AccountingPeriodUpdateEndpointAsync("1", id, period.Adapt<UpdateAccountingPeriodCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.AccountingPeriodDeleteEndpointAsync("1", id).ConfigureAwait(false));
+            hasExtraActionsFunc: () => true);
 
-        return Task.CompletedTask;
+        await Task.CompletedTask;
     }
 
     private async Task OnClosePeriod(DefaultIdType id)
