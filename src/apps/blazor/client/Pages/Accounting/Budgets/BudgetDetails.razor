@@ -14,7 +14,7 @@
 
 <EntityTable @ref="_table" TEntity="BudgetDetailResponse" TId="DefaultIdType" TRequest="BudgetDetailViewModel" Context="@Context">
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12" md="6" lg="4">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />

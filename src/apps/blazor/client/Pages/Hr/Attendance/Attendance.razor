@@ -23,7 +23,7 @@
     </ExtraActions>
     
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12" sm="6" md="4">
                 <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Attendance ID" />
@@ -43,7 +43,7 @@
                                    RequiredError="Employee is required"
                                    Variant="Variant.Filled"
                                    HelperText="Search and select employee"
-                                   Disabled="@(!Context.AddEditModal.IsCreate)" />
+                                   Disabled="@(context.Id != DefaultIdType.Empty)" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="6">
@@ -54,7 +54,7 @@
                           Variant="Variant.Filled"
                           Required="true"
                           HelperText="Select attendance date"
-                          Disabled="@(!Context.AddEditModal.IsCreate)" />
+                          Disabled="@(context.Id != DefaultIdType.Empty)" />
         </MudItem>
 
         <MudItem xs="12" sm="6" md="4">

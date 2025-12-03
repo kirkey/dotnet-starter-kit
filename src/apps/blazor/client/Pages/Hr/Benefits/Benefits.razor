@@ -15,7 +15,7 @@
 
 <EntityTable @ref="_table" TEntity="BenefitAllocationResponse" TId="DefaultIdType" TRequest="BenefitViewModel" Context="@Context">
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
@@ -31,7 +31,7 @@
                           For="@(() => context.BenefitName)" 
                           @bind-Value="context.BenefitName" 
                           Required="true"
-                          ReadOnly="@(!Context.AddEditModal.IsCreate)"
+                          ReadOnly="@(context.Id != DefaultIdType.Empty)"
                           Placeholder="e.g., SSS, PhilHealth, Health Insurance" />
         </MudItem>
 
@@ -42,7 +42,7 @@
                        T="string"
                        Variant="Variant.Filled"
                        Required="true"
-                       Disabled="@(!Context.AddEditModal.IsCreate)">
+                       Disabled="@(context.Id != DefaultIdType.Empty)">
                 <MudSelectItem Value="@("Health")">Health</MudSelectItem>
                 <MudSelectItem Value="@("Retirement")">Retirement</MudSelectItem>
                 <MudSelectItem Value="@("Life Insurance")">Life Insurance</MudSelectItem>
@@ -55,7 +55,7 @@
 
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudSwitch Class="mt-3" T="bool" @bind-Value="context.IsMandatory" Color="Color.Primary"
-                       Disabled="@(!Context.AddEditModal.IsCreate)">
+                       Disabled="@(context.Id != DefaultIdType.Empty)">
                 Mandatory (Per Labor Code)
             </MudSwitch>
         </MudItem>

@@ -25,7 +25,7 @@
     </AdvancedSearchContent>
 
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12" md="6">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Product Id" />
@@ -52,7 +52,7 @@
         <MudItem xs="12" md="12">
             <MudItem>
                 <div>
-                    @if(!Context.AddEditModal.IsCreate)
+                    @if(context.Id != DefaultIdType.Empty)
                     {
                         <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Info" Size="Size.Small" Target="_blank"
                             StartIcon="@Icons.Material.Filled.RemoveRedEye" Style="margin-left: 5px;" >

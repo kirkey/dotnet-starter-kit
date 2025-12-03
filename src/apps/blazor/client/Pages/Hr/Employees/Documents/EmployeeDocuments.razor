@@ -28,7 +28,7 @@
 
 <EntityTable TEntity="EmployeeDocumentResponse" TId="DefaultIdType" TRequest="EmployeeDocumentViewModel" Context="@Context">
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12" sm="6" md="4">
                 <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Document ID" />

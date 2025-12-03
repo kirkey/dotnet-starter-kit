@@ -15,7 +15,7 @@
 
 <EntityTable @ref="_table" TEntity="BankResponse" TId="DefaultIdType" TRequest="BankViewModel" Context="@Context">
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12" md="6" lg="4">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
@@ -106,7 +106,7 @@
                            UploadLabel="Upload Bank Logo" />
         </MudItem>
 
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12">
                 <MudSwitch @bind-Value="context.IsActive"

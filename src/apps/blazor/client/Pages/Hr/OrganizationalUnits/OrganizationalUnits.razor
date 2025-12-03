@@ -15,7 +15,7 @@
 
 <EntityTable @ref="_table" TEntity="OrganizationalUnitResponse" TId="DefaultIdType" TRequest="OrganizationalUnitViewModel" Context="@Context">
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
@@ -26,7 +26,7 @@
             <MudTextField Label="Code" 
                           For="@(() => context.Code)" 
                           @bind-Value="context.Code" 
-                          ReadOnly="@(!Context.AddEditModal.IsCreate)"
+                          ReadOnly="@(context.Id != DefaultIdType.Empty)"
                           Required="true" />
         </MudItem>
 
@@ -36,7 +36,7 @@
                        Label="Type"
                        T="OrganizationalUnitType"
                        Variant="Variant.Filled"
-                       ReadOnly="@(!Context.AddEditModal.IsCreate)"
+                       ReadOnly="@(context.Id != DefaultIdType.Empty)"
                        Required="true">
                 <MudSelectItem Value="(OrganizationalUnitType)1">Department</MudSelectItem>
                 <MudSelectItem Value="(OrganizationalUnitType)2">Division</MudSelectItem>

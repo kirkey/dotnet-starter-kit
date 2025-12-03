@@ -54,7 +54,7 @@
         </MudMenu>
     </ExtraActions>
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12" sm="6" md="4">
                 <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Employee ID" />
@@ -247,7 +247,7 @@
         </MudItem>
 
         <!-- Employee Contacts Section (shown only in edit modal) -->
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12" Class="mt-6">
                 <MudDivider />

@@ -72,7 +72,7 @@
         }
     </ExtraActions>
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12" md="6" lg="4">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
@@ -140,7 +140,7 @@
         </MudItem>
 
         @* Read-only totals and approval info: only visible when editing an existing budget *@
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12" sm="6" md="4" lg="3">
                 <MudNumericField Format="N2" Label="Total Budgeted" ReadOnly T="decimal" Value="context.TotalBudgetedAmount" Variant="Variant.Outlined" />

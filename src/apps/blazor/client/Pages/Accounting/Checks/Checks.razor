@@ -116,7 +116,7 @@
     </ExtraActions>
 
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12" md="6">
                 <MudTextField Value="@context.Id" Underline="false" ReadOnly Label="Check ID" />
@@ -128,7 +128,7 @@
             </MudItem>
         }
 
-        @if (Context.AddEditModal.IsCreate)
+        @if (context.Id == DefaultIdType.Empty)
         {
             <MudItem xs="12" sm="6" md="4">
                 <MudTextField @bind-Value="context.StartCheckNumber"
@@ -186,7 +186,7 @@
                               Variant="Variant.Filled" />
         </MudItem>
 
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             @if (!string.IsNullOrEmpty(context.BankName))
             {

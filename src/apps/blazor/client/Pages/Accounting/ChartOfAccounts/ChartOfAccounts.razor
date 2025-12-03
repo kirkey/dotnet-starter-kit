@@ -15,7 +15,7 @@
 
 <EntityTable @ref="_table" TEntity="ChartOfAccountResponse" TId="DefaultIdType" TRequest="ChartOfAccountViewModel" Context="@Context">
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12" md="6" lg="4">
                 <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />

@@ -83,7 +83,7 @@
     </ExtraActions>
 
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (context.Id != DefaultIdType.Empty)
         {
             <MudItem xs="12" md="6">
                 <MudTextField Value="@context.Id" Underline="false" ReadOnly Label="Trial Balance ID" />
