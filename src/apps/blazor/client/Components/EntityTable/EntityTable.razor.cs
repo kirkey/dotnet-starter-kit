@@ -41,8 +41,35 @@ public partial class EntityTable<TEntity, TId, TRequest>
 
     private ClientPreference? _clientPreference;
     private InputFile? fileUploadInput;
+    private bool _initialized;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        
+        // Initialize if Context is set but not yet initialized
+        if (!_initialized && Context is not null)
+        {
+            _initialized = true;
+            await InitializeAsync();
+        }
+    }
 
     protected override async Task OnInitializedAsync()
+    {
+        if (Context is null)
+        {
+            return;
+        }
+
+        if (!_initialized)
+        {
+            _initialized = true;
+            await InitializeAsync();
+        }
+    }
+
+    private async Task InitializeAsync()
     {
         if (await ClientPreferences.GetPreference() is not ClientPreference clientPreference)
             clientPreference = new ClientPreference();

@@ -6,9 +6,14 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.PurchaseOrders;
 /// </summary>
 public partial class PurchaseOrders
 {
-    
+    /// <summary>
+    /// The entity table context for managing purchase orders with server-side operations.
+    /// </summary>
+    protected EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> Context { get; set; } = null!;
 
-    private EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> Context = null!;
+    /// <summary>
+    /// Reference to the EntityTable component for purchase orders.
+    /// </summary>
     private EntityTable<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel> _table = null!;
 
     private List<SupplierResponse> _suppliers = [];
@@ -21,7 +26,7 @@ public partial class PurchaseOrders
 
     protected override async Task OnInitializedAsync()
     {
-        // Load preference
+        // Load initial preference from localStorage
         if (await ClientPreferences.GetPreference() is ClientPreference preference)
         {
             _preference = preference;
@@ -36,30 +41,16 @@ public partial class PurchaseOrders
             return Task.CompletedTask;
         });
 
+        SetupPurchaseOrdersContext();
+        
+        // Load suppliers after context is set
         await LoadSuppliersAsync();
-        SetupContext();
     }
 
-    private async Task LoadSuppliersAsync()
-    {
-        try
-        {
-            var command = new SearchSuppliersCommand
-            {
-                PageNumber = 1,
-                PageSize = 500,
-                OrderBy = ["Name"]
-            };
-            var result = await Client.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
-            _suppliers = result.Items?.ToList() ?? [];
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"Failed to load suppliers: {ex.Message}", Severity.Error);
-        }
-    }
-
-    private void SetupContext() =>
+    /// <summary>
+    /// Sets up the entity table context for purchase orders.
+    /// </summary>
+    private void SetupPurchaseOrdersContext() =>
         Context = new EntityServerTableContext<PurchaseOrderResponse, DefaultIdType, PurchaseOrderViewModel>(
             entityName: "Purchase Order",
             entityNamePlural: "Purchase Orders",
@@ -101,6 +92,25 @@ public partial class PurchaseOrders
                 await Client.UpdatePurchaseOrderEndpointAsync("1", id, viewModel.Adapt<UpdatePurchaseOrderCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id => await Client.DeletePurchaseOrderEndpointAsync("1", id).ConfigureAwait(false));
+
+    private async Task LoadSuppliersAsync()
+    {
+        try
+        {
+            var command = new SearchSuppliersCommand
+            {
+                PageNumber = 1,
+                PageSize = 500,
+                OrderBy = ["Name"]
+            };
+            var result = await Client.SearchSuppliersEndpointAsync("1", command).ConfigureAwait(false);
+            _suppliers = result.Items?.ToList() ?? [];
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to load suppliers: {ex.Message}", Severity.Error);
+        }
+    }
 
     /// <summary>
     /// Views the full details of a purchase order in a dialog.
