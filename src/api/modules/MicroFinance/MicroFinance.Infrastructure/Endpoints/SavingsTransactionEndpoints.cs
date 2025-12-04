@@ -1,3 +1,4 @@
+using Carter;
 using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsTransactions.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsTransactions.Search.v1;
@@ -8,14 +9,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Savings Transactions.
 /// </summary>
-public static class SavingsTransactionEndpoints
+public class SavingsTransactionEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Savings Transaction endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapSavingsTransactionEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var transactionsGroup = app.MapGroup("savings-transactions").WithTags("savings-transactions");
+        var transactionsGroup = app.MapGroup("microfinance/savings-transactions").WithTags("savings-transactions");
 
         transactionsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
         {
@@ -50,6 +51,5 @@ public static class SavingsTransactionEndpoints
         .WithSummary("Gets all transactions for a savings account")
         .Produces<PagedList<SavingsTransactionResponse>>();
 
-        return app;
     }
 }

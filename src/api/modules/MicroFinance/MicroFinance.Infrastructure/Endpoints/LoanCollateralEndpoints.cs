@@ -1,3 +1,4 @@
+using Carter;
 using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Get.v1;
@@ -8,20 +9,23 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Seize.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.UpdateValuation.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Verify.v1;
 using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Loan Collaterals.
 /// </summary>
-public static class LoanCollateralEndpoints
+public class LoanCollateralEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Loan Collateral endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapLoanCollateralEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var collateralsGroup = app.MapGroup("loan-collaterals").WithTags("loan-collaterals");
+        var collateralsGroup = app.MapGroup("microfinance/loan-collaterals").WithTags("loan-collaterals");
 
         collateralsGroup.MapPost("/", async (CreateLoanCollateralCommand command, ISender mediator) =>
         {
@@ -110,7 +114,5 @@ public static class LoanCollateralEndpoints
         .WithName("SeizeLoanCollateral")
         .WithSummary("Seizes a loan collateral")
         .Produces<SeizeCollateralResponse>();
-
-        return app;
     }
 }

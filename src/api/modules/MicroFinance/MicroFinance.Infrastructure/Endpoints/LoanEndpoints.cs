@@ -1,3 +1,4 @@
+using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.Loans.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Loans.Close.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Loans.Create.v1;
@@ -7,20 +8,25 @@ using FSH.Starter.WebApi.MicroFinance.Application.Loans.Reject.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Loans.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Loans.Update.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Loans.WriteOff.v1;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Loans.
 /// </summary>
-public static class LoanEndpoints
+public class LoanEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Loan endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapLoanEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var loansGroup = app.MapGroup("loans").WithTags("loans");
+        var loansGroup = app.MapGroup("microfinance/loans").WithTags("loans");
 
         loansGroup.MapPost("/", async (CreateLoanCommand command, ISender sender) =>
             {
@@ -122,7 +128,5 @@ public static class LoanEndpoints
             .WithName("SearchLoans")
             .WithSummary("Searches loans with filters and pagination")
             .Produces<PagedList<LoanSummaryResponse>>();
-
-        return app;
     }
 }

@@ -1,0 +1,51 @@
+using Carter;
+using FSH.Starter.WebApi.MicroFinance.Application.QrPayments.CreateDynamic.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.QrPayments.CreateStatic.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.QrPayments.Get.v1;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+
+namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
+
+/// <summary>
+/// Endpoint configuration for QR Payments.
+/// </summary>
+public class QrPaymentEndpoints : ICarterModule
+{
+    /// <summary>
+    /// Maps all QR Payment endpoints to the route builder.
+    /// </summary>
+    public void AddRoutes(IEndpointRouteBuilder app)
+    {
+        var group = app.MapGroup("microfinance/qr-payments").WithTags("qr-payments");
+
+        group.MapPost("/static", async (CreateStaticQrCommand command, ISender sender) =>
+            {
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Created($"/microfinance/qr-payments/{response.Id}", response);
+            })
+            .WithName("CreateStaticQr")
+            .WithSummary("Creates a static QR code for payments")
+            .Produces<CreateStaticQrResponse>(StatusCodes.Status201Created);
+
+        group.MapPost("/dynamic", async (CreateDynamicQrCommand command, ISender sender) =>
+            {
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Created($"/microfinance/qr-payments/{response.Id}", response);
+            })
+            .WithName("CreateDynamicQr")
+            .WithSummary("Creates a dynamic QR code with amount and expiry")
+            .Produces<CreateDynamicQrResponse>(StatusCodes.Status201Created);
+
+        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+            {
+                var response = await sender.Send(new GetQrPaymentRequest(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("GetQrPayment")
+            .WithSummary("Gets a QR payment by ID")
+            .Produces<QrPaymentResponse>();
+    }
+}

@@ -1,22 +1,28 @@
+using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Delete.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Update.v1;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Loan Products.
 /// </summary>
-public static class LoanProductEndpoints
+public class LoanProductEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Loan Product endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapLoanProductEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var loanProductsGroup = app.MapGroup("loan-products").WithTags("loan-products");
+        var loanProductsGroup = app.MapGroup("microfinance/loan-products").WithTags("loan-products");
 
         loanProductsGroup.MapPost("/", async (CreateLoanProductCommand command, ISender sender) =>
             {
@@ -66,7 +72,5 @@ public static class LoanProductEndpoints
             .WithName("SearchLoanProducts")
             .WithSummary("Searches loan products with filters and pagination")
             .Produces<PagedList<LoanProductResponse>>();
-
-        return app;
     }
 }

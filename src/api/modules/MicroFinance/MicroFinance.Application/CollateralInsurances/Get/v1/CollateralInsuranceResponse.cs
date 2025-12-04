@@ -1,0 +1,26 @@
+namespace FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.Get.v1;
+
+public sealed record CollateralInsuranceResponse(
+    Guid Id,
+    Guid CollateralId,
+    string PolicyNumber,
+    string InsurerName,
+    string InsuranceType,
+    string Status,
+    decimal CoverageAmount,
+    decimal PremiumAmount,
+    decimal Deductible,
+    DateOnly EffectiveDate,
+    DateOnly ExpiryDate,
+    DateOnly? RenewalDate,
+    string? InsurerContact,
+    string? InsurerPhone,
+    string? InsurerEmail,
+    bool IsMfiAsBeneficiary,
+    string? BeneficiaryName,
+    string? PolicyDocumentPath,
+    DateOnly? LastPremiumPaidDate,
+    DateOnly? NextPremiumDueDate,
+    string? Notes,
+    int RenewalReminderDays,
+    bool AutoRenewal);

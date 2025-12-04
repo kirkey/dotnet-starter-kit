@@ -1,3 +1,4 @@
+using Carter;
 using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.ClosePremature.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.Create.v1;
@@ -15,14 +16,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Fixed Deposits.
 /// </summary>
-public static class FixedDepositEndpoints
+public class FixedDepositEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Fixed Deposit endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapFixedDepositEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var fixedDepositsGroup = app.MapGroup("fixed-deposits").WithTags("fixed-deposits");
+        var fixedDepositsGroup = app.MapGroup("microfinance/fixed-deposits").WithTags("fixed-deposits");
 
         fixedDepositsGroup.MapPost("/", async (CreateFixedDepositCommand request, ISender mediator) =>
         {
@@ -109,6 +110,5 @@ public static class FixedDepositEndpoints
         .WithSummary("Updates the maturity instruction for a fixed deposit")
         .Produces<UpdateMaturityInstructionResponse>();
 
-        return app;
     }
 }

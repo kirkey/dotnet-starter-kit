@@ -1,3 +1,4 @@
+using Carter;
 using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareTransactions.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareTransactions.Search.v1;
@@ -8,14 +9,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Share Transactions.
 /// </summary>
-public static class ShareTransactionEndpoints
+public class ShareTransactionEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Share Transaction endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapShareTransactionEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var transactionsGroup = app.MapGroup("share-transactions").WithTags("share-transactions");
+        var transactionsGroup = app.MapGroup("microfinance/share-transactions").WithTags("share-transactions");
 
         transactionsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
         {
@@ -50,6 +51,5 @@ public static class ShareTransactionEndpoints
         .WithSummary("Gets all transactions for a share account")
         .Produces<PagedList<ShareTransactionResponse>>();
 
-        return app;
     }
 }

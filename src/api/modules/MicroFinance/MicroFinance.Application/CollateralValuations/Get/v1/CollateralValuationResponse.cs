@@ -1,0 +1,25 @@
+namespace FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Get.v1;
+
+public sealed record CollateralValuationResponse(
+    Guid Id,
+    Guid CollateralId,
+    string ValuationReference,
+    string Status,
+    DateOnly ValuationDate,
+    DateOnly? ExpiryDate,
+    string ValuationMethod,
+    string? AppraiserName,
+    string? AppraiserCompany,
+    string? AppraiserLicense,
+    decimal MarketValue,
+    decimal ForcedSaleValue,
+    decimal InsurableValue,
+    decimal? PreviousValue,
+    decimal? ValueChange,
+    decimal? ValueChangePercent,
+    string? Condition,
+    string? Notes,
+    string? DocumentPath,
+    Guid? ApprovedById,
+    DateOnly? ApprovedDate,
+    string? RejectionReason);

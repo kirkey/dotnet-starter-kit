@@ -1,3 +1,4 @@
+using Carter;
 using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Create.v1;
@@ -7,20 +8,23 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Release.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.UpdateAmount.v1;
 using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Loan Guarantors.
 /// </summary>
-public static class LoanGuarantorEndpoints
+public class LoanGuarantorEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Loan Guarantor endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapLoanGuarantorEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var guarantorsGroup = app.MapGroup("loan-guarantors").WithTags("loan-guarantors");
+        var guarantorsGroup = app.MapGroup("microfinance/loan-guarantors").WithTags("loan-guarantors");
 
         guarantorsGroup.MapPost("/", async (CreateLoanGuarantorCommand command, ISender mediator) =>
         {
@@ -115,7 +119,5 @@ public static class LoanGuarantorEndpoints
         .WithName("UpdateGuarantorAmount")
         .WithSummary("Updates the guaranteed amount for a loan guarantor")
         .Produces<UpdateGuaranteedAmountResponse>();
-
-        return app;
     }
 }

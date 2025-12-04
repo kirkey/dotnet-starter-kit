@@ -1,22 +1,28 @@
+using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Delete.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Update.v1;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Members.
 /// </summary>
-public static class MemberEndpoints
+public class MemberEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Member endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapMemberEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var membersGroup = app.MapGroup("members").WithTags("members");
+        var membersGroup = app.MapGroup("microfinance/members").WithTags("members");
 
         membersGroup.MapPost("/", async (CreateMemberCommand command, ISender sender) =>
             {
@@ -66,7 +72,5 @@ public static class MemberEndpoints
             .WithName("SearchMembers")
             .WithSummary("Searches members with filters and pagination")
             .Produces<PagedList<MemberResponse>>();
-
-        return app;
     }
 }

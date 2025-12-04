@@ -1,21 +1,26 @@
+using Carter;
 using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanRepayments.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanRepayments.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanRepayments.Search.v1;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Loan Repayments.
 /// </summary>
-public static class LoanRepaymentEndpoints
+public class LoanRepaymentEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Loan Repayment endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapLoanRepaymentEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var loanRepaymentsGroup = app.MapGroup("loan-repayments").WithTags("loan-repayments");
+        var loanRepaymentsGroup = app.MapGroup("microfinance/loan-repayments").WithTags("loan-repayments");
 
         loanRepaymentsGroup.MapPost("/", async (CreateLoanRepaymentCommand command, ISender sender) =>
             {
@@ -58,7 +63,5 @@ public static class LoanRepaymentEndpoints
             .WithName("GetLoanRepaymentsByLoan")
             .WithSummary("Gets all repayments for a specific loan")
             .Produces<PagedList<LoanRepaymentResponse>>();
-
-        return app;
     }
 }

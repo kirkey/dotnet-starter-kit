@@ -1,3 +1,4 @@
+using Carter;
 using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.FeeCharges.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.FeeCharges.Get.v1;
@@ -12,14 +13,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Fee Charges.
 /// </summary>
-public static class FeeChargeEndpoints
+public class FeeChargeEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Fee Charge endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapFeeChargeEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var chargesGroup = app.MapGroup("fee-charges").WithTags("fee-charges");
+        var chargesGroup = app.MapGroup("microfinance/fee-charges").WithTags("fee-charges");
 
         chargesGroup.MapPost("/", async (CreateFeeChargeCommand command, ISender mediator) =>
         {
@@ -108,6 +109,5 @@ public static class FeeChargeEndpoints
         .WithSummary("Reverses a fee charge")
         .Produces<ReverseFeeChargeResponse>();
 
-        return app;
     }
 }

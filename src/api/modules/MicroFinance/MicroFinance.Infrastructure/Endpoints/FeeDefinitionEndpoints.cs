@@ -1,3 +1,4 @@
+using Carter;
 using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.FeeDefinitions.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.FeeDefinitions.Get.v1;
@@ -10,14 +11,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Fee Definitions.
 /// </summary>
-public static class FeeDefinitionEndpoints
+public class FeeDefinitionEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Fee Definition endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapFeeDefinitionEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var feeDefinitionsGroup = app.MapGroup("fee-definitions").WithTags("fee-definitions");
+        var feeDefinitionsGroup = app.MapGroup("microfinance/fee-definitions").WithTags("fee-definitions");
 
         feeDefinitionsGroup.MapPost("/", async (CreateFeeDefinitionCommand request, ISender mediator) =>
         {
@@ -59,6 +60,5 @@ public static class FeeDefinitionEndpoints
         .WithSummary("Updates a fee definition")
         .Produces(StatusCodes.Status204NoContent);
 
-        return app;
     }
 }

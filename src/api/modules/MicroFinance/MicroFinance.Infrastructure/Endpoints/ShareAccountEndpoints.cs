@@ -1,3 +1,4 @@
+using Carter;
 using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Close.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Create.v1;
@@ -13,14 +14,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Share Accounts.
 /// </summary>
-public static class ShareAccountEndpoints
+public class ShareAccountEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Share Account endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapShareAccountEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var shareAccountsGroup = app.MapGroup("share-accounts").WithTags("share-accounts");
+        var shareAccountsGroup = app.MapGroup("microfinance/share-accounts").WithTags("share-accounts");
 
         shareAccountsGroup.MapPost("/", async (CreateShareAccountCommand command, ISender sender) =>
             {
@@ -99,6 +100,5 @@ public static class ShareAccountEndpoints
             .WithSummary("Closes a share account")
             .Produces<CloseShareAccountResponse>();
 
-        return app;
     }
 }

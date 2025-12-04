@@ -41,7 +41,7 @@ public static class Extensions
             config.WithModule<HrModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
             config.WithModule<MessagingModule.Endpoints>();
-            config.WithModule<MicroFinanceModule.Endpoints>();
+            // MicroFinance endpoints are auto-discovered via ICarterModule implementations
         });
 
         return builder;

@@ -1,3 +1,4 @@
+using Carter;
 using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Get.v1;
@@ -7,20 +8,23 @@ using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Suspend.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.UpdateRole.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Withdraw.v1;
 using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Group Memberships.
 /// </summary>
-public static class GroupMembershipEndpoints
+public class GroupMembershipEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Group Membership endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapGroupMembershipEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var membershipsGroup = app.MapGroup("group-memberships").WithTags("group-memberships");
+        var membershipsGroup = app.MapGroup("microfinance/group-memberships").WithTags("group-memberships");
 
         membershipsGroup.MapPost("/", async (CreateGroupMembershipCommand command, ISender mediator) =>
         {
@@ -114,9 +118,7 @@ public static class GroupMembershipEndpoints
             return Results.Ok(response);
         })
         .WithName("ReactivateGroupMembership")
-        .WithSummary("Reactivates a suspended group membership")
-        .Produces<ReactivateMembershipResponse>();
-
-        return app;
+            .WithSummary("Reactivates a suspended group membership")
+            .Produces<ReactivateMembershipResponse>();
     }
 }

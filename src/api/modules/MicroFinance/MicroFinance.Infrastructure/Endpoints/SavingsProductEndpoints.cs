@@ -1,22 +1,27 @@
+using Carter;
 using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Update.v1;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Savings Products.
 /// </summary>
-public static class SavingsProductEndpoints
+public class SavingsProductEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Savings Product endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapSavingsProductEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var savingsProductsGroup = app.MapGroup("savings-products").WithTags("savings-products");
+        var savingsProductsGroup = app.MapGroup("microfinance/savings-products").WithTags("savings-products");
 
         savingsProductsGroup.MapPost("/", async (CreateSavingsProductCommand command, ISender sender) =>
             {
@@ -57,7 +62,5 @@ public static class SavingsProductEndpoints
             .WithName("UpdateSavingsProduct")
             .WithSummary("Updates a savings product")
             .Produces<UpdateSavingsProductResponse>();
-
-        return app;
     }
 }

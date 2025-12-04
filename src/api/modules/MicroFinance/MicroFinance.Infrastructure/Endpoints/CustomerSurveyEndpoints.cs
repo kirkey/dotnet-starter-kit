@@ -1,0 +1,56 @@
+using Carter;
+using FSH.Starter.WebApi.MicroFinance.Application.CustomerSurveys.Activate.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.CustomerSurveys.Complete.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.CustomerSurveys.Create.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.CustomerSurveys.Get.v1;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+
+namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
+
+public class CustomerSurveyEndpoints : ICarterModule
+{
+    public void AddRoutes(IEndpointRouteBuilder app)
+    {
+        var group = app.MapGroup("microfinance/customer-surveys").WithTags("Customer Surveys");
+
+        group.MapPost("/", async (CreateCustomerSurveyCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command);
+            return Results.Created($"/microfinance/customer-surveys/{result.Id}", result);
+        })
+        .WithName("CreateCustomerSurvey")
+        .WithSummary("Create a new customer survey")
+        .Produces<CreateCustomerSurveyResponse>(StatusCodes.Status201Created);
+
+        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        {
+            var result = await sender.Send(new GetCustomerSurveyRequest(id));
+            return Results.Ok(result);
+        })
+        .WithName("GetCustomerSurvey")
+        .WithSummary("Get customer survey by ID")
+        .Produces<CustomerSurveyResponse>();
+
+        group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
+        {
+            var result = await sender.Send(new ActivateCustomerSurveyCommand(id));
+            return Results.Ok(result);
+        })
+        .WithName("ActivateCustomerSurvey")
+        .WithSummary("Activate customer survey")
+        .Produces<ActivateCustomerSurveyResponse>();
+
+        group.MapPost("/{id:guid}/complete", async (Guid id, ISender sender) =>
+        {
+            var result = await sender.Send(new CompleteCustomerSurveyCommand(id));
+            return Results.Ok(result);
+        })
+        .WithName("CompleteCustomerSurvey")
+        .WithSummary("Complete customer survey")
+        .Produces<CompleteCustomerSurveyResponse>();
+
+    }
+}

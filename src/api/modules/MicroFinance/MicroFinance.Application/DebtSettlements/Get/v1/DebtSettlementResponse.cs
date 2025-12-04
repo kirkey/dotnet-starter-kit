@@ -1,0 +1,26 @@
+namespace FSH.Starter.WebApi.MicroFinance.Application.DebtSettlements.Get.v1;
+
+public sealed record DebtSettlementResponse(
+    Guid Id,
+    string ReferenceNumber,
+    Guid CollectionCaseId,
+    Guid LoanId,
+    Guid MemberId,
+    string SettlementType,
+    string Status,
+    decimal OriginalOutstanding,
+    decimal SettlementAmount,
+    decimal DiscountAmount,
+    decimal DiscountPercentage,
+    decimal AmountPaid,
+    decimal RemainingBalance,
+    int? NumberOfInstallments,
+    decimal? InstallmentAmount,
+    DateOnly ProposedDate,
+    DateOnly? ApprovedDate,
+    DateOnly DueDate,
+    DateOnly? CompletedDate,
+    string Terms,
+    string? Justification,
+    Guid ProposedById,
+    Guid? ApprovedById);

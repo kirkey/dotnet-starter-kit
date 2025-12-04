@@ -1,3 +1,4 @@
+using Carter;
 using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.AddMember.v1;
@@ -8,20 +9,23 @@ using FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Update.v1;
 using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Member Groups.
 /// </summary>
-public static class MemberGroupEndpoints
+public class MemberGroupEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Member Group endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapMemberGroupEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var memberGroupsGroup = app.MapGroup("member-groups").WithTags("member-groups");
+        var memberGroupsGroup = app.MapGroup("microfinance/member-groups").WithTags("member-groups");
 
         memberGroupsGroup.MapPost("/", async (CreateMemberGroupCommand command, ISender sender) =>
             {
@@ -100,7 +104,5 @@ public static class MemberGroupEndpoints
             .WithName("DissolveMemberGroup")
             .WithSummary("Dissolves a member group")
             .Produces<DissolveMemberGroupResponse>();
-
-        return app;
     }
 }

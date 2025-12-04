@@ -1,0 +1,49 @@
+using Carter;
+using FSH.Starter.WebApi.MicroFinance.Application.LegalActions.Create.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LegalActions.FileCase.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LegalActions.Get.v1;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+
+namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
+
+public class LegalActionEndpoints : ICarterModule
+{
+    public void AddRoutes(IEndpointRouteBuilder app)
+    {
+        var group = app.MapGroup("microfinance/legal-actions").WithTags("Legal Actions");
+
+        group.MapPost("/", async (CreateLegalActionCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command);
+            return Results.Created($"/microfinance/legal-actions/{result.Id}", result);
+        })
+        .WithName("CreateLegalAction")
+        .WithSummary("Create a new legal action")
+        .Produces<CreateLegalActionResponse>(StatusCodes.Status201Created);
+
+        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        {
+            var result = await sender.Send(new GetLegalActionRequest(id));
+            return Results.Ok(result);
+        })
+        .WithName("GetLegalAction")
+        .WithSummary("Get legal action by ID")
+        .Produces<LegalActionResponse>();
+
+        group.MapPost("/{id:guid}/file-case", async (Guid id, FileCaseRequest request, ISender sender) =>
+        {
+            var command = new FileCaseCommand(id, request.FiledDate, request.CaseReference, request.CourtName, request.CourtFees);
+            var result = await sender.Send(command);
+            return Results.Ok(result);
+        })
+        .WithName("FileCase")
+        .WithSummary("File legal case with court")
+        .Produces<FileCaseResponse>();
+
+    }
+}
+
+public sealed record FileCaseRequest(DateOnly FiledDate, string CaseReference, string CourtName, decimal CourtFees);
