@@ -1,3 +1,5 @@
+using Carter;
+using FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 using FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -6,10 +8,44 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure;
 /// <summary>
 /// MicroFinance module configuration and service registration.
 /// Handles dependency injection setup for microfinance features.
-/// See MicroFinanceEndpoints for endpoint routing configuration.
 /// </summary>
 public static class MicroFinanceModule
 {
+    /// <summary>
+    /// Endpoint routes for the MicroFinance module.
+    /// Maps all microfinance endpoints with proper grouping and documentation.
+    /// Individual endpoint groups are organized into separate files.
+    /// </summary>
+    public class Endpoints() : CarterModule("microfinance")
+    {
+        /// <summary>
+        /// Adds all microfinance routes to the application.
+        /// </summary>
+        /// <param name="app">The endpoint route builder.</param>
+        public override void AddRoutes(IEndpointRouteBuilder app)
+        {
+            // Members
+            app.MapMemberEndpoints();
+            app.MapMemberGroupEndpoints();
+
+            // Loan Management
+            app.MapLoanProductEndpoints();
+            app.MapLoanEndpoints();
+            app.MapLoanRepaymentEndpoints();
+
+            // Savings Management
+            app.MapSavingsProductEndpoints();
+            app.MapSavingsAccountEndpoints();
+
+            // Investment Products
+            app.MapShareProductEndpoints();
+            app.MapShareAccountEndpoints();
+            app.MapFixedDepositEndpoints();
+
+            // Fee Management
+            app.MapFeeDefinitionEndpoints();
+        }
+    }
 
     /// <summary>
     /// Registers all microfinance services in the dependency injection container.
