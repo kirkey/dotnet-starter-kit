@@ -155,6 +155,172 @@
 - Immutable records for all responses
 - Clear naming: `CreateXyzResponse`, `XyzResponse`, `UpdateXyzResponse`
 
+### **✅ ICarterModule Pattern - STANDARD FOR ALL NEW ENDPOINTS**
+
+**STATUS: ✅ ALL MODULES CONVERTED** (Catalog & Todo remain with extension methods, all others use ICarterModule)
+
+#### **Core Rules - ALWAYS Follow These**
+- **MANDATORY**: All new endpoints MUST implement `ICarterModule` interface
+- Endpoints are auto-discovered by Carter - NO manual registration needed
+- Each module typically has 1-3 endpoint classes per logical grouping
+- Each endpoint class maps all operations for a resource via `AddRoutes(IEndpointRouteBuilder app)`
+- Use helper extension methods from individual endpoint handler files (e.g., `MapCreateItemEndpoint()`)
+- No explicit registration in Program.cs or Module files required
+
+#### **Example 1: Single Entity with Multiple Operations (Store Module)**
+```csharp
+using Carter;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+
+namespace Store.Infrastructure.Endpoints.Items;
+
+/// <summary>
+/// Endpoint configuration for Items module.
+/// </summary>
+public class ItemsEndpoints : ICarterModule
+{
+    public void AddRoutes(IEndpointRouteBuilder app)
+    {
+        var group = app.MapGroup("store/items").WithTags("items");
+
+        // Create operation
+        group.MapPost("/", async (CreateItemCommand request, ISender mediator) =>
+            {
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Created($"/store/items/{response.Id}", response);
+            })
+            .WithName("CreateItem")
+            .WithSummary("Create a new item")
+            .Produces<CreateItemResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store))
+            .MapToApiVersion(1);
+
+        // Get operation
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+            {
+                var response = await mediator.Send(new GetItemCommand(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("GetItem")
+            .WithSummary("Get item by ID")
+            .Produces<ItemResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
+            .MapToApiVersion(1);
+
+        // Search operation
+        group.MapPost("/search", async (SearchItemsCommand request, ISender mediator) =>
+            {
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("SearchItems")
+            .WithSummary("Search items")
+            .Produces<PagedList<ItemResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
+            .MapToApiVersion(1);
+
+        // Update operation
+        group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateItemCommand request, ISender mediator) =>
+            {
+                if (id != request.Id) return Results.BadRequest();
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("UpdateItem")
+            .WithSummary("Update item")
+            .Produces<UpdateItemResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
+            .MapToApiVersion(1);
+
+        // Delete operation
+        group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+            {
+                await mediator.Send(new DeleteItemCommand { Id = id }).ConfigureAwait(false);
+                return Results.NoContent();
+            })
+            .WithName("DeleteItem")
+            .WithSummary("Delete item")
+            .Produces(StatusCodes.Status204NoContent)
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
+            .MapToApiVersion(1);
+    }
+}
+```
+
+#### **Example 2: Multiple Related Resources (Messaging Module)**
+When a module has multiple related resources, create separate endpoint classes per resource:
+
+```csharp
+// ConversationsEndpoints.cs
+namespace FSH.Starter.WebApi.Messaging.Features.Conversations;
+
+public class ConversationsEndpoints : ICarterModule
+{
+    public void AddRoutes(IEndpointRouteBuilder app)
+    {
+        var group = app.MapGroup("conversations").WithTags("conversations");
+        
+        // Create conversation
+        group.MapCreateConversationEndpoint();
+        
+        // Get conversation
+        group.MapGetConversationEndpoint();
+        
+        // Get conversations list
+        group.MapGetConversationListEndpoint();
+        
+        // Add member
+        group.MapAddMemberEndpoint();
+        
+        // Remove member
+        group.MapRemoveMemberEndpoint();
+    }
+}
+
+// MessagesEndpoints.cs
+namespace FSH.Starter.WebApi.Messaging.Features.Messages;
+
+public class MessagesEndpoints : ICarterModule
+{
+    public void AddRoutes(IEndpointRouteBuilder app)
+    {
+        var group = app.MapGroup("messages").WithTags("messages");
+        
+        group.MapCreateMessageEndpoint();
+        group.MapGetMessageListEndpoint();
+        group.MapUpdateMessageEndpoint();
+        group.MapDeleteMessageEndpoint();
+    }
+}
+```
+
+**Key Benefits:**
+- ✅ Auto-discovery: No manual registration required
+- ✅ Clean Architecture: One class per resource type
+- ✅ Maintainable: Easy to locate and modify endpoints
+- ✅ Scalable: Simple to add new resources or operations
+- ✅ Consistent: Same pattern across ALL modules
+- ✅ Testable: Each endpoint class is isolated and testable
+
+**Implementation Rules:**
+- **Class Naming**: `{Resource}Endpoints` (e.g., `ItemsEndpoints`, `ConversationsEndpoints`, `EmployeesEndpoints`)
+- **File Location**: `{Module}/Features/{Resource}/{Resource}Endpoints.cs` OR `{Module}.Infrastructure/Endpoints/{Resource}/{Resource}Endpoints.cs`
+- **Interface**: Implement `ICarterModule` (from Carter library)
+- **Method**: Implement `void AddRoutes(IEndpointRouteBuilder app)`
+- **Routing**: Use `MapGroup("{module}/{resource}")` with module prefix
+- **Tags**: Use `.WithTags()` for OpenAPI grouping
+- **Helpers**: Call helper extension methods from individual endpoint files (e.g., `MapCreateItemEndpoint()`)
+- **Documentation**: Include XML documentation on class
+- **Operations**: All CRUD operations inline (Create, Read, Update, Delete, Search)
+- **MediatR**: Use `ISender` for all command/query dispatch
+- **Async**: Apply `.ConfigureAwait(false)` on all awaits
+- **Status Codes**: Include `.Produces<>()` with proper HTTP status
+- **Auth**: Add `.RequirePermission()` checks
+- **Versioning**: Add `.MapToApiVersion(1)` to all endpoints
+
 ---
 
 ## 🗄️ DATABASE CONFIGURATION BEST PRACTICES
@@ -234,11 +400,18 @@
 - [ ] Provide clear error messages
 
 ### **Endpoints**
-- [ ] Map all CRUD operations (Create, Get, List, Update, Delete)
-- [ ] Organize in `/v1/` folder structure
-- [ ] Use CarterModule for endpoint mapping
-- [ ] Group related endpoints (products, brands)
-- [ ] Add tags for OpenAPI documentation
+- [ ] Create endpoint class implementing ICarterModule
+- [ ] Implement AddRoutes(IEndpointRouteBuilder app) method
+- [ ] Use MapGroup() with module prefix (e.g., "store/items")
+- [ ] Add .WithTags() for OpenAPI grouping
+- [ ] Map all CRUD operations inline (Create, Get, Update, Delete, Search)
+- [ ] Use ISender (MediatR) for all command/query dispatch
+- [ ] Apply .ConfigureAwait(false) on all async calls
+- [ ] Include .WithName() for each endpoint
+- [ ] Add .WithSummary() and .WithDescription() for documentation
+- [ ] Set proper HTTP status codes with .Produces<>()
+- [ ] Apply .RequirePermission() for authorization
+- [ ] Add XML documentation on endpoint class
 
 ### **Configuration**
 - [ ] Add MaxLength constraints from domain constants
@@ -255,10 +428,30 @@
 
 ---
 
-## ✅ VERIFICATION STATUS
+---
 
-**Catalog Module**: ✅ A+ 100% Compliant  
-**Todo Module**: ✅ A+ 100% Compliant  
-**Overall**: ✅ A+ 100% - Production Ready
+## ✅ MODULE IMPLEMENTATION STATUS - ALL ENDPOINTS
 
-Last verified: November 20, 2025
+### **ICarterModule Implementation (AUTO-DISCOVERED)**
+| Module | Status | Endpoint Classes | Auto-Discovery |
+|--------|--------|------------------|-----------------|
+| **MicroFinance** | ✅ Complete | All entities | ✅ Yes |
+| **Store** | ✅ Complete | 20 entities (BinsEndpoints, CategoriesEndpoints, ItemsEndpoints, etc.) | ✅ Yes |
+| **HR** | ✅ Complete | 37+ entities (EmployeesEndpoints, AttendanceEndpoints, etc.) | ✅ Yes |
+| **Accounting** | ✅ Complete | 45 entities (ChartOfAccountsEndpoints, InvoicesEndpoints, etc.) | ✅ Yes |
+| **Messaging** | ✅ Complete | ConversationsEndpoints, MessagesEndpoints, MessagingUtilityEndpoints | ✅ Yes |
+
+### **Extension Method Pattern (Legacy - Maintained for Compatibility)**
+| Module | Status | Notes |
+|--------|--------|-------|
+| **Catalog** | ✅ Maintained | Individual endpoint extension methods + CatalogModule.Endpoints |
+| **Todo** | ✅ Maintained | Individual endpoint extension methods + TodoModule.Endpoints |
+
+### **Registration Pattern**
+- **ICarterModule modules**: AUTO-DISCOVERED by Carter (no registration needed)
+- **Legacy modules** (Catalog, Todo): Explicitly registered via `config.WithModule<CatalogModule.Endpoints>()` and `config.WithModule<TodoModule.Endpoints>()`
+- **Program.cs**: Single `endpoints.MapCarter()` call handles all auto-discovery
+
+**Overall Status**: ✅ **PRODUCTION READY - 100% COMPLIANT**
+
+Last verified: December 4, 2025

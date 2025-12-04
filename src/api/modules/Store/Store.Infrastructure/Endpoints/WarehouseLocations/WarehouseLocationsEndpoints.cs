@@ -1,28 +1,81 @@
-using Store.Infrastructure.Endpoints.WarehouseLocations.v1;
+using Carter;
+using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Create.v1;
+using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Delete.v1;
+using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Get.v1;
+using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Search.v1;
+using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Update.v1;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.WarehouseLocations;
 
 /// <summary>
 /// Endpoint configuration for Warehouse Locations module.
 /// </summary>
-public static class WarehouseLocationsEndpoints
+public class WarehouseLocationsEndpoints : ICarterModule
 {
-    /// <summary>
-    /// Maps all Warehouse Locations endpoints to the route builder.
-    /// </summary>
-    internal static IEndpointRouteBuilder MapWarehouseLocationsEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var warehouseLocationsGroup = app.MapGroup("/warehouse-locations")
-            .WithTags("Warehouse-Locations")
-            .WithDescription("Endpoints for managing warehouse locations");
+        var group = app.MapGroup("store/warehouse-locations").WithTags("warehouse-locations");
 
-        // Version 1 endpoints
-        warehouseLocationsGroup.MapCreateWarehouseLocationEndpoint();
-        warehouseLocationsGroup.MapUpdateWarehouseLocationEndpoint();
-        warehouseLocationsGroup.MapDeleteWarehouseLocationEndpoint();
-        warehouseLocationsGroup.MapGetWarehouseLocationEndpoint();
-        warehouseLocationsGroup.MapSearchWarehouseLocationsEndpoint();
+        group.MapPost("/", async (CreateWarehouseLocationCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Created($"/warehouse-locations/{result.Id}", result);
+        })
+        .WithName("CreateWarehouseLocation")
+        .WithSummary("Create a new warehouse location")
+        .WithDescription("Creates a new warehouse location for storing items")
+        .Produces<CreateWarehouseLocationResponse>()
+        .MapToApiVersion(1);
 
-        return app;
+        group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateWarehouseLocationCommand request, ISender sender) =>
+        {
+            var command = request with { Id = id };
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName("UpdateWarehouseLocation")
+        .WithSummary("Update warehouse location")
+        .WithDescription("Updates an existing warehouse location with the provided details")
+        .Produces<UpdateWarehouseLocationResponse>()
+        .MapToApiVersion(1);
+
+        group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender sender) =>
+        {
+            await sender.Send(new DeleteWarehouseLocationCommand(id)).ConfigureAwait(false);
+            return Results.NoContent();
+        })
+        .WithName("DeleteWarehouseLocation")
+        .WithSummary("Delete a warehouse location")
+        .WithDescription("Deletes a warehouse location by ID")
+        .Produces(204)
+        .MapToApiVersion(1);
+
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
+        {
+            var result = await sender.Send(new GetWarehouseLocationQuery(id)).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName("GetWarehouseLocation")
+        .WithSummary("Get warehouse location by ID")
+        .WithDescription("Retrieves a warehouse location by its unique identifier")
+        .Produces<GetWarehouseLocationResponse>()
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (ISender sender, [FromBody] SearchWarehouseLocationsCommand request) =>
+        {
+            var result = await sender.Send(request).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName("SearchWarehouseLocations")
+        .WithSummary("Get list of warehouse locations")
+        .WithDescription("Retrieves a paginated list of warehouse locations with optional filtering")
+        .Produces<PagedList<GetWarehouseLocationListResponse>>()
+        .MapToApiVersion(1);
     }
 }

@@ -1,47 +1,5 @@
 // ensure ArgumentNullException available
 using FSH.Starter.WebApi.HumanResources.Domain.Entities;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Attendance;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.AttendanceReports;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BankAccounts;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitAllocations;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitEnrollments;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Benefits; // add benefits endpoints
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Deductions; // add deductions endpoints
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designations;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DocumentTemplates;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeContacts;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDashboards;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDocuments;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.HRAnalytics;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDependents;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeEducations;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeePayComponents;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.GeneratedDocuments;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Holidays;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveBalances;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveRequests;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveReports;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveTypes;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollReports;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PerformanceReviews;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollLines;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollDeductions;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.ShiftAssignments;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Taxes;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TaxBrackets;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TimesheetLines;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Timesheets;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.GeneratedDocuments;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Holidays;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponents;
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Persistence;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure;
@@ -51,53 +9,8 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure;
 /// </summary>
 public static class HrModule
 {
-    /// <summary>
-    /// Carter module for HumanResources endpoints.
-    /// </summary>
-    public class Endpoints() : CarterModule("humanresources")
-    {
-        public override void AddRoutes(IEndpointRouteBuilder app)
-        {
-            app.MapOrganizationalUnitsEndpoints();
-            app.MapPayrollReportsEndpoints();
-            app.MapPayrollsEndpoints();
-            app.MapEmployeesEndpoints();
-            app.MapDesignationsEndpoints();
-            app.MapDesignationAssignmentsEndpoints();
-            app.MapEmployeeContactsEndpoints();
-            app.MapEmployeeDependentsEndpoints();
-            app.MapEmployeeDocumentsEndpoints();
-            app.MapEmployeeEducationsEndpoints();
-            app.MapAttendanceEndpoints();
-            app.MapAttendanceReportsEndpoints();
-            app.MapBankAccountsEndpoints();
-            app.MapBenefitEnrollmentsEndpoints();
-            app.MapBenefitAllocationsEndpoints();
-            app.MapBenefitEndpoints();
-            app.MapDeductionEndpoints();
-            app.MapTimesheetsEndpoints();
-            app.MapTimesheetLinesEndpoints();
-            app.MapLeaveTypesEndpoints();
-            app.MapLeaveBalancesEndpoints();
-            app.MapLeaveRequestsEndpoints();
-            app.MapLeaveReportsEndpoints();
-            app.MapShiftAssignmentEndpoints();
-            app.MapDocumentTemplatesEndpoints();
-            app.MapEmployeeDashboardsEndpoints();
-            // app.MapHrAnalyticsEndpoints();
-            app.MapPayComponentRatesEndpoints();
-            app.MapEmployeePayComponentsEndpoints();
-            app.MapPerformanceReviewsEndpoints();
-            app.MapPayrollLinesEndpoints();
-            app.MapPayrollDeductionsEndpoints();
-            app.MapTaxBracketEndpoints();
-            app.MapTaxEndpoints();
-            app.MapGeneratedDocumentsEndpoints();
-            app.MapHolidaysEndpoints();
-            app.MapPayComponentsEndpoints();
-            app.MapShiftsEndpoints();
-        }
-    }
+    // Note: All HR endpoints now implement ICarterModule and are auto-discovered by Carter.
+    // No explicit endpoint mapping is needed here.
 
     /// <summary>
     /// Registers HumanResources services.

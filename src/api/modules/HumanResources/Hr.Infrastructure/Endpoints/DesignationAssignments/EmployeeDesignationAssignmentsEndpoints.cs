@@ -1,29 +1,87 @@
+using Carter;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Create.v1;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.End.v1;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Get.v1;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments.v1;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments;
 
 /// <summary>
 /// Endpoint configuration for DesignationAssignments module.
 /// </summary>
-public static class DesignationAssignmentsEndpoints
+public class EmployeeDesignationAssignmentsEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all DesignationAssignments endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapDesignationAssignmentsEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var assignmentsGroup = app.MapGroup("/employee-designations")
-            .WithTags("Employee Designations")
-            .WithDescription("Endpoints for managing employee designation assignments (plantilla and acting as)");
+        var group = app.MapGroup("hr/employee-designation-assignments").WithTags("employee-designation-assignments");
 
-        // Version 1 endpoints
-        assignmentsGroup.MapAssignPlantillaDesignationEndpoint();
-        assignmentsGroup.MapAssignActingAsDesignationEndpoint();
-        assignmentsGroup.MapGetDesignationAssignmentEndpoint();
-        assignmentsGroup.MapEndDesignationAssignmentEndpoint();
-        assignmentsGroup.MapSearchEmployeeHistoryEndpoint();
+        group.MapPost("/plantilla", async (AssignPlantillaDesignationCommand request, ISender mediator) =>
+            {
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("AssignPlantillaDesignation")
+            .WithSummary("Assigns a plantilla designation to an employee")
+            .WithDescription("Assigns a primary/plantilla designation to an employee")
+            .Produces<AssignDesignationResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Assign, FshResources.Employees));
 
-        return app;
+        group.MapPost("/acting-as", async (AssignActingAsDesignationCommand request, ISender mediator) =>
+            {
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("AssignActingAsDesignation")
+            .WithSummary("Assigns an acting as designation to an employee")
+            .WithDescription("Assigns a temporary acting designation to an employee")
+            .Produces<AssignDesignationResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Assign, FshResources.Employees));
+
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+            {
+                var response = await mediator
+                    .Send(new GetDesignationAssignmentRequest(id))
+                    .ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("GetDesignationAssignment")
+            .WithSummary("Gets designation assignment by ID")
+            .WithDescription("Retrieves designation assignment details including tenure and status")
+            .Produces<DesignationAssignmentResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+
+        group.MapPost("/{id:guid}/end", async (DefaultIdType id, EndDesignationRequest request, ISender mediator) =>
+            {
+                var response = await mediator
+                    .Send(new EndDesignationAssignmentCommand(id, request.EndDate, request.Reason))
+                    .ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("EndDesignationAssignment")
+            .WithSummary("Ends a designation assignment")
+            .WithDescription("Ends an active designation assignment on a specified date")
+            .Produces<EndDesignationAssignmentResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+
+        group.MapPost("/history/search", async (SearchEmployeeHistoryRequest request, ISender mediator) =>
+            {
+                var result = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(result);
+            })
+            .WithName("SearchEmployeeDesignationHistory")
+            .WithSummary("Search employee designation history")
+            .WithDescription("Searches employee designation history with support for temporal queries, filtering by organization, designation, date range, and employment status")
+            .Produces<PagedList<EmployeeHistoryDto>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.Employees));
     }
 }
 

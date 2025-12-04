@@ -63,109 +63,16 @@ public static class AccountingModule
 {
     /// <summary>
     /// Registers all accounting endpoints with the application.
+    /// All endpoints are auto-discovered by Carter via ICarterModule implementations.
+    /// This method is kept for backward compatibility but can be empty.
     /// </summary>
     /// <param name="app">The endpoint route builder to configure.</param>
     /// <returns>The configured endpoint route builder.</returns>
     public static IEndpointRouteBuilder MapAccountingEndpoints(this IEndpointRouteBuilder app)
     {
-        var accountingGroup = app.MapGroup("/accounting")
-            .WithTags("Accounting")
-            .WithDescription("Comprehensive accounting module endpoints");
-
-        // ============================================================================
-        // CHART OF ACCOUNTS & GENERAL LEDGER
-        // ============================================================================
-        accountingGroup.MapChartOfAccountsEndpoints();
-        accountingGroup.MapGeneralLedgerEndpoints();
-        accountingGroup.MapJournalEntriesEndpoints();
-        accountingGroup.MapJournalEntryLinesEndpoints();
-        accountingGroup.MapRecurringJournalEntriesEndpoints();
-
-        // ============================================================================
-        // ACCOUNTS RECEIVABLE
-        // ============================================================================
-        accountingGroup.MapAccountReconciliationEndpoints();
-        accountingGroup.MapAccountsReceivableAccountsEndpoints();
-        accountingGroup.MapCreditMemosEndpoints();
-        accountingGroup.MapCustomersEndpoints();
-        accountingGroup.MapInvoiceEndpoints();
-        accountingGroup.MapWriteOffsEndpoints();
-
-        // ============================================================================
-        // ACCOUNTS PAYABLE
-        // ============================================================================
-        accountingGroup.MapAccountsPayableAccountsEndpoints();
-        accountingGroup.MapBillsEndpoints();
-        accountingGroup.MapDebitMemosEndpoints();
-        accountingGroup.MapPayeesEndpoints();
-        accountingGroup.MapVendorsEndpoints();
-
-        // ============================================================================
-        // PAYMENTS & BANKING
-        // ============================================================================
-        accountingGroup.MapBanksEndpoints();
-        accountingGroup.MapBankReconciliationsEndpoints();
-        accountingGroup.MapCheckEndpointsV1();
-        accountingGroup.MapPaymentAllocationsEndpoints();
-        accountingGroup.MapPaymentsEndpoints();
-
-        // ============================================================================
-        // FIXED ASSETS & DEPRECIATION
-        // ============================================================================
-        accountingGroup.MapDepreciationMethodsEndpoints();
-        accountingGroup.MapFixedAssetsEndpoints();
-
-        // ============================================================================
-        // INVENTORY
-        // ============================================================================
-        accountingGroup.MapInventoryItemsEndpoints();
-
-        // ============================================================================
-        // DEFERRALS & ACCRUALS
-        // ============================================================================
-        accountingGroup.MapAccrualsEndpoints();
-        accountingGroup.MapDeferredRevenuesEndpoints();
-        accountingGroup.MapPrepaidExpensesEndpoints();
-
-        // ============================================================================
-        // BUDGETING & COST CENTERS
-        // ============================================================================
-        accountingGroup.MapBudgetDetailsEndpoints();
-        accountingGroup.MapBudgetsEndpoints();
-        accountingGroup.MapCostCentersEndpoints();
-
-        // ============================================================================
-        // PROJECTS & JOBS
-        // ============================================================================
-        accountingGroup.MapProjectsCostingEndpoints();
-        accountingGroup.MapProjectsEndpoints();
-
-        // ============================================================================
-        // PERIOD-END & REPORTING
-        // ============================================================================
-        accountingGroup.MapAccountingPeriodsEndpoints();
-        accountingGroup.MapFinancialStatementsEndpoints();
-        accountingGroup.MapFiscalPeriodClosesEndpoints();
-        accountingGroup.MapPostingBatchEndpoints();
-        accountingGroup.MapRegulatoryReportsEndpoints();
-        accountingGroup.MapRetainedEarningsEndpoints();
-        accountingGroup.MapTrialBalanceEndpoints();
-
-        // ============================================================================
-        // UTILITY-SPECIFIC (Electric Cooperative)
-        // ============================================================================
-        accountingGroup.MapBillingEndpoints();
-        accountingGroup.MapConsumptionsEndpoints();
-        accountingGroup.MapMemberEndpoints();
-        accountingGroup.MapMeterEndpoints();
-        accountingGroup.MapPatronageEndpoints();
-
-        // ============================================================================
-        // OTHER ENTITIES
-        // ============================================================================
-        accountingGroup.MapInterCompanyTransactionsEndpoints();
-        accountingGroup.MapTaxCodesEndpoints();
-
+        // All accounting endpoints are now auto-discovered by Carter via ICarterModule implementations.
+        // No manual endpoint mapping is required.
+        // Individual endpoint classes implement ICarterModule and are automatically registered.
         return app;
     }
 

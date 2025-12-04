@@ -1,30 +1,136 @@
-using Store.Infrastructure.Endpoints.GoodsReceipts.v1;
+using Carter;
+using FSH.Starter.WebApi.Store.Application.GoodsReceipts.AddItem.v1;
+using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Create.v1;
+using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Delete.v1;
+using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Get.v1;
+using FSH.Starter.WebApi.Store.Application.GoodsReceipts.MarkReceived.v1;
+using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Queries;
+using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Search.v1;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.GoodsReceipts;
 
 /// <summary>
 /// Endpoint configuration for Goods Receipts module.
 /// </summary>
-public static class GoodsReceiptsEndpoints
+public class GoodsReceiptsEndpoints : ICarterModule
 {
-    /// <summary>
-    /// Maps all Goods Receipts endpoints to the route builder.
-    /// </summary>
-    internal static IEndpointRouteBuilder MapGoodsReceiptsEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var goodsReceiptsGroup = app.MapGroup("/goodsreceipts")
-            .WithTags("GoodsReceipts")
-            .WithDescription("Endpoints for managing goods receipts");
+        var group = app.MapGroup("store/goods-receipts").WithTags("goods-receipts");
 
-        // Version 1 endpoints
-        goodsReceiptsGroup.MapCreateGoodsReceiptEndpoint();
-        goodsReceiptsGroup.MapAddGoodsReceiptItemEndpoint();
-        goodsReceiptsGroup.MapMarkReceivedEndpoint();
-        goodsReceiptsGroup.MapDeleteGoodsReceiptEndpoint();
-        goodsReceiptsGroup.MapGetGoodsReceiptEndpoint();
-        goodsReceiptsGroup.MapSearchGoodsReceiptsEndpoint();
-        goodsReceiptsGroup.MapGetPurchaseOrderItemsForReceivingEndpoint();
+        // Create a new goods receipt
+        group.MapPost("/", async (CreateGoodsReceiptCommand request, ISender sender) =>
+        {
+            var response = await sender.Send(request).ConfigureAwait(false);
+            return Results.Ok(response);
+        })
+        .WithName("CreateGoodsReceipt")
+        .WithSummary("Create a new goods receipt")
+        .WithDescription("Creates a new goods receipt for tracking inbound deliveries from suppliers.")
+        .Produces<CreateGoodsReceiptResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store))
+        .MapToApiVersion(1);
 
-        return app;
+        // Add item to goods receipt
+        group.MapPost("/{id:guid}/items", async (DefaultIdType id, AddGoodsReceiptItemCommand request, ISender sender) =>
+        {
+            if (id != request.GoodsReceiptId)
+            {
+                return Results.BadRequest("Goods receipt ID mismatch");
+            }
+
+            var response = await sender.Send(request).ConfigureAwait(false);
+            return Results.Ok(response);
+        })
+        .WithName("AddGoodsReceiptItem")
+        .WithSummary("Add item to goods receipt")
+        .WithDescription("Adds an item to an existing goods receipt.")
+        .Produces<AddGoodsReceiptItemResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
+        .MapToApiVersion(1);
+
+        // Mark goods receipt as received
+        group.MapPost("/{id:guid}/mark-received", async (DefaultIdType id, MarkReceivedCommand request, ISender sender) =>
+        {
+            if (id != request.GoodsReceiptId)
+            {
+                return Results.BadRequest("Goods receipt ID mismatch");
+            }
+
+            var response = await sender.Send(request).ConfigureAwait(false);
+            return Results.Ok(response);
+        })
+        .WithName("MarkReceived")
+        .WithSummary("Mark goods receipt as received")
+        .WithDescription("Marks a goods receipt as received/completed.")
+        .Produces<MarkReceivedResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
+        .MapToApiVersion(1);
+
+        // Delete a goods receipt
+        group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender sender) =>
+        {
+            var request = new DeleteGoodsReceiptCommand { GoodsReceiptId = id };
+            var response = await sender.Send(request).ConfigureAwait(false);
+            return Results.Ok(response);
+        })
+        .WithName("DeleteGoodsReceipt")
+        .WithSummary("Delete a goods receipt")
+        .WithDescription("Deletes an existing goods receipt.")
+        .Produces<DeleteGoodsReceiptResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
+        .MapToApiVersion(1);
+
+        // Get goods receipt by ID
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
+        {
+            var command = new GetGoodsReceiptCommand { GoodsReceiptId = id };
+            var response = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(response);
+        })
+        .WithName("GetGoodsReceipt")
+        .WithSummary("Get goods receipt by ID")
+        .WithDescription("Retrieves a specific goods receipt with all items.")
+        .Produces<GetGoodsReceiptResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
+        .MapToApiVersion(1);
+
+        // Search goods receipts
+        group.MapPost("/search", async (SearchGoodsReceiptsCommand request, ISender sender) =>
+        {
+            var response = await sender.Send(request).ConfigureAwait(false);
+            return Results.Ok(response);
+        })
+        .WithName("SearchGoodsReceipts")
+        .WithSummary("Search goods receipts")
+        .WithDescription("Searches goods receipts with pagination and filtering options.")
+        .Produces<PagedList<GoodsReceiptResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
+        .MapToApiVersion(1);
+
+        // Get PO items available for receiving
+        group.MapGet("/purchase-order/{purchaseOrderId:guid}/items-for-receiving", async (
+            DefaultIdType purchaseOrderId,
+            ISender sender) =>
+        {
+            var query = new GetPurchaseOrderItemsForReceivingQuery
+            {
+                PurchaseOrderId = purchaseOrderId
+            };
+
+            var response = await sender.Send(query);
+            return Results.Ok(response);
+        })
+        .WithName("GetPurchaseOrderItemsForReceiving")
+        .WithSummary("Get PO items available for receiving")
+        .WithDescription("Returns purchase order items with their ordered, received, and remaining quantities for partial receiving support")
+        .Produces<GetPurchaseOrderItemsForReceivingResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
+        .MapToApiVersion(1);
     }
 }

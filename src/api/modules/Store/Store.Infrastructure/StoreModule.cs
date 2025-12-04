@@ -1,26 +1,6 @@
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Report.v1.Services;
 using Store.Domain.Entities;
 using Store.Infrastructure.Services;
-using Store.Infrastructure.Endpoints.Bins;
-using Store.Infrastructure.Endpoints.Categories;
-using Store.Infrastructure.Endpoints.CycleCounts;
-using Store.Infrastructure.Endpoints.GoodsReceipts;
-using Store.Infrastructure.Endpoints.InventoryReservations;
-using Store.Infrastructure.Endpoints.InventoryTransactions;
-using Store.Infrastructure.Endpoints.InventoryTransfers;
-using Store.Infrastructure.Endpoints.Items;
-using Store.Infrastructure.Endpoints.ItemSuppliers;
-using Store.Infrastructure.Endpoints.LotNumbers;
-using Store.Infrastructure.Endpoints.PickLists;
-using Store.Infrastructure.Endpoints.PurchaseOrders;
-using Store.Infrastructure.Endpoints.PutAwayTasks;
-using Store.Infrastructure.Endpoints.SerialNumbers;
-using Store.Infrastructure.Endpoints.StockAdjustments;
-using Store.Infrastructure.Endpoints.StockLevels;
-using Store.Infrastructure.Endpoints.Suppliers;
-using Store.Infrastructure.Endpoints.WarehouseLocations;
-using Store.Infrastructure.Endpoints.Warehouses;
-using Store.Infrastructure.Endpoints.SalesImports;
 using Store.Infrastructure.Persistence;
 
 namespace Store.Infrastructure;
@@ -33,37 +13,16 @@ public static class StoreModule
 {
     /// <summary>
     /// Registers all store endpoints with the application.
+    /// All endpoints are auto-discovered by Carter via ICarterModule implementations.
+    /// This method is kept for backward compatibility but can be empty.
     /// </summary>
     /// <param name="app">The endpoint route builder to configure.</param>
     /// <returns>The configured endpoint route builder.</returns>
     public static IEndpointRouteBuilder MapStoreEndpoints(this IEndpointRouteBuilder app)
     {
-        var storeGroup = app.MapGroup("/store")
-            .WithTags("Store")
-            .WithDescription("Comprehensive store management module endpoints");
-
-        // Map all functional area endpoints
-        storeGroup.MapBinsEndpoints();
-        storeGroup.MapCategoriesEndpoints();
-        storeGroup.MapCycleCountsEndpoints();
-        storeGroup.MapGoodsReceiptsEndpoints();
-        storeGroup.MapInventoryReservationsEndpoints();
-        storeGroup.MapInventoryTransactionsEndpoints();
-        storeGroup.MapInventoryTransfersEndpoints();
-        storeGroup.MapItemsEndpoints();
-        storeGroup.MapItemSuppliersEndpoints();
-        storeGroup.MapLotNumbersEndpoints();
-        storeGroup.MapPickListsEndpoints();
-        storeGroup.MapPutAwayTasksEndpoints();
-        storeGroup.MapSerialNumbersEndpoints();
-        storeGroup.MapPurchaseOrdersEndpoints();
-        storeGroup.MapStockAdjustmentsEndpoints();
-        storeGroup.MapStockLevelsEndpoints();
-        storeGroup.MapSuppliersEndpoints();
-        storeGroup.MapWarehouseLocationsEndpoints();
-        storeGroup.MapWarehousesEndpoints();
-        storeGroup.MapSalesImportsEndpoints();
-
+        // All store endpoints are now auto-discovered by Carter via ICarterModule implementations.
+        // No manual endpoint mapping is required.
+        // Individual endpoint classes implement ICarterModule and are automatically registered.
         return app;
     }
 

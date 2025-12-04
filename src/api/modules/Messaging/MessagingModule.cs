@@ -1,52 +1,16 @@
-using Carter;
 using FSH.Framework.Infrastructure.Persistence;
-using FSH.Starter.WebApi.Messaging.Features.Conversations.AddMember;
-using FSH.Starter.WebApi.Messaging.Features.Conversations.AssignAdmin;
-using FSH.Starter.WebApi.Messaging.Features.Conversations.Create;
-using FSH.Starter.WebApi.Messaging.Features.Conversations.Get;
-using FSH.Starter.WebApi.Messaging.Features.Conversations.GetList;
-using FSH.Starter.WebApi.Messaging.Features.Conversations.RemoveMember;
-using FSH.Starter.WebApi.Messaging.Features.Conversations.MarkAsRead;
-using FSH.Starter.WebApi.Messaging.Features.Messages.Create;
-using FSH.Starter.WebApi.Messaging.Features.Messages.Delete;
-using FSH.Starter.WebApi.Messaging.Features.Messages.GetList;
-using FSH.Starter.WebApi.Messaging.Features.Messages.Update;
-using FSH.Starter.WebApi.Messaging.Features.OnlineUsers;
 
 namespace FSH.Starter.WebApi.Messaging;
 
 /// <summary>
 /// Module for configuring messaging services and endpoints.
 /// Implements in-app messaging with conversations, messages, and file attachments.
+/// Note: All messaging endpoints are auto-discovered via ICarterModule implementations.
 /// </summary>
 public static class MessagingModule
 {
-    /// <summary>
-    /// Defines all messaging-related endpoints.
-    /// </summary>
-    public class Endpoints : CarterModule
-    {
-        public override void AddRoutes(IEndpointRouteBuilder app)
-        {
-            var conversationsGroup = app.MapGroup("conversations").WithTags("conversations");
-            conversationsGroup.MapCreateConversationEndpoint();
-            conversationsGroup.MapGetConversationEndpoint();
-            conversationsGroup.MapGetConversationListEndpoint();
-            conversationsGroup.MapAddMemberEndpoint();
-            conversationsGroup.MapRemoveMemberEndpoint();
-            conversationsGroup.MapAssignAdminEndpoint();
-            conversationsGroup.MapMarkAsReadEndpoint();
-
-            var messagesGroup = app.MapGroup("messages").WithTags("messages");
-            messagesGroup.MapCreateMessageEndpoint();
-            messagesGroup.MapGetMessageListEndpoint();
-            messagesGroup.MapUpdateMessageEndpoint();
-            messagesGroup.MapDeleteMessageEndpoint();
-
-            var usersGroup = app.MapGroup("messaging").WithTags("messaging");
-            usersGroup.MapGetOnlineUsersEndpoint();
-        }
-    }
+    // Messaging endpoints are auto-discovered by Carter via ICarterModule implementations
+    // See: ConversationsEndpoints, MessagesEndpoints, MessagingUtilityEndpoints
 
     /// <summary>
     /// Registers messaging module services with the application builder.

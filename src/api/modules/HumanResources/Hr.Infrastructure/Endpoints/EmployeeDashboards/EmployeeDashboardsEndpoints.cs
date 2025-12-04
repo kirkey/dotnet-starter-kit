@@ -1,20 +1,55 @@
+using Carter;
+using FSH.Framework.Core.Identity.Users.Abstractions;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeDashboards.Get.v1;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
+
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDashboards;
 
-using v1;
-
 /// <summary>
-/// Employee Dashboards endpoints coordinator.
+/// Endpoint configuration for EmployeeDashboards module.
 /// </summary>
-public static class EmployeeDashboardsEndpoints
+public class EmployeeDashboardsEndpoints : ICarterModule
 {
     /// <summary>
-    /// Maps all employee dashboard endpoints.
+    /// Maps all EmployeeDashboards endpoints to the route builder.
     /// </summary>
-    public static void MapEmployeeDashboardsEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("employee-dashboards").WithTags("Employee Dashboards");
-        group.MapGetEmployeeDashboardEndpoint();
-        group.MapGetTeamDashboardEndpoint();
+        var group = app.MapGroup("hr/employee-dashboards").WithTags("employee-dashboards");
+
+        group.MapGet("/me", async (ICurrentUser currentUser, ISender mediator) =>
+            {
+                var request = new GetEmployeeDashboardRequest(currentUser.GetUserId());
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("GetEmployeeDashboard")
+            .WithSummary("Get personal employee dashboard")
+            .WithDescription("Retrieves aggregated dashboard data for the current employee including leave, attendance, payroll, and pending approvals")
+            .Produces<EmployeeDashboardResponse>()
+            .ProducesProblem(StatusCodes.Status401Unauthorized)
+            .ProducesProblem(StatusCodes.Status403Forbidden)
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .RequireAuthorization();
+
+        group.MapGet("/team/{employeeId:guid}", async (DefaultIdType employeeId, ISender mediator) =>
+            {
+                var request = new GetEmployeeDashboardRequest(employeeId);
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("GetTeamDashboard")
+            .WithSummary("Get team member dashboard")
+            .WithDescription("Retrieves dashboard data for a team member (managers only)")
+            .Produces<EmployeeDashboardResponse>()
+            .ProducesProblem(StatusCodes.Status401Unauthorized)
+            .ProducesProblem(StatusCodes.Status403Forbidden)
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Dashboard));
     }
 }
 

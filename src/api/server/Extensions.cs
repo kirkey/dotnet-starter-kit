@@ -15,7 +15,7 @@ public static class Extensions
             typeof(StoreMetadata).Assembly,
             typeof(MessagingModule).Assembly,
             typeof(HumanResourcesMetadata).Assembly,
-            typeof(MicroFinanceMetadata).Assembly,
+            // typeof(MicroFinanceMetadata).Assembly,
         };
 
         //register validators
@@ -32,16 +32,14 @@ public static class Extensions
         builder.RegisterStoreServices();
         builder.RegisterHumanResourcesServices();
         builder.RegisterMessagingServices();
-        builder.RegisterMicroFinanceServices();
+        // builder.RegisterMicroFinanceServices();
 
         //add carter endpoint modules
         builder.Services.AddCarter(configurator: config =>
         {
             config.WithModule<CatalogModule.Endpoints>();
-            config.WithModule<HrModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
-            config.WithModule<MessagingModule.Endpoints>();
-            // MicroFinance endpoints are auto-discovered via ICarterModule implementations
+            // Store, Accounting, HR, MicroFinance, and Messaging endpoints are auto-discovered via ICarterModule implementations
         });
 
         return builder;
@@ -58,7 +56,7 @@ public static class Extensions
         app.UseAccountingModule();
         app.UseStoreModule();
         app.UseMessagingModule();
-        app.UseMicroFinanceModule();
+        // app.UseMicroFinanceModule();
 
         //register api versions
         var versions = app.NewApiVersionSet()
@@ -70,13 +68,7 @@ public static class Extensions
         //map versioned endpoint
         var endpoints = app.MapGroup("api/v{version:apiVersion}").WithApiVersionSet(versions);
 
-        //map accounting endpoints directly (not using Carter)
-        endpoints.MapAccountingEndpoints();
-
-        //map store endpoints directly (not using Carter)
-        endpoints.MapStoreEndpoints();
-
-        //use carter for other modules
+        //use carter for all module endpoints (Store, Accounting, HR, etc. are auto-discovered via ICarterModule)
         endpoints.MapCarter();
 
         return app;

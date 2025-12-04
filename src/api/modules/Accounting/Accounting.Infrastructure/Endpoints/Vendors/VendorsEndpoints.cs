@@ -1,4 +1,15 @@
-using Accounting.Infrastructure.Endpoints.Vendors.v1;
+using Accounting.Application.Vendors.Create.v1;
+using Accounting.Application.Vendors.Delete.v1;
+using Accounting.Application.Vendors.Get.v1;
+using Accounting.Application.Vendors.Search.v1;
+using Accounting.Application.Vendors.Update.v1;
+using Carter;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Vendors;
 
@@ -6,29 +17,74 @@ namespace Accounting.Infrastructure.Endpoints.Vendors;
 /// Endpoint configuration for Vendors module.
 /// Provides comprehensive REST API endpoints for managing vendor accounts.
 /// </summary>
-public static class VendorsEndpoints
+public class VendorsEndpoints : ICarterModule
 {
-    /// <summary>
-    /// Maps all Vendors endpoints to the route builder.
-    /// Includes Create, Read, Update, Delete, and Search operations for vendors.
-    /// </summary>
-    /// <param name="app">The endpoint route builder.</param>
-    /// <returns>The configured endpoint route builder.</returns>
-    internal static IEndpointRouteBuilder MapVendorsEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var vendorsGroup = app.MapGroup("/vendors")
-            .WithTags("Vendors")
-            .WithDescription("Endpoints for managing vendors in the accounting system")
-            .MapToApiVersion(1);
+        var group = app.MapGroup("accounting/vendors").WithTags("vendors");
 
-        // Version 1 endpoints
-        vendorsGroup.MapVendorCreateEndpoint();
-        vendorsGroup.MapVendorUpdateEndpoint();
-        vendorsGroup.MapVendorDeleteEndpoint();
-        vendorsGroup.MapVendorGetEndpoint();
-        vendorsGroup.MapVendorSearchEndpoint();
+        group.MapPost("/", async (VendorCreateCommand command, ISender mediator) =>
+        {
+            var response = await mediator.Send(command).ConfigureAwait(false);
+            return Results.Ok(response);
+        })
+        .WithName("CreateVendor")
+        .WithSummary("create a vendor")
+        .WithDescription("create a vendor")
+        .Produces<VendorCreateResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+        .MapToApiVersion(1);
 
-        return app;
+        group.MapPut("/{id:guid}", async (DefaultIdType id, VendorUpdateCommand request, ISender mediator) =>
+        {
+            var command = request with { Id = id };
+            var response = await mediator.Send(command).ConfigureAwait(false);
+            return Results.Ok(response);
+        })
+        .WithName("UpdateVendor")
+        .WithSummary("Update a vendor")
+        .WithDescription("Updates an existing vendor")
+        .Produces<VendorUpdateResponse>()
+        .ProducesProblem(StatusCodes.Status404NotFound)
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+        .MapToApiVersion(1);
+
+        group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+        {
+            await mediator.Send(new VendorDeleteCommand(id)).ConfigureAwait(false);
+            return Results.NoContent();
+        })
+        .WithName("DeleteVendor")
+        .WithSummary("delete vendor by id")
+        .WithDescription("delete vendor by id")
+        .Produces(StatusCodes.Status204NoContent)
+        .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+        .MapToApiVersion(1);
+
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+        {
+            var response = await mediator.Send(new VendorGetRequest(id)).ConfigureAwait(false);
+            return Results.Ok(response);
+        })
+        .WithName("GetVendor")
+        .WithSummary("Get a vendor by ID")
+        .WithDescription("Retrieves a vendor by its unique identifier")
+        .Produces<VendorGetResponse>()
+        .ProducesProblem(StatusCodes.Status404NotFound)
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (ISender mediator, [FromBody] VendorSearchRequest request) =>
+        {
+            var response = await mediator.Send(request).ConfigureAwait(false);
+            return Results.Ok(response);
+        })
+        .WithName("SearchVendors")
+        .WithSummary("Search vendors")
+        .WithDescription("Searches vendors with pagination and filtering support")
+        .Produces<PagedList<VendorSearchResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+        .MapToApiVersion(1);
     }
 }
 

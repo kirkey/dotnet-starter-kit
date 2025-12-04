@@ -1,29 +1,86 @@
-using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeContacts.v1;
+using Carter;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Create.v1;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Delete.v1;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Get.v1;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Search.v1;
+using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Update.v1;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeContacts;
 
 /// <summary>
 /// Endpoint configuration for EmployeeContacts module.
 /// </summary>
-public static class EmployeeContactsEndpoints
+public class EmployeeContactsEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all EmployeeContacts endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapEmployeeContactsEndpoints(this IEndpointRouteBuilder app)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var contactsGroup = app.MapGroup("/employee-contacts")
-            .WithTags("Employee Contacts")
-            .WithDescription("Endpoints for managing employee contacts (emergency, references, family)");
+        var group = app.MapGroup("hr/employee-contacts").WithTags("employee-contacts");
 
-        // Version 1 endpoints
-        contactsGroup.MapCreateEmployeeContactEndpoint();
-        contactsGroup.MapGetEmployeeContactEndpoint();
-        contactsGroup.MapSearchEmployeeContactsEndpoint();
-        contactsGroup.MapUpdateEmployeeContactEndpoint();
-        contactsGroup.MapDeleteEmployeeContactEndpoint();
+        group.MapPost("/", async (CreateEmployeeContactCommand request, ISender mediator) =>
+            {
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.CreatedAtRoute("GetEmployeeContact", new { id = response.Id }, response);
+            })
+            .WithName("CreateEmployeeContact")
+            .WithSummary("Creates a new employee contact")
+            .WithDescription("Creates a new employee contact (emergency, reference, family)")
+            .Produces<CreateEmployeeContactResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
 
-        return app;
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+            {
+                var response = await mediator.Send(new GetEmployeeContactRequest(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("GetEmployeeContact")
+            .WithSummary("Gets employee contact by ID")
+            .WithDescription("Retrieves employee contact details")
+            .Produces<EmployeeContactResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+
+        group.MapPost("/search", async (SearchEmployeeContactsRequest request, ISender mediator) =>
+            {
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("SearchEmployeeContacts")
+            .WithSummary("Searches employee contacts")
+            .WithDescription("Searches employee contacts with pagination and filters")
+            .Produces<PagedList<EmployeeContactResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+
+        group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateEmployeeContactCommand request, ISender mediator) =>
+            {
+                if (id != request.Id)
+                    return Results.BadRequest("ID mismatch");
+
+                var response = await mediator.Send(request).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("UpdateEmployeeContact")
+            .WithSummary("Updates an employee contact")
+            .WithDescription("Updates employee contact information")
+            .Produces<UpdateEmployeeContactResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+
+        group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+            {
+                var response = await mediator.Send(new DeleteEmployeeContactCommand(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("DeleteEmployeeContact")
+            .WithSummary("Deletes an employee contact")
+            .WithDescription("Deletes an employee contact record")
+            .Produces<DeleteEmployeeContactResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
     }
 }
 
