@@ -41,7 +41,6 @@ internal static class ShareProductSeeder
                 code: p.Code,
                 name: p.Name,
                 description: p.Desc,
-                currencyCode: "USD",
                 nominalValue: p.Nominal,
                 currentPrice: p.Current,
                 minSharesForMembership: p.MinShares,

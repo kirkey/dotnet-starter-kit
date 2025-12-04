@@ -5,9 +5,43 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a fee or charge definition in the microfinance system.
-/// Fees can be applied to loans, savings, shares, or other products.
+/// Represents a fee or charge definition (template) in the microfinance system.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Define standard fees for loans (disbursement, processing, late payment)</description></item>
+///   <item><description>Configure account maintenance fees for savings/shares</description></item>
+///   <item><description>Set up transaction-based fees (withdrawal, transfer, ATM)</description></item>
+///   <item><description>Configure percentage-based or flat-rate fee structures</description></item>
+///   <item><description>Manage tax applicability on fees</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Fee definitions are templates that determine how fees are calculated when charged to accounts.
+/// Non-interest income from fees is crucial for MFI sustainability, covering operational costs
+/// that interest margins alone may not cover. Common fee types include:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Disbursement Fee</strong>: One-time charge when loan is released</description></item>
+///   <item><description><strong>Processing Fee</strong>: Application/documentation charges</description></item>
+///   <item><description><strong>Late Fee</strong>: Penalty for overdue payments</description></item>
+///   <item><description><strong>Account Maintenance</strong>: Monthly/annual account keeping fee</description></item>
+///   <item><description><strong>Withdrawal Fee</strong>: Per-transaction or per-withdrawal charge</description></item>
+/// </list>
+/// <para><strong>Calculation Methods:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Flat</strong>: Fixed amount regardless of transaction size</description></item>
+///   <item><description><strong>Percentage</strong>: Calculated as % of principal/transaction (with min/max caps)</description></item>
+///   <item><description><strong>PerTransaction</strong>: Fixed amount per occurrence</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="FeeCharge"/> - Actual fees charged to accounts using this definition</description></item>
+///   <item><description><see cref="Loan"/> - Loans where fees may apply</description></item>
+///   <item><description><see cref="SavingsAccount"/> - Savings accounts with maintenance fees</description></item>
+/// </list>
+/// </remarks>
 public class FeeDefinition : AuditableEntity, IAggregateRoot
 {
     // Domain Constants
@@ -31,9 +65,6 @@ public class FeeDefinition : AuditableEntity, IAggregateRoot
 
     /// <summary>Maximum length for charge frequency. (2^5 = 32)</summary>
     public const int ChargeFrequencyMaxLength = 32;
-
-    /// <summary>Maximum length for currency code. (2^3 = 8)</summary>
-    public const int CurrencyCodeMaxLength = 8;
 
     /// <summary>Minimum length for fee name.</summary>
     public const int NameMinLength = 2;
@@ -98,9 +129,6 @@ public class FeeDefinition : AuditableEntity, IAggregateRoot
     /// <summary>Gets the maximum fee amount (for percentage-based fees).</summary>
     public decimal? MaxAmount { get; private set; }
 
-    /// <summary>Gets the currency code.</summary>
-    public string CurrencyCode { get; private set; } = default!;
-
     /// <summary>Gets whether the fee is taxable.</summary>
     public bool IsTaxable { get; private set; }
 
@@ -124,7 +152,6 @@ public class FeeDefinition : AuditableEntity, IAggregateRoot
         decimal amount,
         decimal? minAmount,
         decimal? maxAmount,
-        string currencyCode,
         bool isTaxable,
         decimal? taxRate)
     {
@@ -139,7 +166,6 @@ public class FeeDefinition : AuditableEntity, IAggregateRoot
         Amount = amount;
         MinAmount = minAmount;
         MaxAmount = maxAmount;
-        CurrencyCode = currencyCode.Trim().ToUpperInvariant();
         IsTaxable = isTaxable;
         TaxRate = taxRate;
         IsActive = true;
@@ -158,7 +184,6 @@ public class FeeDefinition : AuditableEntity, IAggregateRoot
         string appliesTo,
         string chargeFrequency,
         decimal amount,
-        string currencyCode,
         string? description = null,
         decimal? minAmount = null,
         decimal? maxAmount = null,
@@ -177,7 +202,6 @@ public class FeeDefinition : AuditableEntity, IAggregateRoot
             amount,
             minAmount,
             maxAmount,
-            currencyCode,
             isTaxable,
             taxRate);
     }

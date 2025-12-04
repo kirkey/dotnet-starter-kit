@@ -6,8 +6,31 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
 /// Represents a savings product template in the microfinance system.
-/// Defines the terms and conditions for a type of savings account.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Define different savings account types (e.g., Regular Savings, Minor's Account, Emergency Fund)</description></item>
+///   <item><description>Configure interest rates and posting frequencies for each product type</description></item>
+///   <item><description>Set minimum balance requirements and withdrawal limits</description></item>
+///   <item><description>Enable overdraft facilities for qualifying products</description></item>
+///   <item><description>Manage product lifecycle (activate/deactivate) without affecting existing accounts</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Savings products define the terms for member savings accounts. MFIs typically offer multiple savings products
+/// to serve different needs: compulsory savings (required for loan eligibility), voluntary savings (flexible deposits),
+/// target savings (goal-based), and children's accounts. Interest rates incentivize saving behavior while
+/// withdrawal rules balance liquidity needs with operational costs.
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="SavingsAccount"/> - Individual accounts created from this product template</description></item>
+///   <item><description><see cref="SavingsTransaction"/> - Transactions on accounts using this product</description></item>
+///   <item><description><see cref="FixedDeposit"/> - May link to savings products for interest rate reference</description></item>
+///   <item><description><see cref="FeeDefinition"/> - Account maintenance and transaction fees</description></item>
+/// </list>
+/// </remarks>
 public class SavingsProduct : AuditableEntity, IAggregateRoot
 {
     // Domain Constants
@@ -20,9 +43,6 @@ public class SavingsProduct : AuditableEntity, IAggregateRoot
     /// <summary>Maximum length for description. (2^11 = 2048)</summary>
     public const int DescriptionMaxLength = 2048;
 
-    /// <summary>Maximum length for currency code. (2^3 = 8)</summary>
-    public const int CurrencyCodeMaxLength = 8;
-
     /// <summary>Maximum length for interest calculation method. (2^5 = 32)</summary>
     public const int InterestCalculationMaxLength = 32;
 
@@ -32,49 +52,123 @@ public class SavingsProduct : AuditableEntity, IAggregateRoot
     /// <summary>Minimum length for product name.</summary>
     public const int NameMinLength = 2;
 
-    /// <summary>Gets the unique product code.</summary>
+    /// <summary>
+    /// Gets the unique product code.
+    /// </summary>
+    /// <remarks>
+    /// Short identifier for internal reference (e.g., "SAV-REG", "SAV-COMP", "SAV-CHILD").
+    /// </remarks>
     public string Code { get; private set; } = default!;
 
-    /// <summary>Gets the product name.</summary>
+    /// <summary>
+    /// Gets the product name.
+    /// </summary>
+    /// <remarks>
+    /// Display name shown to members (e.g., "Regular Savings", "Compulsory Savings", "Youth Account").
+    /// </remarks>
     public new string Name { get; private set; } = default!;
 
-    /// <summary>Gets the product description.</summary>
+    /// <summary>
+    /// Gets the product description.
+    /// </summary>
+    /// <remarks>
+    /// Detailed description including target audience, features, and any restrictions.
+    /// </remarks>
     public new string? Description { get; private set; }
 
-    /// <summary>Gets the currency code (e.g., USD, EUR).</summary>
-    public string CurrencyCode { get; private set; } = default!;
-
-    /// <summary>Gets the annual interest rate (percentage).</summary>
+    /// <summary>
+    /// Gets the annual interest rate paid on deposits (percentage).
+    /// </summary>
+    /// <remarks>
+    /// Interest earned by the depositor. Higher rates attract savings but increase MFI costs.
+    /// </remarks>
     public decimal InterestRate { get; private set; }
 
-    /// <summary>Gets the interest calculation method (Daily, Monthly).</summary>
+    /// <summary>
+    /// Gets the interest calculation method.
+    /// </summary>
+    /// <remarks>
+    /// <list type="bullet">
+    ///   <item><description><strong>Daily</strong>: Interest calculated on daily closing balance</description></item>
+    ///   <item><description><strong>Monthly</strong>: Interest calculated on average monthly balance</description></item>
+    ///   <item><description><strong>MinimumBalance</strong>: Interest on lowest balance during the period</description></item>
+    /// </list>
+    /// </remarks>
     public string InterestCalculation { get; private set; } = default!;
 
-    /// <summary>Gets the interest posting frequency (Monthly, Quarterly, Annually).</summary>
+    /// <summary>
+    /// Gets the interest posting frequency.
+    /// </summary>
+    /// <remarks>
+    /// How often accrued interest is credited to the account:
+    /// <list type="bullet">
+    ///   <item><description><strong>Monthly</strong>: Best for active accounts</description></item>
+    ///   <item><description><strong>Quarterly</strong>: Common for regular savings</description></item>
+    ///   <item><description><strong>Annually</strong>: Used for long-term savings</description></item>
+    /// </list>
+    /// </remarks>
     public string InterestPostingFrequency { get; private set; } = default!;
 
-    /// <summary>Gets the minimum opening balance.</summary>
+    /// <summary>
+    /// Gets the minimum opening balance required.
+    /// </summary>
+    /// <remarks>
+    /// Initial deposit required to open an account. May be waived for certain member categories.
+    /// </remarks>
     public decimal MinOpeningBalance { get; private set; }
 
-    /// <summary>Gets the minimum balance to earn interest.</summary>
+    /// <summary>
+    /// Gets the minimum balance to earn interest.
+    /// </summary>
+    /// <remarks>
+    /// Accounts below this threshold do not accrue interest. Encourages maintaining adequate balances.
+    /// </remarks>
     public decimal MinBalanceForInterest { get; private set; }
 
-    /// <summary>Gets the minimum withdrawal amount.</summary>
+    /// <summary>
+    /// Gets the minimum withdrawal amount.
+    /// </summary>
+    /// <remarks>
+    /// Smallest amount that can be withdrawn per transaction. Reduces processing costs for tiny transactions.
+    /// </remarks>
     public decimal MinWithdrawalAmount { get; private set; }
 
-    /// <summary>Gets the maximum withdrawal amount per day.</summary>
+    /// <summary>
+    /// Gets the maximum withdrawal amount per day.
+    /// </summary>
+    /// <remarks>
+    /// Daily withdrawal limit for fraud prevention and liquidity management. Null means no limit.
+    /// </remarks>
     public decimal? MaxWithdrawalPerDay { get; private set; }
 
-    /// <summary>Gets whether the product allows overdraft.</summary>
+    /// <summary>
+    /// Gets whether the product allows overdraft (negative balance).
+    /// </summary>
+    /// <remarks>
+    /// If true, members can withdraw more than their balance up to <see cref="OverdraftLimit"/>.
+    /// Typically requires good standing and incurs higher fees.
+    /// </remarks>
     public bool AllowOverdraft { get; private set; }
 
-    /// <summary>Gets the overdraft limit if allowed.</summary>
+    /// <summary>
+    /// Gets the overdraft limit if allowed.
+    /// </summary>
+    /// <remarks>
+    /// Maximum negative balance permitted. Interest is typically charged on overdraft amounts.
+    /// </remarks>
     public decimal? OverdraftLimit { get; private set; }
 
-    /// <summary>Gets whether the product is active.</summary>
+    /// <summary>
+    /// Gets whether the product is available for new accounts.
+    /// </summary>
+    /// <remarks>
+    /// Deactivated products cannot be used for new accounts but existing accounts continue normally.
+    /// </remarks>
     public bool IsActive { get; private set; }
 
-    /// <summary>Gets the collection of savings accounts using this product.</summary>
+    /// <summary>
+    /// Gets the collection of savings accounts using this product.
+    /// </summary>
     public virtual ICollection<SavingsAccount> SavingsAccounts { get; private set; } = new List<SavingsAccount>();
 
     private SavingsProduct() { }
@@ -84,7 +178,6 @@ public class SavingsProduct : AuditableEntity, IAggregateRoot
         string code,
         string name,
         string? description,
-        string currencyCode,
         decimal interestRate,
         string interestCalculation,
         string interestPostingFrequency,
@@ -99,7 +192,6 @@ public class SavingsProduct : AuditableEntity, IAggregateRoot
         Code = code.Trim();
         ValidateAndSetName(name);
         Description = description?.Trim();
-        CurrencyCode = currencyCode.Trim().ToUpperInvariant();
         InterestRate = interestRate;
         InterestCalculation = interestCalculation.Trim();
         InterestPostingFrequency = interestPostingFrequency.Trim();
@@ -121,7 +213,6 @@ public class SavingsProduct : AuditableEntity, IAggregateRoot
         string code,
         string name,
         string? description,
-        string currencyCode,
         decimal interestRate,
         string interestCalculation,
         string interestPostingFrequency,
@@ -137,7 +228,6 @@ public class SavingsProduct : AuditableEntity, IAggregateRoot
             code,
             name,
             description,
-            currencyCode,
             interestRate,
             interestCalculation,
             interestPostingFrequency,

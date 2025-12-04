@@ -5,7 +5,6 @@ public sealed record LoanProductResponse(
     string Code,
     string Name,
     string? Description,
-    string CurrencyCode,
     decimal MinLoanAmount,
     decimal MaxLoanAmount,
     decimal InterestRate,

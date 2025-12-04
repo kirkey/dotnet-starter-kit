@@ -21,10 +21,6 @@ internal sealed class ShareProductConfiguration : IEntityTypeConfiguration<Share
         builder.Property(x => x.Description)
             .HasMaxLength(ShareProduct.DescriptionMaxLength);
 
-        builder.Property(x => x.CurrencyCode)
-            .IsRequired()
-            .HasMaxLength(ShareProduct.CurrencyCodeMaxLength);
-
         builder.Property(x => x.NominalValue).HasPrecision(18, 2);
         builder.Property(x => x.CurrentPrice).HasPrecision(18, 2);
 

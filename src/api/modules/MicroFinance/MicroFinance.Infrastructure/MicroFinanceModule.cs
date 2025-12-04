@@ -27,23 +27,30 @@ public static class MicroFinanceModule
             // Members
             app.MapMemberEndpoints();
             app.MapMemberGroupEndpoints();
+            app.MapGroupMembershipEndpoints();
 
             // Loan Management
             app.MapLoanProductEndpoints();
             app.MapLoanEndpoints();
             app.MapLoanRepaymentEndpoints();
+            app.MapLoanScheduleEndpoints();
+            app.MapLoanGuarantorEndpoints();
+            app.MapLoanCollateralEndpoints();
 
             // Savings Management
             app.MapSavingsProductEndpoints();
             app.MapSavingsAccountEndpoints();
+            app.MapSavingsTransactionEndpoints();
 
             // Investment Products
             app.MapShareProductEndpoints();
             app.MapShareAccountEndpoints();
+            app.MapShareTransactionEndpoints();
             app.MapFixedDepositEndpoints();
 
             // Fee Management
             app.MapFeeDefinitionEndpoints();
+            app.MapFeeChargeEndpoints();
         }
     }
 

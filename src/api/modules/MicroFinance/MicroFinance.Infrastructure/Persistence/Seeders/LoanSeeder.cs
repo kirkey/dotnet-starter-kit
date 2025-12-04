@@ -38,7 +38,6 @@ internal static class LoanSeeder
                 interestRate: product.InterestRate,
                 termMonths: product.MinTermMonths + ((product.MaxTermMonths - product.MinTermMonths) / 5 * (i % 5)),
                 repaymentFrequency: product.RepaymentFrequency,
-                currency: "USD",
                 purpose: $"Loan purpose for member {i + 1}");
 
             // Approve and disburse some loans

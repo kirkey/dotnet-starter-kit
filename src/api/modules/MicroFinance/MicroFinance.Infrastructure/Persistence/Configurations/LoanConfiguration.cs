@@ -18,10 +18,6 @@ internal sealed class LoanConfiguration : IEntityTypeConfiguration<Loan>
             .IsRequired()
             .HasMaxLength(LoanConstants.StatusMaxLength);
 
-        builder.Property(x => x.Currency)
-            .IsRequired()
-            .HasMaxLength(LoanConstants.CurrencyMaxLength);
-
         builder.Property(x => x.RepaymentFrequency)
             .IsRequired()
             .HasMaxLength(LoanConstants.RepaymentFrequencyMaxLength);

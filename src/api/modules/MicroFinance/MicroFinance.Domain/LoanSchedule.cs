@@ -17,9 +17,42 @@ public static class LoanScheduleConstants
 }
 
 /// <summary>
-/// Represents a loan repayment schedule entry.
-/// Tracks expected repayments and their due dates.
+/// Represents a single installment in a loan's repayment schedule.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Define expected payment amounts and due dates for each installment</description></item>
+///   <item><description>Track payment status per installment (pending vs. paid)</description></item>
+///   <item><description>Calculate arrears and overdue amounts</description></item>
+///   <item><description>Generate payment reminder notifications</description></item>
+///   <item><description>Provide amortization schedule to borrowers</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// The loan schedule is generated at disbursement based on the loan terms and interest method:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Flat Rate</strong>: Equal payments throughout; more interest in later payments</description></item>
+///   <item><description><strong>Declining Balance</strong>: Decreasing payments; more interest early, more principal late</description></item>
+///   <item><description><strong>Equal Principal</strong>: Fixed principal portion + decreasing interest</description></item>
+/// </list>
+/// <para>
+/// Each installment may be for different frequencies (weekly, biweekly, monthly) and
+/// the schedule respects grace periods defined in the product.
+/// </para>
+/// <para><strong>Payment Tracking:</strong></para>
+/// <list type="bullet">
+///   <item><description>PaidAmount accumulates partial and full payments</description></item>
+///   <item><description>IsPaid becomes true when PaidAmount ≥ TotalAmount</description></item>
+///   <item><description>Past-due unpaid installments are flagged for collections</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Loan"/> - The loan this schedule belongs to</description></item>
+///   <item><description><see cref="LoanRepayment"/> - Actual payments applied to schedules</description></item>
+/// </list>
+/// </remarks>
 public class LoanSchedule : AuditableEntity, IAggregateRoot
 {
     /// <summary>Gets the loan ID this schedule belongs to.</summary>

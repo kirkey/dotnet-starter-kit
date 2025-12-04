@@ -6,8 +6,30 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
 /// Represents a loan product template in the microfinance system.
-/// Defines the terms and conditions for a type of loan.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Define standard loan offerings (e.g., Agricultural Loan, Emergency Loan, Business Loan)</description></item>
+///   <item><description>Configure interest rates, terms, and repayment structures for loan types</description></item>
+///   <item><description>Set borrowing limits (min/max amounts) and eligibility criteria</description></item>
+///   <item><description>Standardize late payment penalties and grace periods</description></item>
+///   <item><description>Enable/disable loan products without affecting existing loans</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Loan products serve as templates from which individual loans are created. When a member applies for a loan,
+/// they select a product, and the loan inherits the product's terms. This allows MFIs to maintain consistent
+/// lending policies while offering multiple loan types tailored to different needs (agriculture, education, 
+/// micro-enterprise, emergency, etc.).
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Loan"/> - Individual loans created from this product template</description></item>
+///   <item><description><see cref="Member"/> - Members who borrow using this product</description></item>
+///   <item><description><see cref="FeeDefinition"/> - Fees that may apply to this product type</description></item>
+/// </list>
+/// </remarks>
 public class LoanProduct : AuditableEntity, IAggregateRoot
 {
     // Domain Constants
@@ -19,9 +41,6 @@ public class LoanProduct : AuditableEntity, IAggregateRoot
 
     /// <summary>Maximum length for description. (2^11 = 2048)</summary>
     public const int DescriptionMaxLength = 2048;
-
-    /// <summary>Maximum length for currency code. (2^3 = 8)</summary>
-    public const int CurrencyCodeMaxLength = 8;
 
     /// <summary>Maximum length for repayment frequency. (2^5 = 32)</summary>
     public const int RepaymentFrequencyMaxLength = 32;
@@ -38,49 +57,132 @@ public class LoanProduct : AuditableEntity, IAggregateRoot
     /// <summary>Maximum interest rate (100%).</summary>
     public const decimal MaxInterestRate = 100m;
 
-    /// <summary>Gets the unique product code.</summary>
+    /// <summary>
+    /// Gets the unique product code.
+    /// </summary>
+    /// <remarks>
+    /// A short, unique identifier for internal reference and reporting (e.g., "AGRI-01", "EMERG-001").
+    /// Used for quick lookup and integration with external systems.
+    /// </remarks>
     public string Code { get; private set; } = default!;
 
-    /// <summary>Gets the product name.</summary>
+    /// <summary>
+    /// Gets the product name.
+    /// </summary>
+    /// <remarks>
+    /// A human-readable name displayed to users (e.g., "Agricultural Season Loan", "Emergency Fund").
+    /// </remarks>
     public new string Name { get; private set; } = default!;
 
-    /// <summary>Gets the product description.</summary>
+    /// <summary>
+    /// Gets the product description.
+    /// </summary>
+    /// <remarks>
+    /// Detailed description of the loan product including purpose, target beneficiaries, and special conditions.
+    /// </remarks>
     public new string? Description { get; private set; }
 
-    /// <summary>Gets the currency code (e.g., USD, EUR).</summary>
-    public string CurrencyCode { get; private set; } = default!;
-
-    /// <summary>Gets the minimum loan amount.</summary>
+    /// <summary>
+    /// Gets the minimum loan amount a member can borrow.
+    /// </summary>
+    /// <remarks>
+    /// Prevents loans that are too small to be operationally cost-effective.
+    /// </remarks>
     public decimal MinLoanAmount { get; private set; }
 
-    /// <summary>Gets the maximum loan amount.</summary>
+    /// <summary>
+    /// Gets the maximum loan amount a member can borrow.
+    /// </summary>
+    /// <remarks>
+    /// Risk management control to limit exposure per borrower. May be further limited by member creditworthiness.
+    /// </remarks>
     public decimal MaxLoanAmount { get; private set; }
 
-    /// <summary>Gets the annual interest rate (percentage).</summary>
+    /// <summary>
+    /// Gets the annual interest rate (percentage).
+    /// </summary>
+    /// <remarks>
+    /// The base interest rate applied to loans. Actual interest charged depends on <see cref="InterestMethod"/>.
+    /// Expressed as a percentage (e.g., 12.5 for 12.5% per annum).
+    /// </remarks>
     public decimal InterestRate { get; private set; }
 
-    /// <summary>Gets the interest calculation method (Flat, Declining, etc.).</summary>
+    /// <summary>
+    /// Gets the interest calculation method.
+    /// </summary>
+    /// <remarks>
+    /// <list type="bullet">
+    ///   <item><description><strong>Flat</strong>: Interest calculated on original principal throughout the term</description></item>
+    ///   <item><description><strong>Declining</strong>: Interest calculated on outstanding balance (reduces over time)</description></item>
+    ///   <item><description><strong>Compound</strong>: Interest calculated on principal plus accumulated interest</description></item>
+    /// </list>
+    /// Declining balance is more borrower-friendly; Flat is simpler to administer.
+    /// </remarks>
     public string InterestMethod { get; private set; } = default!;
 
-    /// <summary>Gets the minimum loan term in months.</summary>
+    /// <summary>
+    /// Gets the minimum loan term in months.
+    /// </summary>
+    /// <remarks>
+    /// Shortest repayment period allowed. Shorter terms mean higher periodic payments but less total interest.
+    /// </remarks>
     public int MinTermMonths { get; private set; }
 
-    /// <summary>Gets the maximum loan term in months.</summary>
+    /// <summary>
+    /// Gets the maximum loan term in months.
+    /// </summary>
+    /// <remarks>
+    /// Longest repayment period allowed. Longer terms mean lower periodic payments but more total interest.
+    /// </remarks>
     public int MaxTermMonths { get; private set; }
 
-    /// <summary>Gets the repayment frequency (Daily, Weekly, Monthly, etc.).</summary>
+    /// <summary>
+    /// Gets the repayment frequency.
+    /// </summary>
+    /// <remarks>
+    /// How often the borrower must make payments:
+    /// <list type="bullet">
+    ///   <item><description><strong>Daily</strong>: Common for micro-vendors with daily cash flow</description></item>
+    ///   <item><description><strong>Weekly</strong>: Popular for group lending (solidarity groups)</description></item>
+    ///   <item><description><strong>Biweekly</strong>: Aligned with typical pay cycles</description></item>
+    ///   <item><description><strong>Monthly</strong>: Standard for salaried borrowers</description></item>
+    /// </list>
+    /// </remarks>
     public string RepaymentFrequency { get; private set; } = default!;
 
-    /// <summary>Gets the grace period in days before first repayment.</summary>
+    /// <summary>
+    /// Gets the grace period in days before first repayment.
+    /// </summary>
+    /// <remarks>
+    /// Time after disbursement before the first payment is due. Useful for agricultural loans
+    /// where income comes after harvest, or business loans needing time to generate revenue.
+    /// </remarks>
     public int GracePeriodDays { get; private set; }
 
-    /// <summary>Gets the late payment penalty rate (percentage).</summary>
+    /// <summary>
+    /// Gets the late payment penalty rate (percentage).
+    /// </summary>
+    /// <remarks>
+    /// Additional interest charged on overdue amounts. Applied as a percentage of the overdue installment.
+    /// Encourages timely repayment and compensates for increased administrative costs.
+    /// </remarks>
     public decimal LatePenaltyRate { get; private set; }
 
-    /// <summary>Gets whether the product is active.</summary>
+    /// <summary>
+    /// Gets whether the product is currently active and available for new loans.
+    /// </summary>
+    /// <remarks>
+    /// When deactivated, no new loans can be created from this product, but existing loans continue normally.
+    /// Useful for phasing out products or seasonal offerings.
+    /// </remarks>
     public bool IsActive { get; private set; }
 
-    /// <summary>Gets the collection of loans using this product.</summary>
+    /// <summary>
+    /// Gets the collection of loans created from this product template.
+    /// </summary>
+    /// <remarks>
+    /// Navigation property for accessing all loans using this product. Used for reporting and analytics.
+    /// </remarks>
     public virtual ICollection<Loan> Loans { get; private set; } = new List<Loan>();
 
     private LoanProduct() { }
@@ -90,7 +192,6 @@ public class LoanProduct : AuditableEntity, IAggregateRoot
         string code,
         string name,
         string? description,
-        string currencyCode,
         decimal minLoanAmount,
         decimal maxLoanAmount,
         decimal interestRate,
@@ -105,7 +206,6 @@ public class LoanProduct : AuditableEntity, IAggregateRoot
         Code = code.Trim();
         ValidateAndSetName(name);
         Description = description?.Trim();
-        CurrencyCode = currencyCode.Trim().ToUpperInvariant();
         MinLoanAmount = minLoanAmount;
         MaxLoanAmount = maxLoanAmount;
         ValidateAndSetInterestRate(interestRate);
@@ -127,7 +227,6 @@ public class LoanProduct : AuditableEntity, IAggregateRoot
         string code,
         string name,
         string? description,
-        string currencyCode,
         decimal minLoanAmount,
         decimal maxLoanAmount,
         decimal interestRate,
@@ -143,7 +242,6 @@ public class LoanProduct : AuditableEntity, IAggregateRoot
             code,
             name,
             description,
-            currencyCode,
             minLoanAmount,
             maxLoanAmount,
             interestRate,

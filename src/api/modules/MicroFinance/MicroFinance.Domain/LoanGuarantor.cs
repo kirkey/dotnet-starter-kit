@@ -6,8 +6,44 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
 /// Represents a loan guarantor who guarantees loan repayment.
-/// Essential for microfinance risk management.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Record third-party guarantees for loan security</description></item>
+///   <item><description>Track the guaranteed amount and relationship to borrower</description></item>
+///   <item><description>Manage guarantor approval workflow</description></item>
+///   <item><description>Release guarantors when loan is repaid</description></item>
+///   <item><description>Pursue guarantors for collection on defaulted loans</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Guarantors provide personal surety for loan repayment, common in microfinance where borrowers
+/// lack traditional collateral. Key principles:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Personal Guarantee</strong>: Guarantor agrees to repay if borrower defaults</description></item>
+///   <item><description><strong>Co-Signer</strong>: May require guarantor's savings/shares as additional security</description></item>
+///   <item><description><strong>Group Guarantee</strong>: In solidarity groups, all members guarantee each other</description></item>
+///   <item><description><strong>Exposure Limits</strong>: Guarantor's total exposure may be capped</description></item>
+/// </list>
+/// <para>
+/// Guarantors are typically other members in good standing. The MFI may freeze a portion of the
+/// guarantor's savings equal to the guaranteed amount.
+/// </para>
+/// <para><strong>Status Progression:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Pending</strong>: Guarantee requested, awaiting approval</description></item>
+///   <item><description><strong>Approved</strong>: Guarantee accepted, active obligation</description></item>
+///   <item><description><strong>Rejected</strong>: Guarantee declined (insufficient standing, over-exposure)</description></item>
+///   <item><description><strong>Released</strong>: Loan repaid, guarantee obligation ends</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Loan"/> - The loan being guaranteed</description></item>
+///   <item><description><see cref="Member"/> - The member acting as guarantor</description></item>
+/// </list>
+/// </remarks>
 public class LoanGuarantor : AuditableEntity, IAggregateRoot
 {
     // Domain Constants

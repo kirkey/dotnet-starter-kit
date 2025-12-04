@@ -29,7 +29,6 @@ public sealed class CreateSavingsProductHandler(
             request.Code,
             request.Name,
             request.Description,
-            request.CurrencyCode,
             request.InterestRate,
             request.InterestCalculation,
             request.InterestPostingFrequency,

@@ -23,11 +23,6 @@ public sealed class CreateSavingsProductCommandValidator : AbstractValidator<Cre
             .When(x => !string.IsNullOrEmpty(x.Description))
             .WithMessage($"Description must not exceed {SavingsProduct.DescriptionMaxLength} characters.");
 
-        RuleFor(x => x.CurrencyCode)
-            .NotEmpty()
-            .MaximumLength(SavingsProduct.CurrencyCodeMaxLength)
-            .WithMessage($"Currency code must not exceed {SavingsProduct.CurrencyCodeMaxLength} characters.");
-
         RuleFor(x => x.InterestRate)
             .GreaterThanOrEqualTo(0)
             .LessThanOrEqualTo(100)

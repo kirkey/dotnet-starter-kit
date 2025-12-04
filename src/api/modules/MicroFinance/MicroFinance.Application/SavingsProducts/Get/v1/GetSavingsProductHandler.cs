@@ -28,7 +28,6 @@ public sealed class GetSavingsProductHandler(
             savingsProduct.Code,
             savingsProduct.Name,
             savingsProduct.Description,
-            savingsProduct.CurrencyCode,
             savingsProduct.InterestRate,
             savingsProduct.InterestCalculation,
             savingsProduct.InterestPostingFrequency,

@@ -7,7 +7,6 @@ public sealed record CreateSavingsProductCommand(
     [property: DefaultValue("REGULAR")] string Code,
     [property: DefaultValue("Regular Savings")] string Name,
     [property: DefaultValue("Standard savings account with competitive interest")] string? Description,
-    [property: DefaultValue("USD")] string CurrencyCode,
     [property: DefaultValue(3.5)] decimal InterestRate,
     [property: DefaultValue("Monthly")] string InterestCalculation,
     [property: DefaultValue("Monthly")] string InterestPostingFrequency,

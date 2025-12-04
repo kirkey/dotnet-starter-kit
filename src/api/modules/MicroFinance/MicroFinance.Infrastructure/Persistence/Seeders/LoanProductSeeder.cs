@@ -41,7 +41,6 @@ internal static class LoanProductSeeder
                 code: p.Code,
                 name: p.Name,
                 description: p.Desc,
-                currencyCode: "USD",
                 minLoanAmount: p.MinAmt,
                 maxLoanAmount: p.MaxAmt,
                 interestRate: p.Rate,

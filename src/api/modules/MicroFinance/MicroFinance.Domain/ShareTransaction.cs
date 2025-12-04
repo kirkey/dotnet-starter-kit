@@ -5,8 +5,42 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a share transaction (purchase, redemption, transfer, dividend).
+/// Represents a share transaction (purchase, redemption, transfer, or dividend).
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Record share purchases and redemptions</description></item>
+///   <item><description>Track share transfers between members</description></item>
+///   <item><description>Record dividend distributions to shareholders</description></item>
+///   <item><description>Maintain share balance history for each account</description></item>
+///   <item><description>Calculate capital gains/losses on share transactions</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Share transactions record changes in member ownership of the MFI. Unlike savings (which are
+/// liabilities), shares represent member equity and ownership stake in the cooperative.
+/// </para>
+/// <para><strong>Transaction Types:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Purchase</strong>: Member buys new shares from the MFI</description></item>
+///   <item><description><strong>Redemption</strong>: Member sells shares back to the MFI</description></item>
+///   <item><description><strong>TransferIn/Out</strong>: Shares transferred between members</description></item>
+///   <item><description><strong>Dividend</strong>: Profit distribution credited (may be reinvested)</description></item>
+///   <item><description><strong>Bonus</strong>: Additional shares issued (stock dividend)</description></item>
+/// </list>
+/// <para><strong>Pricing:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>PricePerShare</strong>: Transaction price (may differ from nominal value)</description></item>
+///   <item><description><strong>TotalAmount</strong>: NumberOfShares × PricePerShare</description></item>
+///   <item><description><strong>SharesBalanceAfter</strong>: Running balance after transaction</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="ShareAccount"/> - The share account this transaction affects</description></item>
+///   <item><description><see cref="ShareProduct"/> - Defines share pricing and transfer rules</description></item>
+/// </list>
+/// </remarks>
 public class ShareTransaction : AuditableEntity, IAggregateRoot
 {
     // Domain Constants

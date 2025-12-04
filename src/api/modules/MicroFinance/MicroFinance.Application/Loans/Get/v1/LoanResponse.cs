@@ -12,7 +12,6 @@ public sealed record LoanResponse(
     decimal InterestRate,
     int TermMonths,
     string RepaymentFrequency,
-    string Currency,
     string? Purpose,
     DateOnly ApplicationDate,
     DateOnly? ApprovalDate,

@@ -5,9 +5,44 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a member's membership in a group.
-/// Links members to groups with membership details.
+/// Represents a member's membership in a group (many-to-many relationship).
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Track which members belong to which groups</description></item>
+///   <item><description>Assign and track member roles within groups (leader, secretary, treasurer)</description></item>
+///   <item><description>Record membership dates for tenure tracking</description></item>
+///   <item><description>Handle member transfers between groups</description></item>
+///   <item><description>Manage membership status (active, suspended, withdrawn)</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// This entity serves as the join table between <see cref="Member"/> and <see cref="MemberGroup"/>,
+/// but contains additional business data beyond a simple link:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Role</strong>: Members may serve as group leaders, secretaries, or treasurers</description></item>
+///   <item><description><strong>Join/Leave Dates</strong>: Track membership duration and history</description></item>
+///   <item><description><strong>Status</strong>: Members can be temporarily suspended or permanently withdrawn</description></item>
+/// </list>
+/// <para>
+/// A member may belong to only one active group at a time in most MFI policies, but historical
+/// memberships are retained for audit purposes.
+/// </para>
+/// <para><strong>Member Roles:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Member</strong>: Regular group participant</description></item>
+///   <item><description><strong>Leader</strong>: Facilitates meetings, resolves conflicts</description></item>
+///   <item><description><strong>Secretary</strong>: Maintains attendance and records</description></item>
+///   <item><description><strong>Treasurer</strong>: Handles group savings and collections</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Member"/> - The member in this membership</description></item>
+///   <item><description><see cref="MemberGroup"/> - The group in this membership</description></item>
+/// </list>
+/// </remarks>
 public class GroupMembership : AuditableEntity, IAggregateRoot
 {
     // Domain Constants

@@ -28,7 +28,6 @@ public sealed class GetLoanProductHandler(
             loanProduct.Code,
             loanProduct.Name,
             loanProduct.Description,
-            loanProduct.CurrencyCode,
             loanProduct.MinLoanAmount,
             loanProduct.MaxLoanAmount,
             loanProduct.InterestRate,

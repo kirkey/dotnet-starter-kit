@@ -21,10 +21,6 @@ internal sealed class LoanProductConfiguration : IEntityTypeConfiguration<LoanPr
         builder.Property(x => x.Description)
             .HasMaxLength(LoanProduct.DescriptionMaxLength);
 
-        builder.Property(x => x.CurrencyCode)
-            .IsRequired()
-            .HasMaxLength(LoanProduct.CurrencyCodeMaxLength);
-
         builder.Property(x => x.RepaymentFrequency)
             .IsRequired()
             .HasMaxLength(LoanProduct.RepaymentFrequencyMaxLength);

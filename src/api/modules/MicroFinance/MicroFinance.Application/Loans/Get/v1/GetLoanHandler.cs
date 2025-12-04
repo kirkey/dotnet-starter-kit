@@ -35,7 +35,6 @@ public sealed class GetLoanHandler(
             loan.InterestRate,
             loan.TermMonths,
             loan.RepaymentFrequency,
-            loan.Currency,
             loan.Purpose,
             loan.ApplicationDate,
             loan.ApprovalDate,

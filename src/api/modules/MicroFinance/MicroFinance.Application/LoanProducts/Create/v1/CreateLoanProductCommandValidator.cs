@@ -23,11 +23,6 @@ public sealed class CreateLoanProductCommandValidator : AbstractValidator<Create
             .When(x => !string.IsNullOrEmpty(x.Description))
             .WithMessage($"Description must not exceed {LoanProduct.DescriptionMaxLength} characters.");
 
-        RuleFor(x => x.CurrencyCode)
-            .NotEmpty()
-            .MaximumLength(LoanProduct.CurrencyCodeMaxLength)
-            .WithMessage($"Currency code must not exceed {LoanProduct.CurrencyCodeMaxLength} characters.");
-
         RuleFor(x => x.InterestRate)
             .InclusiveBetween(LoanProduct.MinInterestRate, LoanProduct.MaxInterestRate)
             .WithMessage($"Interest rate must be between {LoanProduct.MinInterestRate} and {LoanProduct.MaxInterestRate}.");

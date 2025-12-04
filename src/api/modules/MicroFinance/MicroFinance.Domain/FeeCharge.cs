@@ -5,9 +5,48 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents an actual fee charged to an account.
-/// Tracks fees assessed and their payment status.
+/// Represents an actual fee charged to a member's account.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Record fees assessed against loans, savings, or share accounts</description></item>
+///   <item><description>Track fee payment status (pending, partial, paid)</description></item>
+///   <item><description>Process fee waivers and reversals with audit trail</description></item>
+///   <item><description>Calculate outstanding fee balances for collections</description></item>
+///   <item><description>Report on fee income by type and product</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// FeeCharge represents a specific instance of a fee applied to a member's account. While
+/// <see cref="FeeDefinition"/> defines <em>how</em> fees are calculated, FeeCharge records
+/// <em>actual</em> charges with specific amounts and payment tracking.
+/// </para>
+/// <para>
+/// Fee charges can be:
+/// </para>
+/// <list type="bullet">
+///   <item><description>System-generated (automatic late fees, monthly maintenance)</description></item>
+///   <item><description>Manually added (processing fees, special service charges)</description></item>
+///   <item><description>Event-triggered (loan disbursement, account closure)</description></item>
+/// </list>
+/// <para><strong>Status Progression:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Pending</strong>: Fee assessed, awaiting payment</description></item>
+///   <item><description><strong>PartiallyPaid</strong>: Some payment received</description></item>
+///   <item><description><strong>Paid</strong>: Fully settled</description></item>
+///   <item><description><strong>Waived</strong>: Forgiven by authorized personnel</description></item>
+///   <item><description><strong>Reversed</strong>: Cancelled/voided</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="FeeDefinition"/> - Template defining the fee type and calculation</description></item>
+///   <item><description><see cref="Member"/> - Member who owes the fee</description></item>
+///   <item><description><see cref="Loan"/> - Loan account if applicable</description></item>
+///   <item><description><see cref="SavingsAccount"/> - Savings account if applicable</description></item>
+///   <item><description><see cref="ShareAccount"/> - Share account if applicable</description></item>
+/// </list>
+/// </remarks>
 public class FeeCharge : AuditableEntity, IAggregateRoot
 {
     // Domain Constants

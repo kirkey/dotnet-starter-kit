@@ -5,9 +5,36 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a share product template in the microfinance system.
-/// Defines the terms and conditions for share capital.
+/// Represents a share product template for member equity in the microfinance institution.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Define share capital requirements for cooperative membership</description></item>
+///   <item><description>Configure share purchase limits and pricing</description></item>
+///   <item><description>Manage share transfer and redemption policies</description></item>
+///   <item><description>Set dividend payment eligibility rules</description></item>
+///   <item><description>Track share ownership for voting rights and profit distribution</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// In cooperative microfinance institutions, members are owners who hold shares. Share capital:
+/// - Demonstrates commitment to the institution
+/// - Provides a capital base for lending operations
+/// - Determines dividend distributions and voting power
+/// - May be a prerequisite for accessing certain loan products
+/// </para>
+/// <para>
+/// Different share products may exist for different purposes (e.g., common shares, preferred shares,
+/// institutional shares). Some MFIs require minimum shareholding for membership eligibility.
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="ShareAccount"/> - Member share accounts holding this product</description></item>
+///   <item><description><see cref="ShareTransaction"/> - Purchase, redemption, and dividend transactions</description></item>
+///   <item><description><see cref="Member"/> - Members who own shares</description></item>
+/// </list>
+/// </remarks>
 public class ShareProduct : AuditableEntity, IAggregateRoot
 {
     // Domain Constants
@@ -20,52 +47,110 @@ public class ShareProduct : AuditableEntity, IAggregateRoot
     /// <summary>Maximum length for description. (2^11 = 2048)</summary>
     public const int DescriptionMaxLength = 2048;
 
-    /// <summary>Maximum length for currency code. (2^3 = 8)</summary>
-    public const int CurrencyCodeMaxLength = 8;
-
     /// <summary>Minimum length for product name.</summary>
     public const int NameMinLength = 2;
 
-    /// <summary>Gets the unique product code.</summary>
+    /// <summary>
+    /// Gets the unique product code.
+    /// </summary>
+    /// <remarks>
+    /// Short identifier (e.g., "SHR-COM" for common shares, "SHR-PREF" for preferred shares).
+    /// </remarks>
     public string Code { get; private set; } = default!;
 
-    /// <summary>Gets the product name.</summary>
+    /// <summary>
+    /// Gets the product name.
+    /// </summary>
+    /// <remarks>
+    /// Display name (e.g., "Common Shares", "Preferred Shares", "Institutional Shares").
+    /// </remarks>
     public new string Name { get; private set; } = default!;
 
-    /// <summary>Gets the product description.</summary>
+    /// <summary>
+    /// Gets the product description.
+    /// </summary>
     public new string? Description { get; private set; }
 
-    /// <summary>Gets the currency code (e.g., USD, EUR).</summary>
-    public string CurrencyCode { get; private set; } = default!;
-
-    /// <summary>Gets the nominal value per share.</summary>
+    /// <summary>
+    /// Gets the nominal (par/face) value per share.
+    /// </summary>
+    /// <remarks>
+    /// The original value assigned when the share class was created. Used for accounting
+    /// and regulatory purposes. Dividends are often calculated as a percentage of nominal value.
+    /// </remarks>
     public decimal NominalValue { get; private set; }
 
-    /// <summary>Gets the current market price per share.</summary>
+    /// <summary>
+    /// Gets the current market/trading price per share.
+    /// </summary>
+    /// <remarks>
+    /// The price at which shares are currently bought or sold. May differ from nominal value
+    /// based on the institution's performance and retained earnings. Updated periodically.
+    /// </remarks>
     public decimal CurrentPrice { get; private set; }
 
-    /// <summary>Gets the minimum number of shares for membership.</summary>
+    /// <summary>
+    /// Gets the minimum number of shares required for membership eligibility.
+    /// </summary>
+    /// <remarks>
+    /// Members must own at least this many shares to maintain active membership status
+    /// and access member benefits (loans, voting rights, etc.).
+    /// </remarks>
     public int MinSharesForMembership { get; private set; }
 
-    /// <summary>Gets the maximum shares per member.</summary>
+    /// <summary>
+    /// Gets the maximum shares any single member can hold.
+    /// </summary>
+    /// <remarks>
+    /// Prevents concentration of ownership. Null means no limit.
+    /// Important for maintaining democratic control in cooperatives.
+    /// </remarks>
     public int? MaxSharesPerMember { get; private set; }
 
-    /// <summary>Gets whether shares are transferable.</summary>
+    /// <summary>
+    /// Gets whether shares can be transferred between members.
+    /// </summary>
+    /// <remarks>
+    /// If true, members can sell/transfer shares to other eligible members.
+    /// Transfers may require board approval or have other restrictions.
+    /// </remarks>
     public bool AllowTransfer { get; private set; }
 
-    /// <summary>Gets whether shares can be redeemed.</summary>
+    /// <summary>
+    /// Gets whether shares can be redeemed (sold back to the institution).
+    /// </summary>
+    /// <remarks>
+    /// Redemption allows members to exit their investment. May be restricted
+    /// to protect the institution's capital base.
+    /// </remarks>
     public bool AllowRedemption { get; private set; }
 
-    /// <summary>Gets the minimum holding period in months before redemption.</summary>
+    /// <summary>
+    /// Gets the minimum holding period in months before redemption is allowed.
+    /// </summary>
+    /// <remarks>
+    /// Lock-up period ensuring capital stability. Members cannot redeem shares
+    /// until this period has passed since purchase.
+    /// </remarks>
     public int? MinHoldingPeriodMonths { get; private set; }
 
-    /// <summary>Gets whether dividends are paid on these shares.</summary>
+    /// <summary>
+    /// Gets whether dividends are paid on these shares.
+    /// </summary>
+    /// <remarks>
+    /// Dividend-paying shares receive a portion of the institution's profits.
+    /// Dividend rates are typically set annually by the board/AGM.
+    /// </remarks>
     public bool PaysDividends { get; private set; }
 
-    /// <summary>Gets whether the product is active.</summary>
+    /// <summary>
+    /// Gets whether the product is active and available.
+    /// </summary>
     public bool IsActive { get; private set; }
 
-    /// <summary>Gets the collection of share accounts using this product.</summary>
+    /// <summary>
+    /// Gets the collection of share accounts using this product.
+    /// </summary>
     public virtual ICollection<ShareAccount> ShareAccounts { get; private set; } = new List<ShareAccount>();
 
     private ShareProduct() { }
@@ -75,7 +160,6 @@ public class ShareProduct : AuditableEntity, IAggregateRoot
         string code,
         string name,
         string? description,
-        string currencyCode,
         decimal nominalValue,
         decimal currentPrice,
         int minSharesForMembership,
@@ -89,7 +173,6 @@ public class ShareProduct : AuditableEntity, IAggregateRoot
         Code = code.Trim();
         ValidateAndSetName(name);
         Description = description?.Trim();
-        CurrencyCode = currencyCode.Trim().ToUpperInvariant();
         NominalValue = nominalValue;
         CurrentPrice = currentPrice;
         MinSharesForMembership = minSharesForMembership;
@@ -110,7 +193,6 @@ public class ShareProduct : AuditableEntity, IAggregateRoot
         string code,
         string name,
         string? description,
-        string currencyCode,
         decimal nominalValue,
         decimal currentPrice,
         int minSharesForMembership = 1,
@@ -125,7 +207,6 @@ public class ShareProduct : AuditableEntity, IAggregateRoot
             code,
             name,
             description,
-            currencyCode,
             nominalValue,
             currentPrice,
             minSharesForMembership,

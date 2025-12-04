@@ -74,7 +74,6 @@ public sealed class CreateLoanHandler(
             loanProduct.InterestRate,
             request.TermMonths,
             request.RepaymentFrequency,
-            request.Currency,
             request.Purpose
         );
 

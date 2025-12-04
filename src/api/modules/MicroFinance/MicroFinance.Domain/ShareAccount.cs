@@ -5,9 +5,38 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a share account for member equity in the microfinance institution.
-/// Share capital is a common requirement for cooperative-based MFIs.
+/// Represents a share account for member equity ownership in the microfinance institution.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Track member share ownership and total equity value</description></item>
+///   <item><description>Record share purchases, redemptions, and transfers</description></item>
+///   <item><description>Calculate and distribute dividends to shareholders</description></item>
+///   <item><description>Verify membership eligibility based on minimum share requirements</description></item>
+///   <item><description>Manage share certificates and ownership records</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// In cooperative MFIs, share accounts represent member ownership stakes. Share capital:
+/// </para>
+/// <list type="bullet">
+///   <item><description>Provides permanent capital for lending operations</description></item>
+///   <item><description>Determines dividend distribution (proportional to shares held)</description></item>
+///   <item><description>May determine voting power in cooperative governance</description></item>
+///   <item><description>Acts as security for member loans (shares can be frozen as collateral)</description></item>
+/// </list>
+/// <para>
+/// Unlike savings which can be withdrawn freely, shares typically have restrictions
+/// (holding periods, redemption limits) to protect the institution's capital base.
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="ShareProduct"/> - Product defining share terms</description></item>
+///   <item><description><see cref="Member"/> - Share owner</description></item>
+///   <item><description><see cref="ShareTransaction"/> - Purchase, redemption, dividend transactions</description></item>
+/// </list>
+/// </remarks>
 public class ShareAccount : AuditableEntity, IAggregateRoot
 {
     // Domain Constants

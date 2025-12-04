@@ -45,7 +45,6 @@ internal static class FeeDefinitionSeeder
                 appliesTo: f.Applies,
                 chargeFrequency: f.Freq,
                 amount: f.Amt,
-                currencyCode: "USD",
                 description: f.Desc);
 
             await context.FeeDefinitions.AddAsync(fee, cancellationToken).ConfigureAwait(false);

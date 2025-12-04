@@ -1,5 +1,8 @@
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Deposit.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Withdraw.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -24,6 +27,24 @@ public static class SavingsAccountEndpoints
             .WithName("CreateSavingsAccount")
             .WithSummary("Creates a new savings account")
             .Produces<CreateSavingsAccountResponse>(StatusCodes.Status201Created);
+
+        savingsAccountsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+            {
+                var response = await sender.Send(new GetSavingsAccountRequest(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("GetSavingsAccount")
+            .WithSummary("Gets a savings account by ID")
+            .Produces<SavingsAccountResponse>();
+
+        savingsAccountsGroup.MapPost("/search", async (SearchSavingsAccountsCommand command, ISender sender) =>
+            {
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("SearchSavingsAccounts")
+            .WithSummary("Searches savings accounts with filters and pagination")
+            .Produces<PagedList<SavingsAccountResponse>>();
 
         savingsAccountsGroup.MapPost("/{id:guid}/deposit", async (Guid id, DepositCommand command, ISender sender) =>
             {
@@ -50,6 +71,21 @@ public static class SavingsAccountEndpoints
             .WithName("WithdrawFromSavingsAccount")
             .WithSummary("Withdraws money from a savings account")
             .Produces<WithdrawResponse>();
+
+        savingsAccountsGroup.MapGet("/by-member/{memberId:guid}", async (Guid memberId, ISender sender) =>
+            {
+                var command = new SearchSavingsAccountsCommand
+                {
+                    MemberId = memberId,
+                    PageNumber = 1,
+                    PageSize = 100
+                };
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("GetSavingsAccountsByMember")
+            .WithSummary("Gets all savings accounts for a member")
+            .Produces<PagedList<SavingsAccountResponse>>();
 
         return app;
     }

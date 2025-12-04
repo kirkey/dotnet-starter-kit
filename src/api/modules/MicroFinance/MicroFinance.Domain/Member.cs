@@ -6,8 +6,44 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
 /// Represents a member (client) in the microfinance system.
-/// A member can have multiple loans and savings accounts.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Register new members with KYC (Know Your Customer) information</description></item>
+///   <item><description>Maintain member profiles with contact and demographic data</description></item>
+///   <item><description>Track member's financial relationship (loans, savings, shares)</description></item>
+///   <item><description>Assess creditworthiness based on income and history</description></item>
+///   <item><description>Manage member lifecycle (activation, deactivation)</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Members are the core clients of the microfinance institution. A member can:
+/// </para>
+/// <list type="bullet">
+///   <item><description>Hold multiple savings accounts (compulsory, voluntary, special purpose)</description></item>
+///   <item><description>Have one or more active loans (subject to policy limits)</description></item>
+///   <item><description>Own share capital in cooperative MFIs</description></item>
+///   <item><description>Belong to solidarity groups for group lending</description></item>
+///   <item><description>Act as guarantor for other members' loans</description></item>
+/// </list>
+/// <para>
+/// Member data supports:
+/// - Credit decisions (income, occupation, existing obligations)
+/// - Communication (phone, email, address)
+/// - Regulatory compliance (national ID, KYC requirements)
+/// - Risk management (group membership, guarantor relationships)
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Loan"/> - Loans where member is the borrower</description></item>
+///   <item><description><see cref="SavingsAccount"/> - Member's savings accounts</description></item>
+///   <item><description><see cref="ShareAccount"/> - Member's share ownership</description></item>
+///   <item><description><see cref="FixedDeposit"/> - Member's term deposits</description></item>
+///   <item><description><see cref="GroupMembership"/> - Group affiliations</description></item>
+///   <item><description><see cref="LoanGuarantor"/> - Loans guaranteed by this member</description></item>
+/// </list>
+/// </remarks>
 public class Member : AuditableEntity, IAggregateRoot
 {
     // Domain Constants - Binary Limits (Powers of 2)

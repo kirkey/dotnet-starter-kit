@@ -41,7 +41,6 @@ internal static class SavingsProductSeeder
                 code: p.Code,
                 name: p.Name,
                 description: p.Desc,
-                currencyCode: "USD",
                 interestRate: p.Rate,
                 interestCalculation: p.Calc,
                 interestPostingFrequency: p.Freq,

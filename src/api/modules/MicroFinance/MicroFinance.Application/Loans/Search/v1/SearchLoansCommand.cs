@@ -29,7 +29,6 @@ public sealed record LoanSummaryResponse(
     decimal PrincipalAmount,
     decimal InterestRate,
     int TermMonths,
-    string Currency,
     DateOnly ApplicationDate,
     DateOnly? DisbursementDate,
     decimal OutstandingPrincipal,

@@ -19,11 +19,6 @@ public sealed class CreateLoanCommandValidator : AbstractValidator<CreateLoanCom
             .GreaterThan(0)
             .WithMessage("Requested amount must be greater than 0.");
 
-        RuleFor(x => x.Currency)
-            .NotEmpty()
-            .MaximumLength(LoanConstants.CurrencyMaxLength)
-            .WithMessage($"Currency must not exceed {LoanConstants.CurrencyMaxLength} characters.");
-
         RuleFor(x => x.TermMonths)
             .GreaterThan(0)
             .WithMessage("Term months must be greater than 0.");

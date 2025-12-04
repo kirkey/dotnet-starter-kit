@@ -5,9 +5,45 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a fixed deposit account in the microfinance system.
-/// Fixed deposits have a term and higher interest rates than regular savings.
+/// Represents a fixed/term deposit account in the microfinance system.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Accept time-bound deposits with higher interest rates than regular savings</description></item>
+///   <item><description>Track deposit maturity and automatic renewal/payout</description></item>
+///   <item><description>Handle premature withdrawals with penalty calculations</description></item>
+///   <item><description>Post periodic interest to linked savings accounts</description></item>
+///   <item><description>Issue deposit certificates for member records</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Fixed deposits (also called term deposits or time deposits) are a key liability product for MFIs:
+/// </para>
+/// <list type="bullet">
+///   <item><description>Provide predictable, stable funding with known maturity dates</description></item>
+///   <item><description>Offer higher interest rates in exchange for locked funds</description></item>
+///   <item><description>Help match loan tenors with deposit tenors for ALM (Asset-Liability Management)</description></item>
+///   <item><description>Build member savings discipline through commitment</description></item>
+/// </list>
+/// <para>
+/// Status progression: Pending → Active → (Matured | PrematurelyClosed) → (Renewed).
+/// At maturity, the system executes the configured maturity instruction.
+/// </para>
+/// <para><strong>Maturity Instructions:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>RenewPrincipalAndInterest</strong>: Roll over entire amount into new term</description></item>
+///   <item><description><strong>RenewPrincipal</strong>: Renew principal, pay out interest</description></item>
+///   <item><description><strong>TransferToSavings</strong>: Move all funds to linked savings account</description></item>
+///   <item><description><strong>PayOut</strong>: Issue payment to member</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Member"/> - Deposit owner</description></item>
+///   <item><description><see cref="SavingsProduct"/> - May reference for interest rate tiers</description></item>
+///   <item><description><see cref="SavingsAccount"/> - Linked account for interest/maturity transfers</description></item>
+/// </list>
+/// </remarks>
 public class FixedDeposit : AuditableEntity, IAggregateRoot
 {
     // Domain Constants

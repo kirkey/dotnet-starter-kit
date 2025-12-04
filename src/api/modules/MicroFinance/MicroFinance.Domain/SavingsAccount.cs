@@ -7,6 +7,36 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// <summary>
 /// Represents a savings account owned by a member.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Record deposits and withdrawals for member savings</description></item>
+///   <item><description>Calculate and post interest earnings</description></item>
+///   <item><description>Track account status and lifecycle (Active → Dormant → Closed)</description></item>
+///   <item><description>Freeze accounts for suspicious activity or legal holds</description></item>
+///   <item><description>Link to fixed deposits for automatic transfers</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Savings accounts are fundamental to microfinance operations. They:
+/// - Mobilize local deposits to fund lending operations
+/// - Provide members with a safe place to save
+/// - Build financial discipline (especially compulsory savings linked to loans)
+/// - Generate liquidity data for institutional planning
+/// </para>
+/// <para>
+/// Account status progression: Pending → Active → (Dormant after inactivity) → Closed.
+/// Frozen status is a temporary hold that can be applied at any time.
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="SavingsProduct"/> - Product template defining account terms</description></item>
+///   <item><description><see cref="Member"/> - Account owner</description></item>
+///   <item><description><see cref="SavingsTransaction"/> - Individual transactions</description></item>
+///   <item><description><see cref="FixedDeposit"/> - May link for maturity transfers</description></item>
+///   <item><description><see cref="FeeCharge"/> - Account maintenance fees</description></item>
+/// </list>
+/// </remarks>
 public class SavingsAccount : AuditableEntity, IAggregateRoot
 {
     // Domain Constants

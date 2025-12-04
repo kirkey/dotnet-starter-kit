@@ -8,7 +8,6 @@ public class SearchLoanProductsCommand : PaginationFilter, IRequest<PagedList<Lo
 {
     public string? Code { get; set; }
     public string? Name { get; set; }
-    public string? CurrencyCode { get; set; }
     public string? InterestMethod { get; set; }
     public string? RepaymentFrequency { get; set; }
     public decimal? MinInterestRate { get; set; }

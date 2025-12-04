@@ -29,7 +29,6 @@ public sealed class CreateLoanProductHandler(
             request.Code,
             request.Name,
             request.Description,
-            request.CurrencyCode,
             request.MinLoanAmount,
             request.MaxLoanAmount,
             request.InterestRate,

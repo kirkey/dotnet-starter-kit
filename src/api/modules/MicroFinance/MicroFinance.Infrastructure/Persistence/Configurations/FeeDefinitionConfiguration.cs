@@ -37,10 +37,6 @@ internal sealed class FeeDefinitionConfiguration : IEntityTypeConfiguration<FeeD
             .IsRequired()
             .HasMaxLength(FeeDefinition.ChargeFrequencyMaxLength);
 
-        builder.Property(x => x.CurrencyCode)
-            .IsRequired()
-            .HasMaxLength(FeeDefinition.CurrencyCodeMaxLength);
-
         builder.Property(x => x.Amount).HasPrecision(18, 4);
         builder.Property(x => x.MinAmount).HasPrecision(18, 2);
         builder.Property(x => x.MaxAmount).HasPrecision(18, 2);

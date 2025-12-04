@@ -14,11 +14,6 @@ public sealed class CreateSavingsAccountCommandValidator : AbstractValidator<Cre
             .NotEmpty()
             .WithMessage("Savings product ID is required.");
 
-        RuleFor(x => x.Currency)
-            .NotEmpty()
-            .MaximumLength(8)
-            .WithMessage("Currency is required and must not exceed 8 characters.");
-
         RuleFor(x => x.InitialDeposit)
             .GreaterThanOrEqualTo(0)
             .WithMessage("Initial deposit must be 0 or greater.");

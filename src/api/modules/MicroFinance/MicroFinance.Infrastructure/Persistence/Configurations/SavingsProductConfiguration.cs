@@ -21,10 +21,6 @@ internal sealed class SavingsProductConfiguration : IEntityTypeConfiguration<Sav
         builder.Property(x => x.Description)
             .HasMaxLength(SavingsProduct.DescriptionMaxLength);
 
-        builder.Property(x => x.CurrencyCode)
-            .IsRequired()
-            .HasMaxLength(SavingsProduct.CurrencyCodeMaxLength);
-
         builder.Property(x => x.InterestCalculation)
             .IsRequired()
             .HasMaxLength(SavingsProduct.InterestCalculationMaxLength);

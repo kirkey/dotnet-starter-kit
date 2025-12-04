@@ -5,7 +5,6 @@ public sealed record SavingsProductResponse(
     string Code,
     string Name,
     string? Description,
-    string CurrencyCode,
     decimal InterestRate,
     string InterestCalculation,
     string InterestPostingFrequency,

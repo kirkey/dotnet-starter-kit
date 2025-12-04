@@ -7,7 +7,6 @@ public sealed record CreateLoanProductCommand(
     [property: DefaultValue("LP001")] string Code,
     [property: DefaultValue("Personal Loan")] string Name,
     [property: DefaultValue("Short-term personal loan for emergency needs")] string? Description,
-    [property: DefaultValue("USD")] string CurrencyCode,
     [property: DefaultValue(1000)] decimal MinLoanAmount,
     [property: DefaultValue(100000)] decimal MaxLoanAmount,
     [property: DefaultValue(12.5)] decimal InterestRate,

@@ -15,9 +15,6 @@ public static class LoanConstants
     /// <summary>Maximum length for status. (2^5 = 32)</summary>
     public const int StatusMaxLength = 32;
 
-    /// <summary>Maximum length for currency. (2^3 = 8)</summary>
-    public const int CurrencyMaxLength = 8;
-
     /// <summary>Maximum length for purpose. (2^9 = 512)</summary>
     public const int PurposeMaxLength = 512;
 
@@ -32,91 +29,229 @@ public static class LoanConstants
 }
 
 /// <summary>
-/// Represents a loan issued to a member in the microfinance system.
+/// Represents an individual loan issued to a member in the microfinance system.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Track loan applications through the approval workflow (Pending → Approved → Disbursed)</description></item>
+///   <item><description>Record loan disbursements and track repayment progress</description></item>
+///   <item><description>Calculate outstanding balances (principal + interest)</description></item>
+///   <item><description>Manage loan lifecycle including closure and write-offs</description></item>
+///   <item><description>Link to collateral, guarantors, and repayment schedules</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// A Loan is the core lending entity. Each loan is created from a <see cref="LoanProduct"/> template
+/// and assigned to a <see cref="Member"/>. The loan progresses through states:
+/// </para>
+/// <list type="number">
+///   <item><description><strong>PENDING</strong>: Application submitted, awaiting review</description></item>
+///   <item><description><strong>APPROVED</strong>: Credit committee has approved the loan</description></item>
+///   <item><description><strong>REJECTED</strong>: Application denied (terminal state)</description></item>
+///   <item><description><strong>DISBURSED</strong>: Funds released to borrower, repayment begins</description></item>
+///   <item><description><strong>CLOSED</strong>: Fully repaid (terminal state)</description></item>
+///   <item><description><strong>WRITTEN_OFF</strong>: Declared uncollectible (terminal state)</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="LoanProduct"/> - Template defining terms</description></item>
+///   <item><description><see cref="Member"/> - The borrower</description></item>
+///   <item><description><see cref="LoanSchedule"/> - Expected repayment installments</description></item>
+///   <item><description><see cref="LoanRepayment"/> - Actual payments received</description></item>
+///   <item><description><see cref="LoanGuarantor"/> - Members guaranteeing repayment</description></item>
+///   <item><description><see cref="LoanCollateral"/> - Assets pledged as security</description></item>
+///   <item><description><see cref="FeeCharge"/> - Fees assessed on the loan</description></item>
+/// </list>
+/// </remarks>
 public class Loan : AuditableEntity, IAggregateRoot
 {
     // Loan Statuses
+    /// <summary>Loan application submitted, awaiting credit review.</summary>
     public const string StatusPending = "PENDING";
+    /// <summary>Loan approved by credit committee, ready for disbursement.</summary>
     public const string StatusApproved = "APPROVED";
+    /// <summary>Funds released to borrower, loan is active.</summary>
     public const string StatusDisbursed = "DISBURSED";
+    /// <summary>Loan fully repaid and closed.</summary>
     public const string StatusClosed = "CLOSED";
+    /// <summary>Loan written off as uncollectible bad debt.</summary>
     public const string StatusWrittenOff = "WRITTEN_OFF";
+    /// <summary>Loan application rejected by credit committee.</summary>
     public const string StatusRejected = "REJECTED";
 
-    /// <summary>Gets the unique loan number.</summary>
+    /// <summary>
+    /// Gets the unique loan number/reference.
+    /// </summary>
+    /// <remarks>
+    /// System-generated identifier for tracking and communication (e.g., "LN-2024-001234").
+    /// Displayed on all loan documents and communications.
+    /// </remarks>
     public string LoanNumber { get; private set; } = default!;
 
-    /// <summary>Gets the member ID who owns this loan.</summary>
+    /// <summary>
+    /// Gets the member ID who owns this loan.
+    /// </summary>
+    /// <remarks>
+    /// Foreign key to the borrowing member. A member may have multiple loans (if policy allows).
+    /// </remarks>
     public DefaultIdType MemberId { get; private set; }
 
-    /// <summary>Gets the member navigation property.</summary>
+    /// <summary>
+    /// Gets the member navigation property.
+    /// </summary>
     public virtual Member? Member { get; private set; }
 
-    /// <summary>Gets the loan product ID.</summary>
+    /// <summary>
+    /// Gets the loan product ID defining the loan terms.
+    /// </summary>
     public DefaultIdType LoanProductId { get; private set; }
 
-    /// <summary>Gets the loan product navigation property.</summary>
+    /// <summary>
+    /// Gets the loan product navigation property.
+    /// </summary>
     public virtual LoanProduct? LoanProduct { get; private set; }
 
-    /// <summary>Gets the principal amount of the loan.</summary>
+    /// <summary>
+    /// Gets the principal amount borrowed.
+    /// </summary>
+    /// <remarks>
+    /// The original amount disbursed, excluding interest and fees.
+    /// Must be within the product's min/max limits.
+    /// </remarks>
     public decimal PrincipalAmount { get; private set; }
 
-    /// <summary>Gets the interest rate applied to this loan.</summary>
+    /// <summary>
+    /// Gets the interest rate applied to this specific loan.
+    /// </summary>
+    /// <remarks>
+    /// May differ from product rate based on member creditworthiness or special promotions.
+    /// Expressed as annual percentage.
+    /// </remarks>
     public decimal InterestRate { get; private set; }
 
-    /// <summary>Gets the loan term in months.</summary>
+    /// <summary>
+    /// Gets the loan term in months.
+    /// </summary>
+    /// <remarks>
+    /// Repayment period chosen by the borrower, within product limits.
+    /// </remarks>
     public int TermMonths { get; private set; }
 
-    /// <summary>Gets the repayment frequency.</summary>
+    /// <summary>
+    /// Gets the repayment frequency.
+    /// </summary>
+    /// <remarks>
+    /// Inherited from product but may be customized: Daily, Weekly, Biweekly, Monthly.
+    /// </remarks>
     public string RepaymentFrequency { get; private set; } = default!;
 
-    /// <summary>Gets the currency of the loan.</summary>
-    public string Currency { get; private set; } = default!;
-
-    /// <summary>Gets the purpose of the loan.</summary>
+    /// <summary>
+    /// Gets the stated purpose of the loan.
+    /// </summary>
+    /// <remarks>
+    /// Borrower's declared use of funds (e.g., "Working capital for grocery store", "Agricultural inputs").
+    /// Important for risk assessment and regulatory reporting.
+    /// </remarks>
     public string? Purpose { get; private set; }
 
-    /// <summary>Gets the date the loan application was submitted.</summary>
+    /// <summary>
+    /// Gets the date the loan application was submitted.
+    /// </summary>
     public DateOnly ApplicationDate { get; private set; }
 
-    /// <summary>Gets the date the loan was approved.</summary>
+    /// <summary>
+    /// Gets the date the loan was approved by the credit committee.
+    /// </summary>
+    /// <remarks>
+    /// Null until approval. Used to calculate time-to-decision metrics.
+    /// </remarks>
     public DateOnly? ApprovalDate { get; private set; }
 
-    /// <summary>Gets the date the loan was disbursed.</summary>
+    /// <summary>
+    /// Gets the date the loan was disbursed.
+    /// </summary>
+    /// <remarks>
+    /// The date funds were released. Repayment schedule and interest calculation start from this date.
+    /// </remarks>
     public DateOnly? DisbursementDate { get; private set; }
 
-    /// <summary>Gets the expected end date of the loan.</summary>
+    /// <summary>
+    /// Gets the expected/scheduled end date of the loan.
+    /// </summary>
+    /// <remarks>
+    /// Calculated from disbursement date + term. Due date for the final installment.
+    /// </remarks>
     public DateOnly? ExpectedEndDate { get; private set; }
 
-    /// <summary>Gets the actual end date of the loan.</summary>
+    /// <summary>
+    /// Gets the actual end date when the loan was closed.
+    /// </summary>
+    /// <remarks>
+    /// Set when status changes to Closed or WrittenOff. May differ from ExpectedEndDate
+    /// due to early payoff or default.
+    /// </remarks>
     public DateOnly? ActualEndDate { get; private set; }
 
-    /// <summary>Gets the outstanding principal amount.</summary>
+    /// <summary>
+    /// Gets the outstanding principal amount.
+    /// </summary>
+    /// <remarks>
+    /// Remaining principal to be repaid. Decreases with each principal payment.
+    /// </remarks>
     public decimal OutstandingPrincipal { get; private set; }
 
-    /// <summary>Gets the outstanding interest amount.</summary>
+    /// <summary>
+    /// Gets the outstanding interest amount.
+    /// </summary>
+    /// <remarks>
+    /// Accrued interest not yet paid. May include penalty interest for late payments.
+    /// </remarks>
     public decimal OutstandingInterest { get; private set; }
 
-    /// <summary>Gets the total amount paid so far.</summary>
+    /// <summary>
+    /// Gets the total amount paid so far.
+    /// </summary>
+    /// <remarks>
+    /// Sum of all payments (principal + interest + penalties). Used for payoff calculations.
+    /// </remarks>
     public decimal TotalPaid { get; private set; }
 
-    /// <summary>Gets the current status of the loan.</summary>
+    /// <summary>
+    /// Gets the current status of the loan.
+    /// </summary>
+    /// <remarks>
+    /// See status constants: PENDING, APPROVED, DISBURSED, CLOSED, WRITTEN_OFF, REJECTED.
+    /// Status transitions are controlled by domain methods.
+    /// </remarks>
     public string Status { get; private set; } = default!;
 
-    /// <summary>Gets the rejection reason if loan was rejected.</summary>
+    /// <summary>
+    /// Gets the rejection reason if the loan was rejected.
+    /// </summary>
+    /// <remarks>
+    /// Required when status is REJECTED. Documents the reason for denial.
+    /// </remarks>
     public string? RejectionReason { get; private set; }
 
-    /// <summary>Gets the collection of repayments for this loan.</summary>
+    /// <summary>
+    /// Gets the collection of repayment transactions for this loan.
+    /// </summary>
     public virtual ICollection<LoanRepayment> LoanRepayments { get; private set; } = new List<LoanRepayment>();
 
-    /// <summary>Gets the collection of schedules for this loan.</summary>
+    /// <summary>
+    /// Gets the collection of scheduled installments for this loan.
+    /// </summary>
     public virtual ICollection<LoanSchedule> LoanSchedules { get; private set; } = new List<LoanSchedule>();
 
-    /// <summary>Gets the collection of guarantors for this loan.</summary>
+    /// <summary>
+    /// Gets the collection of guarantors for this loan.
+    /// </summary>
     public virtual ICollection<LoanGuarantor> LoanGuarantors { get; private set; } = new List<LoanGuarantor>();
 
-    /// <summary>Gets the collection of collaterals for this loan.</summary>
+    /// <summary>
+    /// Gets the collection of collaterals pledged for this loan.
+    /// </summary>
     public virtual ICollection<LoanCollateral> LoanCollaterals { get; private set; } = new List<LoanCollateral>();
 
     private Loan() { }
@@ -130,7 +265,6 @@ public class Loan : AuditableEntity, IAggregateRoot
         decimal interestRate,
         int termMonths,
         string repaymentFrequency,
-        string currency,
         string? purpose)
     {
         Id = id;
@@ -141,7 +275,6 @@ public class Loan : AuditableEntity, IAggregateRoot
         InterestRate = interestRate;
         TermMonths = termMonths;
         RepaymentFrequency = repaymentFrequency;
-        Currency = currency;
         Purpose = purpose?.Trim();
         ApplicationDate = DateOnly.FromDateTime(DateTime.UtcNow);
         Status = StatusPending;
@@ -163,7 +296,6 @@ public class Loan : AuditableEntity, IAggregateRoot
         decimal interestRate,
         int termMonths,
         string repaymentFrequency,
-        string currency,
         string? purpose = null)
     {
         return new Loan(
@@ -175,7 +307,6 @@ public class Loan : AuditableEntity, IAggregateRoot
             interestRate,
             termMonths,
             repaymentFrequency,
-            currency,
             purpose);
     }
 

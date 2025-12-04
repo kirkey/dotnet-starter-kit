@@ -14,7 +14,6 @@ public class SearchLoanProductsSpecs : EntitiesByPaginationFilterSpec<LoanProduc
             .OrderBy(lp => lp.Name, !command.HasOrderBy())
             .Where(lp => lp.Code == command.Code, !string.IsNullOrWhiteSpace(command.Code))
             .Where(lp => lp.Name.Contains(command.Name!, StringComparison.OrdinalIgnoreCase), !string.IsNullOrWhiteSpace(command.Name))
-            .Where(lp => lp.CurrencyCode == command.CurrencyCode, !string.IsNullOrWhiteSpace(command.CurrencyCode))
             .Where(lp => lp.InterestMethod == command.InterestMethod, !string.IsNullOrWhiteSpace(command.InterestMethod))
             .Where(lp => lp.RepaymentFrequency == command.RepaymentFrequency, !string.IsNullOrWhiteSpace(command.RepaymentFrequency))
             .Where(lp => lp.InterestRate >= command.MinInterestRate!.Value, command.MinInterestRate.HasValue)

@@ -1,5 +1,8 @@
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Search.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Update.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -32,6 +35,28 @@ public static class SavingsProductEndpoints
             .WithName("GetSavingsProduct")
             .WithSummary("Gets a savings product by ID")
             .Produces<SavingsProductResponse>();
+
+        savingsProductsGroup.MapPost("/search", async (SearchSavingsProductsCommand command, ISender sender) =>
+            {
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("SearchSavingsProducts")
+            .WithSummary("Searches savings products with filters and pagination")
+            .Produces<PagedList<SavingsProductResponse>>();
+
+        savingsProductsGroup.MapPut("/{id:guid}", async (Guid id, UpdateSavingsProductCommand command, ISender sender) =>
+            {
+                if (id != command.Id)
+                {
+                    return Results.BadRequest("ID mismatch");
+                }
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("UpdateSavingsProduct")
+            .WithSummary("Updates a savings product")
+            .Produces<UpdateSavingsProductResponse>();
 
         return app;
     }
