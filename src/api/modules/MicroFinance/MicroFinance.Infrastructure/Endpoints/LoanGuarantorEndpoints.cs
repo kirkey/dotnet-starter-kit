@@ -1,7 +1,11 @@
 using FSH.Framework.Core.Paging;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Reject.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Release.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Search.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.UpdateAmount.v1;
 using MediatR;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -72,6 +76,45 @@ public static class LoanGuarantorEndpoints
         .WithName("GetLoanGuarantorsByMember")
         .WithSummary("Gets all loans where a member is a guarantor")
         .Produces<PagedList<LoanGuarantorResponse>>();
+
+        guarantorsGroup.MapPost("/{id:guid}/approve", async (Guid id, ISender mediator) =>
+        {
+            var response = await mediator.Send(new ApproveGuarantorCommand(id));
+            return Results.Ok(response);
+        })
+        .WithName("ApproveLoanGuarantor")
+        .WithSummary("Approves a loan guarantor")
+        .Produces<ApproveGuarantorResponse>();
+
+        guarantorsGroup.MapPost("/{id:guid}/reject", async (Guid id, RejectGuarantorCommand command, ISender mediator) =>
+        {
+            if (id != command.Id) return Results.BadRequest("ID mismatch");
+            var response = await mediator.Send(command);
+            return Results.Ok(response);
+        })
+        .WithName("RejectLoanGuarantor")
+        .WithSummary("Rejects a loan guarantor")
+        .Produces<RejectGuarantorResponse>();
+
+        guarantorsGroup.MapPost("/{id:guid}/release", async (Guid id, ReleaseGuarantorCommand command, ISender mediator) =>
+        {
+            if (id != command.Id) return Results.BadRequest("ID mismatch");
+            var response = await mediator.Send(command);
+            return Results.Ok(response);
+        })
+        .WithName("ReleaseLoanGuarantor")
+        .WithSummary("Releases a loan guarantor")
+        .Produces<ReleaseGuarantorResponse>();
+
+        guarantorsGroup.MapPut("/{id:guid}/amount", async (Guid id, UpdateGuaranteedAmountCommand command, ISender mediator) =>
+        {
+            if (id != command.Id) return Results.BadRequest("ID mismatch");
+            var response = await mediator.Send(command);
+            return Results.Ok(response);
+        })
+        .WithName("UpdateGuarantorAmount")
+        .WithSummary("Updates the guaranteed amount for a loan guarantor")
+        .Produces<UpdateGuaranteedAmountResponse>();
 
         return app;
     }

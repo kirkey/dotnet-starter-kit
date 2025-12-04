@@ -1,9 +1,13 @@
 using FSH.Framework.Core.Paging;
+using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Close.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Deposit.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Freeze.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.PostInterest.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Transfer.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Unfreeze.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Withdraw.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -96,6 +100,44 @@ public static class SavingsAccountEndpoints
             .WithName("GetSavingsAccountsByMember")
             .WithSummary("Gets all savings accounts for a member")
             .Produces<PagedList<SavingsAccountResponse>>();
+
+        savingsAccountsGroup.MapPost("/{id:guid}/post-interest", async (Guid id, PostInterestCommand command, ISender sender) =>
+            {
+                if (id != command.AccountId) return Results.BadRequest("ID mismatch");
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("PostSavingsInterest")
+            .WithSummary("Posts interest to a savings account")
+            .Produces<PostInterestResponse>();
+
+        savingsAccountsGroup.MapPost("/{id:guid}/freeze", async (Guid id, ISender sender) =>
+            {
+                var response = await sender.Send(new FreezeAccountCommand(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("FreezeSavingsAccount")
+            .WithSummary("Freezes a savings account")
+            .Produces<FreezeAccountResponse>();
+
+        savingsAccountsGroup.MapPost("/{id:guid}/unfreeze", async (Guid id, ISender sender) =>
+            {
+                var response = await sender.Send(new UnfreezeAccountCommand(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("UnfreezeSavingsAccount")
+            .WithSummary("Unfreezes a frozen savings account")
+            .Produces<UnfreezeAccountResponse>();
+
+        savingsAccountsGroup.MapPost("/{id:guid}/close", async (Guid id, CloseAccountCommand command, ISender sender) =>
+            {
+                if (id != command.AccountId) return Results.BadRequest("ID mismatch");
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("CloseSavingsAccount")
+            .WithSummary("Closes a savings account")
+            .Produces<CloseAccountResponse>();
 
         return app;
     }

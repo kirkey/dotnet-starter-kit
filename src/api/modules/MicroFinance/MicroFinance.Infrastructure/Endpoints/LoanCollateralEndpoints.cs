@@ -1,7 +1,12 @@
 using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Pledge.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Release.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Search.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Seize.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.UpdateValuation.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Verify.v1;
 using MediatR;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -59,6 +64,52 @@ public static class LoanCollateralEndpoints
         .WithName("GetLoanCollateralsByLoan")
         .WithSummary("Gets all collaterals for a loan")
         .Produces<PagedList<LoanCollateralResponse>>();
+
+        collateralsGroup.MapPut("/{id:guid}/valuation", async (Guid id, UpdateCollateralValuationCommand command, ISender mediator) =>
+        {
+            if (id != command.Id) return Results.BadRequest("ID mismatch");
+            var response = await mediator.Send(command);
+            return Results.Ok(response);
+        })
+        .WithName("UpdateCollateralValuation")
+        .WithSummary("Updates the valuation of a loan collateral")
+        .Produces<UpdateCollateralValuationResponse>();
+
+        collateralsGroup.MapPost("/{id:guid}/verify", async (Guid id, ISender mediator) =>
+        {
+            var response = await mediator.Send(new VerifyCollateralCommand(id));
+            return Results.Ok(response);
+        })
+        .WithName("VerifyLoanCollateral")
+        .WithSummary("Verifies a loan collateral")
+        .Produces<VerifyCollateralResponse>();
+
+        collateralsGroup.MapPost("/{id:guid}/pledge", async (Guid id, ISender mediator) =>
+        {
+            var response = await mediator.Send(new PledgeCollateralCommand(id));
+            return Results.Ok(response);
+        })
+        .WithName("PledgeLoanCollateral")
+        .WithSummary("Pledges a loan collateral")
+        .Produces<PledgeCollateralResponse>();
+
+        collateralsGroup.MapPost("/{id:guid}/release", async (Guid id, ISender mediator) =>
+        {
+            var response = await mediator.Send(new ReleaseCollateralCommand(id));
+            return Results.Ok(response);
+        })
+        .WithName("ReleaseLoanCollateral")
+        .WithSummary("Releases a loan collateral")
+        .Produces<ReleaseCollateralResponse>();
+
+        collateralsGroup.MapPost("/{id:guid}/seize", async (Guid id, ISender mediator) =>
+        {
+            var response = await mediator.Send(new SeizeCollateralCommand(id));
+            return Results.Ok(response);
+        })
+        .WithName("SeizeLoanCollateral")
+        .WithSummary("Seizes a loan collateral")
+        .Produces<SeizeCollateralResponse>();
 
         return app;
     }

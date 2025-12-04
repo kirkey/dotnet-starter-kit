@@ -1,7 +1,11 @@
 using FSH.Framework.Core.Paging;
+using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Close.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.PayDividend.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.PostDividend.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.PurchaseShares.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.RedeemShares.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -54,6 +58,46 @@ public static class ShareAccountEndpoints
             .WithName("PurchaseShares")
             .WithSummary("Purchases shares for an account")
             .Produces<PurchaseSharesResponse>();
+
+        shareAccountsGroup.MapPost("/{id:guid}/redeem", async (Guid id, RedeemSharesCommand command, ISender sender) =>
+            {
+                if (id != command.ShareAccountId) return Results.BadRequest("ID mismatch");
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("RedeemShares")
+            .WithSummary("Redeems shares from an account")
+            .Produces<RedeemSharesResponse>();
+
+        shareAccountsGroup.MapPost("/{id:guid}/post-dividend", async (Guid id, PostDividendCommand command, ISender sender) =>
+            {
+                if (id != command.ShareAccountId) return Results.BadRequest("ID mismatch");
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("PostShareDividend")
+            .WithSummary("Posts a dividend to a share account")
+            .Produces<PostDividendResponse>();
+
+        shareAccountsGroup.MapPost("/{id:guid}/pay-dividend", async (Guid id, PayDividendCommand command, ISender sender) =>
+            {
+                if (id != command.ShareAccountId) return Results.BadRequest("ID mismatch");
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("PayShareDividend")
+            .WithSummary("Pays out the dividend on a share account")
+            .Produces<PayDividendResponse>();
+
+        shareAccountsGroup.MapPost("/{id:guid}/close", async (Guid id, CloseShareAccountCommand command, ISender sender) =>
+            {
+                if (id != command.AccountId) return Results.BadRequest("ID mismatch");
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("CloseShareAccount")
+            .WithSummary("Closes a share account")
+            .Produces<CloseShareAccountResponse>();
 
         return app;
     }
