@@ -157,9 +157,6 @@ public class Member : AuditableEntity, IAggregateRoot
     /// <summary>Gets a value indicating whether the member is active.</summary>
     public bool IsActive { get; private set; }
 
-    /// <summary>Gets internal notes about the member.</summary>
-    public new string? Notes { get; private set; }
-
     /// <summary>Gets the collection of loans for this member.</summary>
     public virtual ICollection<Loan> Loans { get; private set; } = new List<Loan>();
 

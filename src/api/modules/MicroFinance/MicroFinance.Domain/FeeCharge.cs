@@ -120,9 +120,6 @@ public class FeeCharge : AuditableEntity, IAggregateRoot
     /// <summary>Gets the payment completion date.</summary>
     public DateOnly? PaidDate { get; private set; }
 
-    /// <summary>Gets internal notes.</summary>
-    public new string? Notes { get; private set; }
-
     private FeeCharge() { }
 
     private FeeCharge(

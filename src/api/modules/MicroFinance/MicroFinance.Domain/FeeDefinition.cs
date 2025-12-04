@@ -102,12 +102,6 @@ public class FeeDefinition : AuditableEntity, IAggregateRoot
     /// <summary>Gets the unique fee code.</summary>
     public string Code { get; private set; } = default!;
 
-    /// <summary>Gets the fee name.</summary>
-    public new string Name { get; private set; } = default!;
-
-    /// <summary>Gets the fee description.</summary>
-    public new string? Description { get; private set; }
-
     /// <summary>Gets the fee type.</summary>
     public string FeeType { get; private set; } = default!;
 

@@ -67,22 +67,6 @@ public class LoanProduct : AuditableEntity, IAggregateRoot
     public string Code { get; private set; } = default!;
 
     /// <summary>
-    /// Gets the product name.
-    /// </summary>
-    /// <remarks>
-    /// A human-readable name displayed to users (e.g., "Agricultural Season Loan", "Emergency Fund").
-    /// </remarks>
-    public new string Name { get; private set; } = default!;
-
-    /// <summary>
-    /// Gets the product description.
-    /// </summary>
-    /// <remarks>
-    /// Detailed description of the loan product including purpose, target beneficiaries, and special conditions.
-    /// </remarks>
-    public new string? Description { get; private set; }
-
-    /// <summary>
     /// Gets the minimum loan amount a member can borrow.
     /// </summary>
     /// <remarks>

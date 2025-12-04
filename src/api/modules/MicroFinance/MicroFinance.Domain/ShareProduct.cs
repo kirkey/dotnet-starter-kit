@@ -59,19 +59,6 @@ public class ShareProduct : AuditableEntity, IAggregateRoot
     public string Code { get; private set; } = default!;
 
     /// <summary>
-    /// Gets the product name.
-    /// </summary>
-    /// <remarks>
-    /// Display name (e.g., "Common Shares", "Preferred Shares", "Institutional Shares").
-    /// </remarks>
-    public new string Name { get; private set; } = default!;
-
-    /// <summary>
-    /// Gets the product description.
-    /// </summary>
-    public new string? Description { get; private set; }
-
-    /// <summary>
     /// Gets the nominal (par/face) value per share.
     /// </summary>
     /// <remarks>

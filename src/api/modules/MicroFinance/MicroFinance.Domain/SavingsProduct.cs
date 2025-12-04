@@ -61,22 +61,6 @@ public class SavingsProduct : AuditableEntity, IAggregateRoot
     public string Code { get; private set; } = default!;
 
     /// <summary>
-    /// Gets the product name.
-    /// </summary>
-    /// <remarks>
-    /// Display name shown to members (e.g., "Regular Savings", "Compulsory Savings", "Youth Account").
-    /// </remarks>
-    public new string Name { get; private set; } = default!;
-
-    /// <summary>
-    /// Gets the product description.
-    /// </summary>
-    /// <remarks>
-    /// Detailed description including target audience, features, and any restrictions.
-    /// </remarks>
-    public new string? Description { get; private set; }
-
-    /// <summary>
     /// Gets the annual interest rate paid on deposits (percentage).
     /// </summary>
     /// <remarks>

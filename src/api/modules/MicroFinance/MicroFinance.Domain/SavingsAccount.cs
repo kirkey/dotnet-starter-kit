@@ -95,9 +95,6 @@ public class SavingsAccount : AuditableEntity, IAggregateRoot
     /// <summary>Gets the current status of the account.</summary>
     public string Status { get; private set; } = default!;
 
-    /// <summary>Gets internal notes.</summary>
-    public new string? Notes { get; private set; }
-
     /// <summary>Gets the collection of transactions for this account.</summary>
     public virtual ICollection<SavingsTransaction> Transactions { get; private set; } = new List<SavingsTransaction>();
 

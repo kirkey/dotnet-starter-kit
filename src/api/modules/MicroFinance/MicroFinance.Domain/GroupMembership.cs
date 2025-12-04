@@ -91,9 +91,6 @@ public class GroupMembership : AuditableEntity, IAggregateRoot
     /// <summary>Gets the membership status.</summary>
     public string Status { get; private set; } = default!;
 
-    /// <summary>Gets internal notes.</summary>
-    public new string? Notes { get; private set; }
-
     private GroupMembership() { }
 
     private GroupMembership(

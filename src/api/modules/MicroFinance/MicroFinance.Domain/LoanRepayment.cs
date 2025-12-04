@@ -77,9 +77,6 @@ public class LoanRepayment : AuditableEntity, IAggregateRoot
     /// <summary>Gets the payment method.</summary>
     public string PaymentMethod { get; private set; } = default!;
 
-    /// <summary>Gets internal notes.</summary>
-    public new string? Notes { get; private set; }
-
     private LoanRepayment() { }
 
     private LoanRepayment(

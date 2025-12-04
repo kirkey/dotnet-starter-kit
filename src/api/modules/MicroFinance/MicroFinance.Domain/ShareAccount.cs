@@ -96,9 +96,6 @@ public class ShareAccount : AuditableEntity, IAggregateRoot
     /// <summary>Gets the current status.</summary>
     public string Status { get; private set; } = default!;
 
-    /// <summary>Gets internal notes.</summary>
-    public new string? Notes { get; private set; }
-
     /// <summary>Gets the collection of share transactions.</summary>
     public virtual ICollection<ShareTransaction> Transactions { get; private set; } = new List<ShareTransaction>();
 

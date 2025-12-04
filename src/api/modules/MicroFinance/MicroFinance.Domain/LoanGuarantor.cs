@@ -89,9 +89,6 @@ public class LoanGuarantor : AuditableEntity, IAggregateRoot
     /// <summary>Gets the current status.</summary>
     public string Status { get; private set; } = default!;
 
-    /// <summary>Gets internal notes.</summary>
-    public new string? Notes { get; private set; }
-
     private LoanGuarantor() { }
 
     private LoanGuarantor(

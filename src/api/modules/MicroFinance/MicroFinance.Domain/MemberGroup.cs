@@ -121,9 +121,6 @@ public class MemberGroup : AuditableEntity, IAggregateRoot
     /// <summary>Gets the current status of the group.</summary>
     public string Status { get; private set; } = default!;
 
-    /// <summary>Gets internal notes about the group.</summary>
-    public new string? Notes { get; private set; }
-
     /// <summary>Gets the collection of group memberships.</summary>
     public virtual ICollection<GroupMembership> Memberships { get; private set; } = new List<GroupMembership>();
 

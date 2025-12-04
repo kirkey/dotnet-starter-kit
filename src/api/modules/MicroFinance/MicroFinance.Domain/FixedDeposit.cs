@@ -123,9 +123,6 @@ public class FixedDeposit : AuditableEntity, IAggregateRoot
     /// <summary>Gets the date the deposit was closed.</summary>
     public DateOnly? ClosedDate { get; private set; }
 
-    /// <summary>Gets internal notes.</summary>
-    public new string? Notes { get; private set; }
-
     private FixedDeposit() { }
 
     private FixedDeposit(

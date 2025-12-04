@@ -82,9 +82,6 @@ public class SavingsTransaction : AuditableEntity, IAggregateRoot
     /// <summary>Gets the transaction date.</summary>
     public DateOnly TransactionDate { get; private set; }
 
-    /// <summary>Gets the transaction description.</summary>
-    public new string? Description { get; private set; }
-
     /// <summary>Gets the payment method.</summary>
     public string? PaymentMethod { get; private set; }
 
