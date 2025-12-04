@@ -39,7 +39,8 @@ public class RetainedEarningsEndpoints : ICarterModule
             .WithSummary("Create retained earnings record")
             .Produces<RetainedEarningsCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -51,7 +52,8 @@ public class RetainedEarningsEndpoints : ICarterModule
             .WithSummary("Get retained earnings details by ID")
             .Produces<RetainedEarningsDetailsResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (SearchRetainedEarningsRequest request, ISender mediator) =>
@@ -62,7 +64,8 @@ public class RetainedEarningsEndpoints : ICarterModule
             .WithName("SearchRetainedEarnings")
             .WithSummary("Search retained earnings")
             .Produces<List<RetainedEarningsResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update net income endpoint
         group.MapPut("/{id:guid}/net-income", async (DefaultIdType id, UpdateNetIncomeCommand request, ISender mediator) =>
@@ -76,7 +79,8 @@ public class RetainedEarningsEndpoints : ICarterModule
             .WithDescription("Updates the net income for the fiscal year")
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Record distribution endpoint
         group.MapPost("/{id:guid}/distributions", async (DefaultIdType id, RecordDistributionCommand request, ISender mediator) =>
@@ -90,7 +94,8 @@ public class RetainedEarningsEndpoints : ICarterModule
             .WithDescription("Records a distribution to members or shareholders")
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Close endpoint
         group.MapPost("/{id:guid}/close", async (DefaultIdType id, CloseRetainedEarningsCommand request, ISender mediator) =>
@@ -104,7 +109,8 @@ public class RetainedEarningsEndpoints : ICarterModule
             .WithDescription("Closes the fiscal year for retained earnings")
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Reopen endpoint
         group.MapPost("/{id:guid}/reopen", async (DefaultIdType id, ReopenRetainedEarningsCommand request, ISender mediator) =>
@@ -118,7 +124,8 @@ public class RetainedEarningsEndpoints : ICarterModule
             .WithDescription("Reopens a closed fiscal year for retained earnings")
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }
 

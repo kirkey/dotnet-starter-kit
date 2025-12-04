@@ -171,7 +171,8 @@ public class CycleCountsEndpoints : ICarterModule
         .Produces<RecordCycleCountItemResponse>()
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status404NotFound)
-        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store));
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
+            .MapToApiVersion(1);
 
         // Search cycle count items
         group.MapPost("/items/search", async (SearchCycleCountItemsRequest request, ISender sender) =>

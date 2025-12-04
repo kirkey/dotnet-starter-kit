@@ -33,7 +33,8 @@ public class DocumentTemplatesEndpoints : ICarterModule
             .WithSummary("Creates a new document template")
             .WithDescription("Creates a new document template for document generation")
             .Produces<CreateDocumentTemplateResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -44,7 +45,8 @@ public class DocumentTemplatesEndpoints : ICarterModule
             .WithSummary("Gets document template by ID")
             .WithDescription("Retrieves document template details")
             .Produces<DocumentTemplateResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchDocumentTemplatesRequest request, ISender mediator) =>
             {
@@ -55,7 +57,8 @@ public class DocumentTemplatesEndpoints : ICarterModule
             .WithSummary("Searches document templates")
             .WithDescription("Searches document templates with pagination and filters")
             .Produces<PagedList<DocumentTemplateResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateDocumentTemplateCommand request, ISender mediator) =>
             {
@@ -69,7 +72,8 @@ public class DocumentTemplatesEndpoints : ICarterModule
             .WithSummary("Updates a document template")
             .WithDescription("Updates document template information")
             .Produces<UpdateDocumentTemplateResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -80,7 +84,8 @@ public class DocumentTemplatesEndpoints : ICarterModule
             .WithSummary("Deletes a document template")
             .WithDescription("Deletes a document template")
             .Produces<DeleteDocumentTemplateResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
     }
 }
 

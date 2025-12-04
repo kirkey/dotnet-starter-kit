@@ -42,7 +42,8 @@ public class ChecksEndpoints : ICarterModule
             .Produces<CheckCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -55,7 +56,8 @@ public class ChecksEndpoints : ICarterModule
             .WithDescription("Retrieve detailed information about a specific check including current status, payment details, and complete audit trail.")
             .Produces<CheckGetResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id:guid}", async (DefaultIdType id, CheckUpdateCommand command, ISender mediator) =>
@@ -75,7 +77,8 @@ public class ChecksEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (CheckSearchQuery query, ISender mediator) =>
@@ -87,7 +90,8 @@ public class ChecksEndpoints : ICarterModule
             .WithSummary("Search checks")
             .WithDescription("Search and filter checks with pagination, status filtering, date ranges, and amount ranges. Supports advanced filtering by check number, bank account, payee name, and print/stop payment status.")
             .Produces<PagedList<CheckSearchResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Issue endpoint
         group.MapPost("/issue", async (CheckIssueCommand command, ISender mediator) =>
@@ -102,7 +106,8 @@ public class ChecksEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Void endpoint
         group.MapPost("/void", async (CheckVoidCommand command, ISender mediator) =>
@@ -117,7 +122,8 @@ public class ChecksEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Clear endpoint
         group.MapPost("/clear", async (CheckClearCommand command, ISender mediator) =>
@@ -132,7 +138,8 @@ public class ChecksEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Stop Payment endpoint
         group.MapPost("/stop-payment", async (CheckStopPaymentCommand command, ISender mediator) =>
@@ -147,7 +154,8 @@ public class ChecksEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Print endpoint
         group.MapPost("/print", async (CheckPrintCommand command, ISender mediator) =>
@@ -162,6 +170,7 @@ public class ChecksEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

@@ -34,7 +34,8 @@ public class ConsumptionsEndpoints : ICarterModule
             .WithName("CreateConsumption")
             .WithSummary("Create consumption record")
             .WithDescription("Creates a new consumption/meter reading record")
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -46,7 +47,8 @@ public class ConsumptionsEndpoints : ICarterModule
             .WithSummary("Get consumption record")
             .WithDescription("Retrieves a consumption record by ID")
             .Produces<ConsumptionResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateConsumptionCommand command, ISender mediator) =>
@@ -61,7 +63,8 @@ public class ConsumptionsEndpoints : ICarterModule
             .WithSummary("Update consumption record")
             .WithDescription("Updates a consumption record")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete endpoint
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -73,7 +76,8 @@ public class ConsumptionsEndpoints : ICarterModule
             .WithSummary("Delete consumption record")
             .WithDescription("Deletes a consumption record")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (SearchConsumptionsRequest request, ISender mediator) =>
@@ -85,6 +89,7 @@ public class ConsumptionsEndpoints : ICarterModule
             .WithSummary("Search consumption records")
             .WithDescription("Search consumption records with filters and pagination")
             .Produces<PagedList<ConsumptionResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

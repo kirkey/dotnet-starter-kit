@@ -38,7 +38,8 @@ public class ProjectsEndpoints : ICarterModule
             .WithSummary("create a project")
             .WithDescription("create a project")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -50,7 +51,8 @@ public class ProjectsEndpoints : ICarterModule
             .WithSummary("get a project by id")
             .WithDescription("get a project by id")
             .Produces<ProjectResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateProjectCommand request, ISender mediator) =>
@@ -63,7 +65,8 @@ public class ProjectsEndpoints : ICarterModule
             .WithSummary("update a project")
             .WithDescription("update a project")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete endpoint
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -75,7 +78,8 @@ public class ProjectsEndpoints : ICarterModule
             .WithSummary("Delete a project by id")
             .WithDescription("Deletes a project by its unique identifier and returns the result.")
             .Produces<DeleteProjectResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (ISender mediator, [FromBody] SearchProjectsCommand command) =>
@@ -87,6 +91,7 @@ public class ProjectsEndpoints : ICarterModule
             .WithSummary("Gets a list of projects")
             .WithDescription("Gets a list of projects with pagination and filtering support")
             .Produces<PagedList<ProjectResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

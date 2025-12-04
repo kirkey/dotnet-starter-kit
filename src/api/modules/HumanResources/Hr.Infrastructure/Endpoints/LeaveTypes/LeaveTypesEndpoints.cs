@@ -28,7 +28,8 @@ public class LeaveTypesEndpoints : ICarterModule
             .WithSummary("Creates a new leave type")
             .WithDescription("Creates a new leave type with Philippines Labor Code compliance including classification, accrual frequency, and approval requirements")
             .Produces<CreateLeaveTypeResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -39,7 +40,8 @@ public class LeaveTypesEndpoints : ICarterModule
             .WithSummary("Gets leave type by ID")
             .WithDescription("Retrieves detailed information about a specific leave type including accrual rules and approval requirements")
             .Produces<LeaveTypeResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateLeaveTypeCommand request, ISender mediator) =>
             {
@@ -53,7 +55,8 @@ public class LeaveTypesEndpoints : ICarterModule
             .WithSummary("Updates a leave type")
             .WithDescription("Updates leave type information including accrual allowance, frequency, and approval requirements")
             .Produces<UpdateLeaveTypeResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -64,7 +67,8 @@ public class LeaveTypesEndpoints : ICarterModule
             .WithSummary("Deletes a leave type")
             .WithDescription("Removes a leave type from the system")
             .Produces<DeleteLeaveTypeResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchLeaveTypesRequest request, ISender mediator) =>
             {
@@ -75,7 +79,8 @@ public class LeaveTypesEndpoints : ICarterModule
             .WithSummary("Searches leave types")
             .WithDescription("Searches and filters leave types with pagination support")
             .Produces<PagedList<LeaveTypeResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves))
+            .MapToApiVersion(1);
     }
 }
 

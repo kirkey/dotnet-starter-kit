@@ -38,7 +38,8 @@ public class CustomersEndpoints : ICarterModule
             .Produces<CustomerCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -51,7 +52,8 @@ public class CustomersEndpoints : ICarterModule
             .WithDescription("Retrieves detailed information about a specific customer.")
             .Produces<CustomerDetailsDto>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id}", async (DefaultIdType id, CustomerUpdateCommand request, ISender mediator) =>
@@ -65,7 +67,8 @@ public class CustomersEndpoints : ICarterModule
             .WithDescription("Updates an existing customer's information.")
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (CustomerSearchRequest request, ISender mediator) =>
@@ -77,7 +80,8 @@ public class CustomersEndpoints : ICarterModule
             .WithSummary("Search customers with pagination")
             .WithDescription("Searches and lists customers with optional filters and pagination support.")
             .Produces<PagedList<CustomerSearchResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }
 

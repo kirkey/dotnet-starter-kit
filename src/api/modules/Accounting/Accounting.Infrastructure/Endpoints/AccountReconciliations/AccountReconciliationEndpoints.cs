@@ -38,7 +38,8 @@ public class AccountReconciliationEndpoints : ICarterModule
             .WithDescription("Create a new account reconciliation comparing GL balance with subsidiary ledger")
             .Produces<DefaultIdType>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -50,7 +51,8 @@ public class AccountReconciliationEndpoints : ICarterModule
             .WithDescription("Get account reconciliation details by ID")
             .Produces<AccountReconciliationResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (ISender mediator, [FromBody] SearchAccountReconciliationsRequest request) =>
             {
@@ -61,7 +63,8 @@ public class AccountReconciliationEndpoints : ICarterModule
             .WithSummary("Search Account Reconciliations")
             .WithDescription("Search and filter account reconciliations with pagination and filtering support")
             .Produces<PagedList<AccountReconciliationResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, ISender mediator, UpdateAccountReconciliationCommand command) =>
             {
@@ -74,7 +77,8 @@ public class AccountReconciliationEndpoints : ICarterModule
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id}/approve", async (DefaultIdType id, ISender mediator, ApproveAccountReconciliationCommand command) =>
             {
@@ -87,7 +91,8 @@ public class AccountReconciliationEndpoints : ICarterModule
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -100,7 +105,8 @@ public class AccountReconciliationEndpoints : ICarterModule
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/reconcile", async (ReconcileGeneralLedgerAccountCommand request, ISender mediator) =>
             {
@@ -111,7 +117,8 @@ public class AccountReconciliationEndpoints : ICarterModule
             .WithSummary("Reconcile a general ledger account")
             .WithDescription("Run account reconciliation for a chart of account and its reconciliation lines")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }
 

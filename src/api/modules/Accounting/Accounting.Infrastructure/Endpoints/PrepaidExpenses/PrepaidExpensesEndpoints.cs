@@ -39,7 +39,8 @@ public class PrepaidExpensesEndpoints : ICarterModule
             .WithSummary("Create prepaid expense")
             .Produces<PrepaidExpenseCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -52,7 +53,8 @@ public class PrepaidExpensesEndpoints : ICarterModule
             .WithDescription("Retrieves a prepaid expense by its unique identifier")
             .Produces<PrepaidExpenseResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdatePrepaidExpenseCommand request, ISender mediator) =>
@@ -67,7 +69,8 @@ public class PrepaidExpensesEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (SearchPrepaidExpensesRequest request, ISender mediator) =>
@@ -79,7 +82,8 @@ public class PrepaidExpensesEndpoints : ICarterModule
             .WithSummary("Search prepaid expenses")
             .WithDescription("Search prepaid expenses with filtering and pagination")
             .Produces<PagedList<PrepaidExpenseResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Record amortization endpoint
         group.MapPost("/{id:guid}/amortization", async (DefaultIdType id, RecordAmortizationCommand request, ISender mediator) =>
@@ -94,7 +98,8 @@ public class PrepaidExpensesEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Close endpoint
         group.MapPost("/{id:guid}/close", async (DefaultIdType id, ClosePrepaidExpenseCommand command, ISender mediator) =>
@@ -111,7 +116,8 @@ public class PrepaidExpensesEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Cancel endpoint
         group.MapPost("/{id:guid}/cancel", async (DefaultIdType id, CancelPrepaidExpenseCommand request, ISender mediator) =>
@@ -126,7 +132,8 @@ public class PrepaidExpensesEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }
 

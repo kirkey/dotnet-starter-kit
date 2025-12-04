@@ -34,7 +34,8 @@ public class DeductionEndpoints : ICarterModule
             .WithDescription("Creates a new deduction type (loan, cash advance, uniform, etc) with recovery rules per Philippines Labor Code Art 113.")
             .Produces<CreateDeductionResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Payroll));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Payroll))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -47,7 +48,8 @@ public class DeductionEndpoints : ICarterModule
             .WithDescription("Retrieves detailed information for the specified deduction type including recovery rules and compliance settings.")
             .Produces<DeductionResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchDeductionsRequest request, ISender mediator) =>
             {
@@ -59,7 +61,8 @@ public class DeductionEndpoints : ICarterModule
             .WithDescription("Search deduction types by type, recovery method, and active status with pagination.")
             .Produces<PagedList<DeductionDto>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.Payroll));
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.Payroll))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateDeductionCommand body, ISender mediator) =>
             {
@@ -75,7 +78,8 @@ public class DeductionEndpoints : ICarterModule
             .Produces<UpdateDeductionResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Payroll));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Payroll))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -88,7 +92,8 @@ public class DeductionEndpoints : ICarterModule
             .WithDescription("Deletes a deduction type from the master data.")
             .Produces<DeleteDeductionResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Payroll));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Payroll))
+            .MapToApiVersion(1);
     }
 }
 

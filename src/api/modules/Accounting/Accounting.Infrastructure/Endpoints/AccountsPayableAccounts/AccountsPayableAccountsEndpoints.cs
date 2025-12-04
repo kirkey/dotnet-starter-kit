@@ -39,7 +39,8 @@ public class AccountsPayableAccountsEndpoints : ICarterModule
             .WithSummary("Create AP account")
             .Produces<AccountsPayableAccountCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -50,7 +51,8 @@ public class AccountsPayableAccountsEndpoints : ICarterModule
             .WithSummary("Get AP account by ID")
             .Produces<ApAccountResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id}", async (DefaultIdType id, AccountsPayableAccountUpdateCommand request, ISender mediator) =>
             {
@@ -65,7 +67,8 @@ public class AccountsPayableAccountsEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -77,7 +80,8 @@ public class AccountsPayableAccountsEndpoints : ICarterModule
             .WithDescription("Deletes an accounts payable account (only if balance is zero)")
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchApAccountsRequest request, ISender mediator) =>
             {
@@ -87,7 +91,8 @@ public class AccountsPayableAccountsEndpoints : ICarterModule
             .WithName("SearchApAccounts")
             .WithSummary("Search AP accounts")
             .Produces<PagedList<ApAccountResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Workflow operations
         group.MapPut("/{id:guid}/balance", async (DefaultIdType id, UpdateAPBalanceCommand command, ISender mediator) =>
@@ -102,7 +107,8 @@ public class AccountsPayableAccountsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/payments", async (DefaultIdType id, RecordAPPaymentCommand command, ISender mediator) =>
             {
@@ -116,7 +122,8 @@ public class AccountsPayableAccountsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/discounts-lost", async (DefaultIdType id, RecordAPDiscountLostCommand command, ISender mediator) =>
             {
@@ -130,7 +137,8 @@ public class AccountsPayableAccountsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/reconcile", async (DefaultIdType id, ReconcileAPAccountCommand command, ISender mediator) =>
             {
@@ -144,6 +152,7 @@ public class AccountsPayableAccountsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

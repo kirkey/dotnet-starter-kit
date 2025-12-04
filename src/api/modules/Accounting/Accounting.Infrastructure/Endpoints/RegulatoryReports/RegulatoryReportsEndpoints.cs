@@ -36,7 +36,8 @@ public class RegulatoryReportsEndpoints : ICarterModule
             .WithSummary("Create a new regulatory report")
             .WithDescription("Creates a new regulatory report")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -48,7 +49,8 @@ public class RegulatoryReportsEndpoints : ICarterModule
             .WithSummary("Get regulatory report by ID")
             .WithDescription("Retrieves a regulatory report by its unique identifier")
             .Produces<RegulatoryReportResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateRegulatoryReportRequest request, ISender mediator) =>
@@ -63,7 +65,8 @@ public class RegulatoryReportsEndpoints : ICarterModule
             .WithSummary("Update regulatory report")
             .WithDescription("Updates an existing regulatory report")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (SearchRegulatoryReportsRequest request, ISender mediator) =>
@@ -75,6 +78,7 @@ public class RegulatoryReportsEndpoints : ICarterModule
             .WithSummary("Search regulatory reports")
             .WithDescription("Searches regulatory reports with filtering support")
             .Produces<List<RegulatoryReportResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

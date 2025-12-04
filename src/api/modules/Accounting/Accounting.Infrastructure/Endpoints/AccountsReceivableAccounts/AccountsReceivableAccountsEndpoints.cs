@@ -38,7 +38,8 @@ public class AccountsReceivableAccountsEndpoints : ICarterModule
             .WithSummary("Create AR account")
             .Produces<AccountsReceivableAccountCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -49,7 +50,8 @@ public class AccountsReceivableAccountsEndpoints : ICarterModule
             .WithSummary("Get AR account by ID")
             .Produces<ArAccountResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchArAccountsRequest request, ISender mediator) =>
             {
@@ -59,7 +61,8 @@ public class AccountsReceivableAccountsEndpoints : ICarterModule
             .WithName("SearchArAccounts")
             .WithSummary("Search AR accounts")
             .Produces<PagedList<ArAccountResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Workflow operations
         group.MapPut("/{id:guid}/balance", async (DefaultIdType id, UpdateArBalanceCommand request, ISender mediator) =>
@@ -74,7 +77,8 @@ public class AccountsReceivableAccountsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}/allowance", async (DefaultIdType id, UpdateARAllowanceCommand request, ISender mediator) =>
             {
@@ -88,7 +92,8 @@ public class AccountsReceivableAccountsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/write-offs", async (DefaultIdType id, RecordARWriteOffCommand request, ISender mediator) =>
             {
@@ -102,7 +107,8 @@ public class AccountsReceivableAccountsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/collections", async (DefaultIdType id, RecordARCollectionCommand request, ISender mediator) =>
             {
@@ -116,7 +122,8 @@ public class AccountsReceivableAccountsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Receive, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Receive, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/reconcile", async (DefaultIdType id, ReconcileArAccountCommand request, ISender mediator) =>
             {
@@ -130,6 +137,7 @@ public class AccountsReceivableAccountsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

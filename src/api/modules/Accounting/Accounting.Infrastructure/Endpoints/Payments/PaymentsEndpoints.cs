@@ -41,7 +41,8 @@ public class PaymentsEndpoints : ICarterModule
             .Produces<PaymentCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
@@ -54,7 +55,8 @@ public class PaymentsEndpoints : ICarterModule
             .WithDescription("Retrieves a payment by its unique identifier")
             .Produces<PaymentGetResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id}", async (DefaultIdType id, PaymentUpdateCommand request, ISender mediator) =>
@@ -68,7 +70,8 @@ public class PaymentsEndpoints : ICarterModule
             .WithDescription("Updates payment details (reference, deposit account, description, notes)")
             .Produces<PaymentUpdateResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete endpoint
         group.MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
@@ -82,7 +85,8 @@ public class PaymentsEndpoints : ICarterModule
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (PaymentSearchRequest request, ISender mediator) =>
@@ -94,7 +98,8 @@ public class PaymentsEndpoints : ICarterModule
             .WithSummary("Search payments")
             .WithDescription("Searches payments with filtering and pagination")
             .Produces<PagedList<PaymentSearchResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Allocate payment endpoint
         group.MapPost("/allocate", async (AllocatePaymentCommand request, ISender mediator) =>
@@ -105,7 +110,8 @@ public class PaymentsEndpoints : ICarterModule
             .WithName("AllocatePayment")
             .WithSummary("Allocate a payment")
             .WithDescription("Allocate a payment to invoices")
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Refund payment endpoint
         group.MapPost("/{id}/refund", async (DefaultIdType id, RefundPaymentCommand request, ISender mediator) =>
@@ -124,7 +130,8 @@ public class PaymentsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Void payment endpoint
         group.MapPost("/{id}/void", async (DefaultIdType id, VoidPaymentCommand request, ISender mediator) =>
@@ -143,6 +150,7 @@ public class PaymentsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

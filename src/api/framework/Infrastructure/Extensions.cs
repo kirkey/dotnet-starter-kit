@@ -74,7 +74,6 @@ public static class Extensions
         app.UseMultitenancy();
         app.UseExceptionHandler();
         app.UseCorsPolicy();
-        app.UseOpenApi();
         app.UseJobDashboard(app.Configuration);
         app.UseRouting();
         app.UseStaticFiles();
@@ -96,6 +95,10 @@ public static class Extensions
 
         // Map versioned endpoint
         app.MapGroup("api/v{version:apiVersion}").WithApiVersionSet(versions);
+
+        // NOTE: UseOpenApi must be called AFTER all endpoints are mapped (see UseModules in ModuleExtensions.cs)
+        // This ensures Swashbuckle can discover all endpoints including ICarterModule implementations
+        // app.UseOpenApi() is called in UseModules() AFTER MapCarter() for this reason
 
         return app;
     }

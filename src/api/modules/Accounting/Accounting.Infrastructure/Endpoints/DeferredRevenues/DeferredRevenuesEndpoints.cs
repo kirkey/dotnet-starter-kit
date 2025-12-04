@@ -38,7 +38,8 @@ public class DeferredRevenuesEndpoints : ICarterModule
             .Produces<object>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -51,7 +52,8 @@ public class DeferredRevenuesEndpoints : ICarterModule
             .WithDescription("Retrieves a deferred revenue entry by its unique identifier")
             .Produces<DeferredRevenueResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateDeferredRevenueCommand command, ISender mediator) =>
@@ -68,7 +70,8 @@ public class DeferredRevenuesEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete endpoint
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -82,7 +85,8 @@ public class DeferredRevenuesEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (SearchDeferredRevenuesRequest request, ISender mediator) =>
@@ -94,7 +98,8 @@ public class DeferredRevenuesEndpoints : ICarterModule
             .WithSummary("Search deferred revenues")
             .WithDescription("Searches deferred revenue entries with filtering and pagination")
             .Produces<PagedList<DeferredRevenueResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Recognize endpoint
         group.MapPost("/{id:guid}/recognize", async (DefaultIdType id, RecognizeDeferredRevenueCommand command, ISender mediator) =>
@@ -111,7 +116,8 @@ public class DeferredRevenuesEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }
 

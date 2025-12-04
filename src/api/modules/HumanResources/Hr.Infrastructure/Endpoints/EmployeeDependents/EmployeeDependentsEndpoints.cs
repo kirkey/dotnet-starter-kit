@@ -33,7 +33,8 @@ public class EmployeeDependentsEndpoints : ICarterModule
             .WithSummary("Creates a new employee dependent")
             .WithDescription("Creates a new employee dependent (family member, beneficiary)")
             .Produces<CreateEmployeeDependentResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -44,7 +45,8 @@ public class EmployeeDependentsEndpoints : ICarterModule
             .WithSummary("Gets employee dependent by ID")
             .WithDescription("Retrieves employee dependent details")
             .Produces<EmployeeDependentResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchEmployeeDependentsRequest request, ISender mediator) =>
             {
@@ -55,7 +57,8 @@ public class EmployeeDependentsEndpoints : ICarterModule
             .WithSummary("Searches employee dependents")
             .WithDescription("Searches employee dependents with pagination and filters")
             .Produces<PagedList<EmployeeDependentResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateEmployeeDependentCommand request, ISender mediator) =>
             {
@@ -69,7 +72,8 @@ public class EmployeeDependentsEndpoints : ICarterModule
             .WithSummary("Updates an employee dependent")
             .WithDescription("Updates employee dependent information")
             .Produces<UpdateEmployeeDependentResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -80,7 +84,8 @@ public class EmployeeDependentsEndpoints : ICarterModule
             .WithSummary("Deletes an employee dependent")
             .WithDescription("Deletes an employee dependent record")
             .Produces<DeleteEmployeeDependentResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
     }
 }
 

@@ -36,7 +36,8 @@ public class MeterEndpoints : ICarterModule
             .WithName("CreateMeter")
             .WithSummary("Create meter")
             .WithDescription("Creates a new meter")
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -48,7 +49,8 @@ public class MeterEndpoints : ICarterModule
             .WithSummary("Get meter")
             .WithDescription("Retrieves a meter by ID")
             .Produces<MeterResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateMeterCommand command, ISender mediator) =>
@@ -63,7 +65,8 @@ public class MeterEndpoints : ICarterModule
             .WithSummary("Update meter")
             .WithDescription("Updates a meter")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete endpoint
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -75,7 +78,8 @@ public class MeterEndpoints : ICarterModule
             .WithSummary("Delete meter")
             .WithDescription("Deletes a meter (cannot have reading history)")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (SearchMetersRequest request, ISender mediator) =>
@@ -87,6 +91,7 @@ public class MeterEndpoints : ICarterModule
             .WithSummary("Search meters")
             .WithDescription("Search meters with filters and pagination")
             .Produces<PagedList<MeterResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

@@ -1,4 +1,5 @@
 ﻿﻿using System.Reflection;
+using FSH.Framework.Infrastructure.OpenApi;
 
  namespace FSH.Starter.WebApi.Host;
 
@@ -147,6 +148,10 @@ public static class Extensions
 
         //use carter for all module endpoints (Store, Accounting, HR, etc. are auto-discovered via ICarterModule)
         endpoints.MapCarter();
+
+        // IMPORTANT: UseOpenApi must be called AFTER MapCarter() to ensure Swashbuckle discovers all ICarterModule endpoints
+        // When UseOpenApi is called before MapCarter, the Swagger/OpenAPI generation misses the dynamically registered endpoints
+        app.UseOpenApi();
 
         return app;
     }

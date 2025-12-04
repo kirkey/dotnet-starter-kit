@@ -38,7 +38,8 @@ public class BudgetsEndpoints : ICarterModule
             .WithSummary("create a budget")
             .WithDescription("create a budget")
             .Produces<CreateBudgetResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -50,7 +51,8 @@ public class BudgetsEndpoints : ICarterModule
             .WithSummary("get a budget by id")
             .WithDescription("get a budget by id")
             .Produces<BudgetResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateBudgetCommand request, ISender mediator) =>
@@ -63,7 +65,8 @@ public class BudgetsEndpoints : ICarterModule
             .WithSummary("update a budget")
             .WithDescription("update a budget")
             .Produces<UpdateBudgetResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete endpoint
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -74,7 +77,8 @@ public class BudgetsEndpoints : ICarterModule
             .WithName("DeleteBudget")
             .WithSummary("delete budget by id")
             .WithDescription("delete budget by id")
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (ISender mediator, [FromBody] SearchBudgetsRequest request) =>
@@ -86,7 +90,8 @@ public class BudgetsEndpoints : ICarterModule
             .WithSummary("Gets a list of budgets")
             .WithDescription("Gets a list of budgets with pagination and filtering support")
             .Produces<PagedList<BudgetResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Approve endpoint
         group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveBudgetCommand command, ISender mediator) =>
@@ -111,6 +116,7 @@ public class BudgetsEndpoints : ICarterModule
             .WithSummary("Close budget")
             .WithDescription("Closes a budget")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

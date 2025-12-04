@@ -49,7 +49,8 @@ public class EmployeeDashboardsEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status401Unauthorized)
             .ProducesProblem(StatusCodes.Status403Forbidden)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Dashboard));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Dashboard))
+            .MapToApiVersion(1);
     }
 }
 

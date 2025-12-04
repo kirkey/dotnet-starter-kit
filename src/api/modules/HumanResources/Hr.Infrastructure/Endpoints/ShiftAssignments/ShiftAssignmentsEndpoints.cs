@@ -33,7 +33,8 @@ public class ShiftAssignmentsEndpoints : ICarterModule
             .WithSummary("Creates a new shift assignment")
             .WithDescription("Assigns a shift to an employee for a specified date range")
             .Produces<CreateShiftAssignmentResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Attendance));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Attendance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -44,7 +45,8 @@ public class ShiftAssignmentsEndpoints : ICarterModule
             .WithSummary("Gets shift assignment details")
             .WithDescription("Retrieves detailed information about a specific shift assignment")
             .Produces<ShiftAssignmentResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Attendance));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Attendance))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateShiftAssignmentCommand request, ISender mediator) =>
             {
@@ -58,7 +60,8 @@ public class ShiftAssignmentsEndpoints : ICarterModule
             .WithSummary("Updates a shift assignment")
             .WithDescription("Updates the dates, recurrence, or notes for a shift assignment")
             .Produces<UpdateShiftAssignmentResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Attendance));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Attendance))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -69,7 +72,8 @@ public class ShiftAssignmentsEndpoints : ICarterModule
             .WithSummary("Deletes a shift assignment")
             .WithDescription("Removes a shift assignment from the system")
             .Produces<DeleteShiftAssignmentResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Attendance));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Attendance))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchShiftAssignmentsRequest request, ISender mediator) =>
             {
@@ -80,6 +84,7 @@ public class ShiftAssignmentsEndpoints : ICarterModule
             .WithSummary("Searches shift assignments")
             .WithDescription("Searches and filters shift assignments with pagination")
             .Produces<PagedList<ShiftAssignmentResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Attendance));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Attendance))
+            .MapToApiVersion(1);
     }
 }

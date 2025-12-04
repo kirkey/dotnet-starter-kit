@@ -37,7 +37,8 @@ public class ItemsEndpoints : ICarterModule
             .WithSummary("Create a new item")
             .WithDescription("Creates a new inventory item")
             .Produces<CreateItemResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -48,7 +49,8 @@ public class ItemsEndpoints : ICarterModule
             .WithSummary("Get item by ID")
             .WithDescription("Retrieves a specific inventory item by its ID")
             .Produces<ItemResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateItemCommand request, ISender mediator) =>
             {
@@ -60,7 +62,8 @@ public class ItemsEndpoints : ICarterModule
             .WithSummary("Update an existing item")
             .WithDescription("Updates an existing inventory item")
             .Produces<UpdateItemResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -71,7 +74,8 @@ public class ItemsEndpoints : ICarterModule
             .WithSummary("Delete an item")
             .WithDescription("Deletes an inventory item")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchItemsCommand command, ISender mediator) =>
             {
@@ -82,7 +86,8 @@ public class ItemsEndpoints : ICarterModule
             .WithSummary("Search items")
             .WithDescription("Searches for inventory items with pagination and filtering")
             .Produces<PagedList<ItemResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
+            .MapToApiVersion(1);
 
         group.MapPost("/import", async (ImportItemsCommand command, ISender mediator, CancellationToken cancellationToken) =>
             {
@@ -93,7 +98,8 @@ public class ItemsEndpoints : ICarterModule
             .WithSummary("Import items from Excel file")
             .WithDescription("Imports items from an Excel file with validation. Returns ImportResponse with successful/failed counts and detailed error messages.")
             .Produces<ImportResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Import, FshResources.Store));
+            .RequirePermission(FshPermission.NameFor(FshActions.Import, FshResources.Store))
+            .MapToApiVersion(1);
 
         group.MapPost("/export", async (ExportItemsQuery query, ISender mediator, CancellationToken cancellationToken) =>
             {
@@ -105,6 +111,7 @@ public class ItemsEndpoints : ICarterModule
             .WithDescription("Exports items to Excel format with optional filtering by category, supplier, price range, and other criteria. Returns an ExportResponse with file data.")
             .Produces<ExportResponse>()
             .Produces<ExportResponse>(400)
-            .RequirePermission(FshPermission.NameFor(FshActions.Export, FshResources.Store));
+            .RequirePermission(FshPermission.NameFor(FshActions.Export, FshResources.Store))
+            .MapToApiVersion(1);
     }
 }

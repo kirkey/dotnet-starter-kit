@@ -33,7 +33,8 @@ public class BinsEndpoints : ICarterModule
             .WithSummary("Create a new bin")
             .WithDescription("Creates a new storage bin within a warehouse location")
             .Produces<CreateBinResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Warehouse));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Warehouse))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -44,7 +45,8 @@ public class BinsEndpoints : ICarterModule
             .WithSummary("Get bin by ID")
             .WithDescription("Retrieves a specific storage bin by its ID")
             .Produces<BinResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Warehouse));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Warehouse))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateBinCommand request, ISender mediator) =>
             {
@@ -56,7 +58,8 @@ public class BinsEndpoints : ICarterModule
             .WithSummary("Update an existing bin")
             .WithDescription("Updates an existing storage bin")
             .Produces<UpdateBinResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Warehouse));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Warehouse))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -67,7 +70,8 @@ public class BinsEndpoints : ICarterModule
             .WithSummary("Delete a bin")
             .WithDescription("Deletes a storage bin")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Warehouse));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Warehouse))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchBinsCommand command, ISender mediator) =>
             {
@@ -78,6 +82,7 @@ public class BinsEndpoints : ICarterModule
             .WithSummary("Search bins")
             .WithDescription("Searches for storage bins with pagination and filtering")
             .Produces<PagedList<BinResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Warehouse));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Warehouse))
+            .MapToApiVersion(1);
     }
 }

@@ -36,7 +36,8 @@ public class LeaveReportsEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status401Unauthorized)
             .ProducesProblem(StatusCodes.Status403Forbidden)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -51,7 +52,8 @@ public class LeaveReportsEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status401Unauthorized)
             .ProducesProblem(StatusCodes.Status403Forbidden)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchLeaveReportsRequest request, ISender mediator) =>
             {
@@ -65,7 +67,8 @@ public class LeaveReportsEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status401Unauthorized)
             .ProducesProblem(StatusCodes.Status403Forbidden)
-            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id}/download", async (DefaultIdType id, ISender mediator) =>
             {
@@ -78,7 +81,8 @@ public class LeaveReportsEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status401Unauthorized)
             .ProducesProblem(StatusCodes.Status403Forbidden)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id}/export", async (DefaultIdType id, ExportLeaveReportRequest request, ISender mediator) =>
             {
@@ -92,7 +96,8 @@ public class LeaveReportsEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status401Unauthorized)
             .ProducesProblem(StatusCodes.Status403Forbidden)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves))
+            .MapToApiVersion(1);
     }
 }
 

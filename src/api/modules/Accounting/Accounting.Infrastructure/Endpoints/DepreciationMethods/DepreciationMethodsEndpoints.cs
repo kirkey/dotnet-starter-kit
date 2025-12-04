@@ -37,7 +37,8 @@ public class DepreciationMethodsEndpoints : ICarterModule
             .WithSummary("Create a depreciation method")
             .WithDescription("Creates a new depreciation method")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get depreciation method by ID
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -48,7 +49,8 @@ public class DepreciationMethodsEndpoints : ICarterModule
             .WithName("GetDepreciationMethod")
             .WithSummary("Get a depreciation method by ID")
             .WithDescription("Gets the details of a depreciation method by its ID")
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update depreciation method
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateDepreciationMethodRequest request, ISender mediator) =>
@@ -61,7 +63,8 @@ public class DepreciationMethodsEndpoints : ICarterModule
             .WithSummary("Update a depreciation method")
             .WithDescription("Updates an existing depreciation method")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete depreciation method
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -72,7 +75,8 @@ public class DepreciationMethodsEndpoints : ICarterModule
             .WithName("DeleteDepreciationMethod")
             .WithSummary("Delete a depreciation method")
             .WithDescription("Deletes a depreciation method by its ID")
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search depreciation methods
         group.MapPost("/search", async (SearchDepreciationMethodsRequest request, ISender mediator) =>
@@ -84,7 +88,8 @@ public class DepreciationMethodsEndpoints : ICarterModule
             .WithSummary("Search depreciation methods")
             .WithDescription("Searches depreciation methods with filtering and pagination")
             .Produces<PagedList<DepreciationMethodResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Activate depreciation method
         group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender mediator) =>
@@ -98,7 +103,8 @@ public class DepreciationMethodsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Deactivate depreciation method
         group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender mediator) =>
@@ -112,6 +118,7 @@ public class DepreciationMethodsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

@@ -40,7 +40,8 @@ public class PayeesEndpoints : ICarterModule
             .Produces<PayeeCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -54,7 +55,8 @@ public class PayeesEndpoints : ICarterModule
             .Produces<PayeeResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id:guid}", async (DefaultIdType id, PayeeUpdateCommand command, ISender mediator) =>
@@ -72,7 +74,8 @@ public class PayeesEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete endpoint
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -87,7 +90,8 @@ public class PayeesEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (PayeeSearchCommand command, ISender mediator) =>
@@ -99,7 +103,8 @@ public class PayeesEndpoints : ICarterModule
             .WithSummary("Search payees with pagination")
             .WithDescription("Searches payees with comprehensive filtering capabilities including keyword search, payee code, name, expense account code, and TIN filters with pagination support.")
             .Produces<PagedList<PayeeResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Import endpoint
         group.MapPost("/import", async (ImportPayeesCommand command, ISender mediator) =>
@@ -126,6 +131,7 @@ public class PayeesEndpoints : ICarterModule
             .WithDescription("Exports payees to Excel (.xlsx) file with optional filtering by expense account, search criteria, TIN presence, and active status")
             .Produces<FileResult>()
             .ProducesValidationProblem()
-            .RequirePermission(FshPermission.NameFor(FshActions.Export, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Export, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

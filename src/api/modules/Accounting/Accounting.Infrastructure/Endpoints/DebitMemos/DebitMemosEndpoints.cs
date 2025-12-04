@@ -39,7 +39,8 @@ public class DebitMemosEndpoints : ICarterModule
             .WithSummary("Create a debit memo")
             .WithDescription("Create a new debit memo for receivable/payable adjustments")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -52,7 +53,8 @@ public class DebitMemosEndpoints : ICarterModule
             .WithSummary("Get debit memo by ID")
             .WithDescription("Retrieve a specific debit memo by its identifier")
             .Produces<DebitMemoResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateDebitMemoCommand command, ISender mediator) =>
@@ -67,7 +69,8 @@ public class DebitMemosEndpoints : ICarterModule
             .WithSummary("Update a debit memo")
             .WithDescription("Update an existing debit memo (draft only)")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete endpoint
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -80,7 +83,8 @@ public class DebitMemosEndpoints : ICarterModule
             .WithSummary("Delete a debit memo")
             .WithDescription("Delete a debit memo (draft status only)")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (ISender mediator, [FromBody] SearchDebitMemosQuery query) =>
@@ -92,7 +96,8 @@ public class DebitMemosEndpoints : ICarterModule
             .WithSummary("Search debit memos")
             .WithDescription("Search and filter debit memos with pagination")
             .Produces<PagedList<DebitMemoResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Approve endpoint
         group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveDebitMemoCommand command, ISender mediator) =>
@@ -107,7 +112,8 @@ public class DebitMemosEndpoints : ICarterModule
             .WithSummary("Approve a debit memo")
             .WithDescription("Approve a draft debit memo for application")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Apply endpoint
         group.MapPost("/{id:guid}/apply", async (DefaultIdType id, ApplyDebitMemoCommand command, ISender mediator) =>
@@ -122,7 +128,8 @@ public class DebitMemosEndpoints : ICarterModule
             .WithSummary("Apply a debit memo")
             .WithDescription("Apply an approved debit memo to an invoice or bill")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Void endpoint
         group.MapPost("/{id:guid}/void", async (DefaultIdType id, VoidDebitMemoCommand command, ISender mediator) =>
@@ -137,6 +144,7 @@ public class DebitMemosEndpoints : ICarterModule
             .WithSummary("Void a debit memo")
             .WithDescription("Void a debit memo and reverse any applications")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

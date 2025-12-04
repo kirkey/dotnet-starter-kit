@@ -47,7 +47,8 @@ public class BillsEndpoints : ICarterModule
             .Produces<BillCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -60,7 +61,8 @@ public class BillsEndpoints : ICarterModule
             .WithDescription("Retrieves a bill with all line items.")
             .Produces<BillResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id:guid}", async (DefaultIdType id, BillUpdateCommand request, ISender mediator) =>
@@ -74,7 +76,8 @@ public class BillsEndpoints : ICarterModule
             .WithDescription("Updates an existing bill in the accounts payable system with validation.")
             .Produces<UpdateBillResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete endpoint
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -89,7 +92,8 @@ public class BillsEndpoints : ICarterModule
             .Produces<DeleteBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async ([FromBody] SearchBillsRequest request, ISender mediator) =>
@@ -102,7 +106,8 @@ public class BillsEndpoints : ICarterModule
             .WithDescription("Search and filter bills with pagination.")
             .Produces<PagedList<BillResponse>>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Approve endpoint
         group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ISender mediator) =>
@@ -117,7 +122,8 @@ public class BillsEndpoints : ICarterModule
             .Produces<ApproveBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Reject endpoint
         group.MapPut("/{id:guid}/reject", async (DefaultIdType id, RejectBillRequest request, ISender mediator) =>
@@ -132,7 +138,8 @@ public class BillsEndpoints : ICarterModule
             .Produces<RejectBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Post endpoint
         group.MapPut("/{id:guid}/post", async (DefaultIdType id, ISender mediator) =>
@@ -147,7 +154,8 @@ public class BillsEndpoints : ICarterModule
             .Produces<PostBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Mark as paid endpoint
         group.MapPut("/{id:guid}/mark-paid", async (DefaultIdType id, MarkBillAsPaidRequest request, ISender mediator) =>
@@ -162,7 +170,8 @@ public class BillsEndpoints : ICarterModule
             .Produces<MarkBillAsPaidResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.MarkAsPaid, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.MarkAsPaid, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Void endpoint
         group.MapPut("/{id:guid}/void", async (DefaultIdType id, VoidBillRequest request, ISender mediator) =>
@@ -177,7 +186,8 @@ public class BillsEndpoints : ICarterModule
             .Produces<VoidBillResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Void, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Void, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Bill Line Items endpoints
 
@@ -197,7 +207,8 @@ public class BillsEndpoints : ICarterModule
             .Produces<AddBillLineItemResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get line items endpoint
         group.MapGet("/{billId:guid}/line-items", async (DefaultIdType billId, ISender mediator) =>
@@ -211,7 +222,8 @@ public class BillsEndpoints : ICarterModule
             .WithTags("Bill Line Items")
             .Produces<List<BillLineItemResponse>>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get single line item endpoint
         group.MapGet("/{billId:guid}/line-items/{lineItemId:guid}", async (DefaultIdType billId, DefaultIdType lineItemId, ISender mediator) =>
@@ -225,7 +237,8 @@ public class BillsEndpoints : ICarterModule
             .WithTags("Bill Line Items")
             .Produces<BillLineItemResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update line item endpoint
         group.MapPut("/{billId:guid}/line-items/{lineItemId:guid}", async (
@@ -245,7 +258,8 @@ public class BillsEndpoints : ICarterModule
             .Produces<UpdateBillLineItemResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete line item endpoint
         group.MapDelete("/{billId:guid}/line-items/{lineItemId:guid}", async (
@@ -264,7 +278,8 @@ public class BillsEndpoints : ICarterModule
             .Produces<DeleteBillLineItemResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }
 

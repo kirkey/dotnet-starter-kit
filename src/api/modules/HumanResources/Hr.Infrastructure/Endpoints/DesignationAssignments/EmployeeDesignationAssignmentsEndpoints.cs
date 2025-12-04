@@ -33,7 +33,8 @@ public class EmployeeDesignationAssignmentsEndpoints : ICarterModule
             .WithSummary("Assigns a plantilla designation to an employee")
             .WithDescription("Assigns a primary/plantilla designation to an employee")
             .Produces<AssignDesignationResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Assign, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Assign, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPost("/acting-as", async (AssignActingAsDesignationCommand request, ISender mediator) =>
             {
@@ -44,7 +45,8 @@ public class EmployeeDesignationAssignmentsEndpoints : ICarterModule
             .WithSummary("Assigns an acting as designation to an employee")
             .WithDescription("Assigns a temporary acting designation to an employee")
             .Produces<AssignDesignationResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Assign, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Assign, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -57,7 +59,8 @@ public class EmployeeDesignationAssignmentsEndpoints : ICarterModule
             .WithSummary("Gets designation assignment by ID")
             .WithDescription("Retrieves designation assignment details including tenure and status")
             .Produces<DesignationAssignmentResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/end", async (DefaultIdType id, EndDesignationRequest request, ISender mediator) =>
             {
@@ -70,7 +73,8 @@ public class EmployeeDesignationAssignmentsEndpoints : ICarterModule
             .WithSummary("Ends a designation assignment")
             .WithDescription("Ends an active designation assignment on a specified date")
             .Produces<EndDesignationAssignmentResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPost("/history/search", async (SearchEmployeeHistoryRequest request, ISender mediator) =>
             {
@@ -81,7 +85,8 @@ public class EmployeeDesignationAssignmentsEndpoints : ICarterModule
             .WithSummary("Search employee designation history")
             .WithDescription("Searches employee designation history with support for temporal queries, filtering by organization, designation, date range, and employment status")
             .Produces<PagedList<EmployeeHistoryDto>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.Employees))
+            .MapToApiVersion(1);
     }
 }
 

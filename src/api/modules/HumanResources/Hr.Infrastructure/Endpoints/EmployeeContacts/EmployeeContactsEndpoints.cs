@@ -33,7 +33,8 @@ public class EmployeeContactsEndpoints : ICarterModule
             .WithSummary("Creates a new employee contact")
             .WithDescription("Creates a new employee contact (emergency, reference, family)")
             .Produces<CreateEmployeeContactResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -44,7 +45,8 @@ public class EmployeeContactsEndpoints : ICarterModule
             .WithSummary("Gets employee contact by ID")
             .WithDescription("Retrieves employee contact details")
             .Produces<EmployeeContactResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchEmployeeContactsRequest request, ISender mediator) =>
             {
@@ -55,7 +57,8 @@ public class EmployeeContactsEndpoints : ICarterModule
             .WithSummary("Searches employee contacts")
             .WithDescription("Searches employee contacts with pagination and filters")
             .Produces<PagedList<EmployeeContactResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateEmployeeContactCommand request, ISender mediator) =>
             {
@@ -69,7 +72,8 @@ public class EmployeeContactsEndpoints : ICarterModule
             .WithSummary("Updates an employee contact")
             .WithDescription("Updates employee contact information")
             .Produces<UpdateEmployeeContactResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -80,7 +84,8 @@ public class EmployeeContactsEndpoints : ICarterModule
             .WithSummary("Deletes an employee contact")
             .WithDescription("Deletes an employee contact record")
             .Produces<DeleteEmployeeContactResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
     }
 }
 

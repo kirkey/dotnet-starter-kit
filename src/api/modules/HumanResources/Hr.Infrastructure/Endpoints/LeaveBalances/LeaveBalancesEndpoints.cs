@@ -29,7 +29,8 @@ public class LeaveBalancesEndpoints : ICarterModule
             .WithSummary("Creates a new leave balance")
             .WithDescription("Creates a new leave balance for an employee for a specific leave type and year with opening balance")
             .Produces<CreateLeaveBalanceResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -40,7 +41,8 @@ public class LeaveBalancesEndpoints : ICarterModule
             .WithSummary("Gets leave balance by ID")
             .WithDescription("Retrieves detailed information about a specific leave balance including opening, used, and remaining days")
             .Produces<LeaveBalanceResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateLeaveBalanceCommand request, ISender mediator) =>
             {
@@ -54,7 +56,8 @@ public class LeaveBalancesEndpoints : ICarterModule
             .WithSummary("Updates a leave balance")
             .WithDescription("Updates leave balance opening balance or other details")
             .Produces<UpdateLeaveBalanceResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -65,7 +68,8 @@ public class LeaveBalancesEndpoints : ICarterModule
             .WithSummary("Deletes a leave balance")
             .WithDescription("Removes a leave balance from the system")
             .Produces<DeleteLeaveBalanceResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchLeaveBalancesRequest request, ISender mediator) =>
             {
@@ -76,7 +80,8 @@ public class LeaveBalancesEndpoints : ICarterModule
             .WithSummary("Searches leave balances")
             .WithDescription("Searches and filters leave balances by employee, leave type, year with pagination support")
             .Produces<PagedList<LeaveBalanceResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id}/accrue", async (AccrueLeaveCommand request, ISender mediator) =>
             {
@@ -87,7 +92,8 @@ public class LeaveBalancesEndpoints : ICarterModule
             .WithSummary("Accrues leave to a balance")
             .WithDescription("Adds accrued leave amount to a leave balance based on accrual frequency")
             .Produces<AccrueLeaveResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Accrue, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Accrue, FshResources.Leaves))
+            .MapToApiVersion(1);
     }
 }
 

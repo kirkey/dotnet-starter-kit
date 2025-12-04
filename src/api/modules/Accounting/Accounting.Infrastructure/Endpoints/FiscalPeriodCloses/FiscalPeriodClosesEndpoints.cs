@@ -36,7 +36,8 @@ public class FiscalPeriodClosesEndpoints : ICarterModule
             .WithDescription("Initiates a new fiscal period close process (MonthEnd, QuarterEnd, or YearEnd).")
             .Produces<FiscalPeriodCloseCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get fiscal period close by ID
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -49,7 +50,8 @@ public class FiscalPeriodClosesEndpoints : ICarterModule
             .WithDescription("Returns complete fiscal period close details including tasks, validation status, and audit trail.")
             .Produces<FiscalPeriodCloseDetailsDto>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search fiscal period closes
         group.MapPost("/search", async (SearchFiscalPeriodClosesRequest request, ISender mediator) =>
@@ -60,7 +62,8 @@ public class FiscalPeriodClosesEndpoints : ICarterModule
             .WithName("SearchFiscalPeriodCloses")
             .WithSummary("Search fiscal period closes")
             .Produces<PagedList<FiscalPeriodCloseResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Complete fiscal period close task
         group.MapPost("/{id:guid}/tasks/complete", async (DefaultIdType id, CompleteFiscalPeriodTaskCommand command, ISender mediator) =>
@@ -76,7 +79,8 @@ public class FiscalPeriodClosesEndpoints : ICarterModule
             .WithDescription("Marks a task as complete in the fiscal period close checklist")
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Add validation issue
         group.MapPost("/{id:guid}/validation-issues", async (DefaultIdType id, AddFiscalPeriodCloseValidationIssueCommand command, ISender mediator) =>
@@ -95,7 +99,8 @@ public class FiscalPeriodClosesEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Resolve validation issue
         group.MapPut("/{id:guid}/validation-issues/resolve", async (DefaultIdType id, ResolveFiscalPeriodCloseValidationIssueCommand command, ISender mediator) =>
@@ -114,7 +119,8 @@ public class FiscalPeriodClosesEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Complete fiscal period close
         group.MapPost("/{id:guid}/complete", async (DefaultIdType id, CompleteFiscalPeriodCloseCommand command, ISender mediator) =>
@@ -129,7 +135,8 @@ public class FiscalPeriodClosesEndpoints : ICarterModule
             .WithSummary("Complete fiscal period close")
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Reopen fiscal period close
         group.MapPost("/{id:guid}/reopen", async (DefaultIdType id, ReopenFiscalPeriodCloseCommand command, ISender mediator) =>
@@ -144,7 +151,8 @@ public class FiscalPeriodClosesEndpoints : ICarterModule
             .WithSummary("Reopen fiscal period close")
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }
 

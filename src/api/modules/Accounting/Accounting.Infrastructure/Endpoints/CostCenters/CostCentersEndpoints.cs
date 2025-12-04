@@ -39,7 +39,8 @@ public class CostCentersEndpoints : ICarterModule
             .WithSummary("Create cost center")
             .Produces<CostCenterCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -52,7 +53,8 @@ public class CostCentersEndpoints : ICarterModule
             .WithDescription("Retrieves a cost center by its unique identifier")
             .Produces<CostCenterResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateCostCenterCommand command, ISender mediator) =>
@@ -67,7 +69,8 @@ public class CostCentersEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete endpoint
         group.MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
@@ -79,7 +82,8 @@ public class CostCentersEndpoints : ICarterModule
             .WithName("DeleteCostCenter")
             .WithSummary("Delete cost center")
             .WithDescription("Deletes an inactive cost center with no transactions")
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (SearchCostCentersRequest request, ISender mediator) =>
@@ -90,7 +94,8 @@ public class CostCentersEndpoints : ICarterModule
             .WithName("SearchCostCenters")
             .WithSummary("Search cost centers")
             .Produces<PagedList<CostCenterResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update Budget endpoint
         group.MapPut("/{id:guid}/budget", async (DefaultIdType id, UpdateCostCenterBudgetCommand command, ISender mediator) =>
@@ -107,7 +112,8 @@ public class CostCentersEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Record Actual endpoint
         group.MapPost("/{id:guid}/actual", async (DefaultIdType id, RecordCostCenterActualCommand command, ISender mediator) =>
@@ -122,7 +128,8 @@ public class CostCentersEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Activate endpoint
         group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender mediator) =>
@@ -136,7 +143,8 @@ public class CostCentersEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Deactivate endpoint
         group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender mediator) =>
@@ -150,6 +158,7 @@ public class CostCentersEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

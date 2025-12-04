@@ -33,7 +33,8 @@ public class DesignationsEndpoints : ICarterModule
             .WithSummary("Creates a new designation")
             .WithDescription("Creates a new designation in an organizational unit")
             .Produces<CreateDesignationResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Organization));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Organization))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -44,7 +45,8 @@ public class DesignationsEndpoints : ICarterModule
             .WithSummary("Gets designation by ID")
             .WithDescription("Retrieves designation details by ID")
             .Produces<DesignationResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Organization));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Organization))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateDesignationCommand request, ISender mediator) =>
             {
@@ -58,7 +60,8 @@ public class DesignationsEndpoints : ICarterModule
             .WithSummary("Updates a designation")
             .WithDescription("Updates designation information")
             .Produces<UpdateDesignationResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Organization));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Organization))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -69,7 +72,8 @@ public class DesignationsEndpoints : ICarterModule
             .WithSummary("Deletes a designation")
             .WithDescription("Deletes a designation")
             .Produces<DeleteDesignationResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Organization));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Organization))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchDesignationsRequest request, ISender mediator) =>
             {
@@ -80,7 +84,8 @@ public class DesignationsEndpoints : ICarterModule
             .WithSummary("Searches designations")
             .WithDescription("Searches designations with pagination and filters")
             .Produces<PagedList<DesignationResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Organization));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Organization))
+            .MapToApiVersion(1);
     }
 }
 

@@ -32,7 +32,8 @@ public class FinancialStatementsEndpoints : ICarterModule
             .WithSummary("Generate Balance Sheet")
             .WithDescription("Generates a balance sheet for a given date/period")
             .Produces<BalanceSheetDto>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Generate Income Statement
         group.MapPost("/generate/income-statement", async (GenerateIncomeStatementQuery request, ISender mediator) =>
@@ -44,7 +45,8 @@ public class FinancialStatementsEndpoints : ICarterModule
             .WithSummary("Generate Income Statement")
             .WithDescription("Generates an income statement for a given period")
             .Produces<IncomeStatementDto>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Generate Cash Flow Statement
         group.MapPost("/generate/cash-flow", async (GenerateCashFlowStatementQuery request, ISender mediator) =>
@@ -56,6 +58,7 @@ public class FinancialStatementsEndpoints : ICarterModule
             .WithSummary("Generate Cash Flow Statement")
             .WithDescription("Generates a cash flow statement for a given period")
             .Produces<CashFlowStatementDto>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

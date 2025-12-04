@@ -43,7 +43,8 @@ public class ChartOfAccountsEndpoints : ICarterModule
             .WithSummary("Create a chart of account")
             .WithDescription("Creates a new chart of account")
             .Produces<DefaultIdType>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -54,7 +55,8 @@ public class ChartOfAccountsEndpoints : ICarterModule
             .WithSummary("Get chart of account by ID")
             .WithDescription("Retrieves a specific chart of account by its ID")
             .Produces<ChartOfAccountResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateChartOfAccountCommand request, ISender mediator) =>
             {
@@ -68,7 +70,8 @@ public class ChartOfAccountsEndpoints : ICarterModule
             .WithSummary("Update a chart of account")
             .WithDescription("Updates an existing chart of account")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -79,7 +82,8 @@ public class ChartOfAccountsEndpoints : ICarterModule
             .WithSummary("Delete a chart of account")
             .WithDescription("Deletes a chart of account")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (ISender mediator, [FromBody] SearchChartOfAccountRequest request) =>
             {
@@ -90,7 +94,8 @@ public class ChartOfAccountsEndpoints : ICarterModule
             .WithSummary("Search chart of accounts")
             .WithDescription("Searches for chart of accounts with pagination and filtering")
             .Produces<PagedList<ChartOfAccountResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id}/activate", async (DefaultIdType id, ISender mediator) =>
             {
@@ -102,7 +107,8 @@ public class ChartOfAccountsEndpoints : ICarterModule
             .WithSummary("Activate chart of account")
             .WithDescription("Activates a chart of account")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id}/deactivate", async (DefaultIdType id, ISender mediator) =>
             {
@@ -114,7 +120,8 @@ public class ChartOfAccountsEndpoints : ICarterModule
             .WithSummary("Deactivate chart of account")
             .WithDescription("Deactivates a chart of account")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id}/balance", async (DefaultIdType id, UpdateChartOfAccountBalanceCommand command, ISender mediator) =>
             {
@@ -128,7 +135,8 @@ public class ChartOfAccountsEndpoints : ICarterModule
             .WithSummary("Update chart of account balance")
             .WithDescription("Updates a chart of account balance")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/import", async (ImportChartOfAccountsCommand command, ISender mediator) =>
             {
@@ -139,7 +147,8 @@ public class ChartOfAccountsEndpoints : ICarterModule
             .WithSummary("Import chart of accounts from Excel file")
             .WithDescription("Imports chart of accounts from an Excel file with validation. Returns ImportResponse with successful/failed counts and detailed error messages.")
             .Produces<ImportResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Import, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Import, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/export", async (ExportChartOfAccountsQuery query, ISender mediator) =>
             {
@@ -150,6 +159,7 @@ public class ChartOfAccountsEndpoints : ICarterModule
             .WithSummary("Export chart of accounts to Excel file")
             .WithDescription("Exports chart of accounts to Excel format with optional filtering. Returns an ExportResponse with file data.")
             .Produces<ExportResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Export, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Export, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

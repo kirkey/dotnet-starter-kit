@@ -41,7 +41,8 @@ public class BankReconciliationsEndpoints : ICarterModule
             .Produces<DefaultIdType>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -54,7 +55,8 @@ public class BankReconciliationsEndpoints : ICarterModule
                 "adjustments, and audit information.")
             .Produces<BankReconciliationResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateBankReconciliationCommand command, ISender mediator) =>
             {
@@ -72,7 +74,8 @@ public class BankReconciliationsEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -86,7 +89,8 @@ public class BankReconciliationsEndpoints : ICarterModule
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchBankReconciliationsRequest request, ISender mediator) =>
             {
@@ -98,7 +102,8 @@ public class BankReconciliationsEndpoints : ICarterModule
             .WithDescription("Search and filter bank reconciliations by bank account, date range, status, and reconciliation state. " +
                 "Supports pagination. Results are ordered by reconciliation date (most recent first).")
             .Produces<PagedList<BankReconciliationResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id}/start", async (DefaultIdType id, ISender mediator) =>
             {
@@ -113,7 +118,8 @@ public class BankReconciliationsEndpoints : ICarterModule
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id}/complete", async (DefaultIdType id, CompleteBankReconciliationCommand command, ISender mediator) =>
             {
@@ -131,7 +137,8 @@ public class BankReconciliationsEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id}/approve", async (DefaultIdType id, ApproveBankReconciliationCommand command, ISender mediator) =>
             {
@@ -149,7 +156,8 @@ public class BankReconciliationsEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id}/reject", async (DefaultIdType id, RejectBankReconciliationCommand command, ISender mediator) =>
             {
@@ -167,6 +175,7 @@ public class BankReconciliationsEndpoints : ICarterModule
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

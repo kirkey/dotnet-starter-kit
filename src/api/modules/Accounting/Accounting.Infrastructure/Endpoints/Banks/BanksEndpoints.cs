@@ -38,7 +38,8 @@ public class BanksEndpoints : ICarterModule
             .Produces<BankCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -52,7 +53,8 @@ public class BanksEndpoints : ICarterModule
             .WithDescription("Retrieves a bank by its unique identifier with all details.")
             .Produces<BankResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id}", async (DefaultIdType id, BankUpdateCommand request, ISender mediator) =>
@@ -67,7 +69,8 @@ public class BanksEndpoints : ICarterModule
             .Produces<BankUpdateResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete endpoint
         group.MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
@@ -82,7 +85,8 @@ public class BanksEndpoints : ICarterModule
             .Produces<BankDeleteResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (BankSearchRequest request, ISender mediator) =>
@@ -94,7 +98,8 @@ public class BanksEndpoints : ICarterModule
             .WithSummary("Search banks")
             .WithDescription("Searches banks with filtering by bank code, name, routing number, SWIFT code, and active status. Supports pagination and sorting.")
             .Produces<PagedList<BankResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }
 

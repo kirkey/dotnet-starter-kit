@@ -38,7 +38,8 @@ public class AccrualsEndpoints : ICarterModule
             .WithDescription("Creates a new accrual entry")
             .Produces<CreateAccrualResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -50,7 +51,8 @@ public class AccrualsEndpoints : ICarterModule
             .WithDescription("Gets the details of an accrual by its ID")
             .Produces<AccrualResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateAccrualCommand request, ISender mediator) =>
             {
@@ -62,7 +64,8 @@ public class AccrualsEndpoints : ICarterModule
             .WithSummary("Update an accrual")
             .WithDescription("Updates an accrual's mutable fields")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -73,7 +76,8 @@ public class AccrualsEndpoints : ICarterModule
             .WithSummary("Delete accrual by id")
             .WithDescription("Deletes an accrual entry by its identifier")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}/reverse", async (DefaultIdType id, ReverseAccrualCommand command, ISender mediator) =>
             {
@@ -85,7 +89,8 @@ public class AccrualsEndpoints : ICarterModule
             .WithSummary("Reverse an accrual")
             .WithDescription("Reverses an accrual entry by ID")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission(FshPermission.NameFor(FshActions.Void, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Void, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchAccrualsRequest request, ISender mediator) =>
             {
@@ -96,7 +101,8 @@ public class AccrualsEndpoints : ICarterModule
             .WithSummary("Search accruals")
             .WithDescription("Search accrual entries with filters and pagination")
             .Produces<PagedList<AccrualResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveAccrualCommand command, ISender mediator) =>
             {
@@ -108,7 +114,8 @@ public class AccrualsEndpoints : ICarterModule
             .WithSummary("Approve accrual")
             .WithDescription("Approves accrual entry")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectAccrualCommand command, ISender mediator) =>
             {
@@ -120,6 +127,7 @@ public class AccrualsEndpoints : ICarterModule
             .WithSummary("Reject accrual")
             .WithDescription("Rejects accrual entry")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

@@ -33,7 +33,8 @@ public class EmployeeEducationsEndpoints : ICarterModule
             .WithSummary("Creates a new employee education record")
             .WithDescription("Creates a new employee education record with qualification details")
             .Produces<CreateEmployeeEducationResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -44,7 +45,8 @@ public class EmployeeEducationsEndpoints : ICarterModule
             .WithSummary("Gets employee education details")
             .WithDescription("Retrieves detailed information about a specific employee education record")
             .Produces<EmployeeEducationResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchEmployeeEducationsRequest request, ISender mediator) =>
             {
@@ -55,7 +57,8 @@ public class EmployeeEducationsEndpoints : ICarterModule
             .WithSummary("Searches employee education records")
             .WithDescription("Searches and filters employee education records with pagination")
             .Produces<PagedList<EmployeeEducationResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateEmployeeEducationCommand request, ISender mediator) =>
             {
@@ -69,7 +72,8 @@ public class EmployeeEducationsEndpoints : ICarterModule
             .WithSummary("Updates employee education record")
             .WithDescription("Updates education details for an existing employee education record")
             .Produces<UpdateEmployeeEducationResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -80,7 +84,8 @@ public class EmployeeEducationsEndpoints : ICarterModule
             .WithSummary("Deletes an employee education record")
             .WithDescription("Deletes a specific employee education record from the system")
             .Produces<DeleteEmployeeEducationResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Employees))
+            .MapToApiVersion(1);
     }
 }
 

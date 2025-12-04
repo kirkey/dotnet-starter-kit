@@ -36,7 +36,8 @@ public class PaymentAllocationsEndpoints : ICarterModule
             .WithDescription("Allocates a payment amount to a specific invoice")
             .Produces<object>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -47,7 +48,8 @@ public class PaymentAllocationsEndpoints : ICarterModule
             .WithName("GetPaymentAllocation")
             .WithSummary("Gets a payment allocation by id")
             .Produces<PaymentAllocationResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdatePaymentAllocationCommand command, ISender mediator) =>
@@ -66,7 +68,8 @@ public class PaymentAllocationsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete endpoint
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -76,7 +79,8 @@ public class PaymentAllocationsEndpoints : ICarterModule
             })
             .WithName("DeletePaymentAllocation")
             .WithSummary("Deletes a payment allocation")
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async ([FromBody] SearchPaymentAllocationsQuery query, ISender mediator) =>
@@ -87,6 +91,7 @@ public class PaymentAllocationsEndpoints : ICarterModule
             .WithName("SearchPaymentAllocations")
             .WithSummary("Searches payment allocations")
             .Produces<List<PaymentAllocationResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

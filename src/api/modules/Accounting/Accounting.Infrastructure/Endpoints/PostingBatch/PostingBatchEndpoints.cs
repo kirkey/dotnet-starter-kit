@@ -42,7 +42,8 @@ public class PostingBatchEndpoints : ICarterModule
             .WithDescription("Creates a new posting batch")
             .Produces<PostingBatchCreateResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -55,7 +56,8 @@ public class PostingBatchEndpoints : ICarterModule
             .WithDescription("Retrieves a posting batch by its unique identifier")
             .Produces<PostingBatchGetResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id}", async (DefaultIdType id, UpdatePostingBatchCommand command, ISender mediator) =>
@@ -69,7 +71,8 @@ public class PostingBatchEndpoints : ICarterModule
             .WithName("UpdatePostingBatch")
             .WithSummary("Update posting batch")
             .WithDescription("Updates a draft or pending posting batch")
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete endpoint
         group.MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
@@ -81,7 +84,8 @@ public class PostingBatchEndpoints : ICarterModule
             .WithName("DeletePostingBatch")
             .WithSummary("Delete posting batch")
             .WithDescription("Deletes a draft or pending posting batch with no journal entries")
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (PostingBatchSearchQuery request, ISender mediator) =>
@@ -93,7 +97,8 @@ public class PostingBatchEndpoints : ICarterModule
             .WithSummary("Search posting batches")
             .WithDescription("Searches posting batches with filtering and pagination")
             .Produces<PagedList<PostingBatchResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Approve endpoint
         group.MapPost("/{id:guid}/approve", async (DefaultIdType id, PostingBatchApproveCommand request, ISender mediator) =>
@@ -108,7 +113,8 @@ public class PostingBatchEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Reject endpoint
         group.MapPost("/{id:guid}/reject", async (DefaultIdType id, PostingBatchRejectCommand request, ISender mediator) =>
@@ -123,7 +129,8 @@ public class PostingBatchEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Post endpoint
         group.MapPost("/{id:guid}/post", async (DefaultIdType id, ISender mediator) =>
@@ -137,7 +144,8 @@ public class PostingBatchEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Reverse endpoint
         group.MapPost("/{id:guid}/reverse", async (DefaultIdType id, PostingBatchReverseCommand request, ISender mediator) =>
@@ -152,6 +160,7 @@ public class PostingBatchEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

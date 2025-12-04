@@ -42,7 +42,8 @@ public class RecurringJournalEntriesEndpoints : ICarterModule
             .WithDescription("Create a new recurring journal entry template")
             .Produces<DefaultIdType>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get endpoint
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -55,7 +56,8 @@ public class RecurringJournalEntriesEndpoints : ICarterModule
             .WithDescription("Get a recurring journal entry template by ID")
             .Produces<RecurringJournalEntryResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update endpoint
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateRecurringJournalEntryCommand request, ISender mediator) =>
@@ -70,7 +72,8 @@ public class RecurringJournalEntriesEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete endpoint
         group.MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
@@ -82,7 +85,8 @@ public class RecurringJournalEntriesEndpoints : ICarterModule
             .WithSummary("Delete a recurring journal entry template")
             .WithDescription("Delete a recurring journal entry template by ID")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search endpoint
         group.MapPost("/search", async (SearchRecurringJournalEntriesRequest request, ISender mediator) =>
@@ -94,7 +98,8 @@ public class RecurringJournalEntriesEndpoints : ICarterModule
             .WithSummary("Search recurring journal entry templates")
             .WithDescription("Search and filter recurring journal entry templates with pagination")
             .Produces<PagedList<RecurringJournalEntryResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Approve endpoint
         group.MapPost("/{id}/approve", async (DefaultIdType id, ApproveRecurringJournalEntryCommand command, ISender mediator) =>
@@ -109,7 +114,8 @@ public class RecurringJournalEntriesEndpoints : ICarterModule
             .WithSummary("Approve a recurring journal entry template")
             .WithDescription("Approve a recurring journal entry template for use")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Suspend endpoint
         group.MapPost("/{id}/suspend", async (DefaultIdType id, SuspendRecurringJournalEntryCommand command, ISender mediator) =>
@@ -124,7 +130,8 @@ public class RecurringJournalEntriesEndpoints : ICarterModule
             .WithSummary("Suspend a recurring journal entry template")
             .WithDescription("Temporarily suspend a recurring journal entry template")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Reactivate endpoint
         group.MapPost("/{id}/reactivate", async (DefaultIdType id, ISender mediator) =>
@@ -136,7 +143,8 @@ public class RecurringJournalEntriesEndpoints : ICarterModule
             .WithSummary("Reactivate a recurring journal entry template")
             .WithDescription("Reactivate a suspended recurring journal entry template")
             .Produces(StatusCodes.Status200OK)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Generate endpoint
         group.MapPost("/{id:guid}/generate", async (DefaultIdType id, GenerateRecurringJournalEntryCommand request, ISender mediator) =>
@@ -151,6 +159,7 @@ public class RecurringJournalEntriesEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Generate, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Generate, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

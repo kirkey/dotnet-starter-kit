@@ -42,7 +42,8 @@ public class FixedAssetsEndpoints : ICarterModule
             .WithDescription("create a fixed asset")
             .Produces<CreateFixedAssetResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Get fixed asset by ID
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -55,7 +56,8 @@ public class FixedAssetsEndpoints : ICarterModule
             .WithDescription("get a fixed asset by id")
             .Produces<FixedAssetResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update fixed asset
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateFixedAssetCommand request, ISender mediator) =>
@@ -68,7 +70,8 @@ public class FixedAssetsEndpoints : ICarterModule
             .WithSummary("update a fixed asset")
             .WithDescription("update a fixed asset")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Delete fixed asset
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
@@ -79,7 +82,8 @@ public class FixedAssetsEndpoints : ICarterModule
             .WithName("DeleteFixedAsset")
             .WithSummary("delete fixed asset by id")
             .WithDescription("delete fixed asset by id")
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search fixed assets
         group.MapPost("/search", async (ISender mediator, [FromBody] SearchFixedAssetsRequest command) =>
@@ -91,7 +95,8 @@ public class FixedAssetsEndpoints : ICarterModule
             .WithSummary("Gets a list of fixed assets")
             .WithDescription("Gets a list of fixed assets with pagination and filtering support")
             .Produces<PagedList<FixedAssetResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Depreciate fixed asset
         group.MapPost("/{id:guid}/depreciate", async (DefaultIdType id, DepreciateFixedAssetCommand command, ISender mediator) =>
@@ -106,7 +111,8 @@ public class FixedAssetsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Dispose fixed asset
         group.MapPost("/{id:guid}/dispose", async (DefaultIdType id, DisposeFixedAssetCommand command, ISender mediator) =>
@@ -121,7 +127,8 @@ public class FixedAssetsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update maintenance schedule
         group.MapPut("/{id:guid}/maintenance", async (DefaultIdType id, UpdateMaintenanceCommand command, ISender mediator) =>
@@ -136,7 +143,8 @@ public class FixedAssetsEndpoints : ICarterModule
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Approve fixed asset
         group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveFixedAssetCommand command, ISender mediator) =>
@@ -161,6 +169,7 @@ public class FixedAssetsEndpoints : ICarterModule
             .WithSummary("Reject fixed asset")
             .WithDescription("Rejects a fixed asset")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

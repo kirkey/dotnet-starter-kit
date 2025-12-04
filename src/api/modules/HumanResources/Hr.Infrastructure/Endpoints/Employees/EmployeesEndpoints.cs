@@ -36,7 +36,8 @@ public class EmployeesEndpoints : ICarterModule
             .WithSummary("Creates a new employee")
             .WithDescription("Creates a new employee record in the system")
             .Produces<CreateEmployeeResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -47,7 +48,8 @@ public class EmployeesEndpoints : ICarterModule
             .WithSummary("Gets an employee by ID")
             .WithDescription("Retrieves detailed information about a specific employee")
             .Produces<EmployeeResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateEmployeeCommand request, ISender mediator) =>
             {
@@ -61,7 +63,8 @@ public class EmployeesEndpoints : ICarterModule
             .WithSummary("Updates an employee")
             .WithDescription("Updates employee information")
             .Produces<UpdateEmployeeResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -72,7 +75,8 @@ public class EmployeesEndpoints : ICarterModule
             .WithSummary("Deletes an employee")
             .WithDescription("Deletes an employee record from the system")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchEmployeesRequest request, ISender mediator) =>
             {
@@ -83,7 +87,8 @@ public class EmployeesEndpoints : ICarterModule
             .WithSummary("Searches employees")
             .WithDescription("Searches for employees with pagination and filtering")
             .Produces<PagedList<EmployeeResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id}/terminate", async (DefaultIdType id, TerminateEmployeeCommand request, ISender mediator) =>
             {
@@ -97,7 +102,8 @@ public class EmployeesEndpoints : ICarterModule
             .WithSummary("Terminates an employee")
             .WithDescription("Terminates an employee per Philippines Labor Code. Computes separation pay.")
             .Produces<TerminateEmployeeResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Terminate, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Terminate, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id}/regularize", async (DefaultIdType id, RegularizeEmployeeCommand request, ISender mediator) =>
             {
@@ -111,7 +117,8 @@ public class EmployeesEndpoints : ICarterModule
             .WithSummary("Regularizes a probationary employee")
             .WithDescription("Regularizes a probationary employee per Philippines Labor Code Article 280. Typically after probation period (6-12 months).")
             .Produces<RegularizeEmployeeResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Regularize, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Regularize, FshResources.Employees))
+            .MapToApiVersion(1);
     }
 }
 

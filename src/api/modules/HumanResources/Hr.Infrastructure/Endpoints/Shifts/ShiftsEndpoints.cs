@@ -33,7 +33,8 @@ public class ShiftsEndpoints : ICarterModule
             .WithSummary("Creates a new shift")
             .WithDescription("Creates a new shift template (morning, evening, night, etc.)")
             .Produces<CreateShiftResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -44,7 +45,8 @@ public class ShiftsEndpoints : ICarterModule
             .WithSummary("Gets shift by ID")
             .WithDescription("Retrieves shift details with breaks and working hours")
             .Produces<ShiftResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateShiftCommand request, ISender mediator) =>
             {
@@ -58,7 +60,8 @@ public class ShiftsEndpoints : ICarterModule
             .WithSummary("Updates a shift")
             .WithDescription("Updates shift information")
             .Produces<UpdateShiftResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -69,7 +72,8 @@ public class ShiftsEndpoints : ICarterModule
             .WithSummary("Deletes a shift")
             .WithDescription("Deletes a shift template")
             .Produces<DeleteShiftResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchShiftsRequest request, ISender mediator) =>
             {
@@ -80,7 +84,8 @@ public class ShiftsEndpoints : ICarterModule
             .WithSummary("Searches shifts")
             .WithDescription("Searches shifts with pagination and filters")
             .Produces<PagedList<ShiftResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
+            .MapToApiVersion(1);
     }
 }
 

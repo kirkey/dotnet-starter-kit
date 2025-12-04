@@ -33,7 +33,8 @@ public class EmployeeDocumentsEndpoints : ICarterModule
             .WithSummary("Creates a new employee document")
             .WithDescription("Creates a new employee document (contract, certification, license, etc.)")
             .Produces<CreateEmployeeDocumentResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -44,7 +45,8 @@ public class EmployeeDocumentsEndpoints : ICarterModule
             .WithSummary("Gets employee document by ID")
             .WithDescription("Retrieves employee document details")
             .Produces<EmployeeDocumentResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchEmployeeDocumentsRequest request, ISender mediator) =>
             {
@@ -55,7 +57,8 @@ public class EmployeeDocumentsEndpoints : ICarterModule
             .WithSummary("Searches employee documents")
             .WithDescription("Searches employee documents with pagination and filters")
             .Produces<PagedList<EmployeeDocumentResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateEmployeeDocumentCommand request, ISender mediator) =>
             {
@@ -69,7 +72,8 @@ public class EmployeeDocumentsEndpoints : ICarterModule
             .WithSummary("Updates an employee document")
             .WithDescription("Updates employee document information")
             .Produces<UpdateEmployeeDocumentResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -80,7 +84,8 @@ public class EmployeeDocumentsEndpoints : ICarterModule
             .WithSummary("Deletes an employee document")
             .WithDescription("Deletes an employee document record")
             .Produces<DeleteEmployeeDocumentResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees));
+            .RequirePermission(FshPermission.NameFor(FshActions.Manage, FshResources.Employees))
+            .MapToApiVersion(1);
     }
 }
 

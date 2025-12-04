@@ -33,7 +33,8 @@ public class CategoriesEndpoints : ICarterModule
             .WithSummary("Create a new category")
             .WithDescription("Creates a new product category")
             .Produces<CreateCategoryResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Store))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -44,7 +45,8 @@ public class CategoriesEndpoints : ICarterModule
             .WithSummary("Get category by ID")
             .WithDescription("Retrieves a specific category by its ID")
             .Produces<CategoryResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateCategoryCommand request, ISender mediator) =>
             {
@@ -56,7 +58,8 @@ public class CategoriesEndpoints : ICarterModule
             .WithSummary("Update an existing category")
             .WithDescription("Updates an existing product category")
             .Produces<UpdateCategoryResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -67,7 +70,8 @@ public class CategoriesEndpoints : ICarterModule
             .WithSummary("Delete a category")
             .WithDescription("Deletes a product category")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Store))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchCategoriesCommand command, ISender mediator) =>
             {
@@ -78,6 +82,7 @@ public class CategoriesEndpoints : ICarterModule
             .WithSummary("Search categories")
             .WithDescription("Searches for product categories with pagination and filtering")
             .Produces<PagedList<CategoryResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Store))
+            .MapToApiVersion(1);
     }
 }

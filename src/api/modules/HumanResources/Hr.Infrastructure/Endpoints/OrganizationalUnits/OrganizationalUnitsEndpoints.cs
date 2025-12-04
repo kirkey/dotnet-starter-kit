@@ -33,7 +33,8 @@ public class OrganizationalUnitsEndpoints : ICarterModule
             .WithSummary("Creates a new organizational unit")
             .WithDescription("Creates a new organizational unit (Department, Division, or Section)")
             .Produces<CreateOrganizationalUnitResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Organization));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Organization))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -44,7 +45,8 @@ public class OrganizationalUnitsEndpoints : ICarterModule
             .WithSummary("Gets organizational unit by ID")
             .WithDescription("Retrieves organizational unit details by ID")
             .Produces<OrganizationalUnitResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Organization));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Organization))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateOrganizationalUnitCommand request, ISender mediator) =>
             {
@@ -58,7 +60,8 @@ public class OrganizationalUnitsEndpoints : ICarterModule
             .WithSummary("Updates an organizational unit")
             .WithDescription("Updates organizational unit information")
             .Produces<UpdateOrganizationalUnitResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Organization));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Organization))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -69,7 +72,8 @@ public class OrganizationalUnitsEndpoints : ICarterModule
             .WithSummary("Deletes an organizational unit")
             .WithDescription("Deletes an organizational unit if it has no children")
             .Produces<DeleteOrganizationalUnitResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Organization));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Organization))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchOrganizationalUnitsRequest request, ISender mediator) =>
             {
@@ -80,7 +84,8 @@ public class OrganizationalUnitsEndpoints : ICarterModule
             .WithSummary("Searches organizational units")
             .WithDescription("Searches organizational units with pagination and filters")
             .Produces<PagedList<OrganizationalUnitResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Organization));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Organization))
+            .MapToApiVersion(1);
     }
 }
 

@@ -31,6 +31,7 @@ public class PatronageEndpoints : ICarterModule
             .WithSummary("Retire patronage capital")
             .WithDescription("Process the retirement of patronage capital")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

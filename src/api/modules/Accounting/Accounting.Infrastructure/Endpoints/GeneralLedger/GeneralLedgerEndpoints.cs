@@ -33,7 +33,8 @@ public class GeneralLedgerEndpoints : ICarterModule
             .WithDescription("Retrieves a general ledger entry by its unique identifier")
             .Produces<GeneralLedgerGetResponse>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Search general ledger entries
         group.MapPost("/search", async (GeneralLedgerSearchRequest request, ISender mediator) =>
@@ -45,7 +46,8 @@ public class GeneralLedgerEndpoints : ICarterModule
             .WithSummary("Search general ledger entries")
             .WithDescription("Searches general ledger entries with filtering and pagination")
             .Produces<PagedList<GeneralLedgerSearchResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         // Update general ledger entry
         group.MapPut("/{id:guid}", async (DefaultIdType id, GeneralLedgerUpdateCommand request, ISender mediator) =>
@@ -59,6 +61,7 @@ public class GeneralLedgerEndpoints : ICarterModule
             .WithDescription("Updates general ledger entry details (amounts, memo, USOA class)")
             .Produces<object>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

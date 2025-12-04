@@ -36,7 +36,8 @@ public class LeaveRequestsEndpoints : ICarterModule
             .WithSummary("Creates a new leave request")
             .WithDescription("Creates a new leave request for an employee. The request is created in Draft status and must be submitted for approval. Validates employee leave balance and leave type eligibility per Philippines Labor Code.")
             .Produces<CreateLeaveRequestResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -48,7 +49,8 @@ public class LeaveRequestsEndpoints : ICarterModule
             .WithSummary("Gets a leave request by ID")
             .WithDescription("Retrieves detailed information about a specific leave request including status, dates, approval details, and attachments")
             .Produces<LeaveRequestResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateLeaveRequestCommand request, ISender mediator) =>
             {
@@ -60,7 +62,8 @@ public class LeaveRequestsEndpoints : ICarterModule
             .WithSummary("Updates a leave request")
             .WithDescription("Updates a leave request including status and approver comments. Primarily used for administrative updates.")
             .Produces<UpdateLeaveRequestResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -72,7 +75,8 @@ public class LeaveRequestsEndpoints : ICarterModule
             .WithSummary("Deletes a leave request")
             .WithDescription("Deletes a leave request. Only Draft and Rejected requests can be deleted. Approved or Submitted requests cannot be deleted without proper workflow steps.")
             .Produces<DeleteLeaveRequestResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (SearchLeaveRequestsRequest request, ISender mediator) =>
             {
@@ -83,7 +87,8 @@ public class LeaveRequestsEndpoints : ICarterModule
             .WithSummary("Searches leave requests")
             .WithDescription("Searches and filters leave requests by employee, leave type, status, and date range with pagination support. Supports advanced filtering per Philippines Labor Code compliance requirements.")
             .Produces<PagedList<LeaveRequestResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id}/submit", async (DefaultIdType id, SubmitLeaveRequestCommand command, ISender mediator) =>
             {
@@ -95,7 +100,8 @@ public class LeaveRequestsEndpoints : ICarterModule
             .WithSummary("Submits a leave request for approval")
             .WithDescription("Submits a Draft leave request for manager approval. Validates leave balance and eligibility per Philippines Labor Code. Request transitions to Submitted status.")
             .Produces<SubmitLeaveRequestResponse>(StatusCodes.Status202Accepted)
-            .RequirePermission(FshPermission.NameFor(FshActions.Submit, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Submit, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveLeaveRequestCommand command, ISender mediator) =>
             {
@@ -107,7 +113,8 @@ public class LeaveRequestsEndpoints : ICarterModule
             .WithSummary("Approves a leave request")
             .WithDescription("Approves a Submitted leave request. Manager can include optional comments. Request transitions to Approved status and leave balance is updated per Philippines Labor Code.")
             .Produces<ApproveLeaveRequestResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id}/reject", async (DefaultIdType id, RejectLeaveRequestCommand command, ISender mediator) =>
             {
@@ -119,7 +126,8 @@ public class LeaveRequestsEndpoints : ICarterModule
             .WithSummary("Rejects a leave request")
             .WithDescription("Rejects a Submitted leave request with a required reason. Request transitions to Rejected status and reserved pending balance is released per Philippines Labor Code.")
             .Produces<RejectLeaveRequestResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.Leaves))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id}/cancel", async (DefaultIdType id, CancelLeaveRequestCommand command, ISender mediator) =>
             {
@@ -131,7 +139,8 @@ public class LeaveRequestsEndpoints : ICarterModule
             .WithSummary("Cancels a leave request")
             .WithDescription("Cancels a Draft or Submitted leave request by the employee. Approved requests cannot be cancelled. Reserved pending balance is released per Philippines Labor Code.")
             .Produces<CancelLeaveRequestResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Cancel, FshResources.Leaves));
+            .RequirePermission(FshPermission.NameFor(FshActions.Cancel, FshResources.Leaves))
+            .MapToApiVersion(1);
     }
 }
 

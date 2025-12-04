@@ -30,6 +30,7 @@ public class BillingEndpoints : ICarterModule
             .WithSummary("Create invoice from consumption")
             .WithDescription("Creates an invoice for a consumption record")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }

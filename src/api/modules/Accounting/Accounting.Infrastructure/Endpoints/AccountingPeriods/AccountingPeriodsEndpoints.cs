@@ -37,7 +37,8 @@ public class AccountingPeriodsEndpoints : ICarterModule
             .WithSummary("create accounting period")
             .WithDescription("create accounting period")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -48,7 +49,8 @@ public class AccountingPeriodsEndpoints : ICarterModule
             .WithSummary("get accounting period by id")
             .WithDescription("get accounting period by id")
             .Produces<AccountingPeriodResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateAccountingPeriodCommand request, ISender mediator) =>
             {
@@ -60,7 +62,8 @@ public class AccountingPeriodsEndpoints : ICarterModule
             .WithSummary("update accounting period")
             .WithDescription("update accounting period")
             .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
@@ -71,7 +74,8 @@ public class AccountingPeriodsEndpoints : ICarterModule
             .WithSummary("delete accounting period by id")
             .WithDescription("delete accounting period by id")
             .Produces(StatusCodes.Status204NoContent)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async (ISender mediator, [FromBody] SearchAccountingPeriodsRequest request) =>
             {
@@ -82,7 +86,8 @@ public class AccountingPeriodsEndpoints : ICarterModule
             .WithSummary("search accounting periods")
             .WithDescription("search accounting periods")
             .Produces<PagedList<AccountingPeriodResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/close", async (DefaultIdType id, AccountingPeriodCloseCommand command, ISender mediator) =>
             {
@@ -94,7 +99,8 @@ public class AccountingPeriodsEndpoints : ICarterModule
             .WithSummary("Close accounting period")
             .WithDescription("Closes an accounting period")
             .Produces<AccountingPeriodTransitionResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/reopen", async (DefaultIdType id, AccountingPeriodReopenCommand command, ISender mediator) =>
             {
@@ -106,6 +112,7 @@ public class AccountingPeriodsEndpoints : ICarterModule
             .WithSummary("Reopen accounting period")
             .WithDescription("Reopens a previously closed accounting period")
             .Produces<AccountingPeriodTransitionResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting));
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
+            .MapToApiVersion(1);
     }
 }
