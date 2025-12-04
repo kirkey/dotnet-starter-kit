@@ -11,6 +11,8 @@ global using FSH.Starter.WebApi.Host;
 global using FSH.Starter.WebApi.HumanResources.Application;
 global using FSH.Starter.WebApi.HumanResources.Infrastructure;
 global using FSH.Starter.WebApi.Messaging;
+global using FSH.Starter.WebApi.MicroFinance.Application;
+global using FSH.Starter.WebApi.MicroFinance.Infrastructure;
 global using FSH.Starter.WebApi.Store.Application;
 global using FSH.Starter.WebApi.Todo;
 global using Serilog;

@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>FSH.Starter.WebApi.MicroFinance.Application</RootNamespace>
+    <AssemblyName>FSH.Starter.WebApi.MicroFinance.Application</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\framework\Core\Core.csproj" />
+    <ProjectReference Include="..\MicroFinance.Domain\MicroFinance.Domain.csproj" />
+  </ItemGroup>
+</Project>
+

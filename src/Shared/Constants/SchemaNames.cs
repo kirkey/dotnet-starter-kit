@@ -1,4 +1,4 @@
-﻿namespace Shared.Constants;
+﻿﻿namespace Shared.Constants;
 
 public static class SchemaNames
 {
@@ -10,4 +10,5 @@ public static class SchemaNames
     public const string Store = "store";
     public const string Messaging = "messaging";
     public const string HumanResources = "hr";
+    public const string MicroFinance = "microfinance";
 }

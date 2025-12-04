@@ -29,4 +29,14 @@ public static class FshResources
     public const string Benefits = nameof(Benefits);
     public const string Taxes = nameof(Taxes);
     public const string Organization = nameof(Organization);
+
+    // MicroFinance - Granular Resources
+    public const string MicroFinance = nameof(MicroFinance);
+    public const string Members = nameof(Members);
+    public const string LoanProducts = nameof(LoanProducts);
+    public const string Loans = nameof(Loans);
+    public const string LoanRepayments = nameof(LoanRepayments);
+    public const string SavingsProducts = nameof(SavingsProducts);
+    public const string SavingsAccounts = nameof(SavingsAccounts);
+    public const string SavingsTransactions = nameof(SavingsTransactions);
 }

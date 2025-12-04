@@ -11,11 +11,13 @@
     <ProjectReference Include="..\..\modules\Accounting\Accounting.Domain\Accounting.Domain.csproj" />
     <ProjectReference Include="..\..\modules\Accounting\Accounting.Infrastructure\Accounting.Infrastructure.csproj" />
     <ProjectReference Include="..\..\modules\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\modules\MicroFinance\MicroFinance.Infrastructure\MicroFinance.Infrastructure.csproj" />
     <ProjectReference Include="..\..\modules\Todo\Todo.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Catalog\" />
     <Folder Include="Identity\" />
+    <Folder Include="MicroFinance\" />
     <Folder Include="Tenant\" />
     <Folder Include="Todo\" />
   </ItemGroup>

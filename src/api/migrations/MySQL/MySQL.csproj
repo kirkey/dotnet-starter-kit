@@ -22,11 +22,13 @@
       <ProjectReference Include="..\..\modules\Catalog\Catalog.Application\Catalog.Application.csproj" />
       <ProjectReference Include="..\..\modules\Catalog\Catalog.Domain\Catalog.Domain.csproj" />
       <ProjectReference Include="..\..\modules\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\modules\MicroFinance\MicroFinance.Infrastructure\MicroFinance.Infrastructure.csproj" />
       <ProjectReference Include="..\..\modules\Todo\Todo.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Accounting\" />
+      <Folder Include="MicroFinance\" />
     </ItemGroup>
 
 </Project>

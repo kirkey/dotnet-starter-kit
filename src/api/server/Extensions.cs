@@ -1,4 +1,4 @@
-﻿namespace FSH.Starter.WebApi.Host;
+﻿﻿namespace FSH.Starter.WebApi.Host;
 
 public static class Extensions
 {
@@ -15,6 +15,7 @@ public static class Extensions
             typeof(StoreMetadata).Assembly,
             typeof(MessagingModule).Assembly,
             typeof(HumanResourcesMetadata).Assembly,
+            typeof(MicroFinanceMetadata).Assembly,
         };
 
         //register validators
@@ -31,6 +32,7 @@ public static class Extensions
         builder.RegisterStoreServices();
         builder.RegisterHumanResourcesServices();
         builder.RegisterMessagingServices();
+        builder.RegisterMicroFinanceServices();
 
         //add carter endpoint modules
         builder.Services.AddCarter(configurator: config =>
@@ -39,6 +41,7 @@ public static class Extensions
             config.WithModule<HrModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
             config.WithModule<MessagingModule.Endpoints>();
+            config.WithModule<MicroFinanceModule.Endpoints>();
         });
 
         return builder;
@@ -55,6 +58,7 @@ public static class Extensions
         app.UseAccountingModule();
         app.UseStoreModule();
         app.UseMessagingModule();
+        app.UseMicroFinanceModule();
 
         //register api versions
         var versions = app.NewApiVersionSet()

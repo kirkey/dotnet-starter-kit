@@ -28,6 +28,7 @@
     <ProjectReference Include="..\migrations\PostgreSQL\PostgreSQL.csproj" />
     <ProjectReference Include="..\modules\Accounting\Accounting.Infrastructure\Accounting.Infrastructure.csproj" />
     <ProjectReference Include="..\modules\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
+    <ProjectReference Include="..\modules\MicroFinance\MicroFinance.Infrastructure\MicroFinance.Infrastructure.csproj" />
     <ProjectReference Include="..\modules\Todo\Todo.csproj" />
     <ProjectReference Include="..\modules\Messaging\Messaging.csproj" />
   </ItemGroup>
