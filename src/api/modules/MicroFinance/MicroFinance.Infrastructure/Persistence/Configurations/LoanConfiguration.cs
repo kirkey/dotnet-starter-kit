@@ -12,22 +12,31 @@ internal sealed class LoanConfiguration : IEntityTypeConfiguration<Loan>
 
         builder.Property(x => x.LoanNumber)
             .IsRequired()
-            .HasMaxLength(Loan.LoanNumberMaxLength);
+            .HasMaxLength(LoanConstants.LoanNumberMaxLength);
 
         builder.Property(x => x.Status)
             .IsRequired()
-            .HasMaxLength(Loan.StatusMaxLength);
+            .HasMaxLength(LoanConstants.StatusMaxLength);
+
+        builder.Property(x => x.Currency)
+            .IsRequired()
+            .HasMaxLength(LoanConstants.CurrencyMaxLength);
+
+        builder.Property(x => x.RepaymentFrequency)
+            .IsRequired()
+            .HasMaxLength(LoanConstants.RepaymentFrequencyMaxLength);
 
         builder.Property(x => x.Purpose)
-            .HasMaxLength(Loan.PurposeMaxLength);
+            .HasMaxLength(LoanConstants.PurposeMaxLength);
 
-        builder.Property(x => x.Notes)
-            .HasMaxLength(Loan.NotesMaxLength);
+        builder.Property(x => x.RejectionReason)
+            .HasMaxLength(LoanConstants.RejectionReasonMaxLength);
 
         builder.Property(x => x.PrincipalAmount).HasPrecision(18, 2);
         builder.Property(x => x.InterestRate).HasPrecision(5, 2);
-        builder.Property(x => x.TotalRepayable).HasPrecision(18, 2);
-        builder.Property(x => x.TotalRepaid).HasPrecision(18, 2);
+        builder.Property(x => x.OutstandingPrincipal).HasPrecision(18, 2);
+        builder.Property(x => x.OutstandingInterest).HasPrecision(18, 2);
+        builder.Property(x => x.TotalPaid).HasPrecision(18, 2);
 
         // Relationships
         builder.HasOne(x => x.Member)
