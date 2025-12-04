@@ -5,6 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.Loans.Disburse.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Loans.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Loans.Reject.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Loans.Search.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Loans.Update.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Loans.WriteOff.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -38,6 +39,19 @@ public static class LoanEndpoints
             .WithName("GetLoan")
             .WithSummary("Gets a loan by ID with full details")
             .Produces<LoanResponse>();
+
+        loansGroup.MapPut("/{id:guid}", async (Guid id, UpdateLoanCommand command, ISender sender) =>
+            {
+                if (id != command.Id)
+                {
+                    return Results.BadRequest("ID mismatch");
+                }
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("UpdateLoan")
+            .WithSummary("Updates a pending loan application")
+            .Produces<UpdateLoanResponse>();
 
         loansGroup.MapPost("/{id:guid}/approve", async (Guid id, ApproveLoanCommand command, ISender sender) =>
             {

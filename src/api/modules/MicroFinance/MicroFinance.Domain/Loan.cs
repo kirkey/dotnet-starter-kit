@@ -311,6 +311,44 @@ public class Loan : AuditableEntity, IAggregateRoot
     }
 
     /// <summary>
+    /// Updates the pending loan details.
+    /// </summary>
+    /// <remarks>
+    /// Only pending loans can be updated. Once approved, loan terms are locked.
+    /// </remarks>
+    public Loan Update(
+        decimal? interestRate = null,
+        int? termMonths = null,
+        string? repaymentFrequency = null,
+        string? purpose = null)
+    {
+        if (Status != StatusPending)
+            throw new InvalidOperationException($"Cannot update loan in {Status} status. Only pending loans can be updated.");
+
+        if (interestRate.HasValue && interestRate.Value >= 0)
+        {
+            InterestRate = interestRate.Value;
+        }
+
+        if (termMonths.HasValue && termMonths.Value > 0)
+        {
+            TermMonths = termMonths.Value;
+        }
+
+        if (!string.IsNullOrWhiteSpace(repaymentFrequency))
+        {
+            RepaymentFrequency = repaymentFrequency;
+        }
+
+        if (purpose != null)
+        {
+            Purpose = purpose.Trim();
+        }
+
+        return this;
+    }
+
+    /// <summary>
     /// Approves the loan application.
     /// </summary>
     public Loan Approve(DateOnly approvalDate)

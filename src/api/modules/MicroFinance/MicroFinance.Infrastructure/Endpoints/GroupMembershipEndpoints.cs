@@ -1,4 +1,5 @@
 using FSH.Framework.Core.Paging;
+using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Search.v1;
 using MediatR;
@@ -16,6 +17,15 @@ public static class GroupMembershipEndpoints
     internal static IEndpointRouteBuilder MapGroupMembershipEndpoints(this IEndpointRouteBuilder app)
     {
         var membershipsGroup = app.MapGroup("group-memberships").WithTags("group-memberships");
+
+        membershipsGroup.MapPost("/", async (CreateGroupMembershipCommand command, ISender mediator) =>
+        {
+            var response = await mediator.Send(command);
+            return Results.Created($"/microfinance/group-memberships/{response.Id}", response);
+        })
+        .WithName("CreateGroupMembership")
+        .WithSummary("Creates a new group membership")
+        .Produces<CreateGroupMembershipResponse>(StatusCodes.Status201Created);
 
         membershipsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
         {

@@ -1,4 +1,5 @@
 using FSH.Framework.Core.Paging;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Search.v1;
 using MediatR;
@@ -16,6 +17,15 @@ public static class LoanCollateralEndpoints
     internal static IEndpointRouteBuilder MapLoanCollateralEndpoints(this IEndpointRouteBuilder app)
     {
         var collateralsGroup = app.MapGroup("loan-collaterals").WithTags("loan-collaterals");
+
+        collateralsGroup.MapPost("/", async (CreateLoanCollateralCommand command, ISender mediator) =>
+        {
+            var response = await mediator.Send(command);
+            return Results.Created($"/microfinance/loan-collaterals/{response.Id}", response);
+        })
+        .WithName("CreateLoanCollateral")
+        .WithSummary("Creates a new loan collateral")
+        .Produces<CreateLoanCollateralResponse>(StatusCodes.Status201Created);
 
         collateralsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
         {

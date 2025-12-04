@@ -1,4 +1,5 @@
 using FSH.Framework.Core.Paging;
+using FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.AddMember.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Search.v1;
@@ -43,6 +44,19 @@ public static class MemberGroupEndpoints
             .WithName("SearchMemberGroups")
             .WithSummary("Searches member groups with filters and pagination")
             .Produces<PagedList<MemberGroupResponse>>();
+
+        memberGroupsGroup.MapPost("/{id:guid}/members", async (Guid id, AddMemberToGroupCommand command, ISender sender) =>
+            {
+                if (id != command.GroupId)
+                {
+                    return Results.BadRequest("Group ID mismatch");
+                }
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Created($"/microfinance/group-memberships/{response.MembershipId}", response);
+            })
+            .WithName("AddMemberToGroup")
+            .WithSummary("Adds a member to the group")
+            .Produces<AddMemberToGroupResponse>(StatusCodes.Status201Created);
 
         return app;
     }

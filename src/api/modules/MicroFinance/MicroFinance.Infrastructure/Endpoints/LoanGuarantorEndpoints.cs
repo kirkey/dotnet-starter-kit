@@ -1,4 +1,5 @@
 using FSH.Framework.Core.Paging;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Search.v1;
 using MediatR;
@@ -16,6 +17,15 @@ public static class LoanGuarantorEndpoints
     internal static IEndpointRouteBuilder MapLoanGuarantorEndpoints(this IEndpointRouteBuilder app)
     {
         var guarantorsGroup = app.MapGroup("loan-guarantors").WithTags("loan-guarantors");
+
+        guarantorsGroup.MapPost("/", async (CreateLoanGuarantorCommand command, ISender mediator) =>
+        {
+            var response = await mediator.Send(command);
+            return Results.Created($"/microfinance/loan-guarantors/{response.Id}", response);
+        })
+        .WithName("CreateLoanGuarantor")
+        .WithSummary("Creates a new loan guarantor")
+        .Produces<CreateLoanGuarantorResponse>(StatusCodes.Status201Created);
 
         guarantorsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
         {
@@ -37,13 +47,12 @@ public static class LoanGuarantorEndpoints
 
         guarantorsGroup.MapGet("/by-loan/{loanId:guid}", async (Guid loanId, ISender mediator) =>
         {
-            var request = new SearchLoanGuarantorsCommand
+            var response = await mediator.Send(new SearchLoanGuarantorsCommand
             {
                 LoanId = loanId,
                 PageNumber = 1,
                 PageSize = 50
-            };
-            var response = await mediator.Send(request);
+            });
             return Results.Ok(response);
         })
         .WithName("GetLoanGuarantorsByLoan")
@@ -52,13 +61,12 @@ public static class LoanGuarantorEndpoints
 
         guarantorsGroup.MapGet("/by-member/{memberId:guid}", async (Guid memberId, ISender mediator) =>
         {
-            var request = new SearchLoanGuarantorsCommand
+            var response = await mediator.Send(new SearchLoanGuarantorsCommand
             {
                 GuarantorMemberId = memberId,
                 PageNumber = 1,
                 PageSize = 50
-            };
-            var response = await mediator.Send(request);
+            });
             return Results.Ok(response);
         })
         .WithName("GetLoanGuarantorsByMember")

@@ -3,6 +3,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Deposit.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Search.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Transfer.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Withdraw.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -71,6 +72,15 @@ public static class SavingsAccountEndpoints
             .WithName("WithdrawFromSavingsAccount")
             .WithSummary("Withdraws money from a savings account")
             .Produces<WithdrawResponse>();
+
+        savingsAccountsGroup.MapPost("/transfer", async (TransferFundsCommand command, ISender sender) =>
+            {
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName("TransferFunds")
+            .WithSummary("Transfers funds between savings accounts")
+            .Produces<TransferFundsResponse>();
 
         savingsAccountsGroup.MapGet("/by-member/{memberId:guid}", async (Guid memberId, ISender sender) =>
             {
