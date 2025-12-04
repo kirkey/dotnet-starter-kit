@@ -8,6 +8,7 @@ global using FSH.Framework.Infrastructure.Logging.Serilog;
 global using FSH.Starter.WebApi.Catalog.Application;
 global using FSH.Starter.WebApi.Catalog.Infrastructure;
 global using FSH.Starter.WebApi.Host;
+global using FSH.Starter.WebApi.Host.Configuration;
 global using FSH.Starter.WebApi.HumanResources.Application;
 global using FSH.Starter.WebApi.HumanResources.Infrastructure;
 global using FSH.Starter.WebApi.Messaging;

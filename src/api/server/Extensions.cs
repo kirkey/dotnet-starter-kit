@@ -1,4 +1,6 @@
-﻿﻿namespace FSH.Starter.WebApi.Host;
+﻿﻿using System.Reflection;
+
+ namespace FSH.Starter.WebApi.Host;
 
 public static class Extensions
 {
@@ -6,17 +8,56 @@ public static class Extensions
     {
         ArgumentNullException.ThrowIfNull(builder);
 
-        //define module assemblies
-        var assemblies = new[]
+        // Get module options from configuration
+        var moduleOptions = new ModuleOptions();
+        builder.Configuration.GetSection(ModuleOptions.SectionName).Bind(moduleOptions);
+
+        // Build list of enabled module assemblies
+        var assemblyList = new List<Assembly>();
+
+        if (moduleOptions.EnableCatalog)
         {
-            typeof(CatalogMetadata).Assembly,
-            typeof(TodoModule).Assembly,
-            typeof(AccountingMetadata).Assembly,
-            typeof(StoreMetadata).Assembly,
-            typeof(MessagingModule).Assembly,
-            typeof(HumanResourcesMetadata).Assembly,
-            // typeof(MicroFinanceMetadata).Assembly,
-        };
+            assemblyList.Add(typeof(CatalogMetadata).Assembly);
+            Log.Information("Module enabled: Catalog");
+        }
+
+        if (moduleOptions.EnableTodo)
+        {
+            assemblyList.Add(typeof(TodoModule).Assembly);
+            Log.Information("Module enabled: Todo");
+        }
+
+        if (moduleOptions.EnableAccounting)
+        {
+            assemblyList.Add(typeof(AccountingMetadata).Assembly);
+            Log.Information("Module enabled: Accounting");
+        }
+
+        if (moduleOptions.EnableStore)
+        {
+            assemblyList.Add(typeof(StoreMetadata).Assembly);
+            Log.Information("Module enabled: Store");
+        }
+
+        if (moduleOptions.EnableHumanResources)
+        {
+            assemblyList.Add(typeof(HumanResourcesMetadata).Assembly);
+            Log.Information("Module enabled: HumanResources");
+        }
+
+        if (moduleOptions.EnableMessaging)
+        {
+            assemblyList.Add(typeof(MessagingModule).Assembly);
+            Log.Information("Module enabled: Messaging");
+        }
+
+        if (moduleOptions.EnableMicroFinance)
+        {
+            assemblyList.Add(typeof(MicroFinanceMetadata).Assembly);
+            Log.Information("Module enabled: MicroFinance");
+        }
+
+        var assemblies = assemblyList.ToArray();
 
         //register validators
         builder.Services.AddValidatorsFromAssemblies(assemblies);
@@ -26,21 +67,41 @@ public static class Extensions
             configuration.RegisterServicesFromAssemblies(assemblies));
 
         //register module services
-        builder.RegisterCatalogServices();
-        builder.RegisterTodoServices();
-        builder.RegisterAccountingServices();
-        builder.RegisterStoreServices();
-        builder.RegisterHumanResourcesServices();
-        builder.RegisterMessagingServices();
-        // builder.RegisterMicroFinanceServices();
+        if (moduleOptions.EnableCatalog)
+            builder.RegisterCatalogServices();
+        
+        if (moduleOptions.EnableTodo)
+            builder.RegisterTodoServices();
+        
+        if (moduleOptions.EnableAccounting)
+            builder.RegisterAccountingServices();
+        
+        if (moduleOptions.EnableStore)
+            builder.RegisterStoreServices();
+        
+        if (moduleOptions.EnableHumanResources)
+            builder.RegisterHumanResourcesServices();
+        
+        if (moduleOptions.EnableMessaging)
+            builder.RegisterMessagingServices();
+        
+        if (moduleOptions.EnableMicroFinance)
+            builder.RegisterMicroFinanceServices();
 
         //add carter endpoint modules
         builder.Services.AddCarter(configurator: config =>
         {
-            config.WithModule<CatalogModule.Endpoints>();
-            config.WithModule<TodoModule.Endpoints>();
+            if (moduleOptions.EnableCatalog)
+                config.WithModule<CatalogModule.Endpoints>();
+            
+            if (moduleOptions.EnableTodo)
+                config.WithModule<TodoModule.Endpoints>();
+            
             // Store, Accounting, HR, MicroFinance, and Messaging endpoints are auto-discovered via ICarterModule implementations
         });
+
+        // Store module options in DI for potential runtime access
+        builder.Services.AddSingleton(moduleOptions);
 
         return builder;
     }
@@ -49,14 +110,30 @@ public static class Extensions
     {
         ArgumentNullException.ThrowIfNull(app);
 
+        // Get module options from DI
+        var moduleOptions = app.Services.GetRequiredService<ModuleOptions>();
+
         //register modules
-        app.UseCatalogModule();
-        app.UseTodoModule();
-        app.UseHumanResourcesModule();
-        app.UseAccountingModule();
-        app.UseStoreModule();
-        app.UseMessagingModule();
-        // app.UseMicroFinanceModule();
+        if (moduleOptions.EnableCatalog)
+            app.UseCatalogModule();
+        
+        if (moduleOptions.EnableTodo)
+            app.UseTodoModule();
+        
+        if (moduleOptions.EnableHumanResources)
+            app.UseHumanResourcesModule();
+        
+        if (moduleOptions.EnableAccounting)
+            app.UseAccountingModule();
+        
+        if (moduleOptions.EnableStore)
+            app.UseStoreModule();
+        
+        if (moduleOptions.EnableMessaging)
+            app.UseMessagingModule();
+        
+        if (moduleOptions.EnableMicroFinance)
+            app.UseMicroFinanceModule();
 
         //register api versions
         var versions = app.NewApiVersionSet()
