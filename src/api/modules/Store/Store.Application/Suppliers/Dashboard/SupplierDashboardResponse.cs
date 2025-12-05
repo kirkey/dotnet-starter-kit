@@ -1,3 +1,5 @@
+using FSH.Starter.WebApi.Store.Application.Dashboard;
+
 namespace FSH.Starter.WebApi.Store.Application.Suppliers.Dashboard;
 
 /// <summary>
@@ -113,21 +115,6 @@ public sealed record ItemPortfolio
     public int ExclusiveItems { get; init; }
     public decimal AveragePriceCompetitiveness { get; init; }
     public List<string> TopCategories { get; init; } = [];
-}
-
-public sealed record TimeSeriesDataPoint
-{
-    public DateTime Date { get; init; }
-    public decimal Value { get; init; }
-    public string? Label { get; init; }
-}
-
-public sealed record CategoryBreakdown
-{
-    public string CategoryName { get; init; } = default!;
-    public int OrderCount { get; init; }
-    public decimal TotalValue { get; init; }
-    public decimal Percentage { get; init; }
 }
 
 public sealed record TopItemInfo

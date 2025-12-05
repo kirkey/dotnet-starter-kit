@@ -1,3 +1,5 @@
+using FSH.Starter.WebApi.Store.Application.Dashboard;
+
 namespace FSH.Starter.WebApi.Store.Application.Items.Dashboard;
 
 /// <summary>

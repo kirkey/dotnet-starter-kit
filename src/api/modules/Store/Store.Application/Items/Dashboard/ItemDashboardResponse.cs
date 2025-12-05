@@ -1,3 +1,5 @@
+using FSH.Starter.WebApi.Store.Application.Dashboard;
+
 namespace FSH.Starter.WebApi.Store.Application.Items.Dashboard;
 
 /// <summary>
@@ -74,13 +76,6 @@ public sealed record PurchaseMetrics
     public int PurchaseOrderCount { get; init; }
     public decimal AverageLeadTimeDays { get; init; }
     public decimal OnTimeDeliveryRate { get; init; }
-}
-
-public sealed record TimeSeriesDataPoint
-{
-    public DateTime Date { get; init; }
-    public decimal Value { get; init; }
-    public string? Label { get; init; }
 }
 
 public sealed record WarehouseStockInfo
