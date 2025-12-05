@@ -14,7 +14,7 @@ public static class PaymentUpdateEndpoint
     internal static RouteHandlerBuilder MapPaymentUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, PaymentUpdateCommand request, ISender mediator) =>
+            .MapPut("/{id}", async (DefaultIdType id, UpdatePaymentCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var response = await mediator.Send(command).ConfigureAwait(false);

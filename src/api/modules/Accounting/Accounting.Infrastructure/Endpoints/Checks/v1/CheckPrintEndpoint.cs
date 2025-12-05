@@ -17,7 +17,7 @@ public static class CheckPrintEndpoint
     internal static RouteHandlerBuilder MapCheckPrintEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/print", async (CheckPrintCommand command, ISender mediator) =>
+            .MapPost("/print", async (PrintCheckCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);

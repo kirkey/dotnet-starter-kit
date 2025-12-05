@@ -1,12 +1,12 @@
 namespace Accounting.Application.PostingBatches.Approve.v1;
 
 /// <summary>
-/// Validator for PostingBatchApproveCommand.
+/// Validator for ApprovePostingBatchCommand.
 /// The approver is automatically determined from the current user session.
 /// </summary>
-public sealed class PostingBatchApproveCommandValidator : AbstractValidator<PostingBatchApproveCommand>
+public sealed class ApprovePostingBatchCommandValidator : AbstractValidator<ApprovePostingBatchCommand>
 {
-    public PostingBatchApproveCommandValidator()
+    public ApprovePostingBatchCommandValidator()
     {
         RuleFor(x => x.Id)
             .NotEmpty()

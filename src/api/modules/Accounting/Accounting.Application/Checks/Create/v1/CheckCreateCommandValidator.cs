@@ -4,9 +4,9 @@ namespace Accounting.Application.Checks.Create.v1;
 /// Validator for check bundle creation command with range validation rules.
 /// Validates check number ranges and ensures proper sequential ordering.
 /// </summary>
-public class CheckCreateCommandValidator : AbstractValidator<CheckCreateCommand>
+public class CreateCheckCommandValidator : AbstractValidator<CreateCheckCommand>
 {
-    public CheckCreateCommandValidator()
+    public CreateCheckCommandValidator()
     {
         RuleFor(x => x.StartCheckNumber)
             .NotEmpty().WithMessage("Start check number is required.")

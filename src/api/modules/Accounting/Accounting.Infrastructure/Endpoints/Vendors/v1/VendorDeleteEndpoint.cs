@@ -10,7 +10,7 @@ public static class VendorDeleteEndpoint
         return endpoints
             .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                await mediator.Send(new VendorDeleteCommand(id)).ConfigureAwait(false);
+                await mediator.Send(new DeleteVendorCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
             .WithName(nameof(VendorDeleteEndpoint))

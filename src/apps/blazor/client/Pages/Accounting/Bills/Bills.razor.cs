@@ -189,7 +189,7 @@ public partial class Bills
                     return;
                 }
 
-                var createCommand = new BillCreateCommand
+                var createCommand = new CreateBillCommand
                 {
                     BillNumber = bill.BillNumber,
                     VendorId = bill.VendorId!.Value,
@@ -232,7 +232,7 @@ public partial class Bills
                     return;
                 }
 
-                var updateCommand = new BillUpdateCommand
+                var updateCommand = new UpdateBillCommand
                 {
                     BillId = id,
                     BillNumber = bill.BillNumber,

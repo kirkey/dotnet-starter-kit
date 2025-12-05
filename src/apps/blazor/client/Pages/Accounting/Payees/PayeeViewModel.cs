@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Payees;
 
 /// <summary>
 /// ViewModel used by the Payees page for add/edit operations.
-/// Mirrors the shape of the API's PayeeUpdateCommand so Mapster/Adapt can map between them.
+/// Mirrors the shape of the API's UpdatePayeeCommand so Mapster/Adapt can map between them.
 /// </summary>
 public class PayeeViewModel
 {

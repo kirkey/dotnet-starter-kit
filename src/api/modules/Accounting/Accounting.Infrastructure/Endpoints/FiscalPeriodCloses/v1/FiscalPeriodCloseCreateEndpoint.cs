@@ -8,7 +8,7 @@ public static class FiscalPeriodCloseCreateEndpoint
     internal static RouteHandlerBuilder MapFiscalPeriodCloseCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (FiscalPeriodCloseCreateCommand command, ISender mediator) =>
+            .MapPost("/", async (CreateFiscalPeriodCloseCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Created($"/accounting/fiscal-period-closes/{response.Id}", response);

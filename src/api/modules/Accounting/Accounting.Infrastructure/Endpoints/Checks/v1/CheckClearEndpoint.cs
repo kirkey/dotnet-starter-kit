@@ -17,7 +17,7 @@ public static class CheckClearEndpoint
     internal static RouteHandlerBuilder MapCheckClearEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/clear", async (CheckClearCommand command, ISender mediator) =>
+            .MapPost("/clear", async (ClearCheckCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);

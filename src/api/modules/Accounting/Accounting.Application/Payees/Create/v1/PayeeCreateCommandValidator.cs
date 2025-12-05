@@ -3,16 +3,16 @@
 namespace Accounting.Application.Payees.Create.v1;
 
 /// <summary>
-/// Validator for PayeeCreateCommand implementing stricter and tighter validations.
+/// Validator for CreatePayeeCommand implementing stricter and tighter validations.
 /// Ensures data integrity and business rule compliance for payee creation.
 /// </summary>
-public class PayeeCreateCommandValidator : AbstractValidator<PayeeCreateCommand>
+public class CreatePayeeCommandValidator : AbstractValidator<CreatePayeeCommand>
 {
     /// <summary>
-    /// Initializes a new instance of the PayeeCreateCommandValidator class.
+    /// Initializes a new instance of the CreatePayeeCommandValidator class.
     /// </summary>
     /// <param name="repository">Repository for validating uniqueness constraints.</param>
-    public PayeeCreateCommandValidator(IReadRepository<Payee> repository)
+    public CreatePayeeCommandValidator(IReadRepository<Payee> repository)
     {
         ArgumentNullException.ThrowIfNull(repository);
 

@@ -3,9 +3,9 @@ namespace Accounting.Application.Checks.Update.v1;
 /// <summary>
 /// Validator for check update command.
 /// </summary>
-public class CheckUpdateCommandValidator : AbstractValidator<CheckUpdateCommand>
+public class UpdateCheckCommandValidator : AbstractValidator<UpdateCheckCommand>
 {
-    public CheckUpdateCommandValidator()
+    public UpdateCheckCommandValidator()
     {
         RuleFor(x => x.CheckId)
             .NotEqual(DefaultIdType.Empty).WithMessage("Check ID is required.");

@@ -14,7 +14,7 @@ public static class PaymentCreateEndpoint
     internal static RouteHandlerBuilder MapPaymentCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (PaymentCreateCommand request, ISender mediator) =>
+            .MapPost("/", async (CreatePaymentCommand request, ISender mediator) =>
             {
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Created($"/accounting/payments/{response.Id}", response);

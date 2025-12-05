@@ -102,11 +102,11 @@ public partial class Customers
             idFunc: dto => dto.Id,
             createFunc: async viewModel =>
             {
-                await Client.CustomerCreateEndpointAsync("1", viewModel.Adapt<CustomerCreateCommand>()).ConfigureAwait(false);
+                await Client.CustomerCreateEndpointAsync("1", viewModel.Adapt<CreateCustomerCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
-                await Client.CustomerUpdateEndpointAsync("1", id, viewModel.Adapt<CustomerUpdateCommand>()).ConfigureAwait(false);
+                await Client.CustomerUpdateEndpointAsync("1", id, viewModel.Adapt<UpdateCustomerCommand>()).ConfigureAwait(false);
             },
             deleteFunc: null,
             entityName: "Customer",

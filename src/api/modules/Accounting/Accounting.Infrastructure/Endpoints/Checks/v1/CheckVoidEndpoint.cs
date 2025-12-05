@@ -17,7 +17,7 @@ public static class CheckVoidEndpoint
     internal static RouteHandlerBuilder MapCheckVoidEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/void", async (CheckVoidCommand command, ISender mediator) =>
+            .MapPost("/void", async (VoidCheckCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);

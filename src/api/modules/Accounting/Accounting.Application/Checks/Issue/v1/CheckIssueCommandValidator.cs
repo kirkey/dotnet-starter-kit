@@ -3,9 +3,9 @@ namespace Accounting.Application.Checks.Issue.v1;
 /// <summary>
 /// Validator for check issue command with strict validation rules.
 /// </summary>
-public class CheckIssueCommandValidator : AbstractValidator<CheckIssueCommand>
+public class IssueCheckCommandValidator : AbstractValidator<IssueCheckCommand>
 {
-    public CheckIssueCommandValidator()
+    public IssueCheckCommandValidator()
     {
         RuleFor(x => x.CheckId)
             .NotEmpty().WithMessage("Check ID is required.");

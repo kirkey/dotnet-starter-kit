@@ -14,7 +14,7 @@ public static class CustomerCreateEndpoint
     internal static RouteHandlerBuilder MapCustomerCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (CustomerCreateCommand command, ISender mediator) =>
+            .MapPost("/", async (CreateCustomerCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Created($"/accounting/customers/{response.Id}", response);

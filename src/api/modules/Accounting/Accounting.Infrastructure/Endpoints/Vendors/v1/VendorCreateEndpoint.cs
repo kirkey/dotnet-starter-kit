@@ -8,7 +8,7 @@ public static class VendorCreateEndpoint
     internal static RouteHandlerBuilder MapVendorCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (VendorCreateCommand command, ISender mediator) =>
+            .MapPost("/", async (CreateVendorCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);

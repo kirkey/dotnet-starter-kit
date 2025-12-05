@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Banks;
 
 /// <summary>
 /// ViewModel used by the Banks page for add/edit operations.
-/// Mirrors the shape of the API's BankUpdateCommand so Mapster/Adapt can map between them.
+/// Mirrors the shape of the API's UpdateBankCommand so Mapster/Adapt can map between them.
 /// </summary>
 public class BankViewModel
 {

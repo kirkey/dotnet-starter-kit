@@ -1,11 +1,11 @@
 namespace Accounting.Application.TrialBalance.Create.v1;
 
 /// <summary>
-/// Validator for TrialBalanceCreateCommand.
+/// Validator for CreateTrialBalanceCommand.
 /// </summary>
-public sealed class TrialBalanceCreateCommandValidator : AbstractValidator<TrialBalanceCreateCommand>
+public sealed class CreateTrialBalanceCommandValidator : AbstractValidator<CreateTrialBalanceCommand>
 {
-    public TrialBalanceCreateCommandValidator()
+    public CreateTrialBalanceCommandValidator()
     {
         RuleFor(x => x.TrialBalanceNumber)
             .NotEmpty()

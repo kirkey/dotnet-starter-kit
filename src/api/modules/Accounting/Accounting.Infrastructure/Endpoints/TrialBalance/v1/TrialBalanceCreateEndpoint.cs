@@ -11,7 +11,7 @@ public static class TrialBalanceCreateEndpoint
     internal static RouteHandlerBuilder MapTrialBalanceCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (TrialBalanceCreateCommand command, ISender mediator) =>
+            .MapPost("/", async (CreateTrialBalanceCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Created($"/accounting/trial-balance/{response.Id}", response);

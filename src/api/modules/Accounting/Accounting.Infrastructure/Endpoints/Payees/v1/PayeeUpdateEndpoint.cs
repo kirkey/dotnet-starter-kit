@@ -17,7 +17,7 @@ public static class PayeeUpdateEndpoint
     internal static RouteHandlerBuilder MapPayeeUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (DefaultIdType id, PayeeUpdateCommand command, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdatePayeeCommand command, ISender mediator) =>
             {
                 if (id != command.Id)
                     return Results.BadRequest("ID in URL must match ID in request body.");

@@ -11,7 +11,7 @@ public static class TrialBalanceReopenEndpoint
     internal static RouteHandlerBuilder MapTrialBalanceReopenEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/reopen", async (DefaultIdType id, TrialBalanceReopenCommand command, ISender mediator) =>
+            .MapPost("/{id:guid}/reopen", async (DefaultIdType id, ReopenTrialBalanceCommand command, ISender mediator) =>
             {
                 if (id != command.Id)
                 {

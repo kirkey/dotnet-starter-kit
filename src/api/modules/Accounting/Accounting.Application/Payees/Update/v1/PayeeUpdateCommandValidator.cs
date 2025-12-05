@@ -3,16 +3,16 @@ using Accounting.Application.Payees.Queries;
 namespace Accounting.Application.Payees.Update.v1;
 
 /// <summary>
-/// Validator for PayeeUpdateCommand implementing stricter and tighter validations.
+/// Validator for UpdatePayeeCommand implementing stricter and tighter validations.
 /// Ensures data integrity and business rule compliance for payee updates.
 /// </summary>
-public class PayeeUpdateCommandValidator : AbstractValidator<PayeeUpdateCommand>
+public class UpdatePayeeCommandValidator : AbstractValidator<UpdatePayeeCommand>
 {
     /// <summary>
-    /// Initializes a new instance of the PayeeUpdateCommandValidator class.
+    /// Initializes a new instance of the UpdatePayeeCommandValidator class.
     /// </summary>
     /// <param name="repository">Repository for validating uniqueness constraints.</param>
-    public PayeeUpdateCommandValidator(IReadRepository<Payee> repository)
+    public UpdatePayeeCommandValidator(IReadRepository<Payee> repository)
     {
         ArgumentNullException.ThrowIfNull(repository);
 

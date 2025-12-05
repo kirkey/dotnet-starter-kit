@@ -1,11 +1,11 @@
 namespace Accounting.Application.PostingBatches.Create.v1;
 
 /// <summary>
-/// Validator for PostingBatchCreateCommand.
+/// Validator for CreatePostingBatchCommand.
 /// </summary>
-public sealed class PostingBatchCreateCommandValidator : AbstractValidator<PostingBatchCreateCommand>
+public sealed class CreatePostingBatchCommandValidator : AbstractValidator<CreatePostingBatchCommand>
 {
-    public PostingBatchCreateCommandValidator()
+    public CreatePostingBatchCommandValidator()
     {
         RuleFor(x => x.BatchNumber)
             .NotEmpty()

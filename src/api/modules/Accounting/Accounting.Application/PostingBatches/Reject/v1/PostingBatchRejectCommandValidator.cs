@@ -1,8 +1,8 @@
 namespace Accounting.Application.PostingBatches.Reject.v1;
 
-public sealed class PostingBatchRejectCommandValidator : AbstractValidator<PostingBatchRejectCommand>
+public sealed class RejectPostingBatchCommandValidator : AbstractValidator<RejectPostingBatchCommand>
 {
-    public PostingBatchRejectCommandValidator()
+    public RejectPostingBatchCommandValidator()
     {
         RuleFor(x => x.Id)
             .NotEmpty()

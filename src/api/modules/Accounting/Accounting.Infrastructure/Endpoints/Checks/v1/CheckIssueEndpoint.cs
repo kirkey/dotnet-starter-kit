@@ -17,7 +17,7 @@ public static class CheckIssueEndpoint
     internal static RouteHandlerBuilder MapCheckIssueEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/issue", async (CheckIssueCommand command, ISender mediator) =>
+            .MapPost("/issue", async (IssueCheckCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);

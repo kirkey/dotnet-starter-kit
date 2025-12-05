@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Customers;
 
 /// <summary>
 /// ViewModel used by the Customers page for add/edit operations.
-/// Mirrors the shape of the API's CustomerCreateCommand and CustomerUpdateCommand so Mapster/Adapt can map between them.
+/// Mirrors the shape of the API's CreateCustomerCommand and UpdateCustomerCommand so Mapster/Adapt can map between them.
 /// </summary>
 public class CustomerViewModel
 {

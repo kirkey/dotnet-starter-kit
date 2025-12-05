@@ -17,7 +17,7 @@ public static class PayeeCreateEndpoint
     internal static RouteHandlerBuilder MapPayeeCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (PayeeCreateCommand command, ISender mediator) =>
+            .MapPost("/", async (CreatePayeeCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);

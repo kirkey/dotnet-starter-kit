@@ -1,0 +1,41 @@
+using Accounting.Application.Checks.Exceptions;
+
+namespace Accounting.Application.Checks.Issue.v1;
+
+/// <summary>
+/// Handler for issuing a check for payment.
+/// </summary>
+public sealed class IssueCheckHandler(
+    ILogger<IssueCheckHandler> logger,
+    [FromKeyedServices("accounting")] IRepository<Check> repository)
+    : IRequestHandler<IssueCheckCommand, CheckIssueResponse>
+{
+    public async Task<CheckIssueResponse> Handle(IssueCheckCommand request, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+
+        var check = await repository.GetByIdAsync(request.CheckId, cancellationToken);
+        if (check == null)
+        {
+            throw new CheckNotFoundException(request.CheckId);
+        }
+
+        check.Issue(
+            request.Amount,
+            request.PayeeName,
+            request.IssuedDate ?? DateTime.Today,
+            request.PayeeId,
+            request.VendorId,
+            request.PaymentId,
+            request.ExpenseId,
+            request.Memo);
+
+        await repository.UpdateAsync(check, cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
+
+        logger.LogInformation("Check issued: {CheckId} - {CheckNumber} for {Amount} to {PayeeName}", 
+            check.Id, check.CheckNumber, request.Amount, request.PayeeName);
+
+        return new CheckIssueResponse(check.Id, check.CheckNumber, check.Status);
+    }
+}

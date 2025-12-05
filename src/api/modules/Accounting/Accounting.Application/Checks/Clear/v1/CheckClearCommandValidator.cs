@@ -3,9 +3,9 @@ namespace Accounting.Application.Checks.Clear.v1;
 /// <summary>
 /// Validator for clear check command.
 /// </summary>
-public class CheckClearCommandValidator : AbstractValidator<CheckClearCommand>
+public class ClearCheckCommandValidator : AbstractValidator<ClearCheckCommand>
 {
-    public CheckClearCommandValidator()
+    public ClearCheckCommandValidator()
     {
         RuleFor(x => x.CheckId)
             .NotEmpty().WithMessage("Check ID is required.");

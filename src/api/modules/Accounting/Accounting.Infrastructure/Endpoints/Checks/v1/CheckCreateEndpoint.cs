@@ -17,7 +17,7 @@ public static class CheckCreateEndpoint
     internal static RouteHandlerBuilder MapCheckCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (CheckCreateCommand command, ISender mediator) =>
+            .MapPost("/", async (CreateCheckCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Created($"/accounting/checks/{response.Id}", response);

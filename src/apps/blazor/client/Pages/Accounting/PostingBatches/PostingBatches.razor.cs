@@ -134,7 +134,7 @@ public partial class PostingBatches
         // {
         //     try
         //     {
-        //         var command = new PostingBatchApproveCommand();
+        //         var command = new ApprovePostingBatchCommand();
         //         await Client.ApprovePostingBatchEndpointAsync("1", id, command).ConfigureAwait(false);
         //         Snackbar.Add("Posting batch approved", Severity.Success);
         //         await _table.ReloadDataAsync();
@@ -155,7 +155,7 @@ public partial class PostingBatches
         // {
         //     try
         //     {
-        //         var command = new PostingBatchRejectCommand();
+        //         var command = new RejectPostingBatchCommand();
         //         await Client.RejectPostingBatchEndpointAsync("1", id, command).ConfigureAwait(false);
         //         Snackbar.Add("Posting batch rejected", Severity.Success);
         //         await _table.ReloadDataAsync();
@@ -176,7 +176,7 @@ public partial class PostingBatches
         // {
         //     try
         //     {
-        //         var command = new PostingBatchPostCommand();
+        //         var command = new PostPostingBatchCommand();
         //         await Client.PostPostingBatchEndpointAsync("1", id, command).ConfigureAwait(false);
         //         Snackbar.Add("Posting batch posted", Severity.Success);
         //         await _table.ReloadDataAsync();
@@ -197,7 +197,7 @@ public partial class PostingBatches
         // {
         //     try
         //     {
-        //         var command = new PostingBatchReverseCommand();
+        //         var command = new ReversePostingBatchCommand();
         //         await Client.ReversePostingBatchEndpointAsync("1", id, command).ConfigureAwait(false);
         //         Snackbar.Add("Posting batch reversed", Severity.Success);
         //         await _table.ReloadDataAsync();

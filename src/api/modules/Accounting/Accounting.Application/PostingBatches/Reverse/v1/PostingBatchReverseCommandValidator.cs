@@ -1,8 +1,8 @@
 namespace Accounting.Application.PostingBatches.Reverse.v1;
 
-public sealed class PostingBatchReverseCommandValidator : AbstractValidator<PostingBatchReverseCommand>
+public sealed class ReversePostingBatchCommandValidator : AbstractValidator<ReversePostingBatchCommand>
 {
-    public PostingBatchReverseCommandValidator()
+    public ReversePostingBatchCommandValidator()
     {
         RuleFor(x => x.Id).NotEmpty().WithMessage("Posting batch ID is required.");
         RuleFor(x => x.Reason).NotEmpty().WithMessage("Reason is required to reverse a posting batch.")

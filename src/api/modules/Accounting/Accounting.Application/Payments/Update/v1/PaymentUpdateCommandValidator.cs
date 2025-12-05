@@ -1,14 +1,14 @@
 namespace Accounting.Application.Payments.Update.v1;
 
 /// <summary>
-/// Validator for PaymentUpdateCommand.
+/// Validator for UpdatePaymentCommand.
 /// </summary>
-public sealed class PaymentUpdateCommandValidator : AbstractValidator<PaymentUpdateCommand>
+public sealed class UpdatePaymentCommandValidator : AbstractValidator<UpdatePaymentCommand>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="PaymentUpdateCommandValidator"/> class.
+    /// Initializes a new instance of the <see cref="UpdatePaymentCommandValidator"/> class.
     /// </summary>
-    public PaymentUpdateCommandValidator()
+    public UpdatePaymentCommandValidator()
     {
         RuleFor(x => x.Id)
             .NotEmpty()

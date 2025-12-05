@@ -14,7 +14,7 @@ public static class BillCreateEndpoint
     internal static RouteHandlerBuilder MapBillCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (BillCreateCommand command, ISender mediator) =>
+            .MapPost("/", async (CreateBillCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Created($"/accounting/bills/{response.BillId}", response);

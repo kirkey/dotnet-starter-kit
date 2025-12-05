@@ -1,8 +1,8 @@
 namespace Accounting.Application.Vendors.Update.v1;
 
-public class VendorUpdateCommandValidator : AbstractValidator<VendorUpdateCommand>
+public class UpdateVendorCommandValidator : AbstractValidator<UpdateVendorCommand>
 {
-    public VendorUpdateCommandValidator()
+    public UpdateVendorCommandValidator()
     {
         RuleFor(x => x.Id).NotEmpty();
         RuleFor(x => x.VendorCode).NotEmpty();

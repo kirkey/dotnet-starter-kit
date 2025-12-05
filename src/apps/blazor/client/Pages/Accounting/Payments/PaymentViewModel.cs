@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Payments;
 
 /// <summary>
 /// ViewModel used by the Payments page for add/edit operations.
-/// Mirrors the shape of the API's PaymentCreateCommand and PaymentUpdateCommand.
+/// Mirrors the shape of the API's CreatePaymentCommand and UpdatePaymentCommand.
 /// </summary>
 public sealed class PaymentViewModel
 {

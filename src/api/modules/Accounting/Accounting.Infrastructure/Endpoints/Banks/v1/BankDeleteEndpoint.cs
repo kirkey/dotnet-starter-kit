@@ -18,7 +18,7 @@ public static class BankDeleteEndpoint
         return endpoints
             .MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
             {
-                var command = new BankDeleteCommand(id);
+                var command = new DeleteBankCommand(id);
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })

@@ -16,7 +16,7 @@ public static class PaymentDeleteEndpoint
         return endpoints
             .MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
             {
-                await mediator.Send(new PaymentDeleteCommand(id)).ConfigureAwait(false);
+                await mediator.Send(new DeletePaymentCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
             .WithName(nameof(PaymentDeleteEndpoint))

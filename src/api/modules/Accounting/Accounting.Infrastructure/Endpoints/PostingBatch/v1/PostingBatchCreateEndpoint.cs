@@ -8,7 +8,7 @@ public static class PostingBatchCreateEndpoint
     internal static RouteHandlerBuilder MapPostingBatchCreateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (PostingBatchCreateCommand command, ISender mediator) =>
+            .MapPost("/", async (CreatePostingBatchCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Created($"/accounting/posting-batch/{response.Id}", response);

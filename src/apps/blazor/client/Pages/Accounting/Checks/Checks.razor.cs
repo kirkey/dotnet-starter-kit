@@ -21,7 +21,7 @@ public partial class Checks
     private readonly DialogOptions _dialogOptions = new() { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
 
     // Command objects for dialogs
-    private CheckIssueCommand _issueCommand = new()
+    private IssueCheckCommand _issueCommand = new()
     {
         CheckId = DefaultIdType.Empty,
         Amount = 0,
@@ -34,14 +34,14 @@ public partial class Checks
         Memo = null
     };
 
-    private CheckVoidCommand _voidCommand = new()
+    private VoidCheckCommand _voidCommand = new()
     {
         CheckId = DefaultIdType.Empty,
         VoidReason = string.Empty,
         VoidedDate = DateTime.UtcNow
     };
 
-    private CheckClearCommand _clearCommand = new()
+    private ClearCheckCommand _clearCommand = new()
     {
         CheckId = DefaultIdType.Empty,
         ClearedDate = DateTime.UtcNow
@@ -123,7 +123,7 @@ public partial class Checks
                 // For bundle creation, use StartCheckNumber and EndCheckNumber
                 if (!string.IsNullOrWhiteSpace(check.StartCheckNumber) && !string.IsNullOrWhiteSpace(check.EndCheckNumber))
                 {
-                    var createCommand = check.Adapt<CheckCreateCommand>();
+                    var createCommand = check.Adapt<CreateCheckCommand>();
                     await Client.CheckCreateEndpointAsync("1", createCommand);
                     Snackbar.Add($"Check bundle created: {check.StartCheckNumber} to {check.EndCheckNumber}", Severity.Success);
                 }
@@ -135,7 +135,7 @@ public partial class Checks
             updateFunc: async (id, check) =>
             {
                 // Update available checks with new command
-                var updateCommand = check.Adapt<CheckUpdateCommand>();
+                var updateCommand = check.Adapt<UpdateCheckCommand>();
                 updateCommand.CheckId = id;
                 await Client.CheckUpdateEndpointAsync("1", id, updateCommand);
             },

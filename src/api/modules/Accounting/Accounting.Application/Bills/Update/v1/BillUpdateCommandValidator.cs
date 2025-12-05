@@ -1,11 +1,11 @@
 namespace Accounting.Application.Bills.Update.v1;
 
 /// <summary>
-/// Validator for BillUpdateCommand with strict validation rules.
+/// Validator for UpdateBillCommand with strict validation rules.
 /// </summary>
-public sealed class BillUpdateCommandValidator : AbstractValidator<BillUpdateCommand>
+public sealed class UpdateBillCommandValidator : AbstractValidator<UpdateBillCommand>
 {
-    public BillUpdateCommandValidator()
+    public UpdateBillCommandValidator()
     {
         RuleFor(x => x.BillId)
             .NotEmpty()

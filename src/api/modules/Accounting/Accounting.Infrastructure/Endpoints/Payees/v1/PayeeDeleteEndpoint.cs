@@ -19,7 +19,7 @@ public static class PayeeDeleteEndpoint
         return endpoints
             .MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                await mediator.Send(new PayeeDeleteCommand(id)).ConfigureAwait(false);
+                await mediator.Send(new DeletePayeeCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
             .WithName(nameof(PayeeDeleteEndpoint))

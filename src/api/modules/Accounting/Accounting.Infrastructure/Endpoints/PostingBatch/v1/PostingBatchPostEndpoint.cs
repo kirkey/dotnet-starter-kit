@@ -10,7 +10,7 @@ public static class PostingBatchPostEndpoint
         return endpoints
             .MapPost("/{id:guid}/post", async (DefaultIdType id, ISender mediator) =>
             {
-                var batchId = await mediator.Send(new PostingBatchPostCommand(id)).ConfigureAwait(false);
+                var batchId = await mediator.Send(new PostPostingBatchCommand(id)).ConfigureAwait(false);
                 return Results.Ok(new { Id = batchId, Message = "Posting batch posted successfully" });
             })
             .WithName(nameof(PostingBatchPostEndpoint))

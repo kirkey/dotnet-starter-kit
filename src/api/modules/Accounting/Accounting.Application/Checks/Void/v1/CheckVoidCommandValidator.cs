@@ -3,9 +3,9 @@ namespace Accounting.Application.Checks.Void.v1;
 /// <summary>
 /// Validator for void check command.
 /// </summary>
-public class CheckVoidCommandValidator : AbstractValidator<CheckVoidCommand>
+public class VoidCheckCommandValidator : AbstractValidator<VoidCheckCommand>
 {
-    public CheckVoidCommandValidator()
+    public VoidCheckCommandValidator()
     {
         RuleFor(x => x.CheckId)
             .NotEmpty().WithMessage("Check ID is required.");

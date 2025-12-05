@@ -75,7 +75,7 @@ public partial class Payees
                     Data = viewModel.Image?.Data,
                     Size = viewModel.Image?.Size,
                 };
-                await Client.PayeeCreateEndpointAsync("1", viewModel.Adapt<PayeeCreateCommand>());
+                await Client.PayeeCreateEndpointAsync("1", viewModel.Adapt<CreatePayeeCommand>());
             },
             updateFunc: async (id, viewModel) =>
             {
@@ -86,7 +86,7 @@ public partial class Payees
                     Data = viewModel.Image?.Data,
                     Size = viewModel.Image?.Size,
                 };
-                await Client.PayeeUpdateEndpointAsync("1", id, viewModel.Adapt<PayeeUpdateCommand>());
+                await Client.PayeeUpdateEndpointAsync("1", id, viewModel.Adapt<UpdatePayeeCommand>());
             },
             deleteFunc: async id => await Client.PayeeDeleteEndpointAsync("1", id));
 

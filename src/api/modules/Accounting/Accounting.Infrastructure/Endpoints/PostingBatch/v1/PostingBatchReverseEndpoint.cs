@@ -8,7 +8,7 @@ public static class PostingBatchReverseEndpoint
     internal static RouteHandlerBuilder MapPostingBatchReverseEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/reverse", async (DefaultIdType id, PostingBatchReverseCommand request, ISender mediator) =>
+            .MapPost("/{id:guid}/reverse", async (DefaultIdType id, ReversePostingBatchCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var batchId = await mediator.Send(command).ConfigureAwait(false);

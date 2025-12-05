@@ -98,7 +98,7 @@ public partial class TrialBalance
             // },
             createFunc: async viewModel =>
             {
-                var command = new TrialBalanceCreateCommand
+                var command = new CreateTrialBalanceCommand
                 {
                     TrialBalanceNumber = viewModel.TrialBalanceNumber,
                     PeriodId = viewModel.PeriodId!.Value,
@@ -142,7 +142,7 @@ public partial class TrialBalance
         {
             try
             {
-                var command = new TrialBalanceFinalizeCommand { Id = id };
+                var command = new FinalizeTrialBalanceCommand { Id = id };
                 await Client.TrialBalanceFinalizeEndpointAsync("1", id, command);
                 Snackbar.Add("Trial balance finalized successfully", Severity.Success);
                 await _table.ReloadDataAsync();
@@ -169,7 +169,7 @@ public partial class TrialBalance
         {
             try
             {
-                var command = new TrialBalanceReopenCommand { Id = id };
+                var command = new ReopenTrialBalanceCommand { Id = id };
                 await Client.TrialBalanceReopenEndpointAsync("1", id, command);
                 Snackbar.Add("Trial balance reopened successfully", Severity.Success);
                 await _table.ReloadDataAsync();

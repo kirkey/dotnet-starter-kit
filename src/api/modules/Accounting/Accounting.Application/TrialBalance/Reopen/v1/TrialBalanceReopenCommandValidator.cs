@@ -1,11 +1,11 @@
 namespace Accounting.Application.TrialBalance.Reopen.v1;
 
 /// <summary>
-/// Validator for TrialBalanceReopenCommand.
+/// Validator for ReopenTrialBalanceCommand.
 /// </summary>
-public sealed class TrialBalanceReopenCommandValidator : AbstractValidator<TrialBalanceReopenCommand>
+public sealed class ReopenTrialBalanceCommandValidator : AbstractValidator<ReopenTrialBalanceCommand>
 {
-    public TrialBalanceReopenCommandValidator()
+    public ReopenTrialBalanceCommandValidator()
     {
         RuleFor(x => x.Id)
             .NotEmpty()

@@ -3,9 +3,9 @@ namespace Accounting.Application.Customers.Create.v1;
 /// <summary>
 /// Validator for customer creation command.
 /// </summary>
-public class CustomerCreateCommandValidator : AbstractValidator<CustomerCreateCommand>
+public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCommand>
 {
-    public CustomerCreateCommandValidator()
+    public CreateCustomerCommandValidator()
     {
         RuleFor(x => x.CustomerNumber)
             .NotEmpty().WithMessage("Customer number is required")

@@ -1,0 +1,34 @@
+using Accounting.Application.Checks.Exceptions;
+
+namespace Accounting.Application.Checks.Void.v1;
+
+/// <summary>
+/// Handler for voiding a check.
+/// </summary>
+public sealed class VoidCheckHandler(
+    ILogger<VoidCheckHandler> logger,
+    [FromKeyedServices("accounting")] IRepository<Check> repository)
+    : IRequestHandler<VoidCheckCommand, CheckVoidResponse>
+{
+    public async Task<CheckVoidResponse> Handle(VoidCheckCommand request, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+
+        var check = await repository.GetByIdAsync(request.CheckId, cancellationToken);
+        if (check == null)
+        {
+            throw new CheckNotFoundException(request.CheckId);
+        }
+
+        check.Void(request.VoidReason, request.VoidedDate);
+
+        await repository.UpdateAsync(check, cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
+
+        logger.LogInformation("Check voided: {CheckId} - {CheckNumber}. Reason: {VoidReason}", 
+            check.Id, check.CheckNumber, request.VoidReason);
+
+        return new CheckVoidResponse(check.Id, check.CheckNumber, check.Status);
+    }
+}
+

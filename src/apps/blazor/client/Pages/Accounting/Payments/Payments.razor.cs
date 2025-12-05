@@ -73,7 +73,7 @@ public partial class Payments
             },
             createFunc: async vm =>
             {
-                var command = new PaymentCreateCommand
+                var command = new CreatePaymentCommand
                 {
                     PaymentNumber = vm.PaymentNumber,
                     MemberId = vm.MemberId,
@@ -90,7 +90,7 @@ public partial class Payments
             },
             updateFunc: async (id, vm) =>
             {
-                var command = new PaymentUpdateCommand
+                var command = new UpdatePaymentCommand
                 {
                     Id = id,
                     ReferenceNumber = vm.ReferenceNumber,

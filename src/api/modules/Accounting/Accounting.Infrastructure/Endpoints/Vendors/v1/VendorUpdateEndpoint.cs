@@ -8,7 +8,7 @@ public static class VendorUpdateEndpoint
     internal static RouteHandlerBuilder MapVendorUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (DefaultIdType id, VendorUpdateCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateVendorCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var response = await mediator.Send(command).ConfigureAwait(false);

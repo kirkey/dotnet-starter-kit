@@ -17,7 +17,7 @@ public static class CheckStopPaymentEndpoint
     internal static RouteHandlerBuilder MapCheckStopPaymentEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/stop-payment", async (CheckStopPaymentCommand command, ISender mediator) =>
+            .MapPost("/stop-payment", async (StopPaymentCheckCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);

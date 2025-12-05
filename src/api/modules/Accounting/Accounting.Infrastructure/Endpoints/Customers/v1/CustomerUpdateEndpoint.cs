@@ -14,7 +14,7 @@ public static class CustomerUpdateEndpoint
     internal static RouteHandlerBuilder MapCustomerUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id}", async (DefaultIdType id, CustomerUpdateCommand request, ISender mediator) =>
+            .MapPut("/{id}", async (DefaultIdType id, UpdateCustomerCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 await mediator.Send(command).ConfigureAwait(false);

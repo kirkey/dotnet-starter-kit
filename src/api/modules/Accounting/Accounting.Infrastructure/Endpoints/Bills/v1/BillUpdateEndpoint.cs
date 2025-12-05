@@ -14,7 +14,7 @@ public static class BillUpdateEndpoint
     internal static RouteHandlerBuilder MapBillUpdateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (DefaultIdType id, BillUpdateCommand request, ISender mediator) =>
+            .MapPut("/{id:guid}", async (DefaultIdType id, UpdateBillCommand request, ISender mediator) =>
             {
                 var command = request with { BillId = id };
                 var result = await mediator.Send(command).ConfigureAwait(false);

@@ -61,7 +61,7 @@ public partial class Vendors
             // },
             createFunc: async viewModel =>
             {
-                var command = new VendorCreateCommand
+                var command = new CreateVendorCommand
                 {
                     VendorCode = viewModel.VendorCode!.ToUpperInvariant(),
                     Name = viewModel.Name!.ToUpperInvariant(),
@@ -83,7 +83,7 @@ public partial class Vendors
             },
             updateFunc: async (id, viewModel) =>
             {
-                var command = new VendorUpdateCommand
+                var command = new UpdateVendorCommand
                 {
                     Id = id,
                     VendorCode = viewModel.VendorCode!.ToUpperInvariant(),

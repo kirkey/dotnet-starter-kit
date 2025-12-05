@@ -3,16 +3,16 @@ using Accounting.Application.Banks.Specs;
 namespace Accounting.Application.Banks.Update.v1;
 
 /// <summary>
-/// Validator for the BankUpdateCommand with comprehensive validation rules.
+/// Validator for the UpdateBankCommand with comprehensive validation rules.
 /// Ensures data integrity and business rule compliance before bank update.
 /// </summary>
-public class BankUpdateCommandValidator : AbstractValidator<BankUpdateCommand>
+public class UpdateBankCommandValidator : AbstractValidator<UpdateBankCommand>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="BankUpdateCommandValidator"/> class.
+    /// Initializes a new instance of the <see cref="UpdateBankCommandValidator"/> class.
     /// </summary>
     /// <param name="repository">Repository for bank data access to check for duplicates.</param>
-    public BankUpdateCommandValidator(
+    public UpdateBankCommandValidator(
         [FromKeyedServices("accounting:banks")] IReadRepository<Bank> repository)
     {
         // Id validation

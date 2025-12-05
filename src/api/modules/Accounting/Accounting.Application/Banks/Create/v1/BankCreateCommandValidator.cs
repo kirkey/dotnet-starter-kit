@@ -4,16 +4,16 @@ using Accounting.Application.Banks.Queries;
 namespace Accounting.Application.Banks.Create.v1;
 
 /// <summary>
-/// Validator for the BankCreateCommand with comprehensive validation rules.
+/// Validator for the CreateBankCommand with comprehensive validation rules.
 /// Ensures data integrity and business rule compliance before bank creation.
 /// </summary>
-public class BankCreateCommandValidator : AbstractValidator<BankCreateCommand>
+public class CreateBankCommandValidator : AbstractValidator<CreateBankCommand>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="BankCreateCommandValidator"/> class.
+    /// Initializes a new instance of the <see cref="CreateBankCommandValidator"/> class.
     /// </summary>
     /// <param name="repository">Repository for bank data access to check for duplicates.</param>
-    public BankCreateCommandValidator(
+    public CreateBankCommandValidator(
         [FromKeyedServices("accounting:banks")] IReadRepository<Bank> repository)
     {
         // BankCode validation

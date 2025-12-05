@@ -1,0 +1,35 @@
+using FSH.Framework.Core.Identity.Users.Abstractions;
+
+namespace Accounting.Application.PostingBatches.Reject.v1;
+
+/// <summary>
+/// Handler for rejecting a posting batch.
+/// The rejector is automatically determined from the current user session.
+/// </summary>
+public sealed class RejectPostingBatchHandler(
+    ICurrentUser currentUser,
+    [FromKeyedServices("accounting:posting-batches")] IRepository<PostingBatch> repository,
+    ILogger<RejectPostingBatchHandler> logger)
+    : IRequestHandler<RejectPostingBatchCommand, DefaultIdType>
+{
+    public async Task<DefaultIdType> Handle(RejectPostingBatchCommand request, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        
+        logger.LogInformation("Rejecting posting batch {BatchId}", request.Id);
+
+        var batch = await repository.GetByIdAsync(request.Id, cancellationToken);
+        if (batch == null)
+            throw new NotFoundException($"Posting batch with ID {request.Id} not found");
+
+        var rejectedBy = currentUser.GetUserName() ?? currentUser.GetUserId().ToString();
+        batch.Reject(rejectedBy);
+        
+        await repository.UpdateAsync(batch, cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
+
+        logger.LogInformation("Posting batch {BatchNumber} rejected by {RejectedBy}", batch.BatchNumber, rejectedBy);
+        return batch.Id;
+    }
+}
+

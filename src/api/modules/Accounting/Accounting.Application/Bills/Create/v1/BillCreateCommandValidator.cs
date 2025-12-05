@@ -1,11 +1,11 @@
 namespace Accounting.Application.Bills.Create.v1;
 
 /// <summary>
-/// Validator for BillCreateCommand with strict validation rules.
+/// Validator for CreateBillCommand with strict validation rules.
 /// </summary>
-public sealed class BillCreateCommandValidator : AbstractValidator<BillCreateCommand>
+public sealed class CreateBillCommandValidator : AbstractValidator<CreateBillCommand>
 {
-    public BillCreateCommandValidator()
+    public CreateBillCommandValidator()
     {
         RuleFor(x => x.BillNumber)
             .NotEmpty()

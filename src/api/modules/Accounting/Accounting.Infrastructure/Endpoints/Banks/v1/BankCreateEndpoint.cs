@@ -17,7 +17,7 @@ public static class BankCreateEndpoint
     internal static RouteHandlerBuilder MapCreateBankEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/", async (BankCreateCommand command, ISender mediator) =>
+            .MapPost("/", async (CreateBankCommand command, ISender mediator) =>
             {
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);

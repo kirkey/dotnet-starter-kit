@@ -1,12 +1,12 @@
 namespace Accounting.Application.TrialBalance.Finalize.v1;
 
 /// <summary>
-/// Validator for TrialBalanceFinalizeCommand.
+/// Validator for FinalizeTrialBalanceCommand.
 /// The finalizer is automatically determined from the current user session.
 /// </summary>
-public sealed class TrialBalanceFinalizeCommandValidator : AbstractValidator<TrialBalanceFinalizeCommand>
+public sealed class FinalizeTrialBalanceCommandValidator : AbstractValidator<FinalizeTrialBalanceCommand>
 {
-    public TrialBalanceFinalizeCommandValidator()
+    public FinalizeTrialBalanceCommandValidator()
     {
         RuleFor(x => x.Id)
             .NotEmpty()

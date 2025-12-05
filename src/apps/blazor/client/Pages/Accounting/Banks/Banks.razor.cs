@@ -67,7 +67,7 @@ public partial class Banks
             },
             createFunc: async viewModel =>
             {
-                var command = viewModel.Adapt<BankCreateCommand>();
+                var command = viewModel.Adapt<CreateBankCommand>();
                 command.BankCode = viewModel.BankCode!.ToUpperInvariant();
                 command.Name = viewModel.Name!.ToUpperInvariant();
                 command.Image = new FileUploadCommand
@@ -81,7 +81,7 @@ public partial class Banks
             },
             updateFunc: async (id, viewModel) =>
             {
-                var command = viewModel.Adapt<BankUpdateCommand>();
+                var command = viewModel.Adapt<UpdateBankCommand>();
                 command.BankCode = viewModel.BankCode!.ToUpperInvariant();
                 command.Name = viewModel.Name!.ToUpperInvariant();
                 command.Image = new FileUploadCommand

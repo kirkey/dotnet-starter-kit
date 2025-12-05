@@ -1,11 +1,11 @@
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.Checks;
 
 /// <summary>
-/// ViewModel for Check page - combines CheckUpdateCommand with display-only fields.
-/// Inherits from CheckUpdateCommand to leverage Mapster mapping automatically.
+/// ViewModel for Check page - combines UpdateCheckCommand with display-only fields.
+/// Inherits from UpdateCheckCommand to leverage Mapster mapping automatically.
 /// Follows the same pattern as Catalog and Todo pages.
 /// </summary>
-public partial class CheckViewModel : CheckUpdateCommand
+public partial class CheckViewModel : UpdateCheckCommand
 {
     /// <summary>
     /// Display-only: The unique identifier for this Check entity.

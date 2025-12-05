@@ -1,14 +1,14 @@
 namespace Accounting.Application.Payments.Delete.v1;
 
 /// <summary>
-/// Validator for PaymentDeleteCommand.
+/// Validator for DeletePaymentCommand.
 /// </summary>
-public sealed class PaymentDeleteCommandValidator : AbstractValidator<PaymentDeleteCommand>
+public sealed class DeletePaymentCommandValidator : AbstractValidator<DeletePaymentCommand>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="PaymentDeleteCommandValidator"/> class.
+    /// Initializes a new instance of the <see cref="DeletePaymentCommandValidator"/> class.
     /// </summary>
-    public PaymentDeleteCommandValidator()
+    public DeletePaymentCommandValidator()
     {
         RuleFor(x => x.Id)
             .NotEmpty()

@@ -1,15 +1,15 @@
 namespace Accounting.Application.Payments.Create.v1;
 
 /// <summary>
-/// Validator for PaymentCreateCommand.
+/// Validator for CreatePaymentCommand.
 /// Ensures all payment creation requirements are met.
 /// </summary>
-public sealed class PaymentCreateCommandValidator : AbstractValidator<PaymentCreateCommand>
+public sealed class CreatePaymentCommandValidator : AbstractValidator<CreatePaymentCommand>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="PaymentCreateCommandValidator"/> class.
+    /// Initializes a new instance of the <see cref="CreatePaymentCommandValidator"/> class.
     /// </summary>
-    public PaymentCreateCommandValidator()
+    public CreatePaymentCommandValidator()
     {
         RuleFor(x => x.PaymentNumber)
             .NotEmpty()
