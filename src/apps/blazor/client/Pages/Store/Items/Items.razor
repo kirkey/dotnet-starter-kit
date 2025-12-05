@@ -145,6 +145,12 @@
                           UploadLabel="Upload Item Image" />
         </MudItem>
     </EditFormContent>
+
+    <ExtraActions Context="item">
+        <MudMenuItem Icon="@Icons.Material.Filled.Dashboard" OnClick="@(() => OnViewDashboard(item.Id))">
+            View Dashboard
+        </MudMenuItem>
+    </ExtraActions>
 </EntityTable>
 
 @code {

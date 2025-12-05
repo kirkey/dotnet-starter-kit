@@ -12,6 +12,7 @@
 	   </PropertyGroup>
 	 
 	   <ItemGroup>
+	     <PackageReference Include="Blazor-ApexCharts" />
 	     <PackageReference Include="ClosedXML" />
 	     <PackageReference Include="Mapster" />
 	     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />

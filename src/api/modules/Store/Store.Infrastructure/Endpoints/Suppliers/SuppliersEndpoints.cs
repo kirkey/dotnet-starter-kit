@@ -13,7 +13,7 @@ public class SuppliersEndpoints() : CarterModule("store")
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("store/suppliers").WithTags("suppliers");
+        var group = app.MapGroup("suppliers").WithTags("suppliers");
 
         // Call the individual endpoint handler methods from v1
         group.MapCreateSupplierEndpoint();
@@ -23,5 +23,8 @@ public class SuppliersEndpoints() : CarterModule("store")
         group.MapSearchSuppliersEndpoint();
         group.MapActivateSupplierEndpoint();
         group.MapDeactivateSupplierEndpoint();
+        
+        // Dashboard
+        group.MapGetSupplierDashboardEndpoint();
     }
 }

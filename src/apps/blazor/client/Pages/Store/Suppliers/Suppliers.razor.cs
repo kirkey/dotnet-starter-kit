@@ -86,7 +86,16 @@ public partial class Suppliers
                 };
                 await Client.UpdateSupplierEndpointAsync("1", id, viewModel.Adapt<UpdateSupplierCommand>()).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteSupplierEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeleteSupplierEndpointAsync("1", id).ConfigureAwait(false),
+            hasExtraActionsFunc: () => true);
+    }
+
+    /// <summary>
+    /// Navigate to supplier dashboard.
+    /// </summary>
+    private void OnViewDashboard(DefaultIdType id)
+    {
+        Navigation.NavigateTo($"/store/suppliers/{id}/dashboard");
     }
 
     /// <summary>

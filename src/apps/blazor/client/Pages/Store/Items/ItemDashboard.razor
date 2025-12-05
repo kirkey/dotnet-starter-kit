@@ -1,0 +1,321 @@
+@page "/store/items/{Id:guid}/dashboard"
+
+<FshPage Title="@($"Item Dashboard: {_itemName}")"
+         Description="View comprehensive item performance analytics, sales trends, and inventory insights"
+         Breadcrumbs="@_breadcrumbs">
+
+    <MudPaper Class="pa-4 mb-4" Elevation="1">
+        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+            <MudStack Spacing="1">
+                <MudText Typo="Typo.h5">@_itemName</MudText>
+                <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">SKU: @_itemSku</MudText>
+            </MudStack>
+            <MudStack Row="true" Spacing="2">
+                <MudButton Variant="Variant.Outlined"
+                           StartIcon="@Icons.Material.Filled.Refresh"
+                           OnClick="RefreshData"
+                           Color="MudBlazor.Color.Primary">
+                    Refresh
+                </MudButton>
+                <MudButton Variant="Variant.Outlined"
+                           StartIcon="@Icons.Material.Filled.Help"
+                           OnClick="OpenHelpDialog"
+                           Color="MudBlazor.Color.Info">
+                    Help
+                </MudButton>
+            </MudStack>
+        </MudStack>
+    </MudPaper>
+
+    @if (_loading)
+    {
+        <MudProgressLinear Color="MudBlazor.Color.Primary" Indeterminate="true" Class="mb-4" />
+    }
+
+    <!-- Key Performance Indicators -->
+    <MudGrid Class="mb-4">
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard>
+                <MudCardContent>
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Color="MudBlazor.Color.Success" Size="MudBlazor.Size.Large" />
+                        <MudText Typo="Typo.h4" Color="MudBlazor.Color.Success">@_dashboard.TotalSales.ToString("N0")</MudText>
+                        <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Total Units Sold</MudText>
+                        <MudChip T="string" Color="@GetTrendColor(_dashboard.SalesGrowthPercent)" Size="MudBlazor.Size.Small">
+                            @(_dashboard.SalesGrowthPercent >= 0 ? "+" : "")@_dashboard.SalesGrowthPercent.ToString("N1")%
+                        </MudChip>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard>
+                <MudCardContent>
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Color="MudBlazor.Color.Primary" Size="MudBlazor.Size.Large" />
+                        <MudText Typo="Typo.h4" Color="MudBlazor.Color.Primary">@_dashboard.TotalRevenue.ToString("C0")</MudText>
+                        <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Total Revenue</MudText>
+                        <MudChip T="string" Color="@GetTrendColor(_dashboard.RevenueGrowthPercent)" Size="MudBlazor.Size.Small">
+                            @(_dashboard.RevenueGrowthPercent >= 0 ? "+" : "")@_dashboard.RevenueGrowthPercent.ToString("N1")%
+                        </MudChip>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard>
+                <MudCardContent>
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.Inventory" Color="MudBlazor.Color.Info" Size="MudBlazor.Size.Large" />
+                        <MudText Typo="Typo.h4" Color="MudBlazor.Color.Info">@_dashboard.CurrentStock.ToString("N0")</MudText>
+                        <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Current Stock</MudText>
+                        <MudChip T="string" Color="@GetStockLevelColor(_dashboard.StockStatus)" Size="MudBlazor.Size.Small">
+                            @_dashboard.StockStatus
+                        </MudChip>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard>
+                <MudCardContent>
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.Speed" Color="MudBlazor.Color.Warning" Size="MudBlazor.Size.Large" />
+                        <MudText Typo="Typo.h4" Color="MudBlazor.Color.Warning">@_dashboard.TurnoverRate.ToString("N1")</MudText>
+                        <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Turnover Rate</MudText>
+                        <MudChip T="string" Color="@GetTurnoverColor(_dashboard.MovementCategory)" Size="MudBlazor.Size.Small">
+                            @_dashboard.MovementCategory
+                        </MudChip>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+    <!-- Sales Performance Section -->
+    <MudGrid Class="mb-4">
+        <MudItem xs="12" md="8">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Sales Performance</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudSimpleTable Dense="true" Hover="true" Striped="true">
+                        <thead>
+                            <tr>
+                                <th>Period</th>
+                                <th style="text-align:right">Units Sold</th>
+                                <th style="text-align:right">Revenue</th>
+                                <th style="text-align:right">Avg Price</th>
+                                <th style="text-align:right">Growth</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><MudIcon Icon="@Icons.Material.Filled.Today" Size="MudBlazor.Size.Small" Class="mr-1" />Daily Avg</td>
+                                <td style="text-align:right">@_dashboard.DailySalesAvg.ToString("N1")</td>
+                                <td style="text-align:right">@_dashboard.DailyRevenueAvg.ToString("C2")</td>
+                                <td style="text-align:right">@_dashboard.AvgSellingPrice.ToString("C2")</td>
+                                <td style="text-align:right">
+                                    <MudChip T="string" Color="@GetTrendColor(_dashboard.DailyGrowth)" Size="MudBlazor.Size.Small" Variant="Variant.Text">
+                                        @(_dashboard.DailyGrowth >= 0 ? "+" : "")@_dashboard.DailyGrowth.ToString("N1")%
+                                    </MudChip>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><MudIcon Icon="@Icons.Material.Filled.DateRange" Size="MudBlazor.Size.Small" Class="mr-1" />Weekly Avg</td>
+                                <td style="text-align:right">@_dashboard.WeeklySalesAvg.ToString("N1")</td>
+                                <td style="text-align:right">@_dashboard.WeeklyRevenueAvg.ToString("C2")</td>
+                                <td style="text-align:right">-</td>
+                                <td style="text-align:right">
+                                    <MudChip T="string" Color="@GetTrendColor(_dashboard.WeeklyGrowth)" Size="MudBlazor.Size.Small" Variant="Variant.Text">
+                                        @(_dashboard.WeeklyGrowth >= 0 ? "+" : "")@_dashboard.WeeklyGrowth.ToString("N1")%
+                                    </MudChip>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><MudIcon Icon="@Icons.Material.Filled.CalendarMonth" Size="MudBlazor.Size.Small" Class="mr-1" />Monthly Avg</td>
+                                <td style="text-align:right">@_dashboard.MonthlySalesAvg.ToString("N1")</td>
+                                <td style="text-align:right">@_dashboard.MonthlyRevenueAvg.ToString("C2")</td>
+                                <td style="text-align:right">-</td>
+                                <td style="text-align:right">
+                                    <MudChip T="string" Color="@GetTrendColor(_dashboard.MonthlyGrowth)" Size="MudBlazor.Size.Small" Variant="Variant.Text">
+                                        @(_dashboard.MonthlyGrowth >= 0 ? "+" : "")@_dashboard.MonthlyGrowth.ToString("N1")%
+                                    </MudChip>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><MudIcon Icon="@Icons.Material.Filled.CalendarToday" Size="MudBlazor.Size.Small" Class="mr-1" />Yearly Projected</td>
+                                <td style="text-align:right">@_dashboard.YearlySalesProjected.ToString("N0")</td>
+                                <td style="text-align:right">@_dashboard.YearlyRevenueProjected.ToString("C0")</td>
+                                <td style="text-align:right">-</td>
+                                <td style="text-align:right">
+                                    <MudChip T="string" Color="@GetTrendColor(_dashboard.YearlyGrowth)" Size="MudBlazor.Size.Small" Variant="Variant.Text">
+                                        @(_dashboard.YearlyGrowth >= 0 ? "+" : "")@_dashboard.YearlyGrowth.ToString("N1")%
+                                    </MudChip>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudCard Style="height:100%">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Backorder Status</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudStack Spacing="3">
+                        <MudStack>
+                            <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Pending Backorders</MudText>
+                            <MudText Typo="Typo.h4" Color="@GetBackorderColor(_dashboard.PendingBackorders)">
+                                @_dashboard.PendingBackorders.ToString("N0")
+                            </MudText>
+                        </MudStack>
+                        <MudDivider />
+                        <MudStack>
+                            <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Backorder Rate</MudText>
+                            <MudProgressLinear Color="@GetBackorderRateColor(_dashboard.BackorderRate)"
+                                               Value="@((double)_dashboard.BackorderRate)"
+                                               Max="100"
+                                               Rounded="true"
+                                               Size="MudBlazor.Size.Large" />
+                            <MudText Typo="Typo.body2" Align="Align.Right">@_dashboard.BackorderRate.ToString("N1")%</MudText>
+                        </MudStack>
+                        <MudDivider />
+                        <MudStack>
+                            <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Avg Fulfillment Time</MudText>
+                            <MudText Typo="Typo.h5">@_dashboard.AvgFulfillmentDays.ToString("N1") days</MudText>
+                        </MudStack>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+    <!-- Inventory by Warehouse Section -->
+    <MudCard Class="mb-4">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">Inventory by Warehouse</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudSimpleTable Dense="true" Hover="true" Striped="true">
+                <thead>
+                    <tr>
+                        <th>Warehouse</th>
+                        <th style="text-align:right">On Hand</th>
+                        <th style="text-align:right">Reserved</th>
+                        <th style="text-align:right">Available</th>
+                        <th>Status</th>
+                        <th style="text-align:right">Reorder Point</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var wh in _dashboard.WarehouseStock)
+                    {
+                        <tr>
+                            <td>@wh.WarehouseName</td>
+                            <td style="text-align:right">@wh.OnHand.ToString("N0")</td>
+                            <td style="text-align:right">@wh.Reserved.ToString("N0")</td>
+                            <td style="text-align:right">@wh.Available.ToString("N0")</td>
+                            <td>
+                                <MudChip T="string" Color="@GetStockLevelColor(wh.Status)" Size="MudBlazor.Size.Small">
+                                    @wh.Status
+                                </MudChip>
+                            </td>
+                            <td style="text-align:right">@wh.ReorderPoint.ToString("N0")</td>
+                        </tr>
+                    }
+                </tbody>
+            </MudSimpleTable>
+        </MudCardContent>
+    </MudCard>
+
+    <!-- Recent Transactions and Supplier Performance -->
+    <MudGrid>
+        <MudItem xs="12" md="6">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Recent Transactions</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudSimpleTable Dense="true" Hover="true" Striped="true">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th style="text-align:right">Qty</th>
+                                <th style="text-align:right">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var tx in _dashboard.RecentTransactions.Take(10))
+                            {
+                                <tr>
+                                    <td>@tx.Date.ToString("MMM dd")</td>
+                                    <td>
+                                        <MudChip T="string" Color="@GetTransactionTypeColor(tx.Type)" Size="MudBlazor.Size.Small" Variant="Variant.Text">
+                                            @tx.Type
+                                        </MudChip>
+                                    </td>
+                                    <td style="text-align:right">@tx.Quantity.ToString("N0")</td>
+                                    <td style="text-align:right">@tx.Value.ToString("C2")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </MudSimpleTable>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Supplier Performance</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudSimpleTable Dense="true" Hover="true" Striped="true">
+                        <thead>
+                            <tr>
+                                <th>Supplier</th>
+                                <th style="text-align:right">Orders</th>
+                                <th style="text-align:right">On-Time %</th>
+                                <th style="text-align:right">Quality %</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var supplier in _dashboard.SupplierPerformance)
+                            {
+                                <tr>
+                                    <td>@supplier.Name</td>
+                                    <td style="text-align:right">@supplier.TotalOrders.ToString("N0")</td>
+                                    <td style="text-align:right">
+                                        <MudChip T="string" Color="@GetPerformanceColor(supplier.OnTimeDeliveryPercent)" Size="MudBlazor.Size.Small" Variant="Variant.Text">
+                                            @supplier.OnTimeDeliveryPercent.ToString("N1")%
+                                        </MudChip>
+                                    </td>
+                                    <td style="text-align:right">
+                                        <MudChip T="string" Color="@GetPerformanceColor(supplier.QualityPercent)" Size="MudBlazor.Size.Small" Variant="Variant.Text">
+                                            @supplier.QualityPercent.ToString("N1")%
+                                        </MudChip>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </MudSimpleTable>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+</FshPage>

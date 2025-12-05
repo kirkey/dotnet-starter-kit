@@ -1,0 +1,161 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" /> Supplier Dashboard Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels Elevation="@_preference.Elevation" MultiExpansion="true">
+            <MudExpansionPanel Text="Overview" IsInitiallyExpanded="true">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    The Supplier Dashboard provides comprehensive analytics and performance metrics for a specific supplier. 
+                    It displays order trends, delivery performance, quality metrics, financial summaries, and comparative rankings 
+                    to help you evaluate and manage supplier relationships effectively.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Key Performance Indicators (KPIs)">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.ShoppingCart">
+                        <b>Total Orders:</b> Total number of purchase orders placed with this supplier, including pending orders.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                        <b>Purchase Value:</b> Total value of all purchases with year-over-year growth percentage.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.LocalShipping">
+                        <b>On-Time Delivery:</b> Percentage of deliveries received on or before the expected date.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.VerifiedUser">
+                        <b>Quality Score:</b> Overall quality rating based on acceptance rate and defect metrics.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Performance Tiers">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    Suppliers are classified into performance tiers based on their overall metrics:
+                </MudText>
+                <MudSimpleTable Dense="true" Class="mb-2">
+                    <tbody>
+                        <tr>
+                            <td><MudChip T="string" Color="Color.Success" Size="Size.Small">Preferred</MudChip></td>
+                            <td>Top-tier supplier with excellent delivery, quality, and pricing</td>
+                        </tr>
+                        <tr>
+                            <td><MudChip T="string" Color="Color.Info" Size="Size.Small">Approved</MudChip></td>
+                            <td>Good overall performance, meets requirements consistently</td>
+                        </tr>
+                        <tr>
+                            <td><MudChip T="string" Color="Color.Warning" Size="Size.Small">Probation</MudChip></td>
+                            <td>Performance issues identified, under close monitoring</td>
+                        </tr>
+                        <tr>
+                            <td><MudChip T="string" Color="Color.Error" Size="Size.Small">Under Review</MudChip></td>
+                            <td>Significant issues, relationship under evaluation</td>
+                        </tr>
+                    </tbody>
+                </MudSimpleTable>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Order Value Trend">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    The order value trend chart displays historical purchasing data over the last 12 months. The area chart 
+                    shows total order value while the line chart shows order count. Use this to identify purchasing patterns 
+                    and seasonal trends with this supplier.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Delivery Performance">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    Delivery metrics help evaluate the supplier's reliability:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Timer">
+                        <b>Lead Time:</b> Average number of days from order to delivery.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <b>On-Time Deliveries:</b> Count of deliveries received on schedule.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Warning">
+                        <b>Late Deliveries:</b> Count of deliveries received after expected date.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Speed">
+                        <b>Average Delay:</b> Average number of days late for delayed deliveries.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Quality Metrics">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    Quality metrics measure the supplier's product reliability:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.ThumbUp">
+                        <b>Acceptance Rate:</b> Percentage of received items that pass inspection.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.BugReport">
+                        <b>Defect Rate:</b> Percentage of items with quality issues.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Undo">
+                        <b>Return Rate:</b> Percentage of items returned to the supplier.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Financial Summary">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    Financial metrics provide visibility into the commercial relationship:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem>Total purchase value (lifetime, YTD, and previous year)</MudListItem>
+                    <MudListItem>Average order value</MudListItem>
+                    <MudListItem>Outstanding balance and credit utilization</MudListItem>
+                    <MudListItem>Payment terms</MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Supplier Rankings">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    Rankings compare this supplier against all other suppliers across different dimensions:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem><b>Overall Rank:</b> Combined ranking across all metrics</MudListItem>
+                    <MudListItem><b>Volume Rank:</b> Based on total purchase value</MudListItem>
+                    <MudListItem><b>Quality Rank:</b> Based on quality scores and acceptance rates</MudListItem>
+                    <MudListItem><b>Delivery Rank:</b> Based on on-time delivery performance</MudListItem>
+                    <MudListItem><b>Price Rank:</b> Based on price competitiveness</MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+    }
+
+    private void Close() => MudDialog.Close(DialogResult.Ok(true));
+}

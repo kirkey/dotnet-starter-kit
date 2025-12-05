@@ -178,9 +178,18 @@ public partial class Items
                 
                 var result = await Client.ImportItemsEndpointAsync("1", command).ConfigureAwait(false);
                 return result;
-            });
+            },
+            hasExtraActionsFunc: () => true);
         
         await Task.CompletedTask;
+    }
+
+    /// <summary>
+    /// Navigate to item dashboard.
+    /// </summary>
+    private void OnViewDashboard(DefaultIdType id)
+    {
+        Navigation.NavigateTo($"/store/items/{id}/dashboard");
     }
 
     /// <summary>

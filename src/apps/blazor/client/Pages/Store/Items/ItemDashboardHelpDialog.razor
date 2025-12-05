@@ -1,0 +1,132 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" /> Item Dashboard Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels Elevation="@_preference.Elevation" MultiExpansion="true">
+            <MudExpansionPanel Text="Overview" IsInitiallyExpanded="true">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    The Item Dashboard provides comprehensive analytics and performance metrics for a specific inventory item. 
+                    It displays sales trends, stock levels, supplier performance, and backorder analysis to help you make 
+                    informed decisions about inventory management.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Key Performance Indicators (KPIs)">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Inventory2">
+                        <b>Stock On Hand:</b> Current total quantity available across all warehouses with days of supply calculation.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.TrendingUp">
+                        <b>Monthly Sales:</b> Total quantity sold and revenue generated in the current month.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Autorenew">
+                        <b>Turnover Rate:</b> How many times the item's inventory is sold and replaced per year.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <b>Fill Rate:</b> Percentage of customer demand that is met from available stock.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Movement Classification">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    Items are classified based on their sales velocity:
+                </MudText>
+                <MudSimpleTable Dense="true" Class="mb-2">
+                    <tbody>
+                        <tr>
+                            <td><MudChip T="string" Color="Color.Success" Size="Size.Small">Fast Moving</MudChip></td>
+                            <td>High sales frequency, requires close monitoring of stock levels</td>
+                        </tr>
+                        <tr>
+                            <td><MudChip T="string" Color="Color.Info" Size="Size.Small">Medium Moving</MudChip></td>
+                            <td>Moderate sales frequency, standard reorder policies apply</td>
+                        </tr>
+                        <tr>
+                            <td><MudChip T="string" Color="Color.Warning" Size="Size.Small">Slow Moving</MudChip></td>
+                            <td>Low sales frequency, consider reducing order quantities</td>
+                        </tr>
+                        <tr>
+                            <td><MudChip T="string" Color="Color.Error" Size="Size.Small">Dead Stock</MudChip></td>
+                            <td>No recent sales, consider promotions or discontinuation</td>
+                        </tr>
+                    </tbody>
+                </MudSimpleTable>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Sales Trend Chart">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    The sales trend chart displays historical sales data over the last 12 months. The area chart shows 
+                    quantity sold while the line chart shows corresponding revenue. Use this to identify seasonal patterns 
+                    and sales trends.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Stock Distribution">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    The donut chart shows how the item's stock is distributed across different warehouses. This helps 
+                    identify which warehouses hold the most inventory and may need replenishment or rebalancing.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Backorder & Stockout Analysis">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Warning">
+                        <b>Current Backorder:</b> Quantity of pending orders that cannot be fulfilled from current stock.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.EventBusy">
+                        <b>Stockout Days:</b> Number of days in the last 30/90 days when the item was out of stock.
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                        <b>Stockout Cost:</b> Estimated lost revenue due to stockouts.
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Supplier Performance">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    Shows performance metrics for suppliers who provide this item, including:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem>Number of orders placed with each supplier</MudListItem>
+                    <MudListItem>Total quantity supplied</MudListItem>
+                    <MudListItem>On-time delivery rate</MudListItem>
+                    <MudListItem>Quality score based on acceptance rate</MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+    }
+
+    private void Close() => MudDialog.Close(DialogResult.Ok(true));
+}

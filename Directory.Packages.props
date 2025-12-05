@@ -5,6 +5,7 @@
     <PackageVersion Include="Microsoft.JSInterop" Version="7.0.16" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
     <PackageVersion Include="ClosedXML" Version="0.105.0" />
+    <PackageVersion Include="Blazor-ApexCharts" Version="4.0.0" />
   </ItemGroup>
 </Project>
 

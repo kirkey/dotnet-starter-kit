@@ -99,6 +99,24 @@
                           UploadLabel="Upload Supplier Logo" />
         </MudItem>
     </EditFormContent>
+
+    <ExtraActions Context="supplier">
+        <MudMenuItem Icon="@Icons.Material.Filled.Dashboard" OnClick="@(() => OnViewDashboard(supplier.Id ?? DefaultIdType.Empty))">
+            View Dashboard
+        </MudMenuItem>
+        @if (supplier.IsActive == true)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Block" OnClick="@(() => DeactivateSupplier(supplier.Id ?? DefaultIdType.Empty))">
+                Deactivate
+            </MudMenuItem>
+        }
+        else
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => ActivateSupplier(supplier.Id ?? DefaultIdType.Empty))">
+                Activate
+            </MudMenuItem>
+        }
+    </ExtraActions>
 </EntityTable>
 
 @code {

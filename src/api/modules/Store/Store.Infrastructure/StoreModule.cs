@@ -58,6 +58,8 @@ public static class StoreModule
         builder.Services.AddScoped<IReadRepository<GoodsReceipt>, StoreRepository<GoodsReceipt>>();
         builder.Services.AddScoped<IRepository<PickList>, StoreRepository<PickList>>();
         builder.Services.AddScoped<IReadRepository<PickList>, StoreRepository<PickList>>();
+        builder.Services.AddScoped<IRepository<PickListItem>, StoreRepository<PickListItem>>();
+        builder.Services.AddScoped<IReadRepository<PickListItem>, StoreRepository<PickListItem>>();
         builder.Services.AddScoped<IRepository<PutAwayTask>, StoreRepository<PutAwayTask>>();
         builder.Services.AddScoped<IReadRepository<PutAwayTask>, StoreRepository<PutAwayTask>>();
         builder.Services.AddScoped<IRepository<InventoryTransfer>, StoreRepository<InventoryTransfer>>();
@@ -108,6 +110,8 @@ public static class StoreModule
         builder.Services.AddKeyedScoped<IReadRepository<GoodsReceipt>, StoreRepository<GoodsReceipt>>("store");
         builder.Services.AddKeyedScoped<IRepository<PickList>, StoreRepository<PickList>>("store");
         builder.Services.AddKeyedScoped<IReadRepository<PickList>, StoreRepository<PickList>>("store");
+        builder.Services.AddKeyedScoped<IRepository<PickListItem>, StoreRepository<PickListItem>>("store");
+        builder.Services.AddKeyedScoped<IReadRepository<PickListItem>, StoreRepository<PickListItem>>("store");
         builder.Services.AddKeyedScoped<IRepository<PutAwayTask>, StoreRepository<PutAwayTask>>("store");
         builder.Services.AddKeyedScoped<IReadRepository<PutAwayTask>, StoreRepository<PutAwayTask>>("store");
         builder.Services.AddKeyedScoped<IRepository<InventoryTransfer>, StoreRepository<InventoryTransfer>>("store");
