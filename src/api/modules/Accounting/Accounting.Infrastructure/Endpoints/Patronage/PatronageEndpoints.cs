@@ -1,37 +1,23 @@
-using Accounting.Application.Patronages.Commands;
+using Accounting.Infrastructure.Endpoints.Patronage.v1;
 using Carter;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.Patronage;
 
 /// <summary>
 /// Endpoint configuration for Patronage module.
-/// Provides REST API endpoints for managing patronage distributions and calculations.
+/// Provides comprehensive REST API endpoints for managing patronage.
+/// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
 public class PatronageEndpoints : ICarterModule
 {
     /// <summary>
     /// Maps all Patronage endpoints to the route builder.
+    /// Delegates to extension methods for Create, Read, Update, Delete, and business operation endpoints.
     /// </summary>
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("accounting/patronages").WithTags("patronages");
+        var group = app.MapGroup("accounting/patronage").WithTags("patronage");
 
-        // Retire patronage endpoint
-        group.MapPost("/retire", async (RetirePatronageCommand request, ISender mediator) =>
-            {
-                var id = await mediator.Send(request).ConfigureAwait(false);
-                return Results.Ok(id);
-            })
-            .WithName("RetirePatronage")
-            .WithSummary("Retire patronage capital")
-            .WithDescription("Process the retirement of patronage capital")
-            .Produces<DefaultIdType>()
-            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.Accounting))
-            .MapToApiVersion(1);
+        group.MapRetirePatronageEndpoint();
     }
 }

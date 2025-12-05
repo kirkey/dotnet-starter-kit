@@ -1,25 +1,27 @@
+using Accounting.Infrastructure.Endpoints.FuelConsumption.v1;
 using Carter;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.FuelConsumption;
 
 /// <summary>
-/// Endpoint configuration for Fuel Consumption module.
+/// Endpoint configuration for FuelConsumption module.
+/// Provides comprehensive REST API endpoints for managing fuel-consumption.
+/// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
 public class FuelConsumptionEndpoints : ICarterModule
 {
     /// <summary>
-    /// Maps all Fuel Consumption endpoints to the route builder.
+    /// Maps all FuelConsumption endpoints to the route builder.
+    /// Delegates to extension methods for Create, Read, Update, Delete, and business operation endpoints.
     /// </summary>
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("accounting/fuel-consumption").WithTags("fuel-consumption");
 
-        // TODO: Implement FuelConsumption endpoints when Application layer is ready
+        group.MapFuelConsumptionCreateEndpoint();
+        group.MapFuelConsumptionDeleteEndpoint();
+        group.MapFuelConsumptionGetEndpoint();
+        group.MapFuelConsumptionSearchEndpoint();
+        group.MapFuelConsumptionUpdateEndpoint();
     }
 }
-

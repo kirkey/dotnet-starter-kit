@@ -1,123 +1,28 @@
-using Accounting.Application.DeferredRevenues.Create;
-using Accounting.Application.DeferredRevenues.Delete;
-using Accounting.Application.DeferredRevenues.Get;
-using Accounting.Application.DeferredRevenues.Recognize;
-using Accounting.Application.DeferredRevenues.Responses;
-using Accounting.Application.DeferredRevenues.Search;
-using Accounting.Application.DeferredRevenues.Update;
+using Accounting.Infrastructure.Endpoints.DeferredRevenues.v1;
 using Carter;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.DeferredRevenues;
 
 /// <summary>
-/// Endpoint configuration for Deferred Revenue module.
+/// Endpoint configuration for DeferredRevenues module.
+/// Provides comprehensive REST API endpoints for managing deferred-revenues.
+/// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
 public class DeferredRevenuesEndpoints : ICarterModule
 {
     /// <summary>
-    /// Maps all Deferred Revenue endpoints to the route builder.
+    /// Maps all DeferredRevenues endpoints to the route builder.
+    /// Delegates to extension methods for Create, Read, Update, Delete, and business operation endpoints.
     /// </summary>
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("accounting/deferred-revenues").WithTags("deferred-revenues");
+        var group = app.MapGroup("accounting/deferred-revenues").WithTags("deferred-revenue");
 
-        // Create endpoint
-        group.MapPost("/", async (CreateDeferredRevenueCommand command, ISender mediator) =>
-            {
-                var id = await mediator.Send(command).ConfigureAwait(false);
-                return Results.Created($"/api/v1/deferred-revenues/{id}", new { Id = id });
-            })
-            .WithName("CreateDeferredRevenue")
-            .WithSummary("Create a new deferred revenue entry")
-            .WithDescription("Creates a new deferred revenue entry for revenue recognition tracking")
-            .Produces<object>(StatusCodes.Status201Created)
-            .ProducesProblem(StatusCodes.Status400BadRequest)
-            .ProducesProblem(StatusCodes.Status409Conflict)
-            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.Accounting))
-            .MapToApiVersion(1);
-
-        // Get endpoint
-        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
-            {
-                var response = await mediator.Send(new GetDeferredRevenueRequest(id)).ConfigureAwait(false);
-                return Results.Ok(response);
-            })
-            .WithName("GetDeferredRevenue")
-            .WithSummary("Get deferred revenue by ID")
-            .WithDescription("Retrieves a deferred revenue entry by its unique identifier")
-            .Produces<DeferredRevenueResponse>()
-            .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
-            .MapToApiVersion(1);
-
-        // Update endpoint
-        group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateDeferredRevenueCommand command, ISender mediator) =>
-            {
-                if (id != command.Id)
-                    return Results.BadRequest("ID mismatch");
-
-                var result = await mediator.Send(command).ConfigureAwait(false);
-                return Results.Ok(new { Id = result });
-            })
-            .WithName("UpdateDeferredRevenue")
-            .WithSummary("Update deferred revenue")
-            .WithDescription("Updates an existing deferred revenue entry (cannot update recognized revenue)")
-            .Produces<object>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
-            .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
-            .MapToApiVersion(1);
-
-        // Delete endpoint
-        group.MapDelete("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
-            {
-                var result = await mediator.Send(new DeleteDeferredRevenueCommand(id)).ConfigureAwait(false);
-                return Results.Ok(new { Id = result });
-            })
-            .WithName("DeleteDeferredRevenue")
-            .WithSummary("Delete deferred revenue")
-            .WithDescription("Deletes a deferred revenue entry (cannot delete recognized revenue)")
-            .Produces<object>()
-            .ProducesProblem(StatusCodes.Status404NotFound)
-            .ProducesProblem(StatusCodes.Status400BadRequest)
-            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.Accounting))
-            .MapToApiVersion(1);
-
-        // Search endpoint
-        group.MapPost("/search", async (SearchDeferredRevenuesRequest request, ISender mediator) =>
-            {
-                var response = await mediator.Send(request).ConfigureAwait(false);
-                return Results.Ok(response);
-            })
-            .WithName("SearchDeferredRevenues")
-            .WithSummary("Search deferred revenues")
-            .WithDescription("Searches deferred revenue entries with filtering and pagination")
-            .Produces<PagedList<DeferredRevenueResponse>>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Accounting))
-            .MapToApiVersion(1);
-
-        // Recognize endpoint
-        group.MapPost("/{id:guid}/recognize", async (DefaultIdType id, RecognizeDeferredRevenueCommand command, ISender mediator) =>
-            {
-                if (id != command.Id)
-                    return Results.BadRequest("ID mismatch");
-
-                var result = await mediator.Send(command).ConfigureAwait(false);
-                return Results.Ok(new { Id = result, Message = "Deferred revenue recognized successfully" });
-            })
-            .WithName("RecognizeDeferredRevenue")
-            .WithSummary("Recognize deferred revenue")
-            .WithDescription("Marks deferred revenue as recognized, preventing further modifications")
-            .Produces<object>()
-            .ProducesProblem(StatusCodes.Status400BadRequest)
-            .ProducesProblem(StatusCodes.Status404NotFound)
-            .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.Accounting))
-            .MapToApiVersion(1);
+        group.MapDeferredRevenueCreateEndpoint();
+        group.MapDeferredRevenueDeleteEndpoint();
+        group.MapDeferredRevenueGetEndpoint();
+        group.MapDeferredRevenueRecognizeEndpoint();
+        group.MapDeferredRevenueSearchEndpoint();
+        group.MapDeferredRevenueUpdateEndpoint();
     }
 }
-
