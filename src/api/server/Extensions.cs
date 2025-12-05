@@ -109,7 +109,7 @@ public static class Extensions
                 assembliesToScan.Add(typeof(AccountingModule).Assembly);
             
             if (moduleOptions.EnableHumanResources)
-                assembliesToScan.Add(typeof(HumanResourcesMetadata).Assembly);
+                assembliesToScan.Add(typeof(HrModule).Assembly);  // Use HrModule from Infrastructure (where endpoints are) instead of HumanResourcesMetadata from Application
             
             if (moduleOptions.EnableMessaging)
                 assembliesToScan.Add(typeof(MessagingModule).Assembly);

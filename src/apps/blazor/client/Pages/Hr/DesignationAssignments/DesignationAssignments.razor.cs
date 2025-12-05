@@ -1,3 +1,4 @@
+using FSH.Starter.Blazor.Infrastructure.Api;
 namespace FSH.Starter.Blazor.Client.Pages.Hr.DesignationAssignments;
 
 public partial class DesignationAssignments
