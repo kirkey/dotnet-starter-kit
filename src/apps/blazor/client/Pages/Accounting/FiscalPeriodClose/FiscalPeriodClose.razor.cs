@@ -103,7 +103,7 @@ public partial class FiscalPeriodClose
             },
             createFunc: async viewModel =>
             {
-                var command = new FiscalPeriodCloseCreateCommand
+                var command = new CreateFiscalPeriodCloseCommand
                 {
                     CloseNumber = viewModel.CloseNumber,
                     PeriodId = viewModel.PeriodId!.Value,

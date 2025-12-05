@@ -66,15 +66,15 @@ public partial class TaxBrackets
             },
             createFunc: async taxBracket =>
             {
-                await Client.CreateTaxBracketAsync("1", taxBracket.Adapt<CreateTaxBracketCommand>()).ConfigureAwait(false);
+                await Client.CreateTaxBracketEndpointAsync("1", taxBracket.Adapt<CreateTaxBracketCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, taxBracket) =>
             {
-                await Client.UpdateTaxBracketAsync("1", id, taxBracket.Adapt<UpdateTaxBracketCommand>()).ConfigureAwait(false);
+                await Client.UpdateTaxBracketEndpointAsync("1", id, taxBracket.Adapt<UpdateTaxBracketCommand>()).ConfigureAwait(false);
             },
             deleteFunc: async id =>
             {
-                await Client.DeleteTaxBracketAsync("1", id).ConfigureAwait(false);
+                await Client.DeleteTaxBracketEndpointAsync("1", id).ConfigureAwait(false);
             });
 
         await base.OnInitializedAsync();

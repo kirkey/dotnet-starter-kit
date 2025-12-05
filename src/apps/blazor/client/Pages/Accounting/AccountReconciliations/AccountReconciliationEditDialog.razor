@@ -134,7 +134,7 @@
                 AdjustingEntriesRecorded = ViewModel.AdjustingEntriesRecorded
             };
             
-            await Client.UpdateAccountReconciliationEndpointAsync(Id, command);
+            await Client.UpdateAccountReconciliationEndpointAsync("1", Id, command);
             Snackbar.Add("Account reconciliation updated successfully", Severity.Success);
             MudDialog.Close(DialogResult.Ok(true));
         }

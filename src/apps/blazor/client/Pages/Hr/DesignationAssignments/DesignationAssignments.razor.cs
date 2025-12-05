@@ -107,7 +107,7 @@ public partial class DesignationAssignments
                 IncludeActingDesignations = true
             };
 
-            var result = await Client.SearchEmployeeHistoryEndpointAsync("1", request).ConfigureAwait(false);
+            var result = await Client.SearchEmployeeDesignationHistoryEndpointAsync("1", request).ConfigureAwait(false);
 
             if (!string.IsNullOrWhiteSpace(_filterEmployeeId) && DefaultIdType.TryParse(_filterEmployeeId, out var employeeId))
             {

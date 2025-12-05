@@ -212,7 +212,7 @@ public partial class Invoices
                     Notes = invoice.Notes,
                     ConsumptionId = invoice.ConsumptionId
                 };
-                await Client.InvoiceCreateEndpointAsync("1", createCommand);
+                await Client.CreateInvoiceEndpointAsync("1", createCommand);
                 Snackbar.Add("Invoice created successfully", Severity.Success);
             },
             updateFunc: async (id, invoice) =>

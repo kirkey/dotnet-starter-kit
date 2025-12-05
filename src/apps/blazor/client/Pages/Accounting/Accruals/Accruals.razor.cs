@@ -83,25 +83,25 @@ public partial class Accruals
                     Keyword = filter.Keyword,
                     OrderBy = filter.OrderBy
                 };
-                var result = await Client.AccrualSearchEndpointAsync("1", request).ConfigureAwait(false);
+                var result = await Client.SearchAccrualsEndpointAsync("1", request).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<AccrualResponse>>();
             },
             createFunc: async viewModel =>
             {
-                await Client.AccrualCreateEndpointAsync("1", viewModel.Adapt<CreateAccrualCommand>()).ConfigureAwait(false);
+                await Client.CreateAccrualEndpointAsync("1", viewModel.Adapt<CreateAccrualCommand>()).ConfigureAwait(false);
             },
             updateFunc: async (id, viewModel) =>
             {
                 if (viewModel is { IsReversed: true, ReversalDate: not null })
                 {
-                    await Client.AccrualReverseEndpointAsync("1", id, viewModel.Adapt<ReverseAccrualCommand>()).ConfigureAwait(false);
+                    await Client.ReverseAccrualEndpointAsync("1", id, viewModel.Adapt<ReverseAccrualCommand>()).ConfigureAwait(false);
                 }
                 else
                 {
-                    await Client.AccrualUpdateEndpointAsync("1", id, viewModel.Adapt<UpdateAccrualCommand>()).ConfigureAwait(false);
+                    await Client.UpdateAccrualEndpointAsync("1", id, viewModel.Adapt<UpdateAccrualCommand>()).ConfigureAwait(false);
                 }
             },
-            deleteFunc: async id => await Client.AccrualDeleteEndpointAsync("1", id).ConfigureAwait(false));
+            deleteFunc: async id => await Client.DeleteAccrualEndpointAsync("1", id).ConfigureAwait(false));
 
         await Task.CompletedTask;
     }
@@ -114,7 +114,7 @@ public partial class Accruals
             try
             {
                 var command = new ApproveAccrualCommand();
-                await Client.AccrualApproveEndpointAsync("1", id, command).ConfigureAwait(false);
+                await Client.ApproveAccrualEndpointAsync("1", id, command).ConfigureAwait(false);
                 Snackbar.Add("Accrual approved successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -133,7 +133,7 @@ public partial class Accruals
             try
             {
                 var command = new RejectAccrualCommand();
-                await Client.AccrualRejectEndpointAsync("1", id, command).ConfigureAwait(false);
+                await Client.RejectAccrualEndpointAsync("1", id, command).ConfigureAwait(false);
                 Snackbar.Add("Accrual rejected", Severity.Success);
                 await _table.ReloadDataAsync();
             }
@@ -152,7 +152,7 @@ public partial class Accruals
             try
             {
                 var command = new ReverseAccrualCommand { ReversalDate = DateTime.Today };
-                await Client.AccrualReverseEndpointAsync("1", id, command).ConfigureAwait(false);
+                await Client.ReverseAccrualEndpointAsync("1", id, command).ConfigureAwait(false);
                 Snackbar.Add("Accrual reversed successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }

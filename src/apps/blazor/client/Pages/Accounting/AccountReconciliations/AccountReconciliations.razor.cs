@@ -64,7 +64,7 @@ public partial class AccountReconciliations
                     SubsidiaryLedgerSource = SubsidiaryLedgerSource,
                     HasVariance = HasVariance ? true : null
                 };
-                var result = await Client.SearchAccountReconciliationsEndpointAsync(request);
+                var result = await Client.SearchAccountReconciliationsEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<AccountReconciliationResponse>>();
             },
             createFunc: async vm =>
@@ -79,7 +79,7 @@ public partial class AccountReconciliations
                     ReconciliationDate = (DateTime)vm.ReconciliationDate!,
                     VarianceExplanation = vm.VarianceExplanation
                 };
-                await Client.CreateAccountReconciliationEndpointAsync(command);
+                await Client.CreateAccountReconciliationEndpointAsync("1", command);
                 Snackbar.Add("Account reconciliation created successfully", Severity.Success);
             },
             updateFunc: async (id, vm) =>
@@ -93,12 +93,12 @@ public partial class AccountReconciliations
                     LineItemCount = vm.LineItemCount,
                     AdjustingEntriesRecorded = vm.AdjustingEntriesRecorded
                 };
-                await Client.UpdateAccountReconciliationEndpointAsync(id, command);
+                await Client.UpdateAccountReconciliationEndpointAsync("1", id, command);
                 Snackbar.Add("Account reconciliation updated successfully", Severity.Success);
             },
             deleteFunc: async id =>
             {
-                await Client.DeleteAccountReconciliationEndpointAsync(id);
+                await Client.DeleteAccountReconciliationEndpointAsync("1", id);
                 Snackbar.Add("Account reconciliation deleted successfully", Severity.Success);
             });
     }
@@ -177,7 +177,7 @@ public partial class AccountReconciliations
         {
             try
             {
-                await Client.DeleteAccountReconciliationEndpointAsync(reconciliationId);
+                await Client.DeleteAccountReconciliationEndpointAsync("1", reconciliationId);
                 Snackbar.Add("Reconciliation deleted successfully", Severity.Success);
                 await _table.ReloadDataAsync();
             }

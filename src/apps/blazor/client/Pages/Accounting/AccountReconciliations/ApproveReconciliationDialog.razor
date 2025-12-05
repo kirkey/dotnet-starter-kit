@@ -43,7 +43,7 @@
                 ApproverName = null,
                 Remarks = _remarks
             };
-            await Client.ApproveAccountReconciliationEndpointAsync(ReconciliationId, command);
+            await Client.ApproveAccountReconciliationEndpointAsync("1", ReconciliationId, command);
             Snackbar.Add("Reconciliation approved successfully", Severity.Success);
             MudDialog.Close(DialogResult.Ok(true));
         }
