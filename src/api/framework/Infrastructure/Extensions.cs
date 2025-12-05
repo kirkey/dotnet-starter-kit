@@ -74,6 +74,7 @@ public static class Extensions
         app.UseMultitenancy();
         app.UseExceptionHandler();
         app.UseCorsPolicy();
+        app.UseOpenApi();
         app.UseJobDashboard(app.Configuration);
         app.UseRouting();
         app.UseStaticFiles();

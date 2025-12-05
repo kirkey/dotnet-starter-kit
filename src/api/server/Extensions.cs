@@ -151,7 +151,7 @@ public static class Extensions
 
         // IMPORTANT: UseOpenApi must be called AFTER MapCarter() to ensure Swashbuckle discovers all ICarterModule endpoints
         // When UseOpenApi is called before MapCarter, the Swagger/OpenAPI generation misses the dynamically registered endpoints
-        app.UseOpenApi();
+        // app.UseOpenApi();
 
         return app;
     }
