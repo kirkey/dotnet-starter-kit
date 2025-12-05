@@ -193,4 +193,18 @@ public partial class AccountReconciliations
         await DialogService.ShowAsync<AccountReconciliationHelpDialog>("Account Reconciliation Help",
             new DialogParameters(), new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true });
     }
+
+    private async Task OnReconcileGLAccount()
+    {
+        var parameters = new DialogParameters
+        {
+            { nameof(ReconcileGLAccountDialog.ChartOfAccountId), DefaultIdType.Empty }
+        };
+        var dialog = await DialogService.ShowAsync<ReconcileGLAccountDialog>("Reconcile GL Account", parameters, _dialogOptions);
+        var result = await dialog.Result;
+        if (result is not null && !result.Canceled)
+        {
+            await _table.ReloadDataAsync();
+        }
+    }
 }

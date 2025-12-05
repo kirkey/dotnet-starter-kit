@@ -83,130 +83,133 @@ public partial class PostingBatches
             idFunc: response => response.Id,
             searchFunc: async filter =>
             {
-                // TODO: API endpoint not yet implemented
-                // Return empty result set for now
-                return new PaginationResponse<PostingBatchResponse>
+                var request = new PostingBatchSearchQuery
                 {
-                    Items = new List<PostingBatchResponse>(),
-                    CurrentPage = 1,
-                    TotalCount = 0,
-                    PageSize = filter.PageSize
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    Keyword = filter.Keyword,
+                    OrderBy = filter.OrderBy,
+                    Status = SearchStatus,
+                    BatchNumber = SearchBatchNumber
                 };
-            });
-            // Note: Create, Update, and Delete operations are not yet implemented in the API;
+                var result = await Client.PostingBatchSearchEndpointAsync("1", request).ConfigureAwait(false);
+                return result.Adapt<PaginationResponse<PostingBatchResponse>>();
+            },
+            createFunc: async vm =>
+            {
+                var command = new CreatePostingBatchCommand
+                {
+                    BatchNumber = vm.BatchNumber,
+                    Description = vm.Description,
+                    BatchDate = vm.BatchDate ?? DateTime.Today
+                };
+                await Client.PostingBatchCreateEndpointAsync("1", command).ConfigureAwait(false);
+            },
+            updateFunc: async (id, vm) =>
+            {
+                var command = new UpdatePostingBatchCommand
+                {
+                    Description = vm.Description
+                };
+                await Client.PostingBatchUpdateEndpointAsync("1", id, command).ConfigureAwait(false);
+            },
+            deleteFunc: async id =>
+            {
+                await Client.PostingBatchDeleteEndpointAsync("1", id).ConfigureAwait(false);
+            },
+            getDetailsFunc: async id =>
+            {
+                var result = await Client.PostingBatchGetEndpointAsync("1", id).ConfigureAwait(false);
+                return result.Adapt<PostingBatchViewModel>();
+            },
+            getDefaultsFunc: () => Task.FromResult(new PostingBatchViewModel
+            {
+                BatchDate = DateTime.Today,
+                Status = "Draft"
+            }),
+            hasExtraActionsFunc: () => true);
 
         base.OnInitialized();
     }
 
     private async Task ViewDetails(DefaultIdType id)
     {
-        // Open a detail dialog - placeholder for future detailed dialog
         Snackbar.Add("View details - feature coming soon", Severity.Info);
-    }
-
-    private async Task SubmitForApproval(DefaultIdType id)
-    {
-        // TODO: API endpoint not yet implemented
-        Snackbar.Add("Submit operation not yet implemented", Severity.Warning);
-        // bool? confirmed = await DialogService.ShowMessageBox("Submit Batch", "Submit this batch for approval?", yesText: "Submit", cancelText: "Cancel");
-        // if (confirmed == true)
-        // {
-        //     try
-        //     {
-        //         var request = new SubmitPostingBatchRequest();
-        //         await Client.SubmitPostingBatchEndpointAsync("1", id, request).ConfigureAwait(false);
-        //         Snackbar.Add("Posting batch submitted", Severity.Success);
-        //         await _table.ReloadDataAsync();
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Snackbar.Add($"Failed to submit: {ex.Message}", Severity.Error);
-        //     }
-        // }
     }
 
     private async Task ApproveBatch(DefaultIdType id)
     {
-        // TODO: API endpoint not yet implemented
-        Snackbar.Add("Approve operation not yet implemented", Severity.Warning);
-        // bool? confirmed = await DialogService.ShowMessageBox("Approve Batch", "Approve this posting batch?", yesText: "Approve", cancelText: "Cancel");
-        // if (confirmed == true)
-        // {
-        //     try
-        //     {
-        //         var command = new ApprovePostingBatchCommand();
-        //         await Client.ApprovePostingBatchEndpointAsync("1", id, command).ConfigureAwait(false);
-        //         Snackbar.Add("Posting batch approved", Severity.Success);
-        //         await _table.ReloadDataAsync();
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Snackbar.Add($"Failed to approve: {ex.Message}", Severity.Error);
-        //     }
-        // }
+        bool? confirmed = await DialogService.ShowMessageBox("Approve Batch", "Approve this posting batch?", yesText: "Approve", cancelText: "Cancel");
+        if (confirmed == true)
+        {
+            try
+            {
+                var command = new ApprovePostingBatchCommand();
+                await Client.PostingBatchApproveEndpointAsync("1", id, command).ConfigureAwait(false);
+                Snackbar.Add("Posting batch approved", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to approve: {ex.Message}", Severity.Error);
+            }
+        }
     }
 
     private async Task RejectBatch(DefaultIdType id)
     {
-        // TODO: API endpoint not yet implemented
-        Snackbar.Add("Reject operation not yet implemented", Severity.Warning);
-        // bool? confirmed = await DialogService.ShowMessageBox("Reject Batch", "Reject this posting batch?", yesText: "Reject", cancelText: "Cancel");
-        // if (confirmed == true)
-        // {
-        //     try
-        //     {
-        //         var command = new RejectPostingBatchCommand();
-        //         await Client.RejectPostingBatchEndpointAsync("1", id, command).ConfigureAwait(false);
-        //         Snackbar.Add("Posting batch rejected", Severity.Success);
-        //         await _table.ReloadDataAsync();
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Snackbar.Add($"Failed to reject: {ex.Message}", Severity.Error);
-        //     }
-        // }
+        bool? confirmed = await DialogService.ShowMessageBox("Reject Batch", "Reject this posting batch?", yesText: "Reject", cancelText: "Cancel");
+        if (confirmed == true)
+        {
+            try
+            {
+                var command = new RejectPostingBatchCommand();
+                await Client.PostingBatchRejectEndpointAsync("1", id, command).ConfigureAwait(false);
+                Snackbar.Add("Posting batch rejected", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to reject: {ex.Message}", Severity.Error);
+            }
+        }
     }
 
     private async Task PostBatch(DefaultIdType id)
     {
-        // TODO: API endpoint not yet implemented
-        Snackbar.Add("Post operation not yet implemented", Severity.Warning);
-        // bool? confirmed = await DialogService.ShowMessageBox("Post Batch", "Post this approved batch to the ledger?", yesText: "Post", cancelText: "Cancel");
-        // if (confirmed == true)
-        // {
-        //     try
-        //     {
-        //         var command = new PostPostingBatchCommand();
-        //         await Client.PostPostingBatchEndpointAsync("1", id, command).ConfigureAwait(false);
-        //         Snackbar.Add("Posting batch posted", Severity.Success);
-        //         await _table.ReloadDataAsync();
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Snackbar.Add($"Failed to post: {ex.Message}", Severity.Error);
-        //     }
-        // }
+        bool? confirmed = await DialogService.ShowMessageBox("Post Batch", "Post this approved batch to the ledger?", yesText: "Post", cancelText: "Cancel");
+        if (confirmed == true)
+        {
+            try
+            {
+                await Client.PostingBatchPostEndpointAsync("1", id).ConfigureAwait(false);
+                Snackbar.Add("Posting batch posted", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to post: {ex.Message}", Severity.Error);
+            }
+        }
     }
 
     private async Task ReverseBatch(DefaultIdType id)
     {
-        // TODO: API endpoint not yet implemented
-        Snackbar.Add("Reverse operation not yet implemented", Severity.Warning);
-        // bool? confirmed = await DialogService.ShowMessageBox("Reverse Batch", "Reverse a posted batch? This will generate reversing entries.", yesText: "Reverse", cancelText: "Cancel");
-        // if (confirmed == true)
-        // {
-        //     try
-        //     {
-        //         var command = new ReversePostingBatchCommand();
-        //         await Client.ReversePostingBatchEndpointAsync("1", id, command).ConfigureAwait(false);
-        //         Snackbar.Add("Posting batch reversed", Severity.Success);
-        //         await _table.ReloadDataAsync();
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Snackbar.Add($"Failed to reverse: {ex.Message}", Severity.Error);
-        //     }
-        // }
+        bool? confirmed = await DialogService.ShowMessageBox("Reverse Batch", "Reverse a posted batch? This will generate reversing entries.", yesText: "Reverse", cancelText: "Cancel");
+        if (confirmed == true)
+        {
+            try
+            {
+                var command = new ReversePostingBatchCommand();
+                await Client.PostingBatchReverseEndpointAsync("1", id, command).ConfigureAwait(false);
+                Snackbar.Add("Posting batch reversed", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Failed to reverse: {ex.Message}", Severity.Error);
+            }
+        }
     }
 
     private async Task ShowPostingBatchesHelp()

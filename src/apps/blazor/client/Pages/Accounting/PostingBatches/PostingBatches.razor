@@ -35,16 +35,7 @@
                 <span>View Details</span>
             </div>
         </MudMenuItem>
-        @if (context.Status == "Draft")
-        {
-            <MudMenuItem OnClick="@(() => SubmitForApproval(context.Id))">
-                <div class="d-flex align-center">
-                    <MudIcon Icon="@Icons.Material.Filled.Send" Class="mr-2" />
-                    <span>Submit</span>
-                </div>
-            </MudMenuItem>
-        }
-        @if (context.Status == "Submitted")
+        @if (context.Status == "Draft" || context.Status == "Pending")
         {
             <MudMenuItem OnClick="@(() => ApproveBatch(context.Id))">
                 <div class="d-flex align-center">
@@ -91,7 +82,7 @@
             <MudTextField Label="Batch Number" For="@(() => context.BatchNumber)" @bind-Value="context.BatchNumber" Required="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudTextField Label="Source Module" For="@(() => context.SourceModule)" @bind-Value="context.SourceModule" />
+            <MudTextField Label="Source" For="@(() => context.Source)" @bind-Value="context.Source" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="3">
             <MudDatePicker @bind-Date="context.PostingDate" For="@(() => context.PostingDate)" Label="Posting Date" DateFormat="MMMM dd, yyyy" />

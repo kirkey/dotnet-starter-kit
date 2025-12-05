@@ -128,6 +128,20 @@ public partial class Invoices
     };
 
     /// <summary>
+    /// Dialog visibility flag for void invoice dialog.
+    /// </summary>
+    private bool _voidDialogVisible;
+
+    /// <summary>
+    /// State for voiding an invoice dialog.
+    /// </summary>
+    private VoidInvoiceDialogState _voidCommand = new() 
+    { 
+        InvoiceId = DefaultIdType.Empty, 
+        Reason = string.Empty 
+    };
+
+    /// <summary>
     /// Gets the status color based on invoice status.
     /// </summary>
     private static Color GetStatusColor(string? status) => status switch
@@ -390,6 +404,33 @@ public partial class Invoices
         }
     }
 
+    // Void Invoice Dialog
+    private void OnVoidInvoice(DefaultIdType invoiceId)
+    {
+        _voidCommand = new VoidInvoiceDialogState { InvoiceId = invoiceId, Reason = string.Empty };
+        _voidDialogVisible = true;
+    }
+
+    private async Task SubmitVoidInvoice()
+    {
+        try
+        {
+            var command = new VoidInvoiceCommand
+            {
+                InvoiceId = _voidCommand.InvoiceId,
+                Reason = _voidCommand.Reason
+            };
+            await Client.VoidInvoiceEndpointAsync("1", _voidCommand.InvoiceId, command);
+            Snackbar.Add("Invoice voided successfully", Severity.Success);
+            _voidDialogVisible = false;
+            await _table.ReloadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error voiding invoice: {ex.Message}", Severity.Error);
+        }
+    }
+
     /// <summary>
     /// Prints the invoice (placeholder for future implementation).
     /// </summary>
@@ -537,6 +578,12 @@ public sealed class ApplyInvoicePaymentDialogState
 }
 
 public sealed class CancelInvoiceDialogState
+{
+    public DefaultIdType InvoiceId { get; set; }
+    public string Reason { get; set; } = string.Empty;
+}
+
+public sealed class VoidInvoiceDialogState
 {
     public DefaultIdType InvoiceId { get; set; }
     public string Reason { get; set; } = string.Empty;

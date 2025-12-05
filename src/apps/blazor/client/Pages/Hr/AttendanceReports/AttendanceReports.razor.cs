@@ -17,6 +17,10 @@ public partial class AttendanceReports
         FullWidth = true 
     };
 
+    // Generate report dialog state
+    private bool _generateDialogVisible;
+    private GenerateReportDialogState _generateCommand = new();
+
     protected override async Task OnInitializedAsync()
     {
         if (await ClientPreferences.GetPreference() is ClientPreference preference)
@@ -67,6 +71,58 @@ public partial class AttendanceReports
         await DialogService.ShowAsync<AttendanceReportsHelpDialog>("Attendance Reports Help", new DialogParameters(), _dialogOptions);
     }
 
+    private void ShowGenerateDialog()
+    {
+        _generateCommand = new GenerateReportDialogState
+        {
+            Title = $"Attendance Report - {DateTime.Today:yyyy-MM}",
+            ReportType = "Summary",
+            FromDate = DateTime.Today.AddMonths(-1),
+            ToDate = DateTime.Today
+        };
+        _generateDialogVisible = true;
+    }
+
+    private async Task SubmitGenerateReport()
+    {
+        try
+        {
+            var command = new GenerateAttendanceReportCommand
+            {
+                Title = _generateCommand.Title,
+                ReportType = _generateCommand.ReportType,
+                FromDate = _generateCommand.FromDate,
+                ToDate = _generateCommand.ToDate,
+                DepartmentId = _generateCommand.DepartmentId,
+                EmployeeId = _generateCommand.EmployeeId,
+                Notes = _generateCommand.Notes
+            };
+            await Client.GenerateAttendanceReportEndpointAsync("1", command).ConfigureAwait(false);
+            Snackbar.Add("Attendance report generated successfully", Severity.Success);
+            _generateDialogVisible = false;
+            if (_table != null)
+                await _table.ReloadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error generating report: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task ExportReportAsync(DefaultIdType reportId, string format)
+    {
+        try
+        {
+            var request = new ExportAttendanceReportRequest { Format = format };
+            await Client.ExportAttendanceReportEndpointAsync("1", reportId, request).ConfigureAwait(false);
+            Snackbar.Add($"Report exported to {format.ToUpper()}", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error exporting report: {ex.Message}", Severity.Error);
+        }
+    }
+
     private async Task ViewReportDetailsAsync(AttendanceReportDto report)
     {
         var parameters = new DialogParameters
@@ -95,4 +151,15 @@ public class AttendanceReportViewModel
     public string? ReportType { get; set; } = "Monthly";
     public DateTime? FromDate { get; set; } = DateTime.Today.AddMonths(-1);
     public DateTime? ToDate { get; set; } = DateTime.Today;
+}
+
+public class GenerateReportDialogState
+{
+    public string? Title { get; set; }
+    public string? ReportType { get; set; } = "Summary";
+    public DateTime? FromDate { get; set; }
+    public DateTime? ToDate { get; set; }
+    public DefaultIdType? DepartmentId { get; set; }
+    public DefaultIdType? EmployeeId { get; set; }
+    public string? Notes { get; set; }
 }

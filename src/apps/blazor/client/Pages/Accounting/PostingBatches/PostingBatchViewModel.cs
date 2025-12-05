@@ -1,16 +1,33 @@
 namespace FSH.Starter.Blazor.Client.Pages.Accounting.PostingBatches;
 
-public class PostingBatchViewModel : UpdatePostingBatchCommand
+public class PostingBatchViewModel
 {
+    public DefaultIdType Id { get; set; }
+
     /// <summary>
     /// Batch number for display purposes (read-only after creation)
     /// </summary>
     public string? BatchNumber { get; set; }
 
     /// <summary>
-    /// Source module that created this batch (read-only after creation)
+    /// Description of the batch
     /// </summary>
-    public string? SourceModule { get; set; }
+    public string? Description { get; set; }
+
+    /// <summary>
+    /// Source module that created this batch
+    /// </summary>
+    public string? Source { get; set; }
+
+    /// <summary>
+    /// Batch date
+    /// </summary>
+    public DateTime? BatchDate { get; set; }
+
+    /// <summary>
+    /// Batch status
+    /// </summary>
+    public string? Status { get; set; }
 
     /// <summary>
     /// Alias for BatchDate to match UI expectations

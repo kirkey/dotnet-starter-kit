@@ -1,0 +1,129 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Accounting.AccountReconciliations
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Reconcile GL Account</MudText>
+
+            <MudAlert Severity="Severity.Info">
+                Reconcile a General Ledger account with its subsidiary ledger or statement balance.
+            </MudAlert>
+
+            <MudGrid Spacing="2">
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_command.Name"
+                                  Label="Reconciliation Name"
+                                  Variant="Variant.Outlined"
+                                  Required="true"
+                                  Placeholder="e.g., December 2024 Bank Reconciliation" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudDatePicker @bind-Date="_reconciliationDate"
+                                   Label="Reconciliation Date"
+                                   DateFormat="yyyy-MM-dd"
+                                   Variant="Variant.Outlined"
+                                   Required="true" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudNumericField T="decimal" @bind-Value="_command.StatementBalance"
+                                     Label="Statement Balance"
+                                     Variant="Variant.Outlined"
+                                     Format="N2"
+                                     Required="true" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_command.ReconciliationReference"
+                                  Label="Reference Number"
+                                  Variant="Variant.Outlined"
+                                  Placeholder="e.g., STMT-2024-12" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_command.Description"
+                                  Label="Description"
+                                  Lines="2"
+                                  Variant="Variant.Outlined" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_command.Remarks"
+                                  Label="Remarks"
+                                  Lines="2"
+                                  Variant="Variant.Outlined" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_command.Notes"
+                                  Label="Notes"
+                                  Lines="2"
+                                  Variant="Variant.Outlined" />
+                </MudItem>
+            </MudGrid>
+        </MudStack>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton OnClick="@Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="@Submit" Variant="Variant.Filled" Disabled="_isSubmitting">
+            @if (_isSubmitting)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2" />
+            }
+            Reconcile Account
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType ChartOfAccountId { get; set; }
+
+    private ReconcileGeneralLedgerAccountCommand _command = new();
+    private DateTime? _reconciliationDate = DateTime.Today;
+    private bool _isSubmitting;
+
+    protected override void OnParametersSet()
+    {
+        _command.ChartOfAccountId = ChartOfAccountId;
+    }
+
+    private async Task Submit()
+    {
+        if (string.IsNullOrWhiteSpace(_command.Name))
+        {
+            Snackbar.Add("Please enter a reconciliation name", Severity.Warning);
+            return;
+        }
+
+        if (_reconciliationDate == null)
+        {
+            Snackbar.Add("Please select a reconciliation date", Severity.Warning);
+            return;
+        }
+
+        _isSubmitting = true;
+        try
+        {
+            _command.ReconciliationDate = _reconciliationDate.Value;
+            var result = await Client.ReconcileGeneralLedgerAccountEndpointAsync("1", _command);
+            Snackbar.Add("GL Account reconciled successfully", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(result));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error reconciling account: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _isSubmitting = false;
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

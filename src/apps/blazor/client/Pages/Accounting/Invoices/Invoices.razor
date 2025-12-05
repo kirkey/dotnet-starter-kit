@@ -148,6 +148,12 @@
                 Cancel Invoice
             </MudMenuItem>
         }
+        @if (invoice.Status is "Paid" or "Sent")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Block" OnClick="@(() => OnVoidInvoice(invoice.Id))">
+                Void Invoice
+            </MudMenuItem>
+        }
         <MudMenuItem Icon="@Icons.Material.Filled.Print" OnClick="@(() => OnPrintInvoice(invoice.Id))">
             Print Invoice
         </MudMenuItem>
@@ -480,3 +486,25 @@
     </DialogActions>
 </MudDialog>
 
+@* Dialog for voiding invoice *@
+<MudDialog @bind-IsVisible="_voidDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Block" Class="mr-3" /> Void Invoice
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudAlert Severity="Severity.Warning" Class="mb-4">
+            Voiding an invoice will permanently mark it as void. This action cannot be undone.
+        </MudAlert>
+        <MudTextField @bind-Value="_voidCommand.Reason"
+                      Label="Void Reason"
+                      Required="true"
+                      Lines="3"
+                      Variant="Variant.Outlined" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _voidDialogVisible = false)">Cancel</MudButton>
+        <MudButton Color="Color.Error" Variant="Variant.Filled" OnClick="@(() => SubmitVoidInvoice())">Void Invoice</MudButton>
+    </DialogActions>
+</MudDialog>

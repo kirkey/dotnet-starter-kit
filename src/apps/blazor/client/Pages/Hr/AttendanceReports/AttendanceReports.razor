@@ -5,6 +5,11 @@
 <FshPage Title="Attendance Reports"
          Description="View and analyze attendance statistics and trends">
     <ExtraActions>
+        <MudTooltip Text="Generate New Report">
+            <MudIconButton Icon="@Icons.Material.Filled.Add"
+                           Color="Color.Primary"
+                           OnClick="ShowGenerateDialog" />
+        </MudTooltip>
         <MudTooltip Text="Help">
             <MudIconButton Icon="@Icons.Material.Filled.Help"
                            Color="Color.Default"
@@ -17,6 +22,14 @@
                 <MudMenuItem OnClick="@(() => ViewReportDetailsAsync(context))"
                              Icon="@Icons.Material.Filled.Visibility">
                     View Details
+                </MudMenuItem>
+                <MudMenuItem OnClick="@(() => ExportReportAsync(context.Id, "pdf"))"
+                             Icon="@Icons.Material.Filled.PictureAsPdf">
+                    Export PDF
+                </MudMenuItem>
+                <MudMenuItem OnClick="@(() => ExportReportAsync(context.Id, "excel"))"
+                             Icon="@Icons.Material.Filled.TableChart">
+                    Export Excel
                 </MudMenuItem>
                 @if (!string.IsNullOrEmpty(context.ExportPath))
                 {
@@ -59,3 +72,55 @@
         </EntityTable>
     </ChildContent>
 </FshPage>
+
+@* Generate Report Dialog *@
+<MudDialog @bind-IsVisible="_generateDialogVisible" Options="_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Assessment" Class="mr-3" /> Generate Attendance Report
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_generateCommand.Title"
+                              Label="Report Title"
+                              Required="true"
+                              Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudSelect @bind-Value="_generateCommand.ReportType"
+                           Label="Report Type"
+                           Required="true"
+                           Variant="Variant.Outlined">
+                    <MudSelectItem Value="@("Summary")">Summary</MudSelectItem>
+                    <MudSelectItem Value="@("Detailed")">Detailed</MudSelectItem>
+                    <MudSelectItem Value="@("ByDepartment")">By Department</MudSelectItem>
+                    <MudSelectItem Value="@("ByEmployee")">By Employee</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudDatePicker @bind-Date="_generateCommand.FromDate"
+                               Label="From Date"
+                               Required="true"
+                               Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudDatePicker @bind-Date="_generateCommand.ToDate"
+                               Label="To Date"
+                               Required="true"
+                               Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_generateCommand.Notes"
+                              Label="Notes"
+                              Lines="3"
+                              Variant="Variant.Outlined" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _generateDialogVisible = false)">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@SubmitGenerateReport">Generate Report</MudButton>
+    </DialogActions>
+</MudDialog>
