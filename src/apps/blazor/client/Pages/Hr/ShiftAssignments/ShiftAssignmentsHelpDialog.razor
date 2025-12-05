@@ -1,3 +1,6 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.ShiftAssignments
+@using FSH.Starter.Blazor.Infrastructure.Notifications
+
 <MudDialog>
     <TitleContent>
         <MudStack Row="true" AlignItems="AlignItems.Center">
@@ -13,7 +16,7 @@
         </MudText>
         
         <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Assignment Types</MudText>
-        <MudList T="string" Dense="true" Class="mb-4">
+        <MudList T="string" Dense="true" Class="mb-4" Elevation="@_preference.Elevation">
             <MudListItem Icon="@Icons.Material.Filled.Event">
                 <strong>Fixed Assignment</strong> - Specific date range assignment
             </MudListItem>
@@ -26,7 +29,7 @@
         </MudList>
         
         <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Key Points</MudText>
-        <MudList T="string" Dense="true" Class="mb-4">
+        <MudList T="string" Dense="true" Class="mb-4" Elevation="@_preference.Elevation">
             <MudListItem Icon="@Icons.Material.Filled.Info">
                 Each employee can have one active shift at a time
             </MudListItem>
@@ -39,7 +42,7 @@
         </MudList>
         
         <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Tips</MudText>
-        <MudList T="string" Dense="true">
+        <MudList T="string" Dense="true" Elevation="@_preference.Elevation">
             <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
                 Set up recurring assignments for regular schedules
             </MudListItem>
@@ -59,6 +62,23 @@
 @code {
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = default!;
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+    }
 
     private void Close() => MudDialog.Close();
 }

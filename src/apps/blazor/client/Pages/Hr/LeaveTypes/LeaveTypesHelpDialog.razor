@@ -1,0 +1,96 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.LeaveTypes
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Leave Types Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="Overview">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2">
+                            Leave Types define the various categories of time-off available to employees.
+                            Each type has specific rules for accrual, eligibility, and usage.
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Leave Types">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2"><strong>Vacation Leave:</strong> Paid time off for rest and recreation</MudText>
+                        <MudText Typo="Typo.body2"><strong>Sick Leave:</strong> Time off for illness or medical appointments</MudText>
+                        <MudText Typo="Typo.body2"><strong>Maternity Leave:</strong> Leave for childbirth and recovery (female employees)</MudText>
+                        <MudText Typo="Typo.body2"><strong>Paternity Leave:</strong> Leave for new fathers</MudText>
+                        <MudText Typo="Typo.body2"><strong>Bereavement Leave:</strong> Time off for family death</MudText>
+                        <MudText Typo="Typo.body2"><strong>Emergency Leave:</strong> Urgent personal situations</MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Accrual Settings">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2"><strong>Annual Allowance:</strong> Total days available per year</MudText>
+                        <MudText Typo="Typo.body2"><strong>Accrual Frequency:</strong> How often leave is earned (Monthly, Quarterly, Annually)</MudText>
+                        <MudText Typo="Typo.body2"><strong>Carry Over:</strong> Whether unused leave can be carried to next year</MudText>
+                        <MudText Typo="Typo.body2"><strong>Max Carry Over:</strong> Maximum days that can be carried forward</MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Eligibility Rules">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2"><strong>Applicable Gender:</strong> Both, Male, or Female only</MudText>
+                        <MudText Typo="Typo.body2"><strong>Employment Types:</strong> Which employment types are eligible</MudText>
+                        <MudText Typo="Typo.body2"><strong>Minimum Tenure:</strong> Required service period before eligibility</MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Philippine Labor Law">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2"><strong>Service Incentive Leave:</strong> 5 days after 1 year of service</MudText>
+                        <MudText Typo="Typo.body2"><strong>Maternity Leave:</strong> 105 days (RA 11210)</MudText>
+                        <MudText Typo="Typo.body2"><strong>Paternity Leave:</strong> 7 days (RA 8187)</MudText>
+                        <MudText Typo="Typo.body2"><strong>Solo Parent Leave:</strong> 7 days (RA 8972)</MudText>
+                        <MudText Typo="Typo.body2"><strong>VAWC Leave:</strong> 10 days (RA 9262)</MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2">• Define clear leave policies for each type</MudText>
+                        <MudText Typo="Typo.body2">• Set appropriate approval workflows</MudText>
+                        <MudText Typo="Typo.body2">• Configure accrual rules based on company policy</MudText>
+                        <MudText Typo="Typo.body2">• Ensure compliance with labor laws</MudText>
+                        <MudText Typo="Typo.body2">• Review and update policies annually</MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+    }
+
+    private void Close() => MudDialog.Close();
+}

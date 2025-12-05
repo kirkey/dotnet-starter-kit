@@ -4,7 +4,18 @@
 
 <PageHeader Title="Leave Types" Header="Leave Types" SubHeader="Manage leave types, accrual rules, and policies." />
 
-<EntityTable TEntity="LeaveTypeResponse" TId="DefaultIdType" TRequest="LeaveTypeViewModel" Context="@Context">
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="LeaveTypeResponse" TId="DefaultIdType" TRequest="LeaveTypeViewModel" Context="@Context">
     <EditFormContent Context="context">
         <MudItem xs="12" sm="6">
             <MudTextField @bind-Value="context.LeaveName"
@@ -110,3 +121,6 @@
 
     </EditFormContent>
 </EntityTable>
+
+@code {
+}

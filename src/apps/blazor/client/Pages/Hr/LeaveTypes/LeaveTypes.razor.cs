@@ -4,9 +4,25 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.LeaveTypes;
 public partial class LeaveTypes
 {
     protected EntityServerTableContext<LeaveTypeResponse, DefaultIdType, LeaveTypeViewModel> Context { get; set; } = null!;
+    private EntityTable<LeaveTypeResponse, DefaultIdType, LeaveTypeViewModel> _table = null!;
 
-    protected override Task OnInitializedAsync()
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+
         Context = new EntityServerTableContext<LeaveTypeResponse, DefaultIdType, LeaveTypeViewModel>(
             entityName: "Leave Type",
             entityNamePlural: "Leave Types",
@@ -46,8 +62,12 @@ public partial class LeaveTypes
             {
                 await Client.DeleteLeaveTypeEndpointAsync("1", id);
             });
+    }
 
-        return Task.CompletedTask;
+    private async Task ShowHelp()
+    {
+        await DialogService.ShowAsync<LeaveTypesHelpDialog>("Leave Types Help",
+            new DialogParameters(), new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true });
     }
 }
 

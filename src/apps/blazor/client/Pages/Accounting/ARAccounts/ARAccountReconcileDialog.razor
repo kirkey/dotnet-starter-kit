@@ -1,9 +1,33 @@
+@inject IClient Client
+@inject ISnackbar Snackbar
+
 <MudDialog>
     <DialogContent>
-        <MudText>Reconcile Dialog - Coming Soon</MudText>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Reconcile AR Account</MudText>
+
+            <MudAlert Severity="Severity.Info">
+                Enter the subsidiary ledger balance to reconcile this AR account.
+            </MudAlert>
+
+            <MudNumericField T="decimal" @bind-Value="_subsidiaryLedgerBalance"
+                             Label="Subsidiary Ledger Balance"
+                             Variant="Variant.Outlined"
+                             Format="N2"
+                             Required="true"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="@(() => MudDialog.Close())">Close</MudButton>
+        <MudButton OnClick="@Close">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@Reconcile" Disabled="_isSubmitting">
+            @if (_isSubmitting)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2" />
+            }
+            Reconcile
+        </MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -17,6 +41,34 @@
     [Parameter]
     public EventCallback OnUpdated { get; set; }
 
-    private void Close() => MudDialog.Close();
+    private decimal _subsidiaryLedgerBalance;
+    private bool _isSubmitting;
+
+    private async Task Reconcile()
+    {
+        _isSubmitting = true;
+        try
+        {
+            var command = new ReconcileArAccountCommand
+            {
+                Id = ArAccountId,
+                SubsidiaryLedgerBalance = _subsidiaryLedgerBalance
+            };
+            await Client.ArAccountReconcileEndpointAsync("1", ArAccountId, command);
+            Snackbar.Add("AR Account reconciled successfully", Severity.Success);
+            await OnUpdated.InvokeAsync();
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error reconciling AR account: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _isSubmitting = false;
+        }
+    }
+
+    private void Close() => MudDialog.Cancel();
 }
 

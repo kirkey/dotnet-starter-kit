@@ -7,6 +7,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Accounting.Payees;
 public partial class Payees
 {
     [Inject] protected ImageUrlService ImageUrlService { get; set; } = null!;
+    [Inject] protected IJSRuntime JsRuntime { get; set; } = null!;
 
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
@@ -104,5 +105,31 @@ public partial class Payees
             FullWidth = true,
             CloseOnEscapeKey = true
         });
+    }
+
+    /// <summary>
+    /// Export payees to file.
+    /// </summary>
+    private async Task ExportPayees()
+    {
+        try
+        {
+            var query = new ExportPayeesQuery
+            {
+                IncludeInactive = false
+            };
+            var result = await Client.PayeeExportEndpointAsync("1", query);
+            if (result?.Stream != null)
+            {
+                using var streamRef = new DotNetStreamReference(result.Stream);
+                var fileName = $"Payees_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                await JsRuntime.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
+                Snackbar.Add("Payees exported successfully", Severity.Success);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Export failed: {ex.Message}", Severity.Error);
+        }
     }
 }

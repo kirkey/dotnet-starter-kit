@@ -1,3 +1,6 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.PerformanceReviews
+@using FSH.Starter.Blazor.Infrastructure.Notifications
+
 <MudDialog>
     <DialogContent>
         <MudText Typo="Typo.body1" Class="mb-4">
@@ -66,7 +69,7 @@
         </MudSimpleTable>
 
         <MudText Typo="Typo.h6" Class="mt-4 mb-2">Review Types</MudText>
-        <MudList T="string" Dense="true">
+        <MudList T="string" Dense="true" Elevation="@_preference.Elevation">
             <MudListItem Icon="@Icons.Material.Filled.CalendarMonth">
                 <MudText Typo="Typo.body2"><strong>Annual</strong> - Yearly comprehensive performance review</MudText>
             </MudListItem>
@@ -92,6 +95,23 @@
 @code {
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+    }
 
     private void Close() => MudDialog.Close();
 }

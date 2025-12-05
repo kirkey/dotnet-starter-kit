@@ -744,6 +744,15 @@ public partial class StoreDashboard
         "Completed" => Color.Success,
         _ => Color.Default
     };
+
+    /// <summary>
+    /// Show help dialog.
+    /// </summary>
+    private async Task ShowHelp()
+    {
+        await DialogService.ShowAsync<StoreDashboardHelpDialog>("Store Dashboard Help",
+            new DialogParameters(), new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true });
+    }
 }
 
 /// <summary>

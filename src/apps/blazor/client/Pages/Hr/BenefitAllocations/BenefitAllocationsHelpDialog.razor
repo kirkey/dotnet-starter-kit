@@ -1,87 +1,114 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.BenefitAllocations
+
 <MudDialog>
-    <TitleContent>
-        <MudStack Row="true" AlignItems="AlignItems.Center">
-            <MudIcon Icon="@Icons.Material.Filled.Help" Color="Color.Info" Class="mr-2" />
-            <MudText Typo="Typo.h6">Benefit Allocations Help</MudText>
-        </MudStack>
-    </TitleContent>
     <DialogContent>
-        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Overview</MudText>
-        <MudText Class="mb-4">
-            Benefit Allocations track the usage and distribution of employee benefits. This includes claims, 
-            premium payments, usage records, adjustments, and refunds associated with benefit enrollments.
-        </MudText>
-        
-        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Allocation Types</MudText>
-        <MudList T="string" Dense="true" Class="mb-4">
-            <MudListItem Icon="@Icons.Material.Filled.PlayCircle">
-                <strong>Usage</strong> - Regular benefit usage such as medical visits or gym access
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.Payment">
-                <strong>Premium</strong> - Premium payment records for insurance benefits
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.Receipt">
-                <strong>Claim</strong> - Benefit claims submitted by employees
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.Edit">
-                <strong>Adjustment</strong> - Corrections or adjustments to previous allocations
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.Undo">
-                <strong>Refund</strong> - Refund of previously allocated benefits
-            </MudListItem>
-        </MudList>
-        
-        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Workflow</MudText>
-        <MudList T="string" Dense="true" Class="mb-4">
-            <MudListItem Icon="@Icons.Material.Filled.AddCircle">
-                <strong>Create</strong> - Create a new allocation record for an active enrollment
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.HourglassEmpty">
-                <strong>Pending</strong> - New allocations start in Pending status awaiting approval
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
-                <strong>Approve</strong> - Approve the allocation to process it
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.Cancel">
-                <strong>Reject</strong> - Reject the allocation if it's invalid or incorrect
-            </MudListItem>
-        </MudList>
-        
-        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Status Indicators</MudText>
-        <MudStack Row="true" Spacing="2" Class="mb-4">
-            <MudChip T="string" Color="Color.Warning" Size="Size.Small">Pending</MudChip>
-            <MudText Class="my-auto">- Awaiting approval</MudText>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Benefit Allocations Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="Overview">
+                    <MudText>
+                        Benefit Allocations track the usage and distribution of employee benefits. This includes claims, 
+                        premium payments, usage records, adjustments, and refunds associated with benefit enrollments.
+                    </MudText>
+                </MudExpansionPanel>
+                
+                <MudExpansionPanel Text="Allocation Types">
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.PlayCircle">
+                            <strong>Usage</strong> - Regular benefit usage such as medical visits or gym access
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Payment">
+                            <strong>Premium</strong> - Premium payment records for insurance benefits
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Receipt">
+                            <strong>Claim</strong> - Benefit claims submitted by employees
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Edit">
+                            <strong>Adjustment</strong> - Corrections or adjustments to previous allocations
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Undo">
+                            <strong>Refund</strong> - Refund of previously allocated benefits
+                        </MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+                
+                <MudExpansionPanel Text="Workflow">
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.AddCircle">
+                            <strong>Create</strong> - Create a new allocation record for an active enrollment
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.HourglassEmpty">
+                            <strong>Pending</strong> - New allocations start in Pending status awaiting approval
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                            <strong>Approve</strong> - Approve the allocation to process it
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Cancel">
+                            <strong>Reject</strong> - Reject the allocation if it's invalid or incorrect
+                        </MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+                
+                <MudExpansionPanel Text="Status Indicators">
+                    <MudStack Spacing="2">
+                        <MudStack Row="true" Spacing="2">
+                            <MudChip T="string" Color="Color.Warning" Size="Size.Small">Pending</MudChip>
+                            <MudText Class="my-auto">- Awaiting approval</MudText>
+                        </MudStack>
+                        <MudStack Row="true" Spacing="2">
+                            <MudChip T="string" Color="Color.Success" Size="Size.Small">Approved</MudChip>
+                            <MudText Class="my-auto">- Allocation has been approved and processed</MudText>
+                        </MudStack>
+                        <MudStack Row="true" Spacing="2">
+                            <MudChip T="string" Color="Color.Error" Size="Size.Small">Rejected</MudChip>
+                            <MudText Class="my-auto">- Allocation was rejected</MudText>
+                        </MudStack>
+                    </MudStack>
+                </MudExpansionPanel>
+                
+                <MudExpansionPanel Text="Tips">
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                            Always include a reference number for tracking purposes
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                            Review allocation amounts carefully before approval
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                            Use remarks to document any special circumstances
+                        </MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
         </MudStack>
-        <MudStack Row="true" Spacing="2" Class="mb-4">
-            <MudChip T="string" Color="Color.Success" Size="Size.Small">Approved</MudChip>
-            <MudText Class="my-auto">- Allocation has been approved and processed</MudText>
-        </MudStack>
-        <MudStack Row="true" Spacing="2" Class="mb-4">
-            <MudChip T="string" Color="Color.Error" Size="Size.Small">Rejected</MudChip>
-            <MudText Class="my-auto">- Allocation was rejected</MudText>
-        </MudStack>
-        
-        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Tips</MudText>
-        <MudList T="string" Dense="true">
-            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
-                Always include a reference number for tracking purposes
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
-                Review allocation amounts carefully before approval
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
-                Use remarks to document any special circumstances
-            </MudListItem>
-        </MudList>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Got It</MudButton>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
     </DialogActions>
 </MudDialog>
 
 @code {
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+    }
 
     private void Close() => MudDialog.Close();
 }

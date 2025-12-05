@@ -1,3 +1,5 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Deductions
+
 <MudDialog>
     <TitleContent>
         <MudStack Row="true" AlignItems="AlignItems.Center">
@@ -6,65 +8,89 @@
         </MudStack>
     </TitleContent>
     <DialogContent>
-        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Overview</MudText>
-        <MudText Class="mb-4">
-            Deductions define the types of payroll deductions that can be applied to employee salaries, 
-            including loans, taxes, insurance, and other contributions.
-        </MudText>
-        
-        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Deduction Types</MudText>
-        <MudList T="string" Dense="true" Class="mb-4">
-            <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
-                <strong>Loan</strong> - Employee loans with installment recovery
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.Receipt">
-                <strong>Tax</strong> - Government tax deductions
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.HealthAndSafety">
-                <strong>Insurance</strong> - Health and life insurance premiums
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.Savings">
-                <strong>Contribution</strong> - Retirement and savings contributions
-            </MudListItem>
-        </MudList>
-        
-        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Recovery Methods</MudText>
-        <MudList T="string" Dense="true" Class="mb-4">
-            <MudListItem Icon="@Icons.Material.Filled.Edit">
-                <strong>Manual</strong> - Amount entered manually each payroll
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
-                <strong>Fixed Amount</strong> - Same amount deducted each period
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.Percent">
-                <strong>Percentage</strong> - Percentage of salary deducted
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.EventRepeat">
-                <strong>Installment</strong> - Fixed number of equal payments
-            </MudListItem>
-        </MudList>
-        
-        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Tips</MudText>
-        <MudList T="string" Dense="true">
-            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
-                Set max recovery percentage to protect employee take-home pay
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
-                Link to GL account code for proper accounting treatment
-            </MudListItem>
-            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
-                Enable approval for sensitive deductions
-            </MudListItem>
-        </MudList>
+        <MudExpansionPanels Elevation="@_preference.Elevation">
+            <MudExpansionPanel Text="Overview">
+                <MudText>
+                    Deductions define the types of payroll deductions that can be applied to employee salaries, 
+                    including loans, taxes, insurance, and other contributions.
+                </MudText>
+            </MudExpansionPanel>
+            
+            <MudExpansionPanel Text="Deduction Types">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                        <strong>Loan</strong> - Employee loans with installment recovery
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Receipt">
+                        <strong>Tax</strong> - Government tax deductions
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.HealthAndSafety">
+                        <strong>Insurance</strong> - Health and life insurance premiums
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Savings">
+                        <strong>Contribution</strong> - Retirement and savings contributions
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+            
+            <MudExpansionPanel Text="Recovery Methods">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Edit">
+                        <strong>Manual</strong> - Amount entered manually each payroll
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                        <strong>Fixed Amount</strong> - Same amount deducted each period
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Percent">
+                        <strong>Percentage</strong> - Percentage of salary deducted
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.EventRepeat">
+                        <strong>Installment</strong> - Fixed number of equal payments
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+            
+            <MudExpansionPanel Text="Tips">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                        Set max recovery percentage to protect employee take-home pay
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                        Link to GL account code for proper accounting treatment
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                        Enable approval for sensitive deductions
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Got It</MudButton>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
     </DialogActions>
 </MudDialog>
 
 @code {
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+    }
 
     private void Close() => MudDialog.Close();
 }

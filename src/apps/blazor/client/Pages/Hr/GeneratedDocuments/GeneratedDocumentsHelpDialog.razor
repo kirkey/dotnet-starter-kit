@@ -1,4 +1,5 @@
-@using MudBlazor
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.GeneratedDocuments
+@using FSH.Starter.Blazor.Infrastructure.Notifications
 
 <MudDialog>
     <DialogContent>
@@ -6,7 +7,7 @@
             Generated Documents are employee documents created from templates, such as contracts, letters, and certificates.
         </MudText>
 
-        <MudExpansionPanels MultiExpansion="true">
+        <MudExpansionPanels MultiExpansion="true" Elevation="@_preference.Elevation">
             <MudExpansionPanel Text="Document Status" Icon="@Icons.Material.Filled.Assignment">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.Edit">
@@ -66,7 +67,24 @@
 
 @code {
     [CascadingParameter]
-    IMudDialogInstance MudDialog { get; set; } = null!;
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+    }
 
     private void Close() => MudDialog.Close();
 }

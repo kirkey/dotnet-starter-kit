@@ -1,0 +1,96 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Store.Dashboard
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Store Dashboard Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="Overview">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2">
+                            The Store Dashboard provides a comprehensive view of your inventory operations,
+                            including stock levels, recent transactions, and key performance indicators.
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Key Metrics">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2"><strong>Total Items:</strong> Count of unique items in inventory</MudText>
+                        <MudText Typo="Typo.body2"><strong>Total Stock Value:</strong> Monetary value of all inventory</MudText>
+                        <MudText Typo="Typo.body2"><strong>Low Stock Items:</strong> Items below reorder point</MudText>
+                        <MudText Typo="Typo.body2"><strong>Out of Stock:</strong> Items with zero quantity</MudText>
+                        <MudText Typo="Typo.body2"><strong>Pending Orders:</strong> Purchase orders awaiting delivery</MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Inventory Operations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2"><strong>Goods Receipts:</strong> Track incoming inventory</MudText>
+                        <MudText Typo="Typo.body2"><strong>Stock Adjustments:</strong> Correct inventory discrepancies</MudText>
+                        <MudText Typo="Typo.body2"><strong>Inventory Transfers:</strong> Move stock between locations</MudText>
+                        <MudText Typo="Typo.body2"><strong>Cycle Counts:</strong> Regular inventory verification</MudText>
+                        <MudText Typo="Typo.body2"><strong>Pick Lists:</strong> Manage order fulfillment</MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Stock Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2"><strong>Warehouses:</strong> Physical storage locations</MudText>
+                        <MudText Typo="Typo.body2"><strong>Bins:</strong> Specific storage positions within warehouses</MudText>
+                        <MudText Typo="Typo.body2"><strong>Lot Numbers:</strong> Batch tracking for traceability</MudText>
+                        <MudText Typo="Typo.body2"><strong>Serial Numbers:</strong> Individual item tracking</MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Alerts & Notifications">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2">• Low stock warnings when items fall below reorder point</MudText>
+                        <MudText Typo="Typo.body2">• Out of stock alerts for immediate attention</MudText>
+                        <MudText Typo="Typo.body2">• Expiring inventory notifications</MudText>
+                        <MudText Typo="Typo.body2">• Pending purchase order reminders</MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.body2">• Review dashboard daily for operational insights</MudText>
+                        <MudText Typo="Typo.body2">• Address low stock items promptly</MudText>
+                        <MudText Typo="Typo.body2">• Conduct regular cycle counts</MudText>
+                        <MudText Typo="Typo.body2">• Monitor inventory turnover ratios</MudText>
+                        <MudText Typo="Typo.body2">• Use reports for trend analysis</MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+    }
+
+    private void Close() => MudDialog.Close();
+}
