@@ -1,0 +1,64 @@
+<MudDialog>
+    <TitleContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Color="Color.Info" Class="mr-2" />
+            <MudText Typo="Typo.h6">Shift Assignments Help</MudText>
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Overview</MudText>
+        <MudText Class="mb-4">
+            Shift Assignments link employees to specific work shifts, defining their work schedules 
+            for attendance tracking and payroll calculations.
+        </MudText>
+        
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Assignment Types</MudText>
+        <MudList T="string" Dense="true" Class="mb-4">
+            <MudListItem Icon="@Icons.Material.Filled.Event">
+                <strong>Fixed Assignment</strong> - Specific date range assignment
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.EventRepeat">
+                <strong>Recurring</strong> - Repeating weekly schedule
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.AllInclusive">
+                <strong>Ongoing</strong> - No end date, continues until changed
+            </MudListItem>
+        </MudList>
+        
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Key Points</MudText>
+        <MudList T="string" Dense="true" Class="mb-4">
+            <MudListItem Icon="@Icons.Material.Filled.Info">
+                Each employee can have one active shift at a time
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Info">
+                End dates are optional for permanent assignments
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Info">
+                Changes to shifts affect attendance validation
+            </MudListItem>
+        </MudList>
+        
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Tips</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                Set up recurring assignments for regular schedules
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                Use notes to document special arrangements
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                Review assignments when shifts are modified
+            </MudListItem>
+        </MudList>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Got It</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private void Close() => MudDialog.Close();
+}

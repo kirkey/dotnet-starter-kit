@@ -1,0 +1,61 @@
+@page "/hr/timesheet-lines"
+@using FSH.Starter.Blazor.Client.Pages.Hr.TimesheetLines
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+
+<FshPage Title="Timesheet Lines"
+         Description="Manage individual timesheet entries and work hours">
+    <ExtraActions>
+        <MudTooltip Text="Help">
+            <MudIconButton Icon="@Icons.Material.Filled.Help"
+                           Color="Color.Default"
+                           OnClick="ShowHelp" />
+        </MudTooltip>
+    </ExtraActions>
+    <ChildContent>
+        <EntityTable @ref="_table" TEntity="TimesheetLineResponse" TId="DefaultIdType" TRequest="TimesheetLineViewModel" Context="Context">
+            <EditFormContent>
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudDatePicker @bind-Date="context.WorkDate"
+                                       Label="Work Date"
+                                       Required="true" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTextField @bind-Value="context.ProjectId"
+                                      Label="Project ID" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.RegularHours"
+                                         Label="Regular Hours"
+                                         Required="true"
+                                         Min="0"
+                                         Max="24" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.OvertimeHours"
+                                         Label="Overtime Hours"
+                                         Min="0"
+                                         Max="24" />
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudTextField @bind-Value="context.TaskDescription"
+                                      Label="Task Description"
+                                      Lines="2" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudCheckBox @bind-Value="context.IsBillable"
+                                     Label="Billable" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.BillingRate"
+                                         Label="Billing Rate"
+                                         Format="F2"
+                                         Adornment="Adornment.Start"
+                                         AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+                                         Disabled="@(!context.IsBillable)" />
+                    </MudItem>
+                </MudGrid>
+            </EditFormContent>
+        </EntityTable>
+    </ChildContent>
+</FshPage>

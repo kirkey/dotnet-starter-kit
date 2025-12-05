@@ -4,6 +4,14 @@
 
 <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
     <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.FileUpload" OnClick="@ShowImportDialog">
+                Import
+            </MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.FileDownload" OnClick="@ShowExportDialog">
+                Export
+            </MudButton>
+        </MudButtonGroup>
         <MudSpacer />
         <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
             <MudButton StartIcon="@Icons.Material.Filled.Info" OnClick="@ShowChartOfAccountsHelp">
@@ -14,6 +22,30 @@
 </MudPaper>
 
 <EntityTable @ref="_table" TEntity="ChartOfAccountResponse" TId="DefaultIdType" TRequest="ChartOfAccountViewModel" Context="@Context">
+    <ExtraActions Context="account">
+        <MudMenu Label="Actions" Variant="Variant.Filled"
+                 EndIcon="@Icons.Material.Filled.KeyboardArrowDown" IconColor="Color.Secondary" TransformOrigin="Origin.TopCenter">
+            <MudMenuItem Icon="@Icons.Material.Filled.Visibility"
+                         OnClick="@(() => ViewDetailsAsync(account))">
+                View Details
+            </MudMenuItem>
+            <MudDivider />
+            @if (!account.IsActive)
+            {
+                <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle"
+                             OnClick="@(() => ActivateAccountAsync(account))">
+                    Activate
+                </MudMenuItem>
+            }
+            else
+            {
+                <MudMenuItem Icon="@Icons.Material.Filled.Cancel"
+                             OnClick="@(() => DeactivateAccountAsync(account))">
+                    Deactivate
+                </MudMenuItem>
+            }
+        </MudMenu>
+    </ExtraActions>
     <EditFormContent Context="context">
         @if (context.Id != DefaultIdType.Empty)
         {

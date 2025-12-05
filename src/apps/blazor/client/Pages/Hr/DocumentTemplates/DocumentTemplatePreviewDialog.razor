@@ -1,0 +1,70 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <TitleContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center">
+            <MudIcon Icon="@Icons.Material.Filled.Preview" Color="Color.Primary" Class="mr-2" />
+            <MudText Typo="Typo.h6">@(Template?.TemplateName ?? "Template Preview")</MudText>
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        @if (Template != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudStack Row="true" Spacing="4" Class="mb-4">
+                        <MudChip T="string" Color="Color.Info" Size="Size.Small">@Template.DocumentType</MudChip>
+                        <MudChip T="string" Color="@(Template.IsActive ? Color.Success : Color.Error)" Size="Size.Small">
+                            @(Template.IsActive ? "Active" : "Inactive")
+                        </MudChip>
+                        <MudChip T="string" Color="Color.Default" Size="Size.Small">Version @Template.Version</MudChip>
+                    </MudStack>
+                </MudItem>
+                
+                @if (!string.IsNullOrEmpty(Template.Description))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Description</MudText>
+                        <MudText Class="mb-4">@Template.Description</MudText>
+                    </MudItem>
+                }
+                
+                @if (!string.IsNullOrEmpty(Template.TemplateVariables))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Available Variables</MudText>
+                        <MudText Class="mb-4" Style="font-family: monospace;">@Template.TemplateVariables</MudText>
+                    </MudItem>
+                }
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary" Class="mb-2">Template Content Preview</MudText>
+                    <MudDivider Class="mb-2" />
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudPaper Elevation="1" Class="pa-4" Style="background-color: white; min-height: 300px;">
+                        @((MarkupString)(Template.TemplateContent ?? "<p>No content</p>"))
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        }
+        else
+        {
+            <MudText>No template selected</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Default">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public DocumentTemplateResponse? Template { get; set; }
+
+    private void Close() => MudDialog.Close();
+}

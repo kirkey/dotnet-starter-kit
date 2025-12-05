@@ -1,0 +1,131 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <TitleContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center">
+            <MudIcon Icon="@Icons.Material.Filled.AccountBalance" Color="Color.Primary" Class="mr-2" />
+            <MudText Typo="Typo.h6">Chart of Account Details</MudText>
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        @if (Account != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Account Information</MudText>
+                    <MudDivider Class="my-2" />
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Account Code</MudText>
+                    <MudText>@(Account.AccountCode ?? "-")</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Account Name</MudText>
+                    <MudText>@(Account.Name ?? "-")</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Account Type</MudText>
+                    <MudText>@(Account.AccountType ?? "-")</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">USOA Category</MudText>
+                    <MudText>@(Account.UsoaCategory ?? "-")</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Parent Code</MudText>
+                    <MudText>@(Account.ParentCode ?? "None (Top Level)")</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Account Level</MudText>
+                    <MudText>@Account.AccountLevel</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" Class="mt-4">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Balance Information</MudText>
+                    <MudDivider Class="my-2" />
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Current Balance</MudText>
+                    <MudText>@Account.Balance.ToString("C2")</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Normal Balance</MudText>
+                    <MudText>@(Account.NormalBalance ?? "-")</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Is Control Account</MudText>
+                    <MudText>@(Account.IsControlAccount ? "Yes" : "No")</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Status</MudText>
+                    <MudChip T="string" Color="@(Account.IsActive ? Color.Success : Color.Error)" Size="Size.Small">
+                        @(Account.IsActive ? "Active" : "Inactive")
+                    </MudChip>
+                </MudItem>
+                
+                <MudItem xs="12" Class="mt-4">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Description</MudText>
+                    <MudDivider Class="my-2" />
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Description</MudText>
+                    <MudText>@(Account.Description ?? "-")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Notes</MudText>
+                    <MudText>@(Account.Notes ?? "-")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" Class="mt-4">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Audit Information</MudText>
+                    <MudDivider Class="my-2" />
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Created On</MudText>
+                    <MudText>@Account.CreatedOn.ToShortDateString()</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Created By</MudText>
+                    <MudText>@(Account.CreatedByUserName ?? "-")</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Last Modified On</MudText>
+                    <MudText>@Account.LastModifiedOn.ToShortDateString()</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Last Modified By</MudText>
+                    <MudText>@(Account.LastModifiedByUserName ?? "-")</MudText>
+                </MudItem>
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Default">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public ChartOfAccountResponse? Account { get; set; }
+
+    private void Close() => MudDialog.Close();
+}

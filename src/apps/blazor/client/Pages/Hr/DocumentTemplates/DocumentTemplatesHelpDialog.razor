@@ -1,0 +1,64 @@
+<MudDialog>
+    <TitleContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Color="Color.Info" Class="mr-2" />
+            <MudText Typo="Typo.h6">Document Templates Help</MudText>
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Overview</MudText>
+        <MudText Class="mb-4">
+            Document Templates allow you to create reusable templates for HR documents such as 
+            employment contracts, offer letters, certificates, and notices.
+        </MudText>
+        
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Document Types</MudText>
+        <MudList T="string" Dense="true" Class="mb-4">
+            <MudListItem Icon="@Icons.Material.Filled.Description">
+                <strong>Employment Contract</strong> - Standard employment agreements
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Email">
+                <strong>Offer Letter</strong> - Job offers to candidates
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Badge">
+                <strong>Certificates</strong> - Employment and salary certificates
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Warning">
+                <strong>Warning Letters</strong> - Disciplinary notices
+            </MudListItem>
+        </MudList>
+        
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Template Variables</MudText>
+        <MudText Class="mb-2">Use these placeholders in your template content:</MudText>
+        <MudPaper Class="pa-3 mb-4" Elevation="0" Style="background-color: var(--mud-palette-background-grey);">
+            <code>
+                {{EmployeeName}}, {{Position}}, {{Department}}<br/>
+                {{StartDate}}, {{EndDate}}, {{Salary}}<br/>
+                {{CompanyName}}, {{ManagerName}}, {{Today}}
+            </code>
+        </MudPaper>
+        
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Tips</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                Use HTML formatting for professional layouts
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                List all variables in the Variables field for reference
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                Use Preview to check formatting before use
+            </MudListItem>
+        </MudList>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Got It</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private void Close() => MudDialog.Close();
+}

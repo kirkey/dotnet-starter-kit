@@ -1,0 +1,155 @@
+@page "/hr/pay-components"
+
+<PageHeader Title="Pay Components" Header="Pay Components" SubHeader="Manage salary and wage components for payroll calculations." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="PayComponentResponse" TId="DefaultIdType" TRequest="PayComponentViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Component Details</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudTextField @bind-Value="context.Code" 
+                          Label="Code" 
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="5">
+            <MudTextField @bind-Value="context.ComponentName" 
+                          Label="Component Name" 
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string" 
+                       @bind-Value="context.ComponentType" 
+                       Label="Component Type" 
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Earnings")">Earnings</MudSelectItem>
+                <MudSelectItem Value="@("Deduction")">Deduction</MudSelectItem>
+                <MudSelectItem Value="@("Benefit")">Benefit</MudSelectItem>
+                <MudSelectItem Value="@("Allowance")">Allowance</MudSelectItem>
+                <MudSelectItem Value="@("Bonus")">Bonus</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string" 
+                       @bind-Value="context.CalculationMethod" 
+                       Label="Calculation Method" 
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Manual")">Manual Entry</MudSelectItem>
+                <MudSelectItem Value="@("Fixed")">Fixed Amount</MudSelectItem>
+                <MudSelectItem Value="@("Percentage")">Percentage Based</MudSelectItem>
+                <MudSelectItem Value="@("Formula")">Formula Based</MudSelectItem>
+                <MudSelectItem Value="@("Hours")">Hours Based</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.GlAccountCode" 
+                          Label="GL Account Code" 
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Calculation Configuration</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField T="decimal?" 
+                             @bind-Value="context.Rate" 
+                             Label="Rate" 
+                             Variant="Variant.Filled"
+                             Format="N4" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField T="decimal?" 
+                             @bind-Value="context.FixedAmount" 
+                             Label="Fixed Amount" 
+                             Variant="Variant.Filled"
+                             Format="N2" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField T="decimal?" 
+                             @bind-Value="context.MinValue" 
+                             Label="Min Value" 
+                             Variant="Variant.Filled"
+                             Format="N2" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField T="decimal?" 
+                             @bind-Value="context.MaxValue" 
+                             Label="Max Value" 
+                             Variant="Variant.Filled"
+                             Format="N2" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.CalculationFormula" 
+                          Label="Calculation Formula" 
+                          Variant="Variant.Filled"
+                          HelperText="e.g., HourlyRate * Hours" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Settings</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudCheckBox @bind-Value="context.IsCalculated" Label="Auto Calculate" Color="Color.Primary" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudCheckBox @bind-Value="context.IsMandatory" Label="Mandatory" Color="Color.Primary" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudCheckBox @bind-Value="context.IsSubjectToTax" Label="Subject to Tax" Color="Color.Primary" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudCheckBox @bind-Value="context.IsTaxExempt" Label="Tax Exempt" Color="Color.Primary" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="context.LaborLawReference" 
+                          Label="Labor Law Reference" 
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description" 
+                          Label="Description" 
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

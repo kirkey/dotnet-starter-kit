@@ -1,0 +1,74 @@
+@page "/hr/pay-component-rates"
+@using FSH.Starter.Blazor.Client.Pages.Hr.PayComponentRates
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+
+<FshPage Title="Pay Component Rates"
+         Description="Configure rate schedules for pay components">
+    <ExtraActions>
+        <MudTooltip Text="Help">
+            <MudIconButton Icon="@Icons.Material.Filled.Help"
+                           Color="Color.Default"
+                           OnClick="ShowHelp" />
+        </MudTooltip>
+    </ExtraActions>
+    <ChildContent>
+        <EntityTable @ref="_table" TEntity="PayComponentRateResponse" TId="DefaultIdType" TRequest="PayComponentRateViewModel" Context="Context">
+            <EditFormContent>
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.MinAmount"
+                                         Label="Min Amount"
+                                         Format="F2"
+                                         Adornment="Adornment.Start"
+                                         AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.MaxAmount"
+                                         Label="Max Amount"
+                                         Format="F2"
+                                         Adornment="Adornment.Start"
+                                         AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    </MudItem>
+                    <MudItem xs="12" md="4">
+                        <MudNumericField @bind-Value="context.EmployeeRate"
+                                         Label="Employee Rate"
+                                         Format="P2"
+                                         Min="0"
+                                         Max="1"
+                                         Step="0.001M" />
+                    </MudItem>
+                    <MudItem xs="12" md="4">
+                        <MudNumericField @bind-Value="context.EmployerRate"
+                                         Label="Employer Rate"
+                                         Format="P2"
+                                         Min="0"
+                                         Max="1"
+                                         Step="0.001M" />
+                    </MudItem>
+                    <MudItem xs="12" md="4">
+                        <MudNumericField @bind-Value="context.AdditionalEmployerRate"
+                                         Label="Additional Employer Rate"
+                                         Format="P2"
+                                         Min="0"
+                                         Max="1"
+                                         Step="0.001M" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.EmployeeAmount"
+                                         Label="Employee Amount"
+                                         Format="F2"
+                                         Adornment="Adornment.Start"
+                                         AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.EmployerAmount"
+                                         Label="Employer Amount"
+                                         Format="F2"
+                                         Adornment="Adornment.Start"
+                                         AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    </MudItem>
+                </MudGrid>
+            </EditFormContent>
+        </EntityTable>
+    </ChildContent>
+</FshPage>

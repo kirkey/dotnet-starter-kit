@@ -6,6 +6,8 @@ public partial class Employees
     
 
     protected EntityServerTableContext<EmployeeResponse, DefaultIdType, EmployeeViewModel> Context { get; set; } = null!;
+    
+    private EntityTable<EmployeeResponse, DefaultIdType, EmployeeViewModel>? _table;
 
     private ClientPreference _preference = new();
 
@@ -84,6 +86,40 @@ public partial class Employees
     private void NavigateTo(string pageUrl, DefaultIdType employeeId)
     {
         NavigationManager.NavigateTo($"{pageUrl}?employeeId={employeeId}");
+    }
+
+    private async Task RegularizeEmployeeAsync(EmployeeResponse employee)
+    {
+        var parameters = new DialogParameters
+        {
+            { nameof(RegularizeEmployeeDialog.Employee), employee }
+        };
+
+        var dialogOptions = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+        var dialog = await DialogService.ShowAsync<RegularizeEmployeeDialog>("Regularize Employee", parameters, dialogOptions);
+        var result = await dialog.Result;
+
+        if (result is { Canceled: false })
+        {
+            await _table!.ReloadDataAsync();
+        }
+    }
+
+    private async Task TerminateEmployeeAsync(EmployeeResponse employee)
+    {
+        var parameters = new DialogParameters
+        {
+            { nameof(TerminateEmployeeDialog.Employee), employee }
+        };
+
+        var dialogOptions = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+        var dialog = await DialogService.ShowAsync<TerminateEmployeeDialog>("Terminate Employee", parameters, dialogOptions);
+        var result = await dialog.Result;
+
+        if (result is { Canceled: false })
+        {
+            await _table!.ReloadDataAsync();
+        }
     }
 }
 

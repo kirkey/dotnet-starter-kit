@@ -1,0 +1,76 @@
+<MudDialog>
+    <TitleContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Color="Color.Info" Class="mr-2" />
+            <MudText Typo="Typo.h6">Pay Components Help</MudText>
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Overview</MudText>
+        <MudText Class="mb-4">
+            Pay Components define the building blocks of employee compensation, including earnings, 
+            deductions, benefits, allowances, and bonuses used in payroll calculations.
+        </MudText>
+        
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Component Types</MudText>
+        <MudList T="string" Dense="true" Class="mb-4">
+            <MudListItem Icon="@Icons.Material.Filled.TrendingUp">
+                <strong>Earnings</strong> - Base salary and wages
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.TrendingDown">
+                <strong>Deduction</strong> - Amounts subtracted from pay
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.HealthAndSafety">
+                <strong>Benefit</strong> - Non-cash compensation
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.AddCircle">
+                <strong>Allowance</strong> - Additional pay for specific purposes
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Star">
+                <strong>Bonus</strong> - Performance-based payments
+            </MudListItem>
+        </MudList>
+        
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Calculation Methods</MudText>
+        <MudList T="string" Dense="true" Class="mb-4">
+            <MudListItem Icon="@Icons.Material.Filled.Edit">
+                <strong>Manual</strong> - Value entered manually each period
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                <strong>Fixed</strong> - Same amount every period
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Percent">
+                <strong>Percentage</strong> - Based on another component
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Functions">
+                <strong>Formula</strong> - Custom calculation formula
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.AccessTime">
+                <strong>Hours</strong> - Based on hours worked
+            </MudListItem>
+        </MudList>
+        
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Tips</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                Use descriptive codes like BASIC_PAY, OT_PAY, SSS_CONT
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                Link to GL accounts for proper financial reporting
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                Set min/max values to validate calculated amounts
+            </MudListItem>
+        </MudList>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Got It</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private void Close() => MudDialog.Close();
+}

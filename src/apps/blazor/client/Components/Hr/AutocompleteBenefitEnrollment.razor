@@ -1,0 +1,91 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+@namespace FSH.Starter.Blazor.Client.Components.Hr
+
+<MudAutocomplete T="BenefitEnrollmentResponse"
+                 @bind-Value="Value"
+                 SearchFunc="@SearchEnrollments"
+                 ToStringFunc="@(enrollment => enrollment != null ? $"{enrollment.EmployeeName} - {enrollment.BenefitName}" : string.Empty)"
+                 Label="@Label"
+                 Required="@Required"
+                 RequiredError="@RequiredError"
+                 Variant="@Variant"
+                 AdornmentIcon="@Icons.Material.Filled.CardMembership"
+                 AdornmentColor="@AdornmentColor"
+                 HelperText="@HelperText"
+                 Disabled="@Disabled"
+                 Dense="@Dense"
+                 Clearable="@Clearable"
+                 ResetValueOnEmptyText="@ResetValueOnEmptyText" />
+
+@code {
+    [Parameter]
+    public BenefitEnrollmentResponse? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<BenefitEnrollmentResponse?> ValueChanged { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Benefit Enrollment";
+
+    [Parameter]
+    public bool Required { get; set; } = true;
+
+    [Parameter]
+    public string RequiredError { get; set; } = "Benefit enrollment is required";
+
+    [Parameter]
+    public string HelperText { get; set; } = "Search by employee name or benefit";
+
+    [Parameter]
+    public Variant Variant { get; set; } = Variant.Filled;
+
+    [Parameter]
+    public Color AdornmentColor { get; set; } = Color.Primary;
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool Dense { get; set; }
+
+    [Parameter]
+    public bool Clearable { get; set; }
+
+    [Parameter]
+    public bool ResetValueOnEmptyText { get; set; } = true;
+
+    private async Task<IEnumerable<BenefitEnrollmentResponse>> SearchEnrollments(string searchValue, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(searchValue))
+        {
+            return new List<BenefitEnrollmentResponse>();
+        }
+
+        try
+        {
+            var request = new SearchBenefitEnrollmentsRequest
+            {
+                PageNumber = 1,
+                PageSize = 20,
+                IsActive = true
+            };
+
+            var response = await Client.SearchBenefitEnrollmentsEndpointAsync("1", request, cancellationToken);
+
+            if (response?.Items == null)
+            {
+                return new List<BenefitEnrollmentResponse>();
+            }
+
+            // Filter by search value locally (employee name or benefit name)
+            return response.Items
+                .Where(e => e.EmployeeName?.Contains(searchValue, StringComparison.OrdinalIgnoreCase) == true ||
+                           e.BenefitName?.Contains(searchValue, StringComparison.OrdinalIgnoreCase) == true)
+                .ToList();
+        }
+        catch
+        {
+            return new List<BenefitEnrollmentResponse>();
+        }
+    }
+}

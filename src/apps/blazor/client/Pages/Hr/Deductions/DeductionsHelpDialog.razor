@@ -1,0 +1,70 @@
+<MudDialog>
+    <TitleContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Color="Color.Info" Class="mr-2" />
+            <MudText Typo="Typo.h6">Deductions Help</MudText>
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Overview</MudText>
+        <MudText Class="mb-4">
+            Deductions define the types of payroll deductions that can be applied to employee salaries, 
+            including loans, taxes, insurance, and other contributions.
+        </MudText>
+        
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Deduction Types</MudText>
+        <MudList T="string" Dense="true" Class="mb-4">
+            <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                <strong>Loan</strong> - Employee loans with installment recovery
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Receipt">
+                <strong>Tax</strong> - Government tax deductions
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.HealthAndSafety">
+                <strong>Insurance</strong> - Health and life insurance premiums
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Savings">
+                <strong>Contribution</strong> - Retirement and savings contributions
+            </MudListItem>
+        </MudList>
+        
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Recovery Methods</MudText>
+        <MudList T="string" Dense="true" Class="mb-4">
+            <MudListItem Icon="@Icons.Material.Filled.Edit">
+                <strong>Manual</strong> - Amount entered manually each payroll
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                <strong>Fixed Amount</strong> - Same amount deducted each period
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Percent">
+                <strong>Percentage</strong> - Percentage of salary deducted
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.EventRepeat">
+                <strong>Installment</strong> - Fixed number of equal payments
+            </MudListItem>
+        </MudList>
+        
+        <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Tips</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                Set max recovery percentage to protect employee take-home pay
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                Link to GL account code for proper accounting treatment
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
+                Enable approval for sensitive deductions
+            </MudListItem>
+        </MudList>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Got It</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private void Close() => MudDialog.Close();
+}

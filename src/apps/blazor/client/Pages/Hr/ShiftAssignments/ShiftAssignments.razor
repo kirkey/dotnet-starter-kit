@@ -1,0 +1,81 @@
+@page "/hr/shift-assignments"
+@using FSH.Starter.Blazor.Client.Components.Hr
+
+<PageHeader Title="Shift Assignments" Header="Shift Assignments" SubHeader="Manage employee shift schedules and assignments." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="ShiftAssignmentResponse" TId="DefaultIdType" TRequest="ShiftAssignmentViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Assignment Details</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <AutocompleteEmployee @bind-Value="context.SelectedEmployee" 
+                                   Label="Employee" 
+                                   Required="true"
+                                   Disabled="@(context.Id != DefaultIdType.Empty)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <AutocompleteShift @bind-Value="context.SelectedShift" 
+                               Label="Shift" 
+                               Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.StartDate" 
+                           Label="Start Date" 
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.EndDate" 
+                           Label="End Date" 
+                           Variant="Variant.Filled"
+                           Clearable="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox @bind-Value="context.IsRecurring" 
+                         Label="Recurring Assignment" 
+                         Color="Color.Primary" />
+        </MudItem>
+
+        @if (context.IsRecurring)
+        {
+            <MudItem xs="12">
+                <MudTextField @bind-Value="context.RecurrencePattern" 
+                              Label="Recurrence Pattern" 
+                              Variant="Variant.Filled"
+                              HelperText="e.g., Weekly on Mon,Tue,Wed,Thu,Fri" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes" 
+                          Label="Notes" 
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

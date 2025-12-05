@@ -1,0 +1,97 @@
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            Performance reviews help evaluate employee performance, identify strengths and areas for improvement,
+            and set goals for professional development.
+        </MudText>
+
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Review Workflow</MudText>
+        <MudTimeline TimelinePosition="TimelinePosition.Start">
+            <MudTimelineItem Color="Color.Default" Size="Size.Small">
+                <ItemContent>
+                    <MudText Typo="Typo.subtitle2">Draft</MudText>
+                    <MudText Typo="Typo.body2">Create and edit the performance review. The review can be saved and modified.</MudText>
+                </ItemContent>
+            </MudTimelineItem>
+            <MudTimelineItem Color="Color.Info" Size="Size.Small">
+                <ItemContent>
+                    <MudText Typo="Typo.subtitle2">Submitted</MudText>
+                    <MudText Typo="Typo.body2">Review is submitted for completion. The reviewer finalizes the evaluation.</MudText>
+                </ItemContent>
+            </MudTimelineItem>
+            <MudTimelineItem Color="Color.Success" Size="Size.Small">
+                <ItemContent>
+                    <MudText Typo="Typo.subtitle2">Completed</MudText>
+                    <MudText Typo="Typo.body2">Review is completed by the reviewer. Waiting for employee acknowledgment.</MudText>
+                </ItemContent>
+            </MudTimelineItem>
+            <MudTimelineItem Color="Color.Primary" Size="Size.Small">
+                <ItemContent>
+                    <MudText Typo="Typo.subtitle2">Acknowledged</MudText>
+                    <MudText Typo="Typo.body2">Employee has acknowledged reading and understanding the review.</MudText>
+                </ItemContent>
+            </MudTimelineItem>
+        </MudTimeline>
+
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Rating Scale</MudText>
+        <MudSimpleTable Dense="true">
+            <thead>
+                <tr>
+                    <th>Rating</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><MudRating ReadOnly="true" SelectedValue="5" MaxValue="5" Size="Size.Small" /></td>
+                    <td>Exceptional - Consistently exceeds expectations</td>
+                </tr>
+                <tr>
+                    <td><MudRating ReadOnly="true" SelectedValue="4" MaxValue="5" Size="Size.Small" /></td>
+                    <td>Exceeds Expectations - Often exceeds job requirements</td>
+                </tr>
+                <tr>
+                    <td><MudRating ReadOnly="true" SelectedValue="3" MaxValue="5" Size="Size.Small" /></td>
+                    <td>Meets Expectations - Fully meets job requirements</td>
+                </tr>
+                <tr>
+                    <td><MudRating ReadOnly="true" SelectedValue="2" MaxValue="5" Size="Size.Small" /></td>
+                    <td>Needs Improvement - Sometimes meets requirements</td>
+                </tr>
+                <tr>
+                    <td><MudRating ReadOnly="true" SelectedValue="1" MaxValue="5" Size="Size.Small" /></td>
+                    <td>Unsatisfactory - Rarely meets requirements</td>
+                </tr>
+            </tbody>
+        </MudSimpleTable>
+
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Review Types</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.CalendarMonth">
+                <MudText Typo="Typo.body2"><strong>Annual</strong> - Yearly comprehensive performance review</MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.DateRange">
+                <MudText Typo="Typo.body2"><strong>Quarterly</strong> - Quarterly check-in review</MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Timer">
+                <MudText Typo="Typo.body2"><strong>Probation</strong> - Review during probationary period</MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Event">
+                <MudText Typo="Typo.body2"><strong>Mid-Year</strong> - Mid-year performance check</MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Work">
+                <MudText Typo="Typo.body2"><strong>Project</strong> - Project-based performance review</MudText>
+            </MudListItem>
+        </MudList>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

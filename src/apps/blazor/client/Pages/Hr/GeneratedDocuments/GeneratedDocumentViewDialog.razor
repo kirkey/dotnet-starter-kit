@@ -1,0 +1,91 @@
+@using MudBlazor
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <DialogContent>
+        @if (Document != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.h6">Document Details</MudText>
+                        <MudChip T="string" Color="@GetStatusColor(Document.Status)" Size="Size.Small">
+                            @Document.Status
+                        </MudChip>
+                    </MudStack>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider Class="my-2" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2">Entity Type</MudText>
+                    <MudText>@Document.EntityType</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2">Generated Date</MudText>
+                    <MudText>@Document.GeneratedDate.ToString("g")</MudText>
+                </MudItem>
+
+                @if (Document.FinalizedDate.HasValue)
+                {
+                    <MudItem xs="12" md="6">
+                        <MudText Typo="Typo.subtitle2">Finalized Date</MudText>
+                        <MudText>@Document.FinalizedDate.Value.ToString("g")</MudText>
+                    </MudItem>
+                }
+
+                @if (Document.SignedDate.HasValue)
+                {
+                    <MudItem xs="12" md="6">
+                        <MudText Typo="Typo.subtitle2">Signed Date</MudText>
+                        <MudText>@Document.SignedDate.Value.ToString("g")</MudText>
+                    </MudItem>
+                }
+
+                @if (!string.IsNullOrEmpty(Document.SignedBy))
+                {
+                    <MudItem xs="12" md="6">
+                        <MudText Typo="Typo.subtitle2">Signed By</MudText>
+                        <MudText>@Document.SignedBy</MudText>
+                    </MudItem>
+                }
+
+                @if (!string.IsNullOrEmpty(Document.GeneratedContent))
+                {
+                    <MudItem xs="12">
+                        <MudDivider Class="my-3" />
+                        <MudText Typo="Typo.subtitle2">Content Preview</MudText>
+                        <MudPaper Elevation="0" Class="pa-3 mt-2" Style="background-color: var(--mud-palette-background-gray); max-height: 300px; overflow-y: auto;">
+                            @((MarkupString)Document.GeneratedContent)
+                        </MudPaper>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public GeneratedDocumentResponse? Document { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private Color GetStatusColor(string? status) => status switch
+    {
+        "Draft" => Color.Warning,
+        "Finalized" => Color.Info,
+        "Signed" => Color.Success,
+        "Archived" => Color.Default,
+        _ => Color.Default
+    };
+}

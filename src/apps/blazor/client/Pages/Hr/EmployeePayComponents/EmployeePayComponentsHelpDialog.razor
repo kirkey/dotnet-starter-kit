@@ -1,0 +1,77 @@
+@using MudBlazor
+
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            Employee Pay Components assign specific pay components to individual employees with custom rates and amounts.
+        </MudText>
+
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Assignment Types" Icon="@Icons.Material.Filled.Category">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Add">
+                        <b>Addition</b> - Add to base pay
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Remove">
+                        <b>Deduction</b> - Subtract from pay
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.SwapHoriz">
+                        <b>Override</b> - Replace default calculation
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Amount Options" Icon="@Icons.Material.Filled.AttachMoney">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Money">
+                        <b>Fixed Amount</b> - Specific dollar value
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Percent">
+                        <b>Custom Rate</b> - Percentage-based rate
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Functions">
+                        <b>Custom Formula</b> - Calculated value (e.g., BasicPay * 0.10)
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Frequency" Icon="@Icons.Material.Filled.Schedule">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Repeat">
+                        <b>Recurring</b> - Applied every pay period
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.LooksOne">
+                        <b>One-Time</b> - Single payment on specific date
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Common Uses" Icon="@Icons.Material.Filled.Lightbulb">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.MonetizationOn">
+                        Special allowances for specific employees
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Stars">
+                        Performance bonuses
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.LocationOn">
+                        Location-based adjustments
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.School">
+                        Education/training reimbursements
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

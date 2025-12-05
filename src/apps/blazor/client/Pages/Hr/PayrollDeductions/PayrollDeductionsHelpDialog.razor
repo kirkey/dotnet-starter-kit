@@ -1,0 +1,69 @@
+@using MudBlazor
+
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            Payroll Deductions manages automatic deductions from employee pay, including taxes, benefits, and other withholdings.
+        </MudText>
+
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Deduction Types" Icon="@Icons.Material.Filled.Category">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                        <b>Fixed Amount</b> - Specific dollar amount each period
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Percent">
+                        <b>Percentage</b> - Percent of gross pay
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Repeat">
+                        <b>Recurring</b> - Ongoing deductions
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.LooksOne">
+                        <b>One Time</b> - Single deduction
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Common Deductions" Icon="@Icons.Material.Filled.List">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                        <b>Taxes</b> - Federal, state, local taxes
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.HealthAndSafety">
+                        <b>Health Insurance</b> - Medical/dental/vision
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Savings">
+                        <b>Retirement</b> - 401(k), pension contributions
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Gavel">
+                        <b>Garnishments</b> - Court-ordered deductions
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Settings" Icon="@Icons.Material.Filled.Settings">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <b>Authorized</b> - Employee-approved deduction
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Restore">
+                        <b>Recoverable</b> - Can be recovered if needed
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Block">
+                        <b>Max Limit</b> - Maximum deduction cap
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

@@ -1,0 +1,73 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.BenefitEnrollments
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="4">
+            <MudText Typo="Typo.h6">What are Benefit Enrollments?</MudText>
+            <MudText>
+                Benefit Enrollments track employee participation in company-offered benefit programs such as 
+                health insurance, life insurance, retirement plans, and other employee benefits.
+            </MudText>
+
+            <MudDivider />
+
+            <MudText Typo="Typo.h6">Coverage Levels</MudText>
+            <MudList T="string" Dense="true">
+                <MudListItem Icon="@Icons.Material.Filled.Person">
+                    <strong>Individual:</strong> Covers only the employee
+                </MudListItem>
+                <MudListItem Icon="@Icons.Material.Filled.People">
+                    <strong>Individual + Spouse:</strong> Covers employee and spouse
+                </MudListItem>
+                <MudListItem Icon="@Icons.Material.Filled.ChildCare">
+                    <strong>Individual + Children:</strong> Covers employee and dependent children
+                </MudListItem>
+                <MudListItem Icon="@Icons.Material.Filled.FamilyRestroom">
+                    <strong>Family:</strong> Full family coverage including spouse and children
+                </MudListItem>
+            </MudList>
+
+            <MudDivider />
+
+            <MudText Typo="Typo.h6">Key Dates</MudText>
+            <MudList T="string" Dense="true">
+                <MudListItem Icon="@Icons.Material.Filled.Event">
+                    <strong>Enrollment Date:</strong> When the employee signed up for the benefit
+                </MudListItem>
+                <MudListItem Icon="@Icons.Material.Filled.PlayArrow">
+                    <strong>Effective Date:</strong> When the coverage actually begins
+                </MudListItem>
+                <MudListItem Icon="@Icons.Material.Filled.Stop">
+                    <strong>End Date:</strong> When the coverage terminates (if applicable)
+                </MudListItem>
+            </MudList>
+
+            <MudDivider />
+
+            <MudText Typo="Typo.h6">Contributions</MudText>
+            <MudText>
+                Most benefits involve shared costs between the employee and employer. 
+                The contribution amounts shown are typically per pay period (bi-weekly or monthly).
+            </MudText>
+
+            <MudDivider />
+
+            <MudText Typo="Typo.h6">Terminating Enrollments</MudText>
+            <MudText>
+                Use the "Terminate Enrollment" action to end an employee's participation in a benefit plan. 
+                This is typically done when an employee leaves the company, loses eligibility, 
+                or voluntarily opts out during an open enrollment period.
+            </MudText>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => MudDialog.Close())" Variant="Variant.Filled" Color="Color.Primary">
+            Close
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+}

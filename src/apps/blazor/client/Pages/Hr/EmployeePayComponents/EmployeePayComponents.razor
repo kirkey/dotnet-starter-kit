@@ -1,0 +1,74 @@
+@page "/hr/employee-pay-components"
+@using FSH.Starter.Blazor.Client.Pages.Hr.EmployeePayComponents
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+
+<FshPage Title="Employee Pay Components"
+         Description="Assign pay components to individual employees">
+    <ExtraActions>
+        <MudTooltip Text="Help">
+            <MudIconButton Icon="@Icons.Material.Filled.Help"
+                           Color="Color.Default"
+                           OnClick="ShowHelp" />
+        </MudTooltip>
+    </ExtraActions>
+    <ChildContent>
+        <EntityTable @ref="_table" TEntity="EmployeePayComponentResponse" TId="DefaultIdType" TRequest="EmployeePayComponentViewModel" Context="Context">
+            <EditFormContent>
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudSelect @bind-Value="context.AssignmentType"
+                                   Label="Assignment Type"
+                                   Required="true">
+                            <MudSelectItem Value="@("Addition")">Addition</MudSelectItem>
+                            <MudSelectItem Value="@("Deduction")">Deduction</MudSelectItem>
+                            <MudSelectItem Value="@("Override")">Override</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.CustomRate"
+                                         Label="Custom Rate"
+                                         Format="F2"
+                                         Adornment="Adornment.Start"
+                                         AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.FixedAmount"
+                                         Label="Fixed Amount"
+                                         Format="F2"
+                                         Adornment="Adornment.Start"
+                                         AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTextField @bind-Value="context.CustomFormula"
+                                      Label="Custom Formula"
+                                      HelperText="e.g., BasicPay * 0.10" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudDatePicker @bind-Date="context.EffectiveStartDate"
+                                       Label="Effective Start Date" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudDatePicker @bind-Date="context.EffectiveEndDate"
+                                       Label="Effective End Date" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudCheckBox @bind-Value="context.IsOneTime"
+                                     Label="One-Time Payment" />
+                    </MudItem>
+                    @if (context.IsOneTime)
+                    {
+                        <MudItem xs="12" md="6">
+                            <MudDatePicker @bind-Date="context.OneTimeDate"
+                                           Label="One-Time Date" />
+                        </MudItem>
+                    }
+                    <MudItem xs="12">
+                        <MudTextField @bind-Value="context.Remarks"
+                                      Label="Remarks"
+                                      Lines="2" />
+                    </MudItem>
+                </MudGrid>
+            </EditFormContent>
+        </EntityTable>
+    </ChildContent>
+</FshPage>

@@ -1,0 +1,71 @@
+@page "/hr/generated-documents"
+@using FSH.Starter.Blazor.Client.Pages.Hr.GeneratedDocuments
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+
+<FshPage Title="Generated Documents"
+         Description="Manage employee documents generated from templates">
+    <ExtraActions>
+        <MudTooltip Text="Help">
+            <MudIconButton Icon="@Icons.Material.Filled.Help"
+                           Color="Color.Default"
+                           OnClick="ShowHelp" />
+        </MudTooltip>
+    </ExtraActions>
+    <ChildContent>
+        <EntityTable @ref="_table" TEntity="GeneratedDocumentResponse" TId="DefaultIdType" TRequest="GeneratedDocumentViewModel" Context="Context">
+            <ExtraActions>
+                <MudMenuItem OnClick="@(() => ViewDocumentAsync(context))"
+                             Icon="@Icons.Material.Filled.Visibility">
+                    View Document
+                </MudMenuItem>
+                @if (context.Status == "Draft")
+                {
+                    <MudMenuItem OnClick="@(() => FinalizeDocumentAsync(context))"
+                                 Icon="@Icons.Material.Filled.CheckCircle">
+                        Finalize
+                    </MudMenuItem>
+                }
+                @if (context.Status == "Finalized" && string.IsNullOrEmpty(context.SignedBy))
+                {
+                    <MudMenuItem OnClick="@(() => SignDocumentAsync(context))"
+                                 Icon="@Icons.Material.Filled.Draw">
+                        Sign
+                    </MudMenuItem>
+                }
+                @if (!string.IsNullOrEmpty(context.FilePath))
+                {
+                    <MudMenuItem OnClick="@(() => DownloadDocumentAsync(context))"
+                                 Icon="@Icons.Material.Filled.Download">
+                        Download
+                    </MudMenuItem>
+                }
+            </ExtraActions>
+            <EditFormContent>
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudSelect @bind-Value="context.Status"
+                                   Label="Status">
+                            <MudSelectItem Value="@("Draft")">Draft</MudSelectItem>
+                            <MudSelectItem Value="@("Finalized")">Finalized</MudSelectItem>
+                            <MudSelectItem Value="@("Signed")">Signed</MudSelectItem>
+                            <MudSelectItem Value="@("Archived")">Archived</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTextField @bind-Value="context.SignedBy"
+                                      Label="Signed By" />
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudTextField @bind-Value="context.FilePath"
+                                      Label="File Path" />
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudTextField @bind-Value="context.Notes"
+                                      Label="Notes"
+                                      Lines="2" />
+                    </MudItem>
+                </MudGrid>
+            </EditFormContent>
+        </EntityTable>
+    </ChildContent>
+</FshPage>

@@ -1,0 +1,141 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+@using Microsoft.AspNetCore.Components.Forms
+
+<MudDialog>
+    <TitleContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center">
+            <MudIcon Icon="@Icons.Material.Filled.FileUpload" Color="Color.Primary" Class="mr-2" />
+            <MudText Typo="Typo.h6">Import Chart of Accounts</MudText>
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        <MudText Class="mb-4">
+            Upload a CSV or Excel file containing chart of accounts data. The file should include columns 
+            for Account Code, Name, Account Type, USOA Category, and optionally Parent Code.
+        </MudText>
+        
+        <MudFileUpload T="IBrowserFile" 
+                       FilesChanged="OnFileChanged"
+                       Accept=".csv,.xlsx,.xls">
+            <ActivatorContent>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.CloudUpload">
+                    @(_fileName ?? "Select File")
+                </MudButton>
+            </ActivatorContent>
+        </MudFileUpload>
+        
+        @if (!string.IsNullOrEmpty(_fileName))
+        {
+            <MudText Class="mt-2" Typo="Typo.caption">
+                Selected file: @_fileName (@_fileSize)
+            </MudText>
+        }
+        
+        @if (_isUploading)
+        {
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="mt-4" />
+        }
+        
+        @if (!string.IsNullOrEmpty(_errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Class="mt-4">@_errorMessage</MudAlert>
+        }
+        
+        @if (!string.IsNullOrEmpty(_successMessage))
+        {
+            <MudAlert Severity="Severity.Success" Class="mt-4">@_successMessage</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Disabled="@_isUploading">Cancel</MudButton>
+        <MudButton Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   OnClick="ImportAsync"
+                   Disabled="@(_file == null || _isUploading)">
+            Import
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private IBrowserFile? _file;
+    private string? _fileName;
+    private string? _fileSize;
+    private bool _isUploading;
+    private string? _errorMessage;
+    private string? _successMessage;
+
+    private void OnFileChanged(IBrowserFile file)
+    {
+        _file = file;
+        _fileName = file.Name;
+        _fileSize = FormatFileSize(file.Size);
+        _errorMessage = null;
+        _successMessage = null;
+    }
+
+    private string FormatFileSize(long bytes)
+    {
+        if (bytes < 1024)
+            return $"{bytes} bytes";
+        if (bytes < 1024 * 1024)
+            return $"{bytes / 1024.0:F1} KB";
+        return $"{bytes / (1024.0 * 1024):F1} MB";
+    }
+
+    private async Task ImportAsync()
+    {
+        if (_file == null) return;
+
+        _isUploading = true;
+        _errorMessage = null;
+        _successMessage = null;
+
+        try
+        {
+            // Read file content
+            using var stream = _file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024); // 10MB max
+            using var ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+            var fileBytes = ms.ToArray();
+            var base64Data = Convert.ToBase64String(fileBytes);
+
+            var command = new ImportChartOfAccountsCommand
+            {
+                File = new FileUploadCommand
+                {
+                    Name = _file.Name,
+                    Data = base64Data,
+                    Extension = Path.GetExtension(_file.Name),
+                    Size = _file.Size,
+                    ContentType = _file.ContentType
+                }
+            };
+
+            await Client.ChartOfAccountImportEndpointAsync("1", command).ConfigureAwait(false);
+            
+            _successMessage = "Chart of accounts imported successfully!";
+            Snackbar.Add("Import completed successfully", Severity.Success);
+            
+            // Close dialog after short delay
+            await Task.Delay(1500);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"Import failed: {ex.Message}";
+            Snackbar.Add($"Import failed: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _isUploading = false;
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

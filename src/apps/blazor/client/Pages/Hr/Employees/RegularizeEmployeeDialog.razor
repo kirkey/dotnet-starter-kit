@@ -1,0 +1,83 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="4">
+            <MudAlert Severity="Severity.Info" Dense="true">
+                This action will change the employee's status from <strong>@Employee.EmploymentClassification</strong> to <strong>Regular</strong>.
+            </MudAlert>
+            
+            <MudTextField Value="@($"{Employee.FirstName} {Employee.LastName}")"
+                          Label="Employee"
+                          ReadOnly="true"
+                          Variant="Variant.Outlined" />
+            
+            <MudTextField Value="@Employee.EmploymentClassification"
+                          Label="Current Status"
+                          ReadOnly="true"
+                          Variant="Variant.Outlined" />
+
+            <MudDatePicker @bind-Date="_regularizationDate"
+                           Label="Regularization Date"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Filled"
+                           Required="true"
+                           RequiredError="Regularization date is required"
+                           HelperText="The date the employee becomes a regular employee" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="Submit"
+                   Color="Color.Success"
+                   Variant="Variant.Filled"
+                   Disabled="@(_regularizationDate == null || _isProcessing)">
+            @if (_isProcessing)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2" />
+            }
+            Regularize
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public EmployeeResponse Employee { get; set; } = default!;
+
+    private DateTime? _regularizationDate = DateTime.Today;
+    private bool _isProcessing;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        if (_regularizationDate == null) return;
+
+        _isProcessing = true;
+        try
+        {
+            var command = new RegularizeEmployeeCommand
+            {
+                Id = Employee.Id,
+                RegularizationDate = _regularizationDate.Value
+            };
+
+            await Client.RegularizeEmployeeEndpointAsync("1", Employee.Id, command);
+            
+            Snackbar.Add($"Employee {Employee.FirstName} {Employee.LastName} has been regularized.", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error regularizing employee: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _isProcessing = false;
+        }
+    }
+}

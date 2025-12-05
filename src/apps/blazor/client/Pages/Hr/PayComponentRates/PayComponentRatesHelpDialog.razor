@@ -1,0 +1,71 @@
+@using MudBlazor
+
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            Pay Component Rates defines contribution rates and amounts for pay components like taxes and benefits.
+        </MudText>
+
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Rate Brackets" Icon="@Icons.Material.Filled.Layers">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.ArrowDownward">
+                        <b>Min Amount</b> - Lower bracket threshold
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.ArrowUpward">
+                        <b>Max Amount</b> - Upper bracket threshold
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Contribution Rates" Icon="@Icons.Material.Filled.Percent">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Person">
+                        <b>Employee Rate</b> - Employee contribution percentage
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Business">
+                        <b>Employer Rate</b> - Employer contribution percentage
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AddBusiness">
+                        <b>Additional Employer Rate</b> - Extra employer contribution
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Fixed Amounts" Icon="@Icons.Material.Filled.AttachMoney">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.PersonOutline">
+                        <b>Employee Amount</b> - Fixed employee contribution
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.BusinessCenter">
+                        <b>Employer Amount</b> - Fixed employer contribution
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Common Uses" Icon="@Icons.Material.Filled.Lightbulb">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                        Social Security/Medicare tax brackets
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.HealthAndSafety">
+                        Health insurance contribution tiers
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Savings">
+                        Retirement plan matching rates
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

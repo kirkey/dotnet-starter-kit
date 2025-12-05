@@ -1,0 +1,108 @@
+@page "/hr/benefit-allocations"
+@using FSH.Starter.Blazor.Client.Components.Hr
+
+<PageHeader Title="Benefit Allocations" Header="Benefit Allocations" SubHeader="Manage and track benefit allocation records for employees." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="BenefitAllocationResponse" TId="DefaultIdType" TRequest="BenefitAllocationViewModel" Context="@Context">
+    <ExtraActions Context="allocation">
+        <MudMenu Label="Actions" Variant="Variant.Filled"
+                 EndIcon="@Icons.Material.Filled.KeyboardArrowDown" IconColor="Color.Secondary" TransformOrigin="Origin.TopCenter">
+            <MudMenuItem Icon="@Icons.Material.Filled.Visibility"
+                         OnClick="@(() => ViewDetailsAsync(allocation))">
+                View Details
+            </MudMenuItem>
+            <MudDivider />
+            @if (allocation.Status == "Pending")
+            {
+                <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle"
+                             OnClick="@(() => ApproveAllocationAsync(allocation))">
+                    Approve
+                </MudMenuItem>
+                <MudMenuItem Icon="@Icons.Material.Filled.Cancel"
+                             OnClick="@(() => RejectAllocationAsync(allocation))">
+                    Reject
+                </MudMenuItem>
+            }
+        </MudMenu>
+    </ExtraActions>
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Allocation Details</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteBenefitEnrollment @bind-Value="context.SelectedEnrollment" 
+                                           Label="Benefit Enrollment" 
+                                           Required="true"
+                                           Disabled="@(context.Id != DefaultIdType.Empty)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.AllocationDate" 
+                           Label="Allocation Date" 
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.AllocatedAmount" 
+                             Label="Allocated Amount" 
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Min="0"
+                             Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string" 
+                       @bind-Value="context.AllocationType" 
+                       Label="Allocation Type" 
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Usage")">Usage</MudSelectItem>
+                <MudSelectItem Value="@("Premium")">Premium</MudSelectItem>
+                <MudSelectItem Value="@("Claim")">Claim</MudSelectItem>
+                <MudSelectItem Value="@("Adjustment")">Adjustment</MudSelectItem>
+                <MudSelectItem Value="@("Refund")">Refund</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.ReferenceNumber" 
+                          Label="Reference Number" 
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Additional Information</MudText>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Remarks" 
+                          Label="Remarks" 
+                          Variant="Variant.Filled"
+                          Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

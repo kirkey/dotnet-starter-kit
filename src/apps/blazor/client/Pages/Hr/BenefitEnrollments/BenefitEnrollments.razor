@@ -1,0 +1,121 @@
+@page "/hr/benefit-enrollments"
+@using FSH.Starter.Blazor.Client.Components.Hr
+
+<PageHeader Title="Benefit Enrollments" Header="Benefit Enrollments" SubHeader="Manage employee benefit plan enrollments and coverage." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="BenefitEnrollmentResponse" TId="DefaultIdType" TRequest="BenefitEnrollmentViewModel" Context="@Context">
+    <ExtraActions Context="enrollment">
+        <MudMenu Label="Actions" Variant="Variant.Filled"
+                 EndIcon="@Icons.Material.Filled.KeyboardArrowDown" IconColor="Color.Secondary" TransformOrigin="Origin.TopCenter">
+            <MudMenuItem Icon="@Icons.Material.Filled.Visibility"
+                         OnClick="@(() => ViewDetailsAsync(enrollment))">
+                View Details
+            </MudMenuItem>
+            <MudDivider />
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel"
+                         OnClick="@(() => TerminateEnrollmentAsync(enrollment))"
+                         Disabled="@(!enrollment.IsActive)">
+                Terminate Enrollment
+            </MudMenuItem>
+        </MudMenu>
+    </ExtraActions>
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Enrollment Details</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteEmployee @bind-Value="context.SelectedEmployee" 
+                                   Label="Employee" 
+                                   Required="true"
+                                   Disabled="@(context.Id != DefaultIdType.Empty)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteBenefit @bind-Value="context.SelectedBenefit" 
+                                  Label="Benefit Plan" 
+                                  Required="true"
+                                  Disabled="@(context.Id != DefaultIdType.Empty)" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string" 
+                       @bind-Value="context.CoverageLevel" 
+                       Label="Coverage Level" 
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Individual")">Individual</MudSelectItem>
+                <MudSelectItem Value="@("Individual+Spouse")">Individual + Spouse</MudSelectItem>
+                <MudSelectItem Value="@("Individual+Children")">Individual + Children</MudSelectItem>
+                <MudSelectItem Value="@("Family")">Family</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Dates</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.EnrollmentDate" 
+                           Label="Enrollment Date"
+                           Required="true"
+                           Variant="Variant.Filled"
+                           HelperText="Date the enrollment was submitted" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.EffectiveDate" 
+                           Label="Effective Date"
+                           Required="true"
+                           Variant="Variant.Filled"
+                           HelperText="Date coverage becomes active" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Contributions</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal"
+                             @bind-Value="context.EmployeeContributionAmount"
+                             Label="Employee Contribution"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Adornment="Adornment.Start"
+                             AdornmentText="₱"
+                             HelperText="Per pay period" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal"
+                             @bind-Value="context.EmployerContributionAmount"
+                             Label="Employer Contribution"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Adornment="Adornment.Start"
+                             AdornmentText="₱"
+                             HelperText="Per pay period" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

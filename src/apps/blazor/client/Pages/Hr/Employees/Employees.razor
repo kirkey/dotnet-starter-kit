@@ -21,7 +21,7 @@
     </MudStack>
 </MudPaper>
 
-<EntityTable TEntity="EmployeeResponse" TId="DefaultIdType" TRequest="EmployeeViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="EmployeeResponse" TId="DefaultIdType" TRequest="EmployeeViewModel" Context="@Context">
     <ExtraActions Context="employee">
         <MudMenu Label="Actions" Variant="Variant.Filled"
                  EndIcon="@Icons.Material.Filled.KeyboardArrowDown" IconColor="Color.Secondary" TransformOrigin="Origin.TopCenter">
@@ -50,6 +50,17 @@
             <MudMenuItem Icon="@Icons.Material.Filled.Fingerprint"
                          OnClick="@(() => NavigateTo("/hr/attendance", employee.Id))">
                 View Attendance
+            </MudMenuItem>
+            <MudDivider />
+            <MudMenuItem Icon="@Icons.Material.Filled.Verified"
+                         OnClick="@(() => RegularizeEmployeeAsync(employee))"
+                         Disabled="@(employee.EmploymentClassification == "Regular")">
+                Regularize
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.ExitToApp"
+                         OnClick="@(() => TerminateEmployeeAsync(employee))"
+                         Disabled="@(employee.TerminationDate != null)">
+                Terminate
             </MudMenuItem>
         </MudMenu>
     </ExtraActions>

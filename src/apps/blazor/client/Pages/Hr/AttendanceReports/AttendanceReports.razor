@@ -1,0 +1,61 @@
+@page "/hr/attendance-reports"
+@using FSH.Starter.Blazor.Client.Pages.Hr.AttendanceReports
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+
+<FshPage Title="Attendance Reports"
+         Description="View and analyze attendance statistics and trends">
+    <ExtraActions>
+        <MudTooltip Text="Help">
+            <MudIconButton Icon="@Icons.Material.Filled.Help"
+                           Color="Color.Default"
+                           OnClick="ShowHelp" />
+        </MudTooltip>
+    </ExtraActions>
+    <ChildContent>
+        <EntityTable @ref="_table" TEntity="AttendanceReportDto" TId="DefaultIdType" TRequest="AttendanceReportViewModel" Context="Context">
+            <ExtraActions>
+                <MudMenuItem OnClick="@(() => ViewReportDetailsAsync(context))"
+                             Icon="@Icons.Material.Filled.Visibility">
+                    View Details
+                </MudMenuItem>
+                @if (!string.IsNullOrEmpty(context.ExportPath))
+                {
+                    <MudMenuItem OnClick="@(() => DownloadReportAsync(context))"
+                                 Icon="@Icons.Material.Filled.Download">
+                        Download
+                    </MudMenuItem>
+                }
+            </ExtraActions>
+            <EditFormContent>
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudTextField @bind-Value="context.Title"
+                                      Label="Report Title"
+                                      Required="true" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudSelect @bind-Value="context.ReportType"
+                                   Label="Report Type"
+                                   Required="true">
+                            <MudSelectItem Value="@("Daily")">Daily</MudSelectItem>
+                            <MudSelectItem Value="@("Weekly")">Weekly</MudSelectItem>
+                            <MudSelectItem Value="@("Monthly")">Monthly</MudSelectItem>
+                            <MudSelectItem Value="@("Quarterly")">Quarterly</MudSelectItem>
+                            <MudSelectItem Value="@("Yearly")">Yearly</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudDatePicker @bind-Date="context.FromDate"
+                                       Label="From Date"
+                                       Required="true" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudDatePicker @bind-Date="context.ToDate"
+                                       Label="To Date"
+                                       Required="true" />
+                    </MudItem>
+                </MudGrid>
+            </EditFormContent>
+        </EntityTable>
+    </ChildContent>
+</FshPage>

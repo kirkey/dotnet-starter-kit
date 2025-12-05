@@ -1,0 +1,72 @@
+@page "/hr/payroll-deductions"
+@using FSH.Starter.Blazor.Client.Pages.Hr.PayrollDeductions
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+
+<FshPage Title="Payroll Deductions"
+         Description="Manage employee payroll deductions">
+    <ExtraActions>
+        <MudTooltip Text="Help">
+            <MudIconButton Icon="@Icons.Material.Filled.Help"
+                           Color="Color.Default"
+                           OnClick="ShowHelp" />
+        </MudTooltip>
+    </ExtraActions>
+    <ChildContent>
+        <EntityTable @ref="_table" TEntity="PayrollDeductionResponse" TId="DefaultIdType" TRequest="PayrollDeductionViewModel" Context="Context">
+            <EditFormContent>
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudSelect @bind-Value="context.DeductionType"
+                                   Label="Deduction Type"
+                                   Required="true">
+                            <MudSelectItem Value="@("FixedAmount")">Fixed Amount</MudSelectItem>
+                            <MudSelectItem Value="@("Percentage")">Percentage</MudSelectItem>
+                            <MudSelectItem Value="@("Recurring")">Recurring</MudSelectItem>
+                            <MudSelectItem Value="@("OneTime")">One Time</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.DeductionAmount"
+                                         Label="Deduction Amount"
+                                         Format="F2"
+                                         Adornment="Adornment.Start"
+                                         AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.DeductionPercentage"
+                                         Label="Deduction Percentage"
+                                         Format="F2"
+                                         Min="0"
+                                         Max="100"
+                                         Adornment="Adornment.End"
+                                         AdornmentText="%" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.MaxDeductionLimit"
+                                         Label="Max Deduction Limit"
+                                         Format="F2"
+                                         Adornment="Adornment.Start"
+                                         AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudDatePicker @bind-Date="context.EndDate"
+                                       Label="End Date" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudStack Row="true" Spacing="3">
+                            <MudCheckBox @bind-Value="context.IsAuthorized"
+                                         Label="Authorized" />
+                            <MudCheckBox @bind-Value="context.IsRecoverable"
+                                         Label="Recoverable" />
+                        </MudStack>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudTextField @bind-Value="context.Remarks"
+                                      Label="Remarks"
+                                      Lines="2" />
+                    </MudItem>
+                </MudGrid>
+            </EditFormContent>
+        </EntityTable>
+    </ChildContent>
+</FshPage>

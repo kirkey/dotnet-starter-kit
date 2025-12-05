@@ -1,0 +1,153 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+@using Microsoft.JSInterop
+
+<MudDialog>
+    <TitleContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center">
+            <MudIcon Icon="@Icons.Material.Filled.FileDownload" Color="Color.Primary" Class="mr-2" />
+            <MudText Typo="Typo.h6">Export Chart of Accounts</MudText>
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        <MudText Class="mb-4">
+            Configure export options to download chart of accounts data.
+        </MudText>
+        
+        <MudGrid>
+            <MudItem xs="12" sm="6">
+                <MudSelect T="string" 
+                           @bind-Value="_accountType" 
+                           Label="Account Type" 
+                           Variant="Variant.Filled"
+                           Clearable="true">
+                    <MudSelectItem Value="@("DEBIT")">Debit</MudSelectItem>
+                    <MudSelectItem Value="@("CREDIT")">Credit</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            
+            <MudItem xs="12" sm="6">
+                <MudTextField @bind-Value="_usoaCategory" 
+                              Label="USOA Category" 
+                              Variant="Variant.Filled"
+                              Placeholder="Filter by category..." />
+            </MudItem>
+            
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_searchTerm" 
+                              Label="Search Term" 
+                              Variant="Variant.Filled"
+                              Placeholder="Search accounts..." />
+            </MudItem>
+            
+            <MudItem xs="12" sm="6">
+                <MudCheckBox @bind-Value="_includeInactive" 
+                             Label="Include Inactive Accounts" 
+                             Color="Color.Primary" />
+            </MudItem>
+            
+            <MudItem xs="12" sm="6">
+                <MudCheckBox @bind-Value="_onlyControlAccounts" 
+                             Label="Control Accounts Only" 
+                             Color="Color.Primary" />
+            </MudItem>
+            
+            <MudItem xs="12" sm="6">
+                <MudCheckBox @bind-Value="_onlyDetailAccounts" 
+                             Label="Detail Accounts Only" 
+                             Color="Color.Primary" />
+            </MudItem>
+        </MudGrid>
+        
+        @if (_isExporting)
+        {
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="mt-4" />
+        }
+        
+        @if (!string.IsNullOrEmpty(_errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Class="mt-4">@_errorMessage</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Disabled="@_isExporting">Cancel</MudButton>
+        <MudButton Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   OnClick="ExportAsync"
+                   Disabled="@_isExporting"
+                   StartIcon="@Icons.Material.Filled.Download">
+            Export
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; } = default!;
+
+    private string? _accountType;
+    private string? _usoaCategory;
+    private string? _searchTerm;
+    private bool _includeInactive;
+    private bool _onlyControlAccounts;
+    private bool _onlyDetailAccounts;
+    private bool _isExporting;
+    private string? _errorMessage;
+
+    private async Task ExportAsync()
+    {
+        _isExporting = true;
+        _errorMessage = null;
+
+        try
+        {
+            var query = new ExportChartOfAccountsQuery
+            {
+                AccountType = _accountType,
+                UsoaCategory = _usoaCategory,
+                SearchTerm = _searchTerm,
+                IncludeInactive = _includeInactive,
+                OnlyControlAccounts = _onlyControlAccounts,
+                OnlyDetailAccounts = _onlyDetailAccounts
+            };
+
+            var response = await Client.ChartOfAccountExportEndpointAsync("1", query).ConfigureAwait(false);
+            
+            if (response?.Stream != null)
+            {
+                // Read stream to byte array
+                using var memoryStream = new MemoryStream();
+                await response.Stream.CopyToAsync(memoryStream);
+                var fileBytes = memoryStream.ToArray();
+                var base64 = Convert.ToBase64String(fileBytes);
+                
+                // Determine filename and content type
+                var fileName = "ChartOfAccounts.xlsx";
+                var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                
+                // Trigger download using JavaScript interop
+                await JSRuntime.InvokeVoidAsync("downloadFileFromBase64", fileName, contentType, base64);
+                
+                Snackbar.Add("Export completed successfully", Severity.Success);
+                MudDialog.Close();
+            }
+            else
+            {
+                _errorMessage = "No data returned from export";
+            }
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"Export failed: {ex.Message}";
+            Snackbar.Add($"Export failed: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _isExporting = false;
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

@@ -1,0 +1,104 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <TitleContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center">
+            <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Color="Color.Primary" Class="mr-2" />
+            <MudText Typo="Typo.h6">Benefit Allocation Details</MudText>
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        @if (Allocation != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Allocation Information</MudText>
+                    <MudDivider Class="my-2" />
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Employee</MudText>
+                    <MudText>@(Allocation.EmployeeName ?? "-")</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Benefit</MudText>
+                    <MudText>@(Allocation.BenefitName ?? "-")</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Allocation Date</MudText>
+                    <MudText>@Allocation.AllocationDate.ToShortDateString()</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Allocated Amount</MudText>
+                    <MudText>@Allocation.AllocatedAmount.ToString("C2")</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Allocation Type</MudText>
+                    <MudText>@(Allocation.AllocationType ?? "-")</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Reference Number</MudText>
+                    <MudText>@(Allocation.ReferenceNumber ?? "-")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" Class="mt-4">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Status Information</MudText>
+                    <MudDivider Class="my-2" />
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Status</MudText>
+                    <MudChip T="string" Color="@GetStatusColor(Allocation.Status)" Size="Size.Small">
+                        @(Allocation.Status ?? "Unknown")
+                    </MudChip>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Approval Date</MudText>
+                    <MudText>@(Allocation.ApprovalDate?.ToShortDateString() ?? "-")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" Class="mt-4">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">System Information</MudText>
+                    <MudDivider Class="my-2" />
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Enrollment ID</MudText>
+                    <MudText Class="text-truncate" Style="font-size: 0.75rem;">@Allocation.EnrollmentId</MudText>
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Allocation ID</MudText>
+                    <MudText Class="text-truncate" Style="font-size: 0.75rem;">@Allocation.Id</MudText>
+                </MudItem>
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Default">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public BenefitAllocationResponse? Allocation { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private Color GetStatusColor(string? status) => status switch
+    {
+        "Pending" => Color.Warning,
+        "Approved" => Color.Success,
+        "Rejected" => Color.Error,
+        _ => Color.Default
+    };
+}

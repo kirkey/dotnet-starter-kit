@@ -1,0 +1,63 @@
+@page "/hr/payroll-lines"
+@using FSH.Starter.Blazor.Client.Pages.Hr.PayrollLines
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+
+<FshPage Title="Payroll Lines"
+         Description="Manage individual employee payroll line items">
+    <ExtraActions>
+        <MudTooltip Text="Help">
+            <MudIconButton Icon="@Icons.Material.Filled.Help"
+                           Color="Color.Default"
+                           OnClick="ShowHelp" />
+        </MudTooltip>
+    </ExtraActions>
+    <ChildContent>
+        <EntityTable @ref="_table" TEntity="PayrollLineResponse" TId="DefaultIdType" TRequest="PayrollLineViewModel" Context="Context">
+            <EditFormContent>
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.RegularHours"
+                                         Label="Regular Hours"
+                                         Required="true"
+                                         Min="0"
+                                         Max="999" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.OvertimeHours"
+                                         Label="Overtime Hours"
+                                         Min="0"
+                                         Max="999" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.RegularPay"
+                                         Label="Regular Pay"
+                                         Format="F2"
+                                         Adornment="Adornment.Start"
+                                         AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.OvertimePay"
+                                         Label="Overtime Pay"
+                                         Format="F2"
+                                         Adornment="Adornment.Start"
+                                         AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.BonusPay"
+                                         Label="Bonus Pay"
+                                         Format="F2"
+                                         Adornment="Adornment.Start"
+                                         AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="context.OtherEarnings"
+                                         Label="Other Earnings"
+                                         Format="F2"
+                                         Adornment="Adornment.Start"
+                                         AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                    </MudItem>
+                </MudGrid>
+            </EditFormContent>
+        </EntityTable>
+    </ChildContent>
+</FshPage>

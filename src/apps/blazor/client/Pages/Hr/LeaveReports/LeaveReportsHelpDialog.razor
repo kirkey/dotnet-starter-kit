@@ -1,0 +1,69 @@
+@using MudBlazor
+
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            The Leave Reports module provides analytics and reporting for employee leave management.
+        </MudText>
+
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Report Types" Icon="@Icons.Material.Filled.Assessment">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.CalendarMonth">
+                        <b>Monthly Reports</b> - Monthly leave usage summary
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.EventNote">
+                        <b>Quarterly Reports</b> - Quarterly leave trends
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.DateRange">
+                        <b>Yearly Reports</b> - Annual leave statistics
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Category">
+                        <b>By Leave Type</b> - Breakdown by leave categories
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Business">
+                        <b>By Department</b> - Department-wise leave analysis
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Key Metrics" Icon="@Icons.Material.Filled.Analytics">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Assignment">
+                        <b>Total Requests</b> - All leave requests filed
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <b>Approved Count</b> - Approved leave requests
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Pending">
+                        <b>Pending Count</b> - Awaiting approval
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.EventBusy">
+                        <b>Leave Consumed</b> - Total days consumed
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Actions" Icon="@Icons.Material.Filled.TouchApp">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Visibility">
+                        <b>View Details</b> - See complete report breakdown
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Download">
+                        <b>Download</b> - Export report for offline use
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

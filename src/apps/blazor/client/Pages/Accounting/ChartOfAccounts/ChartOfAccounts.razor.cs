@@ -38,6 +38,7 @@ public partial class ChartOfAccounts
                 new EntityField<ChartOfAccountResponse>(response => response.AccountCode, "Code", "AccountCode"),
                 new EntityField<ChartOfAccountResponse>(response => response.Name, "Name", "Name"),
                 new EntityField<ChartOfAccountResponse>(response => response.Balance, "Balance", "Balance", typeof(decimal)),
+                new EntityField<ChartOfAccountResponse>(response => response.IsActive ? "Active" : "Inactive", "Status", "IsActive"),
             ],
             enableAdvancedSearch: true,
             idFunc: response => response.Id,
@@ -65,7 +66,8 @@ public partial class ChartOfAccounts
                 account.Name = account.Name?.ToUpperInvariant() ?? account.Name;
                 await Client.ChartOfAccountUpdateEndpointAsync("1", id, account.Adapt<UpdateChartOfAccountCommand>());
             },
-            deleteFunc: async id => await Client.ChartOfAccountDeleteEndpointAsync("1", id));
+            deleteFunc: async id => await Client.ChartOfAccountDeleteEndpointAsync("1", id),
+            hasExtraActionsFunc: () => true);
 
         await Task.CompletedTask;
     }
@@ -73,6 +75,79 @@ public partial class ChartOfAccounts
     private async Task ShowChartOfAccountsHelp()
     {
         await DialogService.ShowAsync<ChartOfAccountsHelpDialog>("Chart of Accounts Help", new DialogParameters(), _helpDialogOptions);
+    }
+
+    private async Task ViewDetailsAsync(ChartOfAccountResponse account)
+    {
+        var parameters = new DialogParameters
+        {
+            { nameof(ChartOfAccountDetailsDialog.Account), account }
+        };
+        await DialogService.ShowAsync<ChartOfAccountDetailsDialog>("Chart of Account Details", parameters, _helpDialogOptions);
+    }
+
+    private async Task ActivateAccountAsync(ChartOfAccountResponse account)
+    {
+        bool? confirm = await DialogService.ShowMessageBox(
+            "Activate Account",
+            $"Are you sure you want to activate account '{account.AccountCode} - {account.Name}'?",
+            yesText: "Activate", cancelText: "Cancel");
+
+        if (confirm == true)
+        {
+            try
+            {
+                await Client.ChartOfAccountActivateEndpointAsync("1", account.Id).ConfigureAwait(false);
+                Snackbar.Add("Account activated successfully", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Error activating account: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task DeactivateAccountAsync(ChartOfAccountResponse account)
+    {
+        bool? confirm = await DialogService.ShowMessageBox(
+            "Deactivate Account",
+            $"Are you sure you want to deactivate account '{account.AccountCode} - {account.Name}'? This may affect related transactions.",
+            yesText: "Deactivate", cancelText: "Cancel");
+
+        if (confirm == true)
+        {
+            try
+            {
+                await Client.ChartOfAccountDeactivateEndpointAsync("1", account.Id).ConfigureAwait(false);
+                Snackbar.Add("Account deactivated successfully", Severity.Success);
+                await _table.ReloadDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add($"Error deactivating account: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task ShowImportDialog()
+    {
+        var parameters = new DialogParameters();
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+        var dialog = await DialogService.ShowAsync<ChartOfAccountImportDialog>("Import Chart of Accounts", parameters, options);
+        var result = await dialog.Result;
+        
+        if (result is { Canceled: false })
+        {
+            await _table.ReloadDataAsync();
+        }
+    }
+
+    private async Task ShowExportDialog()
+    {
+        var parameters = new DialogParameters();
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+        await DialogService.ShowAsync<ChartOfAccountExportDialog>("Export Chart of Accounts", parameters, options);
     }
 }
 

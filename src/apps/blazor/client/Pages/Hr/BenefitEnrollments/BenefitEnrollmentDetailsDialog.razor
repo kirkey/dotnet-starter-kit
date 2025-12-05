@@ -1,0 +1,104 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.BenefitEnrollments
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudPaper Elevation="0" Class="pa-4 mud-theme-primary" Style="border-radius: 8px;">
+                <MudText Typo="Typo.h6">@Enrollment.BenefitName</MudText>
+                <MudText Typo="Typo.body2">Enrollment for @Enrollment.EmployeeName</MudText>
+            </MudPaper>
+
+            <MudSimpleTable Dense="true" Striped="true">
+                <tbody>
+                    <tr>
+                        <td><strong>Employee</strong></td>
+                        <td>@Enrollment.EmployeeName</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Benefit Plan</strong></td>
+                        <td>@Enrollment.BenefitName</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Coverage Level</strong></td>
+                        <td>@Enrollment.CoverageLevel</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Enrollment Date</strong></td>
+                        <td>@Enrollment.EnrollmentDate.ToLongDateString()</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Effective Date</strong></td>
+                        <td>@Enrollment.EffectiveDate.ToLongDateString()</td>
+                    </tr>
+                    @if (Enrollment.EndDate.HasValue)
+                    {
+                        <tr>
+                            <td><strong>End Date</strong></td>
+                            <td>@Enrollment.EndDate.Value.ToLongDateString()</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td><strong>Status</strong></td>
+                        <td>
+                            <MudChip T="string" 
+                                     Color="@(Enrollment.IsActive ? Color.Success : Color.Error)" 
+                                     Size="Size.Small">
+                                @(Enrollment.IsActive ? "Active" : "Terminated")
+                            </MudChip>
+                        </td>
+                    </tr>
+                </tbody>
+            </MudSimpleTable>
+
+            <MudDivider />
+
+            <MudText Typo="Typo.subtitle2">Contributions (Per Pay Period)</MudText>
+            <MudGrid>
+                <MudItem xs="6">
+                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                        <MudText Typo="Typo.caption">Employee</MudText>
+                        <MudText Typo="Typo.h6" Color="Color.Primary">
+                            @Enrollment.EmployeeContributionAmount.ToString("C2")
+                        </MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                        <MudText Typo="Typo.caption">Employer</MudText>
+                        <MudText Typo="Typo.h6" Color="Color.Secondary">
+                            @Enrollment.EmployerContributionAmount.ToString("C2")
+                        </MudText>
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+
+            <MudPaper Elevation="1" Class="pa-3 text-center">
+                <MudText Typo="Typo.caption">Annual Total Contribution</MudText>
+                <MudText Typo="Typo.h5" Color="Color.Info">
+                    @Enrollment.AnnualContribution.ToString("C2")
+                </MudText>
+            </MudPaper>
+
+            @if (!string.IsNullOrEmpty(Enrollment.CoveredDependentIds))
+            {
+                <MudDivider />
+                <MudText Typo="Typo.subtitle2">Covered Dependents</MudText>
+                <MudText>@Enrollment.CoveredDependentIds</MudText>
+            }
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => MudDialog.Close())" Variant="Variant.Filled" Color="Color.Primary">
+            Close
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public BenefitEnrollmentResponse Enrollment { get; set; } = default!;
+}

@@ -1,0 +1,89 @@
+@using MudBlazor
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <DialogContent>
+        @if (Report != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6">@Report.Title</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                        @Report.ReportType Report | @Report.FromDate.ToShortDateString() - @Report.ToDate.ToShortDateString()
+                    </MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider Class="my-3" />
+                </MudItem>
+
+                <MudItem xs="6" md="3">
+                    <MudCard Elevation="1" Class="pa-3 text-center">
+                        <MudIcon Icon="@Icons.Material.Filled.People" Color="Color.Primary" Size="Size.Large" />
+                        <MudText Typo="Typo.h5">@Report.TotalEmployees</MudText>
+                        <MudText Typo="Typo.caption">Total Employees</MudText>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="6" md="3">
+                    <MudCard Elevation="1" Class="pa-3 text-center">
+                        <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Large" />
+                        <MudText Typo="Typo.h5">@Report.PresentCount</MudText>
+                        <MudText Typo="Typo.caption">Present</MudText>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="6" md="3">
+                    <MudCard Elevation="1" Class="pa-3 text-center">
+                        <MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Size="Size.Large" />
+                        <MudText Typo="Typo.h5">@Report.AbsentCount</MudText>
+                        <MudText Typo="Typo.caption">Absent</MudText>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="6" md="3">
+                    <MudCard Elevation="1" Class="pa-3 text-center">
+                        <MudIcon Icon="@Icons.Material.Filled.Percent" Color="Color.Info" Size="Size.Large" />
+                        <MudText Typo="Typo.h5">@Report.AttendancePercentage.ToString("F1")%</MudText>
+                        <MudText Typo="Typo.caption">Attendance Rate</MudText>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider Class="my-3" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2">Working Days</MudText>
+                    <MudText>@Report.TotalWorkingDays days</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2">Generated On</MudText>
+                    <MudText>@Report.GeneratedOn.ToString("g")</MudText>
+                </MudItem>
+
+                @if (!string.IsNullOrEmpty(Report.ExportPath))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2">Export Path</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">@Report.ExportPath</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public AttendanceReportDto? Report { get; set; }
+
+    private void Close() => MudDialog.Close();
+}

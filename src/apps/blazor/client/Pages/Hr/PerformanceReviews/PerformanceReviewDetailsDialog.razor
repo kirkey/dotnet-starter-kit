@@ -1,0 +1,150 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <DialogContent>
+        <MudGrid Spacing="3">
+            <MudItem xs="12">
+                <MudText Typo="Typo.h6">Review Information</MudText>
+                <MudDivider Class="my-2" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6">
+                <MudField Label="Employee" Variant="Variant.Outlined">@(Review?.EmployeeName ?? "-")</MudField>
+            </MudItem>
+
+            <MudItem xs="12" sm="6">
+                <MudField Label="Reviewer" Variant="Variant.Outlined">@(Review?.ReviewerName ?? "-")</MudField>
+            </MudItem>
+
+            <MudItem xs="12" sm="4">
+                <MudField Label="Review Type" Variant="Variant.Outlined">@(Review?.ReviewType ?? "-")</MudField>
+            </MudItem>
+
+            <MudItem xs="12" sm="4">
+                <MudField Label="Period Start" Variant="Variant.Outlined">@(Review?.ReviewPeriodStart.ToShortDateString() ?? "-")</MudField>
+            </MudItem>
+
+            <MudItem xs="12" sm="4">
+                <MudField Label="Period End" Variant="Variant.Outlined">@(Review?.ReviewPeriodEnd.ToShortDateString() ?? "-")</MudField>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudText Typo="Typo.h6" Class="mt-4">Rating & Status</MudText>
+                <MudDivider Class="my-2" />
+            </MudItem>
+
+            <MudItem xs="12" sm="6">
+                <MudField Label="Overall Rating" Variant="Variant.Outlined">
+                    <MudRating ReadOnly="true" SelectedValue="@GetRatingValue()" MaxValue="5" />
+                    <MudText Typo="Typo.body2" Class="ml-2">@(Review?.OverallRating.ToString("0.0") ?? "0.0") / 5.0</MudText>
+                </MudField>
+            </MudItem>
+
+            <MudItem xs="12" sm="6">
+                <MudField Label="Status" Variant="Variant.Outlined">
+                    <MudChip T="string" Color="@GetStatusColor(Review?.Status)" Size="Size.Small">@(Review?.Status ?? "Draft")</MudChip>
+                </MudField>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudText Typo="Typo.h6" Class="mt-4">Evaluation</MudText>
+                <MudDivider Class="my-2" />
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <MudField Label="Strengths" Variant="Variant.Outlined">
+                    <MudText Typo="Typo.body2" Style="white-space: pre-wrap;">@(Review?.Strengths ?? "-")</MudText>
+                </MudField>
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <MudField Label="Areas for Improvement" Variant="Variant.Outlined">
+                    <MudText Typo="Typo.body2" Style="white-space: pre-wrap;">@(Review?.AreasForImprovement ?? "-")</MudText>
+                </MudField>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudField Label="Goals for Next Period" Variant="Variant.Outlined">
+                    <MudText Typo="Typo.body2" Style="white-space: pre-wrap;">@(Review?.Goals ?? "-")</MudText>
+                </MudField>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudText Typo="Typo.h6" Class="mt-4">Comments</MudText>
+                <MudDivider Class="my-2" />
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <MudField Label="Reviewer Comments" Variant="Variant.Outlined">
+                    <MudText Typo="Typo.body2" Style="white-space: pre-wrap;">@(Review?.ReviewerComments ?? "-")</MudText>
+                </MudField>
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <MudField Label="Employee Comments" Variant="Variant.Outlined">
+                    <MudText Typo="Typo.body2" Style="white-space: pre-wrap;">@(Review?.EmployeeComments ?? "-")</MudText>
+                </MudField>
+            </MudItem>
+
+            @if (Review?.SubmittedDate.HasValue == true || Review?.CompletedDate.HasValue == true || Review?.AcknowledgedDate.HasValue == true)
+            {
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mt-4">Timeline</MudText>
+                    <MudDivider Class="my-2" />
+                </MudItem>
+
+                @if (Review?.SubmittedDate.HasValue == true)
+                {
+                    <MudItem xs="12" sm="4">
+                        <MudField Label="Submitted Date" Variant="Variant.Outlined">@Review.SubmittedDate.Value.ToShortDateString()</MudField>
+                    </MudItem>
+                }
+
+                @if (Review?.CompletedDate.HasValue == true)
+                {
+                    <MudItem xs="12" sm="4">
+                        <MudField Label="Completed Date" Variant="Variant.Outlined">@Review.CompletedDate.Value.ToShortDateString()</MudField>
+                    </MudItem>
+                }
+
+                @if (Review?.AcknowledgedDate.HasValue == true)
+                {
+                    <MudItem xs="12" sm="4">
+                        <MudField Label="Acknowledged Date" Variant="Variant.Outlined">@Review.AcknowledgedDate.Value.ToShortDateString()</MudField>
+                    </MudItem>
+                }
+            }
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public PerformanceReviewResponse? Review { get; set; }
+
+    private int GetRatingValue()
+    {
+        if (Review == null) return 0;
+        return (int)Math.Round(Review.OverallRating);
+    }
+
+    private Color GetStatusColor(string? status)
+    {
+        return status switch
+        {
+            "Draft" => Color.Default,
+            "Submitted" => Color.Info,
+            "Completed" => Color.Success,
+            "Acknowledged" => Color.Primary,
+            _ => Color.Default
+        };
+    }
+
+    private void Close() => MudDialog.Close();
+}

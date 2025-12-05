@@ -1,0 +1,63 @@
+@using MudBlazor
+
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            Payroll Lines represent individual employee payment records within a payroll period.
+        </MudText>
+
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Hours Tracking" Icon="@Icons.Material.Filled.Schedule">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.WorkHistory">
+                        <b>Regular Hours</b> - Standard working hours
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.MoreTime">
+                        <b>Overtime Hours</b> - Hours beyond regular schedule
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Earnings" Icon="@Icons.Material.Filled.Payments">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                        <b>Regular Pay</b> - Base salary/hourly wages
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AddCircle">
+                        <b>Overtime Pay</b> - Extra pay for overtime
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Stars">
+                        <b>Bonus Pay</b> - Performance/incentive bonuses
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.MonetizationOn">
+                        <b>Other Earnings</b> - Additional compensation
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Deductions & Net Pay" Icon="@Icons.Material.Filled.AccountBalance">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Remove">
+                        <b>Taxes</b> - Income, Social Security, Medicare
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.HealthAndSafety">
+                        <b>Benefits</b> - Health insurance deductions
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Wallet">
+                        <b>Net Pay</b> - Final take-home amount
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

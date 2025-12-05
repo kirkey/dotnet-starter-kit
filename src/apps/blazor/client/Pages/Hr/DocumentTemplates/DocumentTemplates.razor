@@ -1,0 +1,95 @@
+@page "/hr/document-templates"
+
+<PageHeader Title="Document Templates" Header="Document Templates" SubHeader="Manage HR document templates for contracts, letters, and certificates." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="DocumentTemplateResponse" TId="DefaultIdType" TRequest="DocumentTemplateViewModel" Context="@Context">
+    <ExtraActions Context="template">
+        <MudMenu Label="Actions" Variant="Variant.Filled"
+                 EndIcon="@Icons.Material.Filled.KeyboardArrowDown" IconColor="Color.Secondary" TransformOrigin="Origin.TopCenter">
+            <MudMenuItem Icon="@Icons.Material.Filled.Visibility"
+                         OnClick="@(() => PreviewTemplateAsync(template))">
+                Preview
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.ContentCopy"
+                         OnClick="@(() => DuplicateTemplateAsync(template))">
+                Duplicate
+            </MudMenuItem>
+        </MudMenu>
+    </ExtraActions>
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Template Details</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudTextField @bind-Value="context.TemplateName" 
+                          Label="Template Name" 
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudSelect T="string" 
+                       @bind-Value="context.DocumentType" 
+                       Label="Document Type" 
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("EmploymentContract")">Employment Contract</MudSelectItem>
+                <MudSelectItem Value="@("OfferLetter")">Offer Letter</MudSelectItem>
+                <MudSelectItem Value="@("TerminationLetter")">Termination Letter</MudSelectItem>
+                <MudSelectItem Value="@("PromotionLetter")">Promotion Letter</MudSelectItem>
+                <MudSelectItem Value="@("SalaryCertificate")">Salary Certificate</MudSelectItem>
+                <MudSelectItem Value="@("EmploymentCertificate")">Employment Certificate</MudSelectItem>
+                <MudSelectItem Value="@("WarningLetter")">Warning Letter</MudSelectItem>
+                <MudSelectItem Value="@("MemoNotice")">Memo/Notice</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description" 
+                          Label="Description" 
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.TemplateVariables" 
+                          Label="Template Variables" 
+                          Variant="Variant.Filled"
+                          HelperText="Comma-separated: {{EmployeeName}}, {{Position}}, {{StartDate}}" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Template Content (HTML)</MudText>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.TemplateContent" 
+                          Label="Template Content" 
+                          Variant="Variant.Outlined"
+                          Lines="15"
+                          HelperText="Use HTML formatting. Variables in {{brackets}} will be replaced." />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

@@ -1,0 +1,150 @@
+@namespace FSH.Starter.Blazor.Client.Pages.Hr.Employees
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="4">
+            <MudAlert Severity="Severity.Warning" Dense="true">
+                This action will terminate the employment of <strong>@Employee.FirstName @Employee.LastName</strong>.
+                This action should be performed with HR approval.
+            </MudAlert>
+            
+            <MudTextField Value="@($"{Employee.FirstName} {Employee.LastName}")"
+                          Label="Employee"
+                          ReadOnly="true"
+                          Variant="Variant.Outlined" />
+            
+            <MudTextField Value="@Employee.EmploymentClassification"
+                          Label="Current Status"
+                          ReadOnly="true"
+                          Variant="Variant.Outlined" />
+
+            <MudDatePicker @bind-Date="_terminationDate"
+                           Label="Termination Date"
+                           DateFormat="MMMM dd, yyyy"
+                           Variant="Variant.Filled"
+                           Required="true"
+                           RequiredError="Termination date is required"
+                           HelperText="The last day of employment" />
+
+            <MudSelect T="string"
+                       @bind-Value="_terminationMode"
+                       Label="Termination Mode"
+                       Variant="Variant.Filled"
+                       Required="true"
+                       HelperText="Who initiated the termination">
+                <MudSelectItem Value="@("ByEmployee")">By Employee (Resignation)</MudSelectItem>
+                <MudSelectItem Value="@("ByEmployer")">By Employer (Termination)</MudSelectItem>
+                <MudSelectItem Value="@("Mutual")">Mutual Agreement</MudSelectItem>
+            </MudSelect>
+
+            <MudSelect T="string"
+                       @bind-Value="_terminationReason"
+                       Label="Termination Reason"
+                       Variant="Variant.Filled"
+                       Required="true"
+                       HelperText="Reason for separation">
+                <MudSelectItem Value="@("ResignationVoluntary")">Voluntary Resignation</MudSelectItem>
+                <MudSelectItem Value="@("ResignationPersonal")">Personal Reasons</MudSelectItem>
+                <MudSelectItem Value="@("ResignationCareer")">Career Opportunity</MudSelectItem>
+                <MudSelectItem Value="@("Retirement")">Retirement</MudSelectItem>
+                <MudSelectItem Value="@("EndOfContract")">End of Contract</MudSelectItem>
+                <MudSelectItem Value="@("Redundancy")">Redundancy</MudSelectItem>
+                <MudSelectItem Value="@("Retrenchment")">Retrenchment</MudSelectItem>
+                <MudSelectItem Value="@("JustCause")">Just Cause (Disciplinary)</MudSelectItem>
+                <MudSelectItem Value="@("AuthorizedCause")">Authorized Cause</MudSelectItem>
+                <MudSelectItem Value="@("Death")">Death</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+
+            <MudDivider Class="my-2" />
+            <MudText Typo="Typo.subtitle2">Separation Pay (Optional)</MudText>
+
+            <MudSelect T="string"
+                       @bind-Value="_separationPayBasis"
+                       Label="Separation Pay Basis"
+                       Variant="Variant.Filled"
+                       HelperText="Basis for computing separation pay">
+                <MudSelectItem Value="@("")">None</MudSelectItem>
+                <MudSelectItem Value="@("OneMonthPerYear")">One Month Salary per Year of Service</MudSelectItem>
+                <MudSelectItem Value="@("HalfMonthPerYear")">Half Month Salary per Year of Service</MudSelectItem>
+                <MudSelectItem Value="@("FixedAmount")">Fixed Amount</MudSelectItem>
+                <MudSelectItem Value="@("Negotiated")">Negotiated Amount</MudSelectItem>
+            </MudSelect>
+
+            <MudNumericField T="decimal?"
+                             @bind-Value="_separationPayAmount"
+                             Label="Separation Pay Amount"
+                             Format="N2"
+                             Variant="Variant.Filled"
+                             Adornment="Adornment.Start"
+                             AdornmentText="₱"
+                             HelperText="Total separation pay amount" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="Submit"
+                   Color="Color.Error"
+                   Variant="Variant.Filled"
+                   Disabled="@(!IsValid || _isProcessing)">
+            @if (_isProcessing)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2" />
+            }
+            Terminate Employment
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter]
+    public EmployeeResponse Employee { get; set; } = default!;
+
+    private DateTime? _terminationDate = DateTime.Today;
+    private string _terminationMode = "ByEmployee";
+    private string _terminationReason = "ResignationVoluntary";
+    private string? _separationPayBasis;
+    private decimal? _separationPayAmount;
+    private bool _isProcessing;
+
+    private bool IsValid => _terminationDate != null && 
+                           !string.IsNullOrEmpty(_terminationMode) && 
+                           !string.IsNullOrEmpty(_terminationReason);
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        if (!IsValid) return;
+
+        _isProcessing = true;
+        try
+        {
+            var command = new TerminateEmployeeCommand
+            {
+                Id = Employee.Id,
+                TerminationDate = _terminationDate!.Value,
+                TerminationMode = _terminationMode,
+                TerminationReason = _terminationReason,
+                SeparationPayBasis = string.IsNullOrEmpty(_separationPayBasis) ? null : _separationPayBasis,
+                SeparationPayAmount = _separationPayAmount
+            };
+
+            await Client.TerminateEmployeeEndpointAsync("1", Employee.Id, command);
+            
+            Snackbar.Add($"Employee {Employee.FirstName} {Employee.LastName} has been terminated.", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error terminating employee: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _isProcessing = false;
+        }
+    }
+}

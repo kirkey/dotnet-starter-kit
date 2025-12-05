@@ -1,0 +1,132 @@
+@page "/hr/deductions"
+
+<PageHeader Title="Deductions" Header="Deductions" SubHeader="Manage payroll deduction types and configurations." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="DeductionResponse" TId="DefaultIdType" TRequest="DeductionViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Deduction Details</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.DeductionName" 
+                          Label="Deduction Name" 
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string" 
+                       @bind-Value="context.DeductionType" 
+                       Label="Deduction Type" 
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Loan")">Loan</MudSelectItem>
+                <MudSelectItem Value="@("Tax")">Tax</MudSelectItem>
+                <MudSelectItem Value="@("Insurance")">Insurance</MudSelectItem>
+                <MudSelectItem Value="@("Contribution")">Contribution</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string" 
+                       @bind-Value="context.RecoveryMethod" 
+                       Label="Recovery Method" 
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Manual")">Manual</MudSelectItem>
+                <MudSelectItem Value="@("FixedAmount")">Fixed Amount</MudSelectItem>
+                <MudSelectItem Value="@("Percentage")">Percentage</MudSelectItem>
+                <MudSelectItem Value="@("Installment")">Installment</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Recovery Configuration</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField T="decimal?" 
+                             @bind-Value="context.RecoveryFixedAmount" 
+                             Label="Fixed Amount" 
+                             Variant="Variant.Filled"
+                             Format="N2" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField T="decimal?" 
+                             @bind-Value="context.RecoveryPercentage" 
+                             Label="Recovery %" 
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Max="100" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField T="int?" 
+                             @bind-Value="context.InstallmentCount" 
+                             Label="Installments" 
+                             Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.MaxRecoveryPercentage" 
+                             Label="Max Recovery %" 
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Max="100" />
+        </MudItem>
+
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-4" />
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Settings</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.GlAccountCode" 
+                          Label="GL Account Code" 
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox @bind-Value="context.RequiresApproval" 
+                         Label="Requires Approval" 
+                         Color="Color.Primary" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox @bind-Value="context.IsRecurring" 
+                         Label="Is Recurring" 
+                         Color="Color.Primary" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description" 
+                          Label="Description" 
+                          Variant="Variant.Filled"
+                          Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

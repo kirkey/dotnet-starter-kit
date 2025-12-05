@@ -1,0 +1,74 @@
+@using MudBlazor
+
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            Timesheet Lines records individual work entries within a timesheet, tracking hours by date, project, and task.
+        </MudText>
+
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Time Tracking" Icon="@Icons.Material.Filled.Schedule">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.CalendarToday">
+                        <b>Work Date</b> - Date when work was performed
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.WorkHistory">
+                        <b>Regular Hours</b> - Standard working hours
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.MoreTime">
+                        <b>Overtime Hours</b> - Extra hours worked
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Timer">
+                        <b>Total Hours</b> - Sum of all hours
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Project Information" Icon="@Icons.Material.Filled.Work">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Folder">
+                        <b>Project ID</b> - Associated project code
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Description">
+                        <b>Task Description</b> - Work performed details
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Billing" Icon="@Icons.Material.Filled.AttachMoney">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <b>Billable</b> - Whether time is billable to client
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.MonetizationOn">
+                        <b>Billing Rate</b> - Hourly rate for billing
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Tips" Icon="@Icons.Material.Filled.Lightbulb">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Today">
+                        Enter time daily for accurate records
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Assignment">
+                        Include clear task descriptions
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Receipt">
+                        Mark billable hours appropriately
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

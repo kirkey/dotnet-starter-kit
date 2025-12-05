@@ -1,0 +1,164 @@
+@page "/hr/performance-reviews"
+@using FSH.Starter.Blazor.Client.Components.Hr
+
+<PageHeader Title="Performance Reviews" Header="Performance Reviews" SubHeader="Manage employee performance reviews and evaluations." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="PerformanceReviewResponse" TId="DefaultIdType" TRequest="PerformanceReviewViewModel" Context="@Context">
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Review Details</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteEmployee @bind-Value="context.SelectedEmployee" Label="Employee" Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteEmployee @bind-Value="context.SelectedReviewer" Label="Reviewer" Required="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string" @bind-Value="context.ReviewType" Label="Review Type" Variant="Variant.Filled" Required="true">
+                <MudSelectItem T="string" Value="@("Annual")">Annual</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Quarterly")">Quarterly</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Probation")">Probation</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Mid-Year")">Mid-Year</MudSelectItem>
+                <MudSelectItem T="string" Value="@("Project")">Project</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Review Period</MudText>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker Label="Period Start" 
+                           @bind-Date="context.ReviewPeriodStart" 
+                           Required="true"
+                           Variant="Variant.Filled"
+                           Editable="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker Label="Period End" 
+                           @bind-Date="context.ReviewPeriodEnd" 
+                           Required="true"
+                           Variant="Variant.Filled"
+                           Editable="true" />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal" 
+                             @bind-Value="context.OverallRating" 
+                             Label="Overall Rating"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             Max="5"
+                             Step="0.5M"
+                             HelperText="Rating from 0 to 5" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Evaluation</MudText>
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.Strengths" 
+                          Label="Strengths"
+                          Lines="3"
+                          Variant="Variant.Filled"
+                          HelperText="Highlight employee's strengths" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.AreasForImprovement" 
+                          Label="Areas for Improvement"
+                          Lines="3"
+                          Variant="Variant.Filled"
+                          HelperText="Areas where the employee can improve" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Goals" 
+                          Label="Goals for Next Period"
+                          Lines="3"
+                          Variant="Variant.Filled"
+                          HelperText="Goals and objectives for the next review period" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.ReviewerComments" 
+                          Label="Reviewer Comments"
+                          Lines="3"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudTextField @bind-Value="context.EmployeeComments" 
+                          Label="Employee Comments"
+                          Lines="3"
+                          Variant="Variant.Filled"
+                          HelperText="Employee's response and feedback" />
+        </MudItem>
+
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField Value="@context.Status" 
+                              Label="Status"
+                              ReadOnly="true"
+                              Variant="Variant.Filled" />
+            </MudItem>
+        }
+    </EditFormContent>
+
+    <ExtraActions>
+        @if (context.Status == "Draft")
+        {
+            <MudMenuItem OnClick="@(() => SubmitReviewAsync(context))" 
+                OnTouch="@(() => SubmitReviewAsync(context))">
+                <MudIcon Icon="@Icons.Material.Filled.Send" Class="mr-2" Size="Size.Small" />
+                Submit
+            </MudMenuItem>
+        }
+        @if (context.Status == "Submitted")
+        {
+            <MudMenuItem OnClick="@(() => CompleteReviewAsync(context))" 
+                OnTouch="@(() => CompleteReviewAsync(context))">
+                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" Size="Size.Small" />
+                Complete
+            </MudMenuItem>
+        }
+        @if (context.Status == "Completed")
+        {
+            <MudMenuItem OnClick="@(() => AcknowledgeReviewAsync(context))" 
+                OnTouch="@(() => AcknowledgeReviewAsync(context))">
+                <MudIcon Icon="@Icons.Material.Filled.ThumbUp" Class="mr-2" Size="Size.Small" />
+                Acknowledge
+            </MudMenuItem>
+        }
+        <MudMenuItem OnClick="@(() => ViewDetailsAsync(context))" 
+            OnTouch="@(() => ViewDetailsAsync(context))">
+            <MudIcon Icon="@Icons.Material.Filled.Visibility" Class="mr-2" Size="Size.Small" />
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+</EntityTable>

@@ -1,0 +1,72 @@
+@using MudBlazor
+
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            Generated Documents are employee documents created from templates, such as contracts, letters, and certificates.
+        </MudText>
+
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Document Status" Icon="@Icons.Material.Filled.Assignment">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Edit">
+                        <b>Draft</b> - Document is being prepared
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <b>Finalized</b> - Document is complete
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Draw">
+                        <b>Signed</b> - Document has been signed
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Archive">
+                        <b>Archived</b> - Document is archived
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Document Types" Icon="@Icons.Material.Filled.Description">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Gavel">
+                        Employment contracts
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Mail">
+                        Offer letters
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Badge">
+                        ID/access cards
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CardMembership">
+                        Certificates
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Actions" Icon="@Icons.Material.Filled.TouchApp">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Visibility">
+                        <b>View</b> - Preview document content
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <b>Finalize</b> - Lock document for signing
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Draw">
+                        <b>Sign</b> - Add signature to document
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Download">
+                        <b>Download</b> - Export document file
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}
