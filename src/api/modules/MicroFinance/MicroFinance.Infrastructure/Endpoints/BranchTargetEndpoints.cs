@@ -7,6 +7,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class BranchTargetEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateBranchTarget = "CreateBranchTarget";
+    private const string GetBranchTarget = "GetBranchTarget";
+    private const string RecordBranchProgress = "RecordBranchProgress";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/branch-targets").WithTags("Branch Targets");
@@ -16,7 +21,7 @@ public class BranchTargetEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/branch-targets/{result.Id}", result);
         })
-        .WithName("CreateBranchTarget")
+        .WithName(CreateBranchTarget)
         .WithSummary("Create a new branch target")
         .Produces<CreateBranchTargetResponse>(StatusCodes.Status201Created);
 
@@ -25,7 +30,7 @@ public class BranchTargetEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetBranchTargetRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetBranchTarget")
+        .WithName(GetBranchTarget)
         .WithSummary("Get branch target by ID")
         .Produces<BranchTargetResponse>();
 
@@ -35,7 +40,7 @@ public class BranchTargetEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("RecordBranchProgress")
+        .WithName(RecordBranchProgress)
         .WithSummary("Record progress towards branch target")
         .Produces<RecordBranchProgressResponse>();
 

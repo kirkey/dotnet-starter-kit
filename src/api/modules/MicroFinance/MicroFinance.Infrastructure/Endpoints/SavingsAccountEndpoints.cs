@@ -17,6 +17,19 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class SavingsAccountEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CloseSavingsAccount = "CloseSavingsAccount";
+    private const string CreateSavingsAccount = "CreateSavingsAccount";
+    private const string DepositToSavingsAccount = "DepositToSavingsAccount";
+    private const string FreezeSavingsAccount = "FreezeSavingsAccount";
+    private const string GetSavingsAccount = "GetSavingsAccount";
+    private const string GetSavingsAccountsByMember = "GetSavingsAccountsByMember";
+    private const string PostSavingsInterest = "PostSavingsInterest";
+    private const string SearchSavingsAccounts = "SearchSavingsAccounts";
+    private const string TransferFunds = "TransferFunds";
+    private const string UnfreezeSavingsAccount = "UnfreezeSavingsAccount";
+    private const string WithdrawFromSavingsAccount = "WithdrawFromSavingsAccount";
+
     /// <summary>
     /// Maps all Savings Account endpoints to the route builder.
     /// </summary>
@@ -29,7 +42,7 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/savings-accounts/{response.Id}", response);
             })
-            .WithName("CreateSavingsAccount")
+            .WithName(CreateSavingsAccount)
             .WithSummary("Creates a new savings account")
             .Produces<CreateSavingsAccountResponse>(StatusCodes.Status201Created);
 
@@ -38,7 +51,7 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetSavingsAccountRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetSavingsAccount")
+            .WithName(GetSavingsAccount)
             .WithSummary("Gets a savings account by ID")
             .Produces<SavingsAccountResponse>();
 
@@ -47,7 +60,7 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchSavingsAccounts")
+            .WithName(SearchSavingsAccounts)
             .WithSummary("Searches savings accounts with filters and pagination")
             .Produces<PagedList<SavingsAccountResponse>>();
 
@@ -60,7 +73,7 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DepositToSavingsAccount")
+            .WithName(DepositToSavingsAccount)
             .WithSummary("Deposits money to a savings account")
             .Produces<DepositResponse>();
 
@@ -73,7 +86,7 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("WithdrawFromSavingsAccount")
+            .WithName(WithdrawFromSavingsAccount)
             .WithSummary("Withdraws money from a savings account")
             .Produces<WithdrawResponse>();
 
@@ -82,7 +95,7 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("TransferFunds")
+            .WithName(TransferFunds)
             .WithSummary("Transfers funds between savings accounts")
             .Produces<TransferFundsResponse>();
 
@@ -97,7 +110,7 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetSavingsAccountsByMember")
+            .WithName(GetSavingsAccountsByMember)
             .WithSummary("Gets all savings accounts for a member")
             .Produces<PagedList<SavingsAccountResponse>>();
 
@@ -107,7 +120,7 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("PostSavingsInterest")
+            .WithName(PostSavingsInterest)
             .WithSummary("Posts interest to a savings account")
             .Produces<PostInterestResponse>();
 
@@ -116,7 +129,7 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new FreezeAccountCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("FreezeSavingsAccount")
+            .WithName(FreezeSavingsAccount)
             .WithSummary("Freezes a savings account")
             .Produces<FreezeAccountResponse>();
 
@@ -125,7 +138,7 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new UnfreezeAccountCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UnfreezeSavingsAccount")
+            .WithName(UnfreezeSavingsAccount)
             .WithSummary("Unfreezes a frozen savings account")
             .Produces<UnfreezeAccountResponse>();
 
@@ -135,7 +148,7 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("CloseSavingsAccount")
+            .WithName(CloseSavingsAccount)
             .WithSummary("Closes a savings account")
             .Produces<CloseAccountResponse>();
 

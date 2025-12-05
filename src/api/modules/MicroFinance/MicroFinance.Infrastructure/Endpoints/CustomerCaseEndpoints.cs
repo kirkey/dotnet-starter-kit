@@ -10,6 +10,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CustomerCaseEndpoints() : CarterModule("microfinance")
 {
+
+    private const string AssignCustomerCase = "AssignCustomerCase";
+    private const string CloseCustomerCase = "CloseCustomerCase";
+    private const string CreateCustomerCase = "CreateCustomerCase";
+    private const string EscalateCustomerCase = "EscalateCustomerCase";
+    private const string GetCustomerCase = "GetCustomerCase";
+    private const string ResolveCustomerCase = "ResolveCustomerCase";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/customer-cases").WithTags("Customer Cases");
@@ -19,7 +27,7 @@ public class CustomerCaseEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/customer-cases/{result.Id}", result);
         })
-        .WithName("CreateCustomerCase")
+        .WithName(CreateCustomerCase)
         .WithSummary("Create a new customer case")
         .Produces<CreateCustomerCaseResponse>(StatusCodes.Status201Created);
 
@@ -28,7 +36,7 @@ public class CustomerCaseEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetCustomerCaseRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetCustomerCase")
+        .WithName(GetCustomerCase)
         .WithSummary("Get customer case by ID")
         .Produces<CustomerCaseResponse>();
 
@@ -37,7 +45,7 @@ public class CustomerCaseEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new AssignCustomerCaseCommand(id, request.StaffId));
             return Results.Ok(result);
         })
-        .WithName("AssignCustomerCase")
+        .WithName(AssignCustomerCase)
         .WithSummary("Assign a customer case to staff")
         .Produces<AssignCustomerCaseResponse>();
 
@@ -46,7 +54,7 @@ public class CustomerCaseEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new EscalateCustomerCaseCommand(id, request.EscalatedToId, request.Reason));
             return Results.Ok(result);
         })
-        .WithName("EscalateCustomerCase")
+        .WithName(EscalateCustomerCase)
         .WithSummary("Escalate a customer case")
         .Produces<EscalateCustomerCaseResponse>();
 
@@ -55,7 +63,7 @@ public class CustomerCaseEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new ResolveCustomerCaseCommand(id, request.Resolution));
             return Results.Ok(result);
         })
-        .WithName("ResolveCustomerCase")
+        .WithName(ResolveCustomerCase)
         .WithSummary("Resolve a customer case")
         .Produces<ResolveCustomerCaseResponse>();
 
@@ -64,7 +72,7 @@ public class CustomerCaseEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new CloseCustomerCaseCommand(id, request.SatisfactionScore, request.Feedback));
             return Results.Ok(result);
         })
-        .WithName("CloseCustomerCase")
+        .WithName(CloseCustomerCase)
         .WithSummary("Close a customer case")
         .Produces<CloseCustomerCaseResponse>();
 

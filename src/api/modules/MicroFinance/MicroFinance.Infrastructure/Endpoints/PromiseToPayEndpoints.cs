@@ -8,6 +8,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class PromiseToPayEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreatePromiseToPay = "CreatePromiseToPay";
+    private const string GetPromiseToPay = "GetPromiseToPay";
+    private const string MarkPromiseBroken = "MarkPromiseBroken";
+    private const string RecordPromisePayment = "RecordPromisePayment";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/promise-to-pays").WithTags("Promise to Pays");
@@ -17,7 +23,7 @@ public class PromiseToPayEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/promise-to-pays/{result.Id}", result);
         })
-        .WithName("CreatePromiseToPay")
+        .WithName(CreatePromiseToPay)
         .WithSummary("Create a new promise to pay")
         .Produces<CreatePromiseToPayResponse>(StatusCodes.Status201Created);
 
@@ -26,7 +32,7 @@ public class PromiseToPayEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetPromiseToPayRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetPromiseToPay")
+        .WithName(GetPromiseToPay)
         .WithSummary("Get promise to pay by ID")
         .Produces<PromiseToPayResponse>();
 
@@ -35,7 +41,7 @@ public class PromiseToPayEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new RecordPromisePaymentCommand(id, request.Amount, request.PaymentDate));
             return Results.Ok(result);
         })
-        .WithName("RecordPromisePayment")
+        .WithName(RecordPromisePayment)
         .WithSummary("Record payment against a promise")
         .Produces<RecordPromisePaymentResponse>();
 
@@ -44,7 +50,7 @@ public class PromiseToPayEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new MarkPromiseBrokenCommand(id, request.Reason));
             return Results.Ok(result);
         })
-        .WithName("MarkPromiseBroken")
+        .WithName(MarkPromiseBroken)
         .WithSummary("Mark a promise as broken")
         .Produces<MarkPromiseBrokenResponse>();
 

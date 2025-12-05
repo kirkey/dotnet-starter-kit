@@ -8,6 +8,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class MobileTransactionEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CompleteMobileTransaction = "CompleteMobileTransaction";
+    private const string CreateMobileTransaction = "CreateMobileTransaction";
+    private const string FailMobileTransaction = "FailMobileTransaction";
+    private const string GetMobileTransaction = "GetMobileTransaction";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/mobile-transactions").WithTags("Mobile Transactions");
@@ -17,7 +23,7 @@ public class MobileTransactionEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/mobile-transactions/{result.Id}", result);
         })
-        .WithName("CreateMobileTransaction")
+        .WithName(CreateMobileTransaction)
         .WithSummary("Create a new mobile transaction")
         .Produces<CreateMobileTransactionResponse>(StatusCodes.Status201Created);
 
@@ -26,7 +32,7 @@ public class MobileTransactionEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetMobileTransactionRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetMobileTransaction")
+        .WithName(GetMobileTransaction)
         .WithSummary("Get mobile transaction by ID")
         .Produces<MobileTransactionResponse>();
 
@@ -36,7 +42,7 @@ public class MobileTransactionEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("CompleteMobileTransaction")
+        .WithName(CompleteMobileTransaction)
         .WithSummary("Complete mobile transaction")
         .Produces<CompleteMobileTransactionResponse>();
 
@@ -46,7 +52,7 @@ public class MobileTransactionEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("FailMobileTransaction")
+        .WithName(FailMobileTransaction)
         .WithSummary("Mark mobile transaction as failed")
         .Produces<FailMobileTransactionResponse>();
 

@@ -11,6 +11,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class FeeDefinitionEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateFeeDefinition = "CreateFeeDefinition";
+    private const string GetFeeDefinition = "GetFeeDefinition";
+    private const string SearchFeeDefinitions = "SearchFeeDefinitions";
+    private const string UpdateFeeDefinition = "UpdateFeeDefinition";
+
     /// <summary>
     /// Maps all Fee Definition endpoints to the route builder.
     /// </summary>
@@ -23,7 +29,7 @@ public class FeeDefinitionEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Created($"/api/microfinance/fee-definitions/{response}", new { id = response });
         })
-        .WithName("CreateFeeDefinition")
+        .WithName(CreateFeeDefinition)
         .WithSummary("Creates a new fee definition")
         .Produces<Guid>(StatusCodes.Status201Created);
 
@@ -32,7 +38,7 @@ public class FeeDefinitionEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new GetFeeDefinitionRequest(id));
             return Results.Ok(response);
         })
-        .WithName("GetFeeDefinition")
+        .WithName(GetFeeDefinition)
         .WithSummary("Gets a fee definition by ID")
         .Produces<FeeDefinitionResponse>();
 
@@ -41,7 +47,7 @@ public class FeeDefinitionEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("SearchFeeDefinitions")
+        .WithName(SearchFeeDefinitions)
         .WithSummary("Searches fee definitions with pagination")
         .Produces<PagedList<FeeDefinitionResponse>>();
 
@@ -54,7 +60,7 @@ public class FeeDefinitionEndpoints() : CarterModule("microfinance")
             await mediator.Send(request);
             return Results.NoContent();
         })
-        .WithName("UpdateFeeDefinition")
+        .WithName(UpdateFeeDefinition)
         .WithSummary("Updates a fee definition")
         .Produces(StatusCodes.Status204NoContent);
 

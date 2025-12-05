@@ -13,6 +13,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class AgentBankingEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ApproveAgentBanking = "ApproveAgentBanking";
+    private const string CreateAgentBanking = "CreateAgentBanking";
+    private const string CreditAgentFloat = "CreditAgentFloat";
+    private const string DebitAgentFloat = "DebitAgentFloat";
+    private const string GetAgentBanking = "GetAgentBanking";
+    private const string SuspendAgentBanking = "SuspendAgentBanking";
+
     /// <summary>
     /// Maps all Agent Banking endpoints to the route builder.
     /// </summary>
@@ -25,7 +33,7 @@ public class AgentBankingEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/agent-banking/{response.Id}", response);
             })
-            .WithName("CreateAgentBanking")
+            .WithName(CreateAgentBanking)
             .WithSummary("Creates a new agent banking location")
             .Produces<CreateAgentBankingResponse>(StatusCodes.Status201Created);
 
@@ -34,7 +42,7 @@ public class AgentBankingEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetAgentBankingRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetAgentBanking")
+            .WithName(GetAgentBanking)
             .WithSummary("Gets an agent banking location by ID")
             .Produces<AgentBankingResponse>();
 
@@ -43,7 +51,7 @@ public class AgentBankingEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new ApproveAgentBankingCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("ApproveAgentBanking")
+            .WithName(ApproveAgentBanking)
             .WithSummary("Approves an agent banking location")
             .Produces<ApproveAgentBankingResponse>();
 
@@ -52,7 +60,7 @@ public class AgentBankingEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new SuspendAgentBankingCommand(id, request.Reason)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SuspendAgentBanking")
+            .WithName(SuspendAgentBanking)
             .WithSummary("Suspends an agent banking location")
             .Produces<SuspendAgentBankingResponse>();
 
@@ -61,7 +69,7 @@ public class AgentBankingEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new CreditFloatCommand(id, request.Amount)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("CreditAgentFloat")
+            .WithName(CreditAgentFloat)
             .WithSummary("Credits float to an agent's account")
             .Produces<CreditFloatResponse>();
 
@@ -70,7 +78,7 @@ public class AgentBankingEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new DebitFloatCommand(id, request.Amount)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DebitAgentFloat")
+            .WithName(DebitAgentFloat)
             .WithSummary("Debits float from an agent's account")
             .Produces<DebitFloatResponse>();
     }

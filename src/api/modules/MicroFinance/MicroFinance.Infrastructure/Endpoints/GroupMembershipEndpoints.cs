@@ -14,6 +14,17 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class GroupMembershipEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateGroupMembership = "CreateGroupMembership";
+    private const string GetGroupMembership = "GetGroupMembership";
+    private const string GetGroupMembershipsByGroup = "GetGroupMembershipsByGroup";
+    private const string GetGroupMembershipsByMember = "GetGroupMembershipsByMember";
+    private const string ReactivateGroupMembership = "ReactivateGroupMembership";
+    private const string SearchGroupMemberships = "SearchGroupMemberships";
+    private const string SuspendGroupMembership = "SuspendGroupMembership";
+    private const string UpdateMembershipRole = "UpdateMembershipRole";
+    private const string WithdrawGroupMembership = "WithdrawGroupMembership";
+
     /// <summary>
     /// Maps all Group Membership endpoints to the route builder.
     /// </summary>
@@ -26,7 +37,7 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Created($"/microfinance/group-memberships/{response.Id}", response);
         })
-        .WithName("CreateGroupMembership")
+        .WithName(CreateGroupMembership)
         .WithSummary("Creates a new group membership")
         .Produces<CreateGroupMembershipResponse>(StatusCodes.Status201Created);
 
@@ -35,7 +46,7 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new GetGroupMembershipRequest(id));
             return Results.Ok(response);
         })
-        .WithName("GetGroupMembership")
+        .WithName(GetGroupMembership)
         .WithSummary("Gets a group membership by ID")
         .Produces<GroupMembershipResponse>();
 
@@ -44,7 +55,7 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("SearchGroupMemberships")
+        .WithName(SearchGroupMemberships)
         .WithSummary("Searches group memberships with pagination")
         .Produces<PagedList<GroupMembershipResponse>>();
 
@@ -59,7 +70,7 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("GetGroupMembershipsByGroup")
+        .WithName(GetGroupMembershipsByGroup)
         .WithSummary("Gets all memberships for a group")
         .Produces<PagedList<GroupMembershipResponse>>();
 
@@ -74,7 +85,7 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("GetGroupMembershipsByMember")
+        .WithName(GetGroupMembershipsByMember)
         .WithSummary("Gets all groups a member belongs to")
         .Produces<PagedList<GroupMembershipResponse>>();
 
@@ -84,7 +95,7 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Ok(response);
         })
-        .WithName("UpdateMembershipRole")
+        .WithName(UpdateMembershipRole)
         .WithSummary("Updates the role of a group membership")
         .Produces<UpdateMembershipRoleResponse>();
 
@@ -94,7 +105,7 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Ok(response);
         })
-        .WithName("WithdrawGroupMembership")
+        .WithName(WithdrawGroupMembership)
         .WithSummary("Withdraws a member from the group")
         .Produces<WithdrawMembershipResponse>();
 
@@ -103,7 +114,7 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new SuspendMembershipCommand(id));
             return Results.Ok(response);
         })
-        .WithName("SuspendGroupMembership")
+        .WithName(SuspendGroupMembership)
         .WithSummary("Suspends a group membership")
         .Produces<SuspendMembershipResponse>();
 
@@ -112,7 +123,7 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new ReactivateMembershipCommand(id));
             return Results.Ok(response);
         })
-        .WithName("ReactivateGroupMembership")
+        .WithName(ReactivateGroupMembership)
             .WithSummary("Reactivates a suspended group membership")
             .Produces<ReactivateMembershipResponse>();
     }

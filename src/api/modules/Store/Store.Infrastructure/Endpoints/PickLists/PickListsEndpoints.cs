@@ -15,6 +15,16 @@ namespace Store.Infrastructure.Endpoints.PickLists;
 /// </summary>
 public class PickListsEndpoints() : CarterModule("store")
 {
+
+    private const string AddPickListItemEndpoint = "AddPickListItemEndpoint";
+    private const string AssignPickListEndpoint = "AssignPickListEndpoint";
+    private const string CompletePickingEndpoint = "CompletePickingEndpoint";
+    private const string CreatePickListEndpoint = "CreatePickListEndpoint";
+    private const string DeletePickListEndpoint = "DeletePickListEndpoint";
+    private const string GetPickListEndpoint = "GetPickListEndpoint";
+    private const string SearchPickListsEndpoint = "SearchPickListsEndpoint";
+    private const string StartPickingEndpoint = "StartPickingEndpoint";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/pick-lists").WithTags("pick-lists");
@@ -25,7 +35,7 @@ public class PickListsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("CreatePickListEndpoint")
+        .WithName(CreatePickListEndpoint)
         .WithSummary("Create a new pick list")
         .WithDescription("Creates a new pick list for warehouse order fulfillment.")
         .Produces<CreatePickListResponse>()
@@ -43,7 +53,7 @@ public class PickListsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("AddPickListItemEndpoint")
+        .WithName(AddPickListItemEndpoint)
         .WithSummary("Add item to pick list")
         .WithDescription("Adds an item to an existing pick list. The pick list must be in 'Created' status. Creates PickListItem as a separate aggregate.")
         .Produces<AddPickListItemResponse>()
@@ -63,7 +73,7 @@ public class PickListsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("AssignPickListEndpoint")
+        .WithName(AssignPickListEndpoint)
         .WithSummary("Assign pick list to picker")
         .WithDescription("Assigns a pick list to a warehouse picker.")
         .Produces<AssignPickListResponse>()
@@ -81,7 +91,7 @@ public class PickListsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("StartPickingEndpoint")
+        .WithName(StartPickingEndpoint)
         .WithSummary("Start picking")
         .WithDescription("Marks a pick list as started and records the start time.")
         .Produces<StartPickingResponse>()
@@ -99,7 +109,7 @@ public class PickListsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("CompletePickingEndpoint")
+        .WithName(CompletePickingEndpoint)
         .WithSummary("Complete picking")
         .WithDescription("Marks a pick list as completed and records the completion time.")
         .Produces<CompletePickingResponse>()
@@ -113,7 +123,7 @@ public class PickListsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("DeletePickListEndpoint")
+        .WithName(DeletePickListEndpoint)
         .WithSummary("Delete a pick list")
         .WithDescription("Deletes an existing pick list.")
         .Produces<DeletePickListResponse>()
@@ -127,7 +137,7 @@ public class PickListsEndpoints() : CarterModule("store")
             var response = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("GetPickListEndpoint")
+        .WithName(GetPickListEndpoint)
         .WithSummary("Get pick list by ID")
         .WithDescription("Retrieves a specific pick list with all items.")
         .Produces<GetPickListResponse>()
@@ -140,7 +150,7 @@ public class PickListsEndpoints() : CarterModule("store")
             var response = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("SearchPickListsEndpoint")
+        .WithName(SearchPickListsEndpoint)
         .WithSummary("Search pick lists")
         .WithDescription("Searches pick lists with pagination and filtering options.")
         .Produces<PagedList<PickListResponse>>()

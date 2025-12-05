@@ -8,6 +8,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class KycDocumentEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateKycDocument = "CreateKycDocument";
+    private const string GetKycDocument = "GetKycDocument";
+    private const string RejectKycDocument = "RejectKycDocument";
+    private const string VerifyKycDocument = "VerifyKycDocument";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/kyc-documents").WithTags("KYC Documents");
@@ -17,7 +23,7 @@ public class KycDocumentEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/kyc-documents/{result.Id}", result);
         })
-        .WithName("CreateKycDocument")
+        .WithName(CreateKycDocument)
         .WithSummary("Upload a new KYC document")
         .Produces<CreateKycDocumentResponse>(StatusCodes.Status201Created);
 
@@ -26,7 +32,7 @@ public class KycDocumentEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetKycDocumentRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetKycDocument")
+        .WithName(GetKycDocument)
         .WithSummary("Get KYC document by ID")
         .Produces<KycDocumentResponse>();
 
@@ -36,7 +42,7 @@ public class KycDocumentEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("VerifyKycDocument")
+        .WithName(VerifyKycDocument)
         .WithSummary("Verify KYC document")
         .Produces<VerifyKycDocumentResponse>();
 
@@ -46,7 +52,7 @@ public class KycDocumentEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("RejectKycDocument")
+        .WithName(RejectKycDocument)
         .WithSummary("Reject KYC document")
         .Produces<RejectKycDocumentResponse>();
 

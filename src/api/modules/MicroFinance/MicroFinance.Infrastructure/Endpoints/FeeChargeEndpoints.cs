@@ -13,6 +13,16 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class FeeChargeEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateFeeCharge = "CreateFeeCharge";
+    private const string GetFeeCharge = "GetFeeCharge";
+    private const string GetFeeChargesByDefinition = "GetFeeChargesByDefinition";
+    private const string GetFeeChargesByMember = "GetFeeChargesByMember";
+    private const string RecordFeePayment = "RecordFeePayment";
+    private const string ReverseFeeCharge = "ReverseFeeCharge";
+    private const string SearchFeeCharges = "SearchFeeCharges";
+    private const string WaiveFeeCharge = "WaiveFeeCharge";
+
     /// <summary>
     /// Maps all Fee Charge endpoints to the route builder.
     /// </summary>
@@ -25,7 +35,7 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Created($"/microfinance/fee-charges/{response.Id}", response);
         })
-        .WithName("CreateFeeCharge")
+        .WithName(CreateFeeCharge)
         .WithSummary("Creates a new fee charge")
         .Produces<CreateFeeChargeResponse>(StatusCodes.Status201Created);
 
@@ -34,7 +44,7 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new GetFeeChargeRequest(id));
             return Results.Ok(response);
         })
-        .WithName("GetFeeCharge")
+        .WithName(GetFeeCharge)
         .WithSummary("Gets a fee charge by ID")
         .Produces<FeeChargeResponse>();
 
@@ -43,7 +53,7 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("SearchFeeCharges")
+        .WithName(SearchFeeCharges)
         .WithSummary("Searches fee charges with pagination")
         .Produces<PagedList<FeeChargeResponse>>();
 
@@ -58,7 +68,7 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("GetFeeChargesByMember")
+        .WithName(GetFeeChargesByMember)
         .WithSummary("Gets all fee charges for a member")
         .Produces<PagedList<FeeChargeResponse>>();
 
@@ -73,7 +83,7 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("GetFeeChargesByDefinition")
+        .WithName(GetFeeChargesByDefinition)
         .WithSummary("Gets all fee charges for a fee definition")
         .Produces<PagedList<FeeChargeResponse>>();
 
@@ -83,7 +93,7 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Ok(response);
         })
-        .WithName("RecordFeePayment")
+        .WithName(RecordFeePayment)
         .WithSummary("Records a payment for a fee charge")
         .Produces<RecordFeePaymentResponse>();
 
@@ -93,7 +103,7 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Ok(response);
         })
-        .WithName("WaiveFeeCharge")
+        .WithName(WaiveFeeCharge)
         .WithSummary("Waives a fee charge")
         .Produces<WaiveFeeChargeResponse>();
 
@@ -103,7 +113,7 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Ok(response);
         })
-        .WithName("ReverseFeeCharge")
+        .WithName(ReverseFeeCharge)
         .WithSummary("Reverses a fee charge")
         .Produces<ReverseFeeChargeResponse>();
 

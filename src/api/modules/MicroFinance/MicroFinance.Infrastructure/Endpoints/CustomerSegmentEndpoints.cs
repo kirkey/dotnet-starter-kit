@@ -8,6 +8,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CustomerSegmentEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ActivateCustomerSegment = "ActivateCustomerSegment";
+    private const string CreateCustomerSegment = "CreateCustomerSegment";
+    private const string DeactivateCustomerSegment = "DeactivateCustomerSegment";
+    private const string GetCustomerSegment = "GetCustomerSegment";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/customer-segments").WithTags("Customer Segments");
@@ -17,7 +23,7 @@ public class CustomerSegmentEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/customer-segments/{result.Id}", result);
         })
-        .WithName("CreateCustomerSegment")
+        .WithName(CreateCustomerSegment)
         .WithSummary("Create a new customer segment")
         .Produces<CreateCustomerSegmentResponse>(StatusCodes.Status201Created);
 
@@ -26,7 +32,7 @@ public class CustomerSegmentEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetCustomerSegmentRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetCustomerSegment")
+        .WithName(GetCustomerSegment)
         .WithSummary("Get customer segment by ID")
         .Produces<CustomerSegmentResponse>();
 
@@ -35,7 +41,7 @@ public class CustomerSegmentEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new ActivateCustomerSegmentCommand(id));
             return Results.Ok(result);
         })
-        .WithName("ActivateCustomerSegment")
+        .WithName(ActivateCustomerSegment)
         .WithSummary("Activate customer segment")
         .Produces<ActivateCustomerSegmentResponse>();
 
@@ -44,7 +50,7 @@ public class CustomerSegmentEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new DeactivateCustomerSegmentCommand(id));
             return Results.Ok(result);
         })
-        .WithName("DeactivateCustomerSegment")
+        .WithName(DeactivateCustomerSegment)
         .WithSummary("Deactivate customer segment")
         .Produces<DeactivateCustomerSegmentResponse>();
 

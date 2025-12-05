@@ -10,6 +10,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class QrPaymentEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateDynamicQr = "CreateDynamicQr";
+    private const string CreateStaticQr = "CreateStaticQr";
+    private const string GetQrPayment = "GetQrPayment";
+
     /// <summary>
     /// Maps all QR Payment endpoints to the route builder.
     /// </summary>
@@ -22,7 +27,7 @@ public class QrPaymentEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/qr-payments/{response.Id}", response);
             })
-            .WithName("CreateStaticQr")
+            .WithName(CreateStaticQr)
             .WithSummary("Creates a static QR code for payments")
             .Produces<CreateStaticQrResponse>(StatusCodes.Status201Created);
 
@@ -31,7 +36,7 @@ public class QrPaymentEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/qr-payments/{response.Id}", response);
             })
-            .WithName("CreateDynamicQr")
+            .WithName(CreateDynamicQr)
             .WithSummary("Creates a dynamic QR code with amount and expiry")
             .Produces<CreateDynamicQrResponse>(StatusCodes.Status201Created);
 
@@ -40,7 +45,7 @@ public class QrPaymentEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetQrPaymentRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetQrPayment")
+            .WithName(GetQrPayment)
             .WithSummary("Gets a QR payment by ID")
             .Produces<QrPaymentResponse>();
     }

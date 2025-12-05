@@ -10,6 +10,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class InsuranceClaimEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ApproveInsuranceClaim = "ApproveInsuranceClaim";
+    private const string GetInsuranceClaim = "GetInsuranceClaim";
+    private const string RejectInsuranceClaim = "RejectInsuranceClaim";
+    private const string ReviewInsuranceClaim = "ReviewInsuranceClaim";
+    private const string SettleInsuranceClaim = "SettleInsuranceClaim";
+    private const string SubmitInsuranceClaim = "SubmitInsuranceClaim";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/insurance-claims").WithTags("insurance-claims");
@@ -20,7 +28,7 @@ public class InsuranceClaimEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/insurance-claims/{response.Id}", response);
             })
-            .WithName("SubmitInsuranceClaim")
+            .WithName(SubmitInsuranceClaim)
             .WithSummary("Submits a new insurance claim")
             .Produces<SubmitInsuranceClaimResponse>(StatusCodes.Status201Created);
 
@@ -29,7 +37,7 @@ public class InsuranceClaimEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetInsuranceClaimRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetInsuranceClaim")
+            .WithName(GetInsuranceClaim)
             .WithSummary("Gets an insurance claim by ID")
             .Produces<InsuranceClaimResponse>();
 
@@ -40,7 +48,7 @@ public class InsuranceClaimEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("ReviewInsuranceClaim")
+            .WithName(ReviewInsuranceClaim)
             .WithSummary("Starts review of an insurance claim")
             .Produces<ReviewInsuranceClaimResponse>();
 
@@ -50,7 +58,7 @@ public class InsuranceClaimEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("ApproveInsuranceClaim")
+            .WithName(ApproveInsuranceClaim)
             .WithSummary("Approves an insurance claim")
             .Produces<ApproveInsuranceClaimResponse>();
 
@@ -60,7 +68,7 @@ public class InsuranceClaimEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("RejectInsuranceClaim")
+            .WithName(RejectInsuranceClaim)
             .WithSummary("Rejects an insurance claim")
             .Produces<RejectInsuranceClaimResponse>();
 
@@ -70,7 +78,7 @@ public class InsuranceClaimEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SettleInsuranceClaim")
+            .WithName(SettleInsuranceClaim)
             .WithSummary("Settles an approved insurance claim")
             .Produces<SettleInsuranceClaimResponse>();
 

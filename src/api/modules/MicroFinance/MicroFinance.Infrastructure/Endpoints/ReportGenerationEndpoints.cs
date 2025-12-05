@@ -9,6 +9,10 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class ReportGenerationEndpoints() : CarterModule("microfinance")
 {
+
+    private const string GetReportGeneration = "GetReportGeneration";
+    private const string QueueReportGeneration = "QueueReportGeneration";
+
     /// <summary>
     /// Maps all Report Generation endpoints to the route builder.
     /// </summary>
@@ -21,7 +25,7 @@ public class ReportGenerationEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/report-generations/{response.Id}", response);
             })
-            .WithName("QueueReportGeneration")
+            .WithName(QueueReportGeneration)
             .WithSummary("Queues a new report generation")
             .Produces<QueueReportGenerationResponse>(StatusCodes.Status201Created);
 
@@ -30,7 +34,7 @@ public class ReportGenerationEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetReportGenerationRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetReportGeneration")
+            .WithName(GetReportGeneration)
             .WithSummary("Gets a report generation by ID")
             .Produces<ReportGenerationResponse>();
     }

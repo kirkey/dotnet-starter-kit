@@ -9,6 +9,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class ShareTransactionEndpoints() : CarterModule("microfinance")
 {
+
+    private const string GetShareTransaction = "GetShareTransaction";
+    private const string GetShareTransactionsByAccount = "GetShareTransactionsByAccount";
+    private const string SearchShareTransactions = "SearchShareTransactions";
+
     /// <summary>
     /// Maps all Share Transaction endpoints to the route builder.
     /// </summary>
@@ -21,7 +26,7 @@ public class ShareTransactionEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new GetShareTransactionRequest(id));
             return Results.Ok(response);
         })
-        .WithName("GetShareTransaction")
+        .WithName(GetShareTransaction)
         .WithSummary("Gets a share transaction by ID")
         .Produces<ShareTransactionResponse>();
 
@@ -30,7 +35,7 @@ public class ShareTransactionEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("SearchShareTransactions")
+        .WithName(SearchShareTransactions)
         .WithSummary("Searches share transactions with pagination")
         .Produces<PagedList<ShareTransactionResponse>>();
 
@@ -45,7 +50,7 @@ public class ShareTransactionEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("GetShareTransactionsByAccount")
+        .WithName(GetShareTransactionsByAccount)
         .WithSummary("Gets all transactions for a share account")
         .Produces<PagedList<ShareTransactionResponse>>();
 

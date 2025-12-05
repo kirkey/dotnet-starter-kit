@@ -8,6 +8,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class DebtSettlementEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ApproveSettlement = "ApproveSettlement";
+    private const string CreateDebtSettlement = "CreateDebtSettlement";
+    private const string GetDebtSettlement = "GetDebtSettlement";
+    private const string RecordSettlementPayment = "RecordSettlementPayment";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/debt-settlements").WithTags("Debt Settlements");
@@ -17,7 +23,7 @@ public class DebtSettlementEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/debt-settlements/{result.Id}", result);
         })
-        .WithName("CreateDebtSettlement")
+        .WithName(CreateDebtSettlement)
         .WithSummary("Create a new debt settlement")
         .Produces<CreateDebtSettlementResponse>(StatusCodes.Status201Created);
 
@@ -26,7 +32,7 @@ public class DebtSettlementEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetDebtSettlementRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetDebtSettlement")
+        .WithName(GetDebtSettlement)
         .WithSummary("Get debt settlement by ID")
         .Produces<DebtSettlementResponse>();
 
@@ -35,7 +41,7 @@ public class DebtSettlementEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new ApproveSettlementCommand(id, request.ApprovedById));
             return Results.Ok(result);
         })
-        .WithName("ApproveSettlement")
+        .WithName(ApproveSettlement)
         .WithSummary("Approve a debt settlement")
         .Produces<ApproveSettlementResponse>();
 
@@ -44,7 +50,7 @@ public class DebtSettlementEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new RecordSettlementPaymentCommand(id, request.Amount));
             return Results.Ok(result);
         })
-        .WithName("RecordSettlementPayment")
+        .WithName(RecordSettlementPayment)
         .WithSummary("Record payment for a debt settlement")
         .Produces<RecordSettlementPaymentResponse>();
 

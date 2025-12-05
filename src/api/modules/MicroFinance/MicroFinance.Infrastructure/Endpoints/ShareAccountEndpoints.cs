@@ -15,6 +15,16 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class ShareAccountEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CloseShareAccount = "CloseShareAccount";
+    private const string CreateShareAccount = "CreateShareAccount";
+    private const string GetShareAccount = "GetShareAccount";
+    private const string PayShareDividend = "PayShareDividend";
+    private const string PostShareDividend = "PostShareDividend";
+    private const string PurchaseShares = "PurchaseShares";
+    private const string RedeemShares = "RedeemShares";
+    private const string SearchShareAccounts = "SearchShareAccounts";
+
     /// <summary>
     /// Maps all Share Account endpoints to the route builder.
     /// </summary>
@@ -27,7 +37,7 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/share-accounts/{response.Id}", response);
             })
-            .WithName("CreateShareAccount")
+            .WithName(CreateShareAccount)
             .WithSummary("Creates a new share account")
             .Produces<CreateShareAccountResponse>(StatusCodes.Status201Created);
 
@@ -36,7 +46,7 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetShareAccountRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetShareAccount")
+            .WithName(GetShareAccount)
             .WithSummary("Gets a share account by ID")
             .Produces<ShareAccountResponse>();
 
@@ -45,7 +55,7 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchShareAccounts")
+            .WithName(SearchShareAccounts)
             .WithSummary("Searches share accounts with filtering and pagination")
             .Produces<PagedList<ShareAccountResponse>>();
 
@@ -55,7 +65,7 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("PurchaseShares")
+            .WithName(PurchaseShares)
             .WithSummary("Purchases shares for an account")
             .Produces<PurchaseSharesResponse>();
 
@@ -65,7 +75,7 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("RedeemShares")
+            .WithName(RedeemShares)
             .WithSummary("Redeems shares from an account")
             .Produces<RedeemSharesResponse>();
 
@@ -75,7 +85,7 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("PostShareDividend")
+            .WithName(PostShareDividend)
             .WithSummary("Posts a dividend to a share account")
             .Produces<PostDividendResponse>();
 
@@ -85,7 +95,7 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("PayShareDividend")
+            .WithName(PayShareDividend)
             .WithSummary("Pays out the dividend on a share account")
             .Produces<PayDividendResponse>();
 
@@ -95,7 +105,7 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("CloseShareAccount")
+            .WithName(CloseShareAccount)
             .WithSummary("Closes a share account")
             .Produces<CloseShareAccountResponse>();
 

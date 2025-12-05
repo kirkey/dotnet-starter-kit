@@ -12,6 +12,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class MemberEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateMember = "CreateMember";
+    private const string DeleteMember = "DeleteMember";
+    private const string GetMember = "GetMember";
+    private const string SearchMembers = "SearchMembers";
+    private const string UpdateMember = "UpdateMember";
+
     /// <summary>
     /// Maps all Member endpoints to the route builder.
     /// </summary>
@@ -24,7 +31,7 @@ public class MemberEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/members/{response.Id}", response);
             })
-            .WithName("CreateMember")
+            .WithName(CreateMember)
             .WithSummary("Creates a new member")
             .Produces<CreateMemberResponse>(StatusCodes.Status201Created);
 
@@ -33,7 +40,7 @@ public class MemberEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetMemberRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetMember")
+            .WithName(GetMember)
             .WithSummary("Gets a member by ID")
             .Produces<MemberResponse>();
 
@@ -46,7 +53,7 @@ public class MemberEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateMember")
+            .WithName(UpdateMember)
             .WithSummary("Updates a member")
             .Produces<UpdateMemberResponse>();
 
@@ -55,7 +62,7 @@ public class MemberEndpoints() : CarterModule("microfinance")
                 await sender.Send(new DeleteMemberCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
-            .WithName("DeleteMember")
+            .WithName(DeleteMember)
             .WithSummary("Deletes a member")
             .Produces(StatusCodes.Status204NoContent);
 
@@ -64,7 +71,7 @@ public class MemberEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchMembers")
+            .WithName(SearchMembers)
             .WithSummary("Searches members with filters and pagination")
             .Produces<PagedList<MemberResponse>>();
     }

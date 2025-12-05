@@ -15,6 +15,16 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class MemberGroupEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ActivateMemberGroup = "ActivateMemberGroup";
+    private const string AddMemberToGroup = "AddMemberToGroup";
+    private const string CreateMemberGroup = "CreateMemberGroup";
+    private const string DeactivateMemberGroup = "DeactivateMemberGroup";
+    private const string DissolveMemberGroup = "DissolveMemberGroup";
+    private const string GetMemberGroup = "GetMemberGroup";
+    private const string SearchMemberGroups = "SearchMemberGroups";
+    private const string UpdateMemberGroup = "UpdateMemberGroup";
+
     /// <summary>
     /// Maps all Member Group endpoints to the route builder.
     /// </summary>
@@ -27,7 +37,7 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/member-groups/{response.Id}", response);
             })
-            .WithName("CreateMemberGroup")
+            .WithName(CreateMemberGroup)
             .WithSummary("Creates a new member group")
             .Produces<CreateMemberGroupResponse>(StatusCodes.Status201Created);
 
@@ -36,7 +46,7 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetMemberGroupRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetMemberGroup")
+            .WithName(GetMemberGroup)
             .WithSummary("Gets a member group by ID")
             .Produces<MemberGroupResponse>();
 
@@ -45,7 +55,7 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchMemberGroups")
+            .WithName(SearchMemberGroups)
             .WithSummary("Searches member groups with filters and pagination")
             .Produces<PagedList<MemberGroupResponse>>();
 
@@ -58,7 +68,7 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/group-memberships/{response.MembershipId}", response);
             })
-            .WithName("AddMemberToGroup")
+            .WithName(AddMemberToGroup)
             .WithSummary("Adds a member to the group")
             .Produces<AddMemberToGroupResponse>(StatusCodes.Status201Created);
 
@@ -68,7 +78,7 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateMemberGroup")
+            .WithName(UpdateMemberGroup)
             .WithSummary("Updates a member group")
             .Produces<UpdateMemberGroupResponse>();
 
@@ -77,7 +87,7 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new ActivateMemberGroupCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("ActivateMemberGroup")
+            .WithName(ActivateMemberGroup)
             .WithSummary("Activates a member group")
             .Produces<ActivateMemberGroupResponse>();
 
@@ -86,7 +96,7 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new DeactivateMemberGroupCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeactivateMemberGroup")
+            .WithName(DeactivateMemberGroup)
             .WithSummary("Deactivates a member group")
             .Produces<DeactivateMemberGroupResponse>();
 
@@ -96,7 +106,7 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DissolveMemberGroup")
+            .WithName(DissolveMemberGroup)
             .WithSummary("Dissolves a member group")
             .Produces<DissolveMemberGroupResponse>();
     }

@@ -14,6 +14,15 @@ namespace Store.Infrastructure.Endpoints.GoodsReceipts;
 /// </summary>
 public class GoodsReceiptsEndpoints() : CarterModule("store")
 {
+
+    private const string AddGoodsReceiptItemEndpoint = "AddGoodsReceiptItemEndpoint";
+    private const string CreateGoodsReceiptEndpoint = "CreateGoodsReceiptEndpoint";
+    private const string DeleteGoodsReceiptEndpoint = "DeleteGoodsReceiptEndpoint";
+    private const string GetGoodsReceiptEndpoint = "GetGoodsReceiptEndpoint";
+    private const string GetPurchaseOrderItemsForReceivingEndpoint = "GetPurchaseOrderItemsForReceivingEndpoint";
+    private const string MarkReceivedEndpoint = "MarkReceivedEndpoint";
+    private const string SearchGoodsReceiptsEndpoint = "SearchGoodsReceiptsEndpoint";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/goods-receipts").WithTags("goods-receipts");
@@ -24,7 +33,7 @@ public class GoodsReceiptsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("CreateGoodsReceiptEndpoint")
+        .WithName(CreateGoodsReceiptEndpoint)
         .WithSummary("Create a new goods receipt")
         .WithDescription("Creates a new goods receipt for tracking inbound deliveries from suppliers.")
         .Produces<CreateGoodsReceiptResponse>()
@@ -42,7 +51,7 @@ public class GoodsReceiptsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("AddGoodsReceiptItemEndpoint")
+        .WithName(AddGoodsReceiptItemEndpoint)
         .WithSummary("Add item to goods receipt")
         .WithDescription("Adds an item to an existing goods receipt.")
         .Produces<AddGoodsReceiptItemResponse>()
@@ -60,7 +69,7 @@ public class GoodsReceiptsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("MarkReceivedEndpoint")
+        .WithName(MarkReceivedEndpoint)
         .WithSummary("Mark goods receipt as received")
         .WithDescription("Marks a goods receipt as received/completed.")
         .Produces<MarkReceivedResponse>()
@@ -74,7 +83,7 @@ public class GoodsReceiptsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("DeleteGoodsReceiptEndpoint")
+        .WithName(DeleteGoodsReceiptEndpoint)
         .WithSummary("Delete a goods receipt")
         .WithDescription("Deletes an existing goods receipt.")
         .Produces<DeleteGoodsReceiptResponse>()
@@ -88,7 +97,7 @@ public class GoodsReceiptsEndpoints() : CarterModule("store")
             var response = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("GetGoodsReceiptEndpoint")
+        .WithName(GetGoodsReceiptEndpoint)
         .WithSummary("Get goods receipt by ID")
         .WithDescription("Retrieves a specific goods receipt with all items.")
         .Produces<GetGoodsReceiptResponse>()
@@ -101,7 +110,7 @@ public class GoodsReceiptsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("SearchGoodsReceiptsEndpoint")
+        .WithName(SearchGoodsReceiptsEndpoint)
         .WithSummary("Search goods receipts")
         .WithDescription("Searches goods receipts with pagination and filtering options.")
         .Produces<PagedList<GoodsReceiptResponse>>()
@@ -121,7 +130,7 @@ public class GoodsReceiptsEndpoints() : CarterModule("store")
             var response = await sender.Send(query);
             return Results.Ok(response);
         })
-        .WithName("GetPurchaseOrderItemsForReceivingEndpoint")
+        .WithName(GetPurchaseOrderItemsForReceivingEndpoint)
         .WithSummary("Get PO items available for receiving")
         .WithDescription("Returns purchase order items with their ordered, received, and remaining quantities for partial receiving support")
         .Produces<GetPurchaseOrderItemsForReceivingResponse>()

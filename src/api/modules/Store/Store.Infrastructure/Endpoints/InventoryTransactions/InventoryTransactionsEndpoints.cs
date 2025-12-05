@@ -14,6 +14,15 @@ namespace Store.Infrastructure.Endpoints.InventoryTransactions;
 /// </summary>
 public class InventoryTransactionsEndpoints() : CarterModule("store")
 {
+
+    private const string ApproveInventoryTransactionEndpoint = "ApproveInventoryTransactionEndpoint";
+    private const string CreateInventoryTransactionEndpoint = "CreateInventoryTransactionEndpoint";
+    private const string DeleteInventoryTransactionEndpoint = "DeleteInventoryTransactionEndpoint";
+    private const string GetInventoryTransactionEndpoint = "GetInventoryTransactionEndpoint";
+    private const string RejectInventoryTransactionEndpoint = "RejectInventoryTransactionEndpoint";
+    private const string SearchInventoryTransactionsEndpoint = "SearchInventoryTransactionsEndpoint";
+    private const string UpdateInventoryTransactionNotesEndpoint = "UpdateInventoryTransactionNotesEndpoint";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/inventory-transactions").WithTags("inventory-transactions");
@@ -24,7 +33,7 @@ public class InventoryTransactionsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("CreateInventoryTransactionEndpoint")
+        .WithName(CreateInventoryTransactionEndpoint)
         .WithSummary("Create a new inventory transaction")
         .WithDescription("Creates a new inventory transaction for stock movement tracking and audit trail.")
         .Produces<CreateInventoryTransactionResponse>()
@@ -42,7 +51,7 @@ public class InventoryTransactionsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("ApproveInventoryTransactionEndpoint")
+        .WithName(ApproveInventoryTransactionEndpoint)
         .WithSummary("Approve an inventory transaction")
         .WithDescription("Approves a pending inventory transaction for authorization and compliance.")
         .Produces<ApproveInventoryTransactionResponse>()
@@ -60,7 +69,7 @@ public class InventoryTransactionsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("RejectInventoryTransactionEndpoint")
+        .WithName(RejectInventoryTransactionEndpoint)
         .WithSummary("Reject an inventory transaction")
         .WithDescription("Rejects a previously approved inventory transaction, optionally recording the reason for rejection.")
         .Produces<RejectInventoryTransactionResponse>()
@@ -76,7 +85,7 @@ public class InventoryTransactionsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("UpdateInventoryTransactionNotesEndpoint")
+        .WithName(UpdateInventoryTransactionNotesEndpoint)
         .WithSummary("Update inventory transaction notes")
         .WithDescription("Updates the notes field on an existing inventory transaction for additional documentation.")
         .Produces<UpdateInventoryTransactionNotesResponse>()
@@ -91,7 +100,7 @@ public class InventoryTransactionsEndpoints() : CarterModule("store")
             var response = await sender.Send(new DeleteInventoryTransactionCommand { Id = id }).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("DeleteInventoryTransactionEndpoint")
+        .WithName(DeleteInventoryTransactionEndpoint)
         .WithSummary("Delete an inventory transaction")
         .WithDescription("Deletes an existing inventory transaction from the system.")
         .Produces<DeleteInventoryTransactionResponse>()
@@ -104,7 +113,7 @@ public class InventoryTransactionsEndpoints() : CarterModule("store")
             var response = await sender.Send(new GetInventoryTransactionCommand(id)).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("GetInventoryTransactionEndpoint")
+        .WithName(GetInventoryTransactionEndpoint)
         .WithSummary("Get an inventory transaction by ID")
         .WithDescription("Retrieves a specific inventory transaction by its unique identifier.")
         .Produces<InventoryTransactionResponse>()
@@ -117,7 +126,7 @@ public class InventoryTransactionsEndpoints() : CarterModule("store")
             var response = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("SearchInventoryTransactionsEndpoint")
+        .WithName(SearchInventoryTransactionsEndpoint)
         .WithSummary("Search inventory transactions")
         .WithDescription("Searches for inventory transactions with pagination and filtering by transaction number, item, warehouse, type, date range, approval status, and cost range.")
         .Produces<PagedList<InventoryTransactionDto>>()

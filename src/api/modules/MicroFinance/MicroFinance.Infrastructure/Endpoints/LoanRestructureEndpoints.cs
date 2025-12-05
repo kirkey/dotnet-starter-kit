@@ -7,6 +7,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class LoanRestructureEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ApproveRestructure = "ApproveRestructure";
+    private const string CreateLoanRestructure = "CreateLoanRestructure";
+    private const string GetLoanRestructure = "GetLoanRestructure";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/loan-restructures").WithTags("Loan Restructures");
@@ -16,7 +21,7 @@ public class LoanRestructureEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/loan-restructures/{result.Id}", result);
         })
-        .WithName("CreateLoanRestructure")
+        .WithName(CreateLoanRestructure)
         .WithSummary("Create a new loan restructure")
         .Produces<CreateLoanRestructureResponse>(StatusCodes.Status201Created);
 
@@ -25,7 +30,7 @@ public class LoanRestructureEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetLoanRestructureRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetLoanRestructure")
+        .WithName(GetLoanRestructure)
         .WithSummary("Get loan restructure by ID")
         .Produces<LoanRestructureResponse>();
 
@@ -35,7 +40,7 @@ public class LoanRestructureEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("ApproveRestructure")
+        .WithName(ApproveRestructure)
         .WithSummary("Approve loan restructure")
         .Produces<ApproveRestructureResponse>();
 

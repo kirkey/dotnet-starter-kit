@@ -9,6 +9,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class LoanScheduleEndpoints() : CarterModule("microfinance")
 {
+
+    private const string GetLoanSchedule = "GetLoanSchedule";
+    private const string GetLoanSchedulesByLoan = "GetLoanSchedulesByLoan";
+    private const string SearchLoanSchedules = "SearchLoanSchedules";
+
     /// <summary>
     /// Maps all Loan Schedule endpoints to the route builder.
     /// </summary>
@@ -21,7 +26,7 @@ public class LoanScheduleEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new GetLoanScheduleRequest(id));
             return Results.Ok(response);
         })
-        .WithName("GetLoanSchedule")
+        .WithName(GetLoanSchedule)
         .WithSummary("Gets a loan schedule entry by ID")
         .Produces<LoanScheduleResponse>();
 
@@ -30,7 +35,7 @@ public class LoanScheduleEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("SearchLoanSchedules")
+        .WithName(SearchLoanSchedules)
         .WithSummary("Searches loan schedules with pagination")
         .Produces<PagedList<LoanScheduleResponse>>();
 
@@ -45,7 +50,7 @@ public class LoanScheduleEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("GetLoanSchedulesByLoan")
+        .WithName(GetLoanSchedulesByLoan)
         .WithSummary("Gets the complete repayment schedule for a loan")
         .Produces<PagedList<LoanScheduleResponse>>();
     }

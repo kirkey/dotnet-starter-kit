@@ -9,6 +9,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CollateralValuationEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ApproveValuation = "ApproveValuation";
+    private const string CreateCollateralValuation = "CreateCollateralValuation";
+    private const string GetCollateralValuation = "GetCollateralValuation";
+    private const string RejectValuation = "RejectValuation";
+    private const string SubmitValuation = "SubmitValuation";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/collateral-valuations").WithTags("Collateral Valuations");
@@ -18,7 +25,7 @@ public class CollateralValuationEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/collateral-valuations/{result.Id}", result);
         })
-        .WithName("CreateCollateralValuation")
+        .WithName(CreateCollateralValuation)
         .WithSummary("Create a new collateral valuation")
         .Produces<CreateCollateralValuationResponse>(StatusCodes.Status201Created);
 
@@ -27,7 +34,7 @@ public class CollateralValuationEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetCollateralValuationRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetCollateralValuation")
+        .WithName(GetCollateralValuation)
         .WithSummary("Get collateral valuation by ID")
         .Produces<CollateralValuationResponse>();
 
@@ -36,7 +43,7 @@ public class CollateralValuationEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new SubmitValuationCommand(id));
             return Results.Ok(result);
         })
-        .WithName("SubmitValuation")
+        .WithName(SubmitValuation)
         .WithSummary("Submit valuation for approval")
         .Produces<SubmitValuationResponse>();
 
@@ -45,7 +52,7 @@ public class CollateralValuationEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new ApproveValuationCommand(id, request.ApprovedById));
             return Results.Ok(result);
         })
-        .WithName("ApproveValuation")
+        .WithName(ApproveValuation)
         .WithSummary("Approve a collateral valuation")
         .Produces<ApproveValuationResponse>();
 
@@ -54,7 +61,7 @@ public class CollateralValuationEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new RejectValuationCommand(id, request.Reason));
             return Results.Ok(result);
         })
-        .WithName("RejectValuation")
+        .WithName(RejectValuation)
         .WithSummary("Reject a collateral valuation")
         .Produces<RejectValuationResponse>();
 

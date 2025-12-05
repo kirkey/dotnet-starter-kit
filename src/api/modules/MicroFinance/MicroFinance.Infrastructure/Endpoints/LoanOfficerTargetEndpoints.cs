@@ -7,6 +7,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class LoanOfficerTargetEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateLoanOfficerTarget = "CreateLoanOfficerTarget";
+    private const string GetLoanOfficerTarget = "GetLoanOfficerTarget";
+    private const string RecordLoanOfficerProgress = "RecordLoanOfficerProgress";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/loan-officer-targets").WithTags("Loan Officer Targets");
@@ -16,7 +21,7 @@ public class LoanOfficerTargetEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/loan-officer-targets/{result.Id}", result);
         })
-        .WithName("CreateLoanOfficerTarget")
+        .WithName(CreateLoanOfficerTarget)
         .WithSummary("Create a new loan officer target")
         .Produces<CreateLoanOfficerTargetResponse>(StatusCodes.Status201Created);
 
@@ -25,7 +30,7 @@ public class LoanOfficerTargetEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetLoanOfficerTargetRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetLoanOfficerTarget")
+        .WithName(GetLoanOfficerTarget)
         .WithSummary("Get loan officer target by ID")
         .Produces<LoanOfficerTargetResponse>();
 
@@ -35,7 +40,7 @@ public class LoanOfficerTargetEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("RecordLoanOfficerProgress")
+        .WithName(RecordLoanOfficerProgress)
         .WithSummary("Record progress towards loan officer target")
         .Produces<RecordLoanOfficerProgressResponse>();
 

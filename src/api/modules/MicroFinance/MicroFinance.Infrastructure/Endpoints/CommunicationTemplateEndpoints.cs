@@ -7,6 +7,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CommunicationTemplateEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ActivateCommunicationTemplate = "ActivateCommunicationTemplate";
+    private const string CreateCommunicationTemplate = "CreateCommunicationTemplate";
+    private const string GetCommunicationTemplate = "GetCommunicationTemplate";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/communication-templates").WithTags("Communication Templates");
@@ -16,7 +21,7 @@ public class CommunicationTemplateEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/communication-templates/{result.Id}", result);
         })
-        .WithName("CreateCommunicationTemplate")
+        .WithName(CreateCommunicationTemplate)
         .WithSummary("Create a new communication template")
         .Produces<CreateCommunicationTemplateResponse>(StatusCodes.Status201Created);
 
@@ -25,7 +30,7 @@ public class CommunicationTemplateEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetCommunicationTemplateRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetCommunicationTemplate")
+        .WithName(GetCommunicationTemplate)
         .WithSummary("Get communication template by ID")
         .Produces<CommunicationTemplateResponse>();
 
@@ -34,7 +39,7 @@ public class CommunicationTemplateEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new ActivateTemplateCommand(id));
             return Results.Ok(result);
         })
-        .WithName("ActivateCommunicationTemplate")
+        .WithName(ActivateCommunicationTemplate)
         .WithSummary("Activate a communication template")
         .Produces<ActivateTemplateResponse>();
 

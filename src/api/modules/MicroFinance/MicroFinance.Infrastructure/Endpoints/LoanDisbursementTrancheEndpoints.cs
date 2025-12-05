@@ -9,6 +9,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ApproveTranche = "ApproveTranche";
+    private const string CreateLoanDisbursementTranche = "CreateLoanDisbursementTranche";
+    private const string DisburseTranche = "DisburseTranche";
+    private const string GetLoanDisbursementTranche = "GetLoanDisbursementTranche";
+    private const string VerifyTrancheMilestone = "VerifyTrancheMilestone";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/loan-disbursement-tranches").WithTags("Loan Disbursement Tranches");
@@ -18,7 +25,7 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/loan-disbursement-tranches/{result.Id}", result);
         })
-        .WithName("CreateLoanDisbursementTranche")
+        .WithName(CreateLoanDisbursementTranche)
         .WithSummary("Create a new loan disbursement tranche")
         .Produces<CreateLoanDisbursementTrancheResponse>(StatusCodes.Status201Created);
 
@@ -27,7 +34,7 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetLoanDisbursementTrancheRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetLoanDisbursementTranche")
+        .WithName(GetLoanDisbursementTranche)
         .WithSummary("Get loan disbursement tranche by ID")
         .Produces<LoanDisbursementTrancheResponse>();
 
@@ -36,7 +43,7 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new VerifyMilestoneCommand(id));
             return Results.Ok(result);
         })
-        .WithName("VerifyTrancheMilestone")
+        .WithName(VerifyTrancheMilestone)
         .WithSummary("Verify tranche milestone")
         .Produces<VerifyMilestoneResponse>();
 
@@ -46,7 +53,7 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("ApproveTranche")
+        .WithName(ApproveTranche)
         .WithSummary("Approve disbursement tranche")
         .Produces<ApproveTrancheResponse>();
 
@@ -56,7 +63,7 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("DisburseTranche")
+        .WithName(DisburseTranche)
         .WithSummary("Disburse tranche")
         .Produces<DisburseTrancheResponse>();
 

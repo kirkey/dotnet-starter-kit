@@ -10,6 +10,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class PaymentGatewayEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ActivatePaymentGateway = "ActivatePaymentGateway";
+    private const string CreatePaymentGateway = "CreatePaymentGateway";
+    private const string GetPaymentGateway = "GetPaymentGateway";
+
     /// <summary>
     /// Maps all Payment Gateway endpoints to the route builder.
     /// </summary>
@@ -22,7 +27,7 @@ public class PaymentGatewayEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/payment-gateways/{response.Id}", response);
             })
-            .WithName("CreatePaymentGateway")
+            .WithName(CreatePaymentGateway)
             .WithSummary("Creates a new payment gateway configuration")
             .Produces<CreatePaymentGatewayResponse>(StatusCodes.Status201Created);
 
@@ -31,7 +36,7 @@ public class PaymentGatewayEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetPaymentGatewayRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetPaymentGateway")
+            .WithName(GetPaymentGateway)
             .WithSummary("Gets a payment gateway by ID")
             .Produces<PaymentGatewayResponse>();
 
@@ -40,7 +45,7 @@ public class PaymentGatewayEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new ActivatePaymentGatewayCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("ActivatePaymentGateway")
+            .WithName(ActivatePaymentGateway)
             .WithSummary("Activates a payment gateway")
             .Produces<ActivatePaymentGatewayResponse>();
     }

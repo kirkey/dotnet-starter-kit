@@ -12,6 +12,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class LoanProductEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateLoanProduct = "CreateLoanProduct";
+    private const string DeleteLoanProduct = "DeleteLoanProduct";
+    private const string GetLoanProduct = "GetLoanProduct";
+    private const string SearchLoanProducts = "SearchLoanProducts";
+    private const string UpdateLoanProduct = "UpdateLoanProduct";
+
     /// <summary>
     /// Maps all Loan Product endpoints to the route builder.
     /// </summary>
@@ -24,7 +31,7 @@ public class LoanProductEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/loan-products/{response.Id}", response);
             })
-            .WithName("CreateLoanProduct")
+            .WithName(CreateLoanProduct)
             .WithSummary("Creates a new loan product")
             .Produces<CreateLoanProductResponse>(StatusCodes.Status201Created);
 
@@ -33,7 +40,7 @@ public class LoanProductEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetLoanProductRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetLoanProduct")
+            .WithName(GetLoanProduct)
             .WithSummary("Gets a loan product by ID")
             .Produces<LoanProductResponse>();
 
@@ -46,7 +53,7 @@ public class LoanProductEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateLoanProduct")
+            .WithName(UpdateLoanProduct)
             .WithSummary("Updates a loan product")
             .Produces<UpdateLoanProductResponse>();
 
@@ -55,7 +62,7 @@ public class LoanProductEndpoints() : CarterModule("microfinance")
                 await sender.Send(new DeleteLoanProductCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
-            .WithName("DeleteLoanProduct")
+            .WithName(DeleteLoanProduct)
             .WithSummary("Deletes a loan product")
             .Produces(StatusCodes.Status204NoContent);
 
@@ -64,7 +71,7 @@ public class LoanProductEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchLoanProducts")
+            .WithName(SearchLoanProducts)
             .WithSummary("Searches loan products with filters and pagination")
             .Produces<PagedList<LoanProductResponse>>();
     }

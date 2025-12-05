@@ -7,6 +7,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CreditBureauInquiryEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CompleteInquiry = "CompleteInquiry";
+    private const string CreateCreditBureauInquiry = "CreateCreditBureauInquiry";
+    private const string GetCreditBureauInquiry = "GetCreditBureauInquiry";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/credit-bureau-inquiries").WithTags("Credit Bureau Inquiries");
@@ -16,7 +21,7 @@ public class CreditBureauInquiryEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/credit-bureau-inquiries/{result.Id}", result);
         })
-        .WithName("CreateCreditBureauInquiry")
+        .WithName(CreateCreditBureauInquiry)
         .WithSummary("Create a new credit bureau inquiry")
         .Produces<CreateCreditBureauInquiryResponse>(StatusCodes.Status201Created);
 
@@ -25,7 +30,7 @@ public class CreditBureauInquiryEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetCreditBureauInquiryRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetCreditBureauInquiry")
+        .WithName(GetCreditBureauInquiry)
         .WithSummary("Get credit bureau inquiry by ID")
         .Produces<CreditBureauInquiryResponse>();
 
@@ -38,7 +43,7 @@ public class CreditBureauInquiryEndpoints() : CarterModule("microfinance")
                 request.CreditReportId));
             return Results.Ok(result);
         })
-        .WithName("CompleteInquiry")
+        .WithName(CompleteInquiry)
         .WithSummary("Complete a credit bureau inquiry")
         .Produces<CompleteInquiryResponse>();
 

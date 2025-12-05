@@ -10,6 +10,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class LoanRepaymentEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateLoanRepayment = "CreateLoanRepayment";
+    private const string GetLoanRepayment = "GetLoanRepayment";
+    private const string GetLoanRepaymentsByLoan = "GetLoanRepaymentsByLoan";
+    private const string SearchLoanRepayments = "SearchLoanRepayments";
+
     /// <summary>
     /// Maps all Loan Repayment endpoints to the route builder.
     /// </summary>
@@ -22,7 +28,7 @@ public class LoanRepaymentEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/loan-repayments/{response.Id}", response);
             })
-            .WithName("CreateLoanRepayment")
+            .WithName(CreateLoanRepayment)
             .WithSummary("Records a loan repayment")
             .Produces<CreateLoanRepaymentResponse>(StatusCodes.Status201Created);
 
@@ -31,7 +37,7 @@ public class LoanRepaymentEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetLoanRepaymentRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetLoanRepayment")
+            .WithName(GetLoanRepayment)
             .WithSummary("Gets a loan repayment by ID")
             .Produces<LoanRepaymentResponse>();
 
@@ -40,7 +46,7 @@ public class LoanRepaymentEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchLoanRepayments")
+            .WithName(SearchLoanRepayments)
             .WithSummary("Searches loan repayments with filters and pagination")
             .Produces<PagedList<LoanRepaymentResponse>>();
 
@@ -55,7 +61,7 @@ public class LoanRepaymentEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetLoanRepaymentsByLoan")
+            .WithName(GetLoanRepaymentsByLoan)
             .WithSummary("Gets all repayments for a specific loan")
             .Produces<PagedList<LoanRepaymentResponse>>();
     }

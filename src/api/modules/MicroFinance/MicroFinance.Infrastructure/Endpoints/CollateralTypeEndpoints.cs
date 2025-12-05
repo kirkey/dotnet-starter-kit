@@ -6,6 +6,10 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CollateralTypeEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateCollateralType = "CreateCollateralType";
+    private const string GetCollateralType = "GetCollateralType";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/collateral-types").WithTags("Collateral Types");
@@ -15,7 +19,7 @@ public class CollateralTypeEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/collateral-types/{result.Id}", result);
         })
-        .WithName("CreateCollateralType")
+        .WithName(CreateCollateralType)
         .WithSummary("Create a new collateral type")
         .Produces<CreateCollateralTypeResponse>(StatusCodes.Status201Created);
 
@@ -24,7 +28,7 @@ public class CollateralTypeEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetCollateralTypeRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetCollateralType")
+        .WithName(GetCollateralType)
         .WithSummary("Get collateral type by ID")
         .Produces<CollateralTypeResponse>();
 

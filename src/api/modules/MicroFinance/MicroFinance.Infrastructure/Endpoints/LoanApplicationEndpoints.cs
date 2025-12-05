@@ -12,6 +12,16 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class LoanApplicationEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ApproveLoanApplication = "ApproveLoanApplication";
+    private const string AssignLoanApplication = "AssignLoanApplication";
+    private const string CreateLoanApplication = "CreateLoanApplication";
+    private const string GetLoanApplication = "GetLoanApplication";
+    private const string RejectLoanApplication = "RejectLoanApplication";
+    private const string ReviewLoanApplication = "ReviewLoanApplication";
+    private const string SubmitLoanApplication = "SubmitLoanApplication";
+    private const string WithdrawLoanApplication = "WithdrawLoanApplication";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/loan-applications").WithTags("loan-applications");
@@ -22,7 +32,7 @@ public class LoanApplicationEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/loan-applications/{response.Id}", response);
             })
-            .WithName("CreateLoanApplication")
+            .WithName(CreateLoanApplication)
             .WithSummary("Creates a new loan application")
             .Produces<CreateLoanApplicationResponse>(StatusCodes.Status201Created);
 
@@ -31,7 +41,7 @@ public class LoanApplicationEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetLoanApplicationRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetLoanApplication")
+            .WithName(GetLoanApplication)
             .WithSummary("Gets a loan application by ID")
             .Produces<LoanApplicationResponse>();
 
@@ -41,7 +51,7 @@ public class LoanApplicationEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new SubmitLoanApplicationCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SubmitLoanApplication")
+            .WithName(SubmitLoanApplication)
             .WithSummary("Submits a loan application for review")
             .Produces<SubmitLoanApplicationResponse>();
 
@@ -51,7 +61,7 @@ public class LoanApplicationEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("AssignLoanApplication")
+            .WithName(AssignLoanApplication)
             .WithSummary("Assigns the application to a loan officer")
             .Produces<AssignLoanApplicationResponse>();
 
@@ -61,7 +71,7 @@ public class LoanApplicationEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("ReviewLoanApplication")
+            .WithName(ReviewLoanApplication)
             .WithSummary("Completes review of the loan application")
             .Produces<ReviewLoanApplicationResponse>();
 
@@ -71,7 +81,7 @@ public class LoanApplicationEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("ApproveLoanApplication")
+            .WithName(ApproveLoanApplication)
             .WithSummary("Approves a loan application with terms")
             .Produces<ApproveLoanApplicationResponse>();
 
@@ -81,7 +91,7 @@ public class LoanApplicationEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("RejectLoanApplication")
+            .WithName(RejectLoanApplication)
             .WithSummary("Rejects a loan application")
             .Produces<RejectLoanApplicationResponse>();
 
@@ -90,7 +100,7 @@ public class LoanApplicationEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new WithdrawLoanApplicationCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("WithdrawLoanApplication")
+            .WithName(WithdrawLoanApplication)
             .WithSummary("Withdraws a loan application by the applicant")
             .Produces<WithdrawLoanApplicationResponse>();
 

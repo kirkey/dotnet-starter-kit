@@ -8,6 +8,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class RiskCategoryEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ActivateRiskCategory = "ActivateRiskCategory";
+    private const string CreateRiskCategory = "CreateRiskCategory";
+    private const string DeactivateRiskCategory = "DeactivateRiskCategory";
+    private const string GetRiskCategory = "GetRiskCategory";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/risk-categories").WithTags("Risk Categories");
@@ -17,7 +23,7 @@ public class RiskCategoryEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/risk-categories/{result.Id}", result);
         })
-        .WithName("CreateRiskCategory")
+        .WithName(CreateRiskCategory)
         .WithSummary("Create a new risk category")
         .Produces<CreateRiskCategoryResponse>(StatusCodes.Status201Created);
 
@@ -26,7 +32,7 @@ public class RiskCategoryEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetRiskCategoryRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetRiskCategory")
+        .WithName(GetRiskCategory)
         .WithSummary("Get risk category by ID")
         .Produces<RiskCategoryResponse>();
 
@@ -35,7 +41,7 @@ public class RiskCategoryEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new ActivateRiskCategoryCommand(id));
             return Results.Ok(result);
         })
-        .WithName("ActivateRiskCategory")
+        .WithName(ActivateRiskCategory)
         .WithSummary("Activate risk category")
         .Produces<ActivateRiskCategoryResponse>();
 
@@ -44,7 +50,7 @@ public class RiskCategoryEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new DeactivateRiskCategoryCommand(id));
             return Results.Ok(result);
         })
-        .WithName("DeactivateRiskCategory")
+        .WithName(DeactivateRiskCategory)
         .WithSummary("Deactivate risk category")
         .Produces<DeactivateRiskCategoryResponse>();
 

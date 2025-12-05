@@ -10,6 +10,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class TellerSessionEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CloseTellerSession = "CloseTellerSession";
+    private const string GetTellerSession = "GetTellerSession";
+    private const string OpenTellerSession = "OpenTellerSession";
+    private const string RecordCashIn = "RecordCashIn";
+    private const string RecordCashOut = "RecordCashOut";
+    private const string VerifyTellerSession = "VerifyTellerSession";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/teller-sessions").WithTags("teller-sessions");
@@ -20,7 +28,7 @@ public class TellerSessionEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/teller-sessions/{response.Id}", response);
             })
-            .WithName("OpenTellerSession")
+            .WithName(OpenTellerSession)
             .WithSummary("Opens a new teller session")
             .Produces<OpenTellerSessionResponse>(StatusCodes.Status201Created);
 
@@ -29,7 +37,7 @@ public class TellerSessionEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetTellerSessionRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetTellerSession")
+            .WithName(GetTellerSession)
             .WithSummary("Gets a teller session by ID")
             .Produces<TellerSessionResponse>();
 
@@ -40,7 +48,7 @@ public class TellerSessionEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("RecordCashIn")
+            .WithName(RecordCashIn)
             .WithSummary("Records a cash-in transaction")
             .Produces<RecordCashInResponse>();
 
@@ -50,7 +58,7 @@ public class TellerSessionEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("RecordCashOut")
+            .WithName(RecordCashOut)
             .WithSummary("Records a cash-out transaction")
             .Produces<RecordCashOutResponse>();
 
@@ -61,7 +69,7 @@ public class TellerSessionEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("CloseTellerSession")
+            .WithName(CloseTellerSession)
             .WithSummary("Closes the teller session with physical count")
             .Produces<CloseTellerSessionResponse>();
 
@@ -71,7 +79,7 @@ public class TellerSessionEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("VerifyTellerSession")
+            .WithName(VerifyTellerSession)
             .WithSummary("Supervisor verifies the closed session")
             .Produces<VerifyTellerSessionResponse>();
 

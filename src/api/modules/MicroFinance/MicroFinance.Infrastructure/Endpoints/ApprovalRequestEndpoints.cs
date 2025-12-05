@@ -9,6 +9,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class ApprovalRequestEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ApproveRequestLevel = "ApproveRequestLevel";
+    private const string CancelApprovalRequest = "CancelApprovalRequest";
+    private const string CreateApprovalRequest = "CreateApprovalRequest";
+    private const string GetApprovalRequest = "GetApprovalRequest";
+    private const string RejectApprovalRequest = "RejectApprovalRequest";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/approval-requests").WithTags("Approval Requests");
@@ -18,7 +25,7 @@ public class ApprovalRequestEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/approval-requests/{result.Id}", result);
         })
-        .WithName("CreateApprovalRequest")
+        .WithName(CreateApprovalRequest)
         .WithSummary("Create a new approval request")
         .Produces<CreateApprovalRequestResponse>(StatusCodes.Status201Created);
 
@@ -27,7 +34,7 @@ public class ApprovalRequestEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetApprovalRequestRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetApprovalRequest")
+        .WithName(GetApprovalRequest)
         .WithSummary("Get approval request by ID")
         .Produces<ApprovalRequestResponse>();
 
@@ -37,7 +44,7 @@ public class ApprovalRequestEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("ApproveRequestLevel")
+        .WithName(ApproveRequestLevel)
         .WithSummary("Approve the current level of an approval request")
         .Produces<ApproveRequestLevelResponse>();
 
@@ -47,7 +54,7 @@ public class ApprovalRequestEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("RejectApprovalRequest")
+        .WithName(RejectApprovalRequest)
         .WithSummary("Reject an approval request")
         .Produces<RejectApprovalRequestResponse>();
 
@@ -57,7 +64,7 @@ public class ApprovalRequestEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("CancelApprovalRequest")
+        .WithName(CancelApprovalRequest)
         .WithSummary("Cancel an approval request")
         .Produces<CancelApprovalRequestResponse>();
 

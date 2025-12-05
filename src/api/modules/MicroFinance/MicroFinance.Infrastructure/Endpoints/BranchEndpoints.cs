@@ -12,6 +12,16 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class BranchEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ActivateBranch = "ActivateBranch";
+    private const string AssignBranchManager = "AssignBranchManager";
+    private const string CloseBranch = "CloseBranch";
+    private const string CreateBranch = "CreateBranch";
+    private const string DeactivateBranch = "DeactivateBranch";
+    private const string GetBranch = "GetBranch";
+    private const string SearchBranches = "SearchBranches";
+    private const string UpdateBranch = "UpdateBranch";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/branches").WithTags("branches");
@@ -22,7 +32,7 @@ public class BranchEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/branches/{response.Id}", response);
             })
-            .WithName("CreateBranch")
+            .WithName(CreateBranch)
             .WithSummary("Creates a new branch")
             .Produces<CreateBranchResponse>(StatusCodes.Status201Created);
 
@@ -31,7 +41,7 @@ public class BranchEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetBranchRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetBranch")
+            .WithName(GetBranch)
             .WithSummary("Gets a branch by ID")
             .Produces<BranchResponse>();
 
@@ -41,7 +51,7 @@ public class BranchEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateBranch")
+            .WithName(UpdateBranch)
             .WithSummary("Updates a branch")
             .Produces<UpdateBranchResponse>();
 
@@ -50,7 +60,7 @@ public class BranchEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchBranches")
+            .WithName(SearchBranches)
             .WithSummary("Searches branches with filters")
             .Produces<PagedList<BranchSummaryResponse>>();
 
@@ -60,7 +70,7 @@ public class BranchEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new ActivateBranchCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("ActivateBranch")
+            .WithName(ActivateBranch)
             .WithSummary("Activates a branch")
             .Produces<ActivateBranchResponse>();
 
@@ -69,7 +79,7 @@ public class BranchEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new DeactivateBranchCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeactivateBranch")
+            .WithName(DeactivateBranch)
             .WithSummary("Deactivates a branch")
             .Produces<DeactivateBranchResponse>();
 
@@ -79,7 +89,7 @@ public class BranchEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("CloseBranch")
+            .WithName(CloseBranch)
             .WithSummary("Permanently closes a branch")
             .Produces<CloseBranchResponse>();
 
@@ -89,7 +99,7 @@ public class BranchEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("AssignBranchManager")
+            .WithName(AssignBranchManager)
             .WithSummary("Assigns a manager to the branch")
             .Produces<AssignBranchManagerResponse>();
 

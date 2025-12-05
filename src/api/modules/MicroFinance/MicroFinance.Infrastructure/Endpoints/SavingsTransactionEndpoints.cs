@@ -9,6 +9,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class SavingsTransactionEndpoints() : CarterModule("microfinance")
 {
+
+    private const string GetSavingsTransaction = "GetSavingsTransaction";
+    private const string GetSavingsTransactionsByAccount = "GetSavingsTransactionsByAccount";
+    private const string SearchSavingsTransactions = "SearchSavingsTransactions";
+
     /// <summary>
     /// Maps all Savings Transaction endpoints to the route builder.
     /// </summary>
@@ -21,7 +26,7 @@ public class SavingsTransactionEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new GetSavingsTransactionRequest(id));
             return Results.Ok(response);
         })
-        .WithName("GetSavingsTransaction")
+        .WithName(GetSavingsTransaction)
         .WithSummary("Gets a savings transaction by ID")
         .Produces<SavingsTransactionResponse>();
 
@@ -30,7 +35,7 @@ public class SavingsTransactionEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("SearchSavingsTransactions")
+        .WithName(SearchSavingsTransactions)
         .WithSummary("Searches savings transactions with pagination")
         .Produces<PagedList<SavingsTransactionResponse>>();
 
@@ -45,7 +50,7 @@ public class SavingsTransactionEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("GetSavingsTransactionsByAccount")
+        .WithName(GetSavingsTransactionsByAccount)
         .WithSummary("Gets all transactions for a savings account")
         .Produces<PagedList<SavingsTransactionResponse>>();
 

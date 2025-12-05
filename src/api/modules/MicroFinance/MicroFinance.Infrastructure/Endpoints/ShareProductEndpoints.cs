@@ -11,6 +11,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class ShareProductEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateShareProduct = "CreateShareProduct";
+    private const string GetShareProduct = "GetShareProduct";
+    private const string SearchShareProducts = "SearchShareProducts";
+    private const string UpdateShareProduct = "UpdateShareProduct";
+
     /// <summary>
     /// Maps all Share Product endpoints to the route builder.
     /// </summary>
@@ -23,7 +29,7 @@ public class ShareProductEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/share-products/{response.Id}", response);
             })
-            .WithName("CreateShareProduct")
+            .WithName(CreateShareProduct)
             .WithSummary("Creates a new share product")
             .Produces<CreateShareProductResponse>(StatusCodes.Status201Created);
 
@@ -32,7 +38,7 @@ public class ShareProductEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetShareProductRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetShareProduct")
+            .WithName(GetShareProduct)
             .WithSummary("Gets a share product by ID")
             .Produces<ShareProductResponse>();
 
@@ -41,7 +47,7 @@ public class ShareProductEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchShareProducts")
+            .WithName(SearchShareProducts)
             .WithSummary("Searches share products with filtering and pagination")
             .Produces<PagedList<ShareProductResponse>>();
 
@@ -51,7 +57,7 @@ public class ShareProductEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateShareProduct")
+            .WithName(UpdateShareProduct)
             .WithSummary("Updates an existing share product")
             .Produces<UpdateShareProductResponse>();
 

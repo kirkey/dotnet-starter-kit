@@ -8,6 +8,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CollateralReleaseEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ApproveRelease = "ApproveRelease";
+    private const string CreateCollateralRelease = "CreateCollateralRelease";
+    private const string GetCollateralRelease = "GetCollateralRelease";
+    private const string ReleaseCollateral = "ReleaseCollateral";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/collateral-releases").WithTags("Collateral Releases");
@@ -17,7 +23,7 @@ public class CollateralReleaseEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/collateral-releases/{result.Id}", result);
         })
-        .WithName("CreateCollateralRelease")
+        .WithName(CreateCollateralRelease)
         .WithSummary("Create a new collateral release request")
         .Produces<CreateCollateralReleaseResponse>(StatusCodes.Status201Created);
 
@@ -26,7 +32,7 @@ public class CollateralReleaseEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetCollateralReleaseRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetCollateralRelease")
+        .WithName(GetCollateralRelease)
         .WithSummary("Get collateral release by ID")
         .Produces<CollateralReleaseResponse>();
 
@@ -35,7 +41,7 @@ public class CollateralReleaseEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new ApproveReleaseCommand(id, request.ApprovedById));
             return Results.Ok(result);
         })
-        .WithName("ApproveRelease")
+        .WithName(ApproveRelease)
         .WithSummary("Approve a collateral release")
         .Produces<ApproveReleaseResponse>();
 
@@ -49,7 +55,7 @@ public class CollateralReleaseEndpoints() : CarterModule("microfinance")
                 request.RecipientSignaturePath));
             return Results.Ok(result);
         })
-        .WithName("ReleaseCollateral")
+        .WithName(ReleaseCollateral)
         .WithSummary("Complete collateral release")
         .Produces<ReleaseCollateralResponse>();
 

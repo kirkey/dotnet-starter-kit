@@ -8,6 +8,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class ApprovalWorkflowEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ActivateApprovalWorkflow = "ActivateApprovalWorkflow";
+    private const string CreateApprovalWorkflow = "CreateApprovalWorkflow";
+    private const string DeactivateApprovalWorkflow = "DeactivateApprovalWorkflow";
+    private const string GetApprovalWorkflow = "GetApprovalWorkflow";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/approval-workflows").WithTags("Approval Workflows");
@@ -17,7 +23,7 @@ public class ApprovalWorkflowEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/approval-workflows/{result.Id}", result);
         })
-        .WithName("CreateApprovalWorkflow")
+        .WithName(CreateApprovalWorkflow)
         .WithSummary("Create a new approval workflow")
         .Produces<CreateApprovalWorkflowResponse>(StatusCodes.Status201Created);
 
@@ -26,7 +32,7 @@ public class ApprovalWorkflowEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetApprovalWorkflowRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetApprovalWorkflow")
+        .WithName(GetApprovalWorkflow)
         .WithSummary("Get approval workflow by ID")
         .Produces<ApprovalWorkflowResponse>();
 
@@ -35,7 +41,7 @@ public class ApprovalWorkflowEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new ActivateApprovalWorkflowCommand(id));
             return Results.Ok(result);
         })
-        .WithName("ActivateApprovalWorkflow")
+        .WithName(ActivateApprovalWorkflow)
         .WithSummary("Activate approval workflow")
         .Produces<ActivateApprovalWorkflowResponse>();
 
@@ -44,7 +50,7 @@ public class ApprovalWorkflowEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new DeactivateApprovalWorkflowCommand(id));
             return Results.Ok(result);
         })
-        .WithName("DeactivateApprovalWorkflow")
+        .WithName(DeactivateApprovalWorkflow)
         .WithSummary("Deactivate approval workflow")
         .Produces<DeactivateApprovalWorkflowResponse>();
 

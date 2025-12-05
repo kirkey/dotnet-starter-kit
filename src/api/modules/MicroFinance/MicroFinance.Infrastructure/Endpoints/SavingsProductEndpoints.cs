@@ -11,6 +11,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class SavingsProductEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateSavingsProduct = "CreateSavingsProduct";
+    private const string GetSavingsProduct = "GetSavingsProduct";
+    private const string SearchSavingsProducts = "SearchSavingsProducts";
+    private const string UpdateSavingsProduct = "UpdateSavingsProduct";
+
     /// <summary>
     /// Maps all Savings Product endpoints to the route builder.
     /// </summary>
@@ -23,7 +29,7 @@ public class SavingsProductEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/savings-products/{response.Id}", response);
             })
-            .WithName("CreateSavingsProduct")
+            .WithName(CreateSavingsProduct)
             .WithSummary("Creates a new savings product")
             .Produces<CreateSavingsProductResponse>(StatusCodes.Status201Created);
 
@@ -32,7 +38,7 @@ public class SavingsProductEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetSavingsProductRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetSavingsProduct")
+            .WithName(GetSavingsProduct)
             .WithSummary("Gets a savings product by ID")
             .Produces<SavingsProductResponse>();
 
@@ -41,7 +47,7 @@ public class SavingsProductEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchSavingsProducts")
+            .WithName(SearchSavingsProducts)
             .WithSummary("Searches savings products with filters and pagination")
             .Produces<PagedList<SavingsProductResponse>>();
 
@@ -54,7 +60,7 @@ public class SavingsProductEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateSavingsProduct")
+            .WithName(UpdateSavingsProduct)
             .WithSummary("Updates a savings product")
             .Produces<UpdateSavingsProductResponse>();
     }

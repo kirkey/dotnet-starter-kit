@@ -6,6 +6,10 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class StaffEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateStaff = "CreateStaff";
+    private const string GetStaff = "GetStaff";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/staff").WithTags("Staff");
@@ -15,7 +19,7 @@ public class StaffEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/staff/{result.Id}", result);
         })
-        .WithName("CreateStaff")
+        .WithName(CreateStaff)
         .WithSummary("Create a new staff member")
         .Produces<CreateStaffResponse>(StatusCodes.Status201Created);
 
@@ -24,7 +28,7 @@ public class StaffEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetStaffRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetStaff")
+        .WithName(GetStaff)
         .WithSummary("Get staff member by ID")
         .Produces<StaffResponse>();
 

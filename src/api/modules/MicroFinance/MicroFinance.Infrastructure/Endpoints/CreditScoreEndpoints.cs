@@ -7,6 +7,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CreditScoreEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateCreditScore = "CreateCreditScore";
+    private const string GetCreditScore = "GetCreditScore";
+    private const string SetCreditScoreLossParameters = "SetCreditScoreLossParameters";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/credit-scores").WithTags("Credit Scores");
@@ -16,7 +21,7 @@ public class CreditScoreEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/credit-scores/{result.Id}", result);
         })
-        .WithName("CreateCreditScore")
+        .WithName(CreateCreditScore)
         .WithSummary("Create a new credit score")
         .Produces<CreateCreditScoreResponse>(StatusCodes.Status201Created);
 
@@ -25,7 +30,7 @@ public class CreditScoreEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetCreditScoreRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetCreditScore")
+        .WithName(GetCreditScore)
         .WithSummary("Get credit score by ID")
         .Produces<CreditScoreResponse>();
 
@@ -38,7 +43,7 @@ public class CreditScoreEndpoints() : CarterModule("microfinance")
                 request.ExposureAtDefault));
             return Results.Ok(result);
         })
-        .WithName("SetCreditScoreLossParameters")
+        .WithName(SetCreditScoreLossParameters)
         .WithSummary("Set loss parameters for risk calculation")
         .Produces<SetLossParametersResponse>();
 

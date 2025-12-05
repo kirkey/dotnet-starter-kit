@@ -9,6 +9,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class MarketingCampaignEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ApproveMarketingCampaign = "ApproveMarketingCampaign";
+    private const string CompleteMarketingCampaign = "CompleteMarketingCampaign";
+    private const string CreateMarketingCampaign = "CreateMarketingCampaign";
+    private const string GetMarketingCampaign = "GetMarketingCampaign";
+    private const string LaunchMarketingCampaign = "LaunchMarketingCampaign";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/marketing-campaigns").WithTags("Marketing Campaigns");
@@ -18,7 +25,7 @@ public class MarketingCampaignEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/marketing-campaigns/{result.Id}", result);
         })
-        .WithName("CreateMarketingCampaign")
+        .WithName(CreateMarketingCampaign)
         .WithSummary("Create a new marketing campaign")
         .Produces<CreateMarketingCampaignResponse>(StatusCodes.Status201Created);
 
@@ -27,7 +34,7 @@ public class MarketingCampaignEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetMarketingCampaignRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetMarketingCampaign")
+        .WithName(GetMarketingCampaign)
         .WithSummary("Get marketing campaign by ID")
         .Produces<MarketingCampaignResponse>();
 
@@ -37,7 +44,7 @@ public class MarketingCampaignEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("ApproveMarketingCampaign")
+        .WithName(ApproveMarketingCampaign)
         .WithSummary("Approve marketing campaign")
         .Produces<ApproveMarketingCampaignResponse>();
 
@@ -46,7 +53,7 @@ public class MarketingCampaignEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new LaunchMarketingCampaignCommand(id));
             return Results.Ok(result);
         })
-        .WithName("LaunchMarketingCampaign")
+        .WithName(LaunchMarketingCampaign)
         .WithSummary("Launch marketing campaign")
         .Produces<LaunchMarketingCampaignResponse>();
 
@@ -55,7 +62,7 @@ public class MarketingCampaignEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new CompleteMarketingCampaignCommand(id));
             return Results.Ok(result);
         })
-        .WithName("CompleteMarketingCampaign")
+        .WithName(CompleteMarketingCampaign)
         .WithSummary("Complete marketing campaign")
         .Produces<CompleteMarketingCampaignResponse>();
 

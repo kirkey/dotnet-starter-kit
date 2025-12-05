@@ -10,6 +10,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CashVaultEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateCashVault = "CreateCashVault";
+    private const string DepositCash = "DepositCash";
+    private const string GetCashVault = "GetCashVault";
+    private const string OpenVaultDay = "OpenVaultDay";
+    private const string ReconcileVault = "ReconcileVault";
+    private const string WithdrawCash = "WithdrawCash";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/cash-vaults").WithTags("cash-vaults");
@@ -20,7 +28,7 @@ public class CashVaultEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/cash-vaults/{response.Id}", response);
             })
-            .WithName("CreateCashVault")
+            .WithName(CreateCashVault)
             .WithSummary("Creates a new cash vault")
             .Produces<CreateCashVaultResponse>(StatusCodes.Status201Created);
 
@@ -29,7 +37,7 @@ public class CashVaultEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetCashVaultRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetCashVault")
+            .WithName(GetCashVault)
             .WithSummary("Gets a cash vault by ID")
             .Produces<CashVaultResponse>();
 
@@ -40,7 +48,7 @@ public class CashVaultEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DepositCash")
+            .WithName(DepositCash)
             .WithSummary("Deposits cash into the vault")
             .Produces<DepositCashResponse>();
 
@@ -50,7 +58,7 @@ public class CashVaultEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("WithdrawCash")
+            .WithName(WithdrawCash)
             .WithSummary("Withdraws cash from the vault")
             .Produces<WithdrawCashResponse>();
 
@@ -61,7 +69,7 @@ public class CashVaultEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("OpenVaultDay")
+            .WithName(OpenVaultDay)
             .WithSummary("Opens a new business day for the vault")
             .Produces<OpenDayResponse>();
 
@@ -71,7 +79,7 @@ public class CashVaultEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("ReconcileVault")
+            .WithName(ReconcileVault)
             .WithSummary("Performs end-of-day reconciliation")
             .Produces<ReconcileCashVaultResponse>();
 

@@ -9,6 +9,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class LoanOfficerAssignmentEndpoints() : CarterModule("microfinance")
 {
+
+    private const string AssignToGroup = "AssignToGroup";
+    private const string AssignToMember = "AssignToMember";
+    private const string EndAssignment = "EndAssignment";
+    private const string GetLoanOfficerAssignment = "GetLoanOfficerAssignment";
+    private const string TransferAssignment = "TransferAssignment";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/loan-officer-assignments").WithTags("Loan Officer Assignments");
@@ -18,7 +25,7 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/loan-officer-assignments/{result.Id}", result);
         })
-        .WithName("AssignToMember")
+        .WithName(AssignToMember)
         .WithSummary("Assign loan officer to a member")
         .Produces<AssignToMemberResponse>(StatusCodes.Status201Created);
 
@@ -27,7 +34,7 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/loan-officer-assignments/{result.Id}", result);
         })
-        .WithName("AssignToGroup")
+        .WithName(AssignToGroup)
         .WithSummary("Assign loan officer to a group")
         .Produces<AssignToGroupResponse>(StatusCodes.Status201Created);
 
@@ -36,7 +43,7 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetLoanOfficerAssignmentRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetLoanOfficerAssignment")
+        .WithName(GetLoanOfficerAssignment)
         .WithSummary("Get loan officer assignment by ID")
         .Produces<LoanOfficerAssignmentResponse>();
 
@@ -46,7 +53,7 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("TransferAssignment")
+        .WithName(TransferAssignment)
         .WithSummary("Transfer assignment to another loan officer")
         .Produces<TransferAssignmentResponse>();
 
@@ -56,7 +63,7 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("EndAssignment")
+        .WithName(EndAssignment)
         .WithSummary("End loan officer assignment")
         .Produces<EndAssignmentResponse>();
 

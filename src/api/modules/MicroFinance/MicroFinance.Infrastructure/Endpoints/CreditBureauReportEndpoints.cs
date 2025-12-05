@@ -9,6 +9,10 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class CreditBureauReportEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateCreditBureauReport = "CreateCreditBureauReport";
+    private const string GetCreditBureauReport = "GetCreditBureauReport";
+
     /// <summary>
     /// Maps all Credit Bureau Report endpoints to the route builder.
     /// </summary>
@@ -21,7 +25,7 @@ public class CreditBureauReportEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/credit-bureau-reports/{response.Id}", response);
             })
-            .WithName("CreateCreditBureauReport")
+            .WithName(CreateCreditBureauReport)
             .WithSummary("Creates a new credit bureau report")
             .Produces<CreateCreditBureauReportResponse>(StatusCodes.Status201Created);
 
@@ -30,7 +34,7 @@ public class CreditBureauReportEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetCreditBureauReportRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetCreditBureauReport")
+            .WithName(GetCreditBureauReport)
             .WithSummary("Gets a credit bureau report by ID")
             .Produces<CreditBureauReportResponse>();
     }

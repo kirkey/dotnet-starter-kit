@@ -15,6 +15,17 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class LoanCollateralEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateLoanCollateral = "CreateLoanCollateral";
+    private const string GetLoanCollateral = "GetLoanCollateral";
+    private const string GetLoanCollateralsByLoan = "GetLoanCollateralsByLoan";
+    private const string PledgeLoanCollateral = "PledgeLoanCollateral";
+    private const string ReleaseLoanCollateral = "ReleaseLoanCollateral";
+    private const string SearchLoanCollaterals = "SearchLoanCollaterals";
+    private const string SeizeLoanCollateral = "SeizeLoanCollateral";
+    private const string UpdateCollateralValuation = "UpdateCollateralValuation";
+    private const string VerifyLoanCollateral = "VerifyLoanCollateral";
+
     /// <summary>
     /// Maps all Loan Collateral endpoints to the route builder.
     /// </summary>
@@ -27,7 +38,7 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Created($"/microfinance/loan-collaterals/{response.Id}", response);
         })
-        .WithName("CreateLoanCollateral")
+        .WithName(CreateLoanCollateral)
         .WithSummary("Creates a new loan collateral")
         .Produces<CreateLoanCollateralResponse>(StatusCodes.Status201Created);
 
@@ -36,7 +47,7 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new GetLoanCollateralRequest(id));
             return Results.Ok(response);
         })
-        .WithName("GetLoanCollateral")
+        .WithName(GetLoanCollateral)
         .WithSummary("Gets a loan collateral by ID")
         .Produces<LoanCollateralResponse>();
 
@@ -45,7 +56,7 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("SearchLoanCollaterals")
+        .WithName(SearchLoanCollaterals)
         .WithSummary("Searches loan collaterals with pagination")
         .Produces<PagedList<LoanCollateralResponse>>();
 
@@ -60,7 +71,7 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("GetLoanCollateralsByLoan")
+        .WithName(GetLoanCollateralsByLoan)
         .WithSummary("Gets all collaterals for a loan")
         .Produces<PagedList<LoanCollateralResponse>>();
 
@@ -70,7 +81,7 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Ok(response);
         })
-        .WithName("UpdateCollateralValuation")
+        .WithName(UpdateCollateralValuation)
         .WithSummary("Updates the valuation of a loan collateral")
         .Produces<UpdateCollateralValuationResponse>();
 
@@ -79,7 +90,7 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new VerifyCollateralCommand(id));
             return Results.Ok(response);
         })
-        .WithName("VerifyLoanCollateral")
+        .WithName(VerifyLoanCollateral)
         .WithSummary("Verifies a loan collateral")
         .Produces<VerifyCollateralResponse>();
 
@@ -88,7 +99,7 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new PledgeCollateralCommand(id));
             return Results.Ok(response);
         })
-        .WithName("PledgeLoanCollateral")
+        .WithName(PledgeLoanCollateral)
         .WithSummary("Pledges a loan collateral")
         .Produces<PledgeCollateralResponse>();
 
@@ -97,7 +108,7 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new ReleaseCollateralCommand(id));
             return Results.Ok(response);
         })
-        .WithName("ReleaseLoanCollateral")
+        .WithName(ReleaseLoanCollateral)
         .WithSummary("Releases a loan collateral")
         .Produces<ReleaseCollateralResponse>();
 
@@ -106,7 +117,7 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new SeizeCollateralCommand(id));
             return Results.Ok(response);
         })
-        .WithName("SeizeLoanCollateral")
+        .WithName(SeizeLoanCollateral)
         .WithSummary("Seizes a loan collateral")
         .Produces<SeizeCollateralResponse>();
     }

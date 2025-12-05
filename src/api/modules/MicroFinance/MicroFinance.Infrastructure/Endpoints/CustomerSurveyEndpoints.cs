@@ -8,6 +8,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CustomerSurveyEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ActivateCustomerSurvey = "ActivateCustomerSurvey";
+    private const string CompleteCustomerSurvey = "CompleteCustomerSurvey";
+    private const string CreateCustomerSurvey = "CreateCustomerSurvey";
+    private const string GetCustomerSurvey = "GetCustomerSurvey";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/customer-surveys").WithTags("Customer Surveys");
@@ -17,7 +23,7 @@ public class CustomerSurveyEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/customer-surveys/{result.Id}", result);
         })
-        .WithName("CreateCustomerSurvey")
+        .WithName(CreateCustomerSurvey)
         .WithSummary("Create a new customer survey")
         .Produces<CreateCustomerSurveyResponse>(StatusCodes.Status201Created);
 
@@ -26,7 +32,7 @@ public class CustomerSurveyEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetCustomerSurveyRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetCustomerSurvey")
+        .WithName(GetCustomerSurvey)
         .WithSummary("Get customer survey by ID")
         .Produces<CustomerSurveyResponse>();
 
@@ -35,7 +41,7 @@ public class CustomerSurveyEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new ActivateCustomerSurveyCommand(id));
             return Results.Ok(result);
         })
-        .WithName("ActivateCustomerSurvey")
+        .WithName(ActivateCustomerSurvey)
         .WithSummary("Activate customer survey")
         .Produces<ActivateCustomerSurveyResponse>();
 
@@ -44,7 +50,7 @@ public class CustomerSurveyEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new CompleteCustomerSurveyCommand(id));
             return Results.Ok(result);
         })
-        .WithName("CompleteCustomerSurvey")
+        .WithName(CompleteCustomerSurvey)
         .WithSummary("Complete customer survey")
         .Produces<CompleteCustomerSurveyResponse>();
 

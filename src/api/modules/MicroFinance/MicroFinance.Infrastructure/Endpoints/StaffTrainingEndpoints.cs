@@ -10,6 +10,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class StaffTrainingEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CancelStaffTraining = "CancelStaffTraining";
+    private const string CompleteStaffTraining = "CompleteStaffTraining";
+    private const string GetStaffTraining = "GetStaffTraining";
+    private const string IssueTrainingCertificate = "IssueTrainingCertificate";
+    private const string ScheduleStaffTraining = "ScheduleStaffTraining";
+    private const string StartStaffTraining = "StartStaffTraining";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/staff-trainings").WithTags("Staff Trainings");
@@ -19,7 +27,7 @@ public class StaffTrainingEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/staff-trainings/{result.Id}", result);
         })
-        .WithName("ScheduleStaffTraining")
+        .WithName(ScheduleStaffTraining)
         .WithSummary("Schedule a new staff training")
         .Produces<ScheduleStaffTrainingResponse>(StatusCodes.Status201Created);
 
@@ -28,7 +36,7 @@ public class StaffTrainingEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetStaffTrainingRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetStaffTraining")
+        .WithName(GetStaffTraining)
         .WithSummary("Get staff training by ID")
         .Produces<StaffTrainingResponse>();
 
@@ -37,7 +45,7 @@ public class StaffTrainingEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new StartStaffTrainingCommand(id));
             return Results.Ok(result);
         })
-        .WithName("StartStaffTraining")
+        .WithName(StartStaffTraining)
         .WithSummary("Start scheduled training")
         .Produces<StartStaffTrainingResponse>();
 
@@ -47,7 +55,7 @@ public class StaffTrainingEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("CompleteStaffTraining")
+        .WithName(CompleteStaffTraining)
         .WithSummary("Complete training with results")
         .Produces<CompleteStaffTrainingResponse>();
 
@@ -57,7 +65,7 @@ public class StaffTrainingEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(cmd);
             return Results.Ok(result);
         })
-        .WithName("IssueTrainingCertificate")
+        .WithName(IssueTrainingCertificate)
         .WithSummary("Issue certificate for completed training")
         .Produces<IssueCertificateResponse>();
 
@@ -67,7 +75,7 @@ public class StaffTrainingEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("CancelStaffTraining")
+        .WithName(CancelStaffTraining)
         .WithSummary("Cancel scheduled training")
         .Produces<CancelStaffTrainingResponse>();
 

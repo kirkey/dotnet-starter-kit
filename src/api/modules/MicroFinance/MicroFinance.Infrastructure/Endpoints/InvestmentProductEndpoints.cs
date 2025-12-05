@@ -7,6 +7,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class InvestmentProductEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateInvestmentProduct = "CreateInvestmentProduct";
+    private const string GetInvestmentProduct = "GetInvestmentProduct";
+    private const string UpdateInvestmentProductNav = "UpdateInvestmentProductNav";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/investment-products").WithTags("Investment Products");
@@ -16,7 +21,7 @@ public class InvestmentProductEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/investment-products/{result.Id}", result);
         })
-        .WithName("CreateInvestmentProduct")
+        .WithName(CreateInvestmentProduct)
         .WithSummary("Create a new investment product")
         .Produces<CreateInvestmentProductResponse>(StatusCodes.Status201Created);
 
@@ -25,7 +30,7 @@ public class InvestmentProductEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetInvestmentProductRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetInvestmentProduct")
+        .WithName(GetInvestmentProduct)
         .WithSummary("Get investment product by ID")
         .Produces<InvestmentProductResponse>();
 
@@ -34,7 +39,7 @@ public class InvestmentProductEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new UpdateInvestmentProductNavCommand(id, request.NewNav, request.NavDate));
             return Results.Ok(result);
         })
-        .WithName("UpdateInvestmentProductNav")
+        .WithName(UpdateInvestmentProductNav)
         .WithSummary("Update investment product NAV")
         .Produces<UpdateInvestmentProductNavResponse>();
 

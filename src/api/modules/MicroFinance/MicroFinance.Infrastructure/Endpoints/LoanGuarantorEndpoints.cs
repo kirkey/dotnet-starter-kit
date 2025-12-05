@@ -14,6 +14,17 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class LoanGuarantorEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ApproveLoanGuarantor = "ApproveLoanGuarantor";
+    private const string CreateLoanGuarantor = "CreateLoanGuarantor";
+    private const string GetLoanGuarantor = "GetLoanGuarantor";
+    private const string GetLoanGuarantorsByLoan = "GetLoanGuarantorsByLoan";
+    private const string GetLoanGuarantorsByMember = "GetLoanGuarantorsByMember";
+    private const string RejectLoanGuarantor = "RejectLoanGuarantor";
+    private const string ReleaseLoanGuarantor = "ReleaseLoanGuarantor";
+    private const string SearchLoanGuarantors = "SearchLoanGuarantors";
+    private const string UpdateGuarantorAmount = "UpdateGuarantorAmount";
+
     /// <summary>
     /// Maps all Loan Guarantor endpoints to the route builder.
     /// </summary>
@@ -26,7 +37,7 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Created($"/microfinance/loan-guarantors/{response.Id}", response);
         })
-        .WithName("CreateLoanGuarantor")
+        .WithName(CreateLoanGuarantor)
         .WithSummary("Creates a new loan guarantor")
         .Produces<CreateLoanGuarantorResponse>(StatusCodes.Status201Created);
 
@@ -35,7 +46,7 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new GetLoanGuarantorRequest(id));
             return Results.Ok(response);
         })
-        .WithName("GetLoanGuarantor")
+        .WithName(GetLoanGuarantor)
         .WithSummary("Gets a loan guarantor by ID")
         .Produces<LoanGuarantorResponse>();
 
@@ -44,7 +55,7 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("SearchLoanGuarantors")
+        .WithName(SearchLoanGuarantors)
         .WithSummary("Searches loan guarantors with pagination")
         .Produces<PagedList<LoanGuarantorResponse>>();
 
@@ -58,7 +69,7 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
             });
             return Results.Ok(response);
         })
-        .WithName("GetLoanGuarantorsByLoan")
+        .WithName(GetLoanGuarantorsByLoan)
         .WithSummary("Gets all guarantors for a loan")
         .Produces<PagedList<LoanGuarantorResponse>>();
 
@@ -72,7 +83,7 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
             });
             return Results.Ok(response);
         })
-        .WithName("GetLoanGuarantorsByMember")
+        .WithName(GetLoanGuarantorsByMember)
         .WithSummary("Gets all loans where a member is a guarantor")
         .Produces<PagedList<LoanGuarantorResponse>>();
 
@@ -81,7 +92,7 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new ApproveGuarantorCommand(id));
             return Results.Ok(response);
         })
-        .WithName("ApproveLoanGuarantor")
+        .WithName(ApproveLoanGuarantor)
         .WithSummary("Approves a loan guarantor")
         .Produces<ApproveGuarantorResponse>();
 
@@ -91,7 +102,7 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Ok(response);
         })
-        .WithName("RejectLoanGuarantor")
+        .WithName(RejectLoanGuarantor)
         .WithSummary("Rejects a loan guarantor")
         .Produces<RejectGuarantorResponse>();
 
@@ -101,7 +112,7 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Ok(response);
         })
-        .WithName("ReleaseLoanGuarantor")
+        .WithName(ReleaseLoanGuarantor)
         .WithSummary("Releases a loan guarantor")
         .Produces<ReleaseGuarantorResponse>();
 
@@ -111,7 +122,7 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Ok(response);
         })
-        .WithName("UpdateGuarantorAmount")
+        .WithName(UpdateGuarantorAmount)
         .WithSummary("Updates the guaranteed amount for a loan guarantor")
         .Produces<UpdateGuaranteedAmountResponse>();
     }

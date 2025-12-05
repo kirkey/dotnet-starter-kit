@@ -8,6 +8,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CollateralInsuranceEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateCollateralInsurance = "CreateCollateralInsurance";
+    private const string GetCollateralInsurance = "GetCollateralInsurance";
+    private const string RecordPremiumPayment = "RecordPremiumPayment";
+    private const string RenewInsurance = "RenewInsurance";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/collateral-insurances").WithTags("Collateral Insurances");
@@ -17,7 +23,7 @@ public class CollateralInsuranceEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/collateral-insurances/{result.Id}", result);
         })
-        .WithName("CreateCollateralInsurance")
+        .WithName(CreateCollateralInsurance)
         .WithSummary("Create a new collateral insurance")
         .Produces<CreateCollateralInsuranceResponse>(StatusCodes.Status201Created);
 
@@ -26,7 +32,7 @@ public class CollateralInsuranceEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetCollateralInsuranceRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetCollateralInsurance")
+        .WithName(GetCollateralInsurance)
         .WithSummary("Get collateral insurance by ID")
         .Produces<CollateralInsuranceResponse>();
 
@@ -35,7 +41,7 @@ public class CollateralInsuranceEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new RecordPremiumPaymentCommand(id, request.PaymentDate, request.NextDueDate));
             return Results.Ok(result);
         })
-        .WithName("RecordPremiumPayment")
+        .WithName(RecordPremiumPayment)
         .WithSummary("Record insurance premium payment")
         .Produces<RecordPremiumPaymentResponse>();
 
@@ -44,7 +50,7 @@ public class CollateralInsuranceEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new RenewInsuranceCommand(id, request.NewExpiryDate, request.NewPremium));
             return Results.Ok(result);
         })
-        .WithName("RenewInsurance")
+        .WithName(RenewInsurance)
         .WithSummary("Renew collateral insurance")
         .Produces<RenewInsuranceResponse>();
 

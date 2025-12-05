@@ -7,6 +7,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CommunicationLogEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateCommunicationLog = "CreateCommunicationLog";
+    private const string GetCommunicationLog = "GetCommunicationLog";
+    private const string MarkCommunicationDelivered = "MarkCommunicationDelivered";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/communication-logs").WithTags("Communication Logs");
@@ -16,7 +21,7 @@ public class CommunicationLogEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/communication-logs/{result.Id}", result);
         })
-        .WithName("CreateCommunicationLog")
+        .WithName(CreateCommunicationLog)
         .WithSummary("Create a new communication log entry")
         .Produces<CreateCommunicationLogResponse>(StatusCodes.Status201Created);
 
@@ -25,7 +30,7 @@ public class CommunicationLogEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetCommunicationLogRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetCommunicationLog")
+        .WithName(GetCommunicationLog)
         .WithSummary("Get communication log by ID")
         .Produces<CommunicationLogResponse>();
 
@@ -34,7 +39,7 @@ public class CommunicationLogEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new MarkCommunicationDeliveredCommand(id));
             return Results.Ok(result);
         })
-        .WithName("MarkCommunicationDelivered")
+        .WithName(MarkCommunicationDelivered)
         .WithSummary("Mark communication as delivered")
         .Produces<MarkCommunicationDeliveredResponse>();
 

@@ -11,6 +11,15 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CollectionCaseEndpoints() : CarterModule("microfinance")
 {
+
+    private const string AssignCollectionCase = "AssignCollectionCase";
+    private const string CreateCollectionCase = "CreateCollectionCase";
+    private const string EscalateToLegal = "EscalateToLegal";
+    private const string GetCollectionCase = "GetCollectionCase";
+    private const string RecordContact = "RecordContact";
+    private const string RecordRecovery = "RecordRecovery";
+    private const string SettleCollectionCase = "SettleCollectionCase";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/collection-cases").WithTags("collection-cases");
@@ -21,7 +30,7 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/collection-cases/{response.Id}", response);
             })
-            .WithName("CreateCollectionCase")
+            .WithName(CreateCollectionCase)
             .WithSummary("Creates a new collection case for a delinquent loan")
             .Produces<CreateCollectionCaseResponse>(StatusCodes.Status201Created);
 
@@ -30,7 +39,7 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetCollectionCaseRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetCollectionCase")
+            .WithName(GetCollectionCase)
             .WithSummary("Gets a collection case by ID")
             .Produces<CollectionCaseResponse>();
 
@@ -41,7 +50,7 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("AssignCollectionCase")
+            .WithName(AssignCollectionCase)
             .WithSummary("Assigns the case to a collector")
             .Produces<AssignCollectionCaseResponse>();
 
@@ -52,7 +61,7 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("RecordContact")
+            .WithName(RecordContact)
             .WithSummary("Records a contact attempt with the borrower")
             .Produces<RecordContactResponse>();
 
@@ -62,7 +71,7 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("RecordRecovery")
+            .WithName(RecordRecovery)
             .WithSummary("Records a payment recovery")
             .Produces<RecordRecoveryResponse>();
 
@@ -73,7 +82,7 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("EscalateToLegal")
+            .WithName(EscalateToLegal)
             .WithSummary("Escalates the case to legal action")
             .Produces<EscalateToLegalResponse>();
 
@@ -83,7 +92,7 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SettleCollectionCase")
+            .WithName(SettleCollectionCase)
             .WithSummary("Settles the case with agreed terms")
             .Produces<SettleCollectionCaseResponse>();
 

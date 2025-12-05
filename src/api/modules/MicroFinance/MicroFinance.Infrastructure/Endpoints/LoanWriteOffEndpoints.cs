@@ -9,6 +9,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class LoanWriteOffEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ApproveWriteOff = "ApproveWriteOff";
+    private const string CreateLoanWriteOff = "CreateLoanWriteOff";
+    private const string GetLoanWriteOff = "GetLoanWriteOff";
+    private const string ProcessWriteOff = "ProcessWriteOff";
+    private const string RecordWriteOffRecovery = "RecordWriteOffRecovery";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/loan-write-offs").WithTags("Loan Write-Offs");
@@ -18,7 +25,7 @@ public class LoanWriteOffEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/loan-write-offs/{result.Id}", result);
         })
-        .WithName("CreateLoanWriteOff")
+        .WithName(CreateLoanWriteOff)
         .WithSummary("Create a new loan write-off")
         .Produces<CreateLoanWriteOffResponse>(StatusCodes.Status201Created);
 
@@ -27,7 +34,7 @@ public class LoanWriteOffEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetLoanWriteOffRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetLoanWriteOff")
+        .WithName(GetLoanWriteOff)
         .WithSummary("Get loan write-off by ID")
         .Produces<LoanWriteOffResponse>();
 
@@ -37,7 +44,7 @@ public class LoanWriteOffEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("ApproveWriteOff")
+        .WithName(ApproveWriteOff)
         .WithSummary("Approve loan write-off")
         .Produces<ApproveWriteOffResponse>();
 
@@ -46,7 +53,7 @@ public class LoanWriteOffEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new ProcessWriteOffCommand(id));
             return Results.Ok(result);
         })
-        .WithName("ProcessWriteOff")
+        .WithName(ProcessWriteOff)
         .WithSummary("Process loan write-off")
         .Produces<ProcessWriteOffResponse>();
 
@@ -56,7 +63,7 @@ public class LoanWriteOffEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("RecordWriteOffRecovery")
+        .WithName(RecordWriteOffRecovery)
         .WithSummary("Record recovery on write-off")
         .Produces<RecordRecoveryResponse>();
 

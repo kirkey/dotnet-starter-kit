@@ -9,6 +9,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class InsurancePolicyEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ActivateInsurancePolicy = "ActivateInsurancePolicy";
+    private const string CancelInsurancePolicy = "CancelInsurancePolicy";
+    private const string CreateInsurancePolicy = "CreateInsurancePolicy";
+    private const string GetInsurancePolicy = "GetInsurancePolicy";
+    private const string RecordPremiumPayment = "RecordPremiumPayment";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/insurance-policies").WithTags("insurance-policies");
@@ -19,7 +26,7 @@ public class InsurancePolicyEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/insurance-policies/{response.Id}", response);
             })
-            .WithName("CreateInsurancePolicy")
+            .WithName(CreateInsurancePolicy)
             .WithSummary("Creates a new insurance policy for a member")
             .Produces<CreateInsurancePolicyResponse>(StatusCodes.Status201Created);
 
@@ -28,7 +35,7 @@ public class InsurancePolicyEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetInsurancePolicyRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetInsurancePolicy")
+            .WithName(GetInsurancePolicy)
             .WithSummary("Gets an insurance policy by ID")
             .Produces<InsurancePolicyResponse>();
 
@@ -38,7 +45,7 @@ public class InsurancePolicyEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new ActivateInsurancePolicyCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("ActivateInsurancePolicy")
+            .WithName(ActivateInsurancePolicy)
             .WithSummary("Activates an insurance policy after first premium")
             .Produces<ActivateInsurancePolicyResponse>();
 
@@ -48,7 +55,7 @@ public class InsurancePolicyEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("CancelInsurancePolicy")
+            .WithName(CancelInsurancePolicy)
             .WithSummary("Cancels an insurance policy")
             .Produces<CancelInsurancePolicyResponse>();
 
@@ -59,7 +66,7 @@ public class InsurancePolicyEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("RecordPremiumPayment")
+            .WithName(RecordPremiumPayment)
             .WithSummary("Records a premium payment on the policy")
             .Produces<RecordPremiumPaymentResponse>();
 

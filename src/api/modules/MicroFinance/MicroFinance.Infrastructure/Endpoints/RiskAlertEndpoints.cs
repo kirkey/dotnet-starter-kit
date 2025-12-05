@@ -10,6 +10,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class RiskAlertEndpoints() : CarterModule("microfinance")
 {
+
+    private const string AcknowledgeRiskAlert = "AcknowledgeRiskAlert";
+    private const string AssignRiskAlert = "AssignRiskAlert";
+    private const string CreateRiskAlert = "CreateRiskAlert";
+    private const string EscalateRiskAlert = "EscalateRiskAlert";
+    private const string GetRiskAlert = "GetRiskAlert";
+    private const string ResolveRiskAlert = "ResolveRiskAlert";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/risk-alerts").WithTags("Risk Alerts");
@@ -19,7 +27,7 @@ public class RiskAlertEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/risk-alerts/{result.Id}", result);
         })
-        .WithName("CreateRiskAlert")
+        .WithName(CreateRiskAlert)
         .WithSummary("Create a new risk alert")
         .Produces<CreateRiskAlertResponse>(StatusCodes.Status201Created);
 
@@ -28,7 +36,7 @@ public class RiskAlertEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetRiskAlertRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetRiskAlert")
+        .WithName(GetRiskAlert)
         .WithSummary("Get risk alert by ID")
         .Produces<RiskAlertResponse>();
 
@@ -37,7 +45,7 @@ public class RiskAlertEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new AcknowledgeRiskAlertCommand(id, request.UserId));
             return Results.Ok(result);
         })
-        .WithName("AcknowledgeRiskAlert")
+        .WithName(AcknowledgeRiskAlert)
         .WithSummary("Acknowledge a risk alert")
         .Produces<AcknowledgeRiskAlertResponse>();
 
@@ -46,7 +54,7 @@ public class RiskAlertEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new AssignRiskAlertCommand(id, request.UserId));
             return Results.Ok(result);
         })
-        .WithName("AssignRiskAlert")
+        .WithName(AssignRiskAlert)
         .WithSummary("Assign risk alert for investigation")
         .Produces<AssignRiskAlertResponse>();
 
@@ -55,7 +63,7 @@ public class RiskAlertEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new EscalateRiskAlertCommand(id));
             return Results.Ok(result);
         })
-        .WithName("EscalateRiskAlert")
+        .WithName(EscalateRiskAlert)
         .WithSummary("Escalate a risk alert")
         .Produces<EscalateRiskAlertResponse>();
 
@@ -64,7 +72,7 @@ public class RiskAlertEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new ResolveRiskAlertCommand(id, request.UserId, request.Resolution));
             return Results.Ok(result);
         })
-        .WithName("ResolveRiskAlert")
+        .WithName(ResolveRiskAlert)
         .WithSummary("Resolve a risk alert")
         .Produces<ResolveRiskAlertResponse>();
 

@@ -8,6 +8,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class MobileWalletEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateMobileWallet = "CreateMobileWallet";
+    private const string CreditMobileWallet = "CreditMobileWallet";
+    private const string DebitMobileWallet = "DebitMobileWallet";
+    private const string GetMobileWallet = "GetMobileWallet";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/mobile-wallets").WithTags("Mobile Wallets");
@@ -17,7 +23,7 @@ public class MobileWalletEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/mobile-wallets/{result.Id}", result);
         })
-        .WithName("CreateMobileWallet")
+        .WithName(CreateMobileWallet)
         .WithSummary("Create a new mobile wallet")
         .Produces<CreateMobileWalletResponse>(StatusCodes.Status201Created);
 
@@ -26,7 +32,7 @@ public class MobileWalletEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetMobileWalletRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetMobileWallet")
+        .WithName(GetMobileWallet)
         .WithSummary("Get mobile wallet by ID")
         .Produces<MobileWalletResponse>();
 
@@ -35,7 +41,7 @@ public class MobileWalletEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new CreditMobileWalletCommand(id, request.Amount, request.TransactionReference));
             return Results.Ok(result);
         })
-        .WithName("CreditMobileWallet")
+        .WithName(CreditMobileWallet)
         .WithSummary("Credit mobile wallet")
         .Produces<CreditMobileWalletResponse>();
 
@@ -44,7 +50,7 @@ public class MobileWalletEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new DebitMobileWalletCommand(id, request.Amount, request.TransactionReference));
             return Results.Ok(result);
         })
-        .WithName("DebitMobileWallet")
+        .WithName(DebitMobileWallet)
         .WithSummary("Debit mobile wallet")
         .Produces<DebitMobileWalletResponse>();
 

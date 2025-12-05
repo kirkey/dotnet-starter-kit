@@ -13,6 +13,13 @@ namespace Store.Infrastructure.Endpoints.InventoryReservations;
 /// </summary>
 public class InventoryReservationsEndpoints() : CarterModule("store")
 {
+
+    private const string CreateInventoryReservationEndpoint = "CreateInventoryReservationEndpoint";
+    private const string DeleteInventoryReservationEndpoint = "DeleteInventoryReservationEndpoint";
+    private const string GetInventoryReservationEndpoint = "GetInventoryReservationEndpoint";
+    private const string ReleaseInventoryReservationEndpoint = "ReleaseInventoryReservationEndpoint";
+    private const string SearchInventoryReservationsEndpoint = "SearchInventoryReservationsEndpoint";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/inventory-reservations").WithTags("inventory-reservations");
@@ -23,7 +30,7 @@ public class InventoryReservationsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("CreateInventoryReservationEndpoint")
+        .WithName(CreateInventoryReservationEndpoint)
         .WithSummary("Create a new inventory reservation")
         .WithDescription("Creates a new inventory reservation to prevent overselling and support order fulfillment.")
         .Produces<CreateInventoryReservationResponse>()
@@ -36,7 +43,7 @@ public class InventoryReservationsEndpoints() : CarterModule("store")
             var response = await sender.Send(new GetInventoryReservationCommand(id)).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("GetInventoryReservationEndpoint")
+        .WithName(GetInventoryReservationEndpoint)
         .WithSummary("Get an inventory reservation by ID")
         .WithDescription("Retrieves a specific inventory reservation by its unique identifier.")
         .Produces<GetInventoryReservationResponse>()
@@ -54,7 +61,7 @@ public class InventoryReservationsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("ReleaseInventoryReservationEndpoint")
+        .WithName(ReleaseInventoryReservationEndpoint)
         .WithSummary("Release an inventory reservation")
         .WithDescription("Releases an active inventory reservation, returning the quantity to available stock.")
         .Produces<ReleaseInventoryReservationResponse>()
@@ -67,7 +74,7 @@ public class InventoryReservationsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("SearchInventoryReservationsEndpoint")
+        .WithName(SearchInventoryReservationsEndpoint)
         .WithSummary("Search inventory reservations")
         .WithDescription("Searches for inventory reservations with pagination and filtering by reservation number, item, warehouse, type, status, dates, and more.")
         .Produces<PagedList<InventoryReservationDto>>()
@@ -80,7 +87,7 @@ public class InventoryReservationsEndpoints() : CarterModule("store")
             var response = await sender.Send(new DeleteInventoryReservationCommand { Id = id }).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("DeleteInventoryReservationEndpoint")
+        .WithName(DeleteInventoryReservationEndpoint)
         .WithSummary("Delete an inventory reservation")
         .WithDescription("Deletes an existing inventory reservation from the system.")
         .Produces<DeleteInventoryReservationResponse>()

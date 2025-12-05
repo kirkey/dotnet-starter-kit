@@ -8,6 +8,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CollectionStrategyEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ActivateStrategy = "ActivateStrategy";
+    private const string CreateCollectionStrategy = "CreateCollectionStrategy";
+    private const string DeactivateStrategy = "DeactivateStrategy";
+    private const string GetCollectionStrategy = "GetCollectionStrategy";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/collection-strategies").WithTags("Collection Strategies");
@@ -17,7 +23,7 @@ public class CollectionStrategyEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/collection-strategies/{result.Id}", result);
         })
-        .WithName("CreateCollectionStrategy")
+        .WithName(CreateCollectionStrategy)
         .WithSummary("Create a new collection strategy")
         .Produces<CreateCollectionStrategyResponse>(StatusCodes.Status201Created);
 
@@ -26,7 +32,7 @@ public class CollectionStrategyEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetCollectionStrategyRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetCollectionStrategy")
+        .WithName(GetCollectionStrategy)
         .WithSummary("Get collection strategy by ID")
         .Produces<CollectionStrategyResponse>();
 
@@ -35,7 +41,7 @@ public class CollectionStrategyEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new ActivateStrategyCommand(id));
             return Results.Ok(result);
         })
-        .WithName("ActivateStrategy")
+        .WithName(ActivateStrategy)
         .WithSummary("Activate a collection strategy")
         .Produces<ActivateStrategyResponse>();
 
@@ -44,7 +50,7 @@ public class CollectionStrategyEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new DeactivateStrategyCommand(id));
             return Results.Ok(result);
         })
-        .WithName("DeactivateStrategy")
+        .WithName(DeactivateStrategy)
         .WithSummary("Deactivate a collection strategy")
         .Produces<DeactivateStrategyResponse>();
 

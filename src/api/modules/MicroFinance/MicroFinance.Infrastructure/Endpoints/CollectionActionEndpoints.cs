@@ -6,6 +6,10 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class CollectionActionEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateCollectionAction = "CreateCollectionAction";
+    private const string GetCollectionAction = "GetCollectionAction";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/collection-actions").WithTags("Collection Actions");
@@ -15,7 +19,7 @@ public class CollectionActionEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/collection-actions/{result.Id}", result);
         })
-        .WithName("CreateCollectionAction")
+        .WithName(CreateCollectionAction)
         .WithSummary("Create a new collection action")
         .Produces<CreateCollectionActionResponse>(StatusCodes.Status201Created);
 
@@ -24,7 +28,7 @@ public class CollectionActionEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetCollectionActionRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetCollectionAction")
+        .WithName(GetCollectionAction)
         .WithSummary("Get collection action by ID")
         .Produces<CollectionActionResponse>();
 

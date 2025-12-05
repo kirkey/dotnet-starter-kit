@@ -9,6 +9,10 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class UssdSessionEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateUssdSession = "CreateUssdSession";
+    private const string GetUssdSession = "GetUssdSession";
+
     /// <summary>
     /// Maps all USSD Session endpoints to the route builder.
     /// </summary>
@@ -21,7 +25,7 @@ public class UssdSessionEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/ussd-sessions/{response.Id}", response);
             })
-            .WithName("CreateUssdSession")
+            .WithName(CreateUssdSession)
             .WithSummary("Creates a new USSD session")
             .Produces<CreateUssdSessionResponse>(StatusCodes.Status201Created);
 
@@ -30,7 +34,7 @@ public class UssdSessionEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetUssdSessionRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetUssdSession")
+            .WithName(GetUssdSession)
             .WithSummary("Gets a USSD session by ID")
             .Produces<UssdSessionResponse>();
     }

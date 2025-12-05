@@ -8,6 +8,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class AmlAlertEndpoints() : CarterModule("microfinance")
 {
+
+    private const string AssignAmlAlert = "AssignAmlAlert";
+    private const string CreateAmlAlert = "CreateAmlAlert";
+    private const string EscalateAmlAlert = "EscalateAmlAlert";
+    private const string GetAmlAlert = "GetAmlAlert";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/aml-alerts").WithTags("AML Alerts");
@@ -17,7 +23,7 @@ public class AmlAlertEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/aml-alerts/{result.Id}", result);
         })
-        .WithName("CreateAmlAlert")
+        .WithName(CreateAmlAlert)
         .WithSummary("Create a new AML alert")
         .Produces<CreateAmlAlertResponse>(StatusCodes.Status201Created);
 
@@ -26,7 +32,7 @@ public class AmlAlertEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetAmlAlertRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetAmlAlert")
+        .WithName(GetAmlAlert)
         .WithSummary("Get AML alert by ID")
         .Produces<AmlAlertResponse>();
 
@@ -35,7 +41,7 @@ public class AmlAlertEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new AssignAmlAlertCommand(id, request.AssignedToId));
             return Results.Ok(result);
         })
-        .WithName("AssignAmlAlert")
+        .WithName(AssignAmlAlert)
         .WithSummary("Assign AML alert to investigator")
         .Produces<AssignAmlAlertResponse>();
 
@@ -44,7 +50,7 @@ public class AmlAlertEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new EscalateAmlAlertCommand(id, request.Reason));
             return Results.Ok(result);
         })
-        .WithName("EscalateAmlAlert")
+        .WithName(EscalateAmlAlert)
         .WithSummary("Escalate AML alert")
         .Produces<EscalateAmlAlertResponse>();
 

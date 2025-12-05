@@ -8,6 +8,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class InvestmentTransactionEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CompleteInvestmentTransaction = "CompleteInvestmentTransaction";
+    private const string CreateBuyTransaction = "CreateBuyTransaction";
+    private const string CreateSellTransaction = "CreateSellTransaction";
+    private const string GetInvestmentTransaction = "GetInvestmentTransaction";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/investment-transactions").WithTags("Investment Transactions");
@@ -17,7 +23,7 @@ public class InvestmentTransactionEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/investment-transactions/{result.Id}", result);
         })
-        .WithName("CreateBuyTransaction")
+        .WithName(CreateBuyTransaction)
         .WithSummary("Create a buy investment transaction")
         .Produces<CreateBuyTransactionResponse>(StatusCodes.Status201Created);
 
@@ -26,7 +32,7 @@ public class InvestmentTransactionEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/investment-transactions/{result.Id}", result);
         })
-        .WithName("CreateSellTransaction")
+        .WithName(CreateSellTransaction)
         .WithSummary("Create a sell investment transaction")
         .Produces<CreateSellTransactionResponse>(StatusCodes.Status201Created);
 
@@ -35,7 +41,7 @@ public class InvestmentTransactionEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetInvestmentTransactionRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetInvestmentTransaction")
+        .WithName(GetInvestmentTransaction)
         .WithSummary("Get investment transaction by ID")
         .Produces<InvestmentTransactionResponse>();
 
@@ -44,7 +50,7 @@ public class InvestmentTransactionEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new CompleteTransactionCommand(id, request?.GainLoss));
             return Results.Ok(result);
         })
-        .WithName("CompleteInvestmentTransaction")
+        .WithName(CompleteInvestmentTransaction)
         .WithSummary("Complete an investment transaction")
         .Produces<CompleteTransactionResponse>();
 

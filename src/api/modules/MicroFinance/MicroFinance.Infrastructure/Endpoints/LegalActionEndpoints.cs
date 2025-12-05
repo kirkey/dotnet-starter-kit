@@ -7,6 +7,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class LegalActionEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateLegalAction = "CreateLegalAction";
+    private const string FileCase = "FileCase";
+    private const string GetLegalAction = "GetLegalAction";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/legal-actions").WithTags("Legal Actions");
@@ -16,7 +21,7 @@ public class LegalActionEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/legal-actions/{result.Id}", result);
         })
-        .WithName("CreateLegalAction")
+        .WithName(CreateLegalAction)
         .WithSummary("Create a new legal action")
         .Produces<CreateLegalActionResponse>(StatusCodes.Status201Created);
 
@@ -25,7 +30,7 @@ public class LegalActionEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetLegalActionRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetLegalAction")
+        .WithName(GetLegalAction)
         .WithSummary("Get legal action by ID")
         .Produces<LegalActionResponse>();
 
@@ -35,7 +40,7 @@ public class LegalActionEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("FileCase")
+        .WithName(FileCase)
         .WithSummary("File legal case with court")
         .Produces<FileCaseResponse>();
 

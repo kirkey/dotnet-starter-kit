@@ -9,6 +9,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class InvestmentAccountEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateInvestmentAccount = "CreateInvestmentAccount";
+    private const string GetInvestmentAccount = "GetInvestmentAccount";
+    private const string InvestInAccount = "InvestInAccount";
+    private const string RedeemFromAccount = "RedeemFromAccount";
+    private const string SetupSip = "SetupSip";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/investment-accounts").WithTags("Investment Accounts");
@@ -18,7 +25,7 @@ public class InvestmentAccountEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/investment-accounts/{result.Id}", result);
         })
-        .WithName("CreateInvestmentAccount")
+        .WithName(CreateInvestmentAccount)
         .WithSummary("Create a new investment account")
         .Produces<CreateInvestmentAccountResponse>(StatusCodes.Status201Created);
 
@@ -27,7 +34,7 @@ public class InvestmentAccountEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetInvestmentAccountRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetInvestmentAccount")
+        .WithName(GetInvestmentAccount)
         .WithSummary("Get investment account by ID")
         .Produces<InvestmentAccountResponse>();
 
@@ -36,7 +43,7 @@ public class InvestmentAccountEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new InvestCommand(id, request.Amount));
             return Results.Ok(result);
         })
-        .WithName("InvestInAccount")
+        .WithName(InvestInAccount)
         .WithSummary("Add investment to account")
         .Produces<InvestResponse>();
 
@@ -45,7 +52,7 @@ public class InvestmentAccountEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new RedeemCommand(id, request.Amount, request.GainLoss));
             return Results.Ok(result);
         })
-        .WithName("RedeemFromAccount")
+        .WithName(RedeemFromAccount)
         .WithSummary("Redeem from investment account")
         .Produces<RedeemResponse>();
 
@@ -54,7 +61,7 @@ public class InvestmentAccountEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new SetupSipCommand(id, request.Amount, request.Frequency, request.NextDate, request.LinkedSavingsAccountId));
             return Results.Ok(result);
         })
-        .WithName("SetupSip")
+        .WithName(SetupSip)
         .WithSummary("Setup SIP for investment account")
         .Produces<SetupSipResponse>();
 

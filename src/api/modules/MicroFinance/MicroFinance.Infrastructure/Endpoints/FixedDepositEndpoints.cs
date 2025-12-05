@@ -16,6 +16,17 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class FixedDepositEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CloseFixedDepositPremature = "CloseFixedDepositPremature";
+    private const string CreateFixedDeposit = "CreateFixedDeposit";
+    private const string GetFixedDeposit = "GetFixedDeposit";
+    private const string MatureFixedDeposit = "MatureFixedDeposit";
+    private const string PayFixedDepositInterest = "PayFixedDepositInterest";
+    private const string PostFixedDepositInterest = "PostFixedDepositInterest";
+    private const string RenewFixedDeposit = "RenewFixedDeposit";
+    private const string SearchFixedDeposits = "SearchFixedDeposits";
+    private const string UpdateMaturityInstruction = "UpdateMaturityInstruction";
+
     /// <summary>
     /// Maps all Fixed Deposit endpoints to the route builder.
     /// </summary>
@@ -28,7 +39,7 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Created($"/api/microfinance/fixed-deposits/{response}", new { id = response });
         })
-        .WithName("CreateFixedDeposit")
+        .WithName(CreateFixedDeposit)
         .WithSummary("Creates a new fixed deposit")
         .Produces<Guid>(StatusCodes.Status201Created);
 
@@ -37,7 +48,7 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new GetFixedDepositRequest(id));
             return Results.Ok(response);
         })
-        .WithName("GetFixedDeposit")
+        .WithName(GetFixedDeposit)
         .WithSummary("Gets a fixed deposit by ID")
         .Produces<FixedDepositResponse>();
 
@@ -46,7 +57,7 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(request);
             return Results.Ok(response);
         })
-        .WithName("SearchFixedDeposits")
+        .WithName(SearchFixedDeposits)
         .WithSummary("Searches fixed deposits with pagination")
         .Produces<PagedList<FixedDepositResponse>>();
 
@@ -56,7 +67,7 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Ok(response);
         })
-        .WithName("PostFixedDepositInterest")
+        .WithName(PostFixedDepositInterest)
         .WithSummary("Posts interest to a fixed deposit")
         .Produces<PostFixedDepositInterestResponse>();
 
@@ -66,7 +77,7 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Ok(response);
         })
-        .WithName("PayFixedDepositInterest")
+        .WithName(PayFixedDepositInterest)
         .WithSummary("Pays accrued interest on a fixed deposit")
         .Produces<PayFixedDepositInterestResponse>();
 
@@ -75,7 +86,7 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new MatureFixedDepositCommand(id));
             return Results.Ok(response);
         })
-        .WithName("MatureFixedDeposit")
+        .WithName(MatureFixedDeposit)
         .WithSummary("Matures a fixed deposit")
         .Produces<MatureFixedDepositResponse>();
 
@@ -84,7 +95,7 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(new RenewFixedDepositCommand(id));
             return Results.Ok(response);
         })
-        .WithName("RenewFixedDeposit")
+        .WithName(RenewFixedDeposit)
         .WithSummary("Renews a matured fixed deposit")
         .Produces<RenewFixedDepositResponse>();
 
@@ -94,7 +105,7 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Ok(response);
         })
-        .WithName("CloseFixedDepositPremature")
+        .WithName(CloseFixedDepositPremature)
         .WithSummary("Closes a fixed deposit prematurely")
         .Produces<ClosePrematureFixedDepositResponse>();
 
@@ -104,7 +115,7 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
             var response = await mediator.Send(command);
             return Results.Ok(response);
         })
-        .WithName("UpdateMaturityInstruction")
+        .WithName(UpdateMaturityInstruction)
         .WithSummary("Updates the maturity instruction for a fixed deposit")
         .Produces<UpdateMaturityInstructionResponse>();
 

@@ -26,6 +26,27 @@ namespace Store.Infrastructure.Endpoints.PurchaseOrders;
 /// </summary>
 public class PurchaseOrdersEndpoints() : CarterModule("store")
 {
+
+    private const string AddPurchaseOrderItemEndpoint = "AddPurchaseOrderItemEndpoint";
+    private const string ApprovePurchaseOrderEndpoint = "ApprovePurchaseOrderEndpoint";
+    private const string AutoAddItemsToPurchaseOrderEndpoint = "AutoAddItemsToPurchaseOrderEndpoint";
+    private const string CancelPurchaseOrderEndpoint = "CancelPurchaseOrderEndpoint";
+    private const string CreatePurchaseOrderEndpoint = "CreatePurchaseOrderEndpoint";
+    private const string DeletePurchaseOrderEndpoint = "DeletePurchaseOrderEndpoint";
+    private const string GeneratePurchaseOrderPdfEndpoint = "GeneratePurchaseOrderPdfEndpoint";
+    private const string GetItemsNeedingReorderEndpoint = "GetItemsNeedingReorderEndpoint";
+    private const string GetPurchaseOrderEndpoint = "GetPurchaseOrderEndpoint";
+    private const string GetPurchaseOrderItemsEndpoint = "GetPurchaseOrderItemsEndpoint";
+    private const string ReceivePurchaseOrderEndpoint = "ReceivePurchaseOrderEndpoint";
+    private const string ReceivePurchaseOrderItemQuantityEndpoint = "ReceivePurchaseOrderItemQuantityEndpoint";
+    private const string RemovePurchaseOrderItemEndpoint = "RemovePurchaseOrderItemEndpoint";
+    private const string SearchPurchaseOrdersEndpoint = "SearchPurchaseOrdersEndpoint";
+    private const string SendPurchaseOrderEndpoint = "SendPurchaseOrderEndpoint";
+    private const string SubmitPurchaseOrderEndpoint = "SubmitPurchaseOrderEndpoint";
+    private const string UpdatePurchaseOrderEndpoint = "UpdatePurchaseOrderEndpoint";
+    private const string UpdatePurchaseOrderItemPriceEndpoint = "UpdatePurchaseOrderItemPriceEndpoint";
+    private const string UpdatePurchaseOrderItemQuantityEndpoint = "UpdatePurchaseOrderItemQuantityEndpoint";
+
     /// <summary>
     /// Maps all Purchase Orders endpoints to the route builder.
     /// </summary>
@@ -39,7 +60,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             var response = await mediator.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("CreatePurchaseOrderEndpoint")
+        .WithName(CreatePurchaseOrderEndpoint)
         .WithSummary("Create a new purchase order")
         .WithDescription("Creates a new purchase order")
         .Produces<CreatePurchaseOrderResponse>()
@@ -53,7 +74,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             var result = await sender.Send(updateCommand).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("UpdatePurchaseOrderEndpoint")
+        .WithName(UpdatePurchaseOrderEndpoint)
         .WithSummary("Update a purchase order")
         .WithDescription("Updates an existing purchase order")
         .Produces<UpdatePurchaseOrderResponse>()
@@ -66,7 +87,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             await sender.Send(new DeletePurchaseOrderCommand(id)).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("DeletePurchaseOrderEndpoint")
+        .WithName(DeletePurchaseOrderEndpoint)
         .WithSummary("Delete a purchase order")
         .WithDescription("Deletes a purchase order by ID")
         .Produces(StatusCodes.Status204NoContent)
@@ -79,7 +100,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             var result = await sender.Send(new GetPurchaseOrderQuery(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("GetPurchaseOrderEndpoint")
+        .WithName(GetPurchaseOrderEndpoint)
         .WithSummary("Get a purchase order")
         .WithDescription("Retrieves a purchase order by ID")
         .Produces<PurchaseOrderResponse>()
@@ -92,7 +113,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             var response = await mediator.Send(command).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("SearchPurchaseOrdersEndpoint")
+        .WithName(SearchPurchaseOrdersEndpoint)
         .WithSummary("Search purchase orders")
         .WithDescription("Search and filter purchase orders with pagination support")
         .Produces<PagedList<PurchaseOrderResponse>>()
@@ -106,7 +127,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             var response = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("AddPurchaseOrderItemEndpoint")
+        .WithName(AddPurchaseOrderItemEndpoint)
         .WithSummary("Add an item to a purchase order")
         .WithDescription("Adds a grocery item line to an existing purchase order. If the item already exists the aggregate will increase the quantity.")
         .Produces<AddPurchaseOrderItemResponse>()
@@ -120,7 +141,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             await sender.Send(command).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("RemovePurchaseOrderItemEndpoint")
+        .WithName(RemovePurchaseOrderItemEndpoint)
         .WithSummary("Remove an item from a purchase order")
         .WithDescription("Removes an item line from a purchase order. Only allowed for modifiable orders.")
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
@@ -133,7 +154,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             await sender.Send(command).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("UpdatePurchaseOrderItemQuantityEndpoint")
+        .WithName(UpdatePurchaseOrderItemQuantityEndpoint)
         .WithSummary("Update item quantity")
         .WithDescription("Updates the ordered quantity for a specific purchase order line item. Quantity cannot be less than already received quantity.")
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
@@ -146,7 +167,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             await sender.Send(command).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("UpdatePurchaseOrderItemPriceEndpoint")
+        .WithName(UpdatePurchaseOrderItemPriceEndpoint)
         .WithSummary("Update item price and discount")
         .WithDescription("Updates the unit price and optional discount on a specific purchase order line item.")
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
@@ -159,7 +180,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             var response = await sender.Send(query).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("GetPurchaseOrderItemsEndpoint")
+        .WithName(GetPurchaseOrderItemsEndpoint)
         .WithSummary("Get all items for a purchase order")
         .WithDescription("Retrieves all line items associated with a purchase order, including grocery item details.")
         .Produces<List<PurchaseOrderItemResponse>>()
@@ -177,7 +198,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             var response = await mediator.Send(command).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("SubmitPurchaseOrderEndpoint")
+        .WithName(SubmitPurchaseOrderEndpoint)
         .WithSummary("Submit a purchase order for approval")
         .WithDescription("Submits a draft purchase order for approval, changing status from Draft to Submitted")
         .Produces<SubmitPurchaseOrderResponse>()
@@ -191,7 +212,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             var response = await mediator.Send(command).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("ApprovePurchaseOrderEndpoint")
+        .WithName(ApprovePurchaseOrderEndpoint)
         .WithSummary("Approve a submitted purchase order")
         .WithDescription("Approves a submitted purchase order, changing status from Submitted to Approved")
         .Produces<ApprovePurchaseOrderResponse>()
@@ -205,7 +226,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             var response = await mediator.Send(command).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("SendPurchaseOrderEndpoint")
+        .WithName(SendPurchaseOrderEndpoint)
         .WithSummary("Send an approved purchase order to supplier")
         .WithDescription("Sends an approved purchase order to the supplier, changing status from Approved to Sent")
         .Produces<SendPurchaseOrderResponse>()
@@ -219,7 +240,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             var response = await mediator.Send(command).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("ReceivePurchaseOrderEndpoint")
+        .WithName(ReceivePurchaseOrderEndpoint)
         .WithSummary("Receive a purchase order delivery")
         .WithDescription("Marks a sent purchase order as received and records the actual delivery date")
         .Produces<ReceivePurchaseOrderResponse>()
@@ -233,7 +254,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             await sender.Send(command).ConfigureAwait(false);
             return Results.NoContent();
         })
-        .WithName("ReceivePurchaseOrderItemQuantityEndpoint")
+        .WithName(ReceivePurchaseOrderItemQuantityEndpoint)
         .WithSummary("Record received quantity for an item")
         .WithDescription("Sets the received quantity for a purchase order line item (can be partial or complete).")
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Store))
@@ -246,7 +267,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             var response = await mediator.Send(command).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("CancelPurchaseOrderEndpoint")
+        .WithName(CancelPurchaseOrderEndpoint)
         .WithSummary("Cancel a purchase order")
         .WithDescription("Cancels a purchase order that hasn't been received yet")
         .Produces<CancelPurchaseOrderResponse>()
@@ -264,7 +285,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
                 "application/pdf",
                 $"PurchaseOrder_{id}_{DateTime.UtcNow:yyyyMMddHHmmss}.pdf");
         })
-        .WithName("GeneratePurchaseOrderPdfEndpoint")
+        .WithName(GeneratePurchaseOrderPdfEndpoint)
         .WithSummary("Generate PDF report for a purchase order")
         .WithDescription("Generates a professional PDF report for the specified purchase order including all items and approval information.")
         .Produces<FileResult>()
@@ -278,7 +299,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             var result = await sender.Send(cmd).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("AutoAddItemsToPurchaseOrderEndpoint")
+        .WithName(AutoAddItemsToPurchaseOrderEndpoint)
         .WithSummary("Auto-add items needing reorder to purchase order")
         .WithDescription("Automatically adds items that are at or below their reorder point to the specified purchase order based on the order's supplier. Only works on Draft status purchase orders.")
         .Produces<AutoAddItemsToPurchaseOrderResponse>()
@@ -292,7 +313,7 @@ public class PurchaseOrdersEndpoints() : CarterModule("store")
             var result = await sender.Send(query).ConfigureAwait(false);
             return Results.Ok(result);
         })
-        .WithName("GetItemsNeedingReorderEndpoint")
+        .WithName(GetItemsNeedingReorderEndpoint)
         .WithSummary("Get items needing reorder for a supplier")
         .WithDescription("Returns a list of items that are at or below their reorder point for the specified supplier, with suggested order quantities based on current stock levels")
         .Produces<List<ItemNeedingReorderResponse>>()

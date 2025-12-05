@@ -9,6 +9,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class RiskIndicatorEndpoints() : CarterModule("microfinance")
 {
+
+    private const string ActivateRiskIndicator = "ActivateRiskIndicator";
+    private const string CreateRiskIndicator = "CreateRiskIndicator";
+    private const string DeactivateRiskIndicator = "DeactivateRiskIndicator";
+    private const string GetRiskIndicator = "GetRiskIndicator";
+    private const string RecordRiskIndicatorMeasurement = "RecordRiskIndicatorMeasurement";
+
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/risk-indicators").WithTags("Risk Indicators");
@@ -18,7 +25,7 @@ public class RiskIndicatorEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Created($"/microfinance/risk-indicators/{result.Id}", result);
         })
-        .WithName("CreateRiskIndicator")
+        .WithName(CreateRiskIndicator)
         .WithSummary("Create a new risk indicator")
         .Produces<CreateRiskIndicatorResponse>(StatusCodes.Status201Created);
 
@@ -27,7 +34,7 @@ public class RiskIndicatorEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new GetRiskIndicatorRequest(id));
             return Results.Ok(result);
         })
-        .WithName("GetRiskIndicator")
+        .WithName(GetRiskIndicator)
         .WithSummary("Get risk indicator by ID")
         .Produces<RiskIndicatorResponse>();
 
@@ -37,7 +44,7 @@ public class RiskIndicatorEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
-        .WithName("RecordRiskIndicatorMeasurement")
+        .WithName(RecordRiskIndicatorMeasurement)
         .WithSummary("Record a new measurement for risk indicator")
         .Produces<RecordMeasurementResponse>();
 
@@ -46,7 +53,7 @@ public class RiskIndicatorEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new ActivateRiskIndicatorCommand(id));
             return Results.Ok(result);
         })
-        .WithName("ActivateRiskIndicator")
+        .WithName(ActivateRiskIndicator)
         .WithSummary("Activate risk indicator")
         .Produces<ActivateRiskIndicatorResponse>();
 
@@ -55,7 +62,7 @@ public class RiskIndicatorEndpoints() : CarterModule("microfinance")
             var result = await sender.Send(new DeactivateRiskIndicatorCommand(id));
             return Results.Ok(result);
         })
-        .WithName("DeactivateRiskIndicator")
+        .WithName(DeactivateRiskIndicator)
         .WithSummary("Deactivate risk indicator")
         .Produces<DeactivateRiskIndicatorResponse>();
 

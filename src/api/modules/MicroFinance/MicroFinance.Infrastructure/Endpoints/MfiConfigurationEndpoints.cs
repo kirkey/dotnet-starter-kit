@@ -10,6 +10,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class MfiConfigurationEndpoints() : CarterModule("microfinance")
 {
+
+    private const string CreateMfiConfiguration = "CreateMfiConfiguration";
+    private const string GetMfiConfiguration = "GetMfiConfiguration";
+    private const string UpdateMfiConfiguration = "UpdateMfiConfiguration";
+
     /// <summary>
     /// Maps all MFI Configuration endpoints to the route builder.
     /// </summary>
@@ -22,7 +27,7 @@ public class MfiConfigurationEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Created($"/microfinance/configurations/{response.Id}", response);
             })
-            .WithName("CreateMfiConfiguration")
+            .WithName(CreateMfiConfiguration)
             .WithSummary("Creates a new MFI configuration setting")
             .Produces<CreateMfiConfigurationResponse>(StatusCodes.Status201Created);
 
@@ -31,7 +36,7 @@ public class MfiConfigurationEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(new GetMfiConfigurationRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetMfiConfiguration")
+            .WithName(GetMfiConfiguration)
             .WithSummary("Gets an MFI configuration setting by ID")
             .Produces<MfiConfigurationResponse>();
 
@@ -41,7 +46,7 @@ public class MfiConfigurationEndpoints() : CarterModule("microfinance")
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateMfiConfiguration")
+            .WithName(UpdateMfiConfiguration)
             .WithSummary("Updates an MFI configuration value")
             .Produces<UpdateMfiConfigurationResponse>();
     }
