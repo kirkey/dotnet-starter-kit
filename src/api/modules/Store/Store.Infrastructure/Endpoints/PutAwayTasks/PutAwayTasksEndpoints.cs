@@ -1,4 +1,3 @@
-using Carter;
 using FSH.Starter.WebApi.Store.Application.PutAwayTasks.AddItem.v1;
 using FSH.Starter.WebApi.Store.Application.PutAwayTasks.Assign.v1;
 using FSH.Starter.WebApi.Store.Application.PutAwayTasks.Complete.v1;
@@ -7,17 +6,13 @@ using FSH.Starter.WebApi.Store.Application.PutAwayTasks.Delete.v1;
 using FSH.Starter.WebApi.Store.Application.PutAwayTasks.Get.v1;
 using FSH.Starter.WebApi.Store.Application.PutAwayTasks.Search.v1;
 using FSH.Starter.WebApi.Store.Application.PutAwayTasks.Start.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PutAwayTasks;
 
-public class PutAwayTasksEndpoints : ICarterModule
+public class PutAwayTasksEndpoints() : CarterModule("store")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/put-away-tasks").WithTags("put-away-tasks");
 

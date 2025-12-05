@@ -5,16 +5,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Escalate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Resolve.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class RiskAlertEndpoints : ICarterModule
+public class RiskAlertEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/risk-alerts").WithTags("Risk Alerts");
 

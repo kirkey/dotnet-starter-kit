@@ -1,22 +1,16 @@
-using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveBalances.Accrue.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveBalances.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveBalances.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveBalances.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveBalances.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveBalances.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveBalances;
 
-public class LeaveBalancesEndpoints : ICarterModule
+public class LeaveBalancesEndpoints() : CarterModule("humanresources")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/leave-balances").WithTags("leave-balances");
 

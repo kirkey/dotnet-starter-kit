@@ -1,13 +1,7 @@
-using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveReports.Export.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveReports.Generate.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveReports.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveReports.Search.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveReports;
@@ -15,12 +9,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveReport
 /// <summary>
 /// Leave Reports endpoints coordinator.
 /// </summary>
-public class LeaveReportsEndpoints : ICarterModule
+public class LeaveReportsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all leave report endpoints.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/leave-reports").WithTags("leave-reports");
 

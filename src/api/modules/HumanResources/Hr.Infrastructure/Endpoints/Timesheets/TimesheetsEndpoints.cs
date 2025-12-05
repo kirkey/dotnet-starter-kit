@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.Timesheets.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Timesheets.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Timesheets.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Timesheets.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Timesheets.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Timesheets;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Timesheets;
 /// <summary>
 /// Endpoint configuration for Timesheets module.
 /// </summary>
-public class TimesheetsEndpoints : ICarterModule
+public class TimesheetsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all Timesheets endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/timesheets").WithTags("timesheets");
 

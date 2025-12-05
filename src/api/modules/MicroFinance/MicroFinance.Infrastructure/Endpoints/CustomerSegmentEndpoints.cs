@@ -3,16 +3,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.CustomerSegments.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CustomerSegments.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CustomerSegments.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CustomerSegments.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CustomerSegmentEndpoints : ICarterModule
+public class CustomerSegmentEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/customer-segments").WithTags("Customer Segments");
 

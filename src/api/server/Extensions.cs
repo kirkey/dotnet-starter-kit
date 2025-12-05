@@ -1,7 +1,6 @@
 ﻿﻿using System.Reflection;
-using FSH.Framework.Infrastructure.OpenApi;
 
- namespace FSH.Starter.WebApi.Host;
+namespace FSH.Starter.WebApi.Host;
 
 public static class Extensions
 {
@@ -98,7 +97,45 @@ public static class Extensions
             if (moduleOptions.EnableTodo)
                 config.WithModule<TodoModule.Endpoints>();
             
-            // Store, Accounting, HR, MicroFinance, and Messaging endpoints are auto-discovered via ICarterModule implementations
+            // Explicitly register all ICarterModule implementations for proper Swagger/OpenAPI discovery
+            // This ensures Swashbuckle can discover all endpoints including those from Store, Accounting, HR, etc.
+            var iCarterModuleType = typeof(Carter.ICarterModule);
+            var assembliesToScan = new List<Assembly>();
+            
+            if (moduleOptions.EnableStore)
+                assembliesToScan.Add(typeof(StoreModule).Assembly);
+            
+            if (moduleOptions.EnableAccounting)
+                assembliesToScan.Add(typeof(AccountingModule).Assembly);
+            
+            if (moduleOptions.EnableHumanResources)
+                assembliesToScan.Add(typeof(HumanResourcesMetadata).Assembly);
+            
+            if (moduleOptions.EnableMessaging)
+                assembliesToScan.Add(typeof(MessagingModule).Assembly);
+            
+            if (moduleOptions.EnableMicroFinance)
+                assembliesToScan.Add(typeof(MicroFinanceModule).Assembly);
+            
+            foreach (var assembly in assembliesToScan)
+            {
+                if (assembly == null) continue;
+                
+                var icarterModuleTypes = assembly.GetTypes()
+                    .Where(t => iCarterModuleType.IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
+                    .ToList();
+                
+                foreach (var moduleType in icarterModuleTypes)
+                {
+                    // Use reflection to call config.WithModule<T>() for each ICarterModule type
+                    var withModuleMethod = typeof(Carter.CarterConfigurator)
+                        .GetMethods()
+                        .First(m => m.Name == "WithModule" && m.IsGenericMethodDefinition);
+                    
+                    var genericMethod = withModuleMethod.MakeGenericMethod(moduleType);
+                    genericMethod.Invoke(config, null);
+                }
+            }
         });
 
         // Store module options in DI for potential runtime access

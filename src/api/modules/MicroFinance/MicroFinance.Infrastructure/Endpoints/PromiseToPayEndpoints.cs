@@ -3,16 +3,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.MarkBroken.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.RecordPayment.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class PromiseToPayEndpoints : ICarterModule
+public class PromiseToPayEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/promise-to-pays").WithTags("Promise to Pays");
 

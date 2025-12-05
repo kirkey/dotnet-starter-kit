@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.Benefits.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Benefits.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Benefits.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Benefits.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Benefits.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Benefits;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Benefits;
 /// <summary>
 /// Endpoint routes for managing benefit master data.
 /// </summary>
-public class BenefitEndpoints : ICarterModule
+public class BenefitEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all benefit endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/benefits").WithTags("benefits");
 

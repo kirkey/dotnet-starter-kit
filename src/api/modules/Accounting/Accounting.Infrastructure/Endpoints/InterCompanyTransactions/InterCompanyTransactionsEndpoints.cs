@@ -8,13 +8,13 @@ namespace Accounting.Infrastructure.Endpoints.InterCompanyTransactions;
 /// Provides comprehensive REST API endpoints for managing inter-company-transactions.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class InterCompanyTransactionsEndpoints : ICarterModule
+public class InterCompanyTransactionsEndpoints() : CarterModule("accounting")
 {
     /// <summary>
     /// Maps all InterCompanyTransactions endpoints to the route builder.
     /// Delegates to extension methods for Create, Read, Update, Delete, and business operation endpoints.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("accounting/inter-company-transactions").WithTags("inter-company-transaction");
 

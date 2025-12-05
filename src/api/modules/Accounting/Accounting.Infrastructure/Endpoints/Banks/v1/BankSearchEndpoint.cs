@@ -15,7 +15,7 @@ public static class BankSearchEndpoint
     /// </summary>
     /// <param name="endpoints">The endpoint route builder.</param>
     /// <returns>Route handler builder for further configuration.</returns>
-    internal static RouteHandlerBuilder MapBankSearchEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapSearchBankEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPost("/search", async (BankSearchRequest request, ISender mediator) =>

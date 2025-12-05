@@ -2,16 +2,12 @@ using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.CreditScores.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CreditScores.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CreditScores.SetLossParameters.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CreditScoreEndpoints : ICarterModule
+public class CreditScoreEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/credit-scores").WithTags("Credit Scores");
 

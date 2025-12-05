@@ -1,22 +1,18 @@
 using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.CreditBureauReports.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CreditBureauReports.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Credit Bureau Reports.
 /// </summary>
-public class CreditBureauReportEndpoints : ICarterModule
+public class CreditBureauReportEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Credit Bureau Report endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/credit-bureau-reports").WithTags("credit-bureau-reports");
 

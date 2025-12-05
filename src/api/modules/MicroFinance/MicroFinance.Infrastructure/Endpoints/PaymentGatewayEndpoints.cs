@@ -2,22 +2,18 @@ using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Payment Gateways.
 /// </summary>
-public class PaymentGatewayEndpoints : ICarterModule
+public class PaymentGatewayEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Payment Gateway endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/payment-gateways").WithTags("payment-gateways");
 

@@ -1,4 +1,3 @@
-using Carter;
 using FSH.Starter.WebApi.Store.Application.InventoryTransactions.Approve.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryTransactions.Create.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryTransactions.Delete.v1;
@@ -6,10 +5,6 @@ using FSH.Starter.WebApi.Store.Application.InventoryTransactions.Get.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryTransactions.Reject.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryTransactions.Search.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryTransactions.UpdateNotes.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransactions;
@@ -17,9 +12,9 @@ namespace Store.Infrastructure.Endpoints.InventoryTransactions;
 /// <summary>
 /// Endpoint configuration for Inventory Transactions module using Carter.
 /// </summary>
-public class InventoryTransactionsEndpoints : ICarterModule
+public class InventoryTransactionsEndpoints() : CarterModule("store")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/inventory-transactions").WithTags("inventory-transactions");
 

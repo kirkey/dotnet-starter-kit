@@ -4,16 +4,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Cancel.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Reject.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class ApprovalRequestEndpoints : ICarterModule
+public class ApprovalRequestEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/approval-requests").WithTags("Approval Requests");
 

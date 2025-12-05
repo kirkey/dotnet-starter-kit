@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.BenefitEnrollments.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.BenefitEnrollments.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.BenefitEnrollments.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.BenefitEnrollments.Terminate.v1;
 using FSH.Starter.WebApi.HumanResources.Application.BenefitEnrollments.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitEnrollments;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitEnro
 /// <summary>
 /// Endpoint routes for managing benefit enrollments.
 /// </summary>
-public class BenefitEnrollmentsEndpoints : ICarterModule
+public class BenefitEnrollmentsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all benefit enrollment endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/benefit-enrollments").WithTags("benefit-enrollments");
 

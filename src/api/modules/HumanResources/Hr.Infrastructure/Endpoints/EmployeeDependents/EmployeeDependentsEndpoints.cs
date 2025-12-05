@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDependents.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDependents.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDependents.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDependents.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDependents.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDependents;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDep
 /// <summary>
 /// Endpoint configuration for EmployeeDependents module.
 /// </summary>
-public class EmployeeDependentsEndpoints : ICarterModule
+public class EmployeeDependentsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all EmployeeDependents endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/employee-dependents").WithTags("employee-dependents");
 

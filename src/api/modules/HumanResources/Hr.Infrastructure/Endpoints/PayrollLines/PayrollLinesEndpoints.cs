@@ -1,14 +1,8 @@
-using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollLines.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollLines.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollLines.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollLines.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollLines.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollLines;
@@ -17,12 +11,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollLine
 /// Endpoint configuration for Payroll Lines module.
 /// Each payroll line represents one employee's pay calculation for a payroll period.
 /// </summary>
-public class PayrollLinesEndpoints : ICarterModule
+public class PayrollLinesEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all Payroll Lines endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/payroll-lines").WithTags("payroll-lines");
 

@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.HRAnalytics.v1;
 
 using FSH.Starter.WebApi.HumanResources.Application.HRAnalytics.Export.v1;

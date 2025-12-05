@@ -13,7 +13,7 @@ public static class BankGetEndpoint
     /// </summary>
     /// <param name="endpoints">The endpoint route builder.</param>
     /// <returns>Route handler builder for further configuration.</returns>
-    internal static RouteHandlerBuilder MapBankGetEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapGetBankEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>

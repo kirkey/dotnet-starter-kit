@@ -1,22 +1,18 @@
 using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.ReportGenerations.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ReportGenerations.Queue.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Report Generations.
 /// </summary>
-public class ReportGenerationEndpoints : ICarterModule
+public class ReportGenerationEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Report Generation endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/report-generations").WithTags("report-generations");
 

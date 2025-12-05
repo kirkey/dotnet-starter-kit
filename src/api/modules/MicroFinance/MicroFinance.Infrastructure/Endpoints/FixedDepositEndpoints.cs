@@ -1,5 +1,4 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.ClosePremature.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.Get.v1;
@@ -9,19 +8,18 @@ using FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.PostInterest.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.Renew.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.UpdateInstruction.v1;
-using MediatR;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Fixed Deposits.
 /// </summary>
-public class FixedDepositEndpoints : ICarterModule
+public class FixedDepositEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Fixed Deposit endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var fixedDepositsGroup = app.MapGroup("microfinance/fixed-deposits").WithTags("fixed-deposits");
 

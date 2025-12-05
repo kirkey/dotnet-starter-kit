@@ -2,16 +2,12 @@ using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.UpdateNav.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class InvestmentProductEndpoints : ICarterModule
+public class InvestmentProductEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/investment-products").WithTags("Investment Products");
 

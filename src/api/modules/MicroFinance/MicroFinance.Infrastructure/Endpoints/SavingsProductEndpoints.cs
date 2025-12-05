@@ -1,25 +1,20 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Savings Products.
 /// </summary>
-public class SavingsProductEndpoints : ICarterModule
+public class SavingsProductEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Savings Product endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var savingsProductsGroup = app.MapGroup("microfinance/savings-products").WithTags("savings-products");
 

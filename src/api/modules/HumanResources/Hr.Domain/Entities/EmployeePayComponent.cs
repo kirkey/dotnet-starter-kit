@@ -1,7 +1,4 @@
 namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
-
-using Events;
-
 /// <summary>
 /// Represents an employee-specific pay component assignment.
 /// Allows per-employee overrides and custom additions to standard pay components.

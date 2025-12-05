@@ -1,24 +1,17 @@
-using Carter;
 using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Create.v1;
 using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Delete.v1;
 using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Get.v1;
 using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Search.v1;
 using FSH.Starter.WebApi.Store.Application.WarehouseLocations.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.WarehouseLocations;
 
 /// <summary>
 /// Endpoint configuration for Warehouse Locations module.
 /// </summary>
-public class WarehouseLocationsEndpoints : ICarterModule
+public class WarehouseLocationsEndpoints() : CarterModule("store")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/warehouse-locations").WithTags("warehouse-locations");
 

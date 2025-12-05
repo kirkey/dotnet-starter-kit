@@ -1,4 +1,3 @@
-using Carter;
 using FSH.Starter.WebApi.Store.Application.PickLists.AddItem.v1;
 using FSH.Starter.WebApi.Store.Application.PickLists.Assign.v1;
 using FSH.Starter.WebApi.Store.Application.PickLists.Complete.v1;
@@ -7,10 +6,6 @@ using FSH.Starter.WebApi.Store.Application.PickLists.Delete.v1;
 using FSH.Starter.WebApi.Store.Application.PickLists.Get.v1;
 using FSH.Starter.WebApi.Store.Application.PickLists.Search.v1;
 using FSH.Starter.WebApi.Store.Application.PickLists.Start.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PickLists;
@@ -18,9 +13,9 @@ namespace Store.Infrastructure.Endpoints.PickLists;
 /// <summary>
 /// Endpoint configuration for Pick Lists module.
 /// </summary>
-public class PickListsEndpoints : ICarterModule
+public class PickListsEndpoints() : CarterModule("store")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/pick-lists").WithTags("pick-lists");
 

@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.Holidays.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Holidays.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Holidays.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Holidays.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Holidays.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Holidays;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Holidays;
 /// <summary>
 /// Endpoint routes for managing holidays.
 /// </summary>
-public class HolidaysEndpoints : ICarterModule
+public class HolidaysEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all holiday endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/holidays").WithTags("holidays");
 

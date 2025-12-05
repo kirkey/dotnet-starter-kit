@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.End.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDesignationAssignments.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DesignationAssignments;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Designation
 /// <summary>
 /// Endpoint configuration for DesignationAssignments module.
 /// </summary>
-public class EmployeeDesignationAssignmentsEndpoints : ICarterModule
+public class EmployeeDesignationAssignmentsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all DesignationAssignments endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/employee-designation-assignments").WithTags("employee-designation-assignments");
 

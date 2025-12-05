@@ -8,13 +8,13 @@ namespace Accounting.Infrastructure.Endpoints.FixedAssets;
 /// Provides comprehensive REST API endpoints for managing fixed-assets.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class FixedAssetsEndpoints : ICarterModule
+public class FixedAssetsEndpoints() : CarterModule("accounting")
 {
     /// <summary>
     /// Maps all FixedAssets endpoints to the route builder.
     /// Delegates to extension methods for Create, Read, Update, Delete, and business operation endpoints.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("accounting/fixed-assets").WithTags("fixed-asset");
 

@@ -1,10 +1,5 @@
-using Carter;
 using FSH.Framework.Core.Identity.Users.Abstractions;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDashboards.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDashboards;
@@ -12,12 +7,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDas
 /// <summary>
 /// Endpoint configuration for EmployeeDashboards module.
 /// </summary>
-public class EmployeeDashboardsEndpoints : ICarterModule
+public class EmployeeDashboardsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all EmployeeDashboards endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/employee-dashboards").WithTags("employee-dashboards");
 

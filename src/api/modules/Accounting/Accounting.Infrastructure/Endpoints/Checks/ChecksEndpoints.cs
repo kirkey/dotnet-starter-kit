@@ -4,29 +4,31 @@ using Carter;
 namespace Accounting.Infrastructure.Endpoints.Checks;
 
 /// <summary>
-/// Endpoint configuration for Checks module.
-/// Provides comprehensive REST API endpoints for managing checks.
-/// Uses the ICarterModule delegated pattern with extension methods for each operation.
+/// Carter module for Checks endpoints.
+/// Routes all requests to separate versioned endpoint handlers.
 /// </summary>
-public class ChecksEndpoints : ICarterModule
+public class ChecksEndpoints() : CarterModule("accounting")
 {
     /// <summary>
     /// Maps all Checks endpoints to the route builder.
-    /// Delegates to extension methods for Create, Read, Update, Delete, and business operation endpoints.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("accounting/checks").WithTags("check");
+        var group = app.MapGroup("accounting/checks").WithTags("checks");
 
-        group.MapCheckClearEndpoint();
-        group.MapCheckCreateEndpoint();
-        group.MapCheckEndpoints();
+        // Query endpoints
         group.MapCheckGetEndpoint();
-        group.MapCheckIssueEndpoint();
-        group.MapCheckPrintEndpoint();
         group.MapCheckSearchEndpoint();
-        group.MapCheckStopPaymentEndpoint();
+
+        // Command endpoints - CRUD operations
+        group.MapCheckCreateEndpoint();
         group.MapCheckUpdateEndpoint();
+
+        // Command endpoints - State transitions
+        group.MapCheckIssueEndpoint();
         group.MapCheckVoidEndpoint();
+        group.MapCheckClearEndpoint();
+        group.MapCheckStopPaymentEndpoint();
+        group.MapCheckPrintEndpoint();
     }
 }

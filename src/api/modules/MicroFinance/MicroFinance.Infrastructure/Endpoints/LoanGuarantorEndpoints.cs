@@ -1,5 +1,4 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Get.v1;
@@ -7,22 +6,18 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Reject.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Release.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.UpdateAmount.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Loan Guarantors.
 /// </summary>
-public class LoanGuarantorEndpoints : ICarterModule
+public class LoanGuarantorEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Loan Guarantor endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var guarantorsGroup = app.MapGroup("microfinance/loan-guarantors").WithTags("loan-guarantors");
 

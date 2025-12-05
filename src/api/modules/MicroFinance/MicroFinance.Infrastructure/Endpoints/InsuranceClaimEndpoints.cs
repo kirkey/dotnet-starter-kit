@@ -8,9 +8,9 @@ using FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Submit.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class InsuranceClaimEndpoints : ICarterModule
+public class InsuranceClaimEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/insurance-claims").WithTags("insurance-claims");
 

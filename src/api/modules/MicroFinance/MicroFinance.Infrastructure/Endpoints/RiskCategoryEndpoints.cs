@@ -3,16 +3,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class RiskCategoryEndpoints : ICarterModule
+public class RiskCategoryEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/risk-categories").WithTags("Risk Categories");
 

@@ -4,16 +4,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.RecordMeasurement.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class RiskIndicatorEndpoints : ICarterModule
+public class RiskIndicatorEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/risk-indicators").WithTags("Risk Indicators");
 

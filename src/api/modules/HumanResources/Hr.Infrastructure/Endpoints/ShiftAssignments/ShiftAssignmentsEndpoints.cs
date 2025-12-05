@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.ShiftAssignments.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.ShiftAssignments.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.ShiftAssignments.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.ShiftAssignments.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.ShiftAssignments.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.ShiftAssignments;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.ShiftAssign
 /// <summary>
 /// Endpoint configuration for Shift Assignments module.
 /// </summary>
-public class ShiftAssignmentsEndpoints : ICarterModule
+public class ShiftAssignmentsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all Shift Assignments endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/shift-assignments").WithTags("shift-assignments");
 

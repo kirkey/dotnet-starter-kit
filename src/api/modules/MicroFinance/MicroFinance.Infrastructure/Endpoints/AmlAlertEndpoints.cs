@@ -3,16 +3,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Assign.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Escalate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class AmlAlertEndpoints : ICarterModule
+public class AmlAlertEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/aml-alerts").WithTags("AML Alerts");
 

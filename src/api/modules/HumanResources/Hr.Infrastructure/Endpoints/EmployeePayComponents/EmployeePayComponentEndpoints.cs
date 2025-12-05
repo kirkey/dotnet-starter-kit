@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeePayComponents.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeePayComponents.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeePayComponents.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeePayComponents.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeePayComponents.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeePayComponents;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeePay
 /// <summary>
 /// Endpoint routes for managing employee pay components.
 /// </summary>
-public class EmployeePayComponentEndpoints : ICarterModule
+public class EmployeePayComponentEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all employee pay component endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/employee-pay-components").WithTags("employee-pay-components");
 

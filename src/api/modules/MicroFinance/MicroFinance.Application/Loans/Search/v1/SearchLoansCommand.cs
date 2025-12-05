@@ -1,5 +1,4 @@
 using FSH.Framework.Core.Paging;
-using FSH.Starter.WebApi.MicroFinance.Application.Loans.Get.v1;
 using MediatR;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.Loans.Search.v1;

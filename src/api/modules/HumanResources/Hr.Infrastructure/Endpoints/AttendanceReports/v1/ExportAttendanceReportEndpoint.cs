@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.AttendanceReports.v1;
 
 using FSH.Starter.WebApi.HumanResources.Application.AttendanceReports.Export.v1;

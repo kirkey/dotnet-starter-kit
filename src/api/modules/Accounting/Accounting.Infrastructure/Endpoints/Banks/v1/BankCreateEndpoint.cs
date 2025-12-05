@@ -14,7 +14,7 @@ public static class BankCreateEndpoint
     /// </summary>
     /// <param name="endpoints">The endpoint route builder.</param>
     /// <returns>Route handler builder for further configuration.</returns>
-    internal static RouteHandlerBuilder MapBankCreateEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapCreateBankEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPost("/", async (BankCreateCommand command, ISender mediator) =>

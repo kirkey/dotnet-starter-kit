@@ -7,9 +7,9 @@ using FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.RecordPremiu
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class InsurancePolicyEndpoints : ICarterModule
+public class InsurancePolicyEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/insurance-policies").WithTags("insurance-policies");
 

@@ -1,5 +1,3 @@
-using System;
-
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.HRAnalytics.v1;
 
 using FSH.Starter.WebApi.HumanResources.Application.HRAnalytics.Get.v1;

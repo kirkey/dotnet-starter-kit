@@ -1,5 +1,4 @@
 global using Carter;
-global using Finbuckle.MultiTenant;
 global using FSH.Framework.Core.Paging;
 global using FSH.Framework.Core.Persistence;
 global using FSH.Framework.Infrastructure.Auth.Policy;
@@ -13,4 +12,3 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.Extensions.DependencyInjection;
 global using Shared.Constants;
-global using Store.Domain;

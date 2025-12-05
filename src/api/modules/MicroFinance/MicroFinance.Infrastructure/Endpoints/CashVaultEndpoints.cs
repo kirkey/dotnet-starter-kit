@@ -8,9 +8,9 @@ using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Withdraw.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CashVaultEndpoints : ICarterModule
+public class CashVaultEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/cash-vaults").WithTags("cash-vaults");
 

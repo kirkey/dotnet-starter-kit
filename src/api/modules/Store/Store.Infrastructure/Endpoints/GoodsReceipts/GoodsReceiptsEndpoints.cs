@@ -1,4 +1,3 @@
-using Carter;
 using FSH.Starter.WebApi.Store.Application.GoodsReceipts.AddItem.v1;
 using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Create.v1;
 using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Delete.v1;
@@ -6,10 +5,6 @@ using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Get.v1;
 using FSH.Starter.WebApi.Store.Application.GoodsReceipts.MarkReceived.v1;
 using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Queries;
 using FSH.Starter.WebApi.Store.Application.GoodsReceipts.Search.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.GoodsReceipts;
@@ -17,9 +12,9 @@ namespace Store.Infrastructure.Endpoints.GoodsReceipts;
 /// <summary>
 /// Endpoint configuration for Goods Receipts module.
 /// </summary>
-public class GoodsReceiptsEndpoints : ICarterModule
+public class GoodsReceiptsEndpoints() : CarterModule("store")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/goods-receipts").WithTags("goods-receipts");
 

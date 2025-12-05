@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.Shifts.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Shifts.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Shifts.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Shifts.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Shifts.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Shifts;
 /// <summary>
 /// Endpoint configuration for Shifts module.
 /// </summary>
-public class ShiftsEndpoints : ICarterModule
+public class ShiftsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all Shifts endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/shifts").WithTags("shifts");
 

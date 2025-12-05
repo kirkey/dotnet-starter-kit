@@ -4,16 +4,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerAssignments.AssignT
 using FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerAssignments.End.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerAssignments.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerAssignments.Transfer.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LoanOfficerAssignmentEndpoints : ICarterModule
+public class LoanOfficerAssignmentEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/loan-officer-assignments").WithTags("Loan Officer Assignments");
 

@@ -3,16 +3,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollateralReleases.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralReleases.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralReleases.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralReleases.Release.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollateralReleaseEndpoints : ICarterModule
+public class CollateralReleaseEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/collateral-releases").WithTags("Collateral Releases");
 

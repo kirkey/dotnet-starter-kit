@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.DocumentTemplates.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.DocumentTemplates.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.DocumentTemplates.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.DocumentTemplates.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.DocumentTemplates.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DocumentTemplates;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.DocumentTem
 /// <summary>
 /// Endpoint configuration for DocumentTemplates module.
 /// </summary>
-public class DocumentTemplatesEndpoints : ICarterModule
+public class DocumentTemplatesEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all DocumentTemplates endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/document-templates").WithTags("document-templates");
 

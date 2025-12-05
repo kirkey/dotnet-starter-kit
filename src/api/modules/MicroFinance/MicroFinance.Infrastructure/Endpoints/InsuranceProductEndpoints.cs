@@ -5,9 +5,9 @@ using FSH.Starter.WebApi.MicroFinance.Application.InsuranceProducts.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class InsuranceProductEndpoints : ICarterModule
+public class InsuranceProductEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/insurance-products").WithTags("insurance-products");
 

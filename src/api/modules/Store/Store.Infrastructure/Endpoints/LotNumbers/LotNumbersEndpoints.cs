@@ -1,22 +1,17 @@
-using Carter;
 using FSH.Starter.WebApi.Store.Application.LotNumbers.Create.v1;
 using FSH.Starter.WebApi.Store.Application.LotNumbers.Delete.v1;
 using FSH.Starter.WebApi.Store.Application.LotNumbers.Get.v1;
 using FSH.Starter.WebApi.Store.Application.LotNumbers.Search.v1;
 using FSH.Starter.WebApi.Store.Application.LotNumbers.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 using GetLotNumberResponse = FSH.Starter.WebApi.Store.Application.LotNumbers.Get.v1.LotNumberResponse;
 using SearchLotNumberResponse = FSH.Starter.WebApi.Store.Application.LotNumbers.Search.v1.LotNumberResponse;
 
 namespace Store.Infrastructure.Endpoints.LotNumbers;
 
-public class LotNumbersEndpoints : ICarterModule
+public class LotNumbersEndpoints() : CarterModule("store")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/lot-numbers").WithTags("lot-numbers");
 

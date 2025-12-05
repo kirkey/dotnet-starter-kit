@@ -5,22 +5,18 @@ using FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.CreditFloat.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.DebitFloat.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.Suspend.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Agent Banking.
 /// </summary>
-public class AgentBankingEndpoints : ICarterModule
+public class AgentBankingEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Agent Banking endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/agent-banking").WithTags("agent-banking");
 

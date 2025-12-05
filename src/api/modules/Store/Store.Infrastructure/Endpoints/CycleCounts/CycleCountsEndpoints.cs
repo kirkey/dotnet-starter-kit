@@ -1,4 +1,3 @@
-using Carter;
 using FSH.Starter.WebApi.Store.Application.CycleCounts.AddItem.v1;
 using FSH.Starter.WebApi.Store.Application.CycleCounts.Cancel.v1;
 using FSH.Starter.WebApi.Store.Application.CycleCounts.Complete.v1;
@@ -9,10 +8,6 @@ using FSH.Starter.WebApi.Store.Application.CycleCounts.RecordCount.v1;
 using FSH.Starter.WebApi.Store.Application.CycleCounts.Search.v1;
 using FSH.Starter.WebApi.Store.Application.CycleCounts.Start.v1;
 using FSH.Starter.WebApi.Store.Application.CycleCounts.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.CycleCounts;
@@ -20,9 +15,9 @@ namespace Store.Infrastructure.Endpoints.CycleCounts;
 /// <summary>
 /// Endpoint configuration for Cycle Counts module.
 /// </summary>
-public class CycleCountsEndpoints : ICarterModule
+public class CycleCountsEndpoints() : CarterModule("store")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/cycle-counts").WithTags("cycle-counts");
 

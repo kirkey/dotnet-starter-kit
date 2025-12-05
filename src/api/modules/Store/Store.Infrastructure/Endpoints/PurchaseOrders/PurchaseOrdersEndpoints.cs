@@ -1,4 +1,3 @@
-using Carter;
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Approve.v1;
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.AutoAddItems.v1;
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Cancel.v1;
@@ -18,10 +17,6 @@ using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Search.v1;
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Send.v1;
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Submit.v1;
 using FSH.Starter.WebApi.Store.Application.PurchaseOrders.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.PurchaseOrders;
@@ -29,12 +24,12 @@ namespace Store.Infrastructure.Endpoints.PurchaseOrders;
 /// <summary>
 /// Endpoint configuration for Purchase Orders module.
 /// </summary>
-public class PurchaseOrdersEndpoints : ICarterModule
+public class PurchaseOrdersEndpoints() : CarterModule("store")
 {
     /// <summary>
     /// Maps all Purchase Orders endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/purchase-orders").WithTags("purchase-orders");
 

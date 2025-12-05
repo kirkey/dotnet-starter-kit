@@ -3,16 +3,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.MobileTransactions.Complete.v1
 using FSH.Starter.WebApi.MicroFinance.Application.MobileTransactions.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MobileTransactions.Fail.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MobileTransactions.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class MobileTransactionEndpoints : ICarterModule
+public class MobileTransactionEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/mobile-transactions").WithTags("Mobile Transactions");
 

@@ -2,22 +2,18 @@ using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.QrPayments.CreateDynamic.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.QrPayments.CreateStatic.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.QrPayments.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for QR Payments.
 /// </summary>
-public class QrPaymentEndpoints : ICarterModule
+public class QrPaymentEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all QR Payment endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/qr-payments").WithTags("qr-payments");
 

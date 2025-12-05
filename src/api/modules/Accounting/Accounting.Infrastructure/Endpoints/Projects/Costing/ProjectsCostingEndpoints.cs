@@ -1,28 +1,26 @@
 using Accounting.Infrastructure.Endpoints.Projects.Costing.v1;
+using Carter;
 
 namespace Accounting.Infrastructure.Endpoints.Projects.Costing;
 
 /// <summary>
-/// Endpoint configuration for ProjectCosting module under Projects.
+/// Carter module for ProjectCosting endpoints.
+/// Routes all requests to separate versioned endpoint handlers.
 /// </summary>
-public static class ProjectsCostingEndpoints
+public class ProjectsCostingEndpoints() : CarterModule("accounting")
 {
     /// <summary>
     /// Maps all Projects Costing endpoints to the route builder.
     /// </summary>
-    internal static IEndpointRouteBuilder MapProjectsCostingEndpoints(this IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var costingGroup = app.MapGroup("/projects/costing")
-            .WithTags("Projects-Costing")
-            .WithDescription("Endpoints for managing project costing entries under projects");
+        var group = app.MapGroup("accounting/projects/costing").WithTags("projects-costing");
 
-        // Version 1 endpoints
-        costingGroup.MapProjectCostingCreateEndpoint();
-        costingGroup.MapProjectCostingUpdateEndpoint();
-        costingGroup.MapProjectCostingDeleteEndpoint();
-        costingGroup.MapProjectCostingGetEndpoint();
-        costingGroup.MapProjectCostingSearchEndpoint();
-
-        return app;
+        // CRUD operations
+        group.MapProjectCostingCreateEndpoint();
+        group.MapProjectCostingUpdateEndpoint();
+        group.MapProjectCostingDeleteEndpoint();
+        group.MapProjectCostingGetEndpoint();
+        group.MapProjectCostingSearchEndpoint();
     }
 }

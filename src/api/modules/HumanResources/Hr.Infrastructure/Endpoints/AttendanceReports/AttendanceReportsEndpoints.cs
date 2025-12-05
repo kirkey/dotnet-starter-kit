@@ -1,8 +1,3 @@
-using Carter;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using FSH.Starter.WebApi.HumanResources.Application.AttendanceReports.Generate.v1;
 using FSH.Starter.WebApi.HumanResources.Application.AttendanceReports.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.AttendanceReports.Search.v1;
@@ -14,12 +9,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.AttendanceR
 /// <summary>
 /// Attendance Reports endpoints using Carter module pattern.
 /// </summary>
-public class AttendanceReportsEndpoints : ICarterModule
+public class AttendanceReportsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Adds attendance report routes to the endpoint route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/attendance-reports").WithTags("attendance-reports");
 

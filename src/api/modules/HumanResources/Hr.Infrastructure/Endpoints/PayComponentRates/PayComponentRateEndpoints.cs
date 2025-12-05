@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PayComponentRates.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponentRates;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayComponen
 /// <summary>
 /// Endpoint configuration for PayComponentRates module.
 /// </summary>
-public class PayComponentRateEndpoints : ICarterModule
+public class PayComponentRateEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all PayComponentRates endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/pay-component-rates").WithTags("pay-component-rates");
 

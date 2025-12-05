@@ -8,9 +8,9 @@ using FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.Verify.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class TellerSessionEndpoints : ICarterModule
+public class TellerSessionEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/teller-sessions").WithTags("teller-sessions");
 

@@ -6,18 +6,15 @@ using FSH.Starter.WebApi.Messaging.Features.Conversations.Get;
 using FSH.Starter.WebApi.Messaging.Features.Conversations.GetList;
 using FSH.Starter.WebApi.Messaging.Features.Conversations.MarkAsRead;
 using FSH.Starter.WebApi.Messaging.Features.Conversations.RemoveMember;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.Messaging.Features.Conversations;
 
 /// <summary>
 /// Endpoint configuration for Conversations module.
 /// </summary>
-public class ConversationsEndpoints : ICarterModule
+public class ConversationsEndpoints() : CarterModule("messaging")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("conversations").WithTags("conversations");
 

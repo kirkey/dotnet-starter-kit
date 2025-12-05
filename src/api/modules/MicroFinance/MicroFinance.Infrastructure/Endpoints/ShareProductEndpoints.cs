@@ -1,5 +1,4 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareProducts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareProducts.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareProducts.Search.v1;
@@ -10,12 +9,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Share Products.
 /// </summary>
-public class ShareProductEndpoints : ICarterModule
+public class ShareProductEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Share Product endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var shareProductsGroup = app.MapGroup("microfinance/share-products").WithTags("share-products");
 

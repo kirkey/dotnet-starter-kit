@@ -1,10 +1,5 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.HRAnalytics.Export.v1;
 using FSH.Starter.WebApi.HumanResources.Application.HRAnalytics.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.HRAnalytics;
@@ -12,12 +7,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.HRAnalytics
 /// <summary>
 /// Endpoint routes for HR Analytics.
 /// </summary>
-public class HrAnalyticsEndpoints : ICarterModule
+public class HrAnalyticsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all HR analytics endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/analytics").WithTags("hr-analytics");
 

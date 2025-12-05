@@ -1,4 +1,3 @@
-using Carter;
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Approve.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Cancel.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Complete.v1;
@@ -11,10 +10,6 @@ using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Items.Update.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.MarkInTransit.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Search.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryTransfers.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.InventoryTransfers;
@@ -22,12 +17,12 @@ namespace Store.Infrastructure.Endpoints.InventoryTransfers;
 /// <summary>
 /// Endpoint configuration for Inventory Transfers module.
 /// </summary>
-public class InventoryTransfersEndpoints : ICarterModule
+public class InventoryTransfersEndpoints() : CarterModule("store")
 {
     /// <summary>
     /// Adds all Inventory Transfers routes to the application.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/inventory-transfers").WithTags("inventory-transfers");
 

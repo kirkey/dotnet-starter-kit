@@ -8,13 +8,13 @@ namespace Accounting.Infrastructure.Endpoints.Vendors;
 /// Provides comprehensive REST API endpoints for managing vendors.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class VendorsEndpoints : ICarterModule
+public class VendorsEndpoints() : CarterModule("accounting")
 {
     /// <summary>
     /// Maps all Vendors endpoints to the route builder.
     /// Delegates to extension methods for Create, Read, Update, Delete, and business operation endpoints.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("accounting/vendors").WithTags("vendor");
 

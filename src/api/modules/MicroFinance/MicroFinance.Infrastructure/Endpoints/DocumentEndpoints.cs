@@ -2,16 +2,12 @@ using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.Documents.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Documents.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Documents.Verify.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class DocumentEndpoints : ICarterModule
+public class DocumentEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/documents").WithTags("Documents");
 

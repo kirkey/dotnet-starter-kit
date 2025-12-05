@@ -4,16 +4,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Complete.v1
 using FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Launch.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class MarketingCampaignEndpoints : ICarterModule
+public class MarketingCampaignEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/marketing-campaigns").WithTags("Marketing Campaigns");
 

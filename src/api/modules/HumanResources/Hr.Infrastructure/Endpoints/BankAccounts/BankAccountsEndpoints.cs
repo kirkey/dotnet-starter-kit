@@ -1,8 +1,3 @@
-using Carter;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.BankAccounts.Get.v1;
@@ -15,9 +10,9 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BankAccount
 /// <summary>
 /// Endpoint routes for managing bank accounts.
 /// </summary>
-public class BankAccountsEndpoints : ICarterModule
+public class BankAccountsEndpoints() : CarterModule("humanresources")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/bank-accounts")
             .WithTags("bank-accounts");

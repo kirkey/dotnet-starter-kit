@@ -1,14 +1,9 @@
-using Carter;
 using FSH.Framework.Core.Identity.Users.Abstractions;
 using FSH.Starter.WebApi.HumanResources.Application.BenefitAllocations.Approve.v1;
 using FSH.Starter.WebApi.HumanResources.Application.BenefitAllocations.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.BenefitAllocations.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.BenefitAllocations.Reject.v1;
 using FSH.Starter.WebApi.HumanResources.Application.BenefitAllocations.Search.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitAllocations;
@@ -16,12 +11,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.BenefitAllo
 /// <summary>
 /// Endpoint routes for managing benefit allocations.
 /// </summary>
-public class BenefitAllocationsEndpoints : ICarterModule
+public class BenefitAllocationsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all benefit allocation endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/benefit-allocations").WithTags("benefit-allocations");
 

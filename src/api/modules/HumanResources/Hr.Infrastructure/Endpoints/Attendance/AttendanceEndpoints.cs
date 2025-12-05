@@ -1,8 +1,3 @@
-using Carter;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 using FSH.Starter.WebApi.HumanResources.Application.Attendances.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Attendances.Delete.v1;
@@ -12,9 +7,9 @@ using FSH.Starter.WebApi.HumanResources.Application.Attendances.Update.v1;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Attendance;
 
-public class AttendanceEndpoints : ICarterModule
+public class AttendanceEndpoints() : CarterModule("humanresources")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/attendance").WithTags("attendance");
 

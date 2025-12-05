@@ -4,23 +4,18 @@ using FSH.Starter.WebApi.MicroFinance.Application.Members.Delete.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Members.
 /// </summary>
-public class MemberEndpoints : ICarterModule
+public class MemberEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Member endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var membersGroup = app.MapGroup("microfinance/members").WithTags("members");
 

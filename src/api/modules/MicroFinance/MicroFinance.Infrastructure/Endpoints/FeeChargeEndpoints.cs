@@ -1,24 +1,22 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.FeeCharges.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.FeeCharges.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.FeeCharges.RecordPayment.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.FeeCharges.Reverse.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.FeeCharges.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.FeeCharges.Waive.v1;
-using MediatR;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Fee Charges.
 /// </summary>
-public class FeeChargeEndpoints : ICarterModule
+public class FeeChargeEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Fee Charge endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var chargesGroup = app.MapGroup("microfinance/fee-charges").WithTags("fee-charges");
 

@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDocuments.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDocuments.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDocuments.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDocuments.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeDocuments.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDocuments;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeDoc
 /// <summary>
 /// Endpoint configuration for EmployeeDocuments module.
 /// </summary>
-public class EmployeeDocumentsEndpoints : ICarterModule
+public class EmployeeDocumentsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all EmployeeDocuments endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/employee-documents").WithTags("employee-documents");
 

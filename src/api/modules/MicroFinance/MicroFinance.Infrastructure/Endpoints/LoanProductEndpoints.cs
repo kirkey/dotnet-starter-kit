@@ -4,23 +4,18 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Delete.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Loan Products.
 /// </summary>
-public class LoanProductEndpoints : ICarterModule
+public class LoanProductEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Loan Product endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var loanProductsGroup = app.MapGroup("microfinance/loan-products").WithTags("loan-products");
 

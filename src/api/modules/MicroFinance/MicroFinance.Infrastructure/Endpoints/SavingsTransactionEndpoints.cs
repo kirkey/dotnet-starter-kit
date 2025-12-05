@@ -1,20 +1,18 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsTransactions.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsTransactions.Search.v1;
-using MediatR;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Savings Transactions.
 /// </summary>
-public class SavingsTransactionEndpoints : ICarterModule
+public class SavingsTransactionEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Savings Transaction endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var transactionsGroup = app.MapGroup("microfinance/savings-transactions").WithTags("savings-transactions");
 

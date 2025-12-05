@@ -2,16 +2,12 @@ using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.CommunicationTemplates.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CommunicationTemplates.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CommunicationTemplates.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CommunicationTemplateEndpoints : ICarterModule
+public class CommunicationTemplateEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/communication-templates").WithTags("Communication Templates");
 

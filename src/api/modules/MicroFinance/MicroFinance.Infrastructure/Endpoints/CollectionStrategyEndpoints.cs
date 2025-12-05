@@ -3,16 +3,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollectionStrategies.Activate.
 using FSH.Starter.WebApi.MicroFinance.Application.CollectionStrategies.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollectionStrategies.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollectionStrategies.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollectionStrategyEndpoints : ICarterModule
+public class CollectionStrategyEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/collection-strategies").WithTags("Collection Strategies");
 

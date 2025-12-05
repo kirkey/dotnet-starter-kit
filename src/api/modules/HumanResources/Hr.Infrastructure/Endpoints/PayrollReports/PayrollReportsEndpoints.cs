@@ -1,13 +1,7 @@
-using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollReports.Export.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollReports.Generate.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollReports.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PayrollReports.Search.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollReports;
@@ -15,12 +9,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollRepo
 /// <summary>
 /// Endpoint configuration for Payroll Reports module.
 /// </summary>
-public class PayrollReportsEndpoints : ICarterModule
+public class PayrollReportsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all Payroll Reports endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/payroll-reports").WithTags("payroll-reports");
 

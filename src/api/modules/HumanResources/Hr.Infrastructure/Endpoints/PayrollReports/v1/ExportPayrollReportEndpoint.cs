@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PayrollReports.v1;
 
 using FSH.Starter.WebApi.HumanResources.Application.PayrollReports.Export.v1;

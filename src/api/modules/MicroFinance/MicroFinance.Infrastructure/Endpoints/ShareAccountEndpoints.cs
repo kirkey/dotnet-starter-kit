@@ -1,5 +1,4 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Close.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Get.v1;
@@ -14,12 +13,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Share Accounts.
 /// </summary>
-public class ShareAccountEndpoints : ICarterModule
+public class ShareAccountEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Share Account endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var shareAccountsGroup = app.MapGroup("microfinance/share-accounts").WithTags("share-accounts");
 

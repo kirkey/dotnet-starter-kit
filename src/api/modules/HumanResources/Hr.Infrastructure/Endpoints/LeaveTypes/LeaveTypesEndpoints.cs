@@ -1,21 +1,15 @@
-using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveTypes.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveTypes.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveTypes.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveTypes.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveTypes.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveTypes;
 
-public class LeaveTypesEndpoints : ICarterModule
+public class LeaveTypesEndpoints() : CarterModule("humanresources")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/leave-types").WithTags("leave-types");
 

@@ -1,15 +1,9 @@
-using Carter;
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Approve.v1;
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Create.v1;
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Delete.v1;
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Get.v1;
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Search.v1;
 using FSH.Starter.WebApi.Store.Application.StockAdjustments.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.StockAdjustments;
@@ -17,9 +11,9 @@ namespace Store.Infrastructure.Endpoints.StockAdjustments;
 /// <summary>
 /// Endpoint configuration for Stock Adjustments module.
 /// </summary>
-public class StockAdjustmentsEndpoints : ICarterModule
+public class StockAdjustmentsEndpoints() : CarterModule("store")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/stock-adjustments").WithTags("stock-adjustments");
 

@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.TaxBrackets.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TaxBrackets;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.TaxBrackets
 /// <summary>
 /// Endpoint routes for managing tax brackets.
 /// </summary>
-public class TaxBracketEndpoints : ICarterModule
+public class TaxBracketEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all Tax Bracket endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/tax-brackets").WithTags("tax-brackets");
 

@@ -10,9 +10,9 @@ using FSH.Starter.WebApi.MicroFinance.Application.Branches.Update.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class BranchEndpoints : ICarterModule
+public class BranchEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/branches").WithTags("branches");
 

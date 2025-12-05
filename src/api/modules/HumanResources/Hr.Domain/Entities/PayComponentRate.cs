@@ -1,7 +1,4 @@
 namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
-
-using Events;
-
 /// <summary>
 /// Represents rates/brackets for pay components (SSS, PhilHealth, Pag-IBIG, tax brackets).
 /// Allows database-driven configuration of Philippine labor law rates.

@@ -2,16 +2,12 @@ using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.CreditBureauInquiries.Complete.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CreditBureauInquiries.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CreditBureauInquiries.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CreditBureauInquiryEndpoints : ICarterModule
+public class CreditBureauInquiryEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/credit-bureau-inquiries").WithTags("Credit Bureau Inquiries");
 

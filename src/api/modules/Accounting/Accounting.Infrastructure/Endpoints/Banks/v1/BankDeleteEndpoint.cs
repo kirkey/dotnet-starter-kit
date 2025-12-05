@@ -13,7 +13,7 @@ public static class BankDeleteEndpoint
     /// </summary>
     /// <param name="endpoints">The endpoint route builder.</param>
     /// <returns>Route handler builder for further configuration.</returns>
-    internal static RouteHandlerBuilder MapBankDeleteEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapDeleteBankEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>

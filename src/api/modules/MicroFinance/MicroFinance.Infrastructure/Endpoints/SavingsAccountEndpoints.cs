@@ -1,5 +1,4 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Close.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Deposit.v1;
@@ -16,12 +15,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Savings Accounts.
 /// </summary>
-public class SavingsAccountEndpoints : ICarterModule
+public class SavingsAccountEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Savings Account endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var savingsAccountsGroup = app.MapGroup("microfinance/savings-accounts").WithTags("savings-accounts");
 

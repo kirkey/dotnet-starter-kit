@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.OrganizationalUnits.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.OrganizationalUnits;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Organizatio
 /// <summary>
 /// Endpoint configuration for OrganizationalUnits module.
 /// </summary>
-public class OrganizationalUnitsEndpoints : ICarterModule
+public class OrganizationalUnitsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all OrganizationalUnits endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/organizational-units").WithTags("organizational-units");
 

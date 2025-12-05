@@ -1,6 +1,4 @@
 using Accounting.Application.AccountReconciliations.Create.v1;
-
-using Accounting.Application.AccountReconciliations.Create.v1;
 using Shared.Authorization;
 
 namespace Accounting.Infrastructure.Endpoints.AccountReconciliations.v1;

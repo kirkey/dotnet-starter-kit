@@ -1,23 +1,18 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanSchedules.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanSchedules.Search.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Loan Schedules.
 /// </summary>
-public class LoanScheduleEndpoints : ICarterModule
+public class LoanScheduleEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Loan Schedule endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var schedulesGroup = app.MapGroup("microfinance/loan-schedules").WithTags("loan-schedules");
 

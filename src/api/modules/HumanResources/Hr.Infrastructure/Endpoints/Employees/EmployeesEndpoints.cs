@@ -1,5 +1,3 @@
-using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.HumanResources.Application.Employees.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Employees.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Employees.Get.v1;
@@ -7,10 +5,6 @@ using FSH.Starter.WebApi.HumanResources.Application.Employees.Regularize.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Employees.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Employees.Terminate.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Employees.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees;
@@ -18,12 +12,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Employees;
 /// <summary>
 /// Endpoint configuration for Employees module.
 /// </summary>
-public class EmployeesEndpoints : ICarterModule
+public class EmployeesEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all Employees endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/employees").WithTags("employees");
 

@@ -14,12 +14,12 @@ namespace Accounting.Infrastructure.Endpoints.AccountReconciliations;
 /// <summary>
 /// Endpoint configuration for Account Reconciliations module.
 /// </summary>
-public class AccountReconciliationEndpoints : ICarterModule
+public class AccountReconciliationEndpoints() : CarterModule("accounting")
 {
     /// <summary>
     /// Maps all Account Reconciliation endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("accounting/account-reconciliations").WithTags("account-reconciliations");
 

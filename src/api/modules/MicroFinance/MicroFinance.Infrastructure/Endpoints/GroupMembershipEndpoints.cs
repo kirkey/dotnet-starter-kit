@@ -1,5 +1,4 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Reactivate.v1;
@@ -7,22 +6,18 @@ using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Suspend.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.UpdateRole.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Withdraw.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Group Memberships.
 /// </summary>
-public class GroupMembershipEndpoints : ICarterModule
+public class GroupMembershipEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Group Membership endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var membershipsGroup = app.MapGroup("microfinance/group-memberships").WithTags("group-memberships");
 

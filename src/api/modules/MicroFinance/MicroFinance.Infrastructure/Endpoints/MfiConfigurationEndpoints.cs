@@ -2,22 +2,18 @@ using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.MfiConfigurations.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MfiConfigurations.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MfiConfigurations.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for MFI Configuration.
 /// </summary>
-public class MfiConfigurationEndpoints : ICarterModule
+public class MfiConfigurationEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all MFI Configuration endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/configurations").WithTags("mfi-configurations");
 

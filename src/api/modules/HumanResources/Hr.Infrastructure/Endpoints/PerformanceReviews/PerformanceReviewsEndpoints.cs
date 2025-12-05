@@ -1,4 +1,3 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Acknowledge.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Complete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Create.v1;
@@ -6,10 +5,6 @@ using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Submit.v1;
 using FSH.Starter.WebApi.HumanResources.Application.PerformanceReviews.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.PerformanceReviews;
@@ -17,12 +12,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Performance
 /// <summary>
 /// Endpoint routes for managing performance reviews.
 /// </summary>
-public class PerformanceReviewsEndpoints : ICarterModule
+public class PerformanceReviewsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all Performance Reviews endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/performance-reviews").WithTags("performance-reviews");
 

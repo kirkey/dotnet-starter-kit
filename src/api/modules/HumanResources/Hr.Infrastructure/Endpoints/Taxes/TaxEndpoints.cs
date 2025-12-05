@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.Taxes.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Taxes.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Taxes.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Taxes.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Taxes.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Taxes;
@@ -16,12 +11,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Taxes;
 /// Tax endpoints coordinator.
 /// Maps all tax master configuration endpoints to their respective handlers.
 /// </summary>
-public class TaxEndpoints : ICarterModule
+public class TaxEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all tax endpoints.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/taxes").WithTags("taxes");
 

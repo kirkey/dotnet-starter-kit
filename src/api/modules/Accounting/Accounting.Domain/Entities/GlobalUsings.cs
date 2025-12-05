@@ -1,7 +1,6 @@
 global using System;
 global using System.Collections.Generic;
 global using System.Linq;
-global using Accounting.Domain;
 global using Accounting.Domain.Exceptions;
 global using FSH.Framework.Core.Caching;
 global using FSH.Framework.Core.Domain;

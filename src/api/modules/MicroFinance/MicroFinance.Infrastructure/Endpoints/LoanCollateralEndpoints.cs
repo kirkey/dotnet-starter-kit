@@ -1,5 +1,4 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Pledge.v1;
@@ -8,22 +7,18 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Seize.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.UpdateValuation.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Verify.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Loan Collaterals.
 /// </summary>
-public class LoanCollateralEndpoints : ICarterModule
+public class LoanCollateralEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Loan Collateral endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var collateralsGroup = app.MapGroup("microfinance/loan-collaterals").WithTags("loan-collaterals");
 

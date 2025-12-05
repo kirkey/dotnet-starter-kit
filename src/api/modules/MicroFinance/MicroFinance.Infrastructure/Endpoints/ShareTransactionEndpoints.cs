@@ -1,20 +1,18 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareTransactions.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareTransactions.Search.v1;
-using MediatR;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Share Transactions.
 /// </summary>
-public class ShareTransactionEndpoints : ICarterModule
+public class ShareTransactionEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Share Transaction endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var transactionsGroup = app.MapGroup("microfinance/share-transactions").WithTags("share-transactions");
 

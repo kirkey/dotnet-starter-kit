@@ -3,16 +3,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.Create.v1
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.RecordPremium.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.Renew.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollateralInsuranceEndpoints : ICarterModule
+public class CollateralInsuranceEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/collateral-insurances").WithTags("Collateral Insurances");
 

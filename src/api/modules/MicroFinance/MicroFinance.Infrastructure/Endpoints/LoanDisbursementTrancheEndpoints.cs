@@ -4,16 +4,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.Creat
 using FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.Disburse.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.VerifyMilestone.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LoanDisbursementTrancheEndpoints : ICarterModule
+public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/loan-disbursement-tranches").WithTags("Loan Disbursement Tranches");
 

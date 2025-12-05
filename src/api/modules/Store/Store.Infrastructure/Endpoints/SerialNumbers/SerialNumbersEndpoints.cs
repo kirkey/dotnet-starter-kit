@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.Store.Application.SerialNumbers.Create.v1;
 using FSH.Starter.WebApi.Store.Application.SerialNumbers.Delete.v1;
 using FSH.Starter.WebApi.Store.Application.SerialNumbers.Get.v1;
 using FSH.Starter.WebApi.Store.Application.SerialNumbers.Search.v1;
 using FSH.Starter.WebApi.Store.Application.SerialNumbers.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.SerialNumbers;
@@ -15,12 +10,12 @@ namespace Store.Infrastructure.Endpoints.SerialNumbers;
 /// <summary>
 /// Endpoint configuration for Serial Numbers module.
 /// </summary>
-public class SerialNumbersEndpoints : ICarterModule
+public class SerialNumbersEndpoints() : CarterModule("store")
 {
     /// <summary>
     /// Maps all Serial Numbers endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/serial-numbers").WithTags("serial-numbers");
 

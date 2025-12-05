@@ -8,13 +8,13 @@ namespace Accounting.Infrastructure.Endpoints.Projects;
 /// Provides comprehensive REST API endpoints for managing projects.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class ProjectsEndpoints : ICarterModule
+public class ProjectsEndpoints() : CarterModule("accounting")
 {
     /// <summary>
     /// Maps all Projects endpoints to the route builder.
     /// Delegates to extension methods for Create, Read, Update, Delete, and business operation endpoints.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("accounting/projects").WithTags("project");
 

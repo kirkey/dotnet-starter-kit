@@ -1,4 +1,3 @@
-global using Accounting.Domain;
 global using Accounting.Domain.Entities;
 global using Asp.Versioning;
 global using FSH.Framework.Core.Paging;

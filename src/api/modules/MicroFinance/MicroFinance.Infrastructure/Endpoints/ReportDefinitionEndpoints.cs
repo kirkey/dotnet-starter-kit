@@ -2,22 +2,18 @@ using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.ReportDefinitions.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ReportDefinitions.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ReportDefinitions.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 /// <summary>
 /// Endpoint configuration for Report Definitions.
 /// </summary>
-public class ReportDefinitionEndpoints : ICarterModule
+public class ReportDefinitionEndpoints() : CarterModule("microfinance")
 {
     /// <summary>
     /// Maps all Report Definition endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/report-definitions").WithTags("report-definitions");
 

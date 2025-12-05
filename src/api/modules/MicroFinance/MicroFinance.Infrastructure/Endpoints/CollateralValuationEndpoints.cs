@@ -4,16 +4,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Create.v1
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Reject.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Submit.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollateralValuationEndpoints : ICarterModule
+public class CollateralValuationEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/collateral-valuations").WithTags("Collateral Valuations");
 

@@ -1,12 +1,7 @@
-using Carter;
 using FSH.Starter.WebApi.Store.Application.SalesImports.Create.v1;
 using FSH.Starter.WebApi.Store.Application.SalesImports.Get.v1;
 using FSH.Starter.WebApi.Store.Application.SalesImports.Reverse.v1;
 using FSH.Starter.WebApi.Store.Application.SalesImports.Search.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace Store.Infrastructure.Endpoints.SalesImports;
@@ -14,9 +9,9 @@ namespace Store.Infrastructure.Endpoints.SalesImports;
 /// <summary>
 /// Endpoint configuration for Sales Imports module.
 /// </summary>
-public class SalesImportsEndpoints : ICarterModule
+public class SalesImportsEndpoints() : CarterModule("store")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/sales-imports").WithTags("sales-imports");
 

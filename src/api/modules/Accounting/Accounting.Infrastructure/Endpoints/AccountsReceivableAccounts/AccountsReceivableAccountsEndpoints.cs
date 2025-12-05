@@ -1,4 +1,3 @@
-using Accounting.Infrastructure.Endpoints.AccountsReceivableAccounts.v1;
 using Carter;
 
 namespace Accounting.Infrastructure.Endpoints.AccountsReceivableAccounts;
@@ -8,13 +7,13 @@ namespace Accounting.Infrastructure.Endpoints.AccountsReceivableAccounts;
 /// Provides comprehensive REST API endpoints for managing accounts-receivable-accounts.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class AccountsReceivableAccountsEndpoints : ICarterModule
+public class AccountsReceivableAccountsEndpoints() : CarterModule("accounting")
 {
     /// <summary>
     /// Maps all AccountsReceivableAccounts endpoints to the route builder.
     /// Delegates to extension methods for Create, Read, Update, Delete, and business operation endpoints.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("accounting/accounts-receivable-accounts").WithTags("accounts-receivable-account");
 

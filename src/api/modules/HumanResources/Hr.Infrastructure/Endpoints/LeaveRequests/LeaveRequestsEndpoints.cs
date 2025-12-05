@@ -1,5 +1,3 @@
-using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Approve.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Cancel.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Create.v1;
@@ -9,10 +7,6 @@ using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Reject.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Submit.v1;
 using FSH.Starter.WebApi.HumanResources.Application.LeaveRequests.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveRequests;
@@ -21,9 +15,9 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.LeaveReques
 /// Endpoint routes for managing leave requests.
 /// Supports the full leave request workflow including creation, submission, approval, and rejection.
 /// </summary>
-public class LeaveRequestsEndpoints : ICarterModule
+public class LeaveRequestsEndpoints() : CarterModule("humanresources")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/leave-requests").WithTags("leave-requests");
 

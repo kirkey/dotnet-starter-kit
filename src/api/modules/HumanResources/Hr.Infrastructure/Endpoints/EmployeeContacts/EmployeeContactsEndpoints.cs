@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeContacts.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeContacts;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeCon
 /// <summary>
 /// Endpoint configuration for EmployeeContacts module.
 /// </summary>
-public class EmployeeContactsEndpoints : ICarterModule
+public class EmployeeContactsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all EmployeeContacts endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/employee-contacts").WithTags("employee-contacts");
 

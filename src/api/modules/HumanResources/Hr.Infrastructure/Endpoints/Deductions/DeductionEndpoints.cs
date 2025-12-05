@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.Deductions.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Deductions.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Deductions.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Deductions.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Deductions.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Deductions;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Deductions;
 /// <summary>
 /// Endpoint routes for managing deduction master data (loans, cash advances, uniform deductions, etc).
 /// </summary>
-public class DeductionEndpoints : ICarterModule
+public class DeductionEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all Deduction endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/deductions").WithTags("deductions");
 

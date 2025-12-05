@@ -1,5 +1,3 @@
-using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.CompleteProcessing.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Delete.v1;
@@ -9,10 +7,6 @@ using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Post.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Process.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls;
@@ -21,12 +15,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.Payrolls;
 /// Endpoint configuration for Payrolls module.
 /// Supports the complete payroll workflow including creation, processing, GL posting, and payment marking.
 /// </summary>
-public class PayrollsEndpoints : ICarterModule
+public class PayrollsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all Payrolls endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/payrolls").WithTags("payrolls");
 

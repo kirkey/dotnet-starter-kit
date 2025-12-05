@@ -1,13 +1,8 @@
-using Carter;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Create.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Delete.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Get.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Search.v1;
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Update.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 
 namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeEducations;
@@ -15,12 +10,12 @@ namespace FSH.Starter.WebApi.HumanResources.Infrastructure.Endpoints.EmployeeEdu
 /// <summary>
 /// Endpoint configuration for EmployeeEducations module.
 /// </summary>
-public class EmployeeEducationsEndpoints : ICarterModule
+public class EmployeeEducationsEndpoints() : CarterModule("humanresources")
 {
     /// <summary>
     /// Maps all EmployeeEducations endpoints to the route builder.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("hr/employee-educations").WithTags("employee-educations");
 

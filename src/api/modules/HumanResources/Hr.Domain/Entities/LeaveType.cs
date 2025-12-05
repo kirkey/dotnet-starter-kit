@@ -1,5 +1,3 @@
-using FSH.Starter.WebApi.HumanResources.Domain.Events;
-
 namespace FSH.Starter.WebApi.HumanResources.Domain.Entities;
 
 /// <summary>

@@ -8,13 +8,13 @@ namespace Accounting.Infrastructure.Endpoints.CostCenters;
 /// Provides comprehensive REST API endpoints for managing cost-centers.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class CostCentersEndpoints : ICarterModule
+public class CostCentersEndpoints() : CarterModule("accounting")
 {
     /// <summary>
     /// Maps all CostCenters endpoints to the route builder.
     /// Delegates to extension methods for Create, Read, Update, Delete, and business operation endpoints.
     /// </summary>
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("accounting/cost-centers").WithTags("cost-center");
 

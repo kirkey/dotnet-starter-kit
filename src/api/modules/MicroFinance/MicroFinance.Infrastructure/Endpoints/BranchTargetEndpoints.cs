@@ -2,16 +2,12 @@ using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.RecordProgress.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class BranchTargetEndpoints : ICarterModule
+public class BranchTargetEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/branch-targets").WithTags("Branch Targets");
 

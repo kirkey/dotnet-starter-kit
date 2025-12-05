@@ -13,7 +13,7 @@ public static class BankUpdateEndpoint
     /// </summary>
     /// <param name="endpoints">The endpoint route builder.</param>
     /// <returns>Route handler builder for further configuration.</returns>
-    internal static RouteHandlerBuilder MapBankUpdateEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapUpdateBankEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPut("/{id}", async (DefaultIdType id, BankUpdateCommand request, ISender mediator) =>

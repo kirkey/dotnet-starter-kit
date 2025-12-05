@@ -1,25 +1,19 @@
-using Carter;
 using FSH.Starter.WebApi.Store.Application.InventoryReservations.Create.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryReservations.Delete.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryReservations.Get.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryReservations.Release.v1;
 using FSH.Starter.WebApi.Store.Application.InventoryReservations.Search.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Shared.Authorization;
 using GetInventoryReservationResponse = FSH.Starter.WebApi.Store.Application.InventoryReservations.Get.v1.InventoryReservationResponse;
-using SearchInventoryReservationResponse = FSH.Starter.WebApi.Store.Application.InventoryReservations.Search.v1.InventoryReservationResponse;
 
 namespace Store.Infrastructure.Endpoints.InventoryReservations;
 
 /// <summary>
 /// Endpoint configuration for Inventory Reservations module.
 /// </summary>
-public class InventoryReservationsEndpoints : ICarterModule
+public class InventoryReservationsEndpoints() : CarterModule("store")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("store/inventory-reservations").WithTags("inventory-reservations");
 

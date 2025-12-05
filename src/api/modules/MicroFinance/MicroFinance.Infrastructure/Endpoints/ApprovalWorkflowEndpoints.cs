@@ -3,16 +3,12 @@ using FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Get.v1;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class ApprovalWorkflowEndpoints : ICarterModule
+public class ApprovalWorkflowEndpoints() : CarterModule("microfinance")
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/approval-workflows").WithTags("Approval Workflows");
 
