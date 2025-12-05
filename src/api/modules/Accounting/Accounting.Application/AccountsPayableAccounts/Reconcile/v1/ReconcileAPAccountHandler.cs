@@ -1,14 +1,14 @@
 namespace Accounting.Application.AccountsPayableAccounts.Reconcile.v1;
 
-public sealed class ReconcileAPAccountHandler(
+public sealed class ReconcileApAccountHandler(
     IRepository<AccountsPayableAccount> repository,
-    ILogger<ReconcileAPAccountHandler> logger)
-    : IRequestHandler<ReconcileAPAccountCommand, DefaultIdType>
+    ILogger<ReconcileApAccountHandler> logger)
+    : IRequestHandler<ReconcileApAccountCommand, DefaultIdType>
 {
     private readonly IRepository<AccountsPayableAccount> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-    private readonly ILogger<ReconcileAPAccountHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    private readonly ILogger<ReconcileApAccountHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-    public async Task<DefaultIdType> Handle(ReconcileAPAccountCommand request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(ReconcileApAccountCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         _logger.LogInformation("Reconciling AP account {Id} with subsidiary ledger balance {Balance}", 

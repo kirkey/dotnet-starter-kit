@@ -6,12 +6,12 @@ namespace Accounting.Application.AccountsPayableAccounts.Get;
 /// <summary>
 /// Handler for retrieving an accounts payable account by ID.
 /// </summary>
-public sealed class GetAPAccountHandler(
-    ILogger<GetAPAccountHandler> logger,
+public sealed class GetApAccountHandler(
+    ILogger<GetApAccountHandler> logger,
     [FromKeyedServices("accounting")] IReadRepository<AccountsPayableAccount> repository)
-    : IRequestHandler<GetAPAccountRequest, ApAccountResponse>
+    : IRequestHandler<GetApAccountRequest, ApAccountResponse>
 {
-    public async Task<ApAccountResponse> Handle(GetAPAccountRequest request, CancellationToken cancellationToken)
+    public async Task<ApAccountResponse> Handle(GetApAccountRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

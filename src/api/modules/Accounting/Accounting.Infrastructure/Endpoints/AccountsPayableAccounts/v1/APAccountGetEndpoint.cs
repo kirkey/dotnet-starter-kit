@@ -11,7 +11,7 @@ public static class ApAccountGetEndpoint
         return endpoints
             .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
             {
-                var response = await mediator.Send(new GetAPAccountRequest(id)).ConfigureAwait(false);
+                var response = await mediator.Send(new GetApAccountRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
             .WithName(nameof(ApAccountGetEndpoint))

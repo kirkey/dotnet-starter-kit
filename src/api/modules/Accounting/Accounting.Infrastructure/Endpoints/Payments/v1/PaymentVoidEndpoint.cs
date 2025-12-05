@@ -11,7 +11,7 @@ public static class PaymentVoidEndpoint
     /// <summary>
     /// Maps the payment void endpoint to the route builder.
     /// </summary>
-    internal static RouteHandlerBuilder MapVoidPaymentEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapPaymentVoidEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPost("/{id}/void", async (DefaultIdType id, VoidPaymentCommand request, ISender mediator) =>

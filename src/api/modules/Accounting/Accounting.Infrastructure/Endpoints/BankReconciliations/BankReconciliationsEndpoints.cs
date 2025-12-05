@@ -1,4 +1,5 @@
 using Carter;
+using Accounting.Infrastructure.Endpoints.BankReconciliations.v1;
 
 namespace Accounting.Infrastructure.Endpoints.BankReconciliations;
 
@@ -17,14 +18,14 @@ public class BankReconciliationsEndpoints() : CarterModule("accounting")
     {
         var group = app.MapGroup("accounting/bank-reconciliations").WithTags("bank-reconciliation");
 
-        group.MapBankReconciliationApproveEndpoint();
-        group.MapBankReconciliationCompleteEndpoint();
-        group.MapBankReconciliationCreateEndpoint();
-        group.MapBankReconciliationDeleteEndpoint();
-        group.MapBankReconciliationGetEndpoint();
-        group.MapBankReconciliationRejectEndpoint();
-        group.MapBankReconciliationSearchEndpoint();
-        group.MapBankReconciliationStartEndpoint();
-        group.MapBankReconciliationUpdateEndpoint();
+        group.MapApproveBankReconciliationEndpoint();
+        group.MapCompleteBankReconciliationEndpoint();
+        group.MapCreateBankReconciliationEndpoint();
+        group.MapDeleteBankReconciliationEndpoint();
+        group.MapGetBankReconciliationEndpoint();
+        group.MapRejectBankReconciliationEndpoint();
+        group.MapSearchBankReconciliationsEndpoint();
+        group.MapStartBankReconciliationEndpoint();
+        group.MapUpdateBankReconciliationEndpoint();
     }
 }

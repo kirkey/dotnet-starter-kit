@@ -11,7 +11,7 @@ public static class PaymentRefundEndpoint
     /// <summary>
     /// Maps the payment refund endpoint to the route builder.
     /// </summary>
-    internal static RouteHandlerBuilder MapRefundPaymentEndpoint(this IEndpointRouteBuilder endpoints)
+    internal static RouteHandlerBuilder MapPaymentRefundEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
             .MapPost("/{id}/refund", async (DefaultIdType id, RefundPaymentCommand request, ISender mediator) =>

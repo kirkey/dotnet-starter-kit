@@ -18,10 +18,11 @@ public class GeneralLedgerEndpoints() : CarterModule("accounting")
     {
         var group = app.MapGroup("accounting/general-ledger").WithTags("general-ledger");
 
-        group.MapGeneralLedgerCreateEndpoint();
-        group.MapGeneralLedgerDeleteEndpoint();
-        group.MapGeneralLedgerGetEndpoint();
-        group.MapGeneralLedgerSearchEndpoint();
-        group.MapGeneralLedgerUpdateEndpoint();
+        // TODO: Implement GeneralLedger endpoints
+        // group.MapGeneralLedgerCreateEndpoint();
+        // group.MapGeneralLedgerDeleteEndpoint();
+        // group.MapGeneralLedgerGetEndpoint();
+        // group.MapGeneralLedgerSearchEndpoint();
+        // group.MapGeneralLedgerUpdateEndpoint();
     }
 }

@@ -17,10 +17,11 @@ public class FuelConsumptionEndpoints() : CarterModule("accounting")
     {
         var group = app.MapGroup("accounting/fuel-consumption").WithTags("fuel-consumption");
 
-        group.MapFuelConsumptionCreateEndpoint();
-        group.MapFuelConsumptionDeleteEndpoint();
-        group.MapFuelConsumptionGetEndpoint();
-        group.MapFuelConsumptionSearchEndpoint();
-        group.MapFuelConsumptionUpdateEndpoint();
+        // TODO: Implement FuelConsumption endpoints
+        // group.MapFuelConsumptionCreateEndpoint();
+        // group.MapFuelConsumptionDeleteEndpoint();
+        // group.MapFuelConsumptionGetEndpoint();
+        // group.MapFuelConsumptionSearchEndpoint();
+        // group.MapFuelConsumptionUpdateEndpoint();
     }
 }

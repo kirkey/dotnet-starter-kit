@@ -1,4 +1,5 @@
 using Carter;
+using Accounting.Infrastructure.Endpoints.AccountsReceivableAccounts.v1;
 
 namespace Accounting.Infrastructure.Endpoints.AccountsReceivableAccounts;
 
@@ -17,13 +18,13 @@ public class AccountsReceivableAccountsEndpoints() : CarterModule("accounting")
     {
         var group = app.MapGroup("accounting/accounts-receivable-accounts").WithTags("accounts-receivable-account");
 
-        group.MapARAccountCreateEndpoint();
-        group.MapARAccountGetEndpoint();
-        group.MapARAccountReconcileEndpoint();
-        group.MapARAccountRecordCollectionEndpoint();
-        group.MapARAccountRecordWriteOffEndpoint();
-        group.MapARAccountSearchEndpoint();
-        group.MapARAccountUpdateAllowanceEndpoint();
-        group.MapARAccountUpdateBalanceEndpoint();
+        group.MapArAccountCreateEndpoint();
+        group.MapArAccountGetEndpoint();
+        group.MapArAccountReconcileEndpoint();
+        group.MapArAccountRecordCollectionEndpoint();
+        group.MapArAccountRecordWriteOffEndpoint();
+        group.MapArAccountSearchEndpoint();
+        group.MapArAccountUpdateAllowanceEndpoint();
+        group.MapArAccountUpdateBalanceEndpoint();
     }
 }

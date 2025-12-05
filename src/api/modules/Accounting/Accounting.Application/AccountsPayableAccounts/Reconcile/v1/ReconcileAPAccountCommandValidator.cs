@@ -1,8 +1,8 @@
 namespace Accounting.Application.AccountsPayableAccounts.Reconcile.v1;
 
-public sealed class ReconcileAPAccountCommandValidator : AbstractValidator<ReconcileAPAccountCommand>
+public sealed class ReconcileApAccountCommandValidator : AbstractValidator<ReconcileApAccountCommand>
 {
-    public ReconcileAPAccountCommandValidator()
+    public ReconcileApAccountCommandValidator()
     {
         RuleFor(x => x.Id).NotEmpty().WithMessage("AP account ID is required.");
         RuleFor(x => x.SubsidiaryLedgerBalance).LessThanOrEqualTo(999999999.99m).WithMessage("Balance must not exceed 999,999,999.99.")

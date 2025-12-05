@@ -1,4 +1,5 @@
 using Carter;
+using Accounting.Infrastructure.Endpoints.AccountsPayableAccounts.v1;
 
 namespace Accounting.Infrastructure.Endpoints.AccountsPayableAccounts;
 
@@ -17,14 +18,14 @@ public class AccountsPayableAccountsEndpoints() : CarterModule("accounting")
     {
         var group = app.MapGroup("accounting/accounts-payable-accounts").WithTags("accounts-payable-account");
 
-        group.MapAPAccountCreateEndpoint();
-        group.MapAPAccountDeleteEndpoint();
-        group.MapAPAccountGetEndpoint();
-        group.MapAPAccountReconcileEndpoint();
-        group.MapAPAccountRecordDiscountLostEndpoint();
-        group.MapAPAccountRecordPaymentEndpoint();
-        group.MapAPAccountSearchEndpoint();
-        group.MapAPAccountUpdateBalanceEndpoint();
-        group.MapAPAccountUpdateEndpoint();
+        group.MapApAccountCreateEndpoint();
+        group.MapApAccountDeleteEndpoint();
+        group.MapApAccountGetEndpoint();
+        group.MapApAccountReconcileEndpoint();
+        group.MapApAccountRecordDiscountLostEndpoint();
+        group.MapApAccountRecordPaymentEndpoint();
+        group.MapApAccountSearchEndpoint();
+        group.MapApAccountUpdateBalanceEndpoint();
+        group.MapApAccountUpdateEndpoint();
     }
 }

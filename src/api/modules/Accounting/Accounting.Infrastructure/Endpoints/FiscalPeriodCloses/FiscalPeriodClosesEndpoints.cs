@@ -18,13 +18,13 @@ public class FiscalPeriodClosesEndpoints() : CarterModule("accounting")
     {
         var group = app.MapGroup("accounting/fiscal-period-closes").WithTags("fiscal-period-close");
 
-        group.MapAddValidationIssueEndpoint();
+        group.MapAddFiscalPeriodCloseValidationIssueEndpoint();
         group.MapCompleteFiscalPeriodCloseEndpoint();
         group.MapCompleteFiscalPeriodCloseTaskEndpoint();
         group.MapFiscalPeriodCloseCreateEndpoint();
         group.MapFiscalPeriodCloseGetEndpoint();
         group.MapFiscalPeriodCloseSearchEndpoint();
         group.MapReopenFiscalPeriodCloseEndpoint();
-        group.MapResolveValidationIssueEndpoint();
+        group.MapResolveFiscalPeriodCloseValidationIssueEndpoint();
     }
 }

@@ -8,7 +8,7 @@ public static class ApAccountReconcileEndpoint
     internal static RouteHandlerBuilder MapApAccountReconcileEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/reconcile", async (DefaultIdType id, ReconcileAPAccountCommand command, ISender mediator) =>
+            .MapPost("/{id:guid}/reconcile", async (DefaultIdType id, ReconcileApAccountCommand command, ISender mediator) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
                 var accountId = await mediator.Send(command).ConfigureAwait(false);
