@@ -24,7 +24,7 @@ public class EmployeePayComponentEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("CreateEmployeePayComponent")
+            .WithName("CreateEmployeePayComponentEndpoint")
             .WithSummary("Create employee pay component")
             .WithDescription("Creates employee-specific pay component assignment")
             .Produces<CreateEmployeePayComponentResponse>()
@@ -36,7 +36,7 @@ public class EmployeePayComponentEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetEmployeePayComponentRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetEmployeePayComponent")
+            .WithName("GetEmployeePayComponentEndpoint")
             .WithSummary("Get employee pay component by ID")
             .WithDescription("Retrieves employee pay component assignment by ID")
             .Produces<EmployeePayComponentResponse>()
@@ -48,7 +48,7 @@ public class EmployeePayComponentEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchEmployeePayComponents")
+            .WithName("SearchEmployeePayComponentsEndpoint")
             .WithSummary("Searches employee pay components")
             .WithDescription("Searches and filters employee pay component assignments by employee, component, type, and active status with pagination support.")
             .Produces<PagedList<EmployeePayComponentResponse>>()
@@ -61,7 +61,7 @@ public class EmployeePayComponentEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateEmployeePayComponent")
+            .WithName("UpdateEmployeePayComponentEndpoint")
             .WithSummary("Update employee pay component")
             .WithDescription("Updates employee pay component assignment")
             .Produces<UpdateEmployeePayComponentResponse>()
@@ -73,7 +73,7 @@ public class EmployeePayComponentEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteEmployeePayComponentCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteEmployeePayComponent")
+            .WithName("DeleteEmployeePayComponentEndpoint")
             .WithSummary("Delete employee pay component")
             .WithDescription("Deletes employee pay component assignment by ID")
             .Produces<DeleteEmployeePayComponentResponse>()

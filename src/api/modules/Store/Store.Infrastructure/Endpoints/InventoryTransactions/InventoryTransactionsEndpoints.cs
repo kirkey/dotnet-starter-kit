@@ -24,7 +24,7 @@ public class InventoryTransactionsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("CreateInventoryTransaction")
+        .WithName("CreateInventoryTransactionEndpoint")
         .WithSummary("Create a new inventory transaction")
         .WithDescription("Creates a new inventory transaction for stock movement tracking and audit trail.")
         .Produces<CreateInventoryTransactionResponse>()
@@ -42,7 +42,7 @@ public class InventoryTransactionsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("ApproveInventoryTransaction")
+        .WithName("ApproveInventoryTransactionEndpoint")
         .WithSummary("Approve an inventory transaction")
         .WithDescription("Approves a pending inventory transaction for authorization and compliance.")
         .Produces<ApproveInventoryTransactionResponse>()
@@ -60,7 +60,7 @@ public class InventoryTransactionsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("RejectInventoryTransaction")
+        .WithName("RejectInventoryTransactionEndpoint")
         .WithSummary("Reject an inventory transaction")
         .WithDescription("Rejects a previously approved inventory transaction, optionally recording the reason for rejection.")
         .Produces<RejectInventoryTransactionResponse>()
@@ -76,7 +76,7 @@ public class InventoryTransactionsEndpoints() : CarterModule("store")
             var response = await sender.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("UpdateInventoryTransactionNotes")
+        .WithName("UpdateInventoryTransactionNotesEndpoint")
         .WithSummary("Update inventory transaction notes")
         .WithDescription("Updates the notes field on an existing inventory transaction for additional documentation.")
         .Produces<UpdateInventoryTransactionNotesResponse>()
@@ -91,7 +91,7 @@ public class InventoryTransactionsEndpoints() : CarterModule("store")
             var response = await sender.Send(new DeleteInventoryTransactionCommand { Id = id }).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("DeleteInventoryTransaction")
+        .WithName("DeleteInventoryTransactionEndpoint")
         .WithSummary("Delete an inventory transaction")
         .WithDescription("Deletes an existing inventory transaction from the system.")
         .Produces<DeleteInventoryTransactionResponse>()
@@ -104,7 +104,7 @@ public class InventoryTransactionsEndpoints() : CarterModule("store")
             var response = await sender.Send(new GetInventoryTransactionCommand(id)).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("GetInventoryTransaction")
+        .WithName("GetInventoryTransactionEndpoint")
         .WithSummary("Get an inventory transaction by ID")
         .WithDescription("Retrieves a specific inventory transaction by its unique identifier.")
         .Produces<InventoryTransactionResponse>()
@@ -117,7 +117,7 @@ public class InventoryTransactionsEndpoints() : CarterModule("store")
             var response = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("SearchInventoryTransactions")
+        .WithName("SearchInventoryTransactionsEndpoint")
         .WithSummary("Search inventory transactions")
         .WithDescription("Searches for inventory transactions with pagination and filtering by transaction number, item, warehouse, type, date range, approval status, and cost range.")
         .Produces<PagedList<InventoryTransactionDto>>()

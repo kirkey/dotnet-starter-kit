@@ -24,7 +24,7 @@ public class EmployeeEducationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetEmployeeEducation", new { id = response.Id }, response);
             })
-            .WithName("CreateEmployeeEducation")
+            .WithName("CreateEmployeeEducationEndpoint")
             .WithSummary("Creates a new employee education record")
             .WithDescription("Creates a new employee education record with qualification details")
             .Produces<CreateEmployeeEducationResponse>(StatusCodes.Status201Created)
@@ -36,7 +36,7 @@ public class EmployeeEducationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetEmployeeEducationRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetEmployeeEducation")
+            .WithName("GetEmployeeEducationEndpoint")
             .WithSummary("Gets employee education details")
             .WithDescription("Retrieves detailed information about a specific employee education record")
             .Produces<EmployeeEducationResponse>()
@@ -48,7 +48,7 @@ public class EmployeeEducationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchEmployeeEducations")
+            .WithName("SearchEmployeeEducationsEndpoint")
             .WithSummary("Searches employee education records")
             .WithDescription("Searches and filters employee education records with pagination")
             .Produces<PagedList<EmployeeEducationResponse>>()
@@ -63,7 +63,7 @@ public class EmployeeEducationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateEmployeeEducation")
+            .WithName("UpdateEmployeeEducationEndpoint")
             .WithSummary("Updates employee education record")
             .WithDescription("Updates education details for an existing employee education record")
             .Produces<UpdateEmployeeEducationResponse>()
@@ -75,7 +75,7 @@ public class EmployeeEducationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteEmployeeEducationCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteEmployeeEducation")
+            .WithName("DeleteEmployeeEducationEndpoint")
             .WithSummary("Deletes an employee education record")
             .WithDescription("Deletes a specific employee education record from the system")
             .Produces<DeleteEmployeeEducationResponse>()

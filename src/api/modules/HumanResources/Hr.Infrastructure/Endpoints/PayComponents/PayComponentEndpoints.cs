@@ -24,7 +24,7 @@ public class PayComponentEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Created($"/hr/pay-components/{response.Id}", response);
             })
-            .WithName("CreatePayComponent")
+            .WithName("CreatePayComponentEndpoint")
             .WithSummary("Create a new pay component")
             .WithDescription("Creates a new pay component for payroll calculation with Philippine labor law compliance")
             .Produces<CreatePayComponentResponse>(StatusCodes.Status201Created)
@@ -36,7 +36,7 @@ public class PayComponentEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetPayComponentRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetPayComponent")
+            .WithName("GetPayComponentEndpoint")
             .WithSummary("Get a pay component by ID")
             .WithDescription("Retrieves a specific pay component by its unique identifier")
             .Produces<PayComponentResponse>()
@@ -49,7 +49,7 @@ public class PayComponentEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdatePayComponent")
+            .WithName("UpdatePayComponentEndpoint")
             .WithSummary("Update a pay component")
             .WithDescription("Updates an existing pay component")
             .Produces<UpdatePayComponentResponse>()
@@ -61,7 +61,7 @@ public class PayComponentEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeletePayComponentCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeletePayComponent")
+            .WithName("DeletePayComponentEndpoint")
             .WithSummary("Delete a pay component")
             .WithDescription("Deletes a pay component by its unique identifier")
             .Produces<DeletePayComponentResponse>()
@@ -73,7 +73,7 @@ public class PayComponentEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchPayComponents")
+            .WithName("SearchPayComponentsEndpoint")
             .WithSummary("Searches pay components")
             .WithDescription("Searches and filters pay components by type, calculation method, active status with pagination support.")
             .Produces<PagedList<PayComponentResponse>>()

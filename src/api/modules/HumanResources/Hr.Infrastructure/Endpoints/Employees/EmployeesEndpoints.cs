@@ -26,7 +26,7 @@ public class EmployeesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Created($"/hr/employees/{response.Id}", response);
             })
-            .WithName("CreateEmployee")
+            .WithName("CreateEmployeeEndpoint")
             .WithSummary("Creates a new employee")
             .WithDescription("Creates a new employee record in the system")
             .Produces<CreateEmployeeResponse>(StatusCodes.Status201Created)
@@ -38,7 +38,7 @@ public class EmployeesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetEmployeeRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetEmployee")
+            .WithName("GetEmployeeEndpoint")
             .WithSummary("Gets an employee by ID")
             .WithDescription("Retrieves detailed information about a specific employee")
             .Produces<EmployeeResponse>()
@@ -53,7 +53,7 @@ public class EmployeesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateEmployee")
+            .WithName("UpdateEmployeeEndpoint")
             .WithSummary("Updates an employee")
             .WithDescription("Updates employee information")
             .Produces<UpdateEmployeeResponse>()
@@ -65,7 +65,7 @@ public class EmployeesEndpoints() : CarterModule("humanresources")
                 await mediator.Send(new DeleteEmployeeCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
-            .WithName("DeleteEmployee")
+            .WithName("DeleteEmployeeEndpoint")
             .WithSummary("Deletes an employee")
             .WithDescription("Deletes an employee record from the system")
             .Produces(StatusCodes.Status204NoContent)
@@ -77,7 +77,7 @@ public class EmployeesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchEmployees")
+            .WithName("SearchEmployeesEndpoint")
             .WithSummary("Searches employees")
             .WithDescription("Searches for employees with pagination and filtering")
             .Produces<PagedList<EmployeeResponse>>()
@@ -92,7 +92,7 @@ public class EmployeesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("TerminateEmployee")
+            .WithName("TerminateEmployeeEndpoint")
             .WithSummary("Terminates an employee")
             .WithDescription("Terminates an employee per Philippines Labor Code. Computes separation pay.")
             .Produces<TerminateEmployeeResponse>()
@@ -107,7 +107,7 @@ public class EmployeesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("RegularizeEmployee")
+            .WithName("RegularizeEmployeeEndpoint")
             .WithSummary("Regularizes a probationary employee")
             .WithDescription("Regularizes a probationary employee per Philippines Labor Code Article 280. Typically after probation period (6-12 months).")
             .Produces<RegularizeEmployeeResponse>()

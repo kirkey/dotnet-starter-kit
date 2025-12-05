@@ -25,7 +25,7 @@ public class PayrollLinesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetPayrollLine", new { id = response.Id }, response);
             })
-            .WithName("CreatePayrollLine")
+            .WithName("CreatePayrollLineEndpoint")
             .WithSummary("Creates a new payroll line")
             .WithDescription("Creates a new payroll line for an employee within a payroll period. Contains hours worked and pay calculations.")
             .Produces<CreatePayrollLineResponse>(StatusCodes.Status201Created)
@@ -38,7 +38,7 @@ public class PayrollLinesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetPayrollLine")
+            .WithName("GetPayrollLineEndpoint")
             .WithSummary("Gets a payroll line by ID")
             .WithDescription("Retrieves detailed information about a specific payroll line including hours, earnings, taxes, and deductions.")
             .Produces<PayrollLineResponse>()
@@ -51,7 +51,7 @@ public class PayrollLinesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(updateRequest).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdatePayrollLine")
+            .WithName("UpdatePayrollLineEndpoint")
             .WithSummary("Updates a payroll line")
             .WithDescription("Updates a payroll line's hours and pay information. Only draft payroll lines can be updated.")
             .Produces<UpdatePayrollLineResponse>()
@@ -64,7 +64,7 @@ public class PayrollLinesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeletePayrollLine")
+            .WithName("DeletePayrollLineEndpoint")
             .WithSummary("Deletes a payroll line")
             .WithDescription("Deletes a payroll line. Only lines from draft payrolls can be deleted. Processed payroll lines cannot be deleted.")
             .Produces<DeletePayrollLineResponse>()
@@ -76,7 +76,7 @@ public class PayrollLinesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchPayrollLines")
+            .WithName("SearchPayrollLinesEndpoint")
             .WithSummary("Searches payroll lines")
             .WithDescription("Searches and filters payroll lines by payroll period, employee, and other criteria with pagination support.")
             .Produces<PagedList<PayrollLineResponse>>()

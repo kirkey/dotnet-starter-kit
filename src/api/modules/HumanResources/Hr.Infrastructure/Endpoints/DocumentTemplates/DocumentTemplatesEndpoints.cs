@@ -24,7 +24,7 @@ public class DocumentTemplatesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetDocumentTemplate", new { id = response.Id }, response);
             })
-            .WithName("CreateDocumentTemplate")
+            .WithName("CreateDocumentTemplateEndpoint")
             .WithSummary("Creates a new document template")
             .WithDescription("Creates a new document template for document generation")
             .Produces<CreateDocumentTemplateResponse>(StatusCodes.Status201Created)
@@ -36,7 +36,7 @@ public class DocumentTemplatesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetDocumentTemplateRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetDocumentTemplate")
+            .WithName("GetDocumentTemplateEndpoint")
             .WithSummary("Gets document template by ID")
             .WithDescription("Retrieves document template details")
             .Produces<DocumentTemplateResponse>()
@@ -48,7 +48,7 @@ public class DocumentTemplatesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchDocumentTemplates")
+            .WithName("SearchDocumentTemplatesEndpoint")
             .WithSummary("Searches document templates")
             .WithDescription("Searches document templates with pagination and filters")
             .Produces<PagedList<DocumentTemplateResponse>>()
@@ -63,7 +63,7 @@ public class DocumentTemplatesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateDocumentTemplate")
+            .WithName("UpdateDocumentTemplateEndpoint")
             .WithSummary("Updates a document template")
             .WithDescription("Updates document template information")
             .Produces<UpdateDocumentTemplateResponse>()
@@ -75,7 +75,7 @@ public class DocumentTemplatesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteDocumentTemplateCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteDocumentTemplate")
+            .WithName("DeleteDocumentTemplateEndpoint")
             .WithSummary("Deletes a document template")
             .WithDescription("Deletes a document template")
             .Produces<DeleteDocumentTemplateResponse>()

@@ -26,7 +26,7 @@ public class LeaveRequestsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Created($"/hr/leave-requests/{response.Id}", response);
             })
-            .WithName("CreateLeaveRequest")
+            .WithName("CreateLeaveRequestEndpoint")
             .WithSummary("Creates a new leave request")
             .WithDescription("Creates a new leave request for an employee. The request is created in Draft status and must be submitted for approval. Validates employee leave balance and leave type eligibility per Philippines Labor Code.")
             .Produces<CreateLeaveRequestResponse>(StatusCodes.Status201Created)
@@ -39,7 +39,7 @@ public class LeaveRequestsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetLeaveRequest")
+            .WithName("GetLeaveRequestEndpoint")
             .WithSummary("Gets a leave request by ID")
             .WithDescription("Retrieves detailed information about a specific leave request including status, dates, approval details, and attachments")
             .Produces<LeaveRequestResponse>()
@@ -52,7 +52,7 @@ public class LeaveRequestsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(updateRequest).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateLeaveRequest")
+            .WithName("UpdateLeaveRequestEndpoint")
             .WithSummary("Updates a leave request")
             .WithDescription("Updates a leave request including status and approver comments. Primarily used for administrative updates.")
             .Produces<UpdateLeaveRequestResponse>()
@@ -65,7 +65,7 @@ public class LeaveRequestsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteLeaveRequest")
+            .WithName("DeleteLeaveRequestEndpoint")
             .WithSummary("Deletes a leave request")
             .WithDescription("Deletes a leave request. Only Draft and Rejected requests can be deleted. Approved or Submitted requests cannot be deleted without proper workflow steps.")
             .Produces<DeleteLeaveRequestResponse>()
@@ -77,7 +77,7 @@ public class LeaveRequestsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchLeaveRequests")
+            .WithName("SearchLeaveRequestsEndpoint")
             .WithSummary("Searches leave requests")
             .WithDescription("Searches and filters leave requests by employee, leave type, status, and date range with pagination support. Supports advanced filtering per Philippines Labor Code compliance requirements.")
             .Produces<PagedList<LeaveRequestResponse>>()
@@ -90,7 +90,7 @@ public class LeaveRequestsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Accepted($"/hr/leave-requests/{response.Id}", response);
             })
-            .WithName("SubmitLeaveRequest")
+            .WithName("SubmitLeaveRequestEndpoint")
             .WithSummary("Submits a leave request for approval")
             .WithDescription("Submits a Draft leave request for manager approval. Validates leave balance and eligibility per Philippines Labor Code. Request transitions to Submitted status.")
             .Produces<SubmitLeaveRequestResponse>(StatusCodes.Status202Accepted)
@@ -103,7 +103,7 @@ public class LeaveRequestsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("ApproveLeaveRequest")
+            .WithName("ApproveLeaveRequestEndpoint")
             .WithSummary("Approves a leave request")
             .WithDescription("Approves a Submitted leave request. Manager can include optional comments. Request transitions to Approved status and leave balance is updated per Philippines Labor Code.")
             .Produces<ApproveLeaveRequestResponse>()
@@ -116,7 +116,7 @@ public class LeaveRequestsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("RejectLeaveRequest")
+            .WithName("RejectLeaveRequestEndpoint")
             .WithSummary("Rejects a leave request")
             .WithDescription("Rejects a Submitted leave request with a required reason. Request transitions to Rejected status and reserved pending balance is released per Philippines Labor Code.")
             .Produces<RejectLeaveRequestResponse>()
@@ -129,7 +129,7 @@ public class LeaveRequestsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("CancelLeaveRequest")
+            .WithName("CancelLeaveRequestEndpoint")
             .WithSummary("Cancels a leave request")
             .WithDescription("Cancels a Draft or Submitted leave request by the employee. Approved requests cannot be cancelled. Reserved pending balance is released per Philippines Labor Code.")
             .Produces<CancelLeaveRequestResponse>()

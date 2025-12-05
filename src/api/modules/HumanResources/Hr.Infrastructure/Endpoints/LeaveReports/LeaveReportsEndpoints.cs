@@ -23,7 +23,7 @@ public class LeaveReportsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Created($"/hr/leave-reports/{response.ReportId}", response);
             })
-            .WithName("GenerateLeaveReport")
+            .WithName("GenerateLeaveReportEndpoint")
             .WithSummary("Generate leave report")
             .WithDescription("Generates a leave report based on specified criteria and report type")
             .Produces<GenerateLeaveReportResponse>(StatusCodes.Status201Created)
@@ -39,7 +39,7 @@ public class LeaveReportsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetLeaveReport")
+            .WithName("GetLeaveReportEndpoint")
             .WithSummary("Get leave report")
             .WithDescription("Retrieves a leave report by ID with all details")
             .Produces<LeaveReportResponse>()
@@ -54,7 +54,7 @@ public class LeaveReportsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchLeaveReports")
+            .WithName("SearchLeaveReportsEndpoint")
             .WithSummary("Search leave reports")
             .WithDescription("Searches and filters leave reports with pagination support")
             .Produces<PagedList<LeaveReportDto>>()
@@ -68,7 +68,7 @@ public class LeaveReportsEndpoints() : CarterModule("humanresources")
             {
                 return Results.Ok(new { message = "Report download functionality to be implemented" });
             })
-            .WithName("DownloadLeaveReport")
+            .WithName("DownloadLeaveReportEndpoint")
             .WithSummary("Download leave report")
             .WithDescription("Downloads a leave report in specified format (PDF/Excel)")
             .Produces(StatusCodes.Status200OK)
@@ -82,7 +82,7 @@ public class LeaveReportsEndpoints() : CarterModule("humanresources")
             {
                 return Results.Ok(new { message = "Report export functionality to be implemented" });
             })
-            .WithName("ExportLeaveReport")
+            .WithName("ExportLeaveReportEndpoint")
             .WithSummary("Export leave report")
             .WithDescription("Exports a leave report in specified format")
             .Produces(StatusCodes.Status200OK)

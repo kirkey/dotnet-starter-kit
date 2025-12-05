@@ -22,7 +22,7 @@ public class EmployeeDashboardsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetEmployeeDashboard")
+            .WithName("GetEmployeeDashboardEndpoint")
             .WithSummary("Get personal employee dashboard")
             .WithDescription("Retrieves aggregated dashboard data for the current employee including leave, attendance, payroll, and pending approvals")
             .Produces<EmployeeDashboardResponse>()
@@ -37,7 +37,7 @@ public class EmployeeDashboardsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetTeamDashboard")
+            .WithName("GetTeamDashboardEndpoint")
             .WithSummary("Get team member dashboard")
             .WithDescription("Retrieves dashboard data for a team member (managers only)")
             .Produces<EmployeeDashboardResponse>()

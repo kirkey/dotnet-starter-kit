@@ -25,7 +25,7 @@ public class BenefitAllocationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetBenefitAllocation", new { id = response.Id }, response);
             })
-            .WithName("CreateBenefitAllocation")
+            .WithName("CreateBenefitAllocationEndpoint")
             .WithSummary("Creates a new benefit allocation")
             .WithDescription("Creates a new benefit allocation for an employee. Allocates specific benefit amounts with optional HR approval.")
             .Produces<CreateBenefitAllocationResponse>(StatusCodes.Status201Created)
@@ -38,7 +38,7 @@ public class BenefitAllocationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetBenefitAllocation")
+            .WithName("GetBenefitAllocationEndpoint")
             .WithSummary("Gets a benefit allocation by ID")
             .WithDescription("Retrieves detailed information about a specific benefit allocation including amount, status, and approval details.")
             .Produces<BenefitAllocationResponse>()
@@ -50,7 +50,7 @@ public class BenefitAllocationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchBenefitAllocations")
+            .WithName("SearchBenefitAllocationsEndpoint")
             .WithSummary("Searches benefit allocations")
             .WithDescription("Searches and filters benefit allocations by employee, benefit, status, year with pagination support.")
             .Produces<PagedList<BenefitAllocationResponse>>()
@@ -63,7 +63,7 @@ public class BenefitAllocationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("ApproveBenefitAllocation")
+            .WithName("ApproveBenefitAllocationEndpoint")
             .WithSummary("Approves a benefit allocation")
             .WithDescription("Approves a pending benefit allocation. Activates the allocation for the employee.")
             .Produces<ApproveBenefitAllocationResponse>()
@@ -76,7 +76,7 @@ public class BenefitAllocationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("RejectBenefitAllocation")
+            .WithName("RejectBenefitAllocationEndpoint")
             .WithSummary("Rejects a benefit allocation")
             .WithDescription("Rejects a pending benefit allocation. Marks as rejected with optional reason.")
             .Produces<RejectBenefitAllocationResponse>()

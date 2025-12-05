@@ -24,7 +24,7 @@ public class EmployeeDesignationAssignmentsEndpoints() : CarterModule("humanreso
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("AssignPlantillaDesignation")
+            .WithName("AssignPlantillaDesignationEndpoint")
             .WithSummary("Assigns a plantilla designation to an employee")
             .WithDescription("Assigns a primary/plantilla designation to an employee")
             .Produces<AssignDesignationResponse>()
@@ -36,7 +36,7 @@ public class EmployeeDesignationAssignmentsEndpoints() : CarterModule("humanreso
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("AssignActingAsDesignation")
+            .WithName("AssignActingAsDesignationEndpoint")
             .WithSummary("Assigns an acting as designation to an employee")
             .WithDescription("Assigns a temporary acting designation to an employee")
             .Produces<AssignDesignationResponse>()
@@ -50,7 +50,7 @@ public class EmployeeDesignationAssignmentsEndpoints() : CarterModule("humanreso
                     .ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetDesignationAssignment")
+            .WithName("GetDesignationAssignmentEndpoint")
             .WithSummary("Gets designation assignment by ID")
             .WithDescription("Retrieves designation assignment details including tenure and status")
             .Produces<DesignationAssignmentResponse>()
@@ -64,7 +64,7 @@ public class EmployeeDesignationAssignmentsEndpoints() : CarterModule("humanreso
                     .ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("EndDesignationAssignment")
+            .WithName("EndDesignationAssignmentEndpoint")
             .WithSummary("Ends a designation assignment")
             .WithDescription("Ends an active designation assignment on a specified date")
             .Produces<EndDesignationAssignmentResponse>()
@@ -76,7 +76,7 @@ public class EmployeeDesignationAssignmentsEndpoints() : CarterModule("humanreso
                 var result = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(result);
             })
-            .WithName("SearchEmployeeDesignationHistory")
+            .WithName("SearchEmployeeDesignationHistoryEndpoint")
             .WithSummary("Search employee designation history")
             .WithDescription("Searches employee designation history with support for temporal queries, filtering by organization, designation, date range, and employment status")
             .Produces<PagedList<EmployeeHistoryDto>>()

@@ -25,7 +25,7 @@ public class TaxEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("CreateTax", new { id = response.Id }, response);
             })
-            .WithName("CreateTax")
+            .WithName("CreateTaxEndpoint")
             .WithSummary("Create tax master configuration")
             .WithDescription("Creates a new tax master configuration for various tax types (VAT, GST, Excise, Withholding, Property, Sales Tax, etc.)")
             .Produces<CreateTaxResponse>(StatusCodes.Status201Created)
@@ -43,7 +43,7 @@ public class TaxEndpoints() : CarterModule("humanresources")
                 var result = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(result);
             })
-            .WithName("UpdateTax")
+            .WithName("UpdateTaxEndpoint")
             .WithSummary("Update tax master configuration")
             .WithDescription("Updates an existing tax master configuration. Only provided fields are updated.")
             .Produces<DefaultIdType>()
@@ -60,7 +60,7 @@ public class TaxEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetTax")
+            .WithName("GetTaxEndpoint")
             .WithSummary("Get tax master configuration")
             .WithDescription("Retrieves a tax master configuration by ID with all details.")
             .Produces<TaxResponse>()
@@ -76,7 +76,7 @@ public class TaxEndpoints() : CarterModule("humanresources")
                 var result = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(result);
             })
-            .WithName("DeleteTax")
+            .WithName("DeleteTaxEndpoint")
             .WithSummary("Delete tax master configuration")
             .WithDescription("Deletes a tax master configuration by ID.")
             .Produces<DefaultIdType>()
@@ -91,7 +91,7 @@ public class TaxEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchTaxes")
+            .WithName("SearchTaxesEndpoint")
             .WithSummary("Search tax master configurations")
             .WithDescription("Searches and filters tax master configurations with pagination support. " +
                              "Supports filtering by code, tax type, jurisdiction, and active status.")

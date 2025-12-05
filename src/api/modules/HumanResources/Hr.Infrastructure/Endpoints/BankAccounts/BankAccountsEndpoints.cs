@@ -22,7 +22,7 @@ public class BankAccountsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetBankAccount", new { id = response.Id }, response);
             })
-            .WithName("CreateBankAccount")
+            .WithName("CreateBankAccountEndpoint")
             .WithSummary("Creates a new bank account")
             .WithDescription("Creates a new bank account for an employee for direct deposit. Account numbers are encrypted at rest.")
             .Produces<CreateBankAccountResponse>(StatusCodes.Status201Created)
@@ -35,7 +35,7 @@ public class BankAccountsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetBankAccount")
+            .WithName("GetBankAccountEndpoint")
             .WithSummary("Gets a bank account by ID")
             .WithDescription("Retrieves detailed information about a specific bank account. Account numbers are masked for security.")
             .Produces<BankAccountResponse>()
@@ -48,7 +48,7 @@ public class BankAccountsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(updateRequest).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateBankAccount")
+            .WithName("UpdateBankAccountEndpoint")
             .WithSummary("Updates a bank account")
             .WithDescription("Updates bank account details. Account numbers are encrypted at rest.")
             .Produces<UpdateBankAccountResponse>()
@@ -60,7 +60,7 @@ public class BankAccountsEndpoints() : CarterModule("humanresources")
                 await mediator.Send(new DeleteBankAccountCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();
             })
-            .WithName("DeleteBankAccount")
+            .WithName("DeleteBankAccountEndpoint")
             .WithSummary("Deletes a bank account")
             .WithDescription("Deletes a bank account. Cannot delete if it's the primary account.")
             .Produces(StatusCodes.Status204NoContent)
@@ -72,7 +72,7 @@ public class BankAccountsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchBankAccounts")
+            .WithName("SearchBankAccountsEndpoint")
             .WithSummary("Searches bank accounts")
             .WithDescription("Searches and filters bank accounts by employee, bank name, account type with pagination support. Account numbers are masked for security.")
             .Produces<PagedList<BankAccountResponse>>()

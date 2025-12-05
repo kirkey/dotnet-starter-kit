@@ -24,7 +24,7 @@ public class PayrollDeductionEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("CreatePayrollDeduction")
+            .WithName("CreatePayrollDeductionEndpoint")
             .WithSummary("Create a new payroll deduction")
             .WithDescription("Creates a new payroll deduction configuration for employees per Philippine Labor Code")
             .Produces<CreatePayrollDeductionResponse>()
@@ -36,7 +36,7 @@ public class PayrollDeductionEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetPayrollDeductionRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetPayrollDeduction")
+            .WithName("GetPayrollDeductionEndpoint")
             .WithSummary("Get a payroll deduction by ID")
             .WithDescription("Retrieves a specific payroll deduction by its unique identifier")
             .Produces<PayrollDeductionResponse>()
@@ -49,7 +49,7 @@ public class PayrollDeductionEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdatePayrollDeduction")
+            .WithName("UpdatePayrollDeductionEndpoint")
             .WithSummary("Update a payroll deduction")
             .WithDescription("Updates an existing payroll deduction configuration")
             .Produces<UpdatePayrollDeductionResponse>()
@@ -61,7 +61,7 @@ public class PayrollDeductionEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeletePayrollDeductionCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeletePayrollDeduction")
+            .WithName("DeletePayrollDeductionEndpoint")
             .WithSummary("Delete a payroll deduction")
             .WithDescription("Deletes a payroll deduction by its unique identifier")
             .Produces<DeletePayrollDeductionResponse>()
@@ -73,7 +73,7 @@ public class PayrollDeductionEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchPayrollDeductions")
+            .WithName("SearchPayrollDeductionsEndpoint")
             .WithSummary("Searches payroll deductions")
             .WithDescription("Searches and filters payroll deductions by type, employee, department, authorization status with pagination support.")
             .Produces<PagedList<PayrollDeductionResponse>>()

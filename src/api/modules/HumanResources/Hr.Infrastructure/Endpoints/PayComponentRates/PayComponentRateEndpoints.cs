@@ -24,7 +24,7 @@ public class PayComponentRateEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Created($"/hr/pay-component-rates/{response.Id}", response);
             })
-            .WithName("CreatePayComponentRate")
+            .WithName("CreatePayComponentRateEndpoint")
             .WithSummary("Create a new pay component rate")
             .WithDescription("Creates a new rate/bracket for pay component")
             .Produces<CreatePayComponentRateResponse>(StatusCodes.Status201Created)
@@ -36,7 +36,7 @@ public class PayComponentRateEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetPayComponentRateRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetPayComponentRate")
+            .WithName("GetPayComponentRateEndpoint")
             .WithSummary("Get a pay component rate by ID")
             .WithDescription("Retrieves a specific pay component rate/bracket by its unique identifier")
             .Produces<PayComponentRateResponse>()
@@ -49,7 +49,7 @@ public class PayComponentRateEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdatePayComponentRate")
+            .WithName("UpdatePayComponentRateEndpoint")
             .WithSummary("Update a pay component rate")
             .WithDescription("Updates an existing pay component rate/bracket")
             .Produces<UpdatePayComponentRateResponse>()
@@ -61,7 +61,7 @@ public class PayComponentRateEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeletePayComponentRateCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeletePayComponentRate")
+            .WithName("DeletePayComponentRateEndpoint")
             .WithSummary("Delete a pay component rate")
             .WithDescription("Deletes a pay component rate/bracket by its unique identifier")
             .Produces<DeletePayComponentRateResponse>()
@@ -73,7 +73,7 @@ public class PayComponentRateEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchPayComponentRates")
+            .WithName("SearchPayComponentRatesEndpoint")
             .WithSummary("Searches pay component rates")
             .WithDescription("Searches and filters pay component rates (tax brackets, SSS rates, etc.) by component, year, amount range with pagination support.")
             .Produces<PagedList<PayComponentRateResponse>>()

@@ -19,7 +19,7 @@ public class LeaveBalancesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Created($"/hr/leave-balances/{response.Id}", response);
             })
-            .WithName("CreateLeaveBalance")
+            .WithName("CreateLeaveBalanceEndpoint")
             .WithSummary("Creates a new leave balance")
             .WithDescription("Creates a new leave balance for an employee for a specific leave type and year with opening balance")
             .Produces<CreateLeaveBalanceResponse>(StatusCodes.Status201Created)
@@ -31,7 +31,7 @@ public class LeaveBalancesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetLeaveBalanceRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetLeaveBalance")
+            .WithName("GetLeaveBalanceEndpoint")
             .WithSummary("Gets leave balance by ID")
             .WithDescription("Retrieves detailed information about a specific leave balance including opening, used, and remaining days")
             .Produces<LeaveBalanceResponse>()
@@ -46,7 +46,7 @@ public class LeaveBalancesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateLeaveBalance")
+            .WithName("UpdateLeaveBalanceEndpoint")
             .WithSummary("Updates a leave balance")
             .WithDescription("Updates leave balance opening balance or other details")
             .Produces<UpdateLeaveBalanceResponse>()
@@ -58,7 +58,7 @@ public class LeaveBalancesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteLeaveBalanceCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteLeaveBalance")
+            .WithName("DeleteLeaveBalanceEndpoint")
             .WithSummary("Deletes a leave balance")
             .WithDescription("Removes a leave balance from the system")
             .Produces<DeleteLeaveBalanceResponse>()
@@ -70,7 +70,7 @@ public class LeaveBalancesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchLeaveBalances")
+            .WithName("SearchLeaveBalancesEndpoint")
             .WithSummary("Searches leave balances")
             .WithDescription("Searches and filters leave balances by employee, leave type, year with pagination support")
             .Produces<PagedList<LeaveBalanceResponse>>()
@@ -82,7 +82,7 @@ public class LeaveBalancesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("AccrueLeave")
+            .WithName("AccrueLeaveEndpoint")
             .WithSummary("Accrues leave to a balance")
             .WithDescription("Adds accrued leave amount to a leave balance based on accrual frequency")
             .Produces<AccrueLeaveResponse>()

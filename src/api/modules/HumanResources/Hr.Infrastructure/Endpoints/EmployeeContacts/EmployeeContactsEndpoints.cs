@@ -24,7 +24,7 @@ public class EmployeeContactsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetEmployeeContact", new { id = response.Id }, response);
             })
-            .WithName("CreateEmployeeContact")
+            .WithName("CreateEmployeeContactEndpoint")
             .WithSummary("Creates a new employee contact")
             .WithDescription("Creates a new employee contact (emergency, reference, family)")
             .Produces<CreateEmployeeContactResponse>(StatusCodes.Status201Created)
@@ -36,7 +36,7 @@ public class EmployeeContactsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetEmployeeContactRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetEmployeeContact")
+            .WithName("GetEmployeeContactEndpoint")
             .WithSummary("Gets employee contact by ID")
             .WithDescription("Retrieves employee contact details")
             .Produces<EmployeeContactResponse>()
@@ -48,7 +48,7 @@ public class EmployeeContactsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchEmployeeContacts")
+            .WithName("SearchEmployeeContactsEndpoint")
             .WithSummary("Searches employee contacts")
             .WithDescription("Searches employee contacts with pagination and filters")
             .Produces<PagedList<EmployeeContactResponse>>()
@@ -63,7 +63,7 @@ public class EmployeeContactsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateEmployeeContact")
+            .WithName("UpdateEmployeeContactEndpoint")
             .WithSummary("Updates an employee contact")
             .WithDescription("Updates employee contact information")
             .Produces<UpdateEmployeeContactResponse>()
@@ -75,7 +75,7 @@ public class EmployeeContactsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteEmployeeContactCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteEmployeeContact")
+            .WithName("DeleteEmployeeContactEndpoint")
             .WithSummary("Deletes an employee contact")
             .WithDescription("Deletes an employee contact record")
             .Produces<DeleteEmployeeContactResponse>()

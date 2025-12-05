@@ -24,7 +24,7 @@ public class DesignationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("CreateDesignation")
+            .WithName("CreateDesignationEndpoint")
             .WithSummary("Creates a new designation")
             .WithDescription("Creates a new designation in an organizational unit")
             .Produces<CreateDesignationResponse>()
@@ -36,7 +36,7 @@ public class DesignationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetDesignationRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetDesignation")
+            .WithName("GetDesignationEndpoint")
             .WithSummary("Gets designation by ID")
             .WithDescription("Retrieves designation details by ID")
             .Produces<DesignationResponse>()
@@ -51,7 +51,7 @@ public class DesignationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateDesignation")
+            .WithName("UpdateDesignationEndpoint")
             .WithSummary("Updates a designation")
             .WithDescription("Updates designation information")
             .Produces<UpdateDesignationResponse>()
@@ -63,7 +63,7 @@ public class DesignationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteDesignationCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteDesignation")
+            .WithName("DeleteDesignationEndpoint")
             .WithSummary("Deletes a designation")
             .WithDescription("Deletes a designation")
             .Produces<DeleteDesignationResponse>()
@@ -75,7 +75,7 @@ public class DesignationsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchDesignations")
+            .WithName("SearchDesignationsEndpoint")
             .WithSummary("Searches designations")
             .WithDescription("Searches designations with pagination and filters")
             .Produces<PagedList<DesignationResponse>>()

@@ -24,7 +24,7 @@ public class GeneratedDocumentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetGeneratedDocument", new { id = response.Id }, response);
             })
-            .WithName("CreateGeneratedDocument")
+            .WithName("CreateGeneratedDocumentEndpoint")
             .WithSummary("Creates a new generated document")
             .WithDescription("Generates a new document from a template")
             .Produces<CreateGeneratedDocumentResponse>(StatusCodes.Status201Created)
@@ -36,7 +36,7 @@ public class GeneratedDocumentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetGeneratedDocumentRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetGeneratedDocument")
+            .WithName("GetGeneratedDocumentEndpoint")
             .WithSummary("Gets generated document by ID")
             .WithDescription("Retrieves generated document details")
             .Produces<GeneratedDocumentResponse>()
@@ -48,7 +48,7 @@ public class GeneratedDocumentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchGeneratedDocuments")
+            .WithName("SearchGeneratedDocumentsEndpoint")
             .WithSummary("Searches generated documents")
             .WithDescription("Searches generated documents with pagination and filters")
             .Produces<PagedList<GeneratedDocumentResponse>>()
@@ -63,7 +63,7 @@ public class GeneratedDocumentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateGeneratedDocument")
+            .WithName("UpdateGeneratedDocumentEndpoint")
             .WithSummary("Updates a generated document")
             .WithDescription("Updates generated document status and information")
             .Produces<UpdateGeneratedDocumentResponse>()
@@ -75,7 +75,7 @@ public class GeneratedDocumentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteGeneratedDocumentCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteGeneratedDocument")
+            .WithName("DeleteGeneratedDocumentEndpoint")
             .WithSummary("Deletes a generated document")
             .WithDescription("Deletes a generated document")
             .Produces<DeleteGeneratedDocumentResponse>()

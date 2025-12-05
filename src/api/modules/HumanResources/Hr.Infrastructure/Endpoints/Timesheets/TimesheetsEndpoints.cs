@@ -24,7 +24,7 @@ public class TimesheetsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetTimesheet", new { id = response.Id }, response);
             })
-            .WithName("CreateTimesheet")
+            .WithName("CreateTimesheetEndpoint")
             .WithSummary("Creates a new timesheet")
             .WithDescription("Creates a timesheet for an employee for a pay period")
             .Produces<CreateTimesheetResponse>(StatusCodes.Status201Created)
@@ -36,7 +36,7 @@ public class TimesheetsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetTimesheetRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetTimesheet")
+            .WithName("GetTimesheetEndpoint")
             .WithSummary("Gets timesheet by ID")
             .WithDescription("Retrieves timesheet details")
             .Produces<TimesheetResponse>()
@@ -48,7 +48,7 @@ public class TimesheetsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchTimesheets")
+            .WithName("SearchTimesheetsEndpoint")
             .WithSummary("Searches timesheets")
             .WithDescription("Searches timesheets with pagination and filters")
             .Produces<PagedList<TimesheetResponse>>()
@@ -63,7 +63,7 @@ public class TimesheetsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateTimesheet")
+            .WithName("UpdateTimesheetEndpoint")
             .WithSummary("Updates a timesheet")
             .WithDescription("Updates timesheet status and approval information")
             .Produces<UpdateTimesheetResponse>()
@@ -75,7 +75,7 @@ public class TimesheetsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteTimesheetCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteTimesheet")
+            .WithName("DeleteTimesheetEndpoint")
             .WithSummary("Deletes a timesheet")
             .WithDescription("Deletes a timesheet record")
             .Produces<DeleteTimesheetResponse>()

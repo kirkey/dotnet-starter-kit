@@ -24,7 +24,7 @@ public class TimesheetLinesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetTimesheetLine", new { id = response.Id }, response);
             })
-            .WithName("CreateTimesheetLine")
+            .WithName("CreateTimesheetLineEndpoint")
             .WithSummary("Creates a new timesheet line")
             .WithDescription("Creates a new daily timesheet entry with hours and project allocation")
             .Produces<CreateTimesheetLineResponse>(StatusCodes.Status201Created)
@@ -36,7 +36,7 @@ public class TimesheetLinesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetTimesheetLineRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetTimesheetLine")
+            .WithName("GetTimesheetLineEndpoint")
             .WithSummary("Gets timesheet line details")
             .WithDescription("Retrieves detailed information about a specific timesheet line entry")
             .Produces<TimesheetLineResponse>()
@@ -48,7 +48,7 @@ public class TimesheetLinesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchTimesheetLines")
+            .WithName("SearchTimesheetLinesEndpoint")
             .WithSummary("Searches timesheet lines")
             .WithDescription("Searches and filters timesheet lines with pagination")
             .Produces<PagedList<TimesheetLineResponse>>()
@@ -63,7 +63,7 @@ public class TimesheetLinesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateTimesheetLine")
+            .WithName("UpdateTimesheetLineEndpoint")
             .WithSummary("Updates timesheet line")
             .WithDescription("Updates hours, project allocation, or billing information for a timesheet line")
             .Produces<UpdateTimesheetLineResponse>()
@@ -75,7 +75,7 @@ public class TimesheetLinesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteTimesheetLineCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteTimesheetLine")
+            .WithName("DeleteTimesheetLineEndpoint")
             .WithSummary("Deletes a timesheet line")
             .WithDescription("Deletes a specific timesheet line entry from the system")
             .Produces<DeleteTimesheetLineResponse>()

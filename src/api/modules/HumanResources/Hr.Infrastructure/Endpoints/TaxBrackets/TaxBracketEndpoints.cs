@@ -24,7 +24,7 @@ public class TaxBracketEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("CreateTaxBracket")
+            .WithName("CreateTaxBracketEndpoint")
             .WithSummary("Create tax bracket")
             .WithDescription("Creates new tax bracket for income taxation")
             .Produces<CreateTaxBracketResponse>()
@@ -37,7 +37,7 @@ public class TaxBracketEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateTaxBracket")
+            .WithName("UpdateTaxBracketEndpoint")
             .WithSummary("Update tax bracket")
             .WithDescription("Updates tax bracket details")
             .Produces<UpdateTaxBracketResponse>()
@@ -49,7 +49,7 @@ public class TaxBracketEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetTaxBracketRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetTaxBracket")
+            .WithName("GetTaxBracketEndpoint")
             .WithSummary("Get tax bracket by ID")
             .WithDescription("Retrieves tax bracket by its unique identifier")
             .Produces<TaxBracketResponse>()
@@ -61,7 +61,7 @@ public class TaxBracketEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteTaxBracketCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteTaxBracket")
+            .WithName("DeleteTaxBracketEndpoint")
             .WithSummary("Delete tax bracket")
             .WithDescription("Deletes tax bracket by its unique identifier")
             .Produces<DeleteTaxBracketResponse>()
@@ -73,7 +73,7 @@ public class TaxBracketEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchTaxBrackets")
+            .WithName("SearchTaxBracketsEndpoint")
             .WithSummary("Searches tax brackets")
             .WithDescription("Searches and filters tax brackets by type, year, filing status, and income range with pagination support.")
             .Produces<PagedList<TaxBracketResponse>>()

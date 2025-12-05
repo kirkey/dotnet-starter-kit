@@ -24,7 +24,7 @@ public class HolidaysEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetHoliday", new { id = response.Id }, response);
             })
-            .WithName("CreateHoliday")
+            .WithName("CreateHolidayEndpoint")
             .WithSummary("Creates a new holiday")
             .WithDescription("Creates a new holiday with Philippines Labor Code compliance including holiday type, pay rate multiplier, and regional applicability")
             .Produces<CreateHolidayResponse>(StatusCodes.Status201Created)
@@ -36,7 +36,7 @@ public class HolidaysEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetHolidayRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetHoliday")
+            .WithName("GetHolidayEndpoint")
             .WithSummary("Gets holiday by ID")
             .WithDescription("Retrieves detailed information about a specific holiday including Philippines Labor Code classification")
             .Produces<HolidayResponse>()
@@ -48,7 +48,7 @@ public class HolidaysEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchHolidays")
+            .WithName("SearchHolidaysEndpoint")
             .WithSummary("Searches holidays")
             .WithDescription("Searches and filters holidays with pagination support")
             .Produces<PagedList<HolidayResponse>>()
@@ -63,7 +63,7 @@ public class HolidaysEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateHoliday")
+            .WithName("UpdateHolidayEndpoint")
             .WithSummary("Updates a holiday")
             .WithDescription("Updates holiday information including name, date, type, and pay rate multiplier")
             .Produces<UpdateHolidayResponse>()
@@ -75,7 +75,7 @@ public class HolidaysEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteHolidayCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteHoliday")
+            .WithName("DeleteHolidayEndpoint")
             .WithSummary("Deletes a holiday")
             .WithDescription("Removes a holiday from the system")
             .Produces<DeleteHolidayResponse>()

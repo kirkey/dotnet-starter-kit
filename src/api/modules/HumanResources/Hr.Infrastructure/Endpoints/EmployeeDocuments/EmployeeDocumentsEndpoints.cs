@@ -24,7 +24,7 @@ public class EmployeeDocumentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetEmployeeDocument", new { id = response.Id }, response);
             })
-            .WithName("CreateEmployeeDocument")
+            .WithName("CreateEmployeeDocumentEndpoint")
             .WithSummary("Creates a new employee document")
             .WithDescription("Creates a new employee document (contract, certification, license, etc.)")
             .Produces<CreateEmployeeDocumentResponse>(StatusCodes.Status201Created)
@@ -36,7 +36,7 @@ public class EmployeeDocumentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetEmployeeDocumentRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetEmployeeDocument")
+            .WithName("GetEmployeeDocumentEndpoint")
             .WithSummary("Gets employee document by ID")
             .WithDescription("Retrieves employee document details")
             .Produces<EmployeeDocumentResponse>()
@@ -48,7 +48,7 @@ public class EmployeeDocumentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchEmployeeDocuments")
+            .WithName("SearchEmployeeDocumentsEndpoint")
             .WithSummary("Searches employee documents")
             .WithDescription("Searches employee documents with pagination and filters")
             .Produces<PagedList<EmployeeDocumentResponse>>()
@@ -63,7 +63,7 @@ public class EmployeeDocumentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateEmployeeDocument")
+            .WithName("UpdateEmployeeDocumentEndpoint")
             .WithSummary("Updates an employee document")
             .WithDescription("Updates employee document information")
             .Produces<UpdateEmployeeDocumentResponse>()
@@ -75,7 +75,7 @@ public class EmployeeDocumentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteEmployeeDocumentCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteEmployeeDocument")
+            .WithName("DeleteEmployeeDocumentEndpoint")
             .WithSummary("Deletes an employee document")
             .WithDescription("Deletes an employee document record")
             .Produces<DeleteEmployeeDocumentResponse>()

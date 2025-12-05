@@ -23,7 +23,7 @@ public class PayrollReportsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetPayrollReport", new { id = response.ReportId }, response);
             })
-            .WithName("GeneratePayrollReport")
+            .WithName("GeneratePayrollReportEndpoint")
             .WithSummary("Generate payroll report")
             .WithDescription("Generates a payroll report based on specified criteria and report type (Summary, Detailed, Departmental, ByEmployee, TaxReport, DeductionReport, BankTransfer)")
             .Produces<GeneratePayrollReportResponse>(StatusCodes.Status201Created)
@@ -39,7 +39,7 @@ public class PayrollReportsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetPayrollReport")
+            .WithName("GetPayrollReportEndpoint")
             .WithSummary("Get payroll report")
             .WithDescription("Retrieves a payroll report by ID with all details including totals and averages")
             .Produces<PayrollReportResponse>()
@@ -54,7 +54,7 @@ public class PayrollReportsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchPayrollReports")
+            .WithName("SearchPayrollReportsEndpoint")
             .WithSummary("Search payroll reports")
             .WithDescription("Searches and filters payroll reports with pagination support")
             .Produces<PagedList<PayrollReportDto>>()
@@ -69,7 +69,7 @@ public class PayrollReportsEndpoints() : CarterModule("humanresources")
                 // TODO: Implement export logic for Excel/PDF/CSV
                 return Results.Ok(new { message = "Payroll report export functionality to be implemented" });
             })
-            .WithName("ExportPayrollReport")
+            .WithName("ExportPayrollReportEndpoint")
             .WithSummary("Export payroll report")
             .WithDescription("Exports a payroll report in specified format (Excel/PDF/CSV)")
             .Produces(StatusCodes.Status200OK)
@@ -86,7 +86,7 @@ public class PayrollReportsEndpoints() : CarterModule("humanresources")
                 // Return file stream with report data
                 return Results.Ok(new { message = "Report download functionality to be implemented" });
             })
-            .WithName("DownloadPayrollReport")
+            .WithName("DownloadPayrollReportEndpoint")
             .WithSummary("Download payroll report")
             .WithDescription("Downloads a payroll report in specified format (PDF/Excel)")
             .Produces(StatusCodes.Status200OK)

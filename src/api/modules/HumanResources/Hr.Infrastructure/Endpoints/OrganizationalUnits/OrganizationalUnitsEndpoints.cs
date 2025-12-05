@@ -24,7 +24,7 @@ public class OrganizationalUnitsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Created($"/hr/organizational-units/{response.Id}", response);
             })
-            .WithName("CreateOrganizationalUnit")
+            .WithName("CreateOrganizationalUnitEndpoint")
             .WithSummary("Creates a new organizational unit")
             .WithDescription("Creates a new organizational unit (Department, Division, or Section)")
             .Produces<CreateOrganizationalUnitResponse>(StatusCodes.Status201Created)
@@ -36,7 +36,7 @@ public class OrganizationalUnitsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetOrganizationalUnitRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetOrganizationalUnit")
+            .WithName("GetOrganizationalUnitEndpoint")
             .WithSummary("Gets organizational unit by ID")
             .WithDescription("Retrieves organizational unit details by ID")
             .Produces<OrganizationalUnitResponse>()
@@ -51,7 +51,7 @@ public class OrganizationalUnitsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateOrganizationalUnit")
+            .WithName("UpdateOrganizationalUnitEndpoint")
             .WithSummary("Updates an organizational unit")
             .WithDescription("Updates organizational unit information")
             .Produces<UpdateOrganizationalUnitResponse>()
@@ -63,7 +63,7 @@ public class OrganizationalUnitsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteOrganizationalUnitCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteOrganizationalUnit")
+            .WithName("DeleteOrganizationalUnitEndpoint")
             .WithSummary("Deletes an organizational unit")
             .WithDescription("Deletes an organizational unit if it has no children")
             .Produces<DeleteOrganizationalUnitResponse>()
@@ -75,7 +75,7 @@ public class OrganizationalUnitsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchOrganizationalUnits")
+            .WithName("SearchOrganizationalUnitsEndpoint")
             .WithSummary("Searches organizational units")
             .WithDescription("Searches organizational units with pagination and filters")
             .Produces<PagedList<OrganizationalUnitResponse>>()

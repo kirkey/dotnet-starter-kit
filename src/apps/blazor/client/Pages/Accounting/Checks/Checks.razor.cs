@@ -48,14 +48,14 @@ public partial class Checks
         ClearedDate = DateTime.UtcNow
     };
 
-    private CheckStopPaymentCommand _stopPaymentCommand = new()
+    private StopPaymentCheckCommand _stopPaymentCommand = new()
     {
         CheckId = DefaultIdType.Empty,
         StopPaymentReason = string.Empty,
         StopPaymentDate = DateTime.UtcNow
     };
 
-    private CheckPrintCommand _printCommand = new()
+    private PrintCheckCommand _printCommand = new()
     {
         CheckId = DefaultIdType.Empty,
         PrintedBy = "System",

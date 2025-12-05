@@ -21,7 +21,7 @@ public class SalesImportsEndpoints() : CarterModule("store")
             var response = await mediator.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("CreateSalesImport")
+        .WithName("CreateSalesImportEndpoint")
         .WithSummary("Import POS sales data")
         .WithDescription("Creates and processes a sales import from POS CSV file to update inventory levels")
         .Produces<CreateSalesImportResponse>()
@@ -34,7 +34,7 @@ public class SalesImportsEndpoints() : CarterModule("store")
             var response = await mediator.Send(new GetSalesImportRequest(id)).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("GetSalesImport")
+        .WithName("GetSalesImportEndpoint")
         .WithSummary("Get sales import details")
         .WithDescription("Retrieves detailed information about a sales import including all items")
         .Produces<SalesImportDetailResponse>()
@@ -47,7 +47,7 @@ public class SalesImportsEndpoints() : CarterModule("store")
             var response = await mediator.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("SearchSalesImports")
+        .WithName("SearchSalesImportsEndpoint")
         .WithSummary("Search sales imports")
         .WithDescription("Searches sales imports with filtering and pagination")
         .Produces<PagedList<SalesImportResponse>>()
@@ -65,7 +65,7 @@ public class SalesImportsEndpoints() : CarterModule("store")
             var response = await mediator.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("ReverseSalesImport")
+        .WithName("ReverseSalesImportEndpoint")
         .WithSummary("Reverse a sales import")
         .WithDescription("Reverses a completed sales import by creating offsetting inventory transactions")
         .Produces<DefaultIdType>()

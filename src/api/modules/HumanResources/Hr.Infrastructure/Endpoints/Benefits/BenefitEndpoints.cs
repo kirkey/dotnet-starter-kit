@@ -24,7 +24,7 @@ public class BenefitEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetBenefit", new { id = response.Id }, response);
             })
-            .WithName("CreateBenefit")
+            .WithName("CreateBenefitEndpoint")
             .WithSummary("Create Benefit")
             .WithDescription("Creates a new benefit offering (mandatory or optional) with contribution details per Philippines Labor Code.")
             .Produces<CreateBenefitResponse>(StatusCodes.Status201Created)
@@ -38,7 +38,7 @@ public class BenefitEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetBenefit")
+            .WithName("GetBenefitEndpoint")
             .WithSummary("Get Benefit Details")
             .WithDescription("Retrieves detailed information for the specified benefit including contributions, coverage, and effective dates.")
             .Produces<BenefitResponse>()
@@ -51,7 +51,7 @@ public class BenefitEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchBenefits")
+            .WithName("SearchBenefitsEndpoint")
             .WithSummary("Search Benefits")
             .WithDescription("Search benefit catalog by type, mandatory flag, and active status with pagination.")
             .Produces<PagedList<BenefitDto>>()
@@ -67,7 +67,7 @@ public class BenefitEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(body).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateBenefit")
+            .WithName("UpdateBenefitEndpoint")
             .WithSummary("Update Benefit")
             .WithDescription("Updates benefit contribution, coverage, activation status, and description.")
             .Produces<UpdateBenefitResponse>()
@@ -82,7 +82,7 @@ public class BenefitEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return response.Success ? Results.Ok(response) : Results.NotFound();
             })
-            .WithName("DeleteBenefit")
+            .WithName("DeleteBenefitEndpoint")
             .WithSummary("Delete Benefit")
             .WithDescription("Deletes a benefit from the catalog.")
             .Produces<DeleteBenefitResponse>()

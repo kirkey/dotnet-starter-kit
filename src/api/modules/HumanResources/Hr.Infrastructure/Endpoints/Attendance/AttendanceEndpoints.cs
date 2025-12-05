@@ -18,7 +18,7 @@ public class AttendanceEndpoints() : CarterModule("humanresources")
             var response = await mediator.Send(request).ConfigureAwait(false);
             return Results.CreatedAtRoute("GetAttendance", new { id = response.Id }, response);
         })
-        .WithName("CreateAttendance")
+        .WithName("CreateAttendanceEndpoint")
         .WithSummary("Creates a new attendance record")
         .WithDescription("Records employee attendance for a specific date")
         .Produces<CreateAttendanceResponse>(StatusCodes.Status201Created)
@@ -30,7 +30,7 @@ public class AttendanceEndpoints() : CarterModule("humanresources")
             var response = await mediator.Send(new GetAttendanceRequest(id)).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("GetAttendance")
+        .WithName("GetAttendanceEndpoint")
         .WithSummary("Gets attendance record by ID")
         .WithDescription("Retrieves attendance details")
         .Produces<AttendanceResponse>()
@@ -42,7 +42,7 @@ public class AttendanceEndpoints() : CarterModule("humanresources")
             var response = await mediator.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("SearchAttendance")
+        .WithName("SearchAttendanceEndpoint")
         .WithSummary("Searches attendance records")
         .WithDescription("Searches attendance records with pagination and filters")
         .Produces<PagedList<AttendanceResponse>>()
@@ -57,7 +57,7 @@ public class AttendanceEndpoints() : CarterModule("humanresources")
             var response = await mediator.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("UpdateAttendance")
+        .WithName("UpdateAttendanceEndpoint")
         .WithSummary("Updates an attendance record")
         .WithDescription("Updates attendance information")
         .Produces<UpdateAttendanceResponse>()
@@ -69,7 +69,7 @@ public class AttendanceEndpoints() : CarterModule("humanresources")
             var response = await mediator.Send(new DeleteAttendanceCommand(id)).ConfigureAwait(false);
             return Results.Ok(response);
         })
-        .WithName("DeleteAttendance")
+        .WithName("DeleteAttendanceEndpoint")
         .WithSummary("Deletes an attendance record")
         .WithDescription("Deletes an attendance record")
         .Produces<DeleteAttendanceResponse>()

@@ -24,7 +24,7 @@ public class EmployeeDependentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetEmployeeDependent", new { id = response.Id }, response);
             })
-            .WithName("CreateEmployeeDependent")
+            .WithName("CreateEmployeeDependentEndpoint")
             .WithSummary("Creates a new employee dependent")
             .WithDescription("Creates a new employee dependent (family member, beneficiary)")
             .Produces<CreateEmployeeDependentResponse>(StatusCodes.Status201Created)
@@ -36,7 +36,7 @@ public class EmployeeDependentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetEmployeeDependentRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetEmployeeDependent")
+            .WithName("GetEmployeeDependentEndpoint")
             .WithSummary("Gets employee dependent by ID")
             .WithDescription("Retrieves employee dependent details")
             .Produces<EmployeeDependentResponse>()
@@ -48,7 +48,7 @@ public class EmployeeDependentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchEmployeeDependents")
+            .WithName("SearchEmployeeDependentsEndpoint")
             .WithSummary("Searches employee dependents")
             .WithDescription("Searches employee dependents with pagination and filters")
             .Produces<PagedList<EmployeeDependentResponse>>()
@@ -63,7 +63,7 @@ public class EmployeeDependentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateEmployeeDependent")
+            .WithName("UpdateEmployeeDependentEndpoint")
             .WithSummary("Updates an employee dependent")
             .WithDescription("Updates employee dependent information")
             .Produces<UpdateEmployeeDependentResponse>()
@@ -75,7 +75,7 @@ public class EmployeeDependentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteEmployeeDependentCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteEmployeeDependent")
+            .WithName("DeleteEmployeeDependentEndpoint")
             .WithSummary("Deletes an employee dependent")
             .WithDescription("Deletes an employee dependent record")
             .Produces<DeleteEmployeeDependentResponse>()

@@ -24,7 +24,7 @@ public class ShiftAssignmentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetShiftAssignment", new { id = response.Id }, response);
             })
-            .WithName("CreateShiftAssignment")
+            .WithName("CreateShiftAssignmentEndpoint")
             .WithSummary("Creates a new shift assignment")
             .WithDescription("Assigns a shift to an employee for a specified date range")
             .Produces<CreateShiftAssignmentResponse>(StatusCodes.Status201Created)
@@ -36,7 +36,7 @@ public class ShiftAssignmentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetShiftAssignmentRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetShiftAssignment")
+            .WithName("GetShiftAssignmentEndpoint")
             .WithSummary("Gets shift assignment details")
             .WithDescription("Retrieves detailed information about a specific shift assignment")
             .Produces<ShiftAssignmentResponse>()
@@ -51,7 +51,7 @@ public class ShiftAssignmentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateShiftAssignment")
+            .WithName("UpdateShiftAssignmentEndpoint")
             .WithSummary("Updates a shift assignment")
             .WithDescription("Updates the dates, recurrence, or notes for a shift assignment")
             .Produces<UpdateShiftAssignmentResponse>()
@@ -63,7 +63,7 @@ public class ShiftAssignmentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteShiftAssignmentCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteShiftAssignment")
+            .WithName("DeleteShiftAssignmentEndpoint")
             .WithSummary("Deletes a shift assignment")
             .WithDescription("Removes a shift assignment from the system")
             .Produces<DeleteShiftAssignmentResponse>()
@@ -75,7 +75,7 @@ public class ShiftAssignmentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchShiftAssignments")
+            .WithName("SearchShiftAssignmentsEndpoint")
             .WithSummary("Searches shift assignments")
             .WithDescription("Searches and filters shift assignments with pagination")
             .Produces<PagedList<ShiftAssignmentResponse>>()

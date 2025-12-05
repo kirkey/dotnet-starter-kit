@@ -24,7 +24,7 @@ public class ShiftsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetShift", new { id = response.Id }, response);
             })
-            .WithName("CreateShift")
+            .WithName("CreateShiftEndpoint")
             .WithSummary("Creates a new shift")
             .WithDescription("Creates a new shift template (morning, evening, night, etc.)")
             .Produces<CreateShiftResponse>(StatusCodes.Status201Created)
@@ -36,7 +36,7 @@ public class ShiftsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetShiftRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetShift")
+            .WithName("GetShiftEndpoint")
             .WithSummary("Gets shift by ID")
             .WithDescription("Retrieves shift details with breaks and working hours")
             .Produces<ShiftResponse>()
@@ -51,7 +51,7 @@ public class ShiftsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateShift")
+            .WithName("UpdateShiftEndpoint")
             .WithSummary("Updates a shift")
             .WithDescription("Updates shift information")
             .Produces<UpdateShiftResponse>()
@@ -63,7 +63,7 @@ public class ShiftsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteShiftCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteShift")
+            .WithName("DeleteShiftEndpoint")
             .WithSummary("Deletes a shift")
             .WithDescription("Deletes a shift template")
             .Produces<DeleteShiftResponse>()
@@ -75,7 +75,7 @@ public class ShiftsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchShifts")
+            .WithName("SearchShiftsEndpoint")
             .WithSummary("Searches shifts")
             .WithDescription("Searches shifts with pagination and filters")
             .Produces<PagedList<ShiftResponse>>()

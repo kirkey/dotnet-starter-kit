@@ -29,7 +29,7 @@ public class PayrollsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetPayroll", new { id = response.Id }, response);
             })
-            .WithName("CreatePayroll")
+            .WithName("CreatePayrollEndpoint")
             .WithSummary("Creates a new payroll period")
             .WithDescription("Creates a new payroll period for processing employee pay. Payroll is created in Draft status and must be processed before GL posting.")
             .Produces<CreatePayrollResponse>(StatusCodes.Status201Created)
@@ -42,7 +42,7 @@ public class PayrollsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetPayroll")
+            .WithName("GetPayrollEndpoint")
             .WithSummary("Gets a payroll period by ID")
             .WithDescription("Retrieves detailed information about a specific payroll period including totals, status, and GL posting details.")
             .Produces<PayrollResponse>()
@@ -55,7 +55,7 @@ public class PayrollsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(updateRequest).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdatePayroll")
+            .WithName("UpdatePayrollEndpoint")
             .WithSummary("Updates a payroll period")
             .WithDescription("Updates payroll period details such as notes. Locked payrolls cannot be updated.")
             .Produces<UpdatePayrollResponse>()
@@ -68,7 +68,7 @@ public class PayrollsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeletePayroll")
+            .WithName("DeletePayrollEndpoint")
             .WithSummary("Deletes a payroll period")
             .WithDescription("Deletes a payroll period. Only Draft payrolls can be deleted. Processed or posted payrolls cannot be deleted.")
             .Produces<DeletePayrollResponse>()
@@ -80,7 +80,7 @@ public class PayrollsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchPayrolls")
+            .WithName("SearchPayrollsEndpoint")
             .WithSummary("Searches payroll periods")
             .WithDescription("Searches and filters payroll periods by date range, status, and pay frequency with pagination support.")
             .Produces<PagedList<PayrollResponse>>()
@@ -93,7 +93,7 @@ public class PayrollsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Accepted($"/hr/payrolls/{response.Id}", response);
             })
-            .WithName("ProcessPayroll")
+            .WithName("ProcessPayrollEndpoint")
             .WithSummary("Processes a payroll period")
             .WithDescription("Initiates processing of a Draft payroll period. Calculates pay totals for all lines. Transitions to Processing status.")
             .Produces<ProcessPayrollResponse>(StatusCodes.Status202Accepted)
@@ -106,7 +106,7 @@ public class PayrollsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("CompletePayrollProcessing")
+            .WithName("CompletePayrollProcessingEndpoint")
             .WithSummary("Completes payroll processing")
             .WithDescription("Completes processing of a payroll period and transitions to Processed status. Ready for GL posting.")
             .Produces<CompletePayrollProcessingResponse>()
@@ -119,7 +119,7 @@ public class PayrollsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("PostPayroll")
+            .WithName("PostPayrollEndpoint")
             .WithSummary("Posts a payroll to the general ledger")
             .WithDescription("Posts a processed payroll to the GL with the specified journal entry ID. Locks payroll from further editing. Transitions to Posted status.")
             .Produces<PostPayrollResponse>()
@@ -132,7 +132,7 @@ public class PayrollsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("MarkPayrollAsPaid")
+            .WithName("MarkPayrollAsPaidEndpoint")
             .WithSummary("Marks a payroll as paid")
             .WithDescription("Marks a posted payroll as paid. Records payment date and transitions to Paid status.")
             .Produces<MarkPayrollAsPaidResponse>()

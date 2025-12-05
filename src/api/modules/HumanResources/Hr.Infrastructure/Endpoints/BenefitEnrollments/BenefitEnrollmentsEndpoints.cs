@@ -24,7 +24,7 @@ public class BenefitEnrollmentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetBenefitEnrollment", new { id = response.Id }, response);
             })
-            .WithName("CreateBenefitEnrollment")
+            .WithName("CreateBenefitEnrollmentEndpoint")
             .WithSummary("Creates a new benefit enrollment")
             .WithDescription("Creates a new benefit enrollment for an employee. Requires approval from HR.")
             .Produces<CreateBenefitEnrollmentResponse>(StatusCodes.Status201Created)
@@ -37,7 +37,7 @@ public class BenefitEnrollmentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetBenefitEnrollment")
+            .WithName("GetBenefitEnrollmentEndpoint")
             .WithSummary("Gets a benefit enrollment by ID")
             .WithDescription("Retrieves detailed information about a specific benefit enrollment including status and approval details.")
             .Produces<BenefitEnrollmentResponse>()
@@ -50,7 +50,7 @@ public class BenefitEnrollmentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(updateRequest).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateBenefitEnrollment")
+            .WithName("UpdateBenefitEnrollmentEndpoint")
             .WithSummary("Updates a benefit enrollment")
             .WithDescription("Updates a benefit enrollment. Limited updates allowed depending on approval status.")
             .Produces<UpdateBenefitEnrollmentResponse>()
@@ -62,7 +62,7 @@ public class BenefitEnrollmentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchBenefitEnrollments")
+            .WithName("SearchBenefitEnrollmentsEndpoint")
             .WithSummary("Searches benefit enrollments")
             .WithDescription("Searches and filters benefit enrollments by employee, benefit, status with pagination support.")
             .Produces<PagedList<BenefitEnrollmentResponse>>()
@@ -75,7 +75,7 @@ public class BenefitEnrollmentsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("TerminateBenefitEnrollment")
+            .WithName("TerminateBenefitEnrollmentEndpoint")
             .WithSummary("Terminates a benefit enrollment")
             .WithDescription("Terminates an active benefit enrollment, effective immediately or on a specified date.")
             .Produces<TerminateBenefitEnrollmentResponse>()

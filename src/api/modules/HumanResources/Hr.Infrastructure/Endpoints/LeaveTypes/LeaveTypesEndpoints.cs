@@ -18,7 +18,7 @@ public class LeaveTypesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Created($"/hr/leave-types/{response.Id}", response);
             })
-            .WithName("CreateLeaveType")
+            .WithName("CreateLeaveTypeEndpoint")
             .WithSummary("Creates a new leave type")
             .WithDescription("Creates a new leave type with Philippines Labor Code compliance including classification, accrual frequency, and approval requirements")
             .Produces<CreateLeaveTypeResponse>(StatusCodes.Status201Created)
@@ -30,7 +30,7 @@ public class LeaveTypesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new GetLeaveTypeRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetLeaveType")
+            .WithName("GetLeaveTypeEndpoint")
             .WithSummary("Gets leave type by ID")
             .WithDescription("Retrieves detailed information about a specific leave type including accrual rules and approval requirements")
             .Produces<LeaveTypeResponse>()
@@ -45,7 +45,7 @@ public class LeaveTypesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateLeaveType")
+            .WithName("UpdateLeaveTypeEndpoint")
             .WithSummary("Updates a leave type")
             .WithDescription("Updates leave type information including accrual allowance, frequency, and approval requirements")
             .Produces<UpdateLeaveTypeResponse>()
@@ -57,7 +57,7 @@ public class LeaveTypesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(new DeleteLeaveTypeCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("DeleteLeaveType")
+            .WithName("DeleteLeaveTypeEndpoint")
             .WithSummary("Deletes a leave type")
             .WithDescription("Removes a leave type from the system")
             .Produces<DeleteLeaveTypeResponse>()
@@ -69,7 +69,7 @@ public class LeaveTypesEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchLeaveTypes")
+            .WithName("SearchLeaveTypesEndpoint")
             .WithSummary("Searches leave types")
             .WithDescription("Searches and filters leave types with pagination support")
             .Produces<PagedList<LeaveTypeResponse>>()

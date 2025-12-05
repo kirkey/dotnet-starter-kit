@@ -26,7 +26,7 @@ public class PerformanceReviewsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetPerformanceReview", new { id = response.Id }, response);
             })
-            .WithName("CreatePerformanceReview")
+            .WithName("CreatePerformanceReviewEndpoint")
             .WithSummary("Creates a new performance review")
             .WithDescription("Creates a new performance review for an employee. Requires manager/reviewer assignment.")
             .Produces<CreatePerformanceReviewResponse>(StatusCodes.Status201Created)
@@ -39,7 +39,7 @@ public class PerformanceReviewsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetPerformanceReview")
+            .WithName("GetPerformanceReviewEndpoint")
             .WithSummary("Gets a performance review by ID")
             .WithDescription("Retrieves detailed information about a specific performance review including scores, feedback, and status.")
             .Produces<PerformanceReviewResponse>()
@@ -52,7 +52,7 @@ public class PerformanceReviewsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(updateRequest).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdatePerformanceReview")
+            .WithName("UpdatePerformanceReviewEndpoint")
             .WithSummary("Updates a performance review")
             .WithDescription("Updates a performance review. Allowed only before submission. Cannot update submitted reviews.")
             .Produces<UpdatePerformanceReviewResponse>()
@@ -64,7 +64,7 @@ public class PerformanceReviewsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchPerformanceReviews")
+            .WithName("SearchPerformanceReviewsEndpoint")
             .WithSummary("Searches performance reviews")
             .WithDescription("Searches and filters performance reviews by employee, period, status, reviewer with pagination support.")
             .Produces<PagedList<PerformanceReviewResponse>>()
@@ -77,7 +77,7 @@ public class PerformanceReviewsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SubmitPerformanceReview")
+            .WithName("SubmitPerformanceReviewEndpoint")
             .WithSummary("Submits a performance review")
             .WithDescription("Submits a draft performance review to the employee. Once submitted, review cannot be edited by reviewer.")
             .Produces<SubmitPerformanceReviewResponse>()
@@ -90,7 +90,7 @@ public class PerformanceReviewsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("AcknowledgePerformanceReview")
+            .WithName("AcknowledgePerformanceReviewEndpoint")
             .WithSummary("Acknowledges a performance review")
             .WithDescription("Employee acknowledges receipt of the performance review. Can add comments or disputes.")
             .Produces<AcknowledgePerformanceReviewResponse>()
@@ -103,7 +103,7 @@ public class PerformanceReviewsEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("CompletePerformanceReview")
+            .WithName("CompletePerformanceReviewEndpoint")
             .WithSummary("Completes a performance review")
             .WithDescription("Marks the performance review as complete. Final step after all approvals and acknowledgments.")
             .Produces<CompletePerformanceReviewResponse>()

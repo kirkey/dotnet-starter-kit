@@ -24,7 +24,7 @@ public class DeductionEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.CreatedAtRoute("GetDeduction", new { id = response.Id }, response);
             })
-            .WithName("CreateDeduction")
+            .WithName("CreateDeductionEndpoint")
             .WithSummary("Create Deduction Type")
             .WithDescription("Creates a new deduction type (loan, cash advance, uniform, etc) with recovery rules per Philippines Labor Code Art 113.")
             .Produces<CreateDeductionResponse>(StatusCodes.Status201Created)
@@ -38,7 +38,7 @@ public class DeductionEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("GetDeduction")
+            .WithName("GetDeductionEndpoint")
             .WithSummary("Get Deduction Details")
             .WithDescription("Retrieves detailed information for the specified deduction type including recovery rules and compliance settings.")
             .Produces<DeductionResponse>()
@@ -51,7 +51,7 @@ public class DeductionEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(request).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("SearchDeductions")
+            .WithName("SearchDeductionsEndpoint")
             .WithSummary("Search Deductions")
             .WithDescription("Search deduction types by type, recovery method, and active status with pagination.")
             .Produces<PagedList<DeductionDto>>()
@@ -67,7 +67,7 @@ public class DeductionEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(body).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName("UpdateDeduction")
+            .WithName("UpdateDeductionEndpoint")
             .WithSummary("Update Deduction Type")
             .WithDescription("Updates deduction type details, recovery rules, and compliance settings.")
             .Produces<UpdateDeductionResponse>()
@@ -82,7 +82,7 @@ public class DeductionEndpoints() : CarterModule("humanresources")
                 var response = await mediator.Send(command).ConfigureAwait(false);
                 return response.IsDeleted ? Results.Ok(response) : Results.NotFound();
             })
-            .WithName("DeleteDeduction")
+            .WithName("DeleteDeductionEndpoint")
             .WithSummary("Delete Deduction Type")
             .WithDescription("Deletes a deduction type from the master data.")
             .Produces<DeleteDeductionResponse>()
