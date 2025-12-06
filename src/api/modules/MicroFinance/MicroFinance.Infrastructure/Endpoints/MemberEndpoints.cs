@@ -1,5 +1,7 @@
 using Carter;
+using FSH.Starter.WebApi.MicroFinance.Application.Members.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Create.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Members.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Delete.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Search.v1;
@@ -13,7 +15,9 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 public class MemberEndpoints() : CarterModule("microfinance")
 {
 
+    private const string ActivateMember = "ActivateMember";
     private const string CreateMember = "CreateMember";
+    private const string DeactivateMember = "DeactivateMember";
     private const string DeleteMember = "DeleteMember";
     private const string GetMember = "GetMember";
     private const string SearchMembers = "SearchMembers";
@@ -83,6 +87,28 @@ public class MemberEndpoints() : CarterModule("microfinance")
             .WithSummary("Searches members with filters and pagination")
             .Produces<PagedList<MemberResponse>>()
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        membersGroup.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
+            {
+                var response = await sender.Send(new ActivateMemberCommand(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(ActivateMember)
+            .WithSummary("Activates an inactive member")
+            .Produces<ActivateMemberResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        membersGroup.MapPost("/{id:guid}/deactivate", async (Guid id, ISender sender) =>
+            {
+                var response = await sender.Send(new DeactivateMemberCommand(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(DeactivateMember)
+            .WithSummary("Deactivates an active member")
+            .Produces<DeactivateMemberResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
     }
 }

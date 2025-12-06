@@ -4,7 +4,11 @@ using FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.CreditFloat.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.DebitFloat.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.RecordAudit.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.Suspend.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.Update.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.UpgradeTier.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -19,7 +23,11 @@ public class AgentBankingEndpoints() : CarterModule("microfinance")
     private const string CreditAgentFloat = "CreditAgentFloat";
     private const string DebitAgentFloat = "DebitAgentFloat";
     private const string GetAgentBanking = "GetAgentBanking";
+    private const string RecordAuditAgentBanking = "RecordAuditAgentBanking";
+    private const string SearchAgentBankings = "SearchAgentBankings";
     private const string SuspendAgentBanking = "SuspendAgentBanking";
+    private const string UpdateAgentBanking = "UpdateAgentBanking";
+    private const string UpgradeTierAgentBanking = "UpgradeTierAgentBanking";
 
     /// <summary>
     /// Maps all Agent Banking endpoints to the route builder.
@@ -91,10 +99,57 @@ public class AgentBankingEndpoints() : CarterModule("microfinance")
             .WithName(DebitAgentFloat)
             .WithSummary("Debits float from an agent's account")
             .Produces<DebitFloatResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Withdraw, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPut("/{id:guid}", async (Guid id, UpdateAgentBankingCommand command, ISender sender) =>
+            {
+                if (id != command.Id) return Results.BadRequest("ID mismatch");
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(UpdateAgentBanking)
+            .WithSummary("Updates an agent banking location")
+            .Produces<UpdateAgentBankingResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/upgrade-tier", async (Guid id, UpgradeTierAgentRequest request, ISender sender) =>
+            {
+                var response = await sender.Send(new UpgradeTierAgentBankingCommand(id, request.NewTier)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(UpgradeTierAgentBanking)
+            .WithSummary("Upgrades an agent's tier")
+            .Produces<UpgradeTierAgentBankingResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/record-audit", async (Guid id, RecordAuditAgentRequest request, ISender sender) =>
+            {
+                var response = await sender.Send(new RecordAuditAgentBankingCommand(id, request.AuditDate)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(RecordAuditAgentBanking)
+            .WithSummary("Records an audit for an agent")
+            .Produces<RecordAuditAgentBankingResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchAgentBankingsCommand command, ISender sender) =>
+            {
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(SearchAgentBankings)
+            .WithSummary("Searches agent banking locations with filters and pagination")
+            .Produces<PagedList<AgentBankingResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
     }
 }
 
 public sealed record SuspendAgentRequest(string Reason);
 public sealed record FloatAmountRequest(decimal Amount);
+public sealed record UpgradeTierAgentRequest(string NewTier);
+public sealed record RecordAuditAgentRequest(DateOnly AuditDate);

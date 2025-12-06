@@ -1,8 +1,13 @@
 using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Assign.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Clear.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Close.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Confirm.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Escalate.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.FileSar.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -10,9 +15,14 @@ public class AmlAlertEndpoints() : CarterModule("microfinance")
 {
 
     private const string AssignAmlAlert = "AssignAmlAlert";
+    private const string ClearAmlAlert = "ClearAmlAlert";
+    private const string CloseAmlAlert = "CloseAmlAlert";
+    private const string ConfirmAmlAlert = "ConfirmAmlAlert";
     private const string CreateAmlAlert = "CreateAmlAlert";
     private const string EscalateAmlAlert = "EscalateAmlAlert";
+    private const string FileSarAmlAlert = "FileSarAmlAlert";
     private const string GetAmlAlert = "GetAmlAlert";
+    private const string SearchAmlAlerts = "SearchAmlAlerts";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -20,7 +30,7 @@ public class AmlAlertEndpoints() : CarterModule("microfinance")
 
         group.MapPost("/", async (CreateAmlAlertCommand command, ISender sender) =>
         {
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Created($"/microfinance/aml-alerts/{result.Id}", result);
         })
         .WithName(CreateAmlAlert)
@@ -31,7 +41,7 @@ public class AmlAlertEndpoints() : CarterModule("microfinance")
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
-            var result = await sender.Send(new GetAmlAlertRequest(id));
+            var result = await sender.Send(new GetAmlAlertRequest(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(GetAmlAlert)
@@ -42,7 +52,7 @@ public class AmlAlertEndpoints() : CarterModule("microfinance")
 
         group.MapPost("/{id:guid}/assign", async (Guid id, AssignAmlAlertRequest request, ISender sender) =>
         {
-            var result = await sender.Send(new AssignAmlAlertCommand(id, request.AssignedToId));
+            var result = await sender.Send(new AssignAmlAlertCommand(id, request.AssignedToId)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(AssignAmlAlert)
@@ -53,13 +63,68 @@ public class AmlAlertEndpoints() : CarterModule("microfinance")
 
         group.MapPost("/{id:guid}/escalate", async (Guid id, EscalateAmlAlertRequest request, ISender sender) =>
         {
-            var result = await sender.Send(new EscalateAmlAlertCommand(id, request.Reason));
+            var result = await sender.Send(new EscalateAmlAlertCommand(id, request.Reason)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(EscalateAmlAlert)
         .WithSummary("Escalate AML alert")
         .Produces<EscalateAmlAlertResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/clear", async (Guid id, ClearAmlAlertRequest request, ISender sender) =>
+        {
+            var result = await sender.Send(new ClearAmlAlertCommand(id, request.ResolvedById, request.Notes)).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(ClearAmlAlert)
+        .WithSummary("Clear AML alert as non-suspicious")
+        .Produces<ClearAmlAlertResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/confirm", async (Guid id, ConfirmAmlAlertRequest request, ISender sender) =>
+        {
+            var result = await sender.Send(new ConfirmAmlAlertCommand(id, request.ResolvedById, request.Notes)).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(ConfirmAmlAlert)
+        .WithSummary("Confirm AML alert as suspicious activity")
+        .Produces<ConfirmAmlAlertResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/file-sar", async (Guid id, FileSarAmlAlertRequest request, ISender sender) =>
+        {
+            var result = await sender.Send(new FileSarAmlAlertCommand(id, request.SarReference, request.FiledDate)).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(FileSarAmlAlert)
+        .WithSummary("File Suspicious Activity Report (SAR) for AML alert")
+        .Produces<FileSarAmlAlertResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/close", async (Guid id, ISender sender) =>
+        {
+            var result = await sender.Send(new CloseAmlAlertCommand(id)).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(CloseAmlAlert)
+        .WithSummary("Close a resolved AML alert")
+        .Produces<CloseAmlAlertResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchAmlAlertsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchAmlAlerts)
+        .WithSummary("Search AML alerts with filters and pagination")
+        .Produces<PagedList<AmlAlertResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }
@@ -67,3 +132,6 @@ public class AmlAlertEndpoints() : CarterModule("microfinance")
 
 public record AssignAmlAlertRequest(Guid AssignedToId);
 public record EscalateAmlAlertRequest(string Reason);
+public record ClearAmlAlertRequest(Guid ResolvedById, string Notes);
+public record ConfirmAmlAlertRequest(Guid ResolvedById, string Notes);
+public record FileSarAmlAlertRequest(string SarReference, DateOnly FiledDate);
