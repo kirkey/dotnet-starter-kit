@@ -179,10 +179,65 @@ export const ACCOUNTING_ROUTES: Routes = [
     loadComponent: () => import('./posting-batches/posting-batches.component').then(m => m.PostingBatchesComponent),
     title: 'Posting Batches'
   },
-  // Reference Data
+  // Reference Data & Management
   {
     path: 'tax-codes',
     loadComponent: () => import('./tax-codes/tax-codes.component').then(m => m.TaxCodesComponent),
     title: 'Tax Codes'
+  },
+  {
+    path: 'cost-centers',
+    loadComponent: () => import('./cost-centers/cost-centers.component').then(m => m.CostCentersComponent),
+    title: 'Cost Centers'
+  },
+  {
+    path: 'billing',
+    loadComponent: () => import('./billing/billing.component').then(m => m.BillingComponent),
+    title: 'Billing'
+  },
+  {
+    path: 'consumptions',
+    loadComponent: () => import('./consumptions/consumptions.component').then(m => m.ConsumptionsComponent),
+    title: 'Consumptions'
+  },
+  {
+    path: 'fuel-consumption',
+    loadComponent: () => import('./fuel-consumption/fuel-consumption.component').then(m => m.FuelConsumptionComponent),
+    title: 'Fuel Consumption'
+  },
+  {
+    path: 'inter-company-transactions',
+    loadComponent: () => import('./inter-company-transactions/inter-company-transactions.component').then(m => m.InterCompanyTransactionsComponent),
+    title: 'Inter-Company Transactions'
+  },
+  {
+    path: 'member',
+    loadComponent: () => import('./member/member.component').then(m => m.MemberComponent),
+    title: 'Members'
+  },
+  {
+    path: 'meter',
+    loadComponent: () => import('./meter/meter.component').then(m => m.MeterComponent),
+    title: 'Meters'
+  },
+  {
+    path: 'patronage',
+    loadComponent: () => import('./patronage/patronage.component').then(m => m.PatronageComponent),
+    title: 'Patronage'
+  },
+  {
+    path: 'payment-allocations',
+    loadComponent: () => import('./payment-allocations/payment-allocations.component').then(m => m.PaymentAllocationsComponent),
+    title: 'Payment Allocations'
+  },
+  {
+    path: 'regulatory-reports',
+    loadComponent: () => import('./regulatory-reports/regulatory-reports.component').then(m => m.RegulatoryReportsComponent),
+    title: 'Regulatory Reports'
+  },
+  {
+    path: 'security-deposits',
+    loadComponent: () => import('./security-deposits/security-deposits.component').then(m => m.SecurityDepositsComponent),
+    title: 'Security Deposits'
   }
 ];

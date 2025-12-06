@@ -77,5 +77,91 @@
             View Details
         </MudMenuItem>
     </ExtraActions>
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="Id" />
+            </MudItem>
+        }
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.TemplateCode"
+                          For="@(() => context.TemplateCode)"
+                          Label="Template Code"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudSelect @bind-Value="context.Frequency"
+                       For="@(() => context.Frequency)"
+                       Label="Frequency"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Monthly")">Monthly</MudSelectItem>
+                <MudSelectItem Value="@("Quarterly")">Quarterly</MudSelectItem>
+                <MudSelectItem Value="@("Annually")">Annually</MudSelectItem>
+                <MudSelectItem Value="@("Custom")">Custom</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        @if (context.Frequency == "Custom")
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudNumericField @bind-Value="context.CustomIntervalDays"
+                                 Label="Interval Days"
+                                 Variant="Variant.Filled"
+                                 Min="1" />
+            </MudItem>
+        }
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudNumericField @bind-Value="context.Amount"
+                             For="@(() => context.Amount)"
+                             Label="Amount"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Format="N2" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker @bind-Date="context.StartDate"
+                           For="@(() => context.StartDate)"
+                           Label="Start Date"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudDatePicker @bind-Date="context.EndDate"
+                           For="@(() => context.EndDate)"
+                           Label="End Date"
+                           Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudTextField @bind-Value="context.Memo"
+                          For="@(() => context.Memo)"
+                          Label="Memo"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3" />
+        </MudItem>
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12">
+                <MudSwitch @bind-Value="context.IsActive"
+                          For="@(() => context.IsActive)"
+                          Label="Active"
+                          Color="Color.Success" />
+            </MudItem>
+        }
+    </EditFormContent>
 </EntityTable>
 
