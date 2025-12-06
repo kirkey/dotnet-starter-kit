@@ -13,9 +13,15 @@ public partial class SupplierDashboard
     private bool _loading = true;
     private string _supplierName = "Loading...";
     private SupplierDashboardData _dashboard = new();
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+        
         _breadcrumbs = new List<BreadcrumbItem>
         {
             new("Home", "/", false, Icons.Material.Filled.Home),

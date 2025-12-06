@@ -4,7 +4,7 @@
          Description="View comprehensive supplier performance analytics, delivery metrics, and quality insights"
          Breadcrumbs="@_breadcrumbs">
 
-    <MudPaper Class="pa-4 mb-4" Elevation="1">
+    <MudPaper Class="pa-4 mb-4" Elevation="@_preference.Elevation">
         <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
             <MudStack Spacing="1">
                 <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
@@ -40,7 +40,7 @@
     <!-- Key Performance Indicators -->
     <MudGrid Class="mb-4">
         <MudItem xs="12" sm="6" md="3">
-            <MudCard>
+            <MudCard Elevation="@_preference.Elevation">
                 <MudCardContent>
                     <MudStack AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Color="MudBlazor.Color.Primary" Size="MudBlazor.Size.Large" />
@@ -54,7 +54,7 @@
             </MudCard>
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudCard>
+            <MudCard Elevation="@_preference.Elevation">
                 <MudCardContent>
                     <MudStack AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.LocalShipping" Color="MudBlazor.Color.Success" Size="MudBlazor.Size.Large" />
@@ -68,7 +68,7 @@
             </MudCard>
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudCard>
+            <MudCard Elevation="@_preference.Elevation">
                 <MudCardContent>
                     <MudStack AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.VerifiedUser" Color="MudBlazor.Color.Info" Size="MudBlazor.Size.Large" />
@@ -82,7 +82,7 @@
             </MudCard>
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudCard>
+            <MudCard Elevation="@_preference.Elevation">
                 <MudCardContent>
                     <MudStack AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.Star" Color="MudBlazor.Color.Warning" Size="MudBlazor.Size.Large" />
@@ -100,7 +100,7 @@
     <!-- Performance Metrics Section -->
     <MudGrid Class="mb-4">
         <MudItem xs="12" md="6">
-            <MudCard Style="height:100%">
+            <MudCard Elevation="@_preference.Elevation" Style="height:100%">
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudText Typo="Typo.h6">Order Metrics</MudText>
@@ -136,7 +136,7 @@
             </MudCard>
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudCard Style="height:100%">
+            <MudCard Elevation="@_preference.Elevation" Style="height:100%">
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudText Typo="Typo.h6">Delivery Performance</MudText>
@@ -174,7 +174,7 @@
     <!-- Quality and Financial Metrics -->
     <MudGrid Class="mb-4">
         <MudItem xs="12" md="6">
-            <MudCard Style="height:100%">
+            <MudCard Elevation="@_preference.Elevation" Style="height:100%">
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudText Typo="Typo.h6">Quality Metrics</MudText>
@@ -208,7 +208,7 @@
             </MudCard>
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudCard Style="height:100%">
+            <MudCard Elevation="@_preference.Elevation" Style="height:100%">
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudText Typo="Typo.h6">Financial Summary</MudText>
@@ -246,7 +246,7 @@
     <!-- Item Portfolio and Recent Orders -->
     <MudGrid>
         <MudItem xs="12" md="6">
-            <MudCard>
+            <MudCard Elevation="@_preference.Elevation">
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudText Typo="Typo.h6">Top Items by Volume</MudText>
@@ -278,7 +278,7 @@
             </MudCard>
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudCard>
+            <MudCard Elevation="@_preference.Elevation">
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudText Typo="Typo.h6">Recent Orders</MudText>
