@@ -48,7 +48,7 @@ public class PromiseToPayEndpoints() : CarterModule("microfinance")
         .WithName(RecordPromisePayment)
         .WithSummary("Record payment against a promise")
         .Produces<RecordPromisePaymentResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/mark-broken", async (Guid id, MarkBrokenRequest request, ISender sender) =>

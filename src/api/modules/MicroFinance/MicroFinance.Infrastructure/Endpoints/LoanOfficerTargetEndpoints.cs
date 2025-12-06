@@ -47,7 +47,7 @@ public class LoanOfficerTargetEndpoints() : CarterModule("microfinance")
         .WithName(RecordLoanOfficerProgress)
         .WithSummary("Record progress towards loan officer target")
         .Produces<RecordLoanOfficerProgressResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

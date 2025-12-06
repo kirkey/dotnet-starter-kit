@@ -48,7 +48,7 @@ public class CollateralInsuranceEndpoints() : CarterModule("microfinance")
         .WithName(RecordPremiumPayment)
         .WithSummary("Record insurance premium payment")
         .Produces<RecordPremiumPaymentResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/renew", async (Guid id, RenewRequest request, ISender sender) =>
@@ -59,7 +59,7 @@ public class CollateralInsuranceEndpoints() : CarterModule("microfinance")
         .WithName(RenewInsurance)
         .WithSummary("Renew collateral insurance")
         .Produces<RenewInsuranceResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Renew, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

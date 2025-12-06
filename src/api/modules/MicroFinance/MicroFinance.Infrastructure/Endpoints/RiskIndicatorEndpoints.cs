@@ -51,7 +51,7 @@ public class RiskIndicatorEndpoints() : CarterModule("microfinance")
         .WithName(RecordRiskIndicatorMeasurement)
         .WithSummary("Record a new measurement for risk indicator")
         .Produces<RecordMeasurementResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>

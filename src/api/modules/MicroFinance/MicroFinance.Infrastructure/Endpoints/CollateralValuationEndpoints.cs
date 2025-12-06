@@ -50,7 +50,7 @@ public class CollateralValuationEndpoints() : CarterModule("microfinance")
         .WithName(SubmitValuation)
         .WithSummary("Submit valuation for approval")
         .Produces<SubmitValuationResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Submit, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/approve", async (Guid id, ApproveRequest request, ISender sender) =>

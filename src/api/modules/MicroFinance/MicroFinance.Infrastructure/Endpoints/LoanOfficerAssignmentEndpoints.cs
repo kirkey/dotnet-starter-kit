@@ -62,7 +62,7 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule("microfinance")
         .WithName(TransferAssignment)
         .WithSummary("Transfer assignment to another loan officer")
         .Produces<TransferAssignmentResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Transfer, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/end", async (Guid id, EndAssignmentRequest request, ISender sender) =>

@@ -139,7 +139,7 @@ public class LoanEndpoints() : CarterModule("microfinance")
             .WithName(WriteOffLoan)
             .WithSummary("Writes off a non-performing loan")
             .Produces<WriteOffLoanResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.WriteOff, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
         loansGroup.MapPost("/search", async ([FromBody] SearchLoansCommand command, ISender sender) =>

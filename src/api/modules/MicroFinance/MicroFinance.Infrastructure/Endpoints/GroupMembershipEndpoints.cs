@@ -120,7 +120,7 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
         .WithName(WithdrawGroupMembership)
         .WithSummary("Withdraws a member from the group")
         .Produces<WithdrawMembershipResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Withdraw, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
         membershipsGroup.MapPost("/{id:guid}/suspend", async (Guid id, ISender mediator) =>

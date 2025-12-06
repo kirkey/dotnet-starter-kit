@@ -55,7 +55,7 @@ public class CashVaultEndpoints() : CarterModule("microfinance")
             .WithName(DepositCash)
             .WithSummary("Deposits cash into the vault")
             .Produces<DepositCashResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Deposit, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/withdraw", async (Guid id, WithdrawCashCommand command, ISender sender) =>
@@ -67,7 +67,7 @@ public class CashVaultEndpoints() : CarterModule("microfinance")
             .WithName(WithdrawCash)
             .WithSummary("Withdraws cash from the vault")
             .Produces<WithdrawCashResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Withdraw, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
         // Day Operations

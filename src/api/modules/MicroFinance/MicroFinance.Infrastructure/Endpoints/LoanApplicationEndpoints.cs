@@ -58,7 +58,7 @@ public class LoanApplicationEndpoints() : CarterModule("microfinance")
             .WithName(SubmitLoanApplication)
             .WithSummary("Submits a loan application for review")
             .Produces<SubmitLoanApplicationResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Submit, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/assign", async (Guid id, AssignLoanApplicationCommand command, ISender sender) =>
@@ -117,7 +117,7 @@ public class LoanApplicationEndpoints() : CarterModule("microfinance")
             .WithName(WithdrawLoanApplication)
             .WithSummary("Withdraws a loan application by the applicant")
             .Produces<WithdrawLoanApplicationResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Withdraw, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
     }

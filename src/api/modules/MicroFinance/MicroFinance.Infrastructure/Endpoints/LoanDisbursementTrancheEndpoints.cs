@@ -28,7 +28,7 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
         .WithName(CreateLoanDisbursementTranche)
         .WithSummary("Create a new loan disbursement tranche")
         .Produces<CreateLoanDisbursementTrancheResponse>(StatusCodes.Status201Created)
-        .RequirePermission(FshPermission.NameFor(FshActions.Disburse, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
@@ -39,7 +39,7 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
         .WithName(GetLoanDisbursementTranche)
         .WithSummary("Get loan disbursement tranche by ID")
         .Produces<LoanDisbursementTrancheResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.Disburse, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/verify-milestone", async (Guid id, ISender sender) =>

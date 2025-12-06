@@ -47,7 +47,7 @@ public class BranchTargetEndpoints() : CarterModule("microfinance")
         .WithName(RecordBranchProgress)
         .WithSummary("Record progress towards branch target")
         .Produces<RecordBranchProgressResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

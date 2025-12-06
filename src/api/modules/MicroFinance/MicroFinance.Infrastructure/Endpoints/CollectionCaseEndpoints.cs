@@ -70,7 +70,7 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
             .WithName(RecordContact)
             .WithSummary("Records a contact attempt with the borrower")
             .Produces<RecordContactResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/record-recovery", async (Guid id, RecordRecoveryCommand command, ISender sender) =>
@@ -82,7 +82,7 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
             .WithName(RecordRecovery)
             .WithSummary("Records a payment recovery")
             .Produces<RecordRecoveryResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
         // Escalation & Resolution

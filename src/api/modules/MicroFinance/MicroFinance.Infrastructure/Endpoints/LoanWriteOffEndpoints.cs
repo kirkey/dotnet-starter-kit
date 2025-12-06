@@ -74,7 +74,7 @@ public class LoanWriteOffEndpoints() : CarterModule("microfinance")
         .WithName(RecordWriteOffRecovery)
         .WithSummary("Record recovery on write-off")
         .Produces<RecordRecoveryResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

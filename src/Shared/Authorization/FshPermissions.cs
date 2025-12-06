@@ -210,6 +210,15 @@ public static class FshPermissions
         new("Post MicroFinance", FshActions.Post, FshResources.MicroFinance),
         new("Disburse MicroFinance", FshActions.Disburse, FshResources.MicroFinance),
         new("Close MicroFinance", FshActions.Close, FshResources.MicroFinance),
+        new("Deposit MicroFinance", FshActions.Deposit, FshResources.MicroFinance),
+        new("Withdraw MicroFinance", FshActions.Withdraw, FshResources.MicroFinance),
+        new("Transfer MicroFinance", FshActions.Transfer, FshResources.MicroFinance),
+        new("Freeze MicroFinance", FshActions.Freeze, FshResources.MicroFinance),
+        new("Unfreeze MicroFinance", FshActions.Unfreeze, FshResources.MicroFinance),
+        new("WriteOff MicroFinance", FshActions.WriteOff, FshResources.MicroFinance),
+        new("Mature MicroFinance", FshActions.Mature, FshResources.MicroFinance),
+        new("Renew MicroFinance", FshActions.Renew, FshResources.MicroFinance),
+        new("Submit MicroFinance", FshActions.Submit, FshResources.MicroFinance),
     ];
 
     public static IReadOnlyList<FshPermission> All { get; } = new ReadOnlyCollection<FshPermission>(AllPermissions);

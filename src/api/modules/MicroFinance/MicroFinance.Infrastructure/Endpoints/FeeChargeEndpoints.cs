@@ -106,7 +106,7 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
         .WithName(RecordFeePayment)
         .WithSummary("Records a payment for a fee charge")
         .Produces<RecordFeePaymentResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
         chargesGroup.MapPost("/{id:guid}/waive", async (Guid id, WaiveFeeChargeCommand command, ISender mediator) =>

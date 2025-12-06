@@ -48,7 +48,7 @@ public class MobileWalletEndpoints() : CarterModule("microfinance")
         .WithName(CreditMobileWallet)
         .WithSummary("Credit mobile wallet")
         .Produces<CreditMobileWalletResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Deposit, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/debit", async (Guid id, DebitRequest request, ISender sender) =>
@@ -59,7 +59,7 @@ public class MobileWalletEndpoints() : CarterModule("microfinance")
         .WithName(DebitMobileWallet)
         .WithSummary("Debit mobile wallet")
         .Produces<DebitMobileWalletResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Withdraw, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

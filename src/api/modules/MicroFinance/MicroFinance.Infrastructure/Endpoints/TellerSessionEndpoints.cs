@@ -31,7 +31,7 @@ public class TellerSessionEndpoints() : CarterModule("microfinance")
             .WithName(OpenTellerSession)
             .WithSummary("Opens a new teller session")
             .Produces<OpenTellerSessionResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
@@ -55,7 +55,7 @@ public class TellerSessionEndpoints() : CarterModule("microfinance")
             .WithName(RecordCashIn)
             .WithSummary("Records a cash-in transaction")
             .Produces<RecordCashInResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/cash-out", async (Guid id, RecordCashOutCommand command, ISender sender) =>
@@ -67,7 +67,7 @@ public class TellerSessionEndpoints() : CarterModule("microfinance")
             .WithName(RecordCashOut)
             .WithSummary("Records a cash-out transaction")
             .Produces<RecordCashOutResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
         // Session Close & Verification
@@ -92,7 +92,7 @@ public class TellerSessionEndpoints() : CarterModule("microfinance")
             .WithName(VerifyTellerSession)
             .WithSummary("Supervisor verifies the closed session")
             .Produces<VerifyTellerSessionResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
     }

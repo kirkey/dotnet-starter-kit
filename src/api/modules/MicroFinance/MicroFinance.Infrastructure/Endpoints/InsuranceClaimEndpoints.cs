@@ -31,7 +31,7 @@ public class InsuranceClaimEndpoints() : CarterModule("microfinance")
             .WithName(SubmitInsuranceClaim)
             .WithSummary("Submits a new insurance claim")
             .Produces<SubmitInsuranceClaimResponse>(StatusCodes.Status201Created)
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Submit, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>

@@ -77,7 +77,7 @@ public class InsurancePolicyEndpoints() : CarterModule("microfinance")
             .WithName(RecordPremiumPayment)
             .WithSummary("Records a premium payment on the policy")
             .Produces<RecordPremiumPaymentResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
     }

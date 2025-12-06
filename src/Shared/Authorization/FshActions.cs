@@ -32,4 +32,12 @@ public static class FshActions
     public const string Acknowledge = nameof(Acknowledge);
     public const string Disburse = nameof(Disburse);
     public const string Close = nameof(Close);
+    public const string Deposit = nameof(Deposit);
+    public const string Withdraw = nameof(Withdraw);
+    public const string Transfer = nameof(Transfer);
+    public const string Freeze = nameof(Freeze);
+    public const string Unfreeze = nameof(Unfreeze);
+    public const string WriteOff = nameof(WriteOff);
+    public const string Mature = nameof(Mature);
+    public const string Renew = nameof(Renew);
 }

@@ -59,7 +59,7 @@ public class DebtSettlementEndpoints() : CarterModule("microfinance")
         .WithName(RecordSettlementPayment)
         .WithSummary("Record payment for a debt settlement")
         .Produces<RecordSettlementPaymentResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }
