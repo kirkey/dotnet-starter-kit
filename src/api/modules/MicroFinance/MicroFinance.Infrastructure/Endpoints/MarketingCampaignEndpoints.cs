@@ -27,7 +27,9 @@ public class MarketingCampaignEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateMarketingCampaign)
         .WithSummary("Create a new marketing campaign")
-        .Produces<CreateMarketingCampaignResponse>(StatusCodes.Status201Created);
+        .Produces<CreateMarketingCampaignResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -36,7 +38,9 @@ public class MarketingCampaignEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetMarketingCampaign)
         .WithSummary("Get marketing campaign by ID")
-        .Produces<MarketingCampaignResponse>();
+        .Produces<MarketingCampaignResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/approve", async (Guid id, ApproveCampaignRequest request, ISender sender) =>
         {
@@ -46,7 +50,9 @@ public class MarketingCampaignEndpoints() : CarterModule("microfinance")
         })
         .WithName(ApproveMarketingCampaign)
         .WithSummary("Approve marketing campaign")
-        .Produces<ApproveMarketingCampaignResponse>();
+        .Produces<ApproveMarketingCampaignResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/launch", async (Guid id, ISender sender) =>
         {
@@ -55,7 +61,9 @@ public class MarketingCampaignEndpoints() : CarterModule("microfinance")
         })
         .WithName(LaunchMarketingCampaign)
         .WithSummary("Launch marketing campaign")
-        .Produces<LaunchMarketingCampaignResponse>();
+        .Produces<LaunchMarketingCampaignResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/complete", async (Guid id, ISender sender) =>
         {
@@ -64,7 +72,9 @@ public class MarketingCampaignEndpoints() : CarterModule("microfinance")
         })
         .WithName(CompleteMarketingCampaign)
         .WithSummary("Complete marketing campaign")
-        .Produces<CompleteMarketingCampaignResponse>();
+        .Produces<CompleteMarketingCampaignResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

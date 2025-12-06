@@ -27,7 +27,9 @@ public class UssdSessionEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateUssdSession)
             .WithSummary("Creates a new USSD session")
-            .Produces<CreateUssdSessionResponse>(StatusCodes.Status201Created);
+            .Produces<CreateUssdSessionResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -36,6 +38,8 @@ public class UssdSessionEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetUssdSession)
             .WithSummary("Gets a USSD session by ID")
-            .Produces<UssdSessionResponse>();
+            .Produces<UssdSessionResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }

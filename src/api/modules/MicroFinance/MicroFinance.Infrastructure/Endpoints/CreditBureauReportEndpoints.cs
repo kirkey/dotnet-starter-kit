@@ -27,7 +27,9 @@ public class CreditBureauReportEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateCreditBureauReport)
             .WithSummary("Creates a new credit bureau report")
-            .Produces<CreateCreditBureauReportResponse>(StatusCodes.Status201Created);
+            .Produces<CreateCreditBureauReportResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -36,6 +38,8 @@ public class CreditBureauReportEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetCreditBureauReport)
             .WithSummary("Gets a credit bureau report by ID")
-            .Produces<CreditBureauReportResponse>();
+            .Produces<CreditBureauReportResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }

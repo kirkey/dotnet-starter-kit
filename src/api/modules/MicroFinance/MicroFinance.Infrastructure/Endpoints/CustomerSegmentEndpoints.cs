@@ -25,7 +25,9 @@ public class CustomerSegmentEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateCustomerSegment)
         .WithSummary("Create a new customer segment")
-        .Produces<CreateCustomerSegmentResponse>(StatusCodes.Status201Created);
+        .Produces<CreateCustomerSegmentResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -34,7 +36,9 @@ public class CustomerSegmentEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetCustomerSegment)
         .WithSummary("Get customer segment by ID")
-        .Produces<CustomerSegmentResponse>();
+        .Produces<CustomerSegmentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
         {
@@ -43,7 +47,9 @@ public class CustomerSegmentEndpoints() : CarterModule("microfinance")
         })
         .WithName(ActivateCustomerSegment)
         .WithSummary("Activate customer segment")
-        .Produces<ActivateCustomerSegmentResponse>();
+        .Produces<ActivateCustomerSegmentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/deactivate", async (Guid id, ISender sender) =>
         {
@@ -52,7 +58,9 @@ public class CustomerSegmentEndpoints() : CarterModule("microfinance")
         })
         .WithName(DeactivateCustomerSegment)
         .WithSummary("Deactivate customer segment")
-        .Produces<DeactivateCustomerSegmentResponse>();
+        .Produces<DeactivateCustomerSegmentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

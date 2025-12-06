@@ -39,7 +39,9 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateMemberGroup)
             .WithSummary("Creates a new member group")
-            .Produces<CreateMemberGroupResponse>(StatusCodes.Status201Created);
+            .Produces<CreateMemberGroupResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         memberGroupsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -48,7 +50,9 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetMemberGroup)
             .WithSummary("Gets a member group by ID")
-            .Produces<MemberGroupResponse>();
+            .Produces<MemberGroupResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         memberGroupsGroup.MapPost("/search", async (SearchMemberGroupsCommand command, ISender sender) =>
             {
@@ -57,7 +61,9 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
             })
             .WithName(SearchMemberGroups)
             .WithSummary("Searches member groups with filters and pagination")
-            .Produces<PagedList<MemberGroupResponse>>();
+            .Produces<PagedList<MemberGroupResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         memberGroupsGroup.MapPost("/{id:guid}/members", async (Guid id, AddMemberToGroupCommand command, ISender sender) =>
             {
@@ -70,7 +76,9 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
             })
             .WithName(AddMemberToGroup)
             .WithSummary("Adds a member to the group")
-            .Produces<AddMemberToGroupResponse>(StatusCodes.Status201Created);
+            .Produces<AddMemberToGroupResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         memberGroupsGroup.MapPut("/{id:guid}", async (Guid id, UpdateMemberGroupCommand command, ISender sender) =>
             {
@@ -80,7 +88,9 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
             })
             .WithName(UpdateMemberGroup)
             .WithSummary("Updates a member group")
-            .Produces<UpdateMemberGroupResponse>();
+            .Produces<UpdateMemberGroupResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         memberGroupsGroup.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
             {
@@ -89,7 +99,9 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
             })
             .WithName(ActivateMemberGroup)
             .WithSummary("Activates a member group")
-            .Produces<ActivateMemberGroupResponse>();
+            .Produces<ActivateMemberGroupResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         memberGroupsGroup.MapPost("/{id:guid}/deactivate", async (Guid id, ISender sender) =>
             {
@@ -98,7 +110,9 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
             })
             .WithName(DeactivateMemberGroup)
             .WithSummary("Deactivates a member group")
-            .Produces<DeactivateMemberGroupResponse>();
+            .Produces<DeactivateMemberGroupResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         memberGroupsGroup.MapPost("/{id:guid}/dissolve", async (Guid id, DissolveMemberGroupCommand command, ISender sender) =>
             {
@@ -108,6 +122,8 @@ public class MemberGroupEndpoints() : CarterModule("microfinance")
             })
             .WithName(DissolveMemberGroup)
             .WithSummary("Dissolves a member group")
-            .Produces<DissolveMemberGroupResponse>();
+            .Produces<DissolveMemberGroupResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }

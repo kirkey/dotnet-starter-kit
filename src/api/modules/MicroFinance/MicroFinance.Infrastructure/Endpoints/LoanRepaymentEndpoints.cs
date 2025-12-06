@@ -30,7 +30,9 @@ public class LoanRepaymentEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateLoanRepayment)
             .WithSummary("Records a loan repayment")
-            .Produces<CreateLoanRepaymentResponse>(StatusCodes.Status201Created);
+            .Produces<CreateLoanRepaymentResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loanRepaymentsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -39,7 +41,9 @@ public class LoanRepaymentEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetLoanRepayment)
             .WithSummary("Gets a loan repayment by ID")
-            .Produces<LoanRepaymentResponse>();
+            .Produces<LoanRepaymentResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loanRepaymentsGroup.MapPost("/search", async (SearchLoanRepaymentsCommand command, ISender sender) =>
             {
@@ -48,7 +52,9 @@ public class LoanRepaymentEndpoints() : CarterModule("microfinance")
             })
             .WithName(SearchLoanRepayments)
             .WithSummary("Searches loan repayments with filters and pagination")
-            .Produces<PagedList<LoanRepaymentResponse>>();
+            .Produces<PagedList<LoanRepaymentResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loanRepaymentsGroup.MapGet("/by-loan/{loanId:guid}", async (Guid loanId, ISender sender) =>
             {
@@ -63,6 +69,8 @@ public class LoanRepaymentEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetLoanRepaymentsByLoan)
             .WithSummary("Gets all repayments for a specific loan")
-            .Produces<PagedList<LoanRepaymentResponse>>();
+            .Produces<PagedList<LoanRepaymentResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }

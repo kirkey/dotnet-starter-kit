@@ -25,7 +25,9 @@ public class MobileTransactionEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateMobileTransaction)
         .WithSummary("Create a new mobile transaction")
-        .Produces<CreateMobileTransactionResponse>(StatusCodes.Status201Created);
+        .Produces<CreateMobileTransactionResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -34,7 +36,9 @@ public class MobileTransactionEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetMobileTransaction)
         .WithSummary("Get mobile transaction by ID")
-        .Produces<MobileTransactionResponse>();
+        .Produces<MobileTransactionResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/complete", async (Guid id, CompleteMobileTransactionRequest request, ISender sender) =>
         {
@@ -44,7 +48,9 @@ public class MobileTransactionEndpoints() : CarterModule("microfinance")
         })
         .WithName(CompleteMobileTransaction)
         .WithSummary("Complete mobile transaction")
-        .Produces<CompleteMobileTransactionResponse>();
+        .Produces<CompleteMobileTransactionResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/fail", async (Guid id, FailMobileTransactionRequest request, ISender sender) =>
         {
@@ -54,7 +60,9 @@ public class MobileTransactionEndpoints() : CarterModule("microfinance")
         })
         .WithName(FailMobileTransaction)
         .WithSummary("Mark mobile transaction as failed")
-        .Produces<FailMobileTransactionResponse>();
+        .Produces<FailMobileTransactionResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

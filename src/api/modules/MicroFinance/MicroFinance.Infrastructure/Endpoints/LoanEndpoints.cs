@@ -41,7 +41,9 @@ public class LoanEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateLoan)
             .WithSummary("Creates a new loan application")
-            .Produces<CreateLoanResponse>(StatusCodes.Status201Created);
+            .Produces<CreateLoanResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loansGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -50,7 +52,9 @@ public class LoanEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetLoan)
             .WithSummary("Gets a loan by ID with full details")
-            .Produces<LoanResponse>();
+            .Produces<LoanResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loansGroup.MapPut("/{id:guid}", async (Guid id, UpdateLoanCommand command, ISender sender) =>
             {
@@ -63,7 +67,9 @@ public class LoanEndpoints() : CarterModule("microfinance")
             })
             .WithName(UpdateLoan)
             .WithSummary("Updates a pending loan application")
-            .Produces<UpdateLoanResponse>();
+            .Produces<UpdateLoanResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loansGroup.MapPost("/{id:guid}/approve", async (Guid id, ApproveLoanCommand command, ISender sender) =>
             {
@@ -76,7 +82,9 @@ public class LoanEndpoints() : CarterModule("microfinance")
             })
             .WithName(ApproveLoan)
             .WithSummary("Approves a pending loan")
-            .Produces<ApproveLoanResponse>();
+            .Produces<ApproveLoanResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loansGroup.MapPost("/{id:guid}/reject", async (Guid id, RejectLoanCommand command, ISender sender) =>
             {
@@ -89,7 +97,9 @@ public class LoanEndpoints() : CarterModule("microfinance")
             })
             .WithName(RejectLoan)
             .WithSummary("Rejects a pending loan")
-            .Produces<RejectLoanResponse>();
+            .Produces<RejectLoanResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loansGroup.MapPost("/{id:guid}/disburse", async (Guid id, DisburseLoanCommand command, ISender sender) =>
             {
@@ -102,7 +112,9 @@ public class LoanEndpoints() : CarterModule("microfinance")
             })
             .WithName(DisburseLoan)
             .WithSummary("Disburses an approved loan")
-            .Produces<DisburseLoanResponse>();
+            .Produces<DisburseLoanResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Disburse, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loansGroup.MapPost("/{id:guid}/close", async (Guid id, ISender sender) =>
             {
@@ -111,7 +123,9 @@ public class LoanEndpoints() : CarterModule("microfinance")
             })
             .WithName(CloseLoan)
             .WithSummary("Closes a fully paid loan")
-            .Produces<CloseLoanResponse>();
+            .Produces<CloseLoanResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loansGroup.MapPost("/{id:guid}/write-off", async (Guid id, WriteOffLoanCommand command, ISender sender) =>
             {
@@ -124,7 +138,9 @@ public class LoanEndpoints() : CarterModule("microfinance")
             })
             .WithName(WriteOffLoan)
             .WithSummary("Writes off a non-performing loan")
-            .Produces<WriteOffLoanResponse>();
+            .Produces<WriteOffLoanResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loansGroup.MapPost("/search", async ([FromBody] SearchLoansCommand command, ISender sender) =>
             {
@@ -133,6 +149,8 @@ public class LoanEndpoints() : CarterModule("microfinance")
             })
             .WithName(SearchLoans)
             .WithSummary("Searches loans with filters and pagination")
-            .Produces<PagedList<LoanSummaryResponse>>();
+            .Produces<PagedList<LoanSummaryResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }

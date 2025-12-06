@@ -29,7 +29,9 @@ public class CustomerCaseEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateCustomerCase)
         .WithSummary("Create a new customer case")
-        .Produces<CreateCustomerCaseResponse>(StatusCodes.Status201Created);
+        .Produces<CreateCustomerCaseResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -38,7 +40,9 @@ public class CustomerCaseEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetCustomerCase)
         .WithSummary("Get customer case by ID")
-        .Produces<CustomerCaseResponse>();
+        .Produces<CustomerCaseResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/assign", async (Guid id, AssignCustomerCaseRequest request, ISender sender) =>
         {
@@ -47,7 +51,9 @@ public class CustomerCaseEndpoints() : CarterModule("microfinance")
         })
         .WithName(AssignCustomerCase)
         .WithSummary("Assign a customer case to staff")
-        .Produces<AssignCustomerCaseResponse>();
+        .Produces<AssignCustomerCaseResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/escalate", async (Guid id, EscalateCustomerCaseRequest request, ISender sender) =>
         {
@@ -56,7 +62,9 @@ public class CustomerCaseEndpoints() : CarterModule("microfinance")
         })
         .WithName(EscalateCustomerCase)
         .WithSummary("Escalate a customer case")
-        .Produces<EscalateCustomerCaseResponse>();
+        .Produces<EscalateCustomerCaseResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/resolve", async (Guid id, ResolveCustomerCaseRequest request, ISender sender) =>
         {
@@ -65,7 +73,9 @@ public class CustomerCaseEndpoints() : CarterModule("microfinance")
         })
         .WithName(ResolveCustomerCase)
         .WithSummary("Resolve a customer case")
-        .Produces<ResolveCustomerCaseResponse>();
+        .Produces<ResolveCustomerCaseResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/close", async (Guid id, CloseCustomerCaseRequest request, ISender sender) =>
         {
@@ -74,7 +84,9 @@ public class CustomerCaseEndpoints() : CarterModule("microfinance")
         })
         .WithName(CloseCustomerCase)
         .WithSummary("Close a customer case")
-        .Produces<CloseCustomerCaseResponse>();
+        .Produces<CloseCustomerCaseResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

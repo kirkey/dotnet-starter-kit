@@ -29,7 +29,9 @@ public class QrPaymentEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateStaticQr)
             .WithSummary("Creates a static QR code for payments")
-            .Produces<CreateStaticQrResponse>(StatusCodes.Status201Created);
+            .Produces<CreateStaticQrResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/dynamic", async (CreateDynamicQrCommand command, ISender sender) =>
             {
@@ -38,7 +40,9 @@ public class QrPaymentEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateDynamicQr)
             .WithSummary("Creates a dynamic QR code with amount and expiry")
-            .Produces<CreateDynamicQrResponse>(StatusCodes.Status201Created);
+            .Produces<CreateDynamicQrResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -47,6 +51,8 @@ public class QrPaymentEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetQrPayment)
             .WithSummary("Gets a QR payment by ID")
-            .Produces<QrPaymentResponse>();
+            .Produces<QrPaymentResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }

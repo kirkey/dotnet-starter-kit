@@ -28,7 +28,9 @@ public class InsurancePolicyEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateInsurancePolicy)
             .WithSummary("Creates a new insurance policy for a member")
-            .Produces<CreateInsurancePolicyResponse>(StatusCodes.Status201Created);
+            .Produces<CreateInsurancePolicyResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -37,7 +39,9 @@ public class InsurancePolicyEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetInsurancePolicy)
             .WithSummary("Gets an insurance policy by ID")
-            .Produces<InsurancePolicyResponse>();
+            .Produces<InsurancePolicyResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         // Lifecycle Operations
         group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
@@ -47,7 +51,9 @@ public class InsurancePolicyEndpoints() : CarterModule("microfinance")
             })
             .WithName(ActivateInsurancePolicy)
             .WithSummary("Activates an insurance policy after first premium")
-            .Produces<ActivateInsurancePolicyResponse>();
+            .Produces<ActivateInsurancePolicyResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/cancel", async (Guid id, CancelInsurancePolicyCommand command, ISender sender) =>
             {
@@ -57,7 +63,9 @@ public class InsurancePolicyEndpoints() : CarterModule("microfinance")
             })
             .WithName(CancelInsurancePolicy)
             .WithSummary("Cancels an insurance policy")
-            .Produces<CancelInsurancePolicyResponse>();
+            .Produces<CancelInsurancePolicyResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Cancel, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         // Premium Payments
         group.MapPost("/{id:guid}/record-premium", async (Guid id, RecordPremiumPaymentCommand command, ISender sender) =>
@@ -68,7 +76,9 @@ public class InsurancePolicyEndpoints() : CarterModule("microfinance")
             })
             .WithName(RecordPremiumPayment)
             .WithSummary("Records a premium payment on the policy")
-            .Produces<RecordPremiumPaymentResponse>();
+            .Produces<RecordPremiumPaymentResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
     }
 }

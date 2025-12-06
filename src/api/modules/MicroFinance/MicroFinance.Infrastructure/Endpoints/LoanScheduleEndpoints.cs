@@ -28,7 +28,9 @@ public class LoanScheduleEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetLoanSchedule)
         .WithSummary("Gets a loan schedule entry by ID")
-        .Produces<LoanScheduleResponse>();
+        .Produces<LoanScheduleResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         schedulesGroup.MapPost("/search", async (SearchLoanSchedulesCommand request, ISender mediator) =>
         {
@@ -37,7 +39,9 @@ public class LoanScheduleEndpoints() : CarterModule("microfinance")
         })
         .WithName(SearchLoanSchedules)
         .WithSummary("Searches loan schedules with pagination")
-        .Produces<PagedList<LoanScheduleResponse>>();
+        .Produces<PagedList<LoanScheduleResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         schedulesGroup.MapGet("/by-loan/{loanId:guid}", async (Guid loanId, ISender mediator) =>
         {
@@ -52,6 +56,8 @@ public class LoanScheduleEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetLoanSchedulesByLoan)
         .WithSummary("Gets the complete repayment schedule for a loan")
-        .Produces<PagedList<LoanScheduleResponse>>();
+        .Produces<PagedList<LoanScheduleResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
     }
 }

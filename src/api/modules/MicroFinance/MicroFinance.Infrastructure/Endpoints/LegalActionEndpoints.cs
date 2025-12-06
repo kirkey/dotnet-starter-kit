@@ -23,7 +23,9 @@ public class LegalActionEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateLegalAction)
         .WithSummary("Create a new legal action")
-        .Produces<CreateLegalActionResponse>(StatusCodes.Status201Created);
+        .Produces<CreateLegalActionResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -32,7 +34,9 @@ public class LegalActionEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetLegalAction)
         .WithSummary("Get legal action by ID")
-        .Produces<LegalActionResponse>();
+        .Produces<LegalActionResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/file-case", async (Guid id, FileCaseRequest request, ISender sender) =>
         {
@@ -42,7 +46,9 @@ public class LegalActionEndpoints() : CarterModule("microfinance")
         })
         .WithName(FileCase)
         .WithSummary("File legal case with court")
-        .Produces<FileCaseResponse>();
+        .Produces<FileCaseResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

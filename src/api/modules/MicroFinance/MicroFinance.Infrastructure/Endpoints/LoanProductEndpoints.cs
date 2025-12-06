@@ -33,7 +33,9 @@ public class LoanProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateLoanProduct)
             .WithSummary("Creates a new loan product")
-            .Produces<CreateLoanProductResponse>(StatusCodes.Status201Created);
+            .Produces<CreateLoanProductResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loanProductsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -42,7 +44,9 @@ public class LoanProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetLoanProduct)
             .WithSummary("Gets a loan product by ID")
-            .Produces<LoanProductResponse>();
+            .Produces<LoanProductResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loanProductsGroup.MapPut("/{id:guid}", async (Guid id, UpdateLoanProductCommand command, ISender sender) =>
             {
@@ -55,7 +59,9 @@ public class LoanProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(UpdateLoanProduct)
             .WithSummary("Updates a loan product")
-            .Produces<UpdateLoanProductResponse>();
+            .Produces<UpdateLoanProductResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loanProductsGroup.MapDelete("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -64,7 +70,9 @@ public class LoanProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(DeleteLoanProduct)
             .WithSummary("Deletes a loan product")
-            .Produces(StatusCodes.Status204NoContent);
+            .Produces(StatusCodes.Status204NoContent)
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         loanProductsGroup.MapPost("/search", async ([FromBody] SearchLoanProductsCommand command, ISender sender) =>
             {
@@ -73,6 +81,8 @@ public class LoanProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(SearchLoanProducts)
             .WithSummary("Searches loan products with filters and pagination")
-            .Produces<PagedList<LoanProductResponse>>();
+            .Produces<PagedList<LoanProductResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }

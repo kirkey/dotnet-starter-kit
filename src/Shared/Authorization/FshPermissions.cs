@@ -192,6 +192,24 @@ public static class FshPermissions
         new("Delete Taxes", FshActions.Delete, FshResources.Taxes),
         new("Import Taxes", FshActions.Import, FshResources.Taxes),
         new("Export Taxes", FshActions.Export, FshResources.Taxes),
+
+        //MicroFinance
+        new("View MicroFinance", FshActions.View, FshResources.MicroFinance),
+        new("Search MicroFinance", FshActions.Search, FshResources.MicroFinance),
+        new("Create MicroFinance", FshActions.Create, FshResources.MicroFinance),
+        new("Update MicroFinance", FshActions.Update, FshResources.MicroFinance),
+        new("Delete MicroFinance", FshActions.Delete, FshResources.MicroFinance),
+        new("Import MicroFinance", FshActions.Import, FshResources.MicroFinance),
+        new("Export MicroFinance", FshActions.Export, FshResources.MicroFinance),
+        new("Approve MicroFinance", FshActions.Approve, FshResources.MicroFinance),
+        new("Reject MicroFinance", FshActions.Reject, FshResources.MicroFinance),
+        new("Process MicroFinance", FshActions.Process, FshResources.MicroFinance),
+        new("Complete MicroFinance", FshActions.Complete, FshResources.MicroFinance),
+        new("Cancel MicroFinance", FshActions.Cancel, FshResources.MicroFinance),
+        new("Void MicroFinance", FshActions.Void, FshResources.MicroFinance),
+        new("Post MicroFinance", FshActions.Post, FshResources.MicroFinance),
+        new("Disburse MicroFinance", FshActions.Disburse, FshResources.MicroFinance),
+        new("Close MicroFinance", FshActions.Close, FshResources.MicroFinance),
     ];
 
     public static IReadOnlyList<FshPermission> All { get; } = new ReadOnlyCollection<FshPermission>(AllPermissions);

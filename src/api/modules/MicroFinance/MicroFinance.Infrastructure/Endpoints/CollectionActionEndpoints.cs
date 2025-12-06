@@ -21,7 +21,9 @@ public class CollectionActionEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateCollectionAction)
         .WithSummary("Create a new collection action")
-        .Produces<CreateCollectionActionResponse>(StatusCodes.Status201Created);
+        .Produces<CreateCollectionActionResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -30,7 +32,9 @@ public class CollectionActionEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetCollectionAction)
         .WithSummary("Get collection action by ID")
-        .Produces<CollectionActionResponse>();
+        .Produces<CollectionActionResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

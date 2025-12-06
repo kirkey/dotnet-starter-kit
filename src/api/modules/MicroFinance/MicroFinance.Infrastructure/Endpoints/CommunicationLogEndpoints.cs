@@ -23,7 +23,9 @@ public class CommunicationLogEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateCommunicationLog)
         .WithSummary("Create a new communication log entry")
-        .Produces<CreateCommunicationLogResponse>(StatusCodes.Status201Created);
+        .Produces<CreateCommunicationLogResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -32,7 +34,9 @@ public class CommunicationLogEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetCommunicationLog)
         .WithSummary("Get communication log by ID")
-        .Produces<CommunicationLogResponse>();
+        .Produces<CommunicationLogResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/delivered", async (Guid id, ISender sender) =>
         {
@@ -41,7 +45,9 @@ public class CommunicationLogEndpoints() : CarterModule("microfinance")
         })
         .WithName(MarkCommunicationDelivered)
         .WithSummary("Mark communication as delivered")
-        .Produces<MarkCommunicationDeliveredResponse>();
+        .Produces<MarkCommunicationDeliveredResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

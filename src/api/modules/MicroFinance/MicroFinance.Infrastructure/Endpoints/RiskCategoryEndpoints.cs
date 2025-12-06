@@ -25,7 +25,9 @@ public class RiskCategoryEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateRiskCategory)
         .WithSummary("Create a new risk category")
-        .Produces<CreateRiskCategoryResponse>(StatusCodes.Status201Created);
+        .Produces<CreateRiskCategoryResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -34,7 +36,9 @@ public class RiskCategoryEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetRiskCategory)
         .WithSummary("Get risk category by ID")
-        .Produces<RiskCategoryResponse>();
+        .Produces<RiskCategoryResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
         {
@@ -43,7 +47,9 @@ public class RiskCategoryEndpoints() : CarterModule("microfinance")
         })
         .WithName(ActivateRiskCategory)
         .WithSummary("Activate risk category")
-        .Produces<ActivateRiskCategoryResponse>();
+        .Produces<ActivateRiskCategoryResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/deactivate", async (Guid id, ISender sender) =>
         {
@@ -52,7 +58,9 @@ public class RiskCategoryEndpoints() : CarterModule("microfinance")
         })
         .WithName(DeactivateRiskCategory)
         .WithSummary("Deactivate risk category")
-        .Produces<DeactivateRiskCategoryResponse>();
+        .Produces<DeactivateRiskCategoryResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

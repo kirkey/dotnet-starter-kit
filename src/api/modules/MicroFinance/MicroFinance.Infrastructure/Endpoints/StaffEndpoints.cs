@@ -21,7 +21,9 @@ public class StaffEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateStaff)
         .WithSummary("Create a new staff member")
-        .Produces<CreateStaffResponse>(StatusCodes.Status201Created);
+        .Produces<CreateStaffResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -30,7 +32,9 @@ public class StaffEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetStaff)
         .WithSummary("Get staff member by ID")
-        .Produces<StaffResponse>();
+        .Produces<StaffResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

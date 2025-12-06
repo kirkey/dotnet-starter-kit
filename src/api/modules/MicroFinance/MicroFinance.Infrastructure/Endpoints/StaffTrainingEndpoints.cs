@@ -29,7 +29,9 @@ public class StaffTrainingEndpoints() : CarterModule("microfinance")
         })
         .WithName(ScheduleStaffTraining)
         .WithSummary("Schedule a new staff training")
-        .Produces<ScheduleStaffTrainingResponse>(StatusCodes.Status201Created);
+        .Produces<ScheduleStaffTrainingResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -38,7 +40,9 @@ public class StaffTrainingEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetStaffTraining)
         .WithSummary("Get staff training by ID")
-        .Produces<StaffTrainingResponse>();
+        .Produces<StaffTrainingResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/start", async (Guid id, ISender sender) =>
         {
@@ -47,7 +51,9 @@ public class StaffTrainingEndpoints() : CarterModule("microfinance")
         })
         .WithName(StartStaffTraining)
         .WithSummary("Start scheduled training")
-        .Produces<StartStaffTrainingResponse>();
+        .Produces<StartStaffTrainingResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/complete", async (Guid id, CompleteTrainingRequest request, ISender sender) =>
         {
@@ -57,7 +63,9 @@ public class StaffTrainingEndpoints() : CarterModule("microfinance")
         })
         .WithName(CompleteStaffTraining)
         .WithSummary("Complete training with results")
-        .Produces<CompleteStaffTrainingResponse>();
+        .Produces<CompleteStaffTrainingResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/certificate", async (Guid id, IssueCertificateCommand command, ISender sender) =>
         {
@@ -67,7 +75,9 @@ public class StaffTrainingEndpoints() : CarterModule("microfinance")
         })
         .WithName(IssueTrainingCertificate)
         .WithSummary("Issue certificate for completed training")
-        .Produces<IssueCertificateResponse>();
+        .Produces<IssueCertificateResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/cancel", async (Guid id, CancelTrainingRequest? request, ISender sender) =>
         {
@@ -77,7 +87,9 @@ public class StaffTrainingEndpoints() : CarterModule("microfinance")
         })
         .WithName(CancelStaffTraining)
         .WithSummary("Cancel scheduled training")
-        .Produces<CancelStaffTrainingResponse>();
+        .Produces<CancelStaffTrainingResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Cancel, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

@@ -25,7 +25,9 @@ public class AmlAlertEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateAmlAlert)
         .WithSummary("Create a new AML alert")
-        .Produces<CreateAmlAlertResponse>(StatusCodes.Status201Created);
+        .Produces<CreateAmlAlertResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -34,7 +36,9 @@ public class AmlAlertEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetAmlAlert)
         .WithSummary("Get AML alert by ID")
-        .Produces<AmlAlertResponse>();
+        .Produces<AmlAlertResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/assign", async (Guid id, AssignAmlAlertRequest request, ISender sender) =>
         {
@@ -43,7 +47,9 @@ public class AmlAlertEndpoints() : CarterModule("microfinance")
         })
         .WithName(AssignAmlAlert)
         .WithSummary("Assign AML alert to investigator")
-        .Produces<AssignAmlAlertResponse>();
+        .Produces<AssignAmlAlertResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/escalate", async (Guid id, EscalateAmlAlertRequest request, ISender sender) =>
         {
@@ -52,7 +58,9 @@ public class AmlAlertEndpoints() : CarterModule("microfinance")
         })
         .WithName(EscalateAmlAlert)
         .WithSummary("Escalate AML alert")
-        .Produces<EscalateAmlAlertResponse>();
+        .Produces<EscalateAmlAlertResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

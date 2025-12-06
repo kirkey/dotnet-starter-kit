@@ -31,7 +31,9 @@ public class ShareProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateShareProduct)
             .WithSummary("Creates a new share product")
-            .Produces<CreateShareProductResponse>(StatusCodes.Status201Created);
+            .Produces<CreateShareProductResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         shareProductsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -40,7 +42,9 @@ public class ShareProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetShareProduct)
             .WithSummary("Gets a share product by ID")
-            .Produces<ShareProductResponse>();
+            .Produces<ShareProductResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         shareProductsGroup.MapPost("/search", async (SearchShareProductsCommand command, ISender sender) =>
             {
@@ -49,7 +53,9 @@ public class ShareProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(SearchShareProducts)
             .WithSummary("Searches share products with filtering and pagination")
-            .Produces<PagedList<ShareProductResponse>>();
+            .Produces<PagedList<ShareProductResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         shareProductsGroup.MapPut("/{id:guid}", async (Guid id, UpdateShareProductCommand command, ISender sender) =>
             {
@@ -59,7 +65,9 @@ public class ShareProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(UpdateShareProduct)
             .WithSummary("Updates an existing share product")
-            .Produces<UpdateShareProductResponse>();
+            .Produces<UpdateShareProductResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
     }
 }

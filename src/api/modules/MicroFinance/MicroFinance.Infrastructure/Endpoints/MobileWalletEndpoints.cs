@@ -25,7 +25,9 @@ public class MobileWalletEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateMobileWallet)
         .WithSummary("Create a new mobile wallet")
-        .Produces<CreateMobileWalletResponse>(StatusCodes.Status201Created);
+        .Produces<CreateMobileWalletResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -34,7 +36,9 @@ public class MobileWalletEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetMobileWallet)
         .WithSummary("Get mobile wallet by ID")
-        .Produces<MobileWalletResponse>();
+        .Produces<MobileWalletResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/credit", async (Guid id, CreditRequest request, ISender sender) =>
         {
@@ -43,7 +47,9 @@ public class MobileWalletEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreditMobileWallet)
         .WithSummary("Credit mobile wallet")
-        .Produces<CreditMobileWalletResponse>();
+        .Produces<CreditMobileWalletResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/debit", async (Guid id, DebitRequest request, ISender sender) =>
         {
@@ -52,7 +58,9 @@ public class MobileWalletEndpoints() : CarterModule("microfinance")
         })
         .WithName(DebitMobileWallet)
         .WithSummary("Debit mobile wallet")
-        .Produces<DebitMobileWalletResponse>();
+        .Produces<DebitMobileWalletResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

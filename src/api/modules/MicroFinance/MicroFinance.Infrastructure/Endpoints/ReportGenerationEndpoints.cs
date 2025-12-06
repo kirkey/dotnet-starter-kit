@@ -27,7 +27,9 @@ public class ReportGenerationEndpoints() : CarterModule("microfinance")
             })
             .WithName(QueueReportGeneration)
             .WithSummary("Queues a new report generation")
-            .Produces<QueueReportGenerationResponse>(StatusCodes.Status201Created);
+            .Produces<QueueReportGenerationResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -36,6 +38,8 @@ public class ReportGenerationEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetReportGeneration)
             .WithSummary("Gets a report generation by ID")
-            .Produces<ReportGenerationResponse>();
+            .Produces<ReportGenerationResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }

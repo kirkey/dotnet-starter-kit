@@ -23,7 +23,9 @@ public class InsuranceProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateInsuranceProduct)
             .WithSummary("Creates a new insurance product")
-            .Produces<CreateInsuranceProductResponse>(StatusCodes.Status201Created);
+            .Produces<CreateInsuranceProductResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -32,7 +34,9 @@ public class InsuranceProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetInsuranceProduct)
             .WithSummary("Gets an insurance product by ID")
-            .Produces<InsuranceProductResponse>();
+            .Produces<InsuranceProductResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
             {
@@ -41,7 +45,9 @@ public class InsuranceProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(ActivateInsuranceProduct)
             .WithSummary("Activates an insurance product")
-            .Produces<ActivateInsuranceProductResponse>();
+            .Produces<ActivateInsuranceProductResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
     }
 }

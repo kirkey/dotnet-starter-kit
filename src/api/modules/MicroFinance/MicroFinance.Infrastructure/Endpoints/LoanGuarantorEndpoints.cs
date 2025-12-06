@@ -39,7 +39,9 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateLoanGuarantor)
         .WithSummary("Creates a new loan guarantor")
-        .Produces<CreateLoanGuarantorResponse>(StatusCodes.Status201Created);
+        .Produces<CreateLoanGuarantorResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         guarantorsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
         {
@@ -48,7 +50,9 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetLoanGuarantor)
         .WithSummary("Gets a loan guarantor by ID")
-        .Produces<LoanGuarantorResponse>();
+        .Produces<LoanGuarantorResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         guarantorsGroup.MapPost("/search", async (SearchLoanGuarantorsCommand request, ISender mediator) =>
         {
@@ -57,7 +61,9 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
         })
         .WithName(SearchLoanGuarantors)
         .WithSummary("Searches loan guarantors with pagination")
-        .Produces<PagedList<LoanGuarantorResponse>>();
+        .Produces<PagedList<LoanGuarantorResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         guarantorsGroup.MapGet("/by-loan/{loanId:guid}", async (Guid loanId, ISender mediator) =>
         {
@@ -71,7 +77,9 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetLoanGuarantorsByLoan)
         .WithSummary("Gets all guarantors for a loan")
-        .Produces<PagedList<LoanGuarantorResponse>>();
+        .Produces<PagedList<LoanGuarantorResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         guarantorsGroup.MapGet("/by-member/{memberId:guid}", async (Guid memberId, ISender mediator) =>
         {
@@ -85,7 +93,9 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetLoanGuarantorsByMember)
         .WithSummary("Gets all loans where a member is a guarantor")
-        .Produces<PagedList<LoanGuarantorResponse>>();
+        .Produces<PagedList<LoanGuarantorResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         guarantorsGroup.MapPost("/{id:guid}/approve", async (Guid id, ISender mediator) =>
         {
@@ -94,7 +104,9 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
         })
         .WithName(ApproveLoanGuarantor)
         .WithSummary("Approves a loan guarantor")
-        .Produces<ApproveGuarantorResponse>();
+        .Produces<ApproveGuarantorResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         guarantorsGroup.MapPost("/{id:guid}/reject", async (Guid id, RejectGuarantorCommand command, ISender mediator) =>
         {
@@ -104,7 +116,9 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
         })
         .WithName(RejectLoanGuarantor)
         .WithSummary("Rejects a loan guarantor")
-        .Produces<RejectGuarantorResponse>();
+        .Produces<RejectGuarantorResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         guarantorsGroup.MapPost("/{id:guid}/release", async (Guid id, ReleaseGuarantorCommand command, ISender mediator) =>
         {
@@ -114,7 +128,9 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
         })
         .WithName(ReleaseLoanGuarantor)
         .WithSummary("Releases a loan guarantor")
-        .Produces<ReleaseGuarantorResponse>();
+        .Produces<ReleaseGuarantorResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         guarantorsGroup.MapPut("/{id:guid}/amount", async (Guid id, UpdateGuaranteedAmountCommand command, ISender mediator) =>
         {
@@ -124,6 +140,8 @@ public class LoanGuarantorEndpoints() : CarterModule("microfinance")
         })
         .WithName(UpdateGuarantorAmount)
         .WithSummary("Updates the guaranteed amount for a loan guarantor")
-        .Produces<UpdateGuaranteedAmountResponse>();
+        .Produces<UpdateGuaranteedAmountResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+        .MapToApiVersion(1);
     }
 }

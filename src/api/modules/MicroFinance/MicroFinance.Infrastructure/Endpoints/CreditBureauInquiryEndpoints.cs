@@ -23,7 +23,9 @@ public class CreditBureauInquiryEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateCreditBureauInquiry)
         .WithSummary("Create a new credit bureau inquiry")
-        .Produces<CreateCreditBureauInquiryResponse>(StatusCodes.Status201Created);
+        .Produces<CreateCreditBureauInquiryResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -32,7 +34,9 @@ public class CreditBureauInquiryEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetCreditBureauInquiry)
         .WithSummary("Get credit bureau inquiry by ID")
-        .Produces<CreditBureauInquiryResponse>();
+        .Produces<CreditBureauInquiryResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/complete", async (Guid id, CompleteInquiryRequest request, ISender sender) =>
         {
@@ -45,7 +49,9 @@ public class CreditBureauInquiryEndpoints() : CarterModule("microfinance")
         })
         .WithName(CompleteInquiry)
         .WithSummary("Complete a credit bureau inquiry")
-        .Produces<CompleteInquiryResponse>();
+        .Produces<CompleteInquiryResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

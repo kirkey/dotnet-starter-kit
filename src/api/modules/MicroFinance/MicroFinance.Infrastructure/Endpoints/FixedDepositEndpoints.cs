@@ -41,7 +41,9 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateFixedDeposit)
         .WithSummary("Creates a new fixed deposit")
-        .Produces<Guid>(StatusCodes.Status201Created);
+        .Produces<Guid>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         fixedDepositsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
         {
@@ -50,7 +52,9 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetFixedDeposit)
         .WithSummary("Gets a fixed deposit by ID")
-        .Produces<FixedDepositResponse>();
+        .Produces<FixedDepositResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         fixedDepositsGroup.MapPost("/search", async (SearchFixedDepositsCommand request, ISender mediator) =>
         {
@@ -59,7 +63,9 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
         })
         .WithName(SearchFixedDeposits)
         .WithSummary("Searches fixed deposits with pagination")
-        .Produces<PagedList<FixedDepositResponse>>();
+        .Produces<PagedList<FixedDepositResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         fixedDepositsGroup.MapPost("/{id:guid}/post-interest", async (Guid id, PostFixedDepositInterestCommand command, ISender mediator) =>
         {
@@ -69,7 +75,9 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
         })
         .WithName(PostFixedDepositInterest)
         .WithSummary("Posts interest to a fixed deposit")
-        .Produces<PostFixedDepositInterestResponse>();
+        .Produces<PostFixedDepositInterestResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         fixedDepositsGroup.MapPost("/{id:guid}/pay-interest", async (Guid id, PayFixedDepositInterestCommand command, ISender mediator) =>
         {
@@ -79,7 +87,9 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
         })
         .WithName(PayFixedDepositInterest)
         .WithSummary("Pays accrued interest on a fixed deposit")
-        .Produces<PayFixedDepositInterestResponse>();
+        .Produces<PayFixedDepositInterestResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         fixedDepositsGroup.MapPost("/{id:guid}/mature", async (Guid id, ISender mediator) =>
         {
@@ -88,7 +98,9 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
         })
         .WithName(MatureFixedDeposit)
         .WithSummary("Matures a fixed deposit")
-        .Produces<MatureFixedDepositResponse>();
+        .Produces<MatureFixedDepositResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         fixedDepositsGroup.MapPost("/{id:guid}/renew", async (Guid id, ISender mediator) =>
         {
@@ -97,7 +109,9 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
         })
         .WithName(RenewFixedDeposit)
         .WithSummary("Renews a matured fixed deposit")
-        .Produces<RenewFixedDepositResponse>();
+        .Produces<RenewFixedDepositResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         fixedDepositsGroup.MapPost("/{id:guid}/close-premature", async (Guid id, ClosePrematureFixedDepositCommand command, ISender mediator) =>
         {
@@ -107,7 +121,9 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
         })
         .WithName(CloseFixedDepositPremature)
         .WithSummary("Closes a fixed deposit prematurely")
-        .Produces<ClosePrematureFixedDepositResponse>();
+        .Produces<ClosePrematureFixedDepositResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         fixedDepositsGroup.MapPut("/{id:guid}/maturity-instruction", async (Guid id, UpdateMaturityInstructionCommand command, ISender mediator) =>
         {
@@ -117,7 +133,9 @@ public class FixedDepositEndpoints() : CarterModule("microfinance")
         })
         .WithName(UpdateMaturityInstruction)
         .WithSummary("Updates the maturity instruction for a fixed deposit")
-        .Produces<UpdateMaturityInstructionResponse>();
+        .Produces<UpdateMaturityInstructionResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

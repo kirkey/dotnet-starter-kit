@@ -31,7 +31,9 @@ public class SavingsProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateSavingsProduct)
             .WithSummary("Creates a new savings product")
-            .Produces<CreateSavingsProductResponse>(StatusCodes.Status201Created);
+            .Produces<CreateSavingsProductResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         savingsProductsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -40,7 +42,9 @@ public class SavingsProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetSavingsProduct)
             .WithSummary("Gets a savings product by ID")
-            .Produces<SavingsProductResponse>();
+            .Produces<SavingsProductResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         savingsProductsGroup.MapPost("/search", async (SearchSavingsProductsCommand command, ISender sender) =>
             {
@@ -49,7 +53,9 @@ public class SavingsProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(SearchSavingsProducts)
             .WithSummary("Searches savings products with filters and pagination")
-            .Produces<PagedList<SavingsProductResponse>>();
+            .Produces<PagedList<SavingsProductResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         savingsProductsGroup.MapPut("/{id:guid}", async (Guid id, UpdateSavingsProductCommand command, ISender sender) =>
             {
@@ -62,6 +68,8 @@ public class SavingsProductEndpoints() : CarterModule("microfinance")
             })
             .WithName(UpdateSavingsProduct)
             .WithSummary("Updates a savings product")
-            .Produces<UpdateSavingsProductResponse>();
+            .Produces<UpdateSavingsProductResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }

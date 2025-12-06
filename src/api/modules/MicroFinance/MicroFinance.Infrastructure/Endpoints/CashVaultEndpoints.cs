@@ -30,7 +30,9 @@ public class CashVaultEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateCashVault)
             .WithSummary("Creates a new cash vault")
-            .Produces<CreateCashVaultResponse>(StatusCodes.Status201Created);
+            .Produces<CreateCashVaultResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -39,7 +41,9 @@ public class CashVaultEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetCashVault)
             .WithSummary("Gets a cash vault by ID")
-            .Produces<CashVaultResponse>();
+            .Produces<CashVaultResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         // Cash Operations
         group.MapPost("/{id:guid}/deposit", async (Guid id, DepositCashCommand command, ISender sender) =>
@@ -50,7 +54,9 @@ public class CashVaultEndpoints() : CarterModule("microfinance")
             })
             .WithName(DepositCash)
             .WithSummary("Deposits cash into the vault")
-            .Produces<DepositCashResponse>();
+            .Produces<DepositCashResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/withdraw", async (Guid id, WithdrawCashCommand command, ISender sender) =>
             {
@@ -60,7 +66,9 @@ public class CashVaultEndpoints() : CarterModule("microfinance")
             })
             .WithName(WithdrawCash)
             .WithSummary("Withdraws cash from the vault")
-            .Produces<WithdrawCashResponse>();
+            .Produces<WithdrawCashResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         // Day Operations
         group.MapPost("/{id:guid}/open-day", async (Guid id, OpenDayCommand command, ISender sender) =>
@@ -71,7 +79,9 @@ public class CashVaultEndpoints() : CarterModule("microfinance")
             })
             .WithName(OpenVaultDay)
             .WithSummary("Opens a new business day for the vault")
-            .Produces<OpenDayResponse>();
+            .Produces<OpenDayResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/reconcile", async (Guid id, ReconcileCashVaultCommand command, ISender sender) =>
             {
@@ -81,7 +91,9 @@ public class CashVaultEndpoints() : CarterModule("microfinance")
             })
             .WithName(ReconcileVault)
             .WithSummary("Performs end-of-day reconciliation")
-            .Produces<ReconcileCashVaultResponse>();
+            .Produces<ReconcileCashVaultResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
     }
 }

@@ -27,7 +27,9 @@ public class RiskIndicatorEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateRiskIndicator)
         .WithSummary("Create a new risk indicator")
-        .Produces<CreateRiskIndicatorResponse>(StatusCodes.Status201Created);
+        .Produces<CreateRiskIndicatorResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -36,7 +38,9 @@ public class RiskIndicatorEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetRiskIndicator)
         .WithSummary("Get risk indicator by ID")
-        .Produces<RiskIndicatorResponse>();
+        .Produces<RiskIndicatorResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/measure", async (Guid id, RecordMeasurementRequest request, ISender sender) =>
         {
@@ -46,7 +50,9 @@ public class RiskIndicatorEndpoints() : CarterModule("microfinance")
         })
         .WithName(RecordRiskIndicatorMeasurement)
         .WithSummary("Record a new measurement for risk indicator")
-        .Produces<RecordMeasurementResponse>();
+        .Produces<RecordMeasurementResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
         {
@@ -55,7 +61,9 @@ public class RiskIndicatorEndpoints() : CarterModule("microfinance")
         })
         .WithName(ActivateRiskIndicator)
         .WithSummary("Activate risk indicator")
-        .Produces<ActivateRiskIndicatorResponse>();
+        .Produces<ActivateRiskIndicatorResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/deactivate", async (Guid id, ISender sender) =>
         {
@@ -64,7 +72,9 @@ public class RiskIndicatorEndpoints() : CarterModule("microfinance")
         })
         .WithName(DeactivateRiskIndicator)
         .WithSummary("Deactivate risk indicator")
-        .Produces<DeactivateRiskIndicatorResponse>();
+        .Produces<DeactivateRiskIndicatorResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

@@ -25,7 +25,9 @@ public class DebtSettlementEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateDebtSettlement)
         .WithSummary("Create a new debt settlement")
-        .Produces<CreateDebtSettlementResponse>(StatusCodes.Status201Created);
+        .Produces<CreateDebtSettlementResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -34,7 +36,9 @@ public class DebtSettlementEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetDebtSettlement)
         .WithSummary("Get debt settlement by ID")
-        .Produces<DebtSettlementResponse>();
+        .Produces<DebtSettlementResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/approve", async (Guid id, ApproveSettlementRequest request, ISender sender) =>
         {
@@ -43,7 +47,9 @@ public class DebtSettlementEndpoints() : CarterModule("microfinance")
         })
         .WithName(ApproveSettlement)
         .WithSummary("Approve a debt settlement")
-        .Produces<ApproveSettlementResponse>();
+        .Produces<ApproveSettlementResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/record-payment", async (Guid id, SettlementPaymentRequest request, ISender sender) =>
         {
@@ -52,7 +58,9 @@ public class DebtSettlementEndpoints() : CarterModule("microfinance")
         })
         .WithName(RecordSettlementPayment)
         .WithSummary("Record payment for a debt settlement")
-        .Produces<RecordSettlementPaymentResponse>();
+        .Produces<RecordSettlementPaymentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

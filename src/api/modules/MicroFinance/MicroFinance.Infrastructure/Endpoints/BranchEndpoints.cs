@@ -34,7 +34,9 @@ public class BranchEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateBranch)
             .WithSummary("Creates a new branch")
-            .Produces<CreateBranchResponse>(StatusCodes.Status201Created);
+            .Produces<CreateBranchResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -43,7 +45,9 @@ public class BranchEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetBranch)
             .WithSummary("Gets a branch by ID")
-            .Produces<BranchResponse>();
+            .Produces<BranchResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (Guid id, UpdateBranchCommand command, ISender sender) =>
             {
@@ -53,7 +57,9 @@ public class BranchEndpoints() : CarterModule("microfinance")
             })
             .WithName(UpdateBranch)
             .WithSummary("Updates a branch")
-            .Produces<UpdateBranchResponse>();
+            .Produces<UpdateBranchResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/search", async ([FromBody] SearchBranchesCommand command, ISender sender) =>
             {
@@ -62,7 +68,9 @@ public class BranchEndpoints() : CarterModule("microfinance")
             })
             .WithName(SearchBranches)
             .WithSummary("Searches branches with filters")
-            .Produces<PagedList<BranchSummaryResponse>>();
+            .Produces<PagedList<BranchSummaryResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         // Workflow Operations
         group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
@@ -72,7 +80,9 @@ public class BranchEndpoints() : CarterModule("microfinance")
             })
             .WithName(ActivateBranch)
             .WithSummary("Activates a branch")
-            .Produces<ActivateBranchResponse>();
+            .Produces<ActivateBranchResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/deactivate", async (Guid id, ISender sender) =>
             {
@@ -81,7 +91,9 @@ public class BranchEndpoints() : CarterModule("microfinance")
             })
             .WithName(DeactivateBranch)
             .WithSummary("Deactivates a branch")
-            .Produces<DeactivateBranchResponse>();
+            .Produces<DeactivateBranchResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/close", async (Guid id, CloseBranchCommand command, ISender sender) =>
             {
@@ -91,7 +103,9 @@ public class BranchEndpoints() : CarterModule("microfinance")
             })
             .WithName(CloseBranch)
             .WithSummary("Permanently closes a branch")
-            .Produces<CloseBranchResponse>();
+            .Produces<CloseBranchResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/assign-manager", async (Guid id, AssignBranchManagerCommand command, ISender sender) =>
             {
@@ -101,7 +115,9 @@ public class BranchEndpoints() : CarterModule("microfinance")
             })
             .WithName(AssignBranchManager)
             .WithSummary("Assigns a manager to the branch")
-            .Produces<AssignBranchManagerResponse>();
+            .Produces<AssignBranchManagerResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
     }
 }

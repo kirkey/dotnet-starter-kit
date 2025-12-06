@@ -23,7 +23,9 @@ public class DocumentEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateDocument)
         .WithSummary("Create a new document record")
-        .Produces<CreateDocumentResponse>(StatusCodes.Status201Created);
+        .Produces<CreateDocumentResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -32,7 +34,9 @@ public class DocumentEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetDocument)
         .WithSummary("Get document by ID")
-        .Produces<DocumentResponse>();
+        .Produces<DocumentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/verify", async (Guid id, VerifyDocumentRequest request, ISender sender) =>
         {
@@ -41,7 +45,9 @@ public class DocumentEndpoints() : CarterModule("microfinance")
         })
         .WithName(VerifyDocument)
         .WithSummary("Verify a document")
-        .Produces<VerifyDocumentResponse>();
+        .Produces<VerifyDocumentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

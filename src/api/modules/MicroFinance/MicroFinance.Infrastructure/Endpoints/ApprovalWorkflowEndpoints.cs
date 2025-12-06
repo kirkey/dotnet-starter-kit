@@ -25,7 +25,9 @@ public class ApprovalWorkflowEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateApprovalWorkflow)
         .WithSummary("Create a new approval workflow")
-        .Produces<CreateApprovalWorkflowResponse>(StatusCodes.Status201Created);
+        .Produces<CreateApprovalWorkflowResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -34,7 +36,9 @@ public class ApprovalWorkflowEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetApprovalWorkflow)
         .WithSummary("Get approval workflow by ID")
-        .Produces<ApprovalWorkflowResponse>();
+        .Produces<ApprovalWorkflowResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
         {
@@ -43,7 +47,9 @@ public class ApprovalWorkflowEndpoints() : CarterModule("microfinance")
         })
         .WithName(ActivateApprovalWorkflow)
         .WithSummary("Activate approval workflow")
-        .Produces<ActivateApprovalWorkflowResponse>();
+        .Produces<ActivateApprovalWorkflowResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/deactivate", async (Guid id, ISender sender) =>
         {
@@ -52,7 +58,9 @@ public class ApprovalWorkflowEndpoints() : CarterModule("microfinance")
         })
         .WithName(DeactivateApprovalWorkflow)
         .WithSummary("Deactivate approval workflow")
-        .Produces<DeactivateApprovalWorkflowResponse>();
+        .Produces<DeactivateApprovalWorkflowResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

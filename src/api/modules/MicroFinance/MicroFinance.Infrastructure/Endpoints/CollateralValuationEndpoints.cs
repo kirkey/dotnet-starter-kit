@@ -27,7 +27,9 @@ public class CollateralValuationEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateCollateralValuation)
         .WithSummary("Create a new collateral valuation")
-        .Produces<CreateCollateralValuationResponse>(StatusCodes.Status201Created);
+        .Produces<CreateCollateralValuationResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -36,7 +38,9 @@ public class CollateralValuationEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetCollateralValuation)
         .WithSummary("Get collateral valuation by ID")
-        .Produces<CollateralValuationResponse>();
+        .Produces<CollateralValuationResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/submit", async (Guid id, ISender sender) =>
         {
@@ -45,7 +49,9 @@ public class CollateralValuationEndpoints() : CarterModule("microfinance")
         })
         .WithName(SubmitValuation)
         .WithSummary("Submit valuation for approval")
-        .Produces<SubmitValuationResponse>();
+        .Produces<SubmitValuationResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/approve", async (Guid id, ApproveRequest request, ISender sender) =>
         {
@@ -54,7 +60,9 @@ public class CollateralValuationEndpoints() : CarterModule("microfinance")
         })
         .WithName(ApproveValuation)
         .WithSummary("Approve a collateral valuation")
-        .Produces<ApproveValuationResponse>();
+        .Produces<ApproveValuationResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/reject", async (Guid id, RejectRequest request, ISender sender) =>
         {
@@ -63,7 +71,9 @@ public class CollateralValuationEndpoints() : CarterModule("microfinance")
         })
         .WithName(RejectValuation)
         .WithSummary("Reject a collateral valuation")
-        .Produces<RejectValuationResponse>();
+        .Produces<RejectValuationResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

@@ -39,7 +39,9 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateShareAccount)
             .WithSummary("Creates a new share account")
-            .Produces<CreateShareAccountResponse>(StatusCodes.Status201Created);
+            .Produces<CreateShareAccountResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         shareAccountsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -48,7 +50,9 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetShareAccount)
             .WithSummary("Gets a share account by ID")
-            .Produces<ShareAccountResponse>();
+            .Produces<ShareAccountResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         shareAccountsGroup.MapPost("/search", async (SearchShareAccountsCommand command, ISender sender) =>
             {
@@ -57,7 +61,9 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(SearchShareAccounts)
             .WithSummary("Searches share accounts with filtering and pagination")
-            .Produces<PagedList<ShareAccountResponse>>();
+            .Produces<PagedList<ShareAccountResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         shareAccountsGroup.MapPost("/{id:guid}/purchase", async (Guid id, PurchaseSharesCommand command, ISender sender) =>
             {
@@ -67,7 +73,9 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(PurchaseShares)
             .WithSummary("Purchases shares for an account")
-            .Produces<PurchaseSharesResponse>();
+            .Produces<PurchaseSharesResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         shareAccountsGroup.MapPost("/{id:guid}/redeem", async (Guid id, RedeemSharesCommand command, ISender sender) =>
             {
@@ -77,7 +85,9 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(RedeemShares)
             .WithSummary("Redeems shares from an account")
-            .Produces<RedeemSharesResponse>();
+            .Produces<RedeemSharesResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         shareAccountsGroup.MapPost("/{id:guid}/post-dividend", async (Guid id, PostDividendCommand command, ISender sender) =>
             {
@@ -87,7 +97,9 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(PostShareDividend)
             .WithSummary("Posts a dividend to a share account")
-            .Produces<PostDividendResponse>();
+            .Produces<PostDividendResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         shareAccountsGroup.MapPost("/{id:guid}/pay-dividend", async (Guid id, PayDividendCommand command, ISender sender) =>
             {
@@ -97,7 +109,9 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(PayShareDividend)
             .WithSummary("Pays out the dividend on a share account")
-            .Produces<PayDividendResponse>();
+            .Produces<PayDividendResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         shareAccountsGroup.MapPost("/{id:guid}/close", async (Guid id, CloseShareAccountCommand command, ISender sender) =>
             {
@@ -107,7 +121,9 @@ public class ShareAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(CloseShareAccount)
             .WithSummary("Closes a share account")
-            .Produces<CloseShareAccountResponse>();
+            .Produces<CloseShareAccountResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
     }
 }

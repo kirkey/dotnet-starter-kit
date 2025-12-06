@@ -40,7 +40,9 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateLoanCollateral)
         .WithSummary("Creates a new loan collateral")
-        .Produces<CreateLoanCollateralResponse>(StatusCodes.Status201Created);
+        .Produces<CreateLoanCollateralResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         collateralsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
         {
@@ -49,7 +51,9 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetLoanCollateral)
         .WithSummary("Gets a loan collateral by ID")
-        .Produces<LoanCollateralResponse>();
+        .Produces<LoanCollateralResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         collateralsGroup.MapPost("/search", async (SearchLoanCollateralsCommand request, ISender mediator) =>
         {
@@ -58,7 +62,9 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
         })
         .WithName(SearchLoanCollaterals)
         .WithSummary("Searches loan collaterals with pagination")
-        .Produces<PagedList<LoanCollateralResponse>>();
+        .Produces<PagedList<LoanCollateralResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         collateralsGroup.MapGet("/by-loan/{loanId:guid}", async (Guid loanId, ISender mediator) =>
         {
@@ -73,7 +79,9 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetLoanCollateralsByLoan)
         .WithSummary("Gets all collaterals for a loan")
-        .Produces<PagedList<LoanCollateralResponse>>();
+        .Produces<PagedList<LoanCollateralResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         collateralsGroup.MapPut("/{id:guid}/valuation", async (Guid id, UpdateCollateralValuationCommand command, ISender mediator) =>
         {
@@ -83,7 +91,9 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
         })
         .WithName(UpdateCollateralValuation)
         .WithSummary("Updates the valuation of a loan collateral")
-        .Produces<UpdateCollateralValuationResponse>();
+        .Produces<UpdateCollateralValuationResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         collateralsGroup.MapPost("/{id:guid}/verify", async (Guid id, ISender mediator) =>
         {
@@ -92,7 +102,9 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
         })
         .WithName(VerifyLoanCollateral)
         .WithSummary("Verifies a loan collateral")
-        .Produces<VerifyCollateralResponse>();
+        .Produces<VerifyCollateralResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         collateralsGroup.MapPost("/{id:guid}/pledge", async (Guid id, ISender mediator) =>
         {
@@ -101,7 +113,9 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
         })
         .WithName(PledgeLoanCollateral)
         .WithSummary("Pledges a loan collateral")
-        .Produces<PledgeCollateralResponse>();
+        .Produces<PledgeCollateralResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         collateralsGroup.MapPost("/{id:guid}/release", async (Guid id, ISender mediator) =>
         {
@@ -110,7 +124,9 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
         })
         .WithName(ReleaseLoanCollateral)
         .WithSummary("Releases a loan collateral")
-        .Produces<ReleaseCollateralResponse>();
+        .Produces<ReleaseCollateralResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         collateralsGroup.MapPost("/{id:guid}/seize", async (Guid id, ISender mediator) =>
         {
@@ -119,6 +135,8 @@ public class LoanCollateralEndpoints() : CarterModule("microfinance")
         })
         .WithName(SeizeLoanCollateral)
         .WithSummary("Seizes a loan collateral")
-        .Produces<SeizeCollateralResponse>();
+        .Produces<SeizeCollateralResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
     }
 }

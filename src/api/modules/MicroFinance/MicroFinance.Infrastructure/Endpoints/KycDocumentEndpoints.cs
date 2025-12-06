@@ -25,7 +25,9 @@ public class KycDocumentEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateKycDocument)
         .WithSummary("Upload a new KYC document")
-        .Produces<CreateKycDocumentResponse>(StatusCodes.Status201Created);
+        .Produces<CreateKycDocumentResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -34,7 +36,9 @@ public class KycDocumentEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetKycDocument)
         .WithSummary("Get KYC document by ID")
-        .Produces<KycDocumentResponse>();
+        .Produces<KycDocumentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/verify", async (Guid id, VerifyKycDocumentRequest request, ISender sender) =>
         {
@@ -44,7 +48,9 @@ public class KycDocumentEndpoints() : CarterModule("microfinance")
         })
         .WithName(VerifyKycDocument)
         .WithSummary("Verify KYC document")
-        .Produces<VerifyKycDocumentResponse>();
+        .Produces<VerifyKycDocumentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/reject", async (Guid id, RejectKycDocumentRequest request, ISender sender) =>
         {
@@ -54,7 +60,9 @@ public class KycDocumentEndpoints() : CarterModule("microfinance")
         })
         .WithName(RejectKycDocument)
         .WithSummary("Reject KYC document")
-        .Produces<RejectKycDocumentResponse>();
+        .Produces<RejectKycDocumentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

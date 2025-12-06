@@ -23,7 +23,9 @@ public class CreditScoreEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateCreditScore)
         .WithSummary("Create a new credit score")
-        .Produces<CreateCreditScoreResponse>(StatusCodes.Status201Created);
+        .Produces<CreateCreditScoreResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -32,7 +34,9 @@ public class CreditScoreEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetCreditScore)
         .WithSummary("Get credit score by ID")
-        .Produces<CreditScoreResponse>();
+        .Produces<CreditScoreResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/loss-parameters", async (Guid id, SetLossParametersRequest request, ISender sender) =>
         {
@@ -45,7 +49,9 @@ public class CreditScoreEndpoints() : CarterModule("microfinance")
         })
         .WithName(SetCreditScoreLossParameters)
         .WithSummary("Set loss parameters for risk calculation")
-        .Produces<SetLossParametersResponse>();
+        .Produces<SetLossParametersResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

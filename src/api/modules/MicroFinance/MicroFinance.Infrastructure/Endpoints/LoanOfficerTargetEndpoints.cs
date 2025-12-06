@@ -23,7 +23,9 @@ public class LoanOfficerTargetEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateLoanOfficerTarget)
         .WithSummary("Create a new loan officer target")
-        .Produces<CreateLoanOfficerTargetResponse>(StatusCodes.Status201Created);
+        .Produces<CreateLoanOfficerTargetResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -32,7 +34,9 @@ public class LoanOfficerTargetEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetLoanOfficerTarget)
         .WithSummary("Get loan officer target by ID")
-        .Produces<LoanOfficerTargetResponse>();
+        .Produces<LoanOfficerTargetResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/progress", async (Guid id, RecordLoanOfficerProgressRequest request, ISender sender) =>
         {
@@ -42,7 +46,9 @@ public class LoanOfficerTargetEndpoints() : CarterModule("microfinance")
         })
         .WithName(RecordLoanOfficerProgress)
         .WithSummary("Record progress towards loan officer target")
-        .Produces<RecordLoanOfficerProgressResponse>();
+        .Produces<RecordLoanOfficerProgressResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

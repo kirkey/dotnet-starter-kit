@@ -28,7 +28,9 @@ public class ShareTransactionEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetShareTransaction)
         .WithSummary("Gets a share transaction by ID")
-        .Produces<ShareTransactionResponse>();
+        .Produces<ShareTransactionResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         transactionsGroup.MapPost("/search", async (SearchShareTransactionsCommand request, ISender mediator) =>
         {
@@ -37,7 +39,9 @@ public class ShareTransactionEndpoints() : CarterModule("microfinance")
         })
         .WithName(SearchShareTransactions)
         .WithSummary("Searches share transactions with pagination")
-        .Produces<PagedList<ShareTransactionResponse>>();
+        .Produces<PagedList<ShareTransactionResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         transactionsGroup.MapGet("/by-account/{accountId:guid}", async (Guid accountId, ISender mediator) =>
         {
@@ -52,7 +56,9 @@ public class ShareTransactionEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetShareTransactionsByAccount)
         .WithSummary("Gets all transactions for a share account")
-        .Produces<PagedList<ShareTransactionResponse>>();
+        .Produces<PagedList<ShareTransactionResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

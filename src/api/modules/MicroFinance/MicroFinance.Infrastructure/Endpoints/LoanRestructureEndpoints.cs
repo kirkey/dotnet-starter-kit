@@ -23,7 +23,9 @@ public class LoanRestructureEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateLoanRestructure)
         .WithSummary("Create a new loan restructure")
-        .Produces<CreateLoanRestructureResponse>(StatusCodes.Status201Created);
+        .Produces<CreateLoanRestructureResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -32,7 +34,9 @@ public class LoanRestructureEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetLoanRestructure)
         .WithSummary("Get loan restructure by ID")
-        .Produces<LoanRestructureResponse>();
+        .Produces<LoanRestructureResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/approve", async (Guid id, ApproveRestructureRequest request, ISender sender) =>
         {
@@ -42,7 +46,9 @@ public class LoanRestructureEndpoints() : CarterModule("microfinance")
         })
         .WithName(ApproveRestructure)
         .WithSummary("Approve loan restructure")
-        .Produces<ApproveRestructureResponse>();
+        .Produces<ApproveRestructureResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

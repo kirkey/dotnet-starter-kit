@@ -28,7 +28,9 @@ public class SavingsTransactionEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetSavingsTransaction)
         .WithSummary("Gets a savings transaction by ID")
-        .Produces<SavingsTransactionResponse>();
+        .Produces<SavingsTransactionResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         transactionsGroup.MapPost("/search", async (SearchSavingsTransactionsCommand request, ISender mediator) =>
         {
@@ -37,7 +39,9 @@ public class SavingsTransactionEndpoints() : CarterModule("microfinance")
         })
         .WithName(SearchSavingsTransactions)
         .WithSummary("Searches savings transactions with pagination")
-        .Produces<PagedList<SavingsTransactionResponse>>();
+        .Produces<PagedList<SavingsTransactionResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         transactionsGroup.MapGet("/by-account/{accountId:guid}", async (Guid accountId, ISender mediator) =>
         {
@@ -52,7 +56,9 @@ public class SavingsTransactionEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetSavingsTransactionsByAccount)
         .WithSummary("Gets all transactions for a savings account")
-        .Produces<PagedList<SavingsTransactionResponse>>();
+        .Produces<PagedList<SavingsTransactionResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

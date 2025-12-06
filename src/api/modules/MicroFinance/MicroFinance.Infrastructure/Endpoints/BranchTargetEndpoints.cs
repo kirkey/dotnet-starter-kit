@@ -23,7 +23,9 @@ public class BranchTargetEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateBranchTarget)
         .WithSummary("Create a new branch target")
-        .Produces<CreateBranchTargetResponse>(StatusCodes.Status201Created);
+        .Produces<CreateBranchTargetResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -32,7 +34,9 @@ public class BranchTargetEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetBranchTarget)
         .WithSummary("Get branch target by ID")
-        .Produces<BranchTargetResponse>();
+        .Produces<BranchTargetResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/progress", async (Guid id, RecordBranchProgressRequest request, ISender sender) =>
         {
@@ -42,7 +46,9 @@ public class BranchTargetEndpoints() : CarterModule("microfinance")
         })
         .WithName(RecordBranchProgress)
         .WithSummary("Record progress towards branch target")
-        .Produces<RecordBranchProgressResponse>();
+        .Produces<RecordBranchProgressResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

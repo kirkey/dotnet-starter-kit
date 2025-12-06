@@ -30,7 +30,9 @@ public class InsuranceClaimEndpoints() : CarterModule("microfinance")
             })
             .WithName(SubmitInsuranceClaim)
             .WithSummary("Submits a new insurance claim")
-            .Produces<SubmitInsuranceClaimResponse>(StatusCodes.Status201Created);
+            .Produces<SubmitInsuranceClaimResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -39,7 +41,9 @@ public class InsuranceClaimEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetInsuranceClaim)
             .WithSummary("Gets an insurance claim by ID")
-            .Produces<InsuranceClaimResponse>();
+            .Produces<InsuranceClaimResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         // Claim Workflow
         group.MapPost("/{id:guid}/review", async (Guid id, ReviewInsuranceClaimCommand command, ISender sender) =>
@@ -50,7 +54,9 @@ public class InsuranceClaimEndpoints() : CarterModule("microfinance")
             })
             .WithName(ReviewInsuranceClaim)
             .WithSummary("Starts review of an insurance claim")
-            .Produces<ReviewInsuranceClaimResponse>();
+            .Produces<ReviewInsuranceClaimResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/approve", async (Guid id, ApproveInsuranceClaimCommand command, ISender sender) =>
             {
@@ -60,7 +66,9 @@ public class InsuranceClaimEndpoints() : CarterModule("microfinance")
             })
             .WithName(ApproveInsuranceClaim)
             .WithSummary("Approves an insurance claim")
-            .Produces<ApproveInsuranceClaimResponse>();
+            .Produces<ApproveInsuranceClaimResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/reject", async (Guid id, RejectInsuranceClaimCommand command, ISender sender) =>
             {
@@ -70,7 +78,9 @@ public class InsuranceClaimEndpoints() : CarterModule("microfinance")
             })
             .WithName(RejectInsuranceClaim)
             .WithSummary("Rejects an insurance claim")
-            .Produces<RejectInsuranceClaimResponse>();
+            .Produces<RejectInsuranceClaimResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/settle", async (Guid id, SettleInsuranceClaimCommand command, ISender sender) =>
             {
@@ -80,7 +90,9 @@ public class InsuranceClaimEndpoints() : CarterModule("microfinance")
             })
             .WithName(SettleInsuranceClaim)
             .WithSummary("Settles an approved insurance claim")
-            .Produces<SettleInsuranceClaimResponse>();
+            .Produces<SettleInsuranceClaimResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
     }
 }

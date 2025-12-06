@@ -25,7 +25,9 @@ public class CollateralReleaseEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateCollateralRelease)
         .WithSummary("Create a new collateral release request")
-        .Produces<CreateCollateralReleaseResponse>(StatusCodes.Status201Created);
+        .Produces<CreateCollateralReleaseResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -34,7 +36,9 @@ public class CollateralReleaseEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetCollateralRelease)
         .WithSummary("Get collateral release by ID")
-        .Produces<CollateralReleaseResponse>();
+        .Produces<CollateralReleaseResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/approve", async (Guid id, ApproveReleaseRequest request, ISender sender) =>
         {
@@ -43,7 +47,9 @@ public class CollateralReleaseEndpoints() : CarterModule("microfinance")
         })
         .WithName(ApproveRelease)
         .WithSummary("Approve a collateral release")
-        .Produces<ApproveReleaseResponse>();
+        .Produces<ApproveReleaseResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/release", async (Guid id, ReleaseRequest request, ISender sender) =>
         {
@@ -57,7 +63,9 @@ public class CollateralReleaseEndpoints() : CarterModule("microfinance")
         })
         .WithName(ReleaseCollateral)
         .WithSummary("Complete collateral release")
-        .Produces<ReleaseCollateralResponse>();
+        .Produces<ReleaseCollateralResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

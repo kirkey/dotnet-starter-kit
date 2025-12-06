@@ -25,7 +25,9 @@ public class InvestmentTransactionEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateBuyTransaction)
         .WithSummary("Create a buy investment transaction")
-        .Produces<CreateBuyTransactionResponse>(StatusCodes.Status201Created);
+        .Produces<CreateBuyTransactionResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/sell", async (CreateSellTransactionCommand command, ISender sender) =>
         {
@@ -34,7 +36,9 @@ public class InvestmentTransactionEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateSellTransaction)
         .WithSummary("Create a sell investment transaction")
-        .Produces<CreateSellTransactionResponse>(StatusCodes.Status201Created);
+        .Produces<CreateSellTransactionResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -43,7 +47,9 @@ public class InvestmentTransactionEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetInvestmentTransaction)
         .WithSummary("Get investment transaction by ID")
-        .Produces<InvestmentTransactionResponse>();
+        .Produces<InvestmentTransactionResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/complete", async (Guid id, CompleteTransactionRequest? request, ISender sender) =>
         {
@@ -52,7 +58,9 @@ public class InvestmentTransactionEndpoints() : CarterModule("microfinance")
         })
         .WithName(CompleteInvestmentTransaction)
         .WithSummary("Complete an investment transaction")
-        .Produces<CompleteTransactionResponse>();
+        .Produces<CompleteTransactionResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

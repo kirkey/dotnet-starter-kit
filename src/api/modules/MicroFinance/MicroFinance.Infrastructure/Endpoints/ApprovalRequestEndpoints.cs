@@ -27,7 +27,9 @@ public class ApprovalRequestEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateApprovalRequest)
         .WithSummary("Create a new approval request")
-        .Produces<CreateApprovalRequestResponse>(StatusCodes.Status201Created);
+        .Produces<CreateApprovalRequestResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -36,7 +38,9 @@ public class ApprovalRequestEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetApprovalRequest)
         .WithSummary("Get approval request by ID")
-        .Produces<ApprovalRequestResponse>();
+        .Produces<ApprovalRequestResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/approve", async (Guid id, ApproveRequestBody body, ISender sender) =>
         {
@@ -46,7 +50,9 @@ public class ApprovalRequestEndpoints() : CarterModule("microfinance")
         })
         .WithName(ApproveRequestLevel)
         .WithSummary("Approve the current level of an approval request")
-        .Produces<ApproveRequestLevelResponse>();
+        .Produces<ApproveRequestLevelResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/reject", async (Guid id, RejectRequestBody body, ISender sender) =>
         {
@@ -56,7 +62,9 @@ public class ApprovalRequestEndpoints() : CarterModule("microfinance")
         })
         .WithName(RejectApprovalRequest)
         .WithSummary("Reject an approval request")
-        .Produces<RejectApprovalRequestResponse>();
+        .Produces<RejectApprovalRequestResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/cancel", async (Guid id, CancelRequestBody body, ISender sender) =>
         {
@@ -66,7 +74,9 @@ public class ApprovalRequestEndpoints() : CarterModule("microfinance")
         })
         .WithName(CancelApprovalRequest)
         .WithSummary("Cancel an approval request")
-        .Produces<CancelApprovalRequestResponse>();
+        .Produces<CancelApprovalRequestResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Cancel, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

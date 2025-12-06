@@ -27,7 +27,9 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateLoanDisbursementTranche)
         .WithSummary("Create a new loan disbursement tranche")
-        .Produces<CreateLoanDisbursementTrancheResponse>(StatusCodes.Status201Created);
+        .Produces<CreateLoanDisbursementTrancheResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Disburse, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -36,7 +38,9 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetLoanDisbursementTranche)
         .WithSummary("Get loan disbursement tranche by ID")
-        .Produces<LoanDisbursementTrancheResponse>();
+        .Produces<LoanDisbursementTrancheResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Disburse, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/verify-milestone", async (Guid id, ISender sender) =>
         {
@@ -45,7 +49,9 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
         })
         .WithName(VerifyTrancheMilestone)
         .WithSummary("Verify tranche milestone")
-        .Produces<VerifyMilestoneResponse>();
+        .Produces<VerifyMilestoneResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/approve", async (Guid id, ApproveTrancheRequest request, ISender sender) =>
         {
@@ -55,7 +61,9 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
         })
         .WithName(ApproveTranche)
         .WithSummary("Approve disbursement tranche")
-        .Produces<ApproveTrancheResponse>();
+        .Produces<ApproveTrancheResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/disburse", async (Guid id, DisburseTrancheRequest request, ISender sender) =>
         {
@@ -65,7 +73,9 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
         })
         .WithName(DisburseTranche)
         .WithSummary("Disburse tranche")
-        .Produces<DisburseTrancheResponse>();
+        .Produces<DisburseTrancheResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Disburse, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

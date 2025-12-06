@@ -27,7 +27,9 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule("microfinance")
         })
         .WithName(AssignToMember)
         .WithSummary("Assign loan officer to a member")
-        .Produces<AssignToMemberResponse>(StatusCodes.Status201Created);
+        .Produces<AssignToMemberResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/group", async (AssignToGroupCommand command, ISender sender) =>
         {
@@ -36,7 +38,9 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule("microfinance")
         })
         .WithName(AssignToGroup)
         .WithSummary("Assign loan officer to a group")
-        .Produces<AssignToGroupResponse>(StatusCodes.Status201Created);
+        .Produces<AssignToGroupResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -45,7 +49,9 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetLoanOfficerAssignment)
         .WithSummary("Get loan officer assignment by ID")
-        .Produces<LoanOfficerAssignmentResponse>();
+        .Produces<LoanOfficerAssignmentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/transfer", async (Guid id, TransferAssignmentRequest request, ISender sender) =>
         {
@@ -55,7 +61,9 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule("microfinance")
         })
         .WithName(TransferAssignment)
         .WithSummary("Transfer assignment to another loan officer")
-        .Produces<TransferAssignmentResponse>();
+        .Produces<TransferAssignmentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/end", async (Guid id, EndAssignmentRequest request, ISender sender) =>
         {
@@ -65,7 +73,9 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule("microfinance")
         })
         .WithName(EndAssignment)
         .WithSummary("End loan officer assignment")
-        .Produces<EndAssignmentResponse>();
+        .Produces<EndAssignmentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

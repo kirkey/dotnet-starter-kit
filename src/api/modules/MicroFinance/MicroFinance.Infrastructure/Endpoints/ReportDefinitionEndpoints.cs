@@ -29,7 +29,9 @@ public class ReportDefinitionEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateReportDefinition)
             .WithSummary("Creates a new report definition")
-            .Produces<CreateReportDefinitionResponse>(StatusCodes.Status201Created);
+            .Produces<CreateReportDefinitionResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -38,7 +40,9 @@ public class ReportDefinitionEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetReportDefinition)
             .WithSummary("Gets a report definition by ID")
-            .Produces<ReportDefinitionResponse>();
+            .Produces<ReportDefinitionResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
             {
@@ -47,6 +51,8 @@ public class ReportDefinitionEndpoints() : CarterModule("microfinance")
             })
             .WithName(ActivateReportDefinition)
             .WithSummary("Activates a report definition")
-            .Produces<ActivateReportDefinitionResponse>();
+            .Produces<ActivateReportDefinitionResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }

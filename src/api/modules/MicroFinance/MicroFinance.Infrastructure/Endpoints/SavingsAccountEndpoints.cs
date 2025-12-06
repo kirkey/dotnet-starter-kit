@@ -44,7 +44,9 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateSavingsAccount)
             .WithSummary("Creates a new savings account")
-            .Produces<CreateSavingsAccountResponse>(StatusCodes.Status201Created);
+            .Produces<CreateSavingsAccountResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         savingsAccountsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -53,7 +55,9 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetSavingsAccount)
             .WithSummary("Gets a savings account by ID")
-            .Produces<SavingsAccountResponse>();
+            .Produces<SavingsAccountResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         savingsAccountsGroup.MapPost("/search", async (SearchSavingsAccountsCommand command, ISender sender) =>
             {
@@ -62,7 +66,9 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(SearchSavingsAccounts)
             .WithSummary("Searches savings accounts with filters and pagination")
-            .Produces<PagedList<SavingsAccountResponse>>();
+            .Produces<PagedList<SavingsAccountResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         savingsAccountsGroup.MapPost("/{id:guid}/deposit", async (Guid id, DepositCommand command, ISender sender) =>
             {
@@ -75,7 +81,9 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(DepositToSavingsAccount)
             .WithSummary("Deposits money to a savings account")
-            .Produces<DepositResponse>();
+            .Produces<DepositResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         savingsAccountsGroup.MapPost("/{id:guid}/withdraw", async (Guid id, WithdrawCommand command, ISender sender) =>
             {
@@ -88,7 +96,9 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(WithdrawFromSavingsAccount)
             .WithSummary("Withdraws money from a savings account")
-            .Produces<WithdrawResponse>();
+            .Produces<WithdrawResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         savingsAccountsGroup.MapPost("/transfer", async (TransferFundsCommand command, ISender sender) =>
             {
@@ -97,7 +107,9 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(TransferFunds)
             .WithSummary("Transfers funds between savings accounts")
-            .Produces<TransferFundsResponse>();
+            .Produces<TransferFundsResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         savingsAccountsGroup.MapGet("/by-member/{memberId:guid}", async (Guid memberId, ISender sender) =>
             {
@@ -112,7 +124,9 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetSavingsAccountsByMember)
             .WithSummary("Gets all savings accounts for a member")
-            .Produces<PagedList<SavingsAccountResponse>>();
+            .Produces<PagedList<SavingsAccountResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         savingsAccountsGroup.MapPost("/{id:guid}/post-interest", async (Guid id, PostInterestCommand command, ISender sender) =>
             {
@@ -122,7 +136,9 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(PostSavingsInterest)
             .WithSummary("Posts interest to a savings account")
-            .Produces<PostInterestResponse>();
+            .Produces<PostInterestResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         savingsAccountsGroup.MapPost("/{id:guid}/freeze", async (Guid id, ISender sender) =>
             {
@@ -131,7 +147,9 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(FreezeSavingsAccount)
             .WithSummary("Freezes a savings account")
-            .Produces<FreezeAccountResponse>();
+            .Produces<FreezeAccountResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         savingsAccountsGroup.MapPost("/{id:guid}/unfreeze", async (Guid id, ISender sender) =>
             {
@@ -140,7 +158,9 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(UnfreezeSavingsAccount)
             .WithSummary("Unfreezes a frozen savings account")
-            .Produces<UnfreezeAccountResponse>();
+            .Produces<UnfreezeAccountResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         savingsAccountsGroup.MapPost("/{id:guid}/close", async (Guid id, CloseAccountCommand command, ISender sender) =>
             {
@@ -150,7 +170,9 @@ public class SavingsAccountEndpoints() : CarterModule("microfinance")
             })
             .WithName(CloseSavingsAccount)
             .WithSummary("Closes a savings account")
-            .Produces<CloseAccountResponse>();
+            .Produces<CloseAccountResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
     }
 }

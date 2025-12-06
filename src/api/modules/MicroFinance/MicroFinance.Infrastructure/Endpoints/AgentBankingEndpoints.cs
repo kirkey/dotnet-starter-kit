@@ -35,7 +35,9 @@ public class AgentBankingEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateAgentBanking)
             .WithSummary("Creates a new agent banking location")
-            .Produces<CreateAgentBankingResponse>(StatusCodes.Status201Created);
+            .Produces<CreateAgentBankingResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -44,7 +46,9 @@ public class AgentBankingEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetAgentBanking)
             .WithSummary("Gets an agent banking location by ID")
-            .Produces<AgentBankingResponse>();
+            .Produces<AgentBankingResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/approve", async (Guid id, ISender sender) =>
             {
@@ -53,7 +57,9 @@ public class AgentBankingEndpoints() : CarterModule("microfinance")
             })
             .WithName(ApproveAgentBanking)
             .WithSummary("Approves an agent banking location")
-            .Produces<ApproveAgentBankingResponse>();
+            .Produces<ApproveAgentBankingResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/suspend", async (Guid id, SuspendAgentRequest request, ISender sender) =>
             {
@@ -62,7 +68,9 @@ public class AgentBankingEndpoints() : CarterModule("microfinance")
             })
             .WithName(SuspendAgentBanking)
             .WithSummary("Suspends an agent banking location")
-            .Produces<SuspendAgentBankingResponse>();
+            .Produces<SuspendAgentBankingResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/credit-float", async (Guid id, FloatAmountRequest request, ISender sender) =>
             {
@@ -71,7 +79,9 @@ public class AgentBankingEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreditAgentFloat)
             .WithSummary("Credits float to an agent's account")
-            .Produces<CreditFloatResponse>();
+            .Produces<CreditFloatResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/debit-float", async (Guid id, FloatAmountRequest request, ISender sender) =>
             {
@@ -80,7 +90,9 @@ public class AgentBankingEndpoints() : CarterModule("microfinance")
             })
             .WithName(DebitAgentFloat)
             .WithSummary("Debits float from an agent's account")
-            .Produces<DebitFloatResponse>();
+            .Produces<DebitFloatResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }
 

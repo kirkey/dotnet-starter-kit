@@ -31,7 +31,9 @@ public class FeeDefinitionEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateFeeDefinition)
         .WithSummary("Creates a new fee definition")
-        .Produces<Guid>(StatusCodes.Status201Created);
+        .Produces<Guid>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         feeDefinitionsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
         {
@@ -40,7 +42,9 @@ public class FeeDefinitionEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetFeeDefinition)
         .WithSummary("Gets a fee definition by ID")
-        .Produces<FeeDefinitionResponse>();
+        .Produces<FeeDefinitionResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         feeDefinitionsGroup.MapPost("/search", async (SearchFeeDefinitionsCommand request, ISender mediator) =>
         {
@@ -49,7 +53,9 @@ public class FeeDefinitionEndpoints() : CarterModule("microfinance")
         })
         .WithName(SearchFeeDefinitions)
         .WithSummary("Searches fee definitions with pagination")
-        .Produces<PagedList<FeeDefinitionResponse>>();
+        .Produces<PagedList<FeeDefinitionResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         feeDefinitionsGroup.MapPut("/{id:guid}", async (Guid id, UpdateFeeDefinitionCommand request, ISender mediator) =>
         {
@@ -62,7 +68,9 @@ public class FeeDefinitionEndpoints() : CarterModule("microfinance")
         })
         .WithName(UpdateFeeDefinition)
         .WithSummary("Updates a fee definition")
-        .Produces(StatusCodes.Status204NoContent);
+        .Produces(StatusCodes.Status204NoContent)
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

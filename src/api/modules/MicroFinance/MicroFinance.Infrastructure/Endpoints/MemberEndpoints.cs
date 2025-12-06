@@ -33,7 +33,9 @@ public class MemberEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateMember)
             .WithSummary("Creates a new member")
-            .Produces<CreateMemberResponse>(StatusCodes.Status201Created);
+            .Produces<CreateMemberResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         membersGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -42,7 +44,9 @@ public class MemberEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetMember)
             .WithSummary("Gets a member by ID")
-            .Produces<MemberResponse>();
+            .Produces<MemberResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         membersGroup.MapPut("/{id:guid}", async (Guid id, UpdateMemberCommand command, ISender sender) =>
             {
@@ -55,7 +59,9 @@ public class MemberEndpoints() : CarterModule("microfinance")
             })
             .WithName(UpdateMember)
             .WithSummary("Updates a member")
-            .Produces<UpdateMemberResponse>();
+            .Produces<UpdateMemberResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         membersGroup.MapDelete("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -64,7 +70,9 @@ public class MemberEndpoints() : CarterModule("microfinance")
             })
             .WithName(DeleteMember)
             .WithSummary("Deletes a member")
-            .Produces(StatusCodes.Status204NoContent);
+            .Produces(StatusCodes.Status204NoContent)
+            .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         membersGroup.MapPost("/search", async ([FromBody] SearchMembersCommand command, ISender sender) =>
             {
@@ -73,6 +81,8 @@ public class MemberEndpoints() : CarterModule("microfinance")
             })
             .WithName(SearchMembers)
             .WithSummary("Searches members with filters and pagination")
-            .Produces<PagedList<MemberResponse>>();
+            .Produces<PagedList<MemberResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }

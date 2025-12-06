@@ -25,7 +25,9 @@ public class CollateralInsuranceEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateCollateralInsurance)
         .WithSummary("Create a new collateral insurance")
-        .Produces<CreateCollateralInsuranceResponse>(StatusCodes.Status201Created);
+        .Produces<CreateCollateralInsuranceResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -34,7 +36,9 @@ public class CollateralInsuranceEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetCollateralInsurance)
         .WithSummary("Get collateral insurance by ID")
-        .Produces<CollateralInsuranceResponse>();
+        .Produces<CollateralInsuranceResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/record-premium", async (Guid id, RecordPremiumRequest request, ISender sender) =>
         {
@@ -43,7 +47,9 @@ public class CollateralInsuranceEndpoints() : CarterModule("microfinance")
         })
         .WithName(RecordPremiumPayment)
         .WithSummary("Record insurance premium payment")
-        .Produces<RecordPremiumPaymentResponse>();
+        .Produces<RecordPremiumPaymentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/renew", async (Guid id, RenewRequest request, ISender sender) =>
         {
@@ -52,7 +58,9 @@ public class CollateralInsuranceEndpoints() : CarterModule("microfinance")
         })
         .WithName(RenewInsurance)
         .WithSummary("Renew collateral insurance")
-        .Produces<RenewInsuranceResponse>();
+        .Produces<RenewInsuranceResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

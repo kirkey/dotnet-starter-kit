@@ -37,7 +37,9 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateFeeCharge)
         .WithSummary("Creates a new fee charge")
-        .Produces<CreateFeeChargeResponse>(StatusCodes.Status201Created);
+        .Produces<CreateFeeChargeResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         chargesGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
         {
@@ -46,7 +48,9 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetFeeCharge)
         .WithSummary("Gets a fee charge by ID")
-        .Produces<FeeChargeResponse>();
+        .Produces<FeeChargeResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         chargesGroup.MapPost("/search", async (SearchFeeChargesCommand request, ISender mediator) =>
         {
@@ -55,7 +59,9 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
         })
         .WithName(SearchFeeCharges)
         .WithSummary("Searches fee charges with pagination")
-        .Produces<PagedList<FeeChargeResponse>>();
+        .Produces<PagedList<FeeChargeResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         chargesGroup.MapGet("/by-member/{memberId:guid}", async (Guid memberId, ISender mediator) =>
         {
@@ -70,7 +76,9 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetFeeChargesByMember)
         .WithSummary("Gets all fee charges for a member")
-        .Produces<PagedList<FeeChargeResponse>>();
+        .Produces<PagedList<FeeChargeResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         chargesGroup.MapGet("/by-definition/{feeDefinitionId:guid}", async (Guid feeDefinitionId, ISender mediator) =>
         {
@@ -85,7 +93,9 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetFeeChargesByDefinition)
         .WithSummary("Gets all fee charges for a fee definition")
-        .Produces<PagedList<FeeChargeResponse>>();
+        .Produces<PagedList<FeeChargeResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         chargesGroup.MapPost("/{id:guid}/payment", async (Guid id, RecordFeePaymentCommand command, ISender mediator) =>
         {
@@ -95,7 +105,9 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
         })
         .WithName(RecordFeePayment)
         .WithSummary("Records a payment for a fee charge")
-        .Produces<RecordFeePaymentResponse>();
+        .Produces<RecordFeePaymentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         chargesGroup.MapPost("/{id:guid}/waive", async (Guid id, WaiveFeeChargeCommand command, ISender mediator) =>
         {
@@ -105,7 +117,9 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
         })
         .WithName(WaiveFeeCharge)
         .WithSummary("Waives a fee charge")
-        .Produces<WaiveFeeChargeResponse>();
+        .Produces<WaiveFeeChargeResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         chargesGroup.MapPost("/{id:guid}/reverse", async (Guid id, ReverseFeeChargeCommand command, ISender mediator) =>
         {
@@ -115,7 +129,9 @@ public class FeeChargeEndpoints() : CarterModule("microfinance")
         })
         .WithName(ReverseFeeCharge)
         .WithSummary("Reverses a fee charge")
-        .Produces<ReverseFeeChargeResponse>();
+        .Produces<ReverseFeeChargeResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

@@ -32,7 +32,9 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateCollectionCase)
             .WithSummary("Creates a new collection case for a delinquent loan")
-            .Produces<CreateCollectionCaseResponse>(StatusCodes.Status201Created);
+            .Produces<CreateCollectionCaseResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -41,7 +43,9 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetCollectionCase)
             .WithSummary("Gets a collection case by ID")
-            .Produces<CollectionCaseResponse>();
+            .Produces<CollectionCaseResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         // Assignment
         group.MapPost("/{id:guid}/assign", async (Guid id, AssignCollectionCaseCommand command, ISender sender) =>
@@ -52,7 +56,9 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
             })
             .WithName(AssignCollectionCase)
             .WithSummary("Assigns the case to a collector")
-            .Produces<AssignCollectionCaseResponse>();
+            .Produces<AssignCollectionCaseResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         // Collection Activities
         group.MapPost("/{id:guid}/record-contact", async (Guid id, RecordContactCommand command, ISender sender) =>
@@ -63,7 +69,9 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
             })
             .WithName(RecordContact)
             .WithSummary("Records a contact attempt with the borrower")
-            .Produces<RecordContactResponse>();
+            .Produces<RecordContactResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/record-recovery", async (Guid id, RecordRecoveryCommand command, ISender sender) =>
             {
@@ -73,7 +81,9 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
             })
             .WithName(RecordRecovery)
             .WithSummary("Records a payment recovery")
-            .Produces<RecordRecoveryResponse>();
+            .Produces<RecordRecoveryResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         // Escalation & Resolution
         group.MapPost("/{id:guid}/escalate-legal", async (Guid id, EscalateToLegalCommand command, ISender sender) =>
@@ -84,7 +94,9 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
             })
             .WithName(EscalateToLegal)
             .WithSummary("Escalates the case to legal action")
-            .Produces<EscalateToLegalResponse>();
+            .Produces<EscalateToLegalResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/settle", async (Guid id, SettleCollectionCaseCommand command, ISender sender) =>
             {
@@ -94,7 +106,9 @@ public class CollectionCaseEndpoints() : CarterModule("microfinance")
             })
             .WithName(SettleCollectionCase)
             .WithSummary("Settles the case with agreed terms")
-            .Produces<SettleCollectionCaseResponse>();
+            .Produces<SettleCollectionCaseResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
     }
 }

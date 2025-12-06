@@ -25,7 +25,9 @@ public class CustomerSurveyEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateCustomerSurvey)
         .WithSummary("Create a new customer survey")
-        .Produces<CreateCustomerSurveyResponse>(StatusCodes.Status201Created);
+        .Produces<CreateCustomerSurveyResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -34,7 +36,9 @@ public class CustomerSurveyEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetCustomerSurvey)
         .WithSummary("Get customer survey by ID")
-        .Produces<CustomerSurveyResponse>();
+        .Produces<CustomerSurveyResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
         {
@@ -43,7 +47,9 @@ public class CustomerSurveyEndpoints() : CarterModule("microfinance")
         })
         .WithName(ActivateCustomerSurvey)
         .WithSummary("Activate customer survey")
-        .Produces<ActivateCustomerSurveyResponse>();
+        .Produces<ActivateCustomerSurveyResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/complete", async (Guid id, ISender sender) =>
         {
@@ -52,7 +58,9 @@ public class CustomerSurveyEndpoints() : CarterModule("microfinance")
         })
         .WithName(CompleteCustomerSurvey)
         .WithSummary("Complete customer survey")
-        .Produces<CompleteCustomerSurveyResponse>();
+        .Produces<CompleteCustomerSurveyResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

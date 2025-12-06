@@ -23,7 +23,9 @@ public class CommunicationTemplateEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateCommunicationTemplate)
         .WithSummary("Create a new communication template")
-        .Produces<CreateCommunicationTemplateResponse>(StatusCodes.Status201Created);
+        .Produces<CreateCommunicationTemplateResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -32,7 +34,9 @@ public class CommunicationTemplateEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetCommunicationTemplate)
         .WithSummary("Get communication template by ID")
-        .Produces<CommunicationTemplateResponse>();
+        .Produces<CommunicationTemplateResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
         {
@@ -41,7 +45,9 @@ public class CommunicationTemplateEndpoints() : CarterModule("microfinance")
         })
         .WithName(ActivateCommunicationTemplate)
         .WithSummary("Activate a communication template")
-        .Produces<ActivateTemplateResponse>();
+        .Produces<ActivateTemplateResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

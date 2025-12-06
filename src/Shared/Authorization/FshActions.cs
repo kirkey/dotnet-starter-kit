@@ -30,4 +30,6 @@ public static class FshActions
     public const string MarkAsPaid = nameof(MarkAsPaid);
     public const string Accrue = nameof(Accrue);
     public const string Acknowledge = nameof(Acknowledge);
+    public const string Disburse = nameof(Disburse);
+    public const string Close = nameof(Close);
 }

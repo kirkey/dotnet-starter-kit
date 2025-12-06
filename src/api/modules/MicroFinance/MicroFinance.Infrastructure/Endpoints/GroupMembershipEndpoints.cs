@@ -39,7 +39,9 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateGroupMembership)
         .WithSummary("Creates a new group membership")
-        .Produces<CreateGroupMembershipResponse>(StatusCodes.Status201Created);
+        .Produces<CreateGroupMembershipResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         membershipsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
         {
@@ -48,7 +50,9 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetGroupMembership)
         .WithSummary("Gets a group membership by ID")
-        .Produces<GroupMembershipResponse>();
+        .Produces<GroupMembershipResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         membershipsGroup.MapPost("/search", async (SearchGroupMembershipsCommand request, ISender mediator) =>
         {
@@ -57,7 +61,9 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
         })
         .WithName(SearchGroupMemberships)
         .WithSummary("Searches group memberships with pagination")
-        .Produces<PagedList<GroupMembershipResponse>>();
+        .Produces<PagedList<GroupMembershipResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         membershipsGroup.MapGet("/by-group/{groupId:guid}", async (Guid groupId, ISender mediator) =>
         {
@@ -72,7 +78,9 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetGroupMembershipsByGroup)
         .WithSummary("Gets all memberships for a group")
-        .Produces<PagedList<GroupMembershipResponse>>();
+        .Produces<PagedList<GroupMembershipResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         membershipsGroup.MapGet("/by-member/{memberId:guid}", async (Guid memberId, ISender mediator) =>
         {
@@ -87,7 +95,9 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetGroupMembershipsByMember)
         .WithSummary("Gets all groups a member belongs to")
-        .Produces<PagedList<GroupMembershipResponse>>();
+        .Produces<PagedList<GroupMembershipResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         membershipsGroup.MapPut("/{id:guid}/role", async (Guid id, UpdateMembershipRoleCommand command, ISender mediator) =>
         {
@@ -97,7 +107,9 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
         })
         .WithName(UpdateMembershipRole)
         .WithSummary("Updates the role of a group membership")
-        .Produces<UpdateMembershipRoleResponse>();
+        .Produces<UpdateMembershipRoleResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         membershipsGroup.MapPost("/{id:guid}/withdraw", async (Guid id, WithdrawMembershipCommand command, ISender mediator) =>
         {
@@ -107,7 +119,9 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
         })
         .WithName(WithdrawGroupMembership)
         .WithSummary("Withdraws a member from the group")
-        .Produces<WithdrawMembershipResponse>();
+        .Produces<WithdrawMembershipResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         membershipsGroup.MapPost("/{id:guid}/suspend", async (Guid id, ISender mediator) =>
         {
@@ -116,7 +130,9 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
         })
         .WithName(SuspendGroupMembership)
         .WithSummary("Suspends a group membership")
-        .Produces<SuspendMembershipResponse>();
+        .Produces<SuspendMembershipResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         membershipsGroup.MapPost("/{id:guid}/reactivate", async (Guid id, ISender mediator) =>
         {
@@ -125,6 +141,8 @@ public class GroupMembershipEndpoints() : CarterModule("microfinance")
         })
         .WithName(ReactivateGroupMembership)
             .WithSummary("Reactivates a suspended group membership")
-            .Produces<ReactivateMembershipResponse>();
+            .Produces<ReactivateMembershipResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }

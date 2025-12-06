@@ -23,7 +23,9 @@ public class InvestmentProductEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateInvestmentProduct)
         .WithSummary("Create a new investment product")
-        .Produces<CreateInvestmentProductResponse>(StatusCodes.Status201Created);
+        .Produces<CreateInvestmentProductResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -32,7 +34,9 @@ public class InvestmentProductEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetInvestmentProduct)
         .WithSummary("Get investment product by ID")
-        .Produces<InvestmentProductResponse>();
+        .Produces<InvestmentProductResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}/nav", async (Guid id, UpdateNavRequest request, ISender sender) =>
         {
@@ -41,7 +45,9 @@ public class InvestmentProductEndpoints() : CarterModule("microfinance")
         })
         .WithName(UpdateInvestmentProductNav)
         .WithSummary("Update investment product NAV")
-        .Produces<UpdateInvestmentProductNavResponse>();
+        .Produces<UpdateInvestmentProductNavResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

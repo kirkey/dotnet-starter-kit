@@ -27,7 +27,9 @@ public class LoanWriteOffEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateLoanWriteOff)
         .WithSummary("Create a new loan write-off")
-        .Produces<CreateLoanWriteOffResponse>(StatusCodes.Status201Created);
+        .Produces<CreateLoanWriteOffResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -36,7 +38,9 @@ public class LoanWriteOffEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetLoanWriteOff)
         .WithSummary("Get loan write-off by ID")
-        .Produces<LoanWriteOffResponse>();
+        .Produces<LoanWriteOffResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/approve", async (Guid id, ApproveWriteOffRequest request, ISender sender) =>
         {
@@ -46,7 +50,9 @@ public class LoanWriteOffEndpoints() : CarterModule("microfinance")
         })
         .WithName(ApproveWriteOff)
         .WithSummary("Approve loan write-off")
-        .Produces<ApproveWriteOffResponse>();
+        .Produces<ApproveWriteOffResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/process", async (Guid id, ISender sender) =>
         {
@@ -55,7 +61,9 @@ public class LoanWriteOffEndpoints() : CarterModule("microfinance")
         })
         .WithName(ProcessWriteOff)
         .WithSummary("Process loan write-off")
-        .Produces<ProcessWriteOffResponse>();
+        .Produces<ProcessWriteOffResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/record-recovery", async (Guid id, RecordRecoveryRequest request, ISender sender) =>
         {
@@ -65,7 +73,9 @@ public class LoanWriteOffEndpoints() : CarterModule("microfinance")
         })
         .WithName(RecordWriteOffRecovery)
         .WithSummary("Record recovery on write-off")
-        .Produces<RecordRecoveryResponse>();
+        .Produces<RecordRecoveryResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

@@ -21,7 +21,9 @@ public class CollateralTypeEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateCollateralType)
         .WithSummary("Create a new collateral type")
-        .Produces<CreateCollateralTypeResponse>(StatusCodes.Status201Created);
+        .Produces<CreateCollateralTypeResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -30,7 +32,9 @@ public class CollateralTypeEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetCollateralType)
         .WithSummary("Get collateral type by ID")
-        .Produces<CollateralTypeResponse>();
+        .Produces<CollateralTypeResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }

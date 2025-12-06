@@ -29,7 +29,9 @@ public class PaymentGatewayEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreatePaymentGateway)
             .WithSummary("Creates a new payment gateway configuration")
-            .Produces<CreatePaymentGatewayResponse>(StatusCodes.Status201Created);
+            .Produces<CreatePaymentGatewayResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -38,7 +40,9 @@ public class PaymentGatewayEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetPaymentGateway)
             .WithSummary("Gets a payment gateway by ID")
-            .Produces<PaymentGatewayResponse>();
+            .Produces<PaymentGatewayResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
             {
@@ -47,6 +51,8 @@ public class PaymentGatewayEndpoints() : CarterModule("microfinance")
             })
             .WithName(ActivatePaymentGateway)
             .WithSummary("Activates a payment gateway")
-            .Produces<ActivatePaymentGatewayResponse>();
+            .Produces<ActivatePaymentGatewayResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }

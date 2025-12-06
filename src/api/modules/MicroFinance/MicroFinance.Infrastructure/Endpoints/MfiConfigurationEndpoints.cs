@@ -29,7 +29,9 @@ public class MfiConfigurationEndpoints() : CarterModule("microfinance")
             })
             .WithName(CreateMfiConfiguration)
             .WithSummary("Creates a new MFI configuration setting")
-            .Produces<CreateMfiConfigurationResponse>(StatusCodes.Status201Created);
+            .Produces<CreateMfiConfigurationResponse>(StatusCodes.Status201Created)
+            .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
             {
@@ -38,7 +40,9 @@ public class MfiConfigurationEndpoints() : CarterModule("microfinance")
             })
             .WithName(GetMfiConfiguration)
             .WithSummary("Gets an MFI configuration setting by ID")
-            .Produces<MfiConfigurationResponse>();
+            .Produces<MfiConfigurationResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         group.MapPut("/{id:guid}", async (Guid id, UpdateMfiConfigurationCommand command, ISender sender) =>
             {
@@ -48,6 +52,8 @@ public class MfiConfigurationEndpoints() : CarterModule("microfinance")
             })
             .WithName(UpdateMfiConfiguration)
             .WithSummary("Updates an MFI configuration value")
-            .Produces<UpdateMfiConfigurationResponse>();
+            .Produces<UpdateMfiConfigurationResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }

@@ -27,7 +27,9 @@ public class InvestmentAccountEndpoints() : CarterModule("microfinance")
         })
         .WithName(CreateInvestmentAccount)
         .WithSummary("Create a new investment account")
-        .Produces<CreateInvestmentAccountResponse>(StatusCodes.Status201Created);
+        .Produces<CreateInvestmentAccountResponse>(StatusCodes.Status201Created)
+        .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
         {
@@ -36,7 +38,9 @@ public class InvestmentAccountEndpoints() : CarterModule("microfinance")
         })
         .WithName(GetInvestmentAccount)
         .WithSummary("Get investment account by ID")
-        .Produces<InvestmentAccountResponse>();
+        .Produces<InvestmentAccountResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/invest", async (Guid id, InvestAccountRequest request, ISender sender) =>
         {
@@ -45,7 +49,9 @@ public class InvestmentAccountEndpoints() : CarterModule("microfinance")
         })
         .WithName(InvestInAccount)
         .WithSummary("Add investment to account")
-        .Produces<InvestResponse>();
+        .Produces<InvestResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/redeem", async (Guid id, RedeemAccountRequest request, ISender sender) =>
         {
@@ -54,7 +60,9 @@ public class InvestmentAccountEndpoints() : CarterModule("microfinance")
         })
         .WithName(RedeemFromAccount)
         .WithSummary("Redeem from investment account")
-        .Produces<RedeemResponse>();
+        .Produces<RedeemResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/sip", async (Guid id, SetupSipRequest request, ISender sender) =>
         {
@@ -63,7 +71,9 @@ public class InvestmentAccountEndpoints() : CarterModule("microfinance")
         })
         .WithName(SetupSip)
         .WithSummary("Setup SIP for investment account")
-        .Produces<SetupSipResponse>();
+        .Produces<SetupSipResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
     }
 }
