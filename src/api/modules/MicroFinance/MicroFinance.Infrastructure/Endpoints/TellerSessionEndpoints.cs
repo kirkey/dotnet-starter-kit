@@ -1,5 +1,4 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.Close.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.Open.v1;

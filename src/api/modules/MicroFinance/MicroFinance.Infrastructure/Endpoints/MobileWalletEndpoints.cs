@@ -1,5 +1,4 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.MobileWallets.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MobileWallets.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MobileWallets.Credit.v1;

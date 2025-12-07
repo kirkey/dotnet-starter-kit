@@ -1,5 +1,4 @@
 using Carter;
-using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.CollectionCases.Assign.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollectionCases.Close.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollectionCases.Create.v1;
