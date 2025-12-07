@@ -50,6 +50,10 @@ internal sealed class MicroFinanceDbInitializer(
         // 6) Seed Fixed Deposits (depend on members)
         await FixedDepositSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
 
+        // 7) Seed Transaction History (depend on accounts and loans)
+        await SavingsTransactionSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+        await LoanRepaymentSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+
         await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         logger.LogInformation("[{Tenant}] completed seeding microfinance module with comprehensive sample data", tenant);
     }
