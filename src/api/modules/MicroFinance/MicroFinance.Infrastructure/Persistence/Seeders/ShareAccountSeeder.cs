@@ -4,6 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for share accounts.
+/// Creates 40 share accounts for testing share capital and dividends.
 /// </summary>
 internal static class ShareAccountSeeder
 {
@@ -13,35 +14,41 @@ internal static class ShareAccountSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
-        const int targetCount = 10;
+        const int targetCount = 40;
         var existingCount = await context.ShareAccounts.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount >= targetCount) return;
 
-        var members = await context.Members.Take(10).ToListAsync(cancellationToken).ConfigureAwait(false);
-        var products = await context.ShareProducts.Take(2).ToListAsync(cancellationToken).ConfigureAwait(false);
+        var members = await context.Members.Where(m => m.IsActive).Take(40).ToListAsync(cancellationToken).ConfigureAwait(false);
+        var products = await context.ShareProducts.ToListAsync(cancellationToken).ConfigureAwait(false);
 
         if (members.Count < 1 || products.Count < 1) return;
 
+        var random = new Random(42);
         int accountNumber = 2001;
-        for (int i = 0; i < Math.Min(10, members.Count); i++)
+        
+        for (int i = 0; i < Math.Min(targetCount, members.Count); i++)
         {
             var accNum = $"SHR-{accountNumber + i:D6}";
             var exists = await context.ShareAccounts.AnyAsync(sa => sa.AccountNumber == accNum, cancellationToken).ConfigureAwait(false);
             if (exists) continue;
 
+            var product = products[i % products.Count];
+            var openDate = DateOnly.FromDateTime(DateTime.UtcNow.AddMonths(-random.Next(1, 18)));
+            
             var account = ShareAccount.Create(
                 accountNumber: accNum,
                 memberId: members[i].Id,
-                shareProductId: products[i % products.Count].Id,
-                openedDate: DateOnly.FromDateTime(DateTime.UtcNow.AddMonths(-3)));
+                shareProductId: product.Id,
+                openedDate: openDate);
 
-            // Purchase some initial shares
-            account.PurchaseShares((i + 1) * 5, products[i % products.Count].CurrentPrice);
+            // Purchase varying amounts of shares (5-100)
+            int shareCount = 5 + (random.Next(1, 20) * 5);
+            account.PurchaseShares(shareCount, product.CurrentPrice);
 
             await context.ShareAccounts.AddAsync(account, cancellationToken).ConfigureAwait(false);
         }
 
         await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-        logger.LogInformation("[{Tenant}] seeded share accounts", tenant);
+        logger.LogInformation("[{Tenant}] seeded {Count} share accounts", tenant, targetCount);
     }
 }

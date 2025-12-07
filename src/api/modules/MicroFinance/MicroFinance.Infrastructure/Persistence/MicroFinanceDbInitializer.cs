@@ -67,6 +67,19 @@ internal sealed class MicroFinanceDbInitializer(
         await ShareTransactionSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
         await LoanRepaymentSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
 
+        // 10) Seed Investment Products and Accounts
+        await InvestmentProductSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+        await InvestmentAccountSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+
+        // 11) Seed Insurance Policies (depend on members, loans, and insurance products)
+        await InsurancePolicySeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+
+        // 12) Seed KYC Documents for members
+        await KycDocumentSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+
+        // 13) Seed Loan Officer Assignments (depend on staff and members)
+        await LoanOfficerAssignmentSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+
         await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         logger.LogInformation("[{Tenant}] completed seeding microfinance module with comprehensive sample data", tenant);
     }

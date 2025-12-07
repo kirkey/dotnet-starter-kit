@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for savings accounts with comprehensive test data.
-/// Creates 40 accounts across various products and statuses for testing deposits, withdrawals, and account management.
+/// Creates 80 accounts across various products and statuses for testing deposits, withdrawals, and account management.
 /// </summary>
 internal static class SavingsAccountSeeder
 {
@@ -14,11 +14,11 @@ internal static class SavingsAccountSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
-        const int targetCount = 40;
+        const int targetCount = 80;
         var existingCount = await context.SavingsAccounts.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount >= targetCount) return;
 
-        var members = await context.Members.Where(m => m.IsActive).Take(40).ToListAsync(cancellationToken).ConfigureAwait(false);
+        var members = await context.Members.Where(m => m.IsActive).Take(80).ToListAsync(cancellationToken).ConfigureAwait(false);
         var products = await context.SavingsProducts.Where(p => p.IsActive).ToListAsync(cancellationToken).ConfigureAwait(false);
 
         if (members.Count < 10 || products.Count < 3) return;
@@ -44,50 +44,90 @@ internal static class SavingsAccountSeeder
             (7, regularSavings, 3200, "Active", 18),
             (8, regularSavings, 150, "Active", 3),
             (9, regularSavings, 4500, "Active", 24),
+            (10, regularSavings, 680, "Active", 7),
+            (11, regularSavings, 2100, "Active", 13),
+            (12, regularSavings, 1450, "Active", 9),
+            (13, regularSavings, 890, "Active", 5),
+            (14, regularSavings, 3700, "Active", 20),
             
             // Business Savings accounts
-            (10, businessSavings, 5000, "Active", 12),
-            (11, businessSavings, 8500, "Active", 9),
-            (12, businessSavings, 12000, "Active", 15),
-            (13, businessSavings, 3500, "Active", 6),
-            (14, businessSavings, 7200, "Active", 8),
+            (15, businessSavings, 5000, "Active", 12),
+            (16, businessSavings, 8500, "Active", 9),
+            (17, businessSavings, 12000, "Active", 15),
+            (18, businessSavings, 3500, "Active", 6),
+            (19, businessSavings, 7200, "Active", 8),
+            (20, businessSavings, 15000, "Active", 18),
+            (21, businessSavings, 9800, "Active", 11),
+            (22, businessSavings, 6300, "Active", 7),
+            (23, businessSavings, 18500, "Active", 24),
+            (24, businessSavings, 4200, "Active", 4),
             
             // Emergency Fund accounts
-            (15, emergencyFund, 1000, "Active", 6),
-            (16, emergencyFund, 2000, "Active", 8),
-            (17, emergencyFund, 500, "Active", 4),
-            (18, emergencyFund, 3000, "Active", 12),
-            (19, emergencyFund, 1500, "Active", 5),
+            (25, emergencyFund, 1000, "Active", 6),
+            (26, emergencyFund, 2000, "Active", 8),
+            (27, emergencyFund, 500, "Active", 4),
+            (28, emergencyFund, 3000, "Active", 12),
+            (29, emergencyFund, 1500, "Active", 5),
+            (30, emergencyFund, 2500, "Active", 10),
+            (31, emergencyFund, 800, "Active", 3),
+            (32, emergencyFund, 4000, "Active", 15),
+            (33, emergencyFund, 1200, "Active", 6),
+            (34, emergencyFund, 3500, "Active", 9),
             
             // Fixed Savings (higher minimums)
-            (20, fixedSavings, 5000, "Active", 12),
-            (21, fixedSavings, 10000, "Active", 18),
-            (22, fixedSavings, 7500, "Active", 9),
-            (23, fixedSavings, 15000, "Active", 24),
-            (24, fixedSavings, 8000, "Active", 6),
+            (35, fixedSavings, 5000, "Active", 12),
+            (36, fixedSavings, 10000, "Active", 18),
+            (37, fixedSavings, 7500, "Active", 9),
+            (38, fixedSavings, 15000, "Active", 24),
+            (39, fixedSavings, 8000, "Active", 6),
+            (40, fixedSavings, 12000, "Active", 15),
+            (41, fixedSavings, 20000, "Active", 24),
+            (42, fixedSavings, 6000, "Active", 8),
+            (43, fixedSavings, 9500, "Active", 12),
+            (44, fixedSavings, 18000, "Active", 20),
             
             // Premium Savings (high-value accounts)
-            (25, premiumSavings, 25000, "Active", 12),
-            (26, premiumSavings, 50000, "Active", 24),
-            (27, premiumSavings, 35000, "Active", 18),
+            (45, premiumSavings, 25000, "Active", 12),
+            (46, premiumSavings, 50000, "Active", 24),
+            (47, premiumSavings, 35000, "Active", 18),
+            (48, premiumSavings, 75000, "Active", 30),
+            (49, premiumSavings, 45000, "Active", 15),
+            (50, premiumSavings, 60000, "Active", 20),
+            (51, premiumSavings, 100000, "Active", 36),
+            (52, premiumSavings, 85000, "Active", 28),
             
             // Dormant accounts (for testing status filters)
-            (28, regularSavings, 50, "Dormant", 30),
-            (29, regularSavings, 100, "Dormant", 36),
-            (30, emergencyFund, 75, "Dormant", 24),
+            (53, regularSavings, 50, "Dormant", 30),
+            (54, regularSavings, 100, "Dormant", 36),
+            (55, emergencyFund, 75, "Dormant", 24),
+            (56, regularSavings, 25, "Dormant", 42),
+            (57, businessSavings, 200, "Dormant", 28),
+            (58, regularSavings, 80, "Dormant", 32),
             
             // Frozen accounts (for testing freeze/unfreeze)
-            (31, regularSavings, 5000, "Frozen", 12),
-            (32, businessSavings, 15000, "Frozen", 9),
-            (33, premiumSavings, 40000, "Frozen", 6),
+            (59, regularSavings, 5000, "Frozen", 12),
+            (60, businessSavings, 15000, "Frozen", 9),
+            (61, premiumSavings, 40000, "Frozen", 6),
+            (62, fixedSavings, 10000, "Frozen", 8),
             
             // More active accounts for variety
-            (34, regularSavings, 2800, "Active", 7),
-            (35, businessSavings, 6500, "Active", 10),
-            (36, emergencyFund, 2200, "Active", 8),
-            (37, fixedSavings, 12000, "Active", 15),
-            (38, regularSavings, 1100, "Active", 4),
-            (39, premiumSavings, 30000, "Active", 12),
+            (63, regularSavings, 2800, "Active", 7),
+            (64, businessSavings, 6500, "Active", 10),
+            (65, emergencyFund, 2200, "Active", 8),
+            (66, fixedSavings, 12000, "Active", 15),
+            (67, regularSavings, 1100, "Active", 4),
+            (68, premiumSavings, 30000, "Active", 12),
+            (69, regularSavings, 1650, "Active", 6),
+            (70, businessSavings, 5800, "Active", 9),
+            (71, emergencyFund, 1800, "Active", 7),
+            (72, fixedSavings, 8500, "Active", 10),
+            (73, regularSavings, 920, "Active", 5),
+            (74, premiumSavings, 55000, "Active", 18),
+            (75, regularSavings, 3100, "Active", 11),
+            (76, businessSavings, 11000, "Active", 14),
+            (77, emergencyFund, 2800, "Active", 9),
+            (78, fixedSavings, 14000, "Active", 16),
+            (79, regularSavings, 1350, "Active", 6),
         };
 
         int accountNumber = 1001;
