@@ -27,31 +27,44 @@ internal sealed class MicroFinanceDbInitializer(
     {
         var tenant = context.TenantInfo?.Identifier ?? "default";
 
-        // 1) Seed Product definitions (independent entities)
+        // 1) Seed Infrastructure (branches, staff, collateral types, communication templates)
+        await BranchSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+        await StaffSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+        await CollateralTypeSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+        await CommunicationTemplateSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+
+        // 2) Seed Product definitions (loan, savings, share, insurance, fee)
         await LoanProductSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
         await SavingsProductSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
         await ShareProductSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+        await InsuranceProductSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
         await FeeDefinitionSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
 
-        // 2) Seed Members (required for accounts and loans)
+        // 3) Seed Members (required for accounts and loans)
         await MemberSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
 
-        // 3) Seed Member Groups and Memberships
+        // 4) Seed Member Groups and Memberships
         await MemberGroupSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
         await GroupMembershipSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
 
-        // 4) Seed Accounts (depend on members and products)
+        // 5) Seed Accounts (depend on members and products)
         await SavingsAccountSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
         await ShareAccountSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
 
-        // 5) Seed Loans (depend on members and loan products)
+        // 6) Seed Loans (depend on members and loan products)
         await LoanSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
 
-        // 6) Seed Fixed Deposits (depend on members)
+        // 7) Seed Fixed Deposits (depend on members)
         await FixedDepositSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
 
-        // 7) Seed Transaction History (depend on accounts and loans)
+        // 8) Seed Loan Supporting Data (schedules, guarantors, collateral)
+        await LoanScheduleSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+        await LoanGuarantorSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+        await LoanCollateralSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+
+        // 9) Seed Transaction History (depend on accounts and loans)
         await SavingsTransactionSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
+        await ShareTransactionSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
         await LoanRepaymentSeeder.SeedAsync(context, logger, tenant, cancellationToken).ConfigureAwait(false);
 
         await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);

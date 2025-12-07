@@ -19,16 +19,16 @@ internal static class MemberGroupSeeder
 
         var groups = new (string Code, string Name, string Desc, string Location, string Freq, string Day)[]
         {
-            ("GRP-001", "Sunrise Women Group", "Women empowerment savings group", "Community Center A", MemberGroup.FrequencyWeekly, "Monday"),
-            ("GRP-002", "Farmers United", "Agricultural cooperative group", "Village Hall", MemberGroup.FrequencyBiweekly, "Wednesday"),
-            ("GRP-003", "Youth Entrepreneurs", "Young business owners group", "Youth Center", MemberGroup.FrequencyWeekly, "Friday"),
-            ("GRP-004", "Market Traders Association", "Traders savings collective", "Market Square", MemberGroup.FrequencyWeekly, "Saturday"),
-            ("GRP-005", "Teachers Cooperative", "Education sector savings group", "School Hall", MemberGroup.FrequencyMonthly, "Tuesday"),
-            ("GRP-006", "Healthcare Workers Group", "Medical staff savings", "Hospital Meeting Room", MemberGroup.FrequencyBiweekly, "Thursday"),
-            ("GRP-007", "Artisan Collective", "Craftsmen and artisans group", "Craft Center", MemberGroup.FrequencyWeekly, "Wednesday"),
-            ("GRP-008", "Transport Workers Union", "Drivers and transport staff", "Transport Hub", MemberGroup.FrequencyWeekly, "Monday"),
-            ("GRP-009", "Village Development Group", "Community development savings", "Village Chief Office", MemberGroup.FrequencyMonthly, "Saturday"),
-            ("GRP-010", "Women in Business", "Female entrepreneurs collective", "Business Center", MemberGroup.FrequencyWeekly, "Tuesday"),
+            ("GRP-001", "Samahan ng Kababaihan ng Barangay", "Women empowerment savings group", "Barangay Hall", MemberGroup.FrequencyWeekly, "Monday"),
+            ("GRP-002", "Magkakapatid na Magsasaka", "Agricultural cooperative group", "Palengke ng Bayan", MemberGroup.FrequencyBiweekly, "Wednesday"),
+            ("GRP-003", "Kabataang Negosyante", "Young business owners group", "SK Hall", MemberGroup.FrequencyWeekly, "Friday"),
+            ("GRP-004", "Samahan ng mga Tindera sa Palengke", "Traders savings collective", "Divisoria Market", MemberGroup.FrequencyWeekly, "Saturday"),
+            ("GRP-005", "Kooperatiba ng mga Guro", "Education sector savings group", "DepEd District Office", MemberGroup.FrequencyMonthly, "Tuesday"),
+            ("GRP-006", "Samahan ng mga Nars at Doktor", "Medical staff savings", "Philippine General Hospital", MemberGroup.FrequencyBiweekly, "Thursday"),
+            ("GRP-007", "Grupo ng mga Artisano", "Craftsmen and artisans group", "Paete Carvers Hall", MemberGroup.FrequencyWeekly, "Wednesday"),
+            ("GRP-008", "Samahan ng mga Tsuper", "Drivers and transport staff", "LTFRB Terminal", MemberGroup.FrequencyWeekly, "Monday"),
+            ("GRP-009", "Pag-unlad ng Barangay", "Community development savings", "Municipal Hall", MemberGroup.FrequencyMonthly, "Saturday"),
+            ("GRP-010", "Kababaihan sa Negosyo", "Female entrepreneurs collective", "TESDA Women's Center", MemberGroup.FrequencyWeekly, "Tuesday"),
         };
 
         for (int i = existingCount; i < groups.Length; i++)

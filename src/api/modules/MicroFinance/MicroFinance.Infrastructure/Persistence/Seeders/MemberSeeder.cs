@@ -21,74 +21,74 @@ internal static class MemberSeeder
         var members = new (string Num, string First, string Last, string? Middle, string Email, string Phone, string Gender, string Occupation, decimal Income, int BirthYear, string City, bool IsActive)[]
         {
             // Active farmers - Agricultural loan candidates
-            ("MBR-001", "John", "Doe", "Michael", "john.doe@email.com", "+1234567890", "Male", "Farmer", 500, 1985, "Greenville", true),
-            ("MBR-002", "Mary", "Johnson", null, "mary.j@email.com", "+1234567891", "Female", "Farmer", 450, 1980, "Farmington", true),
-            ("MBR-003", "Peter", "Okonkwo", "Chidi", "peter.o@email.com", "+1234567892", "Male", "Farmer", 600, 1975, "Croptown", true),
-            ("MBR-004", "Grace", "Abubakar", null, "grace.a@email.com", "+1234567893", "Female", "Farmer", 400, 1988, "Harvest City", true),
-            ("MBR-005", "Samuel", "Mensah", "Kofi", "samuel.m@email.com", "+1234567894", "Male", "Farmer", 550, 1982, "Greenville", true),
+            ("MBR-001", "Juan", "Dela Cruz", "Miguel", "juan.delacruz@email.com", "+639171234567", "Male", "Farmer", 15000, 1985, "Nueva Ecija", true),
+            ("MBR-002", "Maria", "Santos", null, "maria.santos@email.com", "+639172234567", "Female", "Farmer", 12000, 1980, "Isabela", true),
+            ("MBR-003", "Pedro", "Reyes", "Jose", "pedro.reyes@email.com", "+639173234567", "Male", "Farmer", 18000, 1975, "Pangasinan", true),
+            ("MBR-004", "Rosa", "Garcia", null, "rosa.garcia@email.com", "+639174234567", "Female", "Farmer", 10000, 1988, "Tarlac", true),
+            ("MBR-005", "Antonio", "Ramos", "Carlos", "antonio.ramos@email.com", "+639175234567", "Male", "Farmer", 16000, 1982, "Bulacan", true),
             
             // Teachers & Education sector
-            ("MBR-006", "Jane", "Smith", null, "jane.smith@email.com", "+1234567895", "Female", "Teacher", 800, 1990, "Metropolis", true),
-            ("MBR-007", "David", "Williams", "James", "david.w@email.com", "+1234567896", "Male", "Teacher", 850, 1987, "Education City", true),
-            ("MBR-008", "Sarah", "Brown", null, "sarah.b@email.com", "+1234567897", "Female", "Head Teacher", 1200, 1978, "Schooltown", true),
-            ("MBR-009", "Michael", "Davis", "Edward", "michael.d@email.com", "+1234567898", "Male", "Professor", 2000, 1970, "University Heights", true),
-            ("MBR-010", "Emily", "Wilson", null, "emily.w@email.com", "+1234567899", "Female", "Teacher", 750, 1992, "Metropolis", true),
+            ("MBR-006", "Ana", "Mendoza", null, "ana.mendoza@email.com", "+639176234567", "Female", "Teacher", 25000, 1990, "Quezon City", true),
+            ("MBR-007", "Jose", "Torres", "Ramon", "jose.torres@email.com", "+639177234567", "Male", "Teacher", 28000, 1987, "Makati", true),
+            ("MBR-008", "Lorna", "Aquino", null, "lorna.aquino@email.com", "+639178234567", "Female", "Head Teacher", 45000, 1978, "Pasig", true),
+            ("MBR-009", "Ricardo", "Villanueva", "Eduardo", "ricardo.villanueva@email.com", "+639179234567", "Male", "Professor", 65000, 1970, "Manila", true),
+            ("MBR-010", "Cristina", "Bautista", null, "cristina.bautista@email.com", "+639180234567", "Female", "Teacher", 22000, 1992, "Caloocan", true),
             
             // Healthcare workers
-            ("MBR-011", "Robert", "Taylor", "Thomas", "robert.t@email.com", "+1234567900", "Male", "Nurse", 950, 1985, "Medical Center", true),
-            ("MBR-012", "Patricia", "Anderson", null, "patricia.a@email.com", "+1234567901", "Female", "Doctor", 3500, 1975, "Healthcare City", true),
-            ("MBR-013", "James", "Thomas", "Henry", "james.t@email.com", "+1234567902", "Male", "Pharmacist", 1500, 1982, "Wellness Town", true),
-            ("MBR-014", "Linda", "Jackson", null, "linda.j@email.com", "+1234567903", "Female", "Nurse", 900, 1988, "Medical Center", true),
-            ("MBR-015", "William", "White", "George", "william.w@email.com", "+1234567904", "Male", "Lab Technician", 1100, 1984, "Healthcare City", true),
+            ("MBR-011", "Roberto", "Fernandez", "Luis", "roberto.fernandez@email.com", "+639181234567", "Male", "Nurse", 32000, 1985, "Mandaluyong", true),
+            ("MBR-012", "Patricia", "Gonzales", null, "patricia.gonzales@email.com", "+639182234567", "Female", "Doctor", 120000, 1975, "Makati", true),
+            ("MBR-013", "Manuel", "Soriano", "Felipe", "manuel.soriano@email.com", "+639183234567", "Male", "Pharmacist", 55000, 1982, "Pasay", true),
+            ("MBR-014", "Liza", "Dizon", null, "liza.dizon@email.com", "+639184234567", "Female", "Nurse", 30000, 1988, "Taguig", true),
+            ("MBR-015", "Danilo", "Mercado", "Pablo", "danilo.mercado@email.com", "+639185234567", "Male", "Lab Technician", 38000, 1984, "Paranaque", true),
             
             // Small business owners - Micro business loan candidates
-            ("MBR-016", "Elizabeth", "Harris", null, "elizabeth.h@email.com", "+1234567905", "Female", "Shopkeeper", 1200, 1979, "Commerce Town", true),
-            ("MBR-017", "Richard", "Martin", "Allen", "richard.m@email.com", "+1234567906", "Male", "Trader", 1500, 1976, "Market Square", true),
-            ("MBR-018", "Barbara", "Garcia", null, "barbara.g@email.com", "+1234567907", "Female", "Baker", 800, 1983, "Food District", true),
-            ("MBR-019", "Joseph", "Martinez", "Luis", "joseph.m@email.com", "+1234567908", "Male", "Restaurant Owner", 2500, 1972, "Culinary City", true),
-            ("MBR-020", "Susan", "Robinson", null, "susan.r@email.com", "+1234567909", "Female", "Tailor", 650, 1986, "Fashion Town", true),
+            ("MBR-016", "Elena", "Castillo", null, "elena.castillo@email.com", "+639186234567", "Female", "Sari-sari Store Owner", 35000, 1979, "Marikina", true),
+            ("MBR-017", "Reynaldo", "Navarro", "Andres", "reynaldo.navarro@email.com", "+639187234567", "Male", "Trader", 50000, 1976, "Divisoria", true),
+            ("MBR-018", "Beatriz", "Pascual", null, "beatriz.pascual@email.com", "+639188234567", "Female", "Baker", 28000, 1983, "San Juan", true),
+            ("MBR-019", "Eduardo", "Salvador", "Mario", "eduardo.salvador@email.com", "+639189234567", "Male", "Carinderia Owner", 75000, 1972, "Quezon City", true),
+            ("MBR-020", "Rosario", "Aguilar", null, "rosario.aguilar@email.com", "+639190234567", "Female", "Mananahi", 20000, 1986, "Pateros", true),
             
             // Skilled workers
-            ("MBR-021", "Charles", "Clark", "Raymond", "charles.c@email.com", "+1234567910", "Male", "Carpenter", 700, 1980, "Builder's Row", true),
-            ("MBR-022", "Jessica", "Rodriguez", null, "jessica.r@email.com", "+1234567911", "Female", "Electrician", 900, 1985, "Tech City", true),
-            ("MBR-023", "Thomas", "Lewis", "William", "thomas.l@email.com", "+1234567912", "Male", "Mechanic", 750, 1978, "Auto Town", true),
-            ("MBR-024", "Margaret", "Lee", null, "margaret.l@email.com", "+1234567913", "Female", "Plumber", 800, 1983, "Service City", true),
-            ("MBR-025", "Christopher", "Walker", "Paul", "christopher.w@email.com", "+1234567914", "Male", "Welder", 850, 1981, "Industrial Zone", true),
+            ("MBR-021", "Carlos", "Ocampo", "Rafael", "carlos.ocampo@email.com", "+639191234567", "Male", "Karpintero", 22000, 1980, "Las Pinas", true),
+            ("MBR-022", "Jocelyn", "Manalo", null, "jocelyn.manalo@email.com", "+639192234567", "Female", "Electrician", 30000, 1985, "Muntinlupa", true),
+            ("MBR-023", "Rolando", "Padilla", "Sergio", "rolando.padilla@email.com", "+639193234567", "Male", "Mekaniko", 25000, 1978, "Valenzuela", true),
+            ("MBR-024", "Maricel", "Tolentino", null, "maricel.tolentino@email.com", "+639194234567", "Female", "Tubero", 26000, 1983, "Malabon", true),
+            ("MBR-025", "Ernesto", "Velasco", "Arturo", "ernesto.velasco@email.com", "+639195234567", "Male", "Welder", 28000, 1981, "Navotas", true),
             
             // Transport sector
-            ("MBR-026", "Daniel", "Hall", "Joseph", "daniel.h@email.com", "+1234567915", "Male", "Taxi Driver", 600, 1977, "Transit Hub", true),
-            ("MBR-027", "Nancy", "Allen", null, "nancy.a@email.com", "+1234567916", "Female", "Bus Driver", 700, 1982, "Transport City", true),
-            ("MBR-028", "Matthew", "Young", "Andrew", "matthew.y@email.com", "+1234567917", "Male", "Truck Driver", 900, 1975, "Logistics Park", true),
-            ("MBR-029", "Karen", "King", null, "karen.k@email.com", "+1234567918", "Female", "Courier", 500, 1989, "Delivery Town", true),
-            ("MBR-030", "Steven", "Wright", "Michael", "steven.w@email.com", "+1234567919", "Male", "Motorcycle Taxi", 400, 1991, "Quick Transport", true),
+            ("MBR-026", "Dante", "Francisco", "Lorenzo", "dante.francisco@email.com", "+639196234567", "Male", "Taxi Driver", 18000, 1977, "Cubao", true),
+            ("MBR-027", "Nelia", "Ignacio", null, "nelia.ignacio@email.com", "+639197234567", "Female", "Bus Driver", 22000, 1982, "Pasay", true),
+            ("MBR-028", "Marcelo", "Lorenzo", "Benjamin", "marcelo.lorenzo@email.com", "+639198234567", "Male", "Truck Driver", 30000, 1975, "Calamba", true),
+            ("MBR-029", "Karen", "Morales", null, "karen.morales@email.com", "+639199234567", "Female", "Courier", 15000, 1989, "Antipolo", true),
+            ("MBR-030", "Joel", "Sta. Maria", "Miguel", "joel.stamaria@email.com", "+639200234567", "Male", "Habal-habal Driver", 12000, 1991, "Rizal", true),
             
             // Young entrepreneurs
-            ("MBR-031", "Betty", "Lopez", null, "betty.l@email.com", "+1234567920", "Female", "Tech Startup", 1800, 1995, "Innovation Hub", true),
-            ("MBR-032", "Donald", "Hill", "Frank", "donald.h@email.com", "+1234567921", "Male", "Digital Marketing", 2000, 1993, "Tech Valley", true),
-            ("MBR-033", "Dorothy", "Scott", null, "dorothy.s@email.com", "+1234567922", "Female", "E-commerce", 1500, 1994, "Online City", true),
-            ("MBR-034", "Paul", "Green", "Victor", "paul.g@email.com", "+1234567923", "Male", "App Developer", 2500, 1992, "Code Town", true),
-            ("MBR-035", "Sandra", "Adams", null, "sandra.a@email.com", "+1234567924", "Female", "Social Media Manager", 1200, 1996, "Media City", true),
+            ("MBR-031", "Alyssa", "Dimaculangan", null, "alyssa.dimaculangan@email.com", "+639201234567", "Female", "Tech Startup", 60000, 1995, "BGC", true),
+            ("MBR-032", "Marco", "Villareal", "Francis", "marco.villareal@email.com", "+639202234567", "Male", "Digital Marketing", 65000, 1993, "Makati", true),
+            ("MBR-033", "Denise", "Catalan", null, "denise.catalan@email.com", "+639203234567", "Female", "Online Seller", 50000, 1994, "Pasig", true),
+            ("MBR-034", "Paolo", "Evangelista", "Victor", "paolo.evangelista@email.com", "+639204234567", "Male", "App Developer", 85000, 1992, "Ortigas", true),
+            ("MBR-035", "Samantha", "Lacson", null, "samantha.lacson@email.com", "+639205234567", "Female", "Social Media Manager", 40000, 1996, "Quezon City", true),
             
             // Artisans
-            ("MBR-036", "Andrew", "Baker", "Robert", "andrew.b@email.com", "+1234567925", "Male", "Potter", 450, 1979, "Craft Village", true),
-            ("MBR-037", "Ashley", "Nelson", null, "ashley.n@email.com", "+1234567926", "Female", "Weaver", 400, 1984, "Artisan Town", true),
-            ("MBR-038", "Joshua", "Carter", "Daniel", "joshua.c@email.com", "+1234567927", "Male", "Blacksmith", 550, 1976, "Forge Town", true),
-            ("MBR-039", "Kimberly", "Mitchell", null, "kimberly.m@email.com", "+1234567928", "Female", "Jeweler", 800, 1983, "Gem City", true),
-            ("MBR-040", "Kevin", "Perez", "Anthony", "kevin.p@email.com", "+1234567929", "Male", "Sculptor", 600, 1980, "Art District", true),
+            ("MBR-036", "Andres", "Bonifacio", "Roberto", "andres.bonifacio@email.com", "+639206234567", "Male", "Potter", 14000, 1979, "Vigan", true),
+            ("MBR-037", "Angeline", "Magsaysay", null, "angeline.magsaysay@email.com", "+639207234567", "Female", "Weaver", 12000, 1984, "Ilocos Sur", true),
+            ("MBR-038", "Jaime", "Laurel", "Daniel", "jaime.laurel@email.com", "+639208234567", "Male", "Panday", 16000, 1976, "Batangas", true),
+            ("MBR-039", "Katrina", "Roxas", null, "katrina.roxas@email.com", "+639209234567", "Female", "Jeweler", 28000, 1983, "Meycauayan", true),
+            ("MBR-040", "Kevin", "Osmeña", "Antonio", "kevin.osmena@email.com", "+639210234567", "Male", "Sculptor", 20000, 1980, "Paete", true),
             
             // Inactive members for testing status filters
-            ("MBR-041", "Mark", "Roberts", "Alan", "mark.r@email.com", "+1234567930", "Male", "Retired", 300, 1955, "Seniors Town", false),
-            ("MBR-042", "Sharon", "Turner", null, "sharon.t@email.com", "+1234567931", "Female", "Homemaker", 0, 1965, "Home City", false),
-            ("MBR-043", "Brian", "Phillips", "Lee", "brian.p@email.com", "+1234567932", "Male", "Unemployed", 0, 1990, "Job Seeker Town", false),
-            ("MBR-044", "Michelle", "Campbell", null, "michelle.c@email.com", "+1234567933", "Female", "Student", 0, 1998, "University Area", false),
-            ("MBR-045", "Edward", "Parker", "John", "edward.p@email.com", "+1234567934", "Male", "Migrated", 0, 1985, "Abroad City", false),
+            ("MBR-041", "Mariano", "Quezon", "Almario", "mariano.quezon@email.com", "+639211234567", "Male", "Retired", 8000, 1955, "Baler", false),
+            ("MBR-042", "Sharon", "Estrada", null, "sharon.estrada@email.com", "+639212234567", "Female", "Housewife", 0, 1965, "Cavite", false),
+            ("MBR-043", "Bryan", "Macapagal", "Leo", "bryan.macapagal@email.com", "+639213234567", "Male", "Unemployed", 0, 1990, "Pampanga", false),
+            ("MBR-044", "Michelle", "Arroyo", null, "michelle.arroyo@email.com", "+639214234567", "Female", "Student", 0, 1998, "Diliman", false),
+            ("MBR-045", "Edwin", "Marcos", "Juan", "edwin.marcos@email.com", "+639215234567", "Male", "OFW", 0, 1985, "Ilocos Norte", false),
             
             // More active diverse members
-            ("MBR-046", "Laura", "Evans", null, "laura.e@email.com", "+1234567935", "Female", "Hotel Manager", 1800, 1981, "Tourism City", true),
-            ("MBR-047", "Ronald", "Edwards", "Peter", "ronald.e@email.com", "+1234567936", "Male", "Chef", 1200, 1978, "Gourmet Town", true),
-            ("MBR-048", "Deborah", "Collins", null, "deborah.c@email.com", "+1234567937", "Female", "Florist", 500, 1986, "Garden District", true),
-            ("MBR-049", "Timothy", "Stewart", "James", "timothy.s@email.com", "+1234567938", "Male", "Security Guard", 450, 1977, "Safe City", true),
-            ("MBR-050", "Cynthia", "Sanchez", null, "cynthia.s@email.com", "+1234567939", "Female", "Real Estate Agent", 2200, 1980, "Property Town", true),
+            ("MBR-046", "Lourdes", "Enrile", null, "lourdes.enrile@email.com", "+639216234567", "Female", "Hotel Manager", 60000, 1981, "Boracay", true),
+            ("MBR-047", "Ronald", "Recto", "Pedro", "ronald.recto@email.com", "+639217234567", "Male", "Chef", 40000, 1978, "Tagaytay", true),
+            ("MBR-048", "Dina", "Sotto", null, "dina.sotto@email.com", "+639218234567", "Female", "Florist", 18000, 1986, "Baguio", true),
+            ("MBR-049", "Tomas", "Binay", "Jose", "tomas.binay@email.com", "+639219234567", "Male", "Security Guard", 15000, 1977, "Makati", true),
+            ("MBR-050", "Cynthia", "Cayetano", null, "cynthia.cayetano@email.com", "+639220234567", "Female", "Real Estate Agent", 75000, 1980, "Taguig", true),
         };
 
         for (int i = existingCount; i < members.Length; i++)
@@ -110,7 +110,7 @@ internal static class MemberSeeder
                 city: m.City,
                 state: "Central State",
                 postalCode: $"{10000 + i}",
-                country: "United States",
+                country: "Philippines",
                 nationalId: $"NAT-{m.Num}",
                 occupation: m.Occupation,
                 monthlyIncome: m.Income,
