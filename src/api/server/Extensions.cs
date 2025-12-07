@@ -1,4 +1,4 @@
-﻿﻿using System.Reflection;
+﻿using System.Reflection;
 
 namespace FSH.Starter.WebApi.Host;
 
