@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Dashboard;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.Store.Application.Suppliers.Dashboard;
 
@@ -32,7 +33,7 @@ public sealed class GetSupplierDashboardHandler(
         logger.LogInformation("Generating dashboard for supplier {SupplierId}", request.SupplierId);
 
         var supplier = await supplierRepository.GetByIdAsync(request.SupplierId, cancellationToken)
-            ?? throw new Exception($"Supplier {request.SupplierId} not found");
+            ?? throw new NotFoundException($"Supplier {request.SupplierId} not found");
 
         // Get all purchase orders for this supplier
         var allOrders = await purchaseOrderRepository

@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Deactivate.v1;
 
@@ -18,7 +19,7 @@ public sealed class DeactivateApprovalWorkflowHandler(
     public async Task<DeactivateApprovalWorkflowResponse> Handle(DeactivateApprovalWorkflowCommand request, CancellationToken cancellationToken)
     {
         var workflow = await repository.FirstOrDefaultAsync(new ApprovalWorkflowByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Approval workflow {request.Id} not found");
+            ?? throw new NotFoundException($"Approval workflow {request.Id} not found");
 
         workflow.Deactivate();
         await repository.UpdateAsync(workflow, cancellationToken);

@@ -2,6 +2,7 @@ using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Deactivate.v1;
 
@@ -9,7 +10,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Deactivate.v1
 /// Handles the DeactivateMemberGroupCommand to deactivate a member group.
 /// </summary>
 public sealed class DeactivateMemberGroupHandler(
-    IRepository<MemberGroup> repository,
+    [FromKeyedServices("microfinance:membergroups")] IRepository<MemberGroup> repository,
     ILogger<DeactivateMemberGroupHandler> logger)
     : IRequestHandler<DeactivateMemberGroupCommand, DeactivateMemberGroupResponse>
 {

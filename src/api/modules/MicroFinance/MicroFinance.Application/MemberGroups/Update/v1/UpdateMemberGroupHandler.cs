@@ -2,6 +2,7 @@ using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Update.v1;
 
@@ -9,7 +10,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Update.v1;
 /// Handles the UpdateMemberGroupCommand to update a member group's information.
 /// </summary>
 public sealed class UpdateMemberGroupHandler(
-    IRepository<MemberGroup> repository,
+    [FromKeyedServices("microfinance:membergroups")] IRepository<MemberGroup> repository,
     ILogger<UpdateMemberGroupHandler> logger)
     : IRequestHandler<UpdateMemberGroupCommand, UpdateMemberGroupResponse>
 {

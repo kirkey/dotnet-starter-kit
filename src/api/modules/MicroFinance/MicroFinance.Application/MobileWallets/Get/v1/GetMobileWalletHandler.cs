@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.MobileWallets.Get.v1;
 
@@ -15,7 +16,7 @@ public sealed class GetMobileWalletHandler(
     public async Task<MobileWalletResponse> Handle(GetMobileWalletRequest request, CancellationToken cancellationToken)
     {
         var wallet = await repository.FirstOrDefaultAsync(new MobileWalletByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Mobile wallet {request.Id} not found");
+            ?? throw new NotFoundException($"Mobile wallet {request.Id} not found");
 
         logger.LogInformation("Retrieved mobile wallet {Id}", wallet.Id);
 

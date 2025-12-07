@@ -3,6 +3,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Get.v1;
 
@@ -17,7 +18,7 @@ public sealed class GetApprovalWorkflowHandler(
     public async Task<ApprovalWorkflowResponse> Handle(GetApprovalWorkflowRequest request, CancellationToken cancellationToken)
     {
         var workflow = await repository.FirstOrDefaultAsync(new ApprovalWorkflowByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Approval workflow {request.Id} not found");
+            ?? throw new NotFoundException($"Approval workflow {request.Id} not found");
 
         logger.LogInformation("Retrieved approval workflow {Id}", workflow.Id);
 

@@ -15,7 +15,7 @@ public sealed class TerminateEnrollmentHandler(
         var enrollment = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
 
         if (enrollment is null)
-            throw new Exception($"Enrollment not found: {request.Id}");
+            throw new NotFoundException($"Enrollment not found: {request.Id}");
 
         enrollment.Terminate(request.EndDate);
 

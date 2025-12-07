@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.SetupSip.v1;
 
@@ -15,7 +16,7 @@ public sealed class SetupSipHandler(
     public async Task<SetupSipResponse> Handle(SetupSipCommand request, CancellationToken cancellationToken)
     {
         var account = await repository.FirstOrDefaultAsync(new InvestmentAccountByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Investment account {request.Id} not found");
+            ?? throw new NotFoundException($"Investment account {request.Id} not found");
 
         account.SetupSip(request.Amount, request.Frequency, request.NextDate, request.LinkedSavingsAccountId);
         await repository.UpdateAsync(account, cancellationToken);

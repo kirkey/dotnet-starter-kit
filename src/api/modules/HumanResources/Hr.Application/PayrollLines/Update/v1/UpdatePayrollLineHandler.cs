@@ -15,7 +15,7 @@ public sealed class UpdatePayrollLineHandler(
         var line = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
 
         if (line is null)
-            throw new Exception($"Payroll line not found: {request.Id}");
+            throw new NotFoundException($"Payroll line not found: {request.Id}");
 
         if (request.RegularHours.HasValue || request.OvertimeHours.HasValue)
             line.SetHours(

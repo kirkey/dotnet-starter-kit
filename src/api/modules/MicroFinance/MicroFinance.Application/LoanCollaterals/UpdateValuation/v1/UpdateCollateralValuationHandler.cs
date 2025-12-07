@@ -2,6 +2,8 @@ using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.UpdateValuation.v1;
 
@@ -9,14 +11,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.UpdateValu
 /// Handler for updating collateral valuation.
 /// </summary>
 public sealed class UpdateCollateralValuationHandler(
-    IRepository<LoanCollateral> repository,
+    [FromKeyedServices("microfinance:loancollaterals")] IRepository<LoanCollateral> repository,
     ILogger<UpdateCollateralValuationHandler> logger)
     : IRequestHandler<UpdateCollateralValuationCommand, UpdateCollateralValuationResponse>
 {
     public async Task<UpdateCollateralValuationResponse> Handle(UpdateCollateralValuationCommand request, CancellationToken cancellationToken)
     {
         var collateral = await repository.GetByIdAsync(request.Id, cancellationToken)
-            ?? throw new Exception($"Loan collateral with ID {request.Id} not found.");
+            ?? throw new NotFoundException($"Loan collateral with ID {request.Id} not found.");
 
         collateral.UpdateValuation(
             request.EstimatedValue,

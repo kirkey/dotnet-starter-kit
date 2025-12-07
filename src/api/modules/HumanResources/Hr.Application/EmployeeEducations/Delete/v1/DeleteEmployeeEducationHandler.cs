@@ -15,7 +15,7 @@ public sealed class DeleteEmployeeEducationHandler(
         var education = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
 
         if (education is null)
-            throw new Exception($"Employee education record not found: {request.Id}");
+            throw new NotFoundException($"Employee education record not found: {request.Id}");
 
         await repository.DeleteAsync(education, cancellationToken).ConfigureAwait(false);
 

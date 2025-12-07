@@ -3,6 +3,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Get.v1;
 
@@ -17,7 +18,7 @@ public sealed class GetRiskIndicatorHandler(
     public async Task<RiskIndicatorResponse> Handle(GetRiskIndicatorRequest request, CancellationToken cancellationToken)
     {
         var indicator = await repository.FirstOrDefaultAsync(new RiskIndicatorByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Risk indicator {request.Id} not found");
+            ?? throw new NotFoundException($"Risk indicator {request.Id} not found");
 
         logger.LogInformation("Retrieved risk indicator {Id}", indicator.Id);
 

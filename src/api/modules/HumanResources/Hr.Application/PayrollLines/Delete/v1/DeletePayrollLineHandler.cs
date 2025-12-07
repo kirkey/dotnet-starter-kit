@@ -15,7 +15,7 @@ public sealed class DeletePayrollLineHandler(
         var line = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
 
         if (line is null)
-            throw new Exception($"Payroll line not found: {request.Id}");
+            throw new NotFoundException($"Payroll line not found: {request.Id}");
 
         await repository.DeleteAsync(line, cancellationToken).ConfigureAwait(false);
 

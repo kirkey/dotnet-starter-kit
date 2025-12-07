@@ -12,7 +12,7 @@ public sealed class UpdateLeaveBalanceHandler(
         var balance = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
 
         if (balance is null)
-            throw new Exception($"Leave balance not found: {request.Id}");
+            throw new NotFoundException($"Leave balance not found: {request.Id}");
 
         if (request.AccruedDays.HasValue)
             balance.AddAccrual(request.AccruedDays.Value);

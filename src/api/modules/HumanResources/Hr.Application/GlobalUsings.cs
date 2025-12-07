@@ -1,6 +1,7 @@
 global using System.ComponentModel;
 global using Ardalis.Specification;
 global using FluentValidation;
+global using FSH.Framework.Core.Exceptions;
 global using FSH.Framework.Core.Paging;
 global using FSH.Framework.Core.Persistence;
 global using FSH.Framework.Core.Specifications;

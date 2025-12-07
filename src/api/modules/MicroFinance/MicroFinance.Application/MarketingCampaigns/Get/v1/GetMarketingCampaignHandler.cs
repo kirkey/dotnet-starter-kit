@@ -3,6 +3,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Get.v1;
 
@@ -17,7 +18,7 @@ public sealed class GetMarketingCampaignHandler(
     public async Task<MarketingCampaignResponse> Handle(GetMarketingCampaignRequest request, CancellationToken cancellationToken)
     {
         var campaign = await repository.FirstOrDefaultAsync(new MarketingCampaignByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Marketing campaign {request.Id} not found");
+            ?? throw new NotFoundException($"Marketing campaign {request.Id} not found");
 
         logger.LogInformation("Retrieved marketing campaign {Id}", campaign.Id);
 

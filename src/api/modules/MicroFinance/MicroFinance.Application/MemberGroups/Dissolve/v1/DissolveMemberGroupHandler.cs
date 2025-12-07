@@ -2,6 +2,7 @@ using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Dissolve.v1;
 
@@ -9,7 +10,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Dissolve.v1;
 /// Handles the DissolveMemberGroupCommand to dissolve a member group.
 /// </summary>
 public sealed class DissolveMemberGroupHandler(
-    IRepository<MemberGroup> repository,
+    [FromKeyedServices("microfinance:membergroups")] IRepository<MemberGroup> repository,
     ILogger<DissolveMemberGroupHandler> logger)
     : IRequestHandler<DissolveMemberGroupCommand, DissolveMemberGroupResponse>
 {

@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Enrollments.Specifications;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.HumanResources.Application.Enrollments.Get.v1;
 
@@ -18,7 +19,7 @@ public sealed class GetEnrollmentHandler(
             .ConfigureAwait(false);
 
         if (enrollment is null)
-            throw new Exception($"Enrollment not found: {request.Id}");
+            throw new NotFoundException($"Enrollment not found: {request.Id}");
 
         return MapToResponse(enrollment);
     }

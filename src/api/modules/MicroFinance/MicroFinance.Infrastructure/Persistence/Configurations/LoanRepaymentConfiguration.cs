@@ -16,8 +16,6 @@ internal sealed class LoanRepaymentConfiguration : IEntityTypeConfiguration<Loan
         builder.Property(x => x.PaymentMethod)
             .HasMaxLength(32);
 
-        builder.Property(x => x.TotalAmount).HasPrecision(18, 2);
-
         // Relationships
         builder.HasOne<Loan>()
             .WithMany()

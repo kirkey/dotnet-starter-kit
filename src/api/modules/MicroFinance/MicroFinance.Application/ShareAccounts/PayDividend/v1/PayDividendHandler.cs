@@ -2,6 +2,8 @@ using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.PayDividend.v1;
 
@@ -9,14 +11,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.PayDividend.
 /// Handler for paying dividend.
 /// </summary>
 public sealed class PayDividendHandler(
-    IRepository<ShareAccount> repository,
+    [FromKeyedServices("microfinance:shareaccounts")] IRepository<ShareAccount> repository,
     ILogger<PayDividendHandler> logger)
     : IRequestHandler<PayDividendCommand, PayDividendResponse>
 {
     public async Task<PayDividendResponse> Handle(PayDividendCommand request, CancellationToken cancellationToken)
     {
         var account = await repository.GetByIdAsync(request.ShareAccountId, cancellationToken)
-            ?? throw new Exception($"Share account with ID {request.ShareAccountId} not found.");
+            ?? throw new NotFoundException($"Share account with ID {request.ShareAccountId} not found.");
 
         account.PayDividend(request.Amount);
 

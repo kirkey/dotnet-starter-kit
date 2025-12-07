@@ -12,7 +12,7 @@ public sealed class DeleteLeaveBalanceHandler(
         var balance = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
 
         if (balance is null)
-            throw new Exception($"Leave balance not found: {request.Id}");
+            throw new NotFoundException($"Leave balance not found: {request.Id}");
 
         await repository.DeleteAsync(balance, cancellationToken).ConfigureAwait(false);
 

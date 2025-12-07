@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using StaffEntity = FSH.Starter.WebApi.MicroFinance.Domain.Staff;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Get.v1;
 
@@ -15,7 +16,7 @@ public sealed class GetStaffHandler(
     public async Task<StaffResponse> Handle(GetStaffRequest request, CancellationToken cancellationToken)
     {
         var staff = await repository.FirstOrDefaultAsync(new StaffByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Staff {request.Id} not found");
+            ?? throw new NotFoundException($"Staff {request.Id} not found");
 
         logger.LogInformation("Retrieved staff {Id}", staff.Id);
 

@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.StaffTrainings.Start.v1;
 
@@ -18,7 +19,7 @@ public sealed class StartStaffTrainingHandler(
     public async Task<StartStaffTrainingResponse> Handle(StartStaffTrainingCommand request, CancellationToken cancellationToken)
     {
         var training = await repository.FirstOrDefaultAsync(new StaffTrainingByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Staff training {request.Id} not found");
+            ?? throw new NotFoundException($"Staff training {request.Id} not found");
 
         training.Start();
         await repository.UpdateAsync(training, cancellationToken);

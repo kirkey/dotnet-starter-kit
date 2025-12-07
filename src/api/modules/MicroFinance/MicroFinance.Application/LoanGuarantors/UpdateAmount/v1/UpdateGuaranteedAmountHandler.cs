@@ -2,6 +2,8 @@ using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.UpdateAmount.v1;
 
@@ -9,14 +11,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.UpdateAmoun
 /// Handler for updating guaranteed amount.
 /// </summary>
 public sealed class UpdateGuaranteedAmountHandler(
-    IRepository<LoanGuarantor> repository,
+    [FromKeyedServices("microfinance:loanguarantors")] IRepository<LoanGuarantor> repository,
     ILogger<UpdateGuaranteedAmountHandler> logger)
     : IRequestHandler<UpdateGuaranteedAmountCommand, UpdateGuaranteedAmountResponse>
 {
     public async Task<UpdateGuaranteedAmountResponse> Handle(UpdateGuaranteedAmountCommand request, CancellationToken cancellationToken)
     {
         var guarantor = await repository.GetByIdAsync(request.Id, cancellationToken)
-            ?? throw new Exception($"Loan guarantor with ID {request.Id} not found.");
+            ?? throw new NotFoundException($"Loan guarantor with ID {request.Id} not found.");
 
         guarantor.UpdateGuaranteedAmount(request.GuaranteedAmount);
 

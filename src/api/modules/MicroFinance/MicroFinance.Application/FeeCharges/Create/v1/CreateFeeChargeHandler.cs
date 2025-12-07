@@ -2,6 +2,7 @@ using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.FeeCharges.Create.v1;
 
@@ -9,7 +10,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.FeeCharges.Create.v1;
 /// Handler for creating fee charge.
 /// </summary>
 public sealed class CreateFeeChargeHandler(
-    IRepository<FeeCharge> repository,
+    [FromKeyedServices("microfinance:feecharges")] IRepository<FeeCharge> repository,
     ILogger<CreateFeeChargeHandler> logger)
     : IRequestHandler<CreateFeeChargeCommand, CreateFeeChargeResponse>
 {

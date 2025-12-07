@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.MobileWallets.LinkSavings.v1;
 
@@ -15,7 +16,7 @@ public sealed class LinkSavingsMobileWalletHandler(
     public async Task<LinkSavingsMobileWalletResponse> Handle(LinkSavingsMobileWalletCommand request, CancellationToken cancellationToken)
     {
         var wallet = await repository.FirstOrDefaultAsync(new MobileWalletByIdSpec(request.Id), cancellationToken).ConfigureAwait(false)
-            ?? throw new Exception($"Mobile wallet {request.Id} not found");
+            ?? throw new NotFoundException($"Mobile wallet {request.Id} not found");
 
         wallet.LinkToSavingsAccount(request.SavingsAccountId);
         await repository.UpdateAsync(wallet, cancellationToken).ConfigureAwait(false);

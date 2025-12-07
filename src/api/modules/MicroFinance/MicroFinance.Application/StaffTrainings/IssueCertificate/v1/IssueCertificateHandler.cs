@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.StaffTrainings.IssueCertificate.v1;
 
@@ -18,7 +19,7 @@ public sealed class IssueCertificateHandler(
     public async Task<IssueCertificateResponse> Handle(IssueCertificateCommand request, CancellationToken cancellationToken)
     {
         var training = await repository.FirstOrDefaultAsync(new StaffTrainingByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Staff training {request.Id} not found");
+            ?? throw new NotFoundException($"Staff training {request.Id} not found");
 
         training.IssueCertificate(request.CertificationNumber, request.CertificationDate, request.ExpiryDate);
         await repository.UpdateAsync(training, cancellationToken);

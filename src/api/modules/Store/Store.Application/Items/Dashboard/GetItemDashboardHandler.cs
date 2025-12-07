@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.Store.Application.Dashboard;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.Store.Application.Items.Dashboard;
 
@@ -36,7 +37,7 @@ public sealed class GetItemDashboardHandler(
         logger.LogInformation("Generating dashboard for item {ItemId}", request.ItemId);
 
         var item = await itemRepository.GetByIdAsync(request.ItemId, cancellationToken)
-            ?? throw new Exception($"Item {request.ItemId} not found");
+            ?? throw new NotFoundException($"Item {request.ItemId} not found");
 
         var category = item.CategoryId != Guid.Empty
             ? await categoryRepository.GetByIdAsync(item.CategoryId, cancellationToken)

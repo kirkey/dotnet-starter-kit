@@ -17,7 +17,7 @@ public sealed class VendorGetHandler(
             {
                 var spec = new VendorGetSpecs(request.Id);
                 var response = await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false) ??
-                               throw new Exception($"Vendor with id {request.Id} not found");
+                               throw new NotFoundException($"Vendor with id {request.Id} not found");
                 return response;
             },
             cancellationToken: cancellationToken).ConfigureAwait(false);

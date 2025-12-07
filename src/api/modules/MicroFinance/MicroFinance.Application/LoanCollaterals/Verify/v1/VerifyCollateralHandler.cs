@@ -2,6 +2,8 @@ using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Verify.v1;
 
@@ -9,14 +11,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Verify.v1;
 /// Handler for verifying a collateral.
 /// </summary>
 public sealed class VerifyCollateralHandler(
-    IRepository<LoanCollateral> repository,
+    [FromKeyedServices("microfinance:loancollaterals")] IRepository<LoanCollateral> repository,
     ILogger<VerifyCollateralHandler> logger)
     : IRequestHandler<VerifyCollateralCommand, VerifyCollateralResponse>
 {
     public async Task<VerifyCollateralResponse> Handle(VerifyCollateralCommand request, CancellationToken cancellationToken)
     {
         var collateral = await repository.GetByIdAsync(request.Id, cancellationToken)
-            ?? throw new Exception($"Loan collateral with ID {request.Id} not found.");
+            ?? throw new NotFoundException($"Loan collateral with ID {request.Id} not found.");
 
         collateral.Verify();
 

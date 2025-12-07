@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Close.v1;
 
@@ -15,7 +16,7 @@ public sealed class CloseAmlAlertHandler(
     public async Task<CloseAmlAlertResponse> Handle(CloseAmlAlertCommand request, CancellationToken cancellationToken)
     {
         var alert = await repository.FirstOrDefaultAsync(new AmlAlertByIdSpec(request.Id), cancellationToken).ConfigureAwait(false)
-            ?? throw new Exception($"AML alert {request.Id} not found");
+            ?? throw new NotFoundException($"AML alert {request.Id} not found");
 
         alert.Close();
         await repository.UpdateAsync(alert, cancellationToken).ConfigureAwait(false);

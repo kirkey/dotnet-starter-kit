@@ -15,7 +15,7 @@ public sealed class UpdatePayrollHandler(
         var payroll = await repository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
 
         if (payroll is null)
-            throw new Exception($"Payroll not found: {request.Id}");
+            throw new NotFoundException($"Payroll not found: {request.Id}");
 
         if (!string.IsNullOrWhiteSpace(request.Status))
         {

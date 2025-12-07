@@ -2,6 +2,8 @@ using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Suspend.v1;
 
@@ -9,14 +11,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Suspend.v
 /// Handler for suspending membership.
 /// </summary>
 public sealed class SuspendMembershipHandler(
-    IRepository<GroupMembership> repository,
+    [FromKeyedServices("microfinance:groupmemberships")] IRepository<GroupMembership> repository,
     ILogger<SuspendMembershipHandler> logger)
     : IRequestHandler<SuspendMembershipCommand, SuspendMembershipResponse>
 {
     public async Task<SuspendMembershipResponse> Handle(SuspendMembershipCommand request, CancellationToken cancellationToken)
     {
         var membership = await repository.GetByIdAsync(request.Id, cancellationToken)
-            ?? throw new Exception($"Group membership with ID {request.Id} not found.");
+            ?? throw new NotFoundException($"Group membership with ID {request.Id} not found.");
 
         membership.Suspend(request.Reason);
 

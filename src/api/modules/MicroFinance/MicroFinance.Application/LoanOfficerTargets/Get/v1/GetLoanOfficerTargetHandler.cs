@@ -3,6 +3,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerTargets.Get.v1;
 
@@ -17,7 +18,7 @@ public sealed class GetLoanOfficerTargetHandler(
     public async Task<LoanOfficerTargetResponse> Handle(GetLoanOfficerTargetRequest request, CancellationToken cancellationToken)
     {
         var target = await repository.FirstOrDefaultAsync(new LoanOfficerTargetByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Loan officer target {request.Id} not found");
+            ?? throw new NotFoundException($"Loan officer target {request.Id} not found");
 
         logger.LogInformation("Retrieved loan officer target {Id}", target.Id);
 

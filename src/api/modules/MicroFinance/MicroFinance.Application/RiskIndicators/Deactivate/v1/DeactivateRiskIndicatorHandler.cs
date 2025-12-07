@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Deactivate.v1;
 
@@ -18,7 +19,7 @@ public sealed class DeactivateRiskIndicatorHandler(
     public async Task<DeactivateRiskIndicatorResponse> Handle(DeactivateRiskIndicatorCommand request, CancellationToken cancellationToken)
     {
         var indicator = await repository.FirstOrDefaultAsync(new RiskIndicatorByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Risk indicator {request.Id} not found");
+            ?? throw new NotFoundException($"Risk indicator {request.Id} not found");
 
         indicator.Deactivate();
         await repository.UpdateAsync(indicator, cancellationToken);

@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.Get.v1;
 
@@ -15,7 +16,7 @@ public sealed class GetInvestmentProductHandler(
     public async Task<InvestmentProductResponse> Handle(GetInvestmentProductRequest request, CancellationToken cancellationToken)
     {
         var product = await repository.FirstOrDefaultAsync(new InvestmentProductByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Investment product {request.Id} not found");
+            ?? throw new NotFoundException($"Investment product {request.Id} not found");
 
         logger.LogInformation("Retrieved investment product {Id}", product.Id);
 

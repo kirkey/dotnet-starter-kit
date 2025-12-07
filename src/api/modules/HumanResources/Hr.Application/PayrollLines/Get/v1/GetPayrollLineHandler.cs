@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.PayrollLines.Specifications;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.HumanResources.Application.PayrollLines.Get.v1;
 
@@ -18,7 +19,7 @@ public sealed class GetPayrollLineHandler(
             .ConfigureAwait(false);
 
         if (line is null)
-            throw new Exception($"Payroll line not found: {request.Id}");
+            throw new NotFoundException($"Payroll line not found: {request.Id}");
 
         return MapToResponse(line);
     }

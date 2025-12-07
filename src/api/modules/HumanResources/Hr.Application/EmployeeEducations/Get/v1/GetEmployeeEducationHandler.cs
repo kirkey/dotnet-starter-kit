@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Specifications;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.HumanResources.Application.EmployeeEducations.Get.v1;
 
@@ -18,7 +19,7 @@ public sealed class GetEmployeeEducationHandler(
             .ConfigureAwait(false);
 
         if (education is null)
-            throw new Exception($"Employee education record not found: {request.Id}");
+            throw new NotFoundException($"Employee education record not found: {request.Id}");
 
         return MapToResponse(education);
     }

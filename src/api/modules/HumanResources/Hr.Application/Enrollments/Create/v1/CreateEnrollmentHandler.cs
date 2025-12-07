@@ -21,14 +21,14 @@ public sealed class CreateEnrollmentHandler(
             .ConfigureAwait(false);
 
         if (employee is null)
-            throw new Exception($"Employee not found: {request.EmployeeId}");
+            throw new NotFoundException($"Employee not found: {request.EmployeeId}");
 
         var benefit = await benefitRepository
             .GetByIdAsync(request.BenefitId, cancellationToken)
             .ConfigureAwait(false);
 
         if (benefit is null)
-            throw new Exception($"Benefit not found: {request.BenefitId}");
+            throw new NotFoundException($"Benefit not found: {request.BenefitId}");
 
         var enrollment = BenefitEnrollment.Create(
             request.EmployeeId,

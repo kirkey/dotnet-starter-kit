@@ -3,6 +3,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.Get.v1;
 
@@ -17,7 +18,7 @@ public sealed class GetBranchTargetHandler(
     public async Task<BranchTargetResponse> Handle(GetBranchTargetRequest request, CancellationToken cancellationToken)
     {
         var target = await repository.FirstOrDefaultAsync(new BranchTargetByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Branch target {request.Id} not found");
+            ?? throw new NotFoundException($"Branch target {request.Id} not found");
 
         logger.LogInformation("Retrieved branch target {Id}", target.Id);
 

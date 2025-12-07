@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.Redeem.v1;
 
@@ -15,7 +16,7 @@ public sealed class RedeemHandler(
     public async Task<RedeemResponse> Handle(RedeemCommand request, CancellationToken cancellationToken)
     {
         var account = await repository.FirstOrDefaultAsync(new InvestmentAccountByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Investment account {request.Id} not found");
+            ?? throw new NotFoundException($"Investment account {request.Id} not found");
 
         account.Redeem(request.Amount, request.GainLoss);
         await repository.UpdateAsync(account, cancellationToken);

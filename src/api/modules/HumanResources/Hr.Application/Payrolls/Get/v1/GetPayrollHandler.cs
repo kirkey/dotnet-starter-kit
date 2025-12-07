@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.Payrolls.Specifications;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.HumanResources.Application.Payrolls.Get.v1;
 
@@ -18,7 +19,7 @@ public sealed class GetPayrollHandler(
             .ConfigureAwait(false);
 
         if (payroll is null)
-            throw new Exception($"Payroll not found: {request.Id}");
+            throw new NotFoundException($"Payroll not found: {request.Id}");
 
         return new PayrollResponse
         {

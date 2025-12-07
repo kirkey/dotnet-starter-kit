@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.Members.Deactivate.v1;
 
@@ -18,7 +19,7 @@ public sealed class DeactivateMemberHandler(
     public async Task<DeactivateMemberResponse> Handle(DeactivateMemberCommand request, CancellationToken cancellationToken)
     {
         var member = await repository.FirstOrDefaultAsync(new MemberByIdSpec(request.Id), cancellationToken).ConfigureAwait(false)
-            ?? throw new Exception($"Member {request.Id} not found");
+            ?? throw new NotFoundException($"Member {request.Id} not found");
 
         member.Deactivate();
         await repository.UpdateAsync(member, cancellationToken).ConfigureAwait(false);

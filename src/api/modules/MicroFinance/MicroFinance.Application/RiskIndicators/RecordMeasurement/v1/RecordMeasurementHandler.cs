@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.RecordMeasurement.v1;
 
@@ -18,7 +19,7 @@ public sealed class RecordMeasurementHandler(
     public async Task<RecordMeasurementResponse> Handle(RecordMeasurementCommand request, CancellationToken cancellationToken)
     {
         var indicator = await repository.FirstOrDefaultAsync(new RiskIndicatorByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Risk indicator {request.Id} not found");
+            ?? throw new NotFoundException($"Risk indicator {request.Id} not found");
 
         indicator.RecordMeasurement(request.Value);
         await repository.UpdateAsync(indicator, cancellationToken);

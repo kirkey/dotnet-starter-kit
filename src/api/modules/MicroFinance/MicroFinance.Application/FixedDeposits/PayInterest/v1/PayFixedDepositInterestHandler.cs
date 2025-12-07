@@ -2,6 +2,8 @@ using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.PayInterest.v1;
 
@@ -9,14 +11,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.PayInterest.
 /// Handler for paying interest from fixed deposit.
 /// </summary>
 public sealed class PayFixedDepositInterestHandler(
-    IRepository<FixedDeposit> repository,
+    [FromKeyedServices("microfinance:fixeddeposits")] IRepository<FixedDeposit> repository,
     ILogger<PayFixedDepositInterestHandler> logger)
     : IRequestHandler<PayFixedDepositInterestCommand, PayFixedDepositInterestResponse>
 {
     public async Task<PayFixedDepositInterestResponse> Handle(PayFixedDepositInterestCommand request, CancellationToken cancellationToken)
     {
         var deposit = await repository.GetByIdAsync(request.DepositId, cancellationToken)
-            ?? throw new Exception($"Fixed deposit with ID {request.DepositId} not found.");
+            ?? throw new NotFoundException($"Fixed deposit with ID {request.DepositId} not found.");
 
         deposit.PayInterest(request.Amount);
 

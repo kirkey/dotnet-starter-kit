@@ -2,6 +2,8 @@ using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.UpdateInstruction.v1;
 
@@ -9,14 +11,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.UpdateInstru
 /// Handler for updating maturity instruction.
 /// </summary>
 public sealed class UpdateMaturityInstructionHandler(
-    IRepository<FixedDeposit> repository,
+    [FromKeyedServices("microfinance:fixeddeposits")] IRepository<FixedDeposit> repository,
     ILogger<UpdateMaturityInstructionHandler> logger)
     : IRequestHandler<UpdateMaturityInstructionCommand, UpdateMaturityInstructionResponse>
 {
     public async Task<UpdateMaturityInstructionResponse> Handle(UpdateMaturityInstructionCommand request, CancellationToken cancellationToken)
     {
         var deposit = await repository.GetByIdAsync(request.DepositId, cancellationToken)
-            ?? throw new Exception($"Fixed deposit with ID {request.DepositId} not found.");
+            ?? throw new NotFoundException($"Fixed deposit with ID {request.DepositId} not found.");
 
         deposit.UpdateMaturityInstruction(request.Instruction);
 

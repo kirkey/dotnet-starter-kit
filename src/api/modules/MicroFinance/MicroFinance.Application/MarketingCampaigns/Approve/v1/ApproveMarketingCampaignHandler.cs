@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Approve.v1;
 
@@ -18,7 +19,7 @@ public sealed class ApproveMarketingCampaignHandler(
     public async Task<ApproveMarketingCampaignResponse> Handle(ApproveMarketingCampaignCommand request, CancellationToken cancellationToken)
     {
         var campaign = await repository.FirstOrDefaultAsync(new MarketingCampaignByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Marketing campaign {request.Id} not found");
+            ?? throw new NotFoundException($"Marketing campaign {request.Id} not found");
 
         campaign.Approve(request.ApprovedById);
         await repository.UpdateAsync(campaign, cancellationToken);

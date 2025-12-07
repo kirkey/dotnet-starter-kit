@@ -20,7 +20,7 @@ public sealed class CreateEmployeeEducationHandler(
             .ConfigureAwait(false);
 
         if (employee is null)
-            throw new Exception($"Employee not found: {request.EmployeeId}");
+            throw new NotFoundException($"Employee not found: {request.EmployeeId}");
 
         var education = EmployeeEducation.Create(
             request.EmployeeId,

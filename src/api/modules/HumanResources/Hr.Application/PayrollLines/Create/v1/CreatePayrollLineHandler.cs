@@ -21,14 +21,14 @@ public sealed class CreatePayrollLineHandler(
             .ConfigureAwait(false);
 
         if (payroll is null)
-            throw new Exception($"Payroll not found: {request.PayrollId}");
+            throw new NotFoundException($"Payroll not found: {request.PayrollId}");
 
         var employee = await employeeRepository
             .GetByIdAsync(request.EmployeeId, cancellationToken)
             .ConfigureAwait(false);
 
         if (employee is null)
-            throw new Exception($"Employee not found: {request.EmployeeId}");
+            throw new NotFoundException($"Employee not found: {request.EmployeeId}");
 
         var line = PayrollLine.Create(
             request.PayrollId,

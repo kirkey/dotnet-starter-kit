@@ -3,6 +3,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Get.v1;
 
@@ -17,7 +18,7 @@ public sealed class GetApprovalRequestHandler(
     public async Task<ApprovalRequestResponse> Handle(GetApprovalRequestRequest request, CancellationToken cancellationToken)
     {
         var approvalRequest = await repository.FirstOrDefaultAsync(new ApprovalRequestByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Approval request {request.Id} not found");
+            ?? throw new NotFoundException($"Approval request {request.Id} not found");
 
         logger.LogInformation("Retrieved approval request {Id}", approvalRequest.Id);
 

@@ -2,6 +2,8 @@ using FSH.Framework.Core.Persistence;
 using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Withdraw.v1;
 
@@ -9,14 +11,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Withdraw.
 /// Handler for withdrawing membership.
 /// </summary>
 public sealed class WithdrawMembershipHandler(
-    IRepository<GroupMembership> repository,
+    [FromKeyedServices("microfinance:groupmemberships")] IRepository<GroupMembership> repository,
     ILogger<WithdrawMembershipHandler> logger)
     : IRequestHandler<WithdrawMembershipCommand, WithdrawMembershipResponse>
 {
     public async Task<WithdrawMembershipResponse> Handle(WithdrawMembershipCommand request, CancellationToken cancellationToken)
     {
         var membership = await repository.GetByIdAsync(request.Id, cancellationToken)
-            ?? throw new Exception($"Group membership with ID {request.Id} not found.");
+            ?? throw new NotFoundException($"Group membership with ID {request.Id} not found.");
 
         membership.Withdraw(request.LeaveDate, request.Reason);
 

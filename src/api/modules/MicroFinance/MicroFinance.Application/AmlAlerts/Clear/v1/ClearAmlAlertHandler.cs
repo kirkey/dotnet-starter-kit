@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Clear.v1;
 
@@ -15,7 +16,7 @@ public sealed class ClearAmlAlertHandler(
     public async Task<ClearAmlAlertResponse> Handle(ClearAmlAlertCommand request, CancellationToken cancellationToken)
     {
         var alert = await repository.FirstOrDefaultAsync(new AmlAlertByIdSpec(request.Id), cancellationToken).ConfigureAwait(false)
-            ?? throw new Exception($"AML alert {request.Id} not found");
+            ?? throw new NotFoundException($"AML alert {request.Id} not found");
 
         alert.Clear(request.ResolvedById, request.Notes);
         await repository.UpdateAsync(alert, cancellationToken).ConfigureAwait(false);

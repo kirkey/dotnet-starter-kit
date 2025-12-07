@@ -1,4 +1,5 @@
 using FSH.Starter.WebApi.HumanResources.Application.LeaveBalances.Specifications;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.HumanResources.Application.LeaveBalances.Get.v1;
 
@@ -18,7 +19,7 @@ public sealed class GetLeaveBalanceHandler(
             .ConfigureAwait(false);
 
         if (balance is null)
-            throw new Exception($"Leave balance not found: {request.Id}");
+            throw new NotFoundException($"Leave balance not found: {request.Id}");
 
         return new LeaveBalanceResponse
         {

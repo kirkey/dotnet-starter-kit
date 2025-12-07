@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.InvestmentTransactions.Complete.v1;
 
@@ -15,7 +16,7 @@ public sealed class CompleteTransactionHandler(
     public async Task<CompleteTransactionResponse> Handle(CompleteTransactionCommand request, CancellationToken cancellationToken)
     {
         var transaction = await repository.FirstOrDefaultAsync(new InvestmentTransactionByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Investment transaction {request.Id} not found");
+            ?? throw new NotFoundException($"Investment transaction {request.Id} not found");
 
         transaction.Complete(request.GainLoss);
         await repository.UpdateAsync(transaction, cancellationToken);

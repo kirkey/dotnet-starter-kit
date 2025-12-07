@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.CustomerSurveys.Activate.v1;
 
@@ -18,7 +19,7 @@ public sealed class ActivateCustomerSurveyHandler(
     public async Task<ActivateCustomerSurveyResponse> Handle(ActivateCustomerSurveyCommand request, CancellationToken cancellationToken)
     {
         var survey = await repository.FirstOrDefaultAsync(new CustomerSurveyByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Customer survey {request.Id} not found");
+            ?? throw new NotFoundException($"Customer survey {request.Id} not found");
 
         survey.Activate();
         await repository.UpdateAsync(survey, cancellationToken);

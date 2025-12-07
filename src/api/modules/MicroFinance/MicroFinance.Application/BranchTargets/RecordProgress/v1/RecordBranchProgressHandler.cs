@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FSH.Framework.Core.Exceptions;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.RecordProgress.v1;
 
@@ -18,7 +19,7 @@ public sealed class RecordBranchProgressHandler(
     public async Task<RecordBranchProgressResponse> Handle(RecordBranchProgressCommand request, CancellationToken cancellationToken)
     {
         var target = await repository.FirstOrDefaultAsync(new BranchTargetByIdSpec(request.Id), cancellationToken)
-            ?? throw new Exception($"Branch target {request.Id} not found");
+            ?? throw new NotFoundException($"Branch target {request.Id} not found");
 
         target.RecordProgress(request.AchievedValue);
         await repository.UpdateAsync(target, cancellationToken);
