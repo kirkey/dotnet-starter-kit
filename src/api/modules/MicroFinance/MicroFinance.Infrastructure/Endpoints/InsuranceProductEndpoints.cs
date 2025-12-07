@@ -14,7 +14,7 @@ public class InsuranceProductEndpoints() : CarterModule
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/insurance-products").WithTags("insurance-products");
+        var group = app.MapGroup("microfinance/insurance-products").WithTags("Insurance Products");
 
         group.MapPost("/", async (CreateInsuranceProductCommand command, ISender sender) =>
             {

@@ -11,7 +11,7 @@ public class CollateralInsuranceEndpoints() : CarterModule
 
     private const string CreateCollateralInsurance = "CreateCollateralInsurance";
     private const string GetCollateralInsurance = "GetCollateralInsurance";
-    private const string RecordPremiumPayment = "RecordPremiumPayment";
+    private const string RecordCollateralInsurancePremiumPayment = "RecordCollateralInsurancePremiumPayment";
     private const string RenewInsurance = "RenewInsurance";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
@@ -42,12 +42,12 @@ public class CollateralInsuranceEndpoints() : CarterModule
 
         group.MapPost("/{id:guid}/record-premium", async (Guid id, RecordPremiumRequest request, ISender sender) =>
         {
-            var result = await sender.Send(new RecordPremiumPaymentCommand(id, request.PaymentDate, request.NextDueDate));
+            var result = await sender.Send(new RecordCollateralInsurancePremiumCommand(id, request.PaymentDate, request.NextDueDate));
             return Results.Ok(result);
         })
-        .WithName(RecordPremiumPayment)
+        .WithName(RecordCollateralInsurancePremiumPayment)
         .WithSummary("Record insurance premium payment")
-        .Produces<RecordPremiumPaymentResponse>()
+        .Produces<RecordCollateralInsurancePremiumResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 

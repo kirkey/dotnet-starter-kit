@@ -26,7 +26,7 @@ public class TellerSessionEndpoints() : CarterModule
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/teller-sessions").WithTags("teller-sessions");
+        var group = app.MapGroup("microfinance/teller-sessions").WithTags("Teller Sessions");
 
         // Session Lifecycle
         group.MapPost("/", async (OpenTellerSessionCommand command, ISender sender) =>

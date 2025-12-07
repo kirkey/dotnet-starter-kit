@@ -20,13 +20,13 @@ public class CollectionCaseEndpoints() : CarterModule
     private const string EscalateToLegal = "EscalateToLegal";
     private const string GetCollectionCase = "GetCollectionCase";
     private const string RecordContact = "RecordContact";
-    private const string RecordRecovery = "RecordRecovery";
+    private const string RecordCollectionCaseRecovery = "RecordCollectionCaseRecovery";
     private const string SearchCollectionCases = "SearchCollectionCases";
     private const string SettleCollectionCase = "SettleCollectionCase";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/collection-cases").WithTags("collection-cases");
+        var group = app.MapGroup("microfinance/collection-cases").WithTags("Collection Cases");
 
         // Case Management
         group.MapPost("/", async (CreateCollectionCaseCommand command, ISender sender) =>
@@ -77,15 +77,15 @@ public class CollectionCaseEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/record-recovery", async (Guid id, RecordRecoveryCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/record-recovery", async (Guid id, RecordCollectionCaseRecoveryCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName(RecordRecovery)
+            .WithName(RecordCollectionCaseRecovery)
             .WithSummary("Records a payment recovery")
-            .Produces<RecordRecoveryResponse>()
+            .Produces<RecordCollectionCaseRecoveryResponse>()
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 

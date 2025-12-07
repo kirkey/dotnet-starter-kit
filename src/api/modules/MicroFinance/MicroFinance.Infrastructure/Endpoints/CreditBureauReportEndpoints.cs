@@ -18,7 +18,7 @@ public class CreditBureauReportEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/credit-bureau-reports").WithTags("credit-bureau-reports");
+        var group = app.MapGroup("microfinance/credit-bureau-reports").WithTags("Credit Bureau Reports");
 
         group.MapPost("/", async (CreateCreditBureauReportCommand command, ISender sender) =>
             {

@@ -20,7 +20,7 @@ public class InsuranceClaimEndpoints() : CarterModule
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/insurance-claims").WithTags("insurance-claims");
+        var group = app.MapGroup("microfinance/insurance-claims").WithTags("Insurance Claims");
 
         // Submit Claim
         group.MapPost("/", async (SubmitInsuranceClaimCommand command, ISender sender) =>

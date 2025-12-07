@@ -21,7 +21,7 @@ public class LoanRepaymentEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var loanRepaymentsGroup = app.MapGroup("microfinance/loan-repayments").WithTags("loan-repayments");
+        var loanRepaymentsGroup = app.MapGroup("microfinance/loan-repayments").WithTags("Loan Repayments");
 
         loanRepaymentsGroup.MapPost("/", async (CreateLoanRepaymentCommand command, ISender sender) =>
             {

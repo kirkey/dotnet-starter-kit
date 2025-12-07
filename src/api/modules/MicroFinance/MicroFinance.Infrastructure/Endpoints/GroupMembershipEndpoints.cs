@@ -30,7 +30,7 @@ public class GroupMembershipEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var membershipsGroup = app.MapGroup("microfinance/group-memberships").WithTags("group-memberships");
+        var membershipsGroup = app.MapGroup("microfinance/group-memberships").WithTags("Group Memberships");
 
         membershipsGroup.MapPost("/", async (CreateGroupMembershipCommand command, ISender mediator) =>
         {

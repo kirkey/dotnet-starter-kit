@@ -19,7 +19,7 @@ public class ShareTransactionEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var transactionsGroup = app.MapGroup("microfinance/share-transactions").WithTags("share-transactions");
+        var transactionsGroup = app.MapGroup("microfinance/share-transactions").WithTags("Share Transactions");
 
         transactionsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
         {

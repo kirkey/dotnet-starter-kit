@@ -34,7 +34,7 @@ public class AgentBankingEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/agent-banking").WithTags("agent-banking");
+        var group = app.MapGroup("microfinance/agent-banking").WithTags("Agent Banking");
 
         group.MapPost("/", async (CreateAgentBankingCommand command, ISender sender) =>
             {

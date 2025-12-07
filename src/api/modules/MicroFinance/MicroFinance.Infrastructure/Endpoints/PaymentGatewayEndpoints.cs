@@ -20,7 +20,7 @@ public class PaymentGatewayEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/payment-gateways").WithTags("payment-gateways");
+        var group = app.MapGroup("microfinance/payment-gateways").WithTags("Payment Gateways");
 
         group.MapPost("/", async (CreatePaymentGatewayCommand command, ISender sender) =>
             {

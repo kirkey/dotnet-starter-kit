@@ -35,7 +35,7 @@ public class SavingsAccountEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var savingsAccountsGroup = app.MapGroup("microfinance/savings-accounts").WithTags("savings-accounts");
+        var savingsAccountsGroup = app.MapGroup("microfinance/savings-accounts").WithTags("Savings Accounts");
 
         savingsAccountsGroup.MapPost("/", async (CreateSavingsAccountCommand command, ISender sender) =>
             {

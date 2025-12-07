@@ -30,7 +30,7 @@ public class LoanGuarantorEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var guarantorsGroup = app.MapGroup("microfinance/loan-guarantors").WithTags("loan-guarantors");
+        var guarantorsGroup = app.MapGroup("microfinance/loan-guarantors").WithTags("Loan Guarantors");
 
         guarantorsGroup.MapPost("/", async (CreateLoanGuarantorCommand command, ISender mediator) =>
         {

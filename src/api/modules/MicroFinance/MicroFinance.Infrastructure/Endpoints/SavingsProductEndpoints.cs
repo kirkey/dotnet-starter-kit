@@ -22,7 +22,7 @@ public class SavingsProductEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var savingsProductsGroup = app.MapGroup("microfinance/savings-products").WithTags("savings-products");
+        var savingsProductsGroup = app.MapGroup("microfinance/savings-products").WithTags("Savings Products");
 
         savingsProductsGroup.MapPost("/", async (CreateSavingsProductCommand command, ISender sender) =>
             {

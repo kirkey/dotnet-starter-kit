@@ -8,13 +8,13 @@ using Microsoft.Extensions.Logging;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.RecordPremium.v1;
 
-public sealed class RecordPremiumPaymentHandler(
+public sealed class RecordCollateralInsurancePremiumHandler(
     [FromKeyedServices("microfinance:collateralinsurances")] IRepository<CollateralInsurance> repository,
-    ILogger<RecordPremiumPaymentHandler> logger)
-    : IRequestHandler<RecordPremiumPaymentCommand, RecordPremiumPaymentResponse>
+    ILogger<RecordCollateralInsurancePremiumHandler> logger)
+    : IRequestHandler<RecordCollateralInsurancePremiumCommand, RecordCollateralInsurancePremiumResponse>
 {
-    public async Task<RecordPremiumPaymentResponse> Handle(
-        RecordPremiumPaymentCommand request,
+    public async Task<RecordCollateralInsurancePremiumResponse> Handle(
+        RecordCollateralInsurancePremiumCommand request,
         CancellationToken cancellationToken)
     {
         var insurance = await repository.FirstOrDefaultAsync(
@@ -26,6 +26,6 @@ public sealed class RecordPremiumPaymentHandler(
 
         logger.LogInformation("Premium payment recorded for insurance: {InsuranceId}", insurance.Id);
 
-        return new RecordPremiumPaymentResponse(insurance.Id, request.PaymentDate, request.NextDueDate);
+        return new RecordCollateralInsurancePremiumResponse(insurance.Id, request.PaymentDate, request.NextDueDate);
     }
 }

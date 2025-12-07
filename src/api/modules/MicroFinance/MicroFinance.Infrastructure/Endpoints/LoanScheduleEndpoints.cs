@@ -19,7 +19,7 @@ public class LoanScheduleEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var schedulesGroup = app.MapGroup("microfinance/loan-schedules").WithTags("loan-schedules");
+        var schedulesGroup = app.MapGroup("microfinance/loan-schedules").WithTags("Loan Schedules");
 
         schedulesGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
         {

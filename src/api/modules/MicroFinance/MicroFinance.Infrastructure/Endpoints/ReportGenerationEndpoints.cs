@@ -18,7 +18,7 @@ public class ReportGenerationEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/report-generations").WithTags("report-generations");
+        var group = app.MapGroup("microfinance/report-generations").WithTags("Report Generations");
 
         group.MapPost("/", async (QueueReportGenerationCommand command, ISender sender) =>
             {

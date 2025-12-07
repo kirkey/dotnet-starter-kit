@@ -14,11 +14,11 @@ public class InsurancePolicyEndpoints() : CarterModule
     private const string CancelInsurancePolicy = "CancelInsurancePolicy";
     private const string CreateInsurancePolicy = "CreateInsurancePolicy";
     private const string GetInsurancePolicy = "GetInsurancePolicy";
-    private const string RecordPremiumPayment = "RecordPremiumPayment";
+    private const string RecordInsurancePolicyPremiumPayment = "RecordInsurancePolicyPremiumPayment";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/insurance-policies").WithTags("insurance-policies");
+        var group = app.MapGroup("microfinance/insurance-policies").WithTags("Insurance Policies");
 
         // CRUD Operations
         group.MapPost("/", async (CreateInsurancePolicyCommand command, ISender sender) =>
@@ -68,15 +68,15 @@ public class InsurancePolicyEndpoints() : CarterModule
             .MapToApiVersion(1);
 
         // Premium Payments
-        group.MapPost("/{id:guid}/record-premium", async (Guid id, RecordPremiumPaymentCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/record-premium", async (Guid id, RecordInsurancePolicyPremiumCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
                 return Results.Ok(response);
             })
-            .WithName(RecordPremiumPayment)
+            .WithName(RecordInsurancePolicyPremiumPayment)
             .WithSummary("Records a premium payment on the policy")
-            .Produces<RecordPremiumPaymentResponse>()
+            .Produces<RecordInsurancePolicyPremiumResponse>()
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 

@@ -11,11 +11,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.RecordPr
 /// <summary>
 /// Handler for recording a premium payment.
 /// </summary>
-public sealed class RecordPremiumPaymentHandler(
+public sealed class RecordInsurancePolicyPremiumHandler(
     [FromKeyedServices("microfinance:insurancepolicies")] IRepository<InsurancePolicy> repository,
-    ILogger<RecordPremiumPaymentHandler> logger) : IRequestHandler<RecordPremiumPaymentCommand, RecordPremiumPaymentResponse>
+    ILogger<RecordInsurancePolicyPremiumHandler> logger) : IRequestHandler<RecordInsurancePolicyPremiumCommand, RecordInsurancePolicyPremiumResponse>
 {
-    public async Task<RecordPremiumPaymentResponse> Handle(RecordPremiumPaymentCommand request, CancellationToken cancellationToken)
+    public async Task<RecordInsurancePolicyPremiumResponse> Handle(RecordInsurancePolicyPremiumCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -28,6 +28,6 @@ public sealed class RecordPremiumPaymentHandler(
         await repository.UpdateAsync(policy, cancellationToken).ConfigureAwait(false);
         logger.LogInformation("Premium payment of {Amount} recorded for policy {PolicyNumber}", request.Amount, policy.PolicyNumber);
 
-        return new RecordPremiumPaymentResponse(policy.Id, request.Amount, policy.TotalPremiumPaid);
+        return new RecordInsurancePolicyPremiumResponse(policy.Id, request.Amount, policy.TotalPremiumPaid);
     }
 }

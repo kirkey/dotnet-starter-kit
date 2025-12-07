@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.RecordPr
 /// <summary>
 /// Response after recording a premium payment.
 /// </summary>
-public sealed record RecordPremiumPaymentResponse(Guid Id, decimal AmountPaid, decimal TotalPremiumPaid);
+public sealed record RecordInsurancePolicyPremiumResponse(Guid Id, decimal AmountPaid, decimal TotalPremiumPaid);

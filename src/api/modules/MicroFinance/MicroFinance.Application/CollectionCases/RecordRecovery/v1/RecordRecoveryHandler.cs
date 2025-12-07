@@ -8,12 +8,12 @@ using Microsoft.Extensions.Logging;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.CollectionCases.RecordRecovery.v1;
 
-public sealed class RecordRecoveryHandler(
-    ILogger<RecordRecoveryHandler> logger,
+public sealed class RecordCollectionCaseRecoveryHandler(
+    ILogger<RecordCollectionCaseRecoveryHandler> logger,
     [FromKeyedServices("microfinance:collectioncases")] IRepository<CollectionCase> repository)
-    : IRequestHandler<RecordRecoveryCommand, RecordRecoveryResponse>
+    : IRequestHandler<RecordCollectionCaseRecoveryCommand, RecordCollectionCaseRecoveryResponse>
 {
-    public async Task<RecordRecoveryResponse> Handle(RecordRecoveryCommand request, CancellationToken cancellationToken)
+    public async Task<RecordCollectionCaseRecoveryResponse> Handle(RecordCollectionCaseRecoveryCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -31,7 +31,7 @@ public sealed class RecordRecoveryHandler(
         logger.LogInformation("Recovery recorded for case {CaseId}: {Amount}, Status: {Status}",
             collectionCase.Id, request.Amount, collectionCase.Status);
 
-        return new RecordRecoveryResponse(
+        return new RecordCollectionCaseRecoveryResponse(
             collectionCase.Id,
             collectionCase.AmountRecovered,
             collectionCase.AmountOverdue,

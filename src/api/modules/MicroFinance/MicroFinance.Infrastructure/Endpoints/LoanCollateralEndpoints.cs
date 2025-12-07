@@ -31,7 +31,7 @@ public class LoanCollateralEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var collateralsGroup = app.MapGroup("microfinance/loan-collaterals").WithTags("loan-collaterals");
+        var collateralsGroup = app.MapGroup("microfinance/loan-collaterals").WithTags("Loan Collaterals");
 
         collateralsGroup.MapPost("/", async (CreateLoanCollateralCommand command, ISender mediator) =>
         {
@@ -119,12 +119,12 @@ public class LoanCollateralEndpoints() : CarterModule
 
         collateralsGroup.MapPost("/{id:guid}/release", async (Guid id, ISender mediator) =>
         {
-            var response = await mediator.Send(new ReleaseCollateralCommand(id));
+            var response = await mediator.Send(new ReleaseLoanCollateralCommand(id));
             return Results.Ok(response);
         })
         .WithName(ReleaseLoanCollateral)
         .WithSummary("Releases a loan collateral")
-        .Produces<ReleaseCollateralResponse>()
+        .Produces<ReleaseLoanCollateralResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 

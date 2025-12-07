@@ -20,7 +20,7 @@ public class MfiConfigurationEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/configurations").WithTags("mfi-configurations");
+        var group = app.MapGroup("microfinance/configurations").WithTags("MFI Configurations");
 
         group.MapPost("/", async (CreateMfiConfigurationCommand command, ISender sender) =>
             {

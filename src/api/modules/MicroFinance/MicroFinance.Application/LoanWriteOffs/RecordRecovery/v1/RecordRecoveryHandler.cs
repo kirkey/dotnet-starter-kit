@@ -8,13 +8,13 @@ using Microsoft.Extensions.Logging;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanWriteOffs.RecordRecovery.v1;
 
-public sealed class RecordRecoveryHandler(
+public sealed class RecordWriteOffRecoveryHandler(
     [FromKeyedServices("microfinance:loanwriteoffs")] IRepository<LoanWriteOff> repository,
-    ILogger<RecordRecoveryHandler> logger)
-    : IRequestHandler<RecordRecoveryCommand, RecordRecoveryResponse>
+    ILogger<RecordWriteOffRecoveryHandler> logger)
+    : IRequestHandler<RecordWriteOffRecoveryCommand, RecordWriteOffRecoveryResponse>
 {
-    public async Task<RecordRecoveryResponse> Handle(
-        RecordRecoveryCommand request,
+    public async Task<RecordWriteOffRecoveryResponse> Handle(
+        RecordWriteOffRecoveryCommand request,
         CancellationToken cancellationToken)
     {
         var writeOff = await repository.FirstOrDefaultAsync(
@@ -27,7 +27,7 @@ public sealed class RecordRecoveryHandler(
         logger.LogInformation("Recovery recorded for write-off: {WriteOffId}, Amount: {Amount}",
             writeOff.Id, request.Amount);
 
-        return new RecordRecoveryResponse(
+        return new RecordWriteOffRecoveryResponse(
             writeOff.Id,
             writeOff.RecoveredAmount,
             writeOff.TotalWriteOff,

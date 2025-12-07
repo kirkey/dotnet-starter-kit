@@ -20,7 +20,7 @@ public class ReportDefinitionEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/report-definitions").WithTags("report-definitions");
+        var group = app.MapGroup("microfinance/report-definitions").WithTags("Report Definitions");
 
         group.MapPost("/", async (CreateReportDefinitionCommand command, ISender sender) =>
             {

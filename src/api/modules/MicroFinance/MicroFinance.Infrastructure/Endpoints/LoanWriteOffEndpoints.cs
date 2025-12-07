@@ -67,13 +67,13 @@ public class LoanWriteOffEndpoints() : CarterModule
 
         group.MapPost("/{id:guid}/record-recovery", async (Guid id, RecordRecoveryRequest request, ISender sender) =>
         {
-            var command = new RecordRecoveryCommand(id, request.Amount, request.Notes);
+            var command = new RecordWriteOffRecoveryCommand(id, request.Amount, request.Notes);
             var result = await sender.Send(command);
             return Results.Ok(result);
         })
         .WithName(RecordWriteOffRecovery)
         .WithSummary("Record recovery on write-off")
-        .Produces<RecordRecoveryResponse>()
+        .Produces<RecordWriteOffRecoveryResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 

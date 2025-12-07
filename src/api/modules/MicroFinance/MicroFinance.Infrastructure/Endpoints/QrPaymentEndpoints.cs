@@ -20,7 +20,7 @@ public class QrPaymentEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/qr-payments").WithTags("qr-payments");
+        var group = app.MapGroup("microfinance/qr-payments").WithTags("QR Payments");
 
         group.MapPost("/static", async (CreateStaticQrCommand command, ISender sender) =>
             {

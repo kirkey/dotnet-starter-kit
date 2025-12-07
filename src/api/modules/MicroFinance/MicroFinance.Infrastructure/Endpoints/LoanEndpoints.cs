@@ -32,7 +32,7 @@ public class LoanEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var loansGroup = app.MapGroup("microfinance/loans").WithTags("loans");
+        var loansGroup = app.MapGroup("microfinance/loans").WithTags("Loans");
 
         loansGroup.MapPost("/", async (CreateLoanCommand command, ISender sender) =>
             {

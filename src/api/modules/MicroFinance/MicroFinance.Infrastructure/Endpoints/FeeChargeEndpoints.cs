@@ -28,7 +28,7 @@ public class FeeChargeEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var chargesGroup = app.MapGroup("microfinance/fee-charges").WithTags("fee-charges");
+        var chargesGroup = app.MapGroup("microfinance/fee-charges").WithTags("Fee Charges");
 
         chargesGroup.MapPost("/", async (CreateFeeChargeCommand command, ISender mediator) =>
         {

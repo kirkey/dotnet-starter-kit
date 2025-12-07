@@ -20,7 +20,7 @@ public class CashVaultEndpoints() : CarterModule
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/cash-vaults").WithTags("cash-vaults");
+        var group = app.MapGroup("microfinance/cash-vaults").WithTags("Cash Vaults");
 
         // CRUD Operations
         group.MapPost("/", async (CreateCashVaultCommand command, ISender sender) =>

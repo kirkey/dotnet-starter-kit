@@ -22,7 +22,7 @@ public class ShareProductEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var shareProductsGroup = app.MapGroup("microfinance/share-products").WithTags("share-products");
+        var shareProductsGroup = app.MapGroup("microfinance/share-products").WithTags("Share Products");
 
         shareProductsGroup.MapPost("/", async (CreateShareProductCommand command, ISender sender) =>
             {

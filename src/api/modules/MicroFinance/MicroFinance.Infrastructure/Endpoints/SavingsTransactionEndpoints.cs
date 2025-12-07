@@ -19,7 +19,7 @@ public class SavingsTransactionEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var transactionsGroup = app.MapGroup("microfinance/savings-transactions").WithTags("savings-transactions");
+        var transactionsGroup = app.MapGroup("microfinance/savings-transactions").WithTags("Savings Transactions");
 
         transactionsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
         {

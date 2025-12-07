@@ -22,7 +22,7 @@ public class FeeDefinitionEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var feeDefinitionsGroup = app.MapGroup("microfinance/fee-definitions").WithTags("fee-definitions");
+        var feeDefinitionsGroup = app.MapGroup("microfinance/fee-definitions").WithTags("Fee Definitions");
 
         feeDefinitionsGroup.MapPost("/", async (CreateFeeDefinitionCommand request, ISender mediator) =>
         {

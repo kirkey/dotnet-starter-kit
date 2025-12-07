@@ -30,7 +30,7 @@ public class ShareAccountEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var shareAccountsGroup = app.MapGroup("microfinance/share-accounts").WithTags("share-accounts");
+        var shareAccountsGroup = app.MapGroup("microfinance/share-accounts").WithTags("Share Accounts");
 
         shareAccountsGroup.MapPost("/", async (CreateShareAccountCommand command, ISender sender) =>
             {

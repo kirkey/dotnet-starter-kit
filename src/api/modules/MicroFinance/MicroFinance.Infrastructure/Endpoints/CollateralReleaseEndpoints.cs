@@ -12,7 +12,7 @@ public class CollateralReleaseEndpoints() : CarterModule
     private const string ApproveRelease = "ApproveRelease";
     private const string CreateCollateralRelease = "CreateCollateralRelease";
     private const string GetCollateralRelease = "GetCollateralRelease";
-    private const string ReleaseCollateral = "ReleaseCollateral";
+    private const string CompleteCollateralRelease = "CompleteCollateralRelease";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -53,7 +53,7 @@ public class CollateralReleaseEndpoints() : CarterModule
 
         group.MapPost("/{id:guid}/release", async (Guid id, ReleaseRequest request, ISender sender) =>
         {
-            var result = await sender.Send(new ReleaseCollateralCommand(
+            var result = await sender.Send(new CompleteCollateralReleaseCommand(
                 id,
                 request.ReleasedById,
                 request.RecipientName,
@@ -61,9 +61,9 @@ public class CollateralReleaseEndpoints() : CarterModule
                 request.RecipientSignaturePath));
             return Results.Ok(result);
         })
-        .WithName(ReleaseCollateral)
+        .WithName(CompleteCollateralRelease)
         .WithSummary("Complete collateral release")
-        .Produces<ReleaseCollateralResponse>()
+        .Produces<CompleteCollateralReleaseResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 

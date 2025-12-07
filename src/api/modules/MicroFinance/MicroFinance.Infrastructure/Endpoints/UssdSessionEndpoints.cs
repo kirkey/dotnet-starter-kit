@@ -18,7 +18,7 @@ public class UssdSessionEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/ussd-sessions").WithTags("ussd-sessions");
+        var group = app.MapGroup("microfinance/ussd-sessions").WithTags("USSD Sessions");
 
         group.MapPost("/", async (CreateUssdSessionCommand command, ISender sender) =>
             {

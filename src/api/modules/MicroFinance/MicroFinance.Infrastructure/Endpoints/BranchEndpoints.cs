@@ -24,7 +24,7 @@ public class BranchEndpoints() : CarterModule
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("microfinance/branches").WithTags("branches");
+        var group = app.MapGroup("microfinance/branches").WithTags("Branches");
 
         // CRUD Operations
         group.MapPost("/", async (CreateBranchCommand command, ISender sender) =>

@@ -32,7 +32,7 @@ public class FixedDepositEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var fixedDepositsGroup = app.MapGroup("microfinance/fixed-deposits").WithTags("fixed-deposits");
+        var fixedDepositsGroup = app.MapGroup("microfinance/fixed-deposits").WithTags("Fixed Deposits");
 
         fixedDepositsGroup.MapPost("/", async (CreateFixedDepositCommand request, ISender mediator) =>
         {
