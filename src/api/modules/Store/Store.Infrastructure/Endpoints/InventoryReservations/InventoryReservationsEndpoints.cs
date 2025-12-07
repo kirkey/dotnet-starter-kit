@@ -11,7 +11,7 @@ namespace Store.Infrastructure.Endpoints.InventoryReservations;
 /// <summary>
 /// Endpoint configuration for Inventory Reservations module.
 /// </summary>
-public class InventoryReservationsEndpoints() : CarterModule("store")
+public class InventoryReservationsEndpoints() : CarterModule
 {
 
     private const string CreateInventoryReservationEndpoint = "CreateInventoryReservationEndpoint";

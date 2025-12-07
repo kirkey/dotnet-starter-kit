@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.FinancialStatements;
 /// Provides comprehensive REST API endpoints for managing financial-statements.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class FinancialStatementsEndpoints() : CarterModule("accounting")
+public class FinancialStatementsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all FinancialStatements endpoints to the route builder.

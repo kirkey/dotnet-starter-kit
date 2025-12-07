@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LegalActions.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LegalActionEndpoints() : CarterModule("microfinance")
+public class LegalActionEndpoints() : CarterModule
 {
 
     private const string CreateLegalAction = "CreateLegalAction";

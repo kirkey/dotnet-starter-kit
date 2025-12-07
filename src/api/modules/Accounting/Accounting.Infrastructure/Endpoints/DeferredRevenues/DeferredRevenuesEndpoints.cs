@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.DeferredRevenues;
 /// Provides comprehensive REST API endpoints for managing deferred-revenues.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class DeferredRevenuesEndpoints() : CarterModule("accounting")
+public class DeferredRevenuesEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all DeferredRevenues endpoints to the route builder.

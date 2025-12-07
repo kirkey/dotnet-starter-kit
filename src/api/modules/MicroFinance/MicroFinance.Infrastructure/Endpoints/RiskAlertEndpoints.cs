@@ -8,7 +8,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Resolve.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class RiskAlertEndpoints() : CarterModule("microfinance")
+public class RiskAlertEndpoints() : CarterModule
 {
 
     private const string AcknowledgeRiskAlert = "AcknowledgeRiskAlert";

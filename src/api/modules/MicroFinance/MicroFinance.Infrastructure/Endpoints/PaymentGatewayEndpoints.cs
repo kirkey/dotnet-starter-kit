@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Payment Gateways.
 /// </summary>
-public class PaymentGatewayEndpoints() : CarterModule("microfinance")
+public class PaymentGatewayEndpoints() : CarterModule
 {
 
     private const string ActivatePaymentGateway = "ActivatePaymentGateway";

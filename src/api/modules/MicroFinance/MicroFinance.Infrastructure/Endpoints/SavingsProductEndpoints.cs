@@ -9,7 +9,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Savings Products.
 /// </summary>
-public class SavingsProductEndpoints() : CarterModule("microfinance")
+public class SavingsProductEndpoints() : CarterModule
 {
 
     private const string CreateSavingsProduct = "CreateSavingsProduct";

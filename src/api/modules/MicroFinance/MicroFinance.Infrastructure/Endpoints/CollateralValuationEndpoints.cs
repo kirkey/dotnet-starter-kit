@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Submit.v1
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollateralValuationEndpoints() : CarterModule("microfinance")
+public class CollateralValuationEndpoints() : CarterModule
 {
 
     private const string ApproveValuation = "ApproveValuation";

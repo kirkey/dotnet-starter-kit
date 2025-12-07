@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.WriteOffs;
 /// Provides comprehensive REST API endpoints for managing write-offs.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class WriteOffsEndpoints() : CarterModule("accounting")
+public class WriteOffsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all WriteOffs endpoints to the route builder.

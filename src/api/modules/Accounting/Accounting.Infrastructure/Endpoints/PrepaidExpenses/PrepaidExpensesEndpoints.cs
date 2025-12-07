@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.PrepaidExpenses;
 /// Provides comprehensive REST API endpoints for managing prepaid-expenses.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class PrepaidExpensesEndpoints() : CarterModule("accounting")
+public class PrepaidExpensesEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all PrepaidExpenses endpoints to the route builder.

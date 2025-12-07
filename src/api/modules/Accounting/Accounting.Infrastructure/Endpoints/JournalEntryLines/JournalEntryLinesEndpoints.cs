@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.JournalEntryLines;
 /// Provides comprehensive REST API endpoints for managing journal-entry-lines.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class JournalEntryLinesEndpoints() : CarterModule("accounting")
+public class JournalEntryLinesEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all JournalEntryLines endpoints to the route builder.

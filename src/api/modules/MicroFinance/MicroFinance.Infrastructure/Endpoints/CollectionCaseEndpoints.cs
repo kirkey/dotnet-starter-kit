@@ -12,7 +12,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollectionCases.Settle.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollectionCaseEndpoints() : CarterModule("microfinance")
+public class CollectionCaseEndpoints() : CarterModule
 {
 
     private const string AssignCollectionCase = "AssignCollectionCase";

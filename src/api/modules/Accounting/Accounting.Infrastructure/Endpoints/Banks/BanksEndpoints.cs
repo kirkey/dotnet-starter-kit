@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.Banks;
 /// Provides comprehensive REST API endpoints for managing bank accounts and information.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class BanksEndpoints() : CarterModule("accounting")
+public class BanksEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Banks endpoints to the route builder.

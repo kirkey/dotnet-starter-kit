@@ -7,7 +7,7 @@ namespace Accounting.Infrastructure.Endpoints.FuelConsumption;
 /// Provides comprehensive REST API endpoints for managing fuel-consumption.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class FuelConsumptionEndpoints() : CarterModule("accounting")
+public class FuelConsumptionEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all FuelConsumption endpoints to the route builder.

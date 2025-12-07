@@ -8,7 +8,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Submit.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class InsuranceClaimEndpoints() : CarterModule("microfinance")
+public class InsuranceClaimEndpoints() : CarterModule
 {
 
     private const string ApproveInsuranceClaim = "ApproveInsuranceClaim";

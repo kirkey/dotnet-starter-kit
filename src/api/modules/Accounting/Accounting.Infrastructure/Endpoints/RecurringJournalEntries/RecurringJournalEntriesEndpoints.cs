@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.RecurringJournalEntries;
 /// Provides comprehensive REST API endpoints for managing recurring-journal-entries.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class RecurringJournalEntriesEndpoints() : CarterModule("accounting")
+public class RecurringJournalEntriesEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all RecurringJournalEntries endpoints to the route builder.

@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.FiscalPeriodCloses;
 /// Provides comprehensive REST API endpoints for managing fiscal-period-closes.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class FiscalPeriodClosesEndpoints() : CarterModule("accounting")
+public class FiscalPeriodClosesEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all FiscalPeriodCloses endpoints to the route builder.

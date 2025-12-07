@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class RiskCategoryEndpoints() : CarterModule("microfinance")
+public class RiskCategoryEndpoints() : CarterModule
 {
 
     private const string ActivateRiskCategory = "ActivateRiskCategory";

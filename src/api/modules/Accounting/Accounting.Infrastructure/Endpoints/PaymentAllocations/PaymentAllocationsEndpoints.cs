@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.PaymentAllocations;
 /// Provides comprehensive REST API endpoints for managing payment-allocations.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class PaymentAllocationsEndpoints() : CarterModule("accounting")
+public class PaymentAllocationsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all PaymentAllocations endpoints to the route builder.

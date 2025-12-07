@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Loan Schedules.
 /// </summary>
-public class LoanScheduleEndpoints() : CarterModule("microfinance")
+public class LoanScheduleEndpoints() : CarterModule
 {
 
     private const string GetLoanSchedule = "GetLoanSchedule";

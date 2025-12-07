@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.BudgetDetails;
 /// Provides comprehensive REST API endpoints for managing budget-details.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class BudgetDetailsEndpoints() : CarterModule("accounting")
+public class BudgetDetailsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all BudgetDetails endpoints to the route builder.

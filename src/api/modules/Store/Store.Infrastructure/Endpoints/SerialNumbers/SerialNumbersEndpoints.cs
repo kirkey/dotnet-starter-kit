@@ -8,7 +8,7 @@ namespace Store.Infrastructure.Endpoints.SerialNumbers;
 /// Provides REST API endpoints for managing serial numbers.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class SerialNumbersEndpoints() : CarterModule("store")
+public class SerialNumbersEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Serial Numbers endpoints to the route builder.

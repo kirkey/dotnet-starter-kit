@@ -9,7 +9,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Fee Definitions.
 /// </summary>
-public class FeeDefinitionEndpoints() : CarterModule("microfinance")
+public class FeeDefinitionEndpoints() : CarterModule
 {
 
     private const string CreateFeeDefinition = "CreateFeeDefinition";

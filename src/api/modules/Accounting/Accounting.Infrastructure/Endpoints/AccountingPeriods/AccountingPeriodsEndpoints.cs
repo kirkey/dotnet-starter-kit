@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.AccountingPeriods;
 /// Provides comprehensive REST API endpoints for managing accounting-periods.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class AccountingPeriodsEndpoints() : CarterModule("accounting")
+public class AccountingPeriodsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all AccountingPeriods endpoints to the route builder.

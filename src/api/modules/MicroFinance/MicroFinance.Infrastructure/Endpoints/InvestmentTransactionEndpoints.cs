@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.InvestmentTransactions.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class InvestmentTransactionEndpoints() : CarterModule("microfinance")
+public class InvestmentTransactionEndpoints() : CarterModule
 {
 
     private const string CompleteInvestmentTransaction = "CompleteInvestmentTransaction";

@@ -6,7 +6,7 @@ namespace Store.Infrastructure.Endpoints.ItemSuppliers;
 /// Carter module for ItemSupplier endpoints.
 /// Routes all requests to separate versioned endpoint handlers.
 /// </summary>
-public class ItemSuppliersEndpoints() : CarterModule("store")
+public class ItemSuppliersEndpoints() : CarterModule
 {
     public override void AddRoutes(IEndpointRouteBuilder app)
     {

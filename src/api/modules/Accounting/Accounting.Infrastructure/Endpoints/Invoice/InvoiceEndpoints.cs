@@ -9,7 +9,7 @@ namespace Accounting.Infrastructure.Endpoints.Invoice;
 /// Provides comprehensive REST API endpoints for managing invoices and accounts receivable.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class InvoiceEndpoints() : CarterModule("accounting")
+public class InvoiceEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Invoice endpoints to the route builder.

@@ -8,7 +8,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Withdraw.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CashVaultEndpoints() : CarterModule("microfinance")
+public class CashVaultEndpoints() : CarterModule
 {
 
     private const string CreateCashVault = "CreateCashVault";

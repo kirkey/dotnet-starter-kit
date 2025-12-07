@@ -13,7 +13,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Share Accounts.
 /// </summary>
-public class ShareAccountEndpoints() : CarterModule("microfinance")
+public class ShareAccountEndpoints() : CarterModule
 {
 
     private const string CloseShareAccount = "CloseShareAccount";

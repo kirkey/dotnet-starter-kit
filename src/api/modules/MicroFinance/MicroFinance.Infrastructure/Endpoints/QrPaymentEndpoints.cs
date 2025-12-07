@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for QR Payments.
 /// </summary>
-public class QrPaymentEndpoints() : CarterModule("microfinance")
+public class QrPaymentEndpoints() : CarterModule
 {
 
     private const string CreateDynamicQr = "CreateDynamicQr";

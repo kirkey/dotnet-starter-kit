@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Share Transactions.
 /// </summary>
-public class ShareTransactionEndpoints() : CarterModule("microfinance")
+public class ShareTransactionEndpoints() : CarterModule
 {
 
     private const string GetShareTransaction = "GetShareTransaction";

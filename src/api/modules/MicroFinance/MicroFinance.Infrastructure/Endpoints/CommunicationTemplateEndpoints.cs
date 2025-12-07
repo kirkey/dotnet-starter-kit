@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CommunicationTemplates.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CommunicationTemplateEndpoints() : CarterModule("microfinance")
+public class CommunicationTemplateEndpoints() : CarterModule
 {
 
     private const string ActivateCommunicationTemplate = "ActivateCommunicationTemplate";

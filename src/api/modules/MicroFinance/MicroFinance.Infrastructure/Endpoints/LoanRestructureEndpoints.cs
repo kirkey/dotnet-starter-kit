@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanRestructures.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LoanRestructureEndpoints() : CarterModule("microfinance")
+public class LoanRestructureEndpoints() : CarterModule
 {
 
     private const string ApproveRestructure = "ApproveRestructure";

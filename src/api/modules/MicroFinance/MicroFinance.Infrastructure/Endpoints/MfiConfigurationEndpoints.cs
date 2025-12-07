@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for MFI Configuration.
 /// </summary>
-public class MfiConfigurationEndpoints() : CarterModule("microfinance")
+public class MfiConfigurationEndpoints() : CarterModule
 {
 
     private const string CreateMfiConfiguration = "CreateMfiConfiguration";

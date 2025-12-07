@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.TaxCodes;
 /// Provides comprehensive REST API endpoints for managing tax-codes.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class TaxCodesEndpoints() : CarterModule("accounting")
+public class TaxCodesEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all TaxCodes endpoints to the route builder.

@@ -7,7 +7,7 @@ namespace Accounting.Infrastructure.Endpoints.Checks;
 /// Carter module for Checks endpoints.
 /// Routes all requests to separate versioned endpoint handlers.
 /// </summary>
-public class ChecksEndpoints() : CarterModule("accounting")
+public class ChecksEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Checks endpoints to the route builder.

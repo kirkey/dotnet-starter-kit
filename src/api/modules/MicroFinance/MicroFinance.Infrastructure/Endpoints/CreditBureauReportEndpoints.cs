@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Credit Bureau Reports.
 /// </summary>
-public class CreditBureauReportEndpoints() : CarterModule("microfinance")
+public class CreditBureauReportEndpoints() : CarterModule
 {
 
     private const string CreateCreditBureauReport = "CreateCreditBureauReport";

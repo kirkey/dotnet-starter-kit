@@ -8,7 +8,7 @@ namespace Store.Infrastructure.Endpoints.WarehouseLocations;
 /// Provides REST API endpoints for managing warehouse locations.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class WarehouseLocationsEndpoints() : CarterModule("store")
+public class WarehouseLocationsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Warehouse Locations endpoints to the route builder.

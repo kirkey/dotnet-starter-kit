@@ -14,7 +14,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Fixed Deposits.
 /// </summary>
-public class FixedDepositEndpoints() : CarterModule("microfinance")
+public class FixedDepositEndpoints() : CarterModule
 {
 
     private const string CloseFixedDepositPremature = "CloseFixedDepositPremature";

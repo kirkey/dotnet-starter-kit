@@ -8,7 +8,7 @@ namespace Store.Infrastructure.Endpoints.CycleCounts;
 /// Provides REST API endpoints for managing cycle counts and inventory reconciliation.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class CycleCountsEndpoints() : CarterModule("store")
+public class CycleCountsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Cycle Counts endpoints to the route builder.

@@ -12,27 +12,15 @@ internal sealed class ShareProductConfiguration : IEntityTypeConfiguration<Share
 
         builder.Property(x => x.Code)
             .IsRequired()
-            .HasMaxLength(ShareProduct.CodeMaxLength);
-
-        builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(ShareProduct.NameMaxLength);
-
-        builder.Property(x => x.Description)
-            .HasMaxLength(ShareProduct.DescriptionMaxLength);
-
-        builder.Property(x => x.NominalValue).HasPrecision(18, 2);
-        builder.Property(x => x.CurrentPrice).HasPrecision(18, 2);
-
+            .HasMaxLength(64);
+        
         // Indexes
         builder.HasIndex(x => x.Code)
             .IsUnique()
             .HasDatabaseName("IX_ShareProducts_Code");
 
-        builder.HasIndex(x => x.Name)
-            .HasDatabaseName("IX_ShareProducts_Name");
-
         builder.HasIndex(x => x.IsActive)
             .HasDatabaseName("IX_ShareProducts_IsActive");
     }
 }
+

@@ -10,7 +10,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.Branches.Update.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class BranchEndpoints() : CarterModule("microfinance")
+public class BranchEndpoints() : CarterModule
 {
 
     private const string ActivateBranch = "ActivateBranch";

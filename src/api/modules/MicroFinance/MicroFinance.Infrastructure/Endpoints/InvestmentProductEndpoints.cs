@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.UpdateNav.v
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class InvestmentProductEndpoints() : CarterModule("microfinance")
+public class InvestmentProductEndpoints() : CarterModule
 {
 
     private const string CreateInvestmentProduct = "CreateInvestmentProduct";

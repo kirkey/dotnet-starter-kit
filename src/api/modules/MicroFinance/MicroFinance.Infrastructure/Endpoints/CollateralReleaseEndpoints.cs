@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollateralReleases.Release.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollateralReleaseEndpoints() : CarterModule("microfinance")
+public class CollateralReleaseEndpoints() : CarterModule
 {
 
     private const string ApproveRelease = "ApproveRelease";

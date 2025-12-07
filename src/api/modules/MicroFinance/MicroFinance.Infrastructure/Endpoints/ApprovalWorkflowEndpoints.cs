@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class ApprovalWorkflowEndpoints() : CarterModule("microfinance")
+public class ApprovalWorkflowEndpoints() : CarterModule
 {
 
     private const string ActivateApprovalWorkflow = "ActivateApprovalWorkflow";

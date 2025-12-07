@@ -12,7 +12,7 @@ namespace Store.Infrastructure.Endpoints.GoodsReceipts;
 /// <summary>
 /// Endpoint configuration for Goods Receipts module.
 /// </summary>
-public class GoodsReceiptsEndpoints() : CarterModule("store")
+public class GoodsReceiptsEndpoints() : CarterModule
 {
 
     private const string AddGoodsReceiptItemEndpoint = "AddGoodsReceiptItemEndpoint";

@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.SecurityDeposits;
 /// Provides comprehensive REST API endpoints for managing security-deposits.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class SecurityDepositsEndpoints() : CarterModule("accounting")
+public class SecurityDepositsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all SecurityDeposits endpoints to the route builder.

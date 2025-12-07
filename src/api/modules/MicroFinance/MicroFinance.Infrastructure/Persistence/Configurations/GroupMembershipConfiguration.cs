@@ -11,32 +11,23 @@ internal sealed class GroupMembershipConfiguration : IEntityTypeConfiguration<Gr
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Role)
-            .IsRequired()
-            .HasMaxLength(GroupMembership.RoleMaxLength);
+            .HasMaxLength(64);
 
         builder.Property(x => x.Status)
-            .IsRequired()
-            .HasMaxLength(GroupMembership.StatusMaxLength);
-
-        builder.Property(x => x.Notes)
-            .HasMaxLength(GroupMembership.NotesMaxLength);
+            .HasMaxLength(32);
 
         // Relationships
-        builder.HasOne(x => x.Member)
+        builder.HasOne<Member>()
             .WithMany()
             .HasForeignKey(x => x.MemberId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(x => x.Group)
-            .WithMany(g => g.Memberships)
+        builder.HasOne<MemberGroup>()
+            .WithMany()
             .HasForeignKey(x => x.GroupId)
             .OnDelete(DeleteBehavior.Restrict);
 
         // Indexes
-        builder.HasIndex(x => new { x.MemberId, x.GroupId })
-            .IsUnique()
-            .HasDatabaseName("IX_GroupMemberships_MemberGroup");
-
         builder.HasIndex(x => x.MemberId)
             .HasDatabaseName("IX_GroupMemberships_MemberId");
 
@@ -45,8 +36,6 @@ internal sealed class GroupMembershipConfiguration : IEntityTypeConfiguration<Gr
 
         builder.HasIndex(x => x.Status)
             .HasDatabaseName("IX_GroupMemberships_Status");
-
-        builder.HasIndex(x => x.JoinDate)
-            .HasDatabaseName("IX_GroupMemberships_JoinDate");
     }
 }
+

@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.Member;
 /// Provides comprehensive REST API endpoints for managing member.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class MemberEndpoints() : CarterModule("accounting")
+public class MemberEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Member endpoints to the route builder.

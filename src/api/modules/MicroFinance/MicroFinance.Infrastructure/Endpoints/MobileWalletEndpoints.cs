@@ -12,7 +12,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.MobileWallets.UpgradeTier.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class MobileWalletEndpoints() : CarterModule("microfinance")
+public class MobileWalletEndpoints() : CarterModule
 {
 
     private const string ActivateMobileWallet = "ActivateMobileWallet";

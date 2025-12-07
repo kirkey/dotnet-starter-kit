@@ -24,7 +24,7 @@ namespace Store.Infrastructure.Endpoints.PurchaseOrders;
 /// <summary>
 /// Endpoint configuration for Purchase Orders module.
 /// </summary>
-public class PurchaseOrdersEndpoints() : CarterModule("store")
+public class PurchaseOrdersEndpoints() : CarterModule
 {
 
     private const string AddPurchaseOrderItemEndpoint = "AddPurchaseOrderItemEndpoint";

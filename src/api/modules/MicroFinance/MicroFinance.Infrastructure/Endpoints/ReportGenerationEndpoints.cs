@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Report Generations.
 /// </summary>
-public class ReportGenerationEndpoints() : CarterModule("microfinance")
+public class ReportGenerationEndpoints() : CarterModule
 {
 
     private const string GetReportGeneration = "GetReportGeneration";

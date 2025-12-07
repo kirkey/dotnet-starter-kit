@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.AccountReconciliations;
 /// Provides comprehensive REST API endpoints for managing account-reconciliations.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class AccountReconciliationsEndpoints() : CarterModule("accounting")
+public class AccountReconciliationsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all AccountReconciliations endpoints to the route builder.

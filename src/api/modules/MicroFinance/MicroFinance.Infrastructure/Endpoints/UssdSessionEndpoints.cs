@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for USSD Sessions.
 /// </summary>
-public class UssdSessionEndpoints() : CarterModule("microfinance")
+public class UssdSessionEndpoints() : CarterModule
 {
 
     private const string CreateUssdSession = "CreateUssdSession";

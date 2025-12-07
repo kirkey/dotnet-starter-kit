@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerAssignments.Transfe
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LoanOfficerAssignmentEndpoints() : CarterModule("microfinance")
+public class LoanOfficerAssignmentEndpoints() : CarterModule
 {
 
     private const string AssignToGroup = "AssignToGroup";

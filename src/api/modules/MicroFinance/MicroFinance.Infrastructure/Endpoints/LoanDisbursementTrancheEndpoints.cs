@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.Verif
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LoanDisbursementTrancheEndpoints() : CarterModule("microfinance")
+public class LoanDisbursementTrancheEndpoints() : CarterModule
 {
 
     private const string ApproveTranche = "ApproveTranche";

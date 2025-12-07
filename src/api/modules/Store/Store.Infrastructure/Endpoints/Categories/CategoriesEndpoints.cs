@@ -6,7 +6,7 @@ namespace Store.Infrastructure.Endpoints.Categories;
 /// Carter module for Categories endpoints.
 /// Routes all requests to separate versioned endpoint handlers.
 /// </summary>
-public class CategoriesEndpoints() : CarterModule("store")
+public class CategoriesEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Categories endpoints to the route builder.

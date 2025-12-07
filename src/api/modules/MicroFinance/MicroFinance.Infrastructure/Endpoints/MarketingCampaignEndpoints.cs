@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Launch.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class MarketingCampaignEndpoints() : CarterModule("microfinance")
+public class MarketingCampaignEndpoints() : CarterModule
 {
 
     private const string ApproveMarketingCampaign = "ApproveMarketingCampaign";

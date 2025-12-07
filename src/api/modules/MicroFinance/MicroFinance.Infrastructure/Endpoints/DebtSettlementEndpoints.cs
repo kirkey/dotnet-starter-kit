@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.DebtSettlements.RecordPayment.
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class DebtSettlementEndpoints() : CarterModule("microfinance")
+public class DebtSettlementEndpoints() : CarterModule
 {
 
     private const string ApproveSettlement = "ApproveSettlement";

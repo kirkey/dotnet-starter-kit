@@ -4,7 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollectionActions.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollectionActionEndpoints() : CarterModule("microfinance")
+public class CollectionActionEndpoints() : CarterModule
 {
 
     private const string CreateCollectionAction = "CreateCollectionAction";

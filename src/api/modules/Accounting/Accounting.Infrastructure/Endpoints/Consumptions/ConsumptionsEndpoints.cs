@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.Consumptions;
 /// Provides comprehensive REST API endpoints for managing consumptions.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class ConsumptionsEndpoints() : CarterModule("accounting")
+public class ConsumptionsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Consumptions endpoints to the route builder.

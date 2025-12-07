@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.Patronage;
 /// Provides comprehensive REST API endpoints for managing patronage.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class PatronageEndpoints() : CarterModule("accounting")
+public class PatronageEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Patronage endpoints to the route builder.

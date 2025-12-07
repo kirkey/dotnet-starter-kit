@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.Payees;
 /// Provides comprehensive REST API endpoints for managing payees.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class PayeesEndpoints() : CarterModule("accounting")
+public class PayeesEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Payees endpoints to the route builder.

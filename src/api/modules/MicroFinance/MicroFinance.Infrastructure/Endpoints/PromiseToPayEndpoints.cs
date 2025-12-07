@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.RecordPayment.v1
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class PromiseToPayEndpoints() : CarterModule("microfinance")
+public class PromiseToPayEndpoints() : CarterModule
 {
 
     private const string CreatePromiseToPay = "CreatePromiseToPay";

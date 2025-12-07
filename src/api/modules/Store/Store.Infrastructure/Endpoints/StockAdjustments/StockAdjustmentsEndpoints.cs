@@ -8,7 +8,7 @@ namespace Store.Infrastructure.Endpoints.StockAdjustments;
 /// Provides REST API endpoints for managing stock adjustments.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class StockAdjustmentsEndpoints() : CarterModule("store")
+public class StockAdjustmentsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Stock Adjustments endpoints to the route builder.

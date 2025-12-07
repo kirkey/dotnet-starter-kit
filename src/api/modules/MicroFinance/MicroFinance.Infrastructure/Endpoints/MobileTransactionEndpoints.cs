@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.MobileTransactions.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class MobileTransactionEndpoints() : CarterModule("microfinance")
+public class MobileTransactionEndpoints() : CarterModule
 {
 
     private const string CompleteMobileTransaction = "CompleteMobileTransaction";

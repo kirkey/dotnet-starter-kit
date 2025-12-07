@@ -6,7 +6,7 @@ namespace Store.Infrastructure.Endpoints.Suppliers;
 /// Carter module for Suppliers endpoints.
 /// Routes all requests to separate versioned endpoint handlers.
 /// </summary>
-public class SuppliersEndpoints() : CarterModule("store")
+public class SuppliersEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Suppliers endpoints to the route builder.

@@ -12,29 +12,20 @@ internal sealed class ShareAccountConfiguration : IEntityTypeConfiguration<Share
 
         builder.Property(x => x.AccountNumber)
             .IsRequired()
-            .HasMaxLength(ShareAccount.AccountNumberMaxLength);
+            .HasMaxLength(64);
 
         builder.Property(x => x.Status)
-            .IsRequired()
-            .HasMaxLength(ShareAccount.StatusMaxLength);
+            .HasMaxLength(32);
 
-        builder.Property(x => x.Notes)
-            .HasMaxLength(ShareAccount.NotesMaxLength);
-
-        builder.Property(x => x.TotalShareValue).HasPrecision(18, 2);
-        builder.Property(x => x.TotalPurchases).HasPrecision(18, 2);
-        builder.Property(x => x.TotalRedemptions).HasPrecision(18, 2);
-        builder.Property(x => x.TotalDividendsEarned).HasPrecision(18, 2);
-        builder.Property(x => x.TotalDividendsPaid).HasPrecision(18, 2);
 
         // Relationships
-        builder.HasOne(x => x.Member)
+        builder.HasOne<Member>()
             .WithMany()
             .HasForeignKey(x => x.MemberId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(x => x.ShareProduct)
-            .WithMany(p => p.ShareAccounts)
+        builder.HasOne<ShareProduct>()
+            .WithMany()
             .HasForeignKey(x => x.ShareProductId)
             .OnDelete(DeleteBehavior.Restrict);
 
@@ -51,8 +42,6 @@ internal sealed class ShareAccountConfiguration : IEntityTypeConfiguration<Share
 
         builder.HasIndex(x => x.Status)
             .HasDatabaseName("IX_ShareAccounts_Status");
-
-        builder.HasIndex(x => x.OpenedDate)
-            .HasDatabaseName("IX_ShareAccounts_OpenedDate");
     }
 }
+

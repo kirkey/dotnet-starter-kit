@@ -18,30 +18,32 @@ internal sealed class LoanConfiguration : IEntityTypeConfiguration<Loan>
             .IsRequired()
             .HasMaxLength(LoanConstants.StatusMaxLength);
 
-        builder.Property(x => x.RepaymentFrequency)
-            .IsRequired()
-            .HasMaxLength(LoanConstants.RepaymentFrequencyMaxLength);
-
         builder.Property(x => x.Purpose)
             .HasMaxLength(LoanConstants.PurposeMaxLength);
 
         builder.Property(x => x.RejectionReason)
             .HasMaxLength(LoanConstants.RejectionReasonMaxLength);
 
+        builder.Property(x => x.RepaymentFrequency)
+            .HasMaxLength(LoanConstants.RepaymentFrequencyMaxLength);
+
+        builder.Property(x => x.Notes)
+            .HasMaxLength(LoanConstants.NotesMaxLength);
+
         builder.Property(x => x.PrincipalAmount).HasPrecision(18, 2);
-        builder.Property(x => x.InterestRate).HasPrecision(5, 2);
+        builder.Property(x => x.InterestRate).HasPrecision(8, 4);
         builder.Property(x => x.OutstandingPrincipal).HasPrecision(18, 2);
         builder.Property(x => x.OutstandingInterest).HasPrecision(18, 2);
         builder.Property(x => x.TotalPaid).HasPrecision(18, 2);
 
         // Relationships
-        builder.HasOne(x => x.Member)
-            .WithMany(m => m.Loans)
+        builder.HasOne<Member>()
+            .WithMany()
             .HasForeignKey(x => x.MemberId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(x => x.LoanProduct)
-            .WithMany(p => p.Loans)
+        builder.HasOne<LoanProduct>()
+            .WithMany()
             .HasForeignKey(x => x.LoanProductId)
             .OnDelete(DeleteBehavior.Restrict);
 
@@ -58,12 +60,6 @@ internal sealed class LoanConfiguration : IEntityTypeConfiguration<Loan>
 
         builder.HasIndex(x => x.Status)
             .HasDatabaseName("IX_Loans_Status");
-
-        builder.HasIndex(x => x.ApplicationDate)
-            .HasDatabaseName("IX_Loans_ApplicationDate");
-
-        builder.HasIndex(x => x.DisbursementDate)
-            .HasDatabaseName("IX_Loans_DisbursementDate");
     }
 }
 

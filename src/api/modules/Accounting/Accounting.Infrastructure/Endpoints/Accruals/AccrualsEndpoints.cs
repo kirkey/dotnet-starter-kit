@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.Accruals;
 /// Provides comprehensive REST API endpoints for managing accruals.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class AccrualsEndpoints() : CarterModule("accounting")
+public class AccrualsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Accruals endpoints to the route builder.

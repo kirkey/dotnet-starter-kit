@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.DebitMemos;
 /// Provides comprehensive REST API endpoints for managing debit-memos.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class DebitMemosEndpoints() : CarterModule("accounting")
+public class DebitMemosEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all DebitMemos endpoints to the route builder.

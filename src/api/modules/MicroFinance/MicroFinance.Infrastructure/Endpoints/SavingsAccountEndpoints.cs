@@ -15,7 +15,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Savings Accounts.
 /// </summary>
-public class SavingsAccountEndpoints() : CarterModule("microfinance")
+public class SavingsAccountEndpoints() : CarterModule
 {
 
     private const string CloseSavingsAccount = "CloseSavingsAccount";

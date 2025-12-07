@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.TrialBalance;
 /// Provides comprehensive REST API endpoints for managing trial-balance.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class TrialBalanceEndpoints() : CarterModule("accounting")
+public class TrialBalanceEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all TrialBalance endpoints to the route builder.

@@ -11,31 +11,19 @@ internal sealed class LoanCollateralConfiguration : IEntityTypeConfiguration<Loa
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.CollateralType)
-            .IsRequired()
-            .HasMaxLength(LoanCollateral.CollateralTypeMaxLength);
+            .HasMaxLength(64);
 
         builder.Property(x => x.Description)
-            .IsRequired()
-            .HasMaxLength(LoanCollateral.DescriptionMaxLength);
-
-        builder.Property(x => x.Location)
-            .HasMaxLength(LoanCollateral.LocationMaxLength);
-
-        builder.Property(x => x.DocumentReference)
-            .HasMaxLength(LoanCollateral.DocumentReferenceMaxLength);
+            .HasMaxLength(2048);
 
         builder.Property(x => x.Status)
-            .IsRequired()
-            .HasMaxLength(LoanCollateral.StatusMaxLength);
-
-        builder.Property(x => x.Notes)
-            .HasMaxLength(LoanCollateral.NotesMaxLength);
+            .HasMaxLength(32);
 
         builder.Property(x => x.EstimatedValue).HasPrecision(18, 2);
         builder.Property(x => x.ForcedSaleValue).HasPrecision(18, 2);
 
         // Relationships
-        builder.HasOne(x => x.Loan)
+        builder.HasOne<Loan>()
             .WithMany()
             .HasForeignKey(x => x.LoanId)
             .OnDelete(DeleteBehavior.Restrict);
@@ -49,8 +37,6 @@ internal sealed class LoanCollateralConfiguration : IEntityTypeConfiguration<Loa
 
         builder.HasIndex(x => x.Status)
             .HasDatabaseName("IX_LoanCollaterals_Status");
-
-        builder.HasIndex(x => x.ValuationDate)
-            .HasDatabaseName("IX_LoanCollaterals_ValuationDate");
     }
 }
+

@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerTargets.RecordProgr
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LoanOfficerTargetEndpoints() : CarterModule("microfinance")
+public class LoanOfficerTargetEndpoints() : CarterModule
 {
 
     private const string CreateLoanOfficerTarget = "CreateLoanOfficerTarget";

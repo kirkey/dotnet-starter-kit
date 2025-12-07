@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.Customers;
 /// Provides comprehensive REST API endpoints for managing customers.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class CustomersEndpoints() : CarterModule("accounting")
+public class CustomersEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Customers endpoints to the route builder.

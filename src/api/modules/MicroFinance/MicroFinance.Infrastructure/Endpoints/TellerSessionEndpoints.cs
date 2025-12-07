@@ -12,7 +12,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.Verify.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class TellerSessionEndpoints() : CarterModule("microfinance")
+public class TellerSessionEndpoints() : CarterModule
 {
 
     private const string CloseTellerSession = "CloseTellerSession";

@@ -10,7 +10,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Withdraw.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LoanApplicationEndpoints() : CarterModule("microfinance")
+public class LoanApplicationEndpoints() : CarterModule
 {
 
     private const string ApproveLoanApplication = "ApproveLoanApplication";

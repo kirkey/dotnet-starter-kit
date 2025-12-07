@@ -9,7 +9,7 @@ namespace Accounting.Infrastructure.Endpoints.Bills;
 /// Provides comprehensive REST API endpoints for managing bills and accounts payable.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class BillsEndpoints() : CarterModule("accounting")
+public class BillsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Bills endpoints to the route builder.

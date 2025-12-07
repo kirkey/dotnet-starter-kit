@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.GeneralLedger;
 /// Provides comprehensive REST API endpoints for managing general-ledger.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class GeneralLedgerEndpoints() : CarterModule("accounting")
+public class GeneralLedgerEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all GeneralLedger endpoints to the route builder.

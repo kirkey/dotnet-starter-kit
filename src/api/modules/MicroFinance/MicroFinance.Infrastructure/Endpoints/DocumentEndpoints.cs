@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.Documents.Verify.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class DocumentEndpoints() : CarterModule("microfinance")
+public class DocumentEndpoints() : CarterModule
 {
 
     private const string CreateDocument = "CreateDocument";

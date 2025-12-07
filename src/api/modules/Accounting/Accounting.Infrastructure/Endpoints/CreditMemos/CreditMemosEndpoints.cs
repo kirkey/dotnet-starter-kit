@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.CreditMemos;
 /// Provides comprehensive REST API endpoints for managing credit-memos.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class CreditMemosEndpoints() : CarterModule("accounting")
+public class CreditMemosEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all CreditMemos endpoints to the route builder.

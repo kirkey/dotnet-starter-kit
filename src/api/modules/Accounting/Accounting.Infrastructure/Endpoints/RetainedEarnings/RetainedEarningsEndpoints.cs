@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.RetainedEarnings;
 /// Provides comprehensive REST API endpoints for managing retained-earnings.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class RetainedEarningsEndpoints() : CarterModule("accounting")
+public class RetainedEarningsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all RetainedEarnings endpoints to the route builder.

@@ -10,46 +10,20 @@ internal sealed class FixedDepositConfiguration : IEntityTypeConfiguration<Fixed
         builder.IsMultiTenant();
         builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.CertificateNumber)
-            .IsRequired()
-            .HasMaxLength(FixedDeposit.CertificateNumberMaxLength);
-
         builder.Property(x => x.Status)
-            .IsRequired()
-            .HasMaxLength(FixedDeposit.StatusMaxLength);
-
-        builder.Property(x => x.MaturityInstruction)
-            .IsRequired()
-            .HasMaxLength(FixedDeposit.MaturityInstructionMaxLength);
-
-        builder.Property(x => x.Notes)
-            .HasMaxLength(FixedDeposit.NotesMaxLength);
+            .HasMaxLength(32);
 
         builder.Property(x => x.PrincipalAmount).HasPrecision(18, 2);
-        builder.Property(x => x.InterestRate).HasPrecision(5, 2);
+        builder.Property(x => x.InterestRate).HasPrecision(8, 4);
         builder.Property(x => x.InterestEarned).HasPrecision(18, 2);
-        builder.Property(x => x.InterestPaid).HasPrecision(18, 2);
 
         // Relationships
-        builder.HasOne(x => x.Member)
+        builder.HasOne<Member>()
             .WithMany()
             .HasForeignKey(x => x.MemberId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(x => x.SavingsProduct)
-            .WithMany()
-            .HasForeignKey(x => x.SavingsProductId)
-            .OnDelete(DeleteBehavior.SetNull);
-
-        builder.HasOne(x => x.LinkedSavingsAccount)
-            .WithMany()
-            .HasForeignKey(x => x.LinkedSavingsAccountId)
-            .OnDelete(DeleteBehavior.SetNull);
-
         // Indexes
-        builder.HasIndex(x => x.CertificateNumber)
-            .IsUnique()
-            .HasDatabaseName("IX_FixedDeposits_CertificateNumber");
 
         builder.HasIndex(x => x.MemberId)
             .HasDatabaseName("IX_FixedDeposits_MemberId");
@@ -59,8 +33,6 @@ internal sealed class FixedDepositConfiguration : IEntityTypeConfiguration<Fixed
 
         builder.HasIndex(x => x.MaturityDate)
             .HasDatabaseName("IX_FixedDeposits_MaturityDate");
-
-        builder.HasIndex(x => x.DepositDate)
-            .HasDatabaseName("IX_FixedDeposits_DepositDate");
     }
 }
+

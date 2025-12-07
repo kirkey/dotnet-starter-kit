@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanWriteOffs.RecordRecovery.v
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LoanWriteOffEndpoints() : CarterModule("microfinance")
+public class LoanWriteOffEndpoints() : CarterModule
 {
 
     private const string ApproveWriteOff = "ApproveWriteOff";

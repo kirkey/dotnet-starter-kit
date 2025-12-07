@@ -6,7 +6,7 @@ namespace Store.Infrastructure.Endpoints.Bins;
 /// Carter module for Bins endpoints.
 /// Routes all requests to separate versioned endpoint handlers.
 /// </summary>
-public class BinsEndpoints() : CarterModule("store")
+public class BinsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Bins endpoints to the route builder.

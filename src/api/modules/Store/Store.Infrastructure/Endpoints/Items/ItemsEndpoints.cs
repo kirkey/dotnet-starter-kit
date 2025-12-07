@@ -6,7 +6,7 @@ namespace Store.Infrastructure.Endpoints.Items;
 /// Carter module for Items endpoints.
 /// Routes all requests to separate versioned endpoint handlers.
 /// </summary>
-public class ItemsEndpoints() : CarterModule("store")
+public class ItemsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Items endpoints to the route builder.

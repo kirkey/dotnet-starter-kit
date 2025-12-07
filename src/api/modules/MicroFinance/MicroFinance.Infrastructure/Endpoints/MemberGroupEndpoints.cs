@@ -13,7 +13,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Member Groups.
 /// </summary>
-public class MemberGroupEndpoints() : CarterModule("microfinance")
+public class MemberGroupEndpoints() : CarterModule
 {
 
     private const string ActivateMemberGroup = "ActivateMemberGroup";

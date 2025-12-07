@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollectionStrategies.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollectionStrategyEndpoints() : CarterModule("microfinance")
+public class CollectionStrategyEndpoints() : CarterModule
 {
 
     private const string ActivateStrategy = "ActivateStrategy";

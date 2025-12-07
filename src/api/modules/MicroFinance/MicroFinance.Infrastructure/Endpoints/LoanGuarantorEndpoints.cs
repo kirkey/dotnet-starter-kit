@@ -12,7 +12,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Loan Guarantors.
 /// </summary>
-public class LoanGuarantorEndpoints() : CarterModule("microfinance")
+public class LoanGuarantorEndpoints() : CarterModule
 {
 
     private const string ApproveLoanGuarantor = "ApproveLoanGuarantor";

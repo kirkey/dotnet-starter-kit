@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CustomerSegments.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CustomerSegmentEndpoints() : CarterModule("microfinance")
+public class CustomerSegmentEndpoints() : CarterModule
 {
 
     private const string ActivateCustomerSegment = "ActivateCustomerSegment";

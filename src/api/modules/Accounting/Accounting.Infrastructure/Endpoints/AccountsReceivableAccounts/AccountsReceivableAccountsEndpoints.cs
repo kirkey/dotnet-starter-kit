@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.AccountsReceivableAccounts;
 /// Provides comprehensive REST API endpoints for managing accounts-receivable-accounts.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class AccountsReceivableAccountsEndpoints() : CarterModule("accounting")
+public class AccountsReceivableAccountsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all AccountsReceivableAccounts endpoints to the route builder.

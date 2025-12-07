@@ -8,7 +8,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.StaffTrainings.Start.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class StaffTrainingEndpoints() : CarterModule("microfinance")
+public class StaffTrainingEndpoints() : CarterModule
 {
 
     private const string CancelStaffTraining = "CancelStaffTraining";

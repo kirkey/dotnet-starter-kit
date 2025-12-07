@@ -15,7 +15,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Agent Banking.
 /// </summary>
-public class AgentBankingEndpoints() : CarterModule("microfinance")
+public class AgentBankingEndpoints() : CarterModule
 {
 
     private const string ApproveAgentBanking = "ApproveAgentBanking";

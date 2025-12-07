@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CreditScores.SetLossParameters
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CreditScoreEndpoints() : CarterModule("microfinance")
+public class CreditScoreEndpoints() : CarterModule
 {
 
     private const string CreateCreditScore = "CreateCreditScore";

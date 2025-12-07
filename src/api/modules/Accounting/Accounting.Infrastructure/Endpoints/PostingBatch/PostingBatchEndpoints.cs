@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.PostingBatch;
 /// Provides comprehensive REST API endpoints for managing posting-batch.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class PostingBatchEndpoints() : CarterModule("accounting")
+public class PostingBatchEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all PostingBatch endpoints to the route builder.

@@ -8,7 +8,7 @@ namespace Store.Infrastructure.Endpoints.PutAwayTasks;
 /// Provides REST API endpoints for managing put-away tasks in warehouse operations.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class PutAwayTasksEndpoints() : CarterModule("store")
+public class PutAwayTasksEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Put-Away Tasks endpoints to the route builder.

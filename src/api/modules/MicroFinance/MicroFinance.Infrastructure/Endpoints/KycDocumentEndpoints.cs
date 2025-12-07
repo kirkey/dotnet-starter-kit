@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.KycDocuments.Verify.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class KycDocumentEndpoints() : CarterModule("microfinance")
+public class KycDocumentEndpoints() : CarterModule
 {
 
     private const string CreateKycDocument = "CreateKycDocument";

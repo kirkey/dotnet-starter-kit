@@ -8,7 +8,7 @@ namespace Store.Infrastructure.Endpoints.LotNumbers;
 /// Provides REST API endpoints for managing lot/batch numbers.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class LotNumbersEndpoints() : CarterModule("store")
+public class LotNumbersEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Lot Numbers endpoints to the route builder.

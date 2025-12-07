@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.BankReconciliations;
 /// Provides comprehensive REST API endpoints for managing bank-reconciliations.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class BankReconciliationsEndpoints() : CarterModule("accounting")
+public class BankReconciliationsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all BankReconciliations endpoints to the route builder.

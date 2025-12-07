@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.RecordMeasureme
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class RiskIndicatorEndpoints() : CarterModule("microfinance")
+public class RiskIndicatorEndpoints() : CarterModule
 {
 
     private const string ActivateRiskIndicator = "ActivateRiskIndicator";

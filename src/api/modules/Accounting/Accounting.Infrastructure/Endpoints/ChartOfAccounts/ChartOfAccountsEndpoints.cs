@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.ChartOfAccounts;
 /// Provides comprehensive REST API endpoints for managing chart of accounts and account balances.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class ChartOfAccountsEndpoints() : CarterModule("accounting")
+public class ChartOfAccountsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Chart of Accounts endpoints to the route builder.

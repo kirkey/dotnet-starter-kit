@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Report Definitions.
 /// </summary>
-public class ReportDefinitionEndpoints() : CarterModule("microfinance")
+public class ReportDefinitionEndpoints() : CarterModule
 {
 
     private const string ActivateReportDefinition = "ActivateReportDefinition";

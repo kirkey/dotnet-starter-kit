@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Reject.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class ApprovalRequestEndpoints() : CarterModule("microfinance")
+public class ApprovalRequestEndpoints() : CarterModule
 {
 
     private const string ApproveRequestLevel = "ApproveRequestLevel";

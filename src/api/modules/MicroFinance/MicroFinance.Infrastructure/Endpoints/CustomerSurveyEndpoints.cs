@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CustomerSurveys.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CustomerSurveyEndpoints() : CarterModule("microfinance")
+public class CustomerSurveyEndpoints() : CarterModule
 {
 
     private const string ActivateCustomerSurvey = "ActivateCustomerSurvey";

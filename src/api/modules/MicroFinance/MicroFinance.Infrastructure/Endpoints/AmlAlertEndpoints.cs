@@ -11,7 +11,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class AmlAlertEndpoints() : CarterModule("microfinance")
+public class AmlAlertEndpoints() : CarterModule
 {
 
     private const string AssignAmlAlert = "AssignAmlAlert";

@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.Billing;
 /// Provides comprehensive REST API endpoints for managing billing.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class BillingEndpoints() : CarterModule("accounting")
+public class BillingEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Billing endpoints to the route builder.

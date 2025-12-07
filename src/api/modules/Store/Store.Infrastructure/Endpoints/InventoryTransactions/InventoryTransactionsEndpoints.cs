@@ -12,7 +12,7 @@ namespace Store.Infrastructure.Endpoints.InventoryTransactions;
 /// <summary>
 /// Endpoint configuration for Inventory Transactions module using Carter.
 /// </summary>
-public class InventoryTransactionsEndpoints() : CarterModule("store")
+public class InventoryTransactionsEndpoints() : CarterModule
 {
 
     private const string ApproveInventoryTransactionEndpoint = "ApproveInventoryTransactionEndpoint";

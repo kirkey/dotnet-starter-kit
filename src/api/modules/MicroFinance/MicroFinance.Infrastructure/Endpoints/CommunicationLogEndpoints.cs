@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CommunicationLogs.MarkDelivere
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CommunicationLogEndpoints() : CarterModule("microfinance")
+public class CommunicationLogEndpoints() : CarterModule
 {
 
     private const string CreateCommunicationLog = "CreateCommunicationLog";

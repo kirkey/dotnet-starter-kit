@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.RecordPremiu
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class InsurancePolicyEndpoints() : CarterModule("microfinance")
+public class InsurancePolicyEndpoints() : CarterModule
 {
 
     private const string ActivateInsurancePolicy = "ActivateInsurancePolicy";

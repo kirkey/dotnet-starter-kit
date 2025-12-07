@@ -8,7 +8,7 @@ namespace Store.Infrastructure.Endpoints.InventoryTransfers;
 /// Provides REST API endpoints for managing inventory transfers between warehouses.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class InventoryTransfersEndpoints() : CarterModule("store")
+public class InventoryTransfersEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Inventory Transfers endpoints to the route builder.

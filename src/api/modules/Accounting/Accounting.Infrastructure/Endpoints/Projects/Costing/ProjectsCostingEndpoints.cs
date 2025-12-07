@@ -7,7 +7,7 @@ namespace Accounting.Infrastructure.Endpoints.Projects.Costing;
 /// Carter module for ProjectCosting endpoints.
 /// Routes all requests to separate versioned endpoint handlers.
 /// </summary>
-public class ProjectsCostingEndpoints() : CarterModule("accounting")
+public class ProjectsCostingEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Projects Costing endpoints to the route builder.

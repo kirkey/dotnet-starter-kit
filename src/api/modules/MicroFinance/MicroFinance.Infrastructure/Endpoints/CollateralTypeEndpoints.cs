@@ -4,7 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollateralTypes.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollateralTypeEndpoints() : CarterModule("microfinance")
+public class CollateralTypeEndpoints() : CarterModule
 {
 
     private const string CreateCollateralType = "CreateCollateralType";

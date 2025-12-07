@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.RecordProgress.v
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class BranchTargetEndpoints() : CarterModule("microfinance")
+public class BranchTargetEndpoints() : CarterModule
 {
 
     private const string CreateBranchTarget = "CreateBranchTarget";

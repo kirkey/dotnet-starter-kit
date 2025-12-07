@@ -13,7 +13,7 @@ namespace Store.Infrastructure.Endpoints.PickLists;
 /// <summary>
 /// Endpoint configuration for Pick Lists module.
 /// </summary>
-public class PickListsEndpoints() : CarterModule("store")
+public class PickListsEndpoints() : CarterModule
 {
 
     private const string AddPickListItemEndpoint = "AddPickListItemEndpoint";

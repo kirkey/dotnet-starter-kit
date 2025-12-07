@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.InventoryItems;
 /// Provides comprehensive REST API endpoints for managing inventory-items.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class InventoryItemsEndpoints() : CarterModule("accounting")
+public class InventoryItemsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all InventoryItems endpoints to the route builder.

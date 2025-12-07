@@ -6,7 +6,7 @@ namespace Store.Infrastructure.Endpoints.StockLevels;
 /// Carter module for StockLevels endpoints.
 /// Routes all requests to separate versioned endpoint handlers.
 /// </summary>
-public class StockLevelsEndpoints() : CarterModule("store")
+public class StockLevelsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all StockLevels endpoints to the route builder.

@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.Meter;
 /// Provides comprehensive REST API endpoints for managing meter.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class MeterEndpoints() : CarterModule("accounting")
+public class MeterEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all Meter endpoints to the route builder.

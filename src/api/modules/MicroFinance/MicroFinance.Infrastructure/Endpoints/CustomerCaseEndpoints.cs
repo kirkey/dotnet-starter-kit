@@ -8,7 +8,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CustomerCases.Resolve.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CustomerCaseEndpoints() : CarterModule("microfinance")
+public class CustomerCaseEndpoints() : CarterModule
 {
 
     private const string AssignCustomerCase = "AssignCustomerCase";

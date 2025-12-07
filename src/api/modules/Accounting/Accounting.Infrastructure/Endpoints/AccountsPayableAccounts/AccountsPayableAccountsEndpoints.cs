@@ -8,7 +8,7 @@ namespace Accounting.Infrastructure.Endpoints.AccountsPayableAccounts;
 /// Provides comprehensive REST API endpoints for managing accounts-payable-accounts.
 /// Uses the ICarterModule delegated pattern with extension methods for each operation.
 /// </summary>
-public class AccountsPayableAccountsEndpoints() : CarterModule("accounting")
+public class AccountsPayableAccountsEndpoints() : CarterModule
 {
     /// <summary>
     /// Maps all AccountsPayableAccounts endpoints to the route builder.

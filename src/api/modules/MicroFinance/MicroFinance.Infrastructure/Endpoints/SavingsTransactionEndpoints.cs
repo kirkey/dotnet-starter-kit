@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Savings Transactions.
 /// </summary>
-public class SavingsTransactionEndpoints() : CarterModule("microfinance")
+public class SavingsTransactionEndpoints() : CarterModule
 {
 
     private const string GetSavingsTransaction = "GetSavingsTransaction";

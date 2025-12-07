@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.Renew.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollateralInsuranceEndpoints() : CarterModule("microfinance")
+public class CollateralInsuranceEndpoints() : CarterModule
 {
 
     private const string CreateCollateralInsurance = "CreateCollateralInsurance";

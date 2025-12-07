@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CreditBureauInquiries.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CreditBureauInquiryEndpoints() : CarterModule("microfinance")
+public class CreditBureauInquiryEndpoints() : CarterModule
 {
 
     private const string CompleteInquiry = "CompleteInquiry";

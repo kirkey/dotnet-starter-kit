@@ -4,7 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.Staff.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class StaffEndpoints() : CarterModule("microfinance")
+public class StaffEndpoints() : CarterModule
 {
 
     private const string CreateStaff = "CreateStaff";

@@ -9,7 +9,7 @@ namespace Store.Infrastructure.Endpoints.SalesImports;
 /// <summary>
 /// Endpoint configuration for Sales Imports module.
 /// </summary>
-public class SalesImportsEndpoints() : CarterModule("store")
+public class SalesImportsEndpoints() : CarterModule
 {
 
     private const string CreateSalesImportEndpoint = "CreateSalesImportEndpoint";

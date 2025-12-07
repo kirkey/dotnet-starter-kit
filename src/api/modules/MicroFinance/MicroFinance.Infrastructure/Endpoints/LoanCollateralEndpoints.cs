@@ -13,7 +13,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Loan Collaterals.
 /// </summary>
-public class LoanCollateralEndpoints() : CarterModule("microfinance")
+public class LoanCollateralEndpoints() : CarterModule
 {
 
     private const string CreateLoanCollateral = "CreateLoanCollateral";

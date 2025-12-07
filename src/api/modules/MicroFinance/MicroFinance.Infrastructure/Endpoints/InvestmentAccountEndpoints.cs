@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.SetupSip.v1
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class InvestmentAccountEndpoints() : CarterModule("microfinance")
+public class InvestmentAccountEndpoints() : CarterModule
 {
 
     private const string CreateInvestmentAccount = "CreateInvestmentAccount";
