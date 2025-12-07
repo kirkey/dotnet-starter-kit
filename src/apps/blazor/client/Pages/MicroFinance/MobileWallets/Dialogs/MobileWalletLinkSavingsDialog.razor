@@ -56,12 +56,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private DefaultIdType _selectedSavingsAccountId;
 
     private void Cancel() => MudDialog.Cancel();
@@ -75,7 +69,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.LinkSavingsMobileWalletEndpointAsync("1", WalletId, command),
+            async () => await Client.LinkSavingsMobileWalletEndpointAsync("1", WalletId, command),
             Snackbar,
             successMessage: "Wallet linked to savings account successfully.");
 

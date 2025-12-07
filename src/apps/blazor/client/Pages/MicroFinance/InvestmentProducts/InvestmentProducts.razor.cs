@@ -12,11 +12,7 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InvestmentProducts;
 public partial class InvestmentProducts
 {
     [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-    [Inject]
     private IAuthorizationService AuthorizationService { get; set; } = null!;
-    [Inject]
-    private IDialogService DialogService { get; set; } = null!;
     [Inject]
     private ClientPreference ClientPreference { get; set; } = null!;
 
@@ -63,13 +59,13 @@ public partial class InvestmentProducts
             searchFunc: async filter =>
             {
                 var request = filter.Adapt<PaginationFilter>();
-                var response = await MicroFinanceClient.SearchInvestmentProductsEndpointAsync("1", request);
+                var response = await Client.SearchInvestmentProductsEndpointAsync("1", request);
                 return response.Adapt<PaginationResponse<InvestmentProductResponse>>();
             },
             createFunc: async vm =>
             {
                 var command = vm.Adapt<CreateInvestmentProductCommand>();
-                await MicroFinanceClient.CreateInvestmentProductAsync("1", command);
+                await Client.CreateInvestmentProductAsync("1", command);
             },
             getDefaultsFunc: () => Task.FromResult(new InvestmentProductViewModel()),
             hasExtraActionsFunc: () => true,

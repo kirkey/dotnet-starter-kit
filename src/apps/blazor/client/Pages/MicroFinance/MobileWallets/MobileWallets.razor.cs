@@ -1,6 +1,5 @@
 using FSH.Starter.Blazor.Client.Components.Dialogs;
 using FSH.Starter.Blazor.Client.Pages.MicroFinance.MobileWallets.Dialogs;
-using FSH.Starter.WebApi.MicroFinance.Application.MobileWallets.Get.v1;
 using Mapster;
 
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.MobileWallets;
@@ -113,12 +112,12 @@ public partial class MobileWallets
                 if (!string.IsNullOrWhiteSpace(_searchStatus))
                     request = request with { Status = _searchStatus };
 
-                var response = await MicroFinanceClient.SearchMobileWalletsEndpointAsync("1", request);
+                var response = await Client.SearchMobileWalletsEndpointAsync("1", request);
                 return response.Adapt<PaginationResponse<MobileWalletResponse>>();
             },
             getDetailsFunc: async id =>
             {
-                var response = await MicroFinanceClient.GetMobileWalletEndpointAsync("1", id);
+                var response = await Client.GetMobileWalletEndpointAsync("1", id);
                 return response.Adapt<MobileWalletViewModel>();
             },
             createFunc: async vm =>
@@ -131,10 +130,10 @@ public partial class MobileWallets
                     DailyLimit = vm.DailyLimit,
                     MonthlyLimit = vm.MonthlyLimit
                 };
-                var response = await MicroFinanceClient.CreateMobileWalletEndpointAsync("1", command);
+                var response = await Client.CreateMobileWalletEndpointAsync("1", command);
                 return response.Id;
             },
-            deleteFunc: async id => await MicroFinanceClient.DeleteMobileWalletEndpointAsync("1", id),
+            deleteFunc: async id => await Client.DeleteMobileWalletEndpointAsync("1", id),
             exportAction: string.Empty,
             entityTypeName: "Mobile Wallet",
             entityTypeNamePlural: "Mobile Wallets",
@@ -157,7 +156,7 @@ public partial class MobileWallets
         {
             var command = new ActivateMobileWalletCommand { Id = id };
             await ApiHelper.ExecuteCallGuardedAsync(
-                async () => await MicroFinanceClient.ActivateMobileWalletEndpointAsync("1", id, command),
+                async () => await Client.ActivateMobileWalletEndpointAsync("1", id, command),
                 Snackbar,
                 successMessage: "Wallet activated successfully.");
             await _table.ReloadDataAsync();
@@ -176,7 +175,7 @@ public partial class MobileWallets
         {
             var command = new SuspendMobileWalletCommand { Id = id };
             await ApiHelper.ExecuteCallGuardedAsync(
-                async () => await MicroFinanceClient.SuspendMobileWalletEndpointAsync("1", id, command),
+                async () => await Client.SuspendMobileWalletEndpointAsync("1", id, command),
                 Snackbar,
                 successMessage: "Wallet suspended successfully.");
             await _table.ReloadDataAsync();
@@ -244,7 +243,7 @@ public partial class MobileWallets
 
     private async Task ViewWalletDetails(DefaultIdType id)
     {
-        var entity = await MicroFinanceClient.GetMobileWalletEndpointAsync("1", id);
+        var entity = await Client.GetMobileWalletEndpointAsync("1", id);
 
         var parameters = new DialogParameters<MobileWalletDetailsDialog>
         {

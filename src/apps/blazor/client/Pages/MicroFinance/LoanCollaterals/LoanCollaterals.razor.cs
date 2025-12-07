@@ -12,16 +12,7 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanCollaterals;
 public partial class LoanCollaterals
 {
     [Inject]
-    protected IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
     protected IAuthorizationService AuthorizationService { get; set; } = null!;
-
-    [Inject]
-    protected IDialogService DialogService { get; set; } = null!;
-
-    [Inject]
-    protected ISnackbar Snackbar { get; set; } = null!;
 
     [Inject]
     protected ClientPreference ClientPreference { get; set; } = null!;
@@ -69,7 +60,7 @@ public partial class LoanCollaterals
             idFunc: c => c.Id,
             searchFunc: async filter =>
             {
-                var response = await MicroFinanceClient.SearchLoanCollateralsEndpointAsync("1", new SearchLoanCollateralsCommand
+                var response = await Client.SearchLoanCollateralsEndpointAsync("1", new SearchLoanCollateralsCommand
                 {
                     PageNumber = filter.PageNumber,
                     PageSize = filter.PageSize,
@@ -82,11 +73,11 @@ public partial class LoanCollaterals
             createFunc: async vm =>
             {
                 var command = vm.Adapt<CreateLoanCollateralCommand>();
-                await MicroFinanceClient.CreateLoanCollateralAsync("1", command);
+                await Client.CreateLoanCollateralAsync("1", command);
             },
             getDetailsFunc: async id =>
             {
-                var response = await MicroFinanceClient.GetLoanCollateralEndpointAsync("1", id);
+                var response = await Client.GetLoanCollateralEndpointAsync("1", id);
                 return response.Adapt<LoanCollateralViewModel>();
             },
             hasExtraActionsFunc: () => true);

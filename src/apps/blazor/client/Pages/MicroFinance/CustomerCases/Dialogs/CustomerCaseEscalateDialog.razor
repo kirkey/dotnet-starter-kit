@@ -50,12 +50,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string? _escalatedToId;
     private string? _reason;
 
@@ -79,7 +73,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.EscalateCustomerCaseEndpointAsync("1", CaseId, command),
+            async () => await Client.EscalateCustomerCaseEndpointAsync("1", CaseId, command),
             Snackbar,
             successMessage: "Case escalated successfully.");
 

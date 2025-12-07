@@ -67,12 +67,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private decimal _approvedAmount;
     private int _approvedTermMonths;
 
@@ -94,7 +88,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.ApproveLoanApplicationEndpointAsync("1", ApplicationId, command),
+            async () => await Client.ApproveLoanApplicationEndpointAsync("1", ApplicationId, command),
             Snackbar,
             successMessage: $"Application approved for {_approvedAmount:N0} over {_approvedTermMonths} months.");
 

@@ -42,12 +42,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private DefaultIdType _selectedCollectorId;
 
     private void Cancel() => MudDialog.Cancel();
@@ -61,7 +55,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.AssignCollectionCaseEndpointAsync("1", CaseId, command),
+            async () => await Client.AssignCollectionCaseEndpointAsync("1", CaseId, command),
             Snackbar,
             successMessage: "Case assigned successfully.");
 

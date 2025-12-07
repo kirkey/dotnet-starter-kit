@@ -82,12 +82,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string? _sarReferenceNumber;
     private DateTime? _filingDate = DateTime.Today;
     private string? _activityType;
@@ -116,7 +110,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.FileSarForAmlAlertEndpointAsync("1", AlertId, command),
+            async () => await Client.FileSarForAmlAlertEndpointAsync("1", AlertId, command),
             Snackbar,
             successMessage: "SAR filed successfully.");
 

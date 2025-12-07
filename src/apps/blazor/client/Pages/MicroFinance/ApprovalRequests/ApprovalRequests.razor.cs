@@ -12,11 +12,7 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.ApprovalRequests;
 public partial class ApprovalRequests
 {
     [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-    [Inject]
     private IAuthorizationService AuthorizationService { get; set; } = null!;
-    [Inject]
-    private IDialogService DialogService { get; set; } = null!;
     [Inject]
     private ClientPreference ClientPreference { get; set; } = null!;
 
@@ -64,13 +60,13 @@ public partial class ApprovalRequests
             searchFunc: async filter =>
             {
                 var request = filter.Adapt<PaginationFilter>();
-                var response = await MicroFinanceClient.SearchApprovalRequestsEndpointAsync("1", request);
+                var response = await Client.SearchApprovalRequestsEndpointAsync("1", request);
                 return response.Adapt<PaginationResponse<ApprovalRequestResponse>>();
             },
             createFunc: async vm =>
             {
                 var command = vm.Adapt<CreateApprovalRequestCommand>();
-                await MicroFinanceClient.CreateApprovalRequestAsync("1", command);
+                await Client.CreateApprovalRequestAsync("1", command);
             },
             getDefaultsFunc: () => Task.FromResult(new ApprovalRequestViewModel { TotalLevels = 1, CurrentLevel = 1 }),
             hasExtraActionsFunc: () => true,

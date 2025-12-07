@@ -34,12 +34,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private void Cancel() => MudDialog.Cancel();
 
     private async Task Submit()
@@ -47,7 +41,7 @@
         var command = new DeactivateApprovalWorkflowCommand { Id = WorkflowId };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.DeactivateApprovalWorkflowEndpointAsync("1", WorkflowId, command),
+            async () => await Client.DeactivateApprovalWorkflowEndpointAsync("1", WorkflowId, command),
             Snackbar,
             successMessage: "Workflow deactivated successfully.");
 

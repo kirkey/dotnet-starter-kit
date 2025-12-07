@@ -12,13 +12,7 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.ApprovalWorkflows;
 public partial class ApprovalWorkflows
 {
     [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-    [Inject]
     private IAuthorizationService AuthorizationService { get; set; } = null!;
-    [Inject]
-    private IDialogService DialogService { get; set; } = null!;
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
     [Inject]
     private ClientPreference ClientPreference { get; set; } = null!;
 
@@ -66,13 +60,13 @@ public partial class ApprovalWorkflows
             searchFunc: async filter =>
             {
                 var request = filter.Adapt<PaginationFilter>();
-                var response = await MicroFinanceClient.SearchApprovalWorkflowsEndpointAsync("1", request);
+                var response = await Client.SearchApprovalWorkflowsEndpointAsync("1", request);
                 return response.Adapt<PaginationResponse<ApprovalWorkflowResponse>>();
             },
             createFunc: async vm =>
             {
                 var command = vm.Adapt<CreateApprovalWorkflowCommand>();
-                await MicroFinanceClient.CreateApprovalWorkflowAsync("1", command);
+                await Client.CreateApprovalWorkflowAsync("1", command);
             },
             getDefaultsFunc: () => Task.FromResult(new ApprovalWorkflowViewModel { IsSequential = true, Priority = 100 }),
             hasExtraActionsFunc: () => true,
@@ -95,7 +89,7 @@ public partial class ApprovalWorkflows
     {
         var command = new ActivateApprovalWorkflowCommand { Id = workflow.Id };
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.ActivateApprovalWorkflowEndpointAsync("1", workflow.Id, command),
+            async () => await Client.ActivateApprovalWorkflowEndpointAsync("1", workflow.Id, command),
             Snackbar,
             successMessage: "Workflow activated successfully.");
         await _table!.ReloadDataAsync();

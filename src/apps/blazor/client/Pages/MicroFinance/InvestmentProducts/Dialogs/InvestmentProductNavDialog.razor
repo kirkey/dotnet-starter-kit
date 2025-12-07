@@ -60,12 +60,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private decimal _newNav;
     private DateTime? _navDate = DateTime.Today;
 
@@ -83,7 +77,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.UpdateInvestmentProductNavEndpointAsync("1", ProductId, command),
+            async () => await Client.UpdateInvestmentProductNavEndpointAsync("1", ProductId, command),
             Snackbar,
             successMessage: "NAV updated successfully.");
 

@@ -72,12 +72,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private decimal _amount = 0;
 
     private void Cancel() => MudDialog.Cancel();
@@ -93,7 +87,7 @@
             };
 
             await ApiHelper.ExecuteCallGuardedAsync(
-                async () => await MicroFinanceClient.CreditFloatAgentBankingEndpointAsync("1", AgentId, command),
+                async () => await Client.CreditFloatAgentBankingEndpointAsync("1", AgentId, command),
                 Snackbar,
                 successMessage: $"Float credited successfully. New balance: {(CurrentBalance + _amount):N2}");
         }
@@ -106,7 +100,7 @@
             };
 
             await ApiHelper.ExecuteCallGuardedAsync(
-                async () => await MicroFinanceClient.DebitFloatAgentBankingEndpointAsync("1", AgentId, command),
+                async () => await Client.DebitFloatAgentBankingEndpointAsync("1", AgentId, command),
                 Snackbar,
                 successMessage: $"Float debited successfully. New balance: {(CurrentBalance - _amount):N2}");
         }

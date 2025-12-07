@@ -1,10 +1,9 @@
-using FSH.Starter.Blazor.Client.Components.EntityTable;
 using FSH.Starter.Blazor.Infrastructure.Api;
 using Mapster;
 
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanRepayments;
 
-public class LoanRepaymentViewModel : IEntity<DefaultIdType>
+public class LoanRepaymentViewModel
 {
     public DefaultIdType Id { get; set; }
     public Guid LoanId { get; set; }

@@ -15,7 +15,7 @@
 
                 <MudItem xs="12" md="6">
                     <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Status</MudText>
-                    <MudChip Color="@GetStatusColor(Product.Status)" Size="Size.Small">@Product.Status</MudChip>
+                    <MudChip T="string" Color="@GetStatusColor(Product.Status)" Size="Size.Small">@Product.Status</MudChip>
                 </MudItem>
 
                 <MudItem xs="12" md="6">
@@ -63,21 +63,21 @@
 
                 <MudItem xs="12" md="4">
                     <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Allow Transfer</MudText>
-                    <MudChip Color="@(Product.AllowTransfer ? Color.Success : Color.Default)" Size="Size.Small">
+                    <MudChip T="string" Color="@(Product.AllowTransfer ? Color.Success : Color.Default)" Size="Size.Small">
                         @(Product.AllowTransfer ? "Yes" : "No")
                     </MudChip>
                 </MudItem>
 
                 <MudItem xs="12" md="4">
                     <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Allow Redemption</MudText>
-                    <MudChip Color="@(Product.AllowRedemption ? Color.Success : Color.Default)" Size="Size.Small">
+                    <MudChip T="string" Color="@(Product.AllowRedemption ? Color.Success : Color.Default)" Size="Size.Small">
                         @(Product.AllowRedemption ? "Yes" : "No")
                     </MudChip>
                 </MudItem>
 
                 <MudItem xs="12" md="4">
                     <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Pays Dividends</MudText>
-                    <MudChip Color="@(Product.PaysDividends ? Color.Success : Color.Default)" Size="Size.Small">
+                    <MudChip T="string" Color="@(Product.PaysDividends ? Color.Success : Color.Default)" Size="Size.Small">
                         @(Product.PaysDividends ? "Yes" : "No")
                     </MudChip>
                 </MudItem>

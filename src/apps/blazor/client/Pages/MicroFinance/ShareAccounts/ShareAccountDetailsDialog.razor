@@ -20,7 +20,7 @@
 
                 <MudItem xs="12" md="6">
                     <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Status</MudText>
-                    <MudChip Color="@GetStatusColor(Account.Status)" Size="Size.Small">@Account.Status</MudChip>
+                    <MudChip T="string" Color="@GetStatusColor(Account.Status)" Size="Size.Small">@Account.Status</MudChip>
                 </MudItem>
 
                 <MudItem xs="12" md="6">
@@ -68,7 +68,7 @@
 
                 <MudItem xs="12" md="6">
                     <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Dividend Eligible</MudText>
-                    <MudChip Color="@(Account.PaysDividends ? Color.Success : Color.Default)" Size="Size.Small">
+                    <MudChip T="string" Color="@(Account.PaysDividends ? Color.Success : Color.Default)" Size="Size.Small">
                         @(Account.PaysDividends ? "Yes" : "No")
                     </MudChip>
                 </MudItem>

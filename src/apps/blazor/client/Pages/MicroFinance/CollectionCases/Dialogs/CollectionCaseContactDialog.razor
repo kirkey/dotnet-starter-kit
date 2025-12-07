@@ -70,12 +70,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string? _contactMethod;
     private string? _outcome;
     private string _notes = string.Empty;
@@ -95,7 +89,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.RecordContactCollectionCaseEndpointAsync("1", CaseId, command),
+            async () => await Client.RecordContactCollectionCaseEndpointAsync("1", CaseId, command),
             Snackbar,
             successMessage: "Contact recorded successfully.");
 

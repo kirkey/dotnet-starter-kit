@@ -43,12 +43,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private bool _confirmVerification;
 
     private void Cancel() => MudDialog.Cancel();
@@ -62,7 +56,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.VerifyDocumentEndpointAsync("1", DocumentId, command),
+            async () => await Client.VerifyDocumentEndpointAsync("1", DocumentId, command),
             Snackbar,
             successMessage: "Document verified successfully.");
 

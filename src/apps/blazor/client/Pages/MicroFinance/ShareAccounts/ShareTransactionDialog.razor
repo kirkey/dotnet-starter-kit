@@ -88,12 +88,6 @@
     [Parameter]
     public string TransactionType { get; set; } = "Purchase";
 
-    [Inject]
-    private IMicroFinanceClient Client { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Toast { get; set; } = null!;
-
     private int _sharesToTransact = 1;
     private string? _notes;
     private MemberResponse? _targetMember;
@@ -121,12 +115,12 @@
         {
             // Transaction logic would go here
             // For now, just close the dialog with success
-            Toast.Add($"{TransactionType} of {_sharesToTransact} shares submitted successfully.", Severity.Success);
+            Snackbar.Add($"{TransactionType} of {_sharesToTransact} shares submitted successfully.", Severity.Success);
             MudDialog.Close(DialogResult.Ok(true));
         }
         catch (Exception ex)
         {
-            Toast.Add($"Error: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Error: {ex.Message}", Severity.Error);
         }
     }
 }

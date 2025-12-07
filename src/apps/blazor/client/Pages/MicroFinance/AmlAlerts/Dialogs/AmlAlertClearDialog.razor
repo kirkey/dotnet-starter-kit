@@ -56,12 +56,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string? _clearanceReason;
     private string? _explanation;
 
@@ -79,7 +73,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.ClearAmlAlertEndpointAsync("1", AlertId, command),
+            async () => await Client.ClearAmlAlertEndpointAsync("1", AlertId, command),
             Snackbar,
             successMessage: "Alert cleared.");
 

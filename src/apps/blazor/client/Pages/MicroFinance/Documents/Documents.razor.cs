@@ -12,16 +12,7 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Documents;
 public partial class Documents
 {
     [Inject]
-    protected IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
     protected IAuthorizationService AuthorizationService { get; set; } = null!;
-
-    [Inject]
-    protected IDialogService DialogService { get; set; } = null!;
-
-    [Inject]
-    protected ISnackbar Snackbar { get; set; } = null!;
 
     [Inject]
     protected ClientPreference ClientPreference { get; set; } = null!;
@@ -63,7 +54,7 @@ public partial class Documents
             idFunc: d => d.Id,
             searchFunc: async filter =>
             {
-                var response = await MicroFinanceClient.SearchDocumentsEndpointAsync("1", new SearchDocumentsCommand
+                var response = await Client.SearchDocumentsEndpointAsync("1", new SearchDocumentsCommand
                 {
                     PageNumber = filter.PageNumber,
                     PageSize = filter.PageSize,
@@ -76,11 +67,11 @@ public partial class Documents
             createFunc: async vm =>
             {
                 var command = vm.Adapt<CreateDocumentCommand>();
-                await MicroFinanceClient.CreateDocumentAsync("1", command);
+                await Client.CreateDocumentAsync("1", command);
             },
             getDetailsFunc: async id =>
             {
-                var response = await MicroFinanceClient.GetDocumentEndpointAsync("1", id);
+                var response = await Client.GetDocumentEndpointAsync("1", id);
                 return response.Adapt<DocumentViewModel>();
             },
             hasExtraActionsFunc: () => true);

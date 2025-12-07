@@ -14,15 +14,6 @@ public partial class TellerSessions
     [Inject]
     private IAuthorizationService AuthorizationService { get; set; } = null!;
 
-    [Inject]
-    private IDialogService DialogService { get; set; } = null!;
-
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private ClientPreference _clientPreference = new();
     private EntityTable<TellerSessionResponse, DefaultIdType, TellerSessionViewModel>? _table;
     private EntityServerTableContext<TellerSessionResponse, DefaultIdType, TellerSessionViewModel> _context = null!;
@@ -64,10 +55,10 @@ public partial class TellerSessions
             searchFunc: async filter =>
             {
                 var request = filter.Adapt<PaginationFilter>();
-                var response = await MicroFinanceClient.SearchTellerSessionsEndpointAsync("1", request);
+                var response = await Client.SearchTellerSessionsEndpointAsync("1", request);
                 return response.Adapt<PaginationResponse<TellerSessionResponse>>();
             },
-            getDetailsFunc: async id => (await MicroFinanceClient.GetTellerSessionEndpointAsync("1", id)).Adapt<TellerSessionViewModel>(),
+            getDetailsFunc: async id => (await Client.GetTellerSessionEndpointAsync("1", id)).Adapt<TellerSessionViewModel>(),
             hasExtraActionsFunc: () => true,
             canUpdateEntityFunc: _ => false,
             canDeleteEntityFunc: _ => false);
@@ -141,7 +132,7 @@ public partial class TellerSessions
     {
         var command = new PauseTellerSessionCommand { Id = session.Id };
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.PauseTellerSessionEndpointAsync("1", session.Id, command),
+            async () => await Client.PauseTellerSessionEndpointAsync("1", session.Id, command),
             Snackbar,
             successMessage: "Session paused.");
         await _table!.ReloadDataAsync();
@@ -151,7 +142,7 @@ public partial class TellerSessions
     {
         var command = new ResumeTellerSessionCommand { Id = session.Id };
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.ResumeTellerSessionEndpointAsync("1", session.Id, command),
+            async () => await Client.ResumeTellerSessionEndpointAsync("1", session.Id, command),
             Snackbar,
             successMessage: "Session resumed.");
         await _table!.ReloadDataAsync();

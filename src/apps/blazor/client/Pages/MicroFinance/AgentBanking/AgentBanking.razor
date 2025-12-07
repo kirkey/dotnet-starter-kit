@@ -205,7 +205,7 @@
                            Label="Contract Start Date"
                            Variant="Variant.Filled"
                            Required="true"
-                           DateChanged="@(date => OnContractStartDateChanged(context, date))" />
+                           @bind-Date:after="@(() => OnContractStartDateChanged(context, _contractStartDate))" />
         </MudItem>
 
         @if (context.Id == DefaultIdType.Empty)

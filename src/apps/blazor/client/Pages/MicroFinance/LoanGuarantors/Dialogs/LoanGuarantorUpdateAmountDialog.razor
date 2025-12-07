@@ -65,12 +65,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private decimal _newAmount;
     private string? _reason;
 
@@ -93,7 +87,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.UpdateGuaranteedAmountEndpointAsync("1", GuarantorId, command),
+            async () => await Client.UpdateGuaranteedAmountEndpointAsync("1", GuarantorId, command),
             Snackbar,
             successMessage: "Guaranteed amount updated successfully.");
 

@@ -1,6 +1,5 @@
 using FSH.Starter.Blazor.Client.Components.Dialogs;
 using FSH.Starter.Blazor.Client.Pages.MicroFinance.AgentBanking.Dialogs;
-using FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.Get.v1;
 using Mapster;
 
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.AgentBanking;
@@ -134,12 +133,12 @@ public partial class AgentBanking
                 if (!string.IsNullOrWhiteSpace(_searchTier))
                     request = request with { Tier = _searchTier };
 
-                var response = await MicroFinanceClient.SearchAgentBankingsEndpointAsync("1", request);
+                var response = await Client.SearchAgentBankingsEndpointAsync("1", request);
                 return response.Adapt<PaginationResponse<AgentBankingResponse>>();
             },
             getDetailsFunc: async id =>
             {
-                var response = await MicroFinanceClient.GetAgentBankingEndpointAsync("1", id);
+                var response = await Client.GetAgentBankingEndpointAsync("1", id);
                 return response.Adapt<AgentBankingViewModel>();
             },
             createFunc: async vm =>
@@ -160,7 +159,7 @@ public partial class AgentBanking
                     GpsCoordinates = vm.GpsCoordinates,
                     OperatingHours = vm.OperatingHours
                 };
-                var response = await MicroFinanceClient.CreateAgentBankingEndpointAsync("1", command);
+                var response = await Client.CreateAgentBankingEndpointAsync("1", command);
                 return response.Id;
             },
             updateFunc: async (id, vm) =>
@@ -179,9 +178,9 @@ public partial class AgentBanking
                     DailyTransactionLimit = vm.DailyTransactionLimit,
                     MonthlyTransactionLimit = vm.MonthlyTransactionLimit
                 };
-                await MicroFinanceClient.UpdateAgentBankingEndpointAsync("1", id, command);
+                await Client.UpdateAgentBankingEndpointAsync("1", id, command);
             },
-            deleteFunc: async id => await MicroFinanceClient.DeleteAgentBankingEndpointAsync("1", id),
+            deleteFunc: async id => await Client.DeleteAgentBankingEndpointAsync("1", id),
             exportAction: string.Empty,
             entityTypeName: "Agent",
             entityTypeNamePlural: "Agents",
@@ -213,7 +212,7 @@ public partial class AgentBanking
         {
             var command = new ApproveAgentBankingCommand { Id = id };
             await ApiHelper.ExecuteCallGuardedAsync(
-                async () => await MicroFinanceClient.ApproveAgentBankingEndpointAsync("1", id, command),
+                async () => await Client.ApproveAgentBankingEndpointAsync("1", id, command),
                 Snackbar,
                 successMessage: "Agent approved successfully.");
             await _table.ReloadDataAsync();
@@ -299,7 +298,7 @@ public partial class AgentBanking
 
     private async Task ViewAgentDetails(DefaultIdType id)
     {
-        var entity = await MicroFinanceClient.GetAgentBankingEndpointAsync("1", id);
+        var entity = await Client.GetAgentBankingEndpointAsync("1", id);
 
         var parameters = new DialogParameters<AgentBankingDetailsDialog>
         {

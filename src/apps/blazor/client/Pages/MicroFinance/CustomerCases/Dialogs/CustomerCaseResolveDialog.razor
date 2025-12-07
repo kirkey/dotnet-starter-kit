@@ -38,12 +38,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string? _resolution;
 
     private bool IsValid => !string.IsNullOrWhiteSpace(_resolution);
@@ -59,7 +53,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.ResolveCustomerCaseEndpointAsync("1", CaseId, command),
+            async () => await Client.ResolveCustomerCaseEndpointAsync("1", CaseId, command),
             Snackbar,
             successMessage: "Case resolved successfully.");
 

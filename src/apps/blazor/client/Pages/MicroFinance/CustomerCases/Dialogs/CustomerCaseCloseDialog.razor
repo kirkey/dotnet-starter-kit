@@ -45,12 +45,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private int _satisfactionScore;
     private string? _feedback;
 
@@ -66,7 +60,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.CloseCustomerCaseEndpointAsync("1", CaseId, command),
+            async () => await Client.CloseCustomerCaseEndpointAsync("1", CaseId, command),
             Snackbar,
             successMessage: "Case closed successfully.");
 

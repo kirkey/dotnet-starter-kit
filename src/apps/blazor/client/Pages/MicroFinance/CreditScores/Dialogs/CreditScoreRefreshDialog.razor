@@ -72,10 +72,7 @@
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
+    private Client MicroFinanceClient { get; set; } = null!;
 
     private string _scoreType = "Internal";
     private string _scoreModel = "Default";

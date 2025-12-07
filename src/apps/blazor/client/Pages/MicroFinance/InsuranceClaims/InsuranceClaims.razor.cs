@@ -1,6 +1,5 @@
 using FSH.Starter.Blazor.Client.Components.Dialogs;
 using FSH.Starter.Blazor.Client.Pages.MicroFinance.InsuranceClaims.Dialogs;
-using FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Get.v1;
 using Mapster;
 
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InsuranceClaims;
@@ -115,12 +114,12 @@ public partial class InsuranceClaims
                 if (!string.IsNullOrWhiteSpace(_searchClaimType))
                     request = request with { ClaimType = _searchClaimType };
 
-                var response = await MicroFinanceClient.SearchInsuranceClaimsEndpointAsync("1", request);
+                var response = await Client.SearchInsuranceClaimsEndpointAsync("1", request);
                 return response.Adapt<PaginationResponse<InsuranceClaimResponse>>();
             },
             getDetailsFunc: async id =>
             {
-                var response = await MicroFinanceClient.GetInsuranceClaimEndpointAsync("1", id);
+                var response = await Client.GetInsuranceClaimEndpointAsync("1", id);
                 return response.Adapt<InsuranceClaimViewModel>();
             },
             createFunc: async vm =>
@@ -134,10 +133,10 @@ public partial class InsuranceClaims
                     Description = vm.Description ?? string.Empty,
                     SupportingDocuments = vm.SupportingDocuments
                 };
-                var response = await MicroFinanceClient.SubmitInsuranceClaimEndpointAsync("1", command);
+                var response = await Client.SubmitInsuranceClaimEndpointAsync("1", command);
                 return response.Id;
             },
-            deleteFunc: async id => await MicroFinanceClient.DeleteInsuranceClaimEndpointAsync("1", id),
+            deleteFunc: async id => await Client.DeleteInsuranceClaimEndpointAsync("1", id),
             exportAction: string.Empty,
             entityTypeName: "Insurance Claim",
             entityTypeNamePlural: "Insurance Claims",
@@ -161,7 +160,7 @@ public partial class InsuranceClaims
     {
         var command = new ReviewInsuranceClaimCommand { Id = id };
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.ReviewInsuranceClaimEndpointAsync("1", id, command),
+            async () => await Client.ReviewInsuranceClaimEndpointAsync("1", id, command),
             Snackbar,
             successMessage: "Claim marked as under review.");
         await _table.ReloadDataAsync();
@@ -216,7 +215,7 @@ public partial class InsuranceClaims
         {
             var command = new SettleInsuranceClaimCommand { Id = id };
             await ApiHelper.ExecuteCallGuardedAsync(
-                async () => await MicroFinanceClient.SettleInsuranceClaimEndpointAsync("1", id, command),
+                async () => await Client.SettleInsuranceClaimEndpointAsync("1", id, command),
                 Snackbar,
                 successMessage: "Claim settled successfully.");
             await _table.ReloadDataAsync();
@@ -225,7 +224,7 @@ public partial class InsuranceClaims
 
     private async Task ViewClaimDetails(DefaultIdType id)
     {
-        var entity = await MicroFinanceClient.GetInsuranceClaimEndpointAsync("1", id);
+        var entity = await Client.GetInsuranceClaimEndpointAsync("1", id);
 
         var parameters = new DialogParameters<InsuranceClaimDetailsDialog>
         {

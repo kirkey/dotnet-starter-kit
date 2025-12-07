@@ -14,15 +14,6 @@ public partial class CashVaults
     [Inject]
     private IAuthorizationService AuthorizationService { get; set; } = null!;
 
-    [Inject]
-    private IDialogService DialogService { get; set; } = null!;
-
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private ClientPreference _clientPreference = new();
     private EntityTable<CashVaultResponse, DefaultIdType, CashVaultViewModel>? _table;
     private EntityServerTableContext<CashVaultResponse, DefaultIdType, CashVaultViewModel> _context = null!;
@@ -66,21 +57,21 @@ public partial class CashVaults
             searchFunc: async filter =>
             {
                 var request = filter.Adapt<PaginationFilter>();
-                var response = await MicroFinanceClient.SearchCashVaultsEndpointAsync("1", request);
+                var response = await Client.SearchCashVaultsEndpointAsync("1", request);
                 return response.Adapt<PaginationResponse<CashVaultResponse>>();
             },
-            getDetailsFunc: async id => (await MicroFinanceClient.GetCashVaultEndpointAsync("1", id)).Adapt<CashVaultViewModel>(),
+            getDetailsFunc: async id => (await Client.GetCashVaultEndpointAsync("1", id)).Adapt<CashVaultViewModel>(),
             createFunc: async vm =>
             {
                 var command = vm.Adapt<CreateCashVaultCommand>();
-                await MicroFinanceClient.CreateCashVaultEndpointAsync("1", command);
+                await Client.CreateCashVaultEndpointAsync("1", command);
             },
             updateFunc: async (id, vm) =>
             {
                 var command = vm.Adapt<UpdateCashVaultCommand>();
-                await MicroFinanceClient.UpdateCashVaultEndpointAsync("1", id, command);
+                await Client.UpdateCashVaultEndpointAsync("1", id, command);
             },
-            deleteFunc: async id => await MicroFinanceClient.DeleteCashVaultEndpointAsync("1", id),
+            deleteFunc: async id => await Client.DeleteCashVaultEndpointAsync("1", id),
             hasExtraActionsFunc: () => true,
             canUpdateEntityFunc: _ => _canUpdate,
             canDeleteEntityFunc: _ => _canDelete);

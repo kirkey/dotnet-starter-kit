@@ -58,12 +58,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string? _findings;
     private string? _riskLevel;
     private bool _confirmAction;
@@ -84,7 +78,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.ConfirmAmlAlertEndpointAsync("1", AlertId, command),
+            async () => await Client.ConfirmAmlAlertEndpointAsync("1", AlertId, command),
             Snackbar,
             successMessage: "Alert confirmed.");
 

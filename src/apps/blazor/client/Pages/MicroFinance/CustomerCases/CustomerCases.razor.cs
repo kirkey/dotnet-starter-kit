@@ -12,16 +12,7 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CustomerCases;
 public partial class CustomerCases
 {
     [Inject]
-    protected IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
     protected IAuthorizationService AuthorizationService { get; set; } = null!;
-
-    [Inject]
-    protected IDialogService DialogService { get; set; } = null!;
-
-    [Inject]
-    protected ISnackbar Snackbar { get; set; } = null!;
 
     [Inject]
     protected ClientPreference ClientPreference { get; set; } = null!;
@@ -68,7 +59,7 @@ public partial class CustomerCases
             idFunc: c => c.Id,
             searchFunc: async filter =>
             {
-                var response = await MicroFinanceClient.SearchCustomerCasesEndpointAsync("1", new SearchCustomerCasesCommand
+                var response = await Client.SearchCustomerCasesEndpointAsync("1", new SearchCustomerCasesCommand
                 {
                     PageNumber = filter.PageNumber,
                     PageSize = filter.PageSize,
@@ -81,11 +72,11 @@ public partial class CustomerCases
             createFunc: async vm =>
             {
                 var command = vm.Adapt<CreateCustomerCaseCommand>();
-                await MicroFinanceClient.CreateCustomerCaseAsync("1", command);
+                await Client.CreateCustomerCaseAsync("1", command);
             },
             getDetailsFunc: async id =>
             {
-                var response = await MicroFinanceClient.GetCustomerCaseEndpointAsync("1", id);
+                var response = await Client.GetCustomerCaseEndpointAsync("1", id);
                 return response.Adapt<CustomerCaseViewModel>();
             },
             hasExtraActionsFunc: () => true);

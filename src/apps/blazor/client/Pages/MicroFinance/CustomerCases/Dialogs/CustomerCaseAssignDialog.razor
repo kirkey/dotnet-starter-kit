@@ -37,12 +37,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string? _staffId;
 
     private bool IsValid => Guid.TryParse(_staffId, out _);
@@ -64,7 +58,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.AssignCustomerCaseEndpointAsync("1", CaseId, command),
+            async () => await Client.AssignCustomerCaseEndpointAsync("1", CaseId, command),
             Snackbar,
             successMessage: "Case assigned successfully.");
 

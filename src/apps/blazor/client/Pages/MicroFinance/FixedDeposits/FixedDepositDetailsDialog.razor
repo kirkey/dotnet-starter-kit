@@ -20,7 +20,7 @@
 
                 <MudItem xs="12" md="6">
                     <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Status</MudText>
-                    <MudChip Color="@GetStatusColor(Deposit.Status)" Size="Size.Small">@Deposit.Status</MudChip>
+                    <MudChip T="string" Color="@GetStatusColor(Deposit.Status)" Size="Size.Small">@Deposit.Status</MudChip>
                 </MudItem>
 
                 <MudItem xs="12">
@@ -90,7 +90,7 @@
 
                 <MudItem xs="12" md="6">
                     <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Auto-Renew</MudText>
-                    <MudChip Color="@(Deposit.AutoRenew ? Color.Success : Color.Default)" Size="Size.Small">
+                    <MudChip T="string" Color="@(Deposit.AutoRenew ? Color.Success : Color.Default)" Size="Size.Small">
                         @(Deposit.AutoRenew ? "Yes" : "No")
                     </MudChip>
                 </MudItem>

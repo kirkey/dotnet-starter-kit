@@ -56,12 +56,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private decimal _approvedAmount;
 
     protected override void OnParametersSet()
@@ -80,7 +74,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.ApproveInsuranceClaimEndpointAsync("1", ClaimId, command),
+            async () => await Client.ApproveInsuranceClaimEndpointAsync("1", ClaimId, command),
             Snackbar,
             successMessage: $"Claim approved for {_approvedAmount:N0}.");
 

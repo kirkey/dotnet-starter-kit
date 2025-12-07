@@ -134,11 +134,11 @@
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
             <MudDatePicker @bind-Date="@_incidentDate"
+                           @bind-Date:after="@(() => OnIncidentDateChanged(context, _incidentDate))"
                            Label="Incident Date"
                            Variant="Variant.Filled"
                            Required="true"
-                           MaxDate="@DateTime.Today"
-                           DateChanged="@(date => OnIncidentDateChanged(context, date))" />
+                           MaxDate="@DateTime.Today" />
         </MudItem>
         <MudItem xs="12">
             <MudTextField @bind-Value="context.Description"

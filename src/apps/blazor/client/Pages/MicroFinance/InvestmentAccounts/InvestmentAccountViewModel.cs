@@ -1,10 +1,9 @@
-using FSH.Starter.Blazor.Client.Components.EntityTable;
 using FSH.Starter.Blazor.Infrastructure.Api;
 using Mapster;
 
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InvestmentAccounts;
 
-public class InvestmentAccountViewModel : IEntity<DefaultIdType>
+public class InvestmentAccountViewModel
 {
     public DefaultIdType Id { get; set; }
     public DefaultIdType MemberId { get; set; }

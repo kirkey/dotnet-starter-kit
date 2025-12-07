@@ -69,12 +69,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string _reviewNotes = string.Empty;
     private string? _recommendation;
     private decimal _recommendedAmount;
@@ -97,7 +91,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.ReviewLoanApplicationEndpointAsync("1", ApplicationId, command),
+            async () => await Client.ReviewLoanApplicationEndpointAsync("1", ApplicationId, command),
             Snackbar,
             successMessage: "Review submitted successfully.");
 

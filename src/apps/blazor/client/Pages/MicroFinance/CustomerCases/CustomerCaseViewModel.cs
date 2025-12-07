@@ -1,10 +1,9 @@
-using FSH.Starter.Blazor.Client.Components.EntityTable;
 using FSH.Starter.Blazor.Infrastructure.Api;
 using Mapster;
 
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CustomerCases;
 
-public class CustomerCaseViewModel : IEntity<DefaultIdType>
+public class CustomerCaseViewModel
 {
     public DefaultIdType Id { get; set; }
     public string CaseNumber { get; set; } = string.Empty;

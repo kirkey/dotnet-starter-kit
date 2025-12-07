@@ -12,16 +12,7 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanRepayments;
 public partial class LoanRepayments
 {
     [Inject]
-    protected IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
     protected IAuthorizationService AuthorizationService { get; set; } = null!;
-
-    [Inject]
-    protected IDialogService DialogService { get; set; } = null!;
-
-    [Inject]
-    protected ISnackbar Snackbar { get; set; } = null!;
 
     [Inject]
     protected ClientPreference ClientPreference { get; set; } = null!;
@@ -66,7 +57,7 @@ public partial class LoanRepayments
             idFunc: r => r.Id,
             searchFunc: async filter =>
             {
-                var response = await MicroFinanceClient.SearchLoanRepaymentsEndpointAsync("1", new SearchLoanRepaymentsCommand
+                var response = await Client.SearchLoanRepaymentsEndpointAsync("1", new SearchLoanRepaymentsCommand
                 {
                     PageNumber = filter.PageNumber,
                     PageSize = filter.PageSize,
@@ -79,11 +70,11 @@ public partial class LoanRepayments
             createFunc: async vm =>
             {
                 var command = vm.Adapt<CreateLoanRepaymentCommand>();
-                await MicroFinanceClient.CreateLoanRepaymentAsync("1", command);
+                await Client.CreateLoanRepaymentAsync("1", command);
             },
             getDetailsFunc: async id =>
             {
-                var response = await MicroFinanceClient.GetLoanRepaymentEndpointAsync("1", id);
+                var response = await Client.GetLoanRepaymentEndpointAsync("1", id);
                 return response.Adapt<LoanRepaymentViewModel>();
             },
             hasExtraActionsFunc: () => true);

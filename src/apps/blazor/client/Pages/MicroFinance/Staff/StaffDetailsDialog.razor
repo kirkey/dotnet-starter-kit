@@ -20,12 +20,12 @@
 
                 <MudItem xs="12" md="6">
                     <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Role</MudText>
-                    <MudChip Color="Color.Primary" Size="Size.Small">@Staff.Role</MudChip>
+                    <MudChip T="string" Color="Color.Primary" Size="Size.Small">@Staff.Role</MudChip>
                 </MudItem>
 
                 <MudItem xs="12" md="6">
                     <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Status</MudText>
-                    <MudChip Color="@GetStatusColor(Staff.Status)" Size="Size.Small">@Staff.Status</MudChip>
+                    <MudChip T="string" Color="@GetStatusColor(Staff.Status)" Size="Size.Small">@Staff.Status</MudChip>
                 </MudItem>
 
                 <MudItem xs="12" md="6">

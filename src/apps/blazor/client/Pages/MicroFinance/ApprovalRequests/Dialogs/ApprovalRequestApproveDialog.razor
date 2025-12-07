@@ -52,12 +52,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string? _comments;
 
     private void Cancel() => MudDialog.Cancel();
@@ -72,7 +66,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.ApproveRequestLevelEndpointAsync("1", RequestId, command),
+            async () => await Client.ApproveRequestLevelEndpointAsync("1", RequestId, command),
             Snackbar,
             successMessage: CurrentLevel == TotalLevels 
                 ? "Request fully approved." 

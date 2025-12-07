@@ -57,12 +57,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string? _rejectionReason;
     private string? _additionalNotes;
 
@@ -82,7 +76,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.RejectGuarantorEndpointAsync("1", GuarantorId, command),
+            async () => await Client.RejectGuarantorEndpointAsync("1", GuarantorId, command),
             Snackbar,
             successMessage: "Guarantor rejected.");
 

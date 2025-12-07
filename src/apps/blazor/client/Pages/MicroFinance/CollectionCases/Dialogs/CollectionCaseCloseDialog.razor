@@ -68,12 +68,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string? _closureReason;
     private decimal _finalAmount;
     private string? _closureNotes;
@@ -94,7 +88,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.CloseCollectionCaseEndpointAsync("1", CaseId, command),
+            async () => await Client.CloseCollectionCaseEndpointAsync("1", CaseId, command),
             Snackbar,
             successMessage: "Case closed successfully.");
 

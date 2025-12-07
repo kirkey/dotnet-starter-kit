@@ -59,12 +59,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string? _escalationLevel;
     private string? _reason;
     private bool _urgent;
@@ -84,7 +78,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.EscalateAmlAlertEndpointAsync("1", AlertId, command),
+            async () => await Client.EscalateAmlAlertEndpointAsync("1", AlertId, command),
             Snackbar,
             successMessage: "Alert escalated.");
 

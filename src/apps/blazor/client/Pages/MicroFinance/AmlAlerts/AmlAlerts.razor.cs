@@ -14,15 +14,6 @@ public partial class AmlAlerts
     [Inject]
     private IAuthorizationService AuthorizationService { get; set; } = null!;
 
-    [Inject]
-    private IDialogService DialogService { get; set; } = null!;
-
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private ClientPreference _clientPreference = new();
     private EntityTable<AmlAlertResponse, DefaultIdType, AmlAlertViewModel>? _table;
     private EntityServerTableContext<AmlAlertResponse, DefaultIdType, AmlAlertViewModel> _context = null!;
@@ -68,16 +59,16 @@ public partial class AmlAlerts
             searchFunc: async filter =>
             {
                 var request = filter.Adapt<PaginationFilter>();
-                var response = await MicroFinanceClient.SearchAmlAlertsEndpointAsync("1", request);
+                var response = await Client.SearchAmlAlertsEndpointAsync("1", request);
                 return response.Adapt<PaginationResponse<AmlAlertResponse>>();
             },
-            getDetailsFunc: async id => (await MicroFinanceClient.GetAmlAlertEndpointAsync("1", id)).Adapt<AmlAlertViewModel>(),
+            getDetailsFunc: async id => (await Client.GetAmlAlertEndpointAsync("1", id)).Adapt<AmlAlertViewModel>(),
             createFunc: async vm =>
             {
                 var command = vm.Adapt<CreateAmlAlertCommand>();
-                await MicroFinanceClient.CreateAmlAlertEndpointAsync("1", command);
+                await Client.CreateAmlAlertEndpointAsync("1", command);
             },
-            deleteFunc: async id => await MicroFinanceClient.DeleteAmlAlertEndpointAsync("1", id),
+            deleteFunc: async id => await Client.DeleteAmlAlertEndpointAsync("1", id),
             hasExtraActionsFunc: () => true,
             canUpdateEntityFunc: _ => false,
             canDeleteEntityFunc: _ => false);
@@ -199,7 +190,7 @@ public partial class AmlAlerts
     {
         var command = new CloseAmlAlertCommand { Id = alert.Id };
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.CloseAmlAlertEndpointAsync("1", alert.Id, command),
+            async () => await Client.CloseAmlAlertEndpointAsync("1", alert.Id, command),
             Snackbar,
             successMessage: "Alert closed.");
         await _table!.ReloadDataAsync();

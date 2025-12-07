@@ -42,12 +42,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private DefaultIdType _selectedOfficerId;
 
     private void Cancel() => MudDialog.Cancel();
@@ -61,7 +55,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.AssignLoanApplicationEndpointAsync("1", ApplicationId, command),
+            async () => await Client.AssignLoanApplicationEndpointAsync("1", ApplicationId, command),
             Snackbar,
             successMessage: "Application assigned successfully.");
 

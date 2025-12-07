@@ -1,10 +1,9 @@
-using FSH.Starter.Blazor.Client.Components.EntityTable;
 using FSH.Starter.Blazor.Infrastructure.Api;
 using Mapster;
 
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Documents;
 
-public class DocumentViewModel : IEntity<DefaultIdType>
+public class DocumentViewModel
 {
     public DefaultIdType Id { get; set; }
     public string Name { get; set; } = string.Empty;

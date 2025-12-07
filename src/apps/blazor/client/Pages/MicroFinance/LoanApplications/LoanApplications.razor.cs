@@ -1,6 +1,5 @@
 using FSH.Starter.Blazor.Client.Components.Dialogs;
 using FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanApplications.Dialogs;
-using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Get.v1;
 using Mapster;
 
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanApplications;
@@ -105,12 +104,12 @@ public partial class LoanApplications
                 if (!string.IsNullOrWhiteSpace(_searchApplicationNumber))
                     request = request with { ApplicationNumber = _searchApplicationNumber };
 
-                var response = await MicroFinanceClient.SearchLoanApplicationsEndpointAsync("1", request);
+                var response = await Client.SearchLoanApplicationsEndpointAsync("1", request);
                 return response.Adapt<PaginationResponse<LoanApplicationResponse>>();
             },
             getDetailsFunc: async id =>
             {
-                var response = await MicroFinanceClient.GetLoanApplicationEndpointAsync("1", id);
+                var response = await Client.GetLoanApplicationEndpointAsync("1", id);
                 return response.Adapt<LoanApplicationViewModel>();
             },
             createFunc: async vm =>
@@ -124,10 +123,10 @@ public partial class LoanApplications
                     Purpose = vm.Purpose ?? string.Empty,
                     GroupId = vm.MemberGroupId
                 };
-                var response = await MicroFinanceClient.CreateLoanApplicationEndpointAsync("1", command);
+                var response = await Client.CreateLoanApplicationEndpointAsync("1", command);
                 return response.Id;
             },
-            deleteFunc: async id => await MicroFinanceClient.DeleteLoanApplicationEndpointAsync("1", id),
+            deleteFunc: async id => await Client.DeleteLoanApplicationEndpointAsync("1", id),
             exportAction: string.Empty,
             entityTypeName: "Loan Application",
             entityTypeNamePlural: "Loan Applications",
@@ -150,7 +149,7 @@ public partial class LoanApplications
         {
             var command = new SubmitLoanApplicationCommand { Id = id };
             await ApiHelper.ExecuteCallGuardedAsync(
-                async () => await MicroFinanceClient.SubmitLoanApplicationEndpointAsync("1", id, command),
+                async () => await Client.SubmitLoanApplicationEndpointAsync("1", id, command),
                 Snackbar,
                 successMessage: "Application submitted successfully.");
             await _table.ReloadDataAsync();
@@ -169,7 +168,7 @@ public partial class LoanApplications
         {
             var command = new WithdrawLoanApplicationCommand { Id = id };
             await ApiHelper.ExecuteCallGuardedAsync(
-                async () => await MicroFinanceClient.WithdrawLoanApplicationEndpointAsync("1", id, command),
+                async () => await Client.WithdrawLoanApplicationEndpointAsync("1", id, command),
                 Snackbar,
                 successMessage: "Application withdrawn successfully.");
             await _table.ReloadDataAsync();
@@ -253,7 +252,7 @@ public partial class LoanApplications
 
     private async Task ViewApplicationDetails(DefaultIdType id)
     {
-        var entity = await MicroFinanceClient.GetLoanApplicationEndpointAsync("1", id);
+        var entity = await Client.GetLoanApplicationEndpointAsync("1", id);
 
         var parameters = new DialogParameters<LoanApplicationDetailsDialog>
         {

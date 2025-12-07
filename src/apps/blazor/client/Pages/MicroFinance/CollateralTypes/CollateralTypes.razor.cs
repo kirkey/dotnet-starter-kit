@@ -12,16 +12,7 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollateralTypes;
 public partial class CollateralTypes
 {
     [Inject]
-    protected IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
     protected IAuthorizationService AuthorizationService { get; set; } = null!;
-
-    [Inject]
-    protected IDialogService DialogService { get; set; } = null!;
-
-    [Inject]
-    protected ISnackbar Snackbar { get; set; } = null!;
 
     [Inject]
     protected ClientPreference ClientPreference { get; set; } = null!;
@@ -63,7 +54,7 @@ public partial class CollateralTypes
             idFunc: ct => ct.Id,
             searchFunc: async filter =>
             {
-                var response = await MicroFinanceClient.SearchCollateralTypesEndpointAsync("1", new SearchCollateralTypesCommand
+                var response = await Client.SearchCollateralTypesEndpointAsync("1", new SearchCollateralTypesCommand
                 {
                     PageNumber = filter.PageNumber,
                     PageSize = filter.PageSize,
@@ -76,16 +67,16 @@ public partial class CollateralTypes
             createFunc: async vm =>
             {
                 var command = vm.Adapt<CreateCollateralTypeCommand>();
-                await MicroFinanceClient.CreateCollateralTypeAsync("1", command);
+                await Client.CreateCollateralTypeAsync("1", command);
             },
             updateFunc: async (id, vm) =>
             {
                 var command = vm.Adapt<UpdateCollateralTypeCommand>();
-                await MicroFinanceClient.UpdateCollateralTypeEndpointAsync("1", id, command);
+                await Client.UpdateCollateralTypeEndpointAsync("1", id, command);
             },
             getDetailsFunc: async id =>
             {
-                var response = await MicroFinanceClient.GetCollateralTypeEndpointAsync("1", id);
+                var response = await Client.GetCollateralTypeEndpointAsync("1", id);
                 return response.Adapt<CollateralTypeViewModel>();
             },
             hasExtraActionsFunc: () => true);

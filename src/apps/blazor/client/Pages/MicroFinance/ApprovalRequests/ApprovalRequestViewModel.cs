@@ -1,10 +1,9 @@
-using FSH.Starter.Blazor.Client.Components.EntityTable;
 using FSH.Starter.Blazor.Infrastructure.Api;
 using Mapster;
 
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.ApprovalRequests;
 
-public class ApprovalRequestViewModel : IEntity<DefaultIdType>
+public class ApprovalRequestViewModel
 {
     public DefaultIdType Id { get; set; }
     public string RequestNumber { get; set; } = string.Empty;

@@ -9,7 +9,7 @@
         <MudGrid>
             <MudItem xs="12">
                 <MudText Class="mb-4">
-                    Current Tier: <MudChip Color="@GetTierColor(CurrentTier)" Size="Size.Small">@CurrentTier</MudChip>
+                    Current Tier: <MudChip T="string" Color="@GetTierColor(CurrentTier)" Size="Size.Small">@CurrentTier</MudChip>
                 </MudText>
             </MudItem>
             <MudItem xs="12">
@@ -64,12 +64,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string? _newTier;
 
     private void Cancel() => MudDialog.Cancel();
@@ -83,7 +77,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.UpgradeTierAgentBankingEndpointAsync("1", AgentId, command),
+            async () => await Client.UpgradeTierAgentBankingEndpointAsync("1", AgentId, command),
             Snackbar,
             successMessage: $"Agent upgraded to {_newTier} tier successfully.");
 

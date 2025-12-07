@@ -80,12 +80,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private decimal _recoveryAmount;
     private string? _paymentMethod;
     private string? _referenceNumber;
@@ -105,7 +99,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.RecordRecoveryCollectionCaseEndpointAsync("1", CaseId, command),
+            async () => await Client.RecordRecoveryCollectionCaseEndpointAsync("1", CaseId, command),
             Snackbar,
             successMessage: $"Recovery of {_recoveryAmount:N0} recorded successfully.");
 

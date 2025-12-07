@@ -93,12 +93,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private decimal _settlementAmount;
     private string? _settlementType;
     private DateTime? _settlementDate = DateTime.Today;
@@ -123,7 +117,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.SettleCollectionCaseEndpointAsync("1", CaseId, command),
+            async () => await Client.SettleCollectionCaseEndpointAsync("1", CaseId, command),
             Snackbar,
             successMessage: "Case settled successfully.");
 

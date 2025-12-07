@@ -14,15 +14,6 @@ public partial class LoanGuarantors
     [Inject]
     private IAuthorizationService AuthorizationService { get; set; } = null!;
 
-    [Inject]
-    private IDialogService DialogService { get; set; } = null!;
-
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private ClientPreference _clientPreference = new();
     private EntityTable<LoanGuarantorResponse, DefaultIdType, LoanGuarantorViewModel>? _table;
     private EntityServerTableContext<LoanGuarantorResponse, DefaultIdType, LoanGuarantorViewModel> _context = null!;
@@ -62,21 +53,21 @@ public partial class LoanGuarantors
             searchFunc: async filter =>
             {
                 var request = filter.Adapt<SearchLoanGuarantorsCommand>();
-                var response = await MicroFinanceClient.SearchLoanGuarantorsEndpointAsync("1", request);
+                var response = await Client.SearchLoanGuarantorsEndpointAsync("1", request);
                 return response.Adapt<PaginationResponse<LoanGuarantorResponse>>();
             },
-            getDetailsFunc: async id => (await MicroFinanceClient.GetLoanGuarantorEndpointAsync("1", id)).Adapt<LoanGuarantorViewModel>(),
+            getDetailsFunc: async id => (await Client.GetLoanGuarantorEndpointAsync("1", id)).Adapt<LoanGuarantorViewModel>(),
             createFunc: async vm =>
             {
                 var command = vm.Adapt<CreateLoanGuarantorCommand>();
-                await MicroFinanceClient.CreateLoanGuarantorEndpointAsync("1", command);
+                await Client.CreateLoanGuarantorEndpointAsync("1", command);
             },
             updateFunc: async (id, vm) =>
             {
                 var command = vm.Adapt<UpdateLoanGuarantorCommand>();
-                await MicroFinanceClient.UpdateLoanGuarantorEndpointAsync("1", id, command);
+                await Client.UpdateLoanGuarantorEndpointAsync("1", id, command);
             },
-            deleteFunc: async id => await MicroFinanceClient.DeleteLoanGuarantorEndpointAsync("1", id),
+            deleteFunc: async id => await Client.DeleteLoanGuarantorEndpointAsync("1", id),
             hasExtraActionsFunc: () => true,
             canUpdateEntityFunc: _ => _canUpdate,
             canDeleteEntityFunc: _ => _canDelete);

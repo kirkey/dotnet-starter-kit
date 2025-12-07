@@ -1,6 +1,5 @@
 using FSH.Starter.Blazor.Client.Components.Dialogs;
 using FSH.Starter.Blazor.Client.Pages.MicroFinance.CollectionCases.Dialogs;
-using FSH.Starter.WebApi.MicroFinance.Application.CollectionCases.Get.v1;
 using Mapster;
 
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollectionCases;
@@ -130,12 +129,12 @@ public partial class CollectionCases
                 if (!string.IsNullOrWhiteSpace(_searchClassification))
                     request = request with { Classification = _searchClassification };
 
-                var response = await MicroFinanceClient.SearchCollectionCasesEndpointAsync("1", request);
+                var response = await Client.SearchCollectionCasesEndpointAsync("1", request);
                 return response.Adapt<PaginationResponse<CollectionCaseResponse>>();
             },
             getDetailsFunc: async id =>
             {
-                var response = await MicroFinanceClient.GetCollectionCaseEndpointAsync("1", id);
+                var response = await Client.GetCollectionCaseEndpointAsync("1", id);
                 return response.Adapt<CollectionCaseViewModel>();
             },
             createFunc: async vm =>
@@ -149,10 +148,10 @@ public partial class CollectionCases
                     AmountOverdue = vm.AmountOverdue,
                     TotalOutstanding = vm.TotalOutstanding
                 };
-                var response = await MicroFinanceClient.CreateCollectionCaseEndpointAsync("1", command);
+                var response = await Client.CreateCollectionCaseEndpointAsync("1", command);
                 return response.Id;
             },
-            deleteFunc: async id => await MicroFinanceClient.DeleteCollectionCaseEndpointAsync("1", id),
+            deleteFunc: async id => await Client.DeleteCollectionCaseEndpointAsync("1", id),
             exportAction: string.Empty,
             entityTypeName: "Collection Case",
             entityTypeNamePlural: "Collection Cases",
@@ -230,7 +229,7 @@ public partial class CollectionCases
         {
             var command = new EscalateToLegalCollectionCaseCommand { Id = id };
             await ApiHelper.ExecuteCallGuardedAsync(
-                async () => await MicroFinanceClient.EscalateToLegalCollectionCaseEndpointAsync("1", id, command),
+                async () => await Client.EscalateToLegalCollectionCaseEndpointAsync("1", id, command),
                 Snackbar,
                 successMessage: "Case escalated to legal.");
             await _table.ReloadDataAsync();
@@ -249,7 +248,7 @@ public partial class CollectionCases
         {
             var command = new SettleCollectionCaseCommand { Id = id };
             await ApiHelper.ExecuteCallGuardedAsync(
-                async () => await MicroFinanceClient.SettleCollectionCaseEndpointAsync("1", id, command),
+                async () => await Client.SettleCollectionCaseEndpointAsync("1", id, command),
                 Snackbar,
                 successMessage: "Case settled successfully.");
             await _table.ReloadDataAsync();
@@ -276,7 +275,7 @@ public partial class CollectionCases
 
     private async Task ViewCaseDetails(DefaultIdType id)
     {
-        var entity = await MicroFinanceClient.GetCollectionCaseEndpointAsync("1", id);
+        var entity = await Client.GetCollectionCaseEndpointAsync("1", id);
 
         var parameters = new DialogParameters<CollectionCaseDetailsDialog>
         {

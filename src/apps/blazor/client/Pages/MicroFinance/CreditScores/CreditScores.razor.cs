@@ -14,15 +14,6 @@ public partial class CreditScores
     [Inject]
     private IAuthorizationService AuthorizationService { get; set; } = null!;
 
-    [Inject]
-    private IDialogService DialogService { get; set; } = null!;
-
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private ClientPreference _clientPreference = new();
     private EntityTable<CreditScoreResponse, DefaultIdType, CreditScoreViewModel>? _table;
     private EntityServerTableContext<CreditScoreResponse, DefaultIdType, CreditScoreViewModel> _context = null!;
@@ -59,21 +50,21 @@ public partial class CreditScores
             searchFunc: async filter =>
             {
                 var request = filter.Adapt<PaginationFilter>();
-                var response = await MicroFinanceClient.SearchCreditScoresEndpointAsync("1", request);
+                var response = await Client.SearchCreditScoresEndpointAsync("1", request);
                 return response.Adapt<PaginationResponse<CreditScoreResponse>>();
             },
-            getDetailsFunc: async id => (await MicroFinanceClient.GetCreditScoreEndpointAsync("1", id)).Adapt<CreditScoreViewModel>(),
+            getDetailsFunc: async id => (await Client.GetCreditScoreEndpointAsync("1", id)).Adapt<CreditScoreViewModel>(),
             createFunc: async vm =>
             {
                 var command = vm.Adapt<CreateCreditScoreCommand>();
-                await MicroFinanceClient.CreateCreditScoreEndpointAsync("1", command);
+                await Client.CreateCreditScoreEndpointAsync("1", command);
             },
             updateFunc: async (id, vm) =>
             {
                 var command = vm.Adapt<UpdateCreditScoreCommand>();
-                await MicroFinanceClient.UpdateCreditScoreEndpointAsync("1", id, command);
+                await Client.UpdateCreditScoreEndpointAsync("1", id, command);
             },
-            deleteFunc: async id => await MicroFinanceClient.DeleteCreditScoreEndpointAsync("1", id),
+            deleteFunc: async id => await Client.DeleteCreditScoreEndpointAsync("1", id),
             hasExtraActionsFunc: () => true,
             canUpdateEntityFunc: _ => _canUpdate,
             canDeleteEntityFunc: _ => _canDelete);

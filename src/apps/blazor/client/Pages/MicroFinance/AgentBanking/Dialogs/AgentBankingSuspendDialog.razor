@@ -34,12 +34,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string _reason = string.Empty;
 
     private void Cancel() => MudDialog.Cancel();
@@ -53,7 +47,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.SuspendAgentBankingEndpointAsync("1", AgentId, command),
+            async () => await Client.SuspendAgentBankingEndpointAsync("1", AgentId, command),
             Snackbar,
             successMessage: "Agent suspended successfully.");
 

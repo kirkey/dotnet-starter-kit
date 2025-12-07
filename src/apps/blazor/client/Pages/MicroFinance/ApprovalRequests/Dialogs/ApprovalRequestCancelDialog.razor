@@ -43,12 +43,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private string? _reason;
 
     private bool IsValid => !string.IsNullOrWhiteSpace(_reason);
@@ -64,7 +58,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.CancelApprovalRequestEndpointAsync("1", RequestId, command),
+            async () => await Client.CancelApprovalRequestEndpointAsync("1", RequestId, command),
             Snackbar,
             successMessage: "Request cancelled.");
 

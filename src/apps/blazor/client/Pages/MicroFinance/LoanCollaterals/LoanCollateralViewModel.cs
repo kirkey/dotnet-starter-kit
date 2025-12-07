@@ -1,10 +1,9 @@
-using FSH.Starter.Blazor.Client.Components.EntityTable;
 using FSH.Starter.Blazor.Infrastructure.Api;
 using Mapster;
 
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanCollaterals;
 
-public class LoanCollateralViewModel : IEntity<DefaultIdType>
+public class LoanCollateralViewModel
 {
     public DefaultIdType Id { get; set; }
     public Guid LoanId { get; set; }
