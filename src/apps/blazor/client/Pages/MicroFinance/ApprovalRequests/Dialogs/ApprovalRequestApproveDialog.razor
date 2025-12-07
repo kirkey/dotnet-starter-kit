@@ -1,0 +1,83 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" Color="Color.Success" />
+            Approve Request - @RequestNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Info" Class="mb-4">
+                    You are approving level @CurrentLevel of @TotalLevels for this request.
+                    @if (CurrentLevel == TotalLevels)
+                    {
+                        <br />
+                        <strong>This is the final approval level.</strong>
+                    }
+                </MudAlert>
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_comments"
+                              Label="Approval Comments"
+                              Variant="Variant.Outlined"
+                              Lines="3"
+                              HelperText="Optional comments for this approval" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Success" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit">
+            Approve
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType RequestId { get; set; }
+
+    [Parameter]
+    public string RequestNumber { get; set; } = string.Empty;
+
+    [Parameter]
+    public int CurrentLevel { get; set; }
+
+    [Parameter]
+    public int TotalLevels { get; set; }
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private string? _comments;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new ApproveRequestLevelCommand
+        {
+            Id = RequestId,
+            ApproverId = Guid.NewGuid(), // In real app, get from auth context
+            Comments = _comments
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.ApproveRequestLevelEndpointAsync("1", RequestId, command),
+            Snackbar,
+            successMessage: CurrentLevel == TotalLevels 
+                ? "Request fully approved." 
+                : $"Level {CurrentLevel} approved. Awaiting next level.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

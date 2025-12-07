@@ -47,7 +47,7 @@ internal static class FeeChargeSeeder
                 // Most processing fees are paid
                 if (random.NextDouble() < 0.9)
                 {
-                    charge.RecordPayment(charge.Amount, DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-random.Next(1, 30))));
+                    charge.RecordPayment(charge.Amount);
                 }
 
                 await context.FeeCharges.AddAsync(charge, cancellationToken).ConfigureAwait(false);
@@ -55,11 +55,11 @@ internal static class FeeChargeSeeder
             }
         }
 
-        // Late fees for overdue loans
+        // Late fees for disbursed loans (simulating overdue scenario)
         var lateFee = feeDefinitions.FirstOrDefault(f => f.Name.Contains("Late") || f.Name.Contains("Penalty"));
         if (lateFee != null)
         {
-            var overdueLoans = loans.Where(l => l.Status == Loan.StatusInArrears || l.Status == Loan.StatusDefaulted).Take(15);
+            var overdueLoans = loans.Where(l => l.Status == Loan.StatusDisbursed).Take(15);
             foreach (var loan in overdueLoans)
             {
                 for (int i = 0; i < random.Next(1, 4); i++)
@@ -77,7 +77,7 @@ internal static class FeeChargeSeeder
                     // Some late fees are pending
                     if (random.NextDouble() < 0.4)
                     {
-                        charge.RecordPayment(charge.Amount, DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-random.Next(1, 30))));
+                        charge.RecordPayment(charge.Amount);
                     }
 
                     await context.FeeCharges.AddAsync(charge, cancellationToken).ConfigureAwait(false);
@@ -102,7 +102,7 @@ internal static class FeeChargeSeeder
                     amount: maintenanceFee.Amount,
                     reference: $"FEE-{chargeNumber++:D6}");
 
-                charge.RecordPayment(charge.Amount, DateOnly.FromDateTime(DateTime.UtcNow));
+                charge.RecordPayment(charge.Amount);
                 await context.FeeCharges.AddAsync(charge, cancellationToken).ConfigureAwait(false);
                 chargeCount++;
             }

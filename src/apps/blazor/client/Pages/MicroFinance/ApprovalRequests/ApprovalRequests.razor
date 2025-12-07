@@ -1,0 +1,48 @@
+@page "/microfinance/approval-requests"
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+@using FSH.Starter.Blazor.Client.Pages.MicroFinance.ApprovalRequests.Dialogs
+
+<MudPaper Elevation="@_elevation" Style="@_borderRadius">
+    <EntityTable @ref="_table"
+                 TEntity="ApprovalRequestResponse"
+                 TId="DefaultIdType"
+                 TViewModel="ApprovalRequestViewModel"
+                 Context="@_context"
+                 Dense="true"
+                 Striped="true"
+                 Hover="true"
+                 SearchFields="@(new[] { "RequestNumber", "EntityType", "Status" })">
+
+        <ActionsContent>
+            <MudButtonGroup OverrideStyles="false">
+                <MudIconButton Icon="@Icons.Material.Filled.Visibility"
+                               Color="Color.Info"
+                               Title="View Details"
+                               OnClick="@(() => ViewDetails(context))" />
+                @if (_canApprove && context.Status == "Pending")
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.CheckCircle"
+                                   Color="Color.Success"
+                                   Title="Approve"
+                                   OnClick="@(() => Approve(context))" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Cancel"
+                                   Color="Color.Error"
+                                   Title="Reject"
+                                   OnClick="@(() => Reject(context))" />
+                }
+                @if (_canCancel && context.Status == "Pending")
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.Block"
+                                   Color="Color.Warning"
+                                   Title="Cancel"
+                                   OnClick="@(() => Cancel(context))" />
+                }
+            </MudButtonGroup>
+        </ActionsContent>
+
+        <ExtraActions>
+            <MudMenuItem Icon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">Help</MudMenuItem>
+        </ExtraActions>
+
+    </EntityTable>
+</MudPaper>

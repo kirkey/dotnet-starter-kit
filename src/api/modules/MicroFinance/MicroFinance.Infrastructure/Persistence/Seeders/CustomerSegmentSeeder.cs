@@ -54,14 +54,12 @@ internal static class CustomerSegmentSeeder
                 description: seg.Desc,
                 priority: seg.Priority);
 
-            if (seg.MinIncome.HasValue || seg.MaxIncome.HasValue)
+            if (seg.MinIncome.HasValue || seg.MaxIncome.HasValue || !string.IsNullOrEmpty(seg.Risk))
             {
-                segment.SetIncomeRange(seg.MinIncome, seg.MaxIncome);
-            }
-
-            if (!string.IsNullOrEmpty(seg.Risk))
-            {
-                segment.SetRiskLevel(seg.Risk);
+                segment.Update(
+                    minIncomeLevel: seg.MinIncome,
+                    maxIncomeLevel: seg.MaxIncome,
+                    riskLevel: seg.Risk);
             }
 
             await context.CustomerSegments.AddAsync(segment, cancellationToken).ConfigureAwait(false);

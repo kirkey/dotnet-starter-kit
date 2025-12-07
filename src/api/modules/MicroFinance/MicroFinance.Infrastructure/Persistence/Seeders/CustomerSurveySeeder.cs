@@ -56,7 +56,7 @@ internal static class CustomerSurveySeeder
                 endDate: endDate,
                 isAnonymous: s.Anonymous);
 
-            survey.SetQuestions("[{\"id\":1,\"text\":\"How satisfied are you with our service?\",\"type\":\"rating\"},{\"id\":2,\"text\":\"Would you recommend us to a friend?\",\"type\":\"nps\"},{\"id\":3,\"text\":\"What could we improve?\",\"type\":\"text\"}]");
+            survey.Update(questions: "[{\"id\":1,\"text\":\"How satisfied are you with our service?\",\"type\":\"rating\"},{\"id\":2,\"text\":\"Would you recommend us to a friend?\",\"type\":\"nps\"},{\"id\":3,\"text\":\"What could we improve?\",\"type\":\"text\"}]");
             survey.Activate();
 
             // Add response data for past surveys
@@ -64,9 +64,18 @@ internal static class CustomerSurveySeeder
             {
                 var responses = random.Next(50, 200);
                 var avgScore = 3.5m + (decimal)random.NextDouble() * 1.5m;
-                var npsScore = s.Type == CustomerSurvey.TypeNPS ? random.Next(30, 70) : (int?)null;
                 
-                survey.RecordResponses(responses, avgScore, npsScore);
+                // Record responses to update TotalResponses and AverageScore
+                for (int i = 0; i < responses; i++)
+                {
+                    survey.RecordResponse(avgScore);
+                }
+                
+                // Update NPS score for NPS surveys
+                if (s.Type == CustomerSurvey.TypeNPS)
+                {
+                    survey.UpdateNpsScore(random.Next(30, 70));
+                }
             }
 
             // Complete past surveys

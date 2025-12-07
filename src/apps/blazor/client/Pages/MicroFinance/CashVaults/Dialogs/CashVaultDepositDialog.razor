@@ -1,0 +1,120 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.AddCircle" Class="mr-2" Color="Color.Success" />
+            Deposit Cash - @VaultName
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Class="mb-2">
+                    Current Balance: <strong>KES @CurrentBalance.ToString("N0")</strong>
+                </MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudNumericField @bind-Value="_amount"
+                                 Label="Deposit Amount"
+                                 Variant="Variant.Outlined"
+                                 Format="N0"
+                                 Min="1"
+                                 Adornment="Adornment.Start"
+                                 AdornmentText="KES"
+                                 Required="true" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudText Typo="Typo.subtitle2" Class="mb-2">Denomination Breakdown (Optional)</MudText>
+            </MudItem>
+            <MudItem xs="6">
+                <MudNumericField @bind-Value="_notes1000" Label="1000 Notes" Variant="Variant.Outlined" Min="0" />
+            </MudItem>
+            <MudItem xs="6">
+                <MudNumericField @bind-Value="_notes500" Label="500 Notes" Variant="Variant.Outlined" Min="0" />
+            </MudItem>
+            <MudItem xs="6">
+                <MudNumericField @bind-Value="_notes200" Label="200 Notes" Variant="Variant.Outlined" Min="0" />
+            </MudItem>
+            <MudItem xs="6">
+                <MudNumericField @bind-Value="_notes100" Label="100 Notes" Variant="Variant.Outlined" Min="0" />
+            </MudItem>
+            <MudItem xs="6">
+                <MudNumericField @bind-Value="_notes50" Label="50 Notes" Variant="Variant.Outlined" Min="0" />
+            </MudItem>
+            <MudItem xs="6">
+                <MudNumericField @bind-Value="_coins" Label="Coins Total" Variant="Variant.Outlined" Min="0" />
+            </MudItem>
+            @if (DenominationTotal > 0 && DenominationTotal != _amount)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Warning">
+                        Denomination total (KES @DenominationTotal.ToString("N0")) does not match deposit amount!
+                    </MudAlert>
+                </MudItem>
+            }
+            <MudItem xs="12">
+                <MudText Class="mt-2">
+                    New Balance: <strong>KES @((CurrentBalance + _amount).ToString("N0"))</strong>
+                </MudText>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Success" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(_amount <= 0)">
+            Confirm Deposit
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType VaultId { get; set; }
+
+    [Parameter]
+    public string VaultName { get; set; } = string.Empty;
+
+    [Parameter]
+    public decimal CurrentBalance { get; set; }
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private decimal _amount;
+    private int _notes1000;
+    private int _notes500;
+    private int _notes200;
+    private int _notes100;
+    private int _notes50;
+    private decimal _coins;
+
+    private decimal DenominationTotal => (_notes1000 * 1000) + (_notes500 * 500) + (_notes200 * 200) + 
+                                         (_notes100 * 100) + (_notes50 * 50) + _coins;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        string? denominationBreakdown = null;
+        if (DenominationTotal > 0)
+        {
+            denominationBreakdown = $"1000x{_notes1000}, 500x{_notes500}, 200x{_notes200}, 100x{_notes100}, 50x{_notes50}, Coins:{_coins}";
+        }
+
+        var command = new DepositCashCommand
+        {
+            Id = VaultId,
+            Amount = _amount,
+            DenominationBreakdown = denominationBreakdown
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await Client.DepositCashAsync("1", VaultId, command),
+            Snackbar,
+            successMessage: $"Deposited KES {_amount:N0} successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

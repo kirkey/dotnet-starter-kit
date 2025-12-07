@@ -99,8 +99,7 @@ public partial class SavingsAccounts
                 new EntityField<SavingsAccountResponse>(dto => dto.TotalWithdrawals, "Total Withdrawals", "TotalWithdrawals", typeof(decimal)),
                 new EntityField<SavingsAccountResponse>(dto => dto.TotalInterestEarned, "Interest Earned", "TotalInterestEarned", typeof(decimal)),
                 new EntityField<SavingsAccountResponse>(dto => dto.OpenedDate, "Opened", "OpenedDate", typeof(DateOnly)),
-                new EntityField<SavingsAccountResponse>(dto => dto.Status, "Status", "Status",
-                    Template: entity => @<MudChip T="string" Color="@GetStatusColor(entity.Status)" Size="Size.Small">@entity.Status</MudChip>),
+                new EntityField<SavingsAccountResponse>(dto => dto.Status, "Status", "Status"),
             ],
             searchFunc: async filter =>
             {

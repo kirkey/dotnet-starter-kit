@@ -43,14 +43,13 @@ internal static class AmlAlertSeeder
             var alertDate = DateTimeOffset.UtcNow.AddDays(-random.Next(1, 60));
             var transactionAmount = 100000 + random.Next(0, 900000);
 
+            var alertCode = $"AML-{alertNumber++:D6}";
             var alert = AmlAlert.Create(
-                alertNumber: $"AML-{alertNumber++:D6}",
-                memberId: member.Id,
+                alertCode: alertCode,
                 alertType: alertType.Type,
-                description: alertType.Desc,
                 severity: alertType.Severity,
-                alertDate: alertDate,
-                transactionAmount: transactionAmount);
+                triggerRule: $"{alertType.Type}Rule",
+                description: alertType.Desc);
 
             // Process alerts based on severity and random outcome
             var outcome = random.NextDouble();
@@ -60,15 +59,15 @@ internal static class AmlAlertSeeder
             }
             else if (outcome < 0.4)
             {
-                alert.Investigate("Under investigation by compliance officer");
+                alert.AssignTo(Guid.NewGuid());
                 if (random.NextDouble() < 0.3)
                 {
-                    alert.Close("False positive - legitimate business transaction", "Reviewed KYC documentation");
+                    alert.Clear(Guid.NewGuid(), "False positive - legitimate business transaction. Reviewed KYC documentation");
                 }
             }
             else if (outcome < 0.7)
             {
-                alert.Close("False positive - within normal transaction range", "Compared with historical pattern");
+                alert.Clear(Guid.NewGuid(), "False positive - within normal transaction range. Compared with historical pattern");
             }
 
             await context.AmlAlerts.AddAsync(alert, cancellationToken).ConfigureAwait(false);

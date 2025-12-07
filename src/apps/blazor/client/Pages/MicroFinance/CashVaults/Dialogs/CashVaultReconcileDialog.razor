@@ -1,0 +1,143 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Balance" Class="mr-2" Color="Color.Warning" />
+            Reconcile Vault - @VaultName
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Info" Class="mb-4">
+                    Count all physical cash in the vault and enter the total below.
+                </MudAlert>
+            </MudItem>
+            <MudItem xs="12">
+                <MudText Class="mb-2">
+                    System Balance: <strong>KES @CurrentBalance.ToString("N0")</strong>
+                </MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudNumericField @bind-Value="_physicalCount"
+                                 Label="Physical Count Total"
+                                 Variant="Variant.Outlined"
+                                 Format="N0"
+                                 Min="0"
+                                 Adornment="Adornment.Start"
+                                 AdornmentText="KES"
+                                 Required="true" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudText Typo="Typo.subtitle2" Class="mb-2">Denomination Breakdown</MudText>
+            </MudItem>
+            <MudItem xs="6">
+                <MudNumericField @bind-Value="_notes1000" Label="1000 Notes" Variant="Variant.Outlined" Min="0" />
+            </MudItem>
+            <MudItem xs="6">
+                <MudNumericField @bind-Value="_notes500" Label="500 Notes" Variant="Variant.Outlined" Min="0" />
+            </MudItem>
+            <MudItem xs="6">
+                <MudNumericField @bind-Value="_notes200" Label="200 Notes" Variant="Variant.Outlined" Min="0" />
+            </MudItem>
+            <MudItem xs="6">
+                <MudNumericField @bind-Value="_notes100" Label="100 Notes" Variant="Variant.Outlined" Min="0" />
+            </MudItem>
+            <MudItem xs="6">
+                <MudNumericField @bind-Value="_notes50" Label="50 Notes" Variant="Variant.Outlined" Min="0" />
+            </MudItem>
+            <MudItem xs="6">
+                <MudNumericField @bind-Value="_coins" Label="Coins Total" Variant="Variant.Outlined" Min="0" />
+            </MudItem>
+            @if (DenominationTotal > 0)
+            {
+                <MudItem xs="12">
+                    <MudText>
+                        Denomination Total: <strong>KES @DenominationTotal.ToString("N0")</strong>
+                        @if (DenominationTotal != _physicalCount)
+                        {
+                            <MudChip T="string" Size="Size.Small" Color="Color.Warning" Class="ml-2">Mismatch</MudChip>
+                        }
+                    </MudText>
+                </MudItem>
+            }
+            @if (_physicalCount != CurrentBalance && _physicalCount > 0)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="@(Difference >= 0 ? Severity.Warning : Severity.Error)">
+                        <strong>Discrepancy: KES @Difference.ToString("N0")</strong>
+                        (@(Difference >= 0 ? "Overage" : "Shortage"))
+                    </MudAlert>
+                </MudItem>
+            }
+            @if (_physicalCount == CurrentBalance && _physicalCount > 0)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Success">
+                        Physical count matches system balance - no discrepancy!
+                    </MudAlert>
+                </MudItem>
+            }
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Warning" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(_physicalCount < 0)">
+            Complete Reconciliation
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType VaultId { get; set; }
+
+    [Parameter]
+    public string VaultName { get; set; } = string.Empty;
+
+    [Parameter]
+    public decimal CurrentBalance { get; set; }
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private decimal _physicalCount;
+    private int _notes1000;
+    private int _notes500;
+    private int _notes200;
+    private int _notes100;
+    private int _notes50;
+    private decimal _coins;
+
+    private decimal DenominationTotal => (_notes1000 * 1000) + (_notes500 * 500) + (_notes200 * 200) + 
+                                         (_notes100 * 100) + (_notes50 * 50) + _coins;
+
+    private decimal Difference => _physicalCount - CurrentBalance;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        string? denominationBreakdown = null;
+        if (DenominationTotal > 0)
+        {
+            denominationBreakdown = $"1000x{_notes1000}, 500x{_notes500}, 200x{_notes200}, 100x{_notes100}, 50x{_notes50}, Coins:{_coins}";
+        }
+
+        var command = new ReconcileCashVaultCommand
+        {
+            Id = VaultId,
+            PhysicalCount = _physicalCount,
+            DenominationBreakdown = denominationBreakdown
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await Client.ReconcileVaultAsync("1", VaultId, command),
+            Snackbar,
+            successMessage: "Vault reconciled successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

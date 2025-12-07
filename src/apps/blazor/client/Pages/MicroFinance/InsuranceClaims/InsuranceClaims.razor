@@ -1,0 +1,152 @@
+@page "/microfinance/insurance-claims"
+
+<PageHeader Title="Insurance Claims" Header="Insurance Claims" SubHeader="Manage insurance claims - submit, review, approve, and settle claims for insured members." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudChipSet T="string" SelectedValue="@_statusFilter" SelectedValueChanged="@OnStatusFilterChanged">
+            <MudChip Value="@("")" Variant="Variant.Text">All</MudChip>
+            <MudChip Value="@("Submitted")" Color="Color.Info" Variant="Variant.Text">Submitted</MudChip>
+            <MudChip Value="@("UnderReview")" Color="Color.Warning" Variant="Variant.Text">Under Review</MudChip>
+            <MudChip Value="@("Approved")" Color="Color.Success" Variant="Variant.Text">Approved</MudChip>
+            <MudChip Value="@("Rejected")" Color="Color.Error" Variant="Variant.Text">Rejected</MudChip>
+            <MudChip Value="@("Settled")" Color="Color.Primary" Variant="Variant.Text">Settled</MudChip>
+        </MudChipSet>
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowInsuranceClaimsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="InsuranceClaimResponse" TId="DefaultIdType" TRequest="InsuranceClaimViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchClaimNumber"
+                          Label="Claim Number"
+                          Placeholder="Search by claim number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchClaimType"
+                       Label="Claim Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Death")">Death</MudSelectItem>
+                <MudSelectItem Value="@("Disability")">Disability</MudSelectItem>
+                <MudSelectItem Value="@("CriticalIllness")">Critical Illness</MudSelectItem>
+                <MudSelectItem Value="@("Hospitalization")">Hospitalization</MudSelectItem>
+                <MudSelectItem Value="@("LoanDefault")">Loan Default</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@_searchFromDate"
+                           Label="From Date"
+                           Variant="Variant.Outlined"
+                           Clearable="true" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (entity.Status == "Submitted" && _canReview)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.RateReview" IconColor="Color.Warning" OnClick="@(() => ReviewClaim(entity.Id))">
+                Review
+            </MudMenuItem>
+        }
+        @if (entity.Status == "UnderReview")
+        {
+            @if (_canApprove)
+            {
+                <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success" OnClick="@(() => ShowApproveDialog(entity))">
+                    Approve
+                </MudMenuItem>
+            }
+            @if (_canReject)
+            {
+                <MudMenuItem Icon="@Icons.Material.Filled.Cancel" IconColor="Color.Error" OnClick="@(() => ShowRejectDialog(entity))">
+                    Reject
+                </MudMenuItem>
+            }
+        }
+        @if (entity.Status == "Approved" && _canSettle)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Payments" IconColor="Color.Primary" OnClick="@(() => SettleClaim(entity.Id))">
+                Settle Payment
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewClaimDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Claim Details</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <InsurancePolicyAutocomplete @bind-Value="context.PolicyId"
+                                         Label="Insurance Policy"
+                                         Variant="Variant.Filled"
+                                         Required="true"
+                                         HelperText="Select the policy to claim against"
+                                         Disabled="@(context.Id != DefaultIdType.Empty)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.ClaimType"
+                       For="@(() => context.ClaimType)"
+                       Label="Claim Type"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Death")">Death</MudSelectItem>
+                <MudSelectItem Value="@("Disability")">Disability</MudSelectItem>
+                <MudSelectItem Value="@("CriticalIllness")">Critical Illness</MudSelectItem>
+                <MudSelectItem Value="@("Hospitalization")">Hospitalization</MudSelectItem>
+                <MudSelectItem Value="@("LoanDefault")">Loan Default</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.ClaimAmount"
+                             For="@(() => context.ClaimAmount)"
+                             Label="Claim Amount"
+                             Variant="Variant.Filled"
+                             Min="1"
+                             Format="N0"
+                             Adornment="Adornment.Start"
+                             AdornmentText="KES"
+                             Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@_incidentDate"
+                           Label="Incident Date"
+                           Variant="Variant.Filled"
+                           Required="true"
+                           MaxDate="@DateTime.Today"
+                           DateChanged="@(date => OnIncidentDateChanged(context, date))" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="4"
+                          HelperText="Describe the incident and circumstances of the claim" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

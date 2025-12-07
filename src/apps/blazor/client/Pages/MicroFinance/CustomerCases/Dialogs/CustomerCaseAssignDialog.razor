@@ -1,0 +1,73 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.PersonAdd" Class="mr-2" Color="Color.Primary" />
+            Assign Case - @CaseNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_staffId"
+                              Label="Staff ID"
+                              Variant="Variant.Outlined"
+                              Required="true"
+                              HelperText="Enter the ID of the staff member to assign this case to" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(!IsValid)">
+            Assign
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType CaseId { get; set; }
+
+    [Parameter]
+    public string CaseNumber { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private string? _staffId;
+
+    private bool IsValid => Guid.TryParse(_staffId, out _);
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        if (!Guid.TryParse(_staffId, out var staffGuid))
+        {
+            Snackbar.Add("Invalid Staff ID format.", Severity.Error);
+            return;
+        }
+
+        var command = new AssignCustomerCaseCommand
+        {
+            Id = CaseId,
+            StaffId = staffGuid
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.AssignCustomerCaseEndpointAsync("1", CaseId, command),
+            Snackbar,
+            successMessage: "Case assigned successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

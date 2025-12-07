@@ -1,0 +1,84 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.RemoveCircle" Class="mr-2" Color="Color.Error" />
+            Cash Out - @SessionNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Class="mb-2">
+                    Current Balance: <strong>KES @CurrentBalance.ToString("N0")</strong>
+                </MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudNumericField @bind-Value="_amount"
+                                 Label="Cash Out Amount"
+                                 Variant="Variant.Outlined"
+                                 Format="N0"
+                                 Min="1"
+                                 Max="@CurrentBalance"
+                                 Adornment="Adornment.Start"
+                                 AdornmentText="KES"
+                                 Required="true" />
+            </MudItem>
+            @if (_amount > CurrentBalance)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Error">
+                        Insufficient balance for cash out!
+                    </MudAlert>
+                </MudItem>
+            }
+            <MudItem xs="12">
+                <MudText Class="mt-2">
+                    New Balance: <strong>KES @((CurrentBalance - _amount).ToString("N0"))</strong>
+                </MudText>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Error" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(_amount <= 0 || _amount > CurrentBalance)">
+            Record Cash Out
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType SessionId { get; set; }
+
+    [Parameter]
+    public string SessionNumber { get; set; } = string.Empty;
+
+    [Parameter]
+    public decimal CurrentBalance { get; set; }
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private decimal _amount;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new RecordCashOutCommand
+        {
+            Id = SessionId,
+            Amount = _amount
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await Client.RecordCashOutAsync("1", SessionId, command),
+            Snackbar,
+            successMessage: $"Cash out of KES {_amount:N0} recorded.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

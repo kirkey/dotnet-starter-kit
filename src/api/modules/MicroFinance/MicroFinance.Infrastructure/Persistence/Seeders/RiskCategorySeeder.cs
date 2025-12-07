@@ -60,7 +60,7 @@ internal static class RiskCategorySeeder
                 riskType: cat.Type,
                 description: cat.Desc,
                 defaultSeverity: cat.Severity,
-                riskWeight: cat.Weight);
+                weightFactor: cat.Weight);
 
             await context.RiskCategories.AddAsync(category, cancellationToken).ConfigureAwait(false);
         }

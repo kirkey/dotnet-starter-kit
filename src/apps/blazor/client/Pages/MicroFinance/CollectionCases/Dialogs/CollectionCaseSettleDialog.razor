@@ -1,0 +1,132 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" Color="Color.Success" />
+            Settle Case - @CaseNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Info" Class="mb-4">
+                    Settling this case indicates that a negotiated settlement has been reached with the borrower.
+                </MudAlert>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudText Class="mb-2">
+                    Total Outstanding: <strong>@TotalOutstanding.ToString("N0")</strong>
+                </MudText>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudText Class="mb-2">
+                    Amount Overdue: <strong>@AmountOverdue.ToString("N0")</strong>
+                </MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudNumericField @bind-Value="_settlementAmount"
+                                 Label="Settlement Amount"
+                                 Variant="Variant.Outlined"
+                                 Format="N0"
+                                 Adornment="Adornment.Start"
+                                 AdornmentText="KES"
+                                 Required="true" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudSelect @bind-Value="@_settlementType"
+                           Label="Settlement Type"
+                           Variant="Variant.Outlined"
+                           Required="true">
+                    <MudSelectItem Value="@("FullPayment")">Full Payment</MudSelectItem>
+                    <MudSelectItem Value="@("NegotiatedAmount")">Negotiated Amount</MudSelectItem>
+                    <MudSelectItem Value="@("PaymentPlan")">Payment Plan Agreed</MudSelectItem>
+                    <MudSelectItem Value="@("DebtRestructure")">Debt Restructure</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12">
+                <MudDatePicker @bind-Date="_settlementDate"
+                               Label="Settlement Date"
+                               Variant="Variant.Outlined"
+                               Required="true" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_settlementNotes"
+                              Label="Settlement Notes"
+                              Variant="Variant.Outlined"
+                              Lines="3"
+                              Required="true"
+                              HelperText="Document the terms of settlement" />
+            </MudItem>
+            @if (_settlementAmount < TotalOutstanding && _settlementAmount > 0)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Warning">
+                        Write-off amount: <strong>@((TotalOutstanding - _settlementAmount).ToString("N0"))</strong>
+                    </MudAlert>
+                </MudItem>
+            }
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Success" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(!IsValid)">
+            Confirm Settlement
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType CaseId { get; set; }
+
+    [Parameter]
+    public string CaseNumber { get; set; } = string.Empty;
+
+    [Parameter]
+    public decimal TotalOutstanding { get; set; }
+
+    [Parameter]
+    public decimal AmountOverdue { get; set; }
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private decimal _settlementAmount;
+    private string? _settlementType;
+    private DateTime? _settlementDate = DateTime.Today;
+    private string? _settlementNotes;
+
+    private bool IsValid => _settlementAmount > 0 &&
+                            !string.IsNullOrEmpty(_settlementType) &&
+                            _settlementDate.HasValue &&
+                            !string.IsNullOrWhiteSpace(_settlementNotes);
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new SettleCollectionCaseCommand
+        {
+            Id = CaseId,
+            SettlementAmount = _settlementAmount,
+            SettlementType = _settlementType!,
+            SettlementDate = _settlementDate!.Value,
+            Notes = _settlementNotes
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.SettleCollectionCaseEndpointAsync("1", CaseId, command),
+            Snackbar,
+            successMessage: "Case settled successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

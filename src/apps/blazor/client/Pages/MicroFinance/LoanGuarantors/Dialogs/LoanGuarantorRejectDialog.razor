@@ -1,0 +1,91 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Close" Class="mr-2" Color="Color.Error" />
+            Reject Guarantor - @GuarantorName
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Warning" Class="mb-4">
+                    You are rejecting this member as a guarantor for the loan.
+                </MudAlert>
+            </MudItem>
+            <MudItem xs="12">
+                <MudSelect @bind-Value="@_rejectionReason"
+                           Label="Rejection Reason"
+                           Variant="Variant.Outlined"
+                           Required="true">
+                    <MudSelectItem Value="@("InsufficientSavings")">Insufficient Savings Balance</MudSelectItem>
+                    <MudSelectItem Value="@("ExistingGuarantees")">Too Many Existing Guarantees</MudSelectItem>
+                    <MudSelectItem Value="@("PoorCreditHistory")">Poor Credit History</MudSelectItem>
+                    <MudSelectItem Value="@("InactiveAccount")">Inactive Member Account</MudSelectItem>
+                    <MudSelectItem Value="@("DefaultedLoans")">Has Defaulted Loans</MudSelectItem>
+                    <MudSelectItem Value="@("RelationshipNotAllowed")">Relationship Type Not Allowed</MudSelectItem>
+                    <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_additionalNotes"
+                              Label="Additional Notes"
+                              Variant="Variant.Outlined"
+                              Lines="2"
+                              Required="@(_rejectionReason == "Other")"
+                              HelperText="@(_rejectionReason == "Other" ? "Required for Other reason" : "Optional additional details")" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Error" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(!IsValid)">
+            Reject Guarantor
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType GuarantorId { get; set; }
+
+    [Parameter]
+    public string GuarantorName { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private string? _rejectionReason;
+    private string? _additionalNotes;
+
+    private bool IsValid => !string.IsNullOrEmpty(_rejectionReason) &&
+                           (_rejectionReason != "Other" || !string.IsNullOrWhiteSpace(_additionalNotes));
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var reason = _rejectionReason == "Other" ? _additionalNotes : _rejectionReason;
+
+        var command = new RejectGuarantorCommand
+        {
+            Id = GuarantorId,
+            Reason = reason!
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.RejectGuarantorEndpointAsync("1", GuarantorId, command),
+            Snackbar,
+            successMessage: "Guarantor rejected.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

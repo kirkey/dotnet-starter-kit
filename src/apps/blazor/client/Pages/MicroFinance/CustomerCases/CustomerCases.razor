@@ -1,0 +1,58 @@
+@page "/microfinance/customer-cases"
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+@using FSH.Starter.Blazor.Client.Pages.MicroFinance.CustomerCases.Dialogs
+
+<MudPaper Elevation="@_elevation" Style="@_borderRadius">
+    <EntityTable @ref="_table"
+                 TEntity="CustomerCaseResponse"
+                 TId="DefaultIdType"
+                 TViewModel="CustomerCaseViewModel"
+                 Context="@_context"
+                 Dense="true"
+                 Striped="true"
+                 Hover="true"
+                 SearchFields="@(new[] { "CaseNumber", "Subject", "Category", "MemberName" })">
+
+        <ActionsContent>
+            <MudButtonGroup OverrideStyles="false">
+                <MudIconButton Icon="@Icons.Material.Filled.Visibility"
+                               Color="Color.Info"
+                               Title="View Details"
+                               OnClick="@(() => ViewDetails(context))" />
+                @if (_canAssign && string.IsNullOrEmpty(context.Status) || context.Status == "Open")
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.PersonAdd"
+                                   Color="Color.Primary"
+                                   Title="Assign"
+                                   OnClick="@(() => AssignCase(context))" />
+                }
+                @if (_canEscalate)
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.ArrowUpward"
+                                   Color="Color.Warning"
+                                   Title="Escalate"
+                                   OnClick="@(() => EscalateCase(context))" />
+                }
+                @if (_canResolve && context.Status != "Resolved" && context.Status != "Closed")
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.CheckCircle"
+                                   Color="Color.Success"
+                                   Title="Resolve"
+                                   OnClick="@(() => ResolveCase(context))" />
+                }
+                @if (_canClose && context.Status == "Resolved")
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.Done"
+                                   Color="Color.Dark"
+                                   Title="Close"
+                                   OnClick="@(() => CloseCase(context))" />
+                }
+            </MudButtonGroup>
+        </ActionsContent>
+
+        <ExtraActions>
+            <MudMenuItem Icon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">Help</MudMenuItem>
+        </ExtraActions>
+
+    </EntityTable>
+</MudPaper>

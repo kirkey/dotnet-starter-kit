@@ -1,0 +1,112 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" />
+            Documents Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Overview" IsInitiallyExpanded="true">
+                <MudText Typo="Typo.body2">
+                    The Documents module provides centralized document management for all MicroFinance entities. 
+                    Documents can be attached to members, loans, accounts, and other records. Each document 
+                    can be verified to ensure authenticity.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Document Types">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Common Document Types:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Badge">
+                        <strong>ID Documents:</strong> National ID, passport, driver's license
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Home">
+                        <strong>Address Proof:</strong> Utility bills, bank statements
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                        <strong>Income Proof:</strong> Pay slips, tax returns, business records
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Security">
+                        <strong>Collateral Docs:</strong> Title deeds, vehicle registration
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Handshake">
+                        <strong>Contracts:</strong> Loan agreements, guarantor forms
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.PhotoCamera">
+                        <strong>Photos:</strong> Member photos, collateral images
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Entity Types">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Documents can be attached to:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Person">Member</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">Loan</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Savings">Savings Account</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Security">Collateral</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Groups">Group</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Business">Branch</MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Key Actions">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Available Operations:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Upload">
+                        <strong>Upload:</strong> Add new documents to the system
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Visibility">
+                        <strong>View:</strong> View document details and metadata
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Download">
+                        <strong>Download:</strong> Download document files
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.VerifiedUser">
+                        <strong>Verify:</strong> Mark documents as verified
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Best Practices">
+                <MudText Typo="Typo.body2">
+                    <strong>Recommended Practices:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.DriveFileRenameOutline">
+                        Use descriptive document names
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Category">
+                        Categorize documents properly
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.VerifiedUser">
+                        Verify documents before processing applications
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Security">
+                        Ensure sensitive documents are properly secured
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Update">
+                        Keep documents up to date (re-verify expired IDs)
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Cancel() => MudDialog.Cancel();
+}

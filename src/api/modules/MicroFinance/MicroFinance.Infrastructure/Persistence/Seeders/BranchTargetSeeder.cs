@@ -19,7 +19,7 @@ internal static class BranchTargetSeeder
         if (existingCount > 0) return;
 
         var branches = await context.Branches
-            .Where(b => b.IsActive)
+            .Where(b => b.Status == Branch.StatusActive)
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
 
@@ -52,14 +52,12 @@ internal static class BranchTargetSeeder
 
                 var target = BranchTarget.Create(
                     branchId: branch.Id,
-                    targetPeriod: $"Q{quarter}-{currentYear}",
-                    startDate: startDate,
-                    endDate: endDate,
-                    loanDisbursementTarget: loanTarget,
-                    savingsCollectionTarget: savingsTarget,
-                    newMemberTarget: memberTarget,
-                    loanCollectionTarget: loanTarget * 0.95m,
-                    parTarget: 5.0m);
+                    targetType: BranchTarget.TypeLoanDisbursement,
+                    period: BranchTarget.PeriodQuarterly,
+                    periodStart: startDate,
+                    periodEnd: endDate,
+                    targetValue: loanTarget,
+                    description: $"Q{quarter}-{currentYear} Loan Disbursement Target");
 
                 await context.BranchTargets.AddAsync(target, cancellationToken).ConfigureAwait(false);
                 targetCount++;

@@ -99,8 +99,7 @@ public partial class Loans
                 new EntityField<LoanResponse>(dto => dto.TermMonths, "Term", "TermMonths", typeof(int)),
                 new EntityField<LoanResponse>(dto => dto.OutstandingPrincipal, "Outstanding", "OutstandingPrincipal", typeof(decimal)),
                 new EntityField<LoanResponse>(dto => dto.ApplicationDate, "Applied", "ApplicationDate", typeof(DateOnly)),
-                new EntityField<LoanResponse>(dto => dto.Status, "Status", "Status",
-                    Template: entity => @<MudChip T="string" Color="@GetStatusColor(entity.Status)" Size="Size.Small">@entity.Status</MudChip>),
+                new EntityField<LoanResponse>(dto => dto.Status, "Status", "Status"),
             ],
             searchFunc: async filter =>
             {

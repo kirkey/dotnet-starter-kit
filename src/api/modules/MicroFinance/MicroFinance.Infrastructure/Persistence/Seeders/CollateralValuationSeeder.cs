@@ -42,7 +42,7 @@ internal static class CollateralValuationSeeder
         {
             var appraiser = appraisers[random.Next(appraisers.Length)];
             var valuationDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-random.Next(30, 180)));
-            var marketValue = collateral.AppraisedValue;
+            var marketValue = collateral.EstimatedValue;
             var forcedSaleValue = marketValue * 0.7m;
             var insurableValue = marketValue * 0.8m;
 
@@ -57,9 +57,9 @@ internal static class CollateralValuationSeeder
                 appraiserName: appraiser.Name,
                 appraiserCompany: appraiser.Company);
 
-            valuation.SetAppraiserLicense(appraiser.License);
-            valuation.SetCondition("Good condition, well-maintained");
-            valuation.SetExpiryDate(valuationDate.AddYears(1));
+            valuation.Update(
+                condition: "Good condition, well-maintained",
+                notes: $"Appraiser license: {appraiser.License}");
 
             // Submit and approve most valuations
             valuation.Submit();
@@ -71,7 +71,7 @@ internal static class CollateralValuationSeeder
             // Check for expiry
             if (valuation.ExpiryDate < DateOnly.FromDateTime(DateTime.UtcNow))
             {
-                valuation.MarkExpired();
+                valuation.Expire();
             }
 
             await context.CollateralValuations.AddAsync(valuation, cancellationToken).ConfigureAwait(false);

@@ -52,23 +52,18 @@ internal static class LoanOfficerTargetSeeder
 
                 var target = LoanOfficerTarget.Create(
                     staffId: officer.Id,
-                    targetPeriod: $"{targetYear}-{targetMonth:D2}",
-                    startDate: startDate,
-                    endDate: endDate,
-                    loanDisbursementTarget: loanTarget,
-                    newClientTarget: clientTarget,
-                    loanCollectionTarget: collectionTarget,
-                    parTarget: 5.0m);
+                    targetType: LoanOfficerTarget.TypeLoanDisbursement,
+                    period: LoanOfficerTarget.PeriodMonthly,
+                    periodStart: startDate,
+                    periodEnd: endDate,
+                    targetValue: loanTarget,
+                    description: $"{targetYear}-{targetMonth:D2} Loan Disbursement Target");
 
                 // Add some actual performance for past months
                 if (i > 0)
                 {
                     var achievementRate = 0.7m + (decimal)random.NextDouble() * 0.5m; // 70-120%
-                    target.UpdateActuals(
-                        actualDisbursement: loanTarget * achievementRate,
-                        actualNewClients: (int)(clientTarget * achievementRate),
-                        actualCollection: collectionTarget * achievementRate,
-                        actualPar: 3m + (decimal)random.NextDouble() * 4m);
+                    target.RecordProgress(loanTarget * achievementRate);
                 }
 
                 await context.LoanOfficerTargets.AddAsync(target, cancellationToken).ConfigureAwait(false);

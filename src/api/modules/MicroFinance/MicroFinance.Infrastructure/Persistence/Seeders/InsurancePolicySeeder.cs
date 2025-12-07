@@ -52,7 +52,7 @@ internal static class InsurancePolicySeeder
 
                 var beneficiary = beneficiaries[random.Next(beneficiaries.Length)];
                 var startDate = loan.DisbursementDate ?? DateOnly.FromDateTime(DateTime.UtcNow.AddMonths(-3));
-                var endDate = loan.MaturityDate ?? startDate.AddMonths(loan.TermMonths);
+                var endDate = loan.ExpectedEndDate ?? startDate.AddMonths(loan.TermMonths);
                 var premium = loan.PrincipalAmount * (loanProtection.PremiumRate / 100);
 
                 var policy = InsurancePolicy.Create(

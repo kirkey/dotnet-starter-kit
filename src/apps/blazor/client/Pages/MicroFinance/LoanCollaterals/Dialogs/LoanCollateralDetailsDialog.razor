@@ -1,0 +1,127 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Security" Class="mr-2" />
+            Loan Collateral Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12" md="6">
+                <MudField Label="Loan Number" Variant="Variant.Outlined">@Collateral.LoanNumber</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Status" Variant="Variant.Outlined">
+                    <MudChip T="string" Color="@GetStatusColor(Collateral.Status)" Size="Size.Small">
+                        @Collateral.Status
+                    </MudChip>
+                </MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Collateral Type" Variant="Variant.Outlined">@Collateral.CollateralType</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Verified" Variant="Variant.Outlined">
+                    <MudChip T="string" Color="@(Collateral.IsVerified ? Color.Success : Color.Warning)" Size="Size.Small">
+                        @(Collateral.IsVerified ? "Verified" : "Pending")
+                    </MudChip>
+                </MudField>
+            </MudItem>
+            <MudItem xs="12">
+                <MudField Label="Description" Variant="Variant.Outlined" Lines="2">@Collateral.Description</MudField>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudDivider Class="my-2" />
+                <MudText Typo="Typo.subtitle1" Class="mb-2">Valuation</MudText>
+            </MudItem>
+
+            <MudItem xs="12" md="4">
+                <MudField Label="Estimated Value" Variant="Variant.Outlined">@Collateral.EstimatedValue.ToString("N2")</MudField>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudField Label="Forced Sale Value" Variant="Variant.Outlined">@Collateral.ForcedSaleValue?.ToString("N2")</MudField>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudField Label="Valuation Date" Variant="Variant.Outlined">@Collateral.ValuationDate?.ToString("dd MMM yyyy")</MudField>
+            </MudItem>
+
+            @if (!string.IsNullOrEmpty(Collateral.Location))
+            {
+                <MudItem xs="12">
+                    <MudField Label="Location" Variant="Variant.Outlined">@Collateral.Location</MudField>
+                </MudItem>
+            }
+
+            @if (!string.IsNullOrEmpty(Collateral.DocumentReference))
+            {
+                <MudItem xs="12" md="6">
+                    <MudField Label="Document Reference" Variant="Variant.Outlined">@Collateral.DocumentReference</MudField>
+                </MudItem>
+            }
+
+            @if (!string.IsNullOrEmpty(Collateral.Notes))
+            {
+                <MudItem xs="12">
+                    <MudField Label="Notes" Variant="Variant.Outlined" Lines="2">@Collateral.Notes</MudField>
+                </MudItem>
+            }
+
+            @if (Collateral.VerifiedAt.HasValue || Collateral.PledgedAt.HasValue || Collateral.ReleasedAt.HasValue || Collateral.SeizedAt.HasValue)
+            {
+                <MudItem xs="12">
+                    <MudDivider Class="my-2" />
+                    <MudText Typo="Typo.subtitle1" Class="mb-2">Timeline</MudText>
+                </MudItem>
+
+                @if (Collateral.VerifiedAt.HasValue)
+                {
+                    <MudItem xs="12" md="6">
+                        <MudField Label="Verified At" Variant="Variant.Outlined">@Collateral.VerifiedAt.Value.ToString("dd MMM yyyy HH:mm")</MudField>
+                    </MudItem>
+                }
+                @if (Collateral.PledgedAt.HasValue)
+                {
+                    <MudItem xs="12" md="6">
+                        <MudField Label="Pledged At" Variant="Variant.Outlined">@Collateral.PledgedAt.Value.ToString("dd MMM yyyy HH:mm")</MudField>
+                    </MudItem>
+                }
+                @if (Collateral.ReleasedAt.HasValue)
+                {
+                    <MudItem xs="12" md="6">
+                        <MudField Label="Released At" Variant="Variant.Outlined">@Collateral.ReleasedAt.Value.ToString("dd MMM yyyy HH:mm")</MudField>
+                    </MudItem>
+                }
+                @if (Collateral.SeizedAt.HasValue)
+                {
+                    <MudItem xs="12" md="6">
+                        <MudField Label="Seized At" Variant="Variant.Outlined">@Collateral.SeizedAt.Value.ToString("dd MMM yyyy HH:mm")</MudField>
+                    </MudItem>
+                }
+            }
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public LoanCollateralResponse Collateral { get; set; } = null!;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private Color GetStatusColor(string? status) => status switch
+    {
+        "Pending" => Color.Default,
+        "Verified" => Color.Info,
+        "Pledged" => Color.Warning,
+        "Released" => Color.Success,
+        "Seized" => Color.Error,
+        _ => Color.Default
+    };
+}

@@ -1,0 +1,125 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Description" Class="mr-2" Color="Color.Primary" />
+            File SAR - @AlertCode
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Info" Class="mb-4">
+                    Filing a Suspicious Activity Report (SAR) is a regulatory requirement. Ensure all information is accurate.
+                </MudAlert>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="_sarReferenceNumber"
+                              Label="SAR Reference Number"
+                              Variant="Variant.Outlined"
+                              Required="true"
+                              HelperText="Unique reference for the SAR filing" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudDatePicker @bind-Date="_filingDate"
+                               Label="Filing Date"
+                               Variant="Variant.Outlined"
+                               Required="true"
+                               MaxDate="@DateTime.Today" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudSelect @bind-Value="@_activityType"
+                           Label="Suspicious Activity Type"
+                           Variant="Variant.Outlined"
+                           Required="true">
+                    <MudSelectItem Value="@("MoneyLaundering")">Money Laundering</MudSelectItem>
+                    <MudSelectItem Value="@("TerroristFinancing")">Terrorist Financing</MudSelectItem>
+                    <MudSelectItem Value="@("Fraud")">Fraud</MudSelectItem>
+                    <MudSelectItem Value="@("StructuredTransaction")">Structured Transaction</MudSelectItem>
+                    <MudSelectItem Value="@("SuspiciousDocuments")">Suspicious Documents</MudSelectItem>
+                    <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_activityDescription"
+                              Label="Activity Description"
+                              Variant="Variant.Outlined"
+                              Lines="3"
+                              Required="true"
+                              HelperText="Detailed description of the suspicious activity" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_filingNotes"
+                              Label="Filing Notes"
+                              Variant="Variant.Outlined"
+                              Lines="2"
+                              HelperText="Additional notes for the SAR filing" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudCheckBox @bind-Value="_confirmAccuracy" Color="Color.Primary">
+                    I confirm the information provided is accurate and complete
+                </MudCheckBox>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(!IsValid)">
+            File SAR
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType AlertId { get; set; }
+
+    [Parameter]
+    public string AlertCode { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private string? _sarReferenceNumber;
+    private DateTime? _filingDate = DateTime.Today;
+    private string? _activityType;
+    private string? _activityDescription;
+    private string? _filingNotes;
+    private bool _confirmAccuracy;
+
+    private bool IsValid => !string.IsNullOrWhiteSpace(_sarReferenceNumber) 
+                           && _filingDate.HasValue 
+                           && !string.IsNullOrWhiteSpace(_activityType)
+                           && !string.IsNullOrWhiteSpace(_activityDescription)
+                           && _confirmAccuracy;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new FileSarForAmlAlertCommand
+        {
+            Id = AlertId,
+            SarReferenceNumber = _sarReferenceNumber!,
+            FilingDate = _filingDate!.Value,
+            ActivityType = _activityType!,
+            ActivityDescription = _activityDescription!,
+            FilingNotes = _filingNotes
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.FileSarForAmlAlertEndpointAsync("1", AlertId, command),
+            Snackbar,
+            successMessage: "SAR filed successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

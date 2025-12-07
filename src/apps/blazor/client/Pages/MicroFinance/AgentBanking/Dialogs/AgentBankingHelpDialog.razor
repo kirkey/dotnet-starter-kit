@@ -1,0 +1,123 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" Color="Color.Info" />
+            Agent Banking Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="What is Agent Banking?" IsInitiallyExpanded="true">
+                <MudText Typo="Typo.body2" Class="pa-2">
+                    Agent Banking allows MFIs to extend their services through a network of third-party agents.
+                    Agents are typically retail shops, pharmacies, or small businesses that can process basic 
+                    banking transactions on behalf of the MFI. This enables financial services to reach 
+                    remote or underserved areas without building physical branches.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Agent Statuses">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.HourglassEmpty" IconColor="Color.Warning">
+                        <strong>Pending:</strong> New agent awaiting approval
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        <strong>Active:</strong> Agent is operational and can process transactions
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Block" IconColor="Color.Error">
+                        <strong>Suspended:</strong> Agent temporarily blocked from transactions
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Agent Tiers">
+                <MudText Typo="Typo.body2" Class="pa-2">
+                    Agents are classified into tiers based on performance and trust:
+                </MudText>
+                <MudSimpleTable Dense="true" Class="mt-2">
+                    <thead>
+                        <tr>
+                            <th>Tier</th>
+                            <th>Commission</th>
+                            <th>Daily Limit</th>
+                            <th>Benefits</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Basic</td>
+                            <td>2.0%</td>
+                            <td>100,000</td>
+                            <td>Standard support</td>
+                        </tr>
+                        <tr>
+                            <td>Standard</td>
+                            <td>2.5%</td>
+                            <td>250,000</td>
+                            <td>Priority support, training</td>
+                        </tr>
+                        <tr>
+                            <td>Premium</td>
+                            <td>3.0%</td>
+                            <td>500,000</td>
+                            <td>Dedicated account manager</td>
+                        </tr>
+                    </tbody>
+                </MudSimpleTable>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Float Management">
+                <MudText Typo="Typo.body2" Class="pa-2">
+                    <strong>Float</strong> is the working capital agents use to process transactions:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Add" IconColor="Color.Success">
+                        <strong>Credit Float:</strong> Add funds to agent's float balance
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Remove" IconColor="Color.Warning">
+                        <strong>Debit Float:</strong> Withdraw from agent's float balance
+                    </MudListItem>
+                </MudList>
+                <MudAlert Severity="Severity.Info" Class="mt-2">
+                    Agents must maintain minimum float balance to continue processing transactions.
+                </MudAlert>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Agent Operations">
+                <MudText Typo="Typo.body2" Class="pa-2">
+                    Agents can perform the following operations:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Savings">Cash Deposits</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Payments">Cash Withdrawals</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Receipt">Loan Repayments</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">Balance Inquiries</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.SwapHoriz">Transfers</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.PhoneAndroid">Mobile Money Services</MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="KYC & Compliance">
+                <MudText Typo="Typo.body2" Class="pa-2">
+                    All agents must complete KYC verification before activation:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Description">Valid business license</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Badge">Owner identification</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.LocationOn">Physical location verification</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.School">Training completion certificate</MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Close" Variant="Variant.Text">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

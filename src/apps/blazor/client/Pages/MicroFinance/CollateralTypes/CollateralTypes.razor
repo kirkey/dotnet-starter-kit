@@ -1,0 +1,30 @@
+@page "/microfinance/collateral-types"
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+@using FSH.Starter.Blazor.Client.Pages.MicroFinance.CollateralTypes.Dialogs
+
+<MudPaper Elevation="@_elevation" Style="@_borderRadius">
+    <EntityTable @ref="_table"
+                 TEntity="CollateralTypeResponse"
+                 TId="DefaultIdType"
+                 TViewModel="CollateralTypeViewModel"
+                 Context="@_context"
+                 Dense="true"
+                 Striped="true"
+                 Hover="true"
+                 SearchFields="@(new[] { "Name", "Code", "Category" })">
+
+        <ActionsContent>
+            <MudButtonGroup OverrideStyles="false">
+                <MudIconButton Icon="@Icons.Material.Filled.Visibility"
+                               Color="Color.Info"
+                               Title="View Details"
+                               OnClick="@(() => ViewDetails(context))" />
+            </MudButtonGroup>
+        </ActionsContent>
+
+        <ExtraActions>
+            <MudMenuItem Icon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">Help</MudMenuItem>
+        </ExtraActions>
+
+    </EntityTable>
+</MudPaper>

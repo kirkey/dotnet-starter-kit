@@ -1,0 +1,82 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.AddCircle" Class="mr-2" Color="Color.Success" />
+            Add Investment - @AccountNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Info" Class="mb-4">
+                    Add funds to this investment account.
+                </MudAlert>
+            </MudItem>
+            <MudItem xs="12">
+                <MudNumericField @bind-Value="_amount"
+                                 Label="Investment Amount"
+                                 Variant="Variant.Outlined"
+                                 Required="true"
+                                 Min="0m"
+                                 Adornment="Adornment.Start"
+                                 AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_notes"
+                              Label="Notes"
+                              Variant="Variant.Outlined"
+                              Lines="2"
+                              HelperText="Optional notes for this investment" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Success" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(!IsValid)">
+            Invest
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType AccountId { get; set; }
+
+    [Parameter]
+    public string AccountNumber { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private decimal _amount;
+    private string? _notes;
+
+    private bool IsValid => _amount > 0;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new InvestCommand
+        {
+            Id = AccountId,
+            Amount = _amount
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.InvestInAccountEndpointAsync("1", AccountId, command),
+            Snackbar,
+            successMessage: "Investment added successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

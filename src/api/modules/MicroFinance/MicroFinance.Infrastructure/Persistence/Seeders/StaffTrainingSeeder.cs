@@ -53,27 +53,29 @@ internal static class StaffTrainingSeeder
                 var startDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-random.Next(30, 365)));
                 var endDate = startDate.AddDays(training.Hours / 8); // Assuming 8 hours per day
 
-                var staffTraining = StaffTraining.Create(
+                var staffTraining = StaffTraining.Schedule(
                     staffId: staffMember.Id,
-                    trainingCode: training.Code,
                     trainingName: training.Name,
                     trainingType: training.Type,
-                    provider: training.Provider,
+                    deliveryMethod: StaffTraining.MethodClassroom,
                     startDate: startDate,
                     endDate: endDate,
                     durationHours: training.Hours,
-                    isRequired: training.Required);
+                    trainingCode: training.Code,
+                    provider: training.Provider,
+                    isMandatory: training.Required);
 
                 // Most trainings are completed
                 if (random.NextDouble() > 0.1)
                 {
                     var score = 70 + random.Next(0, 31); // Score between 70-100
-                    staffTraining.Complete(score, score >= 75);
+                    staffTraining.Complete(score, endDate);
                     
                     if (score >= 75)
                     {
                         staffTraining.IssueCertificate(
                             $"CERT-{training.Code}-{staffMember.EmployeeNumber}",
+                            endDate,
                             endDate.AddYears(1));
                     }
                 }

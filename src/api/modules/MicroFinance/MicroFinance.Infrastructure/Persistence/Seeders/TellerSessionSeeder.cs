@@ -53,14 +53,12 @@ internal static class TellerSessionSeeder
                 var openingBalance = 50000m + random.Next(0, 30000);
                 var startTime = DateTime.UtcNow.AddDays(-dayOffset).Date.AddHours(8).AddMinutes(random.Next(0, 30));
 
-                var session = TellerSession.Create(
+                var session = TellerSession.Open(
                     branchId: drawer.BranchId,
                     cashVaultId: drawer.Id,
                     sessionNumber: $"TS-{sessionNumber++:D6}",
                     tellerUserId: teller.Id,
                     tellerName: $"{teller.FirstName} {teller.LastName}",
-                    sessionDate: sessionDate,
-                    startTime: startTime,
                     openingBalance: openingBalance);
 
                 // Add some transaction activity
@@ -72,10 +70,8 @@ internal static class TellerSessionSeeder
                 // Close past sessions
                 if (dayOffset > 0)
                 {
-                    var endTime = startTime.AddHours(8).AddMinutes(random.Next(0, 60));
                     var closingBalance = openingBalance + cashIn - cashOut;
-                    session.Close(endTime, closingBalance);
-                    session.Reconcile("All transactions verified", teller.Id.ToString(), $"{teller.FirstName} {teller.LastName}");
+                    session.Close(closingBalance);
                 }
 
                 await context.TellerSessions.AddAsync(session, cancellationToken).ConfigureAwait(false);

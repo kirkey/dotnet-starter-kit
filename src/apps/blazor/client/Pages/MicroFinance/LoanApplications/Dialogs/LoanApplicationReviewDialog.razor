@@ -1,0 +1,106 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.RateReview" Class="mr-2" Color="Color.Warning" />
+            Review Application - @ApplicationNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Class="mb-2">
+                    Requested Amount: <strong>@RequestedAmount.ToString("N0")</strong>
+                </MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="@_reviewNotes"
+                              Label="Review Notes"
+                              Variant="Variant.Outlined"
+                              Lines="5"
+                              Required="true"
+                              HelperText="Document your review findings and recommendations" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudSelect @bind-Value="@_recommendation"
+                           Label="Recommendation"
+                           Variant="Variant.Outlined"
+                           Required="true">
+                    <MudSelectItem Value="@("Approve")">Recommend Approval</MudSelectItem>
+                    <MudSelectItem Value="@("Reject")">Recommend Rejection</MudSelectItem>
+                    <MudSelectItem Value="@("RequestInfo")">Request More Information</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            @if (_recommendation == "Approve")
+            {
+                <MudItem xs="12" sm="6">
+                    <MudNumericField @bind-Value="_recommendedAmount"
+                                     Label="Recommended Amount"
+                                     Variant="Variant.Outlined"
+                                     Min="1000"
+                                     Max="@RequestedAmount"
+                                     Format="N0"
+                                     Adornment="Adornment.Start"
+                                     AdornmentText="KES" />
+                </MudItem>
+            }
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(string.IsNullOrWhiteSpace(_reviewNotes) || string.IsNullOrEmpty(_recommendation))">
+            Submit Review
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType ApplicationId { get; set; }
+
+    [Parameter]
+    public string ApplicationNumber { get; set; } = string.Empty;
+
+    [Parameter]
+    public decimal RequestedAmount { get; set; }
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private string _reviewNotes = string.Empty;
+    private string? _recommendation;
+    private decimal _recommendedAmount;
+
+    protected override void OnParametersSet()
+    {
+        _recommendedAmount = RequestedAmount;
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new ReviewLoanApplicationCommand
+        {
+            Id = ApplicationId,
+            Notes = _reviewNotes,
+            Recommendation = _recommendation!,
+            RecommendedAmount = _recommendation == "Approve" ? _recommendedAmount : null
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.ReviewLoanApplicationEndpointAsync("1", ApplicationId, command),
+            Snackbar,
+            successMessage: "Review submitted successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

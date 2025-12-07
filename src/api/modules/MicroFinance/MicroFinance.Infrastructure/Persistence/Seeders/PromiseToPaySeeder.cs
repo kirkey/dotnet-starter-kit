@@ -37,19 +37,18 @@ internal static class PromiseToPaySeeder
             int numPromises = random.Next(1, 4);
             for (int i = 0; i < numPromises; i++)
             {
-                var promiseDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-random.Next(1, 60)));
-                var promisedDate = promiseDate.AddDays(random.Next(3, 14));
-                var promisedAmount = Math.Round(collectionCase.TotalAmountDue * (0.2m + (decimal)random.NextDouble() * 0.5m), 2);
+                var promisedDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-random.Next(1, 60) + random.Next(3, 14)));
+                var promisedAmount = Math.Round(collectionCase.TotalOutstanding * (0.2m + (decimal)random.NextDouble() * 0.5m), 2);
 
                 var promise = PromiseToPay.Create(
                     collectionCaseId: collectionCase.Id,
                     loanId: collectionCase.LoanId,
                     memberId: collectionCase.MemberId,
-                    promiseDate: promiseDate,
                     promisedPaymentDate: promisedDate,
                     promisedAmount: promisedAmount,
-                    paymentMethod: paymentMethods[random.Next(paymentMethods.Length)],
-                    notes: "Member committed to payment during follow-up call");
+                    recordedById: Guid.NewGuid())
+                    .WithPaymentMethod(paymentMethods[random.Next(paymentMethods.Length)])
+                    .WithNotes("Member committed to payment during follow-up call");
 
                 // Determine outcome based on promised date
                 if (promisedDate <= DateOnly.FromDateTime(DateTime.UtcNow))
@@ -58,17 +57,17 @@ internal static class PromiseToPaySeeder
                     if (outcome < 0.4)
                     {
                         // Promise kept
-                        promise.MarkKept(promisedAmount, promisedDate.AddDays(random.Next(0, 2)));
+                        promise.RecordPayment(promisedAmount, promisedDate.AddDays(random.Next(0, 2)));
                     }
                     else if (outcome < 0.55)
                     {
                         // Partially kept
-                        promise.MarkPartial(promisedAmount * 0.5m, promisedDate.AddDays(random.Next(0, 3)));
+                        promise.RecordPayment(promisedAmount * 0.5m, promisedDate.AddDays(random.Next(0, 3)));
                     }
                     else if (outcome < 0.85)
                     {
                         // Broken
-                        promise.MarkBroken("Payment not received by promised date. Member unreachable.");
+                        promise.MarkAsBroken("Payment not received by promised date. Member unreachable.");
                     }
                     else
                     {

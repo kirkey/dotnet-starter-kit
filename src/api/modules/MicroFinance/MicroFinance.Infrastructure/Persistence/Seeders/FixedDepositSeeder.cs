@@ -27,7 +27,7 @@ internal static class FixedDepositSeeder
         var terms = new[] { 3, 6, 12, 18, 24, 36, 60 };
         var rates = new[] { 5.5m, 6.0m, 6.5m, 7.0m, 7.5m, 8.0m, 8.5m };
         var amounts = new[] { 5000m, 10000m, 15000m, 20000m, 25000m, 30000m, 50000m, 75000m, 100000m };
-        var instructions = new[] { FixedDeposit.MaturityTransferToSavings, FixedDeposit.MaturityRenewPrincipalAndInterest, FixedDeposit.MaturityRenewPrincipalOnly };
+        var instructions = new[] { FixedDeposit.MaturityTransferToSavings, FixedDeposit.MaturityRenewPrincipalAndInterest, FixedDeposit.MaturityRenewPrincipal };
 
         for (int i = 0; i < Math.Min(targetCount, members.Count); i++)
         {

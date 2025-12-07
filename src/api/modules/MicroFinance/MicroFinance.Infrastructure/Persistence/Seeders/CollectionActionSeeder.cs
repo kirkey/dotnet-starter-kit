@@ -39,25 +39,25 @@ internal static class CollectionActionSeeder
             // Phone calls
             (CollectionAction.TypePhoneCall, "Mobile", "Initial reminder call regarding overdue payment", CollectionAction.OutcomeContacted),
             (CollectionAction.TypePhoneCall, "Mobile", "Follow-up call - no answer", CollectionAction.OutcomeNoAnswer),
-            (CollectionAction.TypePhoneCall, "Landline", "Called alternate number, spoke with family member", CollectionAction.OutcomeLeftMessage),
-            (CollectionAction.TypePhoneCall, "Mobile", "Borrower requested extension, committed to pay", CollectionAction.OutcomePromiseToPay),
+            (CollectionAction.TypePhoneCall, "Landline", "Called alternate number, spoke with family member", CollectionAction.OutcomeContacted),
+            (CollectionAction.TypePhoneCall, "Mobile", "Borrower requested extension, committed to pay", CollectionAction.OutcomePromisedToPay),
             
             // SMS
-            (CollectionAction.TypeSms, "SMS", "Automated SMS reminder sent for overdue payment", CollectionAction.OutcomeMessageSent),
-            (CollectionAction.TypeSms, "Viber", "Viber message sent with payment reminder", CollectionAction.OutcomeMessageSent),
+            (CollectionAction.TypeSms, "SMS", "Automated SMS reminder sent for overdue payment", CollectionAction.OutcomeDelivered),
+            (CollectionAction.TypeSms, "Viber", "Viber message sent with payment reminder", CollectionAction.OutcomeDelivered),
             
             // Field visits
-            (CollectionAction.TypeFieldVisit, "InPerson", "Visited residence, borrower not home", CollectionAction.OutcomeNotHome),
+            (CollectionAction.TypeFieldVisit, "InPerson", "Visited residence, borrower not home", CollectionAction.OutcomeNotFound),
             (CollectionAction.TypeFieldVisit, "InPerson", "Met with borrower, discussed payment options", CollectionAction.OutcomeContacted),
             (CollectionAction.TypeFieldVisit, "InPerson", "Partial payment collected during visit", CollectionAction.OutcomePaymentReceived),
             
             // Letters and notices
-            (CollectionAction.TypeLetter, "Mail", "First reminder letter sent via registered mail", CollectionAction.OutcomeMessageSent),
-            (CollectionAction.TypeDemandNotice, "Mail", "Demand notice sent - 15 day ultimatum", CollectionAction.OutcomeMessageSent),
+            (CollectionAction.TypeLetter, "Mail", "First reminder letter sent via registered mail", CollectionAction.OutcomeDelivered),
+            (CollectionAction.TypeDemandNotice, "Mail", "Demand notice sent - 15 day ultimatum", CollectionAction.OutcomeDelivered),
             
             // Guarantor contact
             (CollectionAction.TypeGuarantorContact, "Mobile", "Called guarantor to inform of delinquency", CollectionAction.OutcomeContacted),
-            (CollectionAction.TypeGuarantorContact, "InPerson", "Met with guarantor, agreed to assist", CollectionAction.OutcomePromiseToPay),
+            (CollectionAction.TypeGuarantorContact, "InPerson", "Met with guarantor, agreed to assist", CollectionAction.OutcomePromisedToPay),
         };
 
         foreach (var collectionCase in collectionCases)
@@ -76,24 +76,12 @@ internal static class CollectionActionSeeder
                 var action = CollectionAction.Create(
                     collectionCaseId: collectionCase.Id,
                     loanId: collectionCase.LoanId,
-                    memberId: collectionCase.MemberId,
-                    performedById: performedBy,
                     actionType: template.Type,
-                    actionDate: actionDate,
+                    performedById: performedBy,
+                    outcome: template.Outcome,
                     description: template.Desc);
 
-                action.SetContactDetails(
-                    contactMethod: template.ContactMethod,
-                    contactPerson: "Borrower",
-                    phoneNumber: $"+639{random.Next(100000000, 999999999)}");
-
-                action.RecordOutcome(template.Outcome, "Action completed as scheduled");
-
-                // Some actions resulted in payment
-                if (template.Outcome == CollectionAction.OutcomePaymentReceived)
-                {
-                    action.RecordPaymentReceived(1000m + random.Next(0, 5000));
-                }
+                action.WithNotes("Action completed as scheduled");
 
                 await context.CollectionActions.AddAsync(action, cancellationToken).ConfigureAwait(false);
                 actionCount++;

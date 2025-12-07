@@ -54,31 +54,29 @@ internal static class RiskAlertSeeder
 
         foreach (var a in alerts)
         {
-            var alertDate = DateTimeOffset.UtcNow.AddDays(a.DaysAgo);
             var categoryId = riskCategories.Any() ? riskCategories[random.Next(riskCategories.Count)].Id : (Guid?)null;
 
             var alert = RiskAlert.Create(
                 alertNumber: $"RISK-{alertNumber++:D6}",
                 title: a.Title,
-                description: a.Desc,
                 severity: a.Severity,
                 source: a.Source,
-                alertDate: alertDate,
-                riskCategoryId: categoryId);
+                riskCategoryId: categoryId,
+                description: a.Desc);
 
             // Process based on age
             if (a.DaysAgo < -20)
             {
                 alert.Acknowledge(Guid.NewGuid());
-                alert.StartInvestigation("Assigned to risk team for investigation");
-                alert.Resolve("Root cause identified and corrective action taken", "Implemented controls to prevent recurrence");
+                alert.Assign(Guid.NewGuid());
+                alert.Resolve(Guid.NewGuid(), "Root cause identified and corrective action taken. Implemented controls to prevent recurrence.");
             }
             else if (a.DaysAgo < -10)
             {
                 alert.Acknowledge(Guid.NewGuid());
                 if (a.Severity == RiskAlert.SeverityCritical || a.Severity == RiskAlert.SeverityHigh)
                 {
-                    alert.StartInvestigation("Under active investigation");
+                    alert.Assign(Guid.NewGuid());
                 }
             }
             else if (a.DaysAgo < -5)

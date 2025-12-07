@@ -64,12 +64,21 @@ internal static class RiskIndicatorSeeder
                 frequency: kri.Frequency,
                 direction: kri.Direction);
 
-            indicator.SetThresholds(
-                redThreshold: kri.Threshold,
+            indicator.Update(
+                name: null,
+                description: null,
+                formula: null,
+                unit: null,
+                dataSource: null,
+                targetValue: kri.Target,
+                greenThreshold: null,
                 yellowThreshold: kri.Threshold * 0.7m,
-                targetValue: kri.Target);
+                orangeThreshold: null,
+                redThreshold: kri.Threshold,
+                weightFactor: null,
+                notes: null);
 
-            indicator.RecordValue(kri.Current, DateTimeOffset.UtcNow);
+            indicator.RecordMeasurement(kri.Current);
             indicator.Activate();
 
             await context.RiskIndicators.AddAsync(indicator, cancellationToken).ConfigureAwait(false);

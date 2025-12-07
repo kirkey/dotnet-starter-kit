@@ -1,0 +1,95 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.PlayArrow" Class="mr-2" Color="Color.Success" />
+            Open Day - @VaultName
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Info" Class="mb-4">
+                    Opening the day requires verifying the physical cash balance in the vault.
+                </MudAlert>
+            </MudItem>
+            <MudItem xs="12">
+                <MudText Class="mb-2">
+                    Last Recorded Balance: <strong>KES @LastBalance.ToString("N0")</strong>
+                </MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudNumericField @bind-Value="_verifiedBalance"
+                                 Label="Verified Physical Balance"
+                                 Variant="Variant.Outlined"
+                                 Format="N0"
+                                 Adornment="Adornment.Start"
+                                 AdornmentText="KES"
+                                 Required="true" />
+            </MudItem>
+            @if (_verifiedBalance != LastBalance && _verifiedBalance > 0)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Warning">
+                        Discrepancy detected: <strong>KES @((_verifiedBalance - LastBalance).ToString("N0"))</strong>
+                    </MudAlert>
+                </MudItem>
+            }
+            @if (_verifiedBalance == LastBalance && _verifiedBalance > 0)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Success">
+                        Balance verified - matches last recorded balance.
+                    </MudAlert>
+                </MudItem>
+            }
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Success" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(_verifiedBalance <= 0)">
+            Open Day
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType VaultId { get; set; }
+
+    [Parameter]
+    public string VaultName { get; set; } = string.Empty;
+
+    [Parameter]
+    public decimal LastBalance { get; set; }
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private decimal _verifiedBalance;
+
+    protected override void OnInitialized()
+    {
+        _verifiedBalance = LastBalance;
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new OpenDayCommand
+        {
+            Id = VaultId,
+            VerifiedBalance = _verifiedBalance
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await Client.OpenVaultDayAsync("1", VaultId, command),
+            Snackbar,
+            successMessage: "Day opened successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

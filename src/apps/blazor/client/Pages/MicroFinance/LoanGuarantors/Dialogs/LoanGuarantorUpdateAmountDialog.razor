@@ -1,0 +1,102 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-2" Color="Color.Primary" />
+            Update Guaranteed Amount - @GuarantorName
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Class="mb-2">
+                    Current Amount: <strong>KES @CurrentAmount.ToString("N0")</strong>
+                </MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudNumericField @bind-Value="_newAmount"
+                                 Label="New Guaranteed Amount"
+                                 Variant="Variant.Outlined"
+                                 Format="N0"
+                                 Min="1"
+                                 Adornment="Adornment.Start"
+                                 AdornmentText="KES"
+                                 Required="true" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_reason"
+                              Label="Reason for Change"
+                              Variant="Variant.Outlined"
+                              Lines="2"
+                              Required="true"
+                              HelperText="Document why the amount is being changed" />
+            </MudItem>
+            @if (_newAmount != CurrentAmount && _newAmount > 0)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="@(_newAmount > CurrentAmount ? Severity.Info : Severity.Warning)">
+                        Change: <strong>KES @((_newAmount - CurrentAmount).ToString("N0"))</strong>
+                        (@(_newAmount > CurrentAmount ? "Increase" : "Decrease"))
+                    </MudAlert>
+                </MudItem>
+            }
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(!IsValid)">
+            Update Amount
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType GuarantorId { get; set; }
+
+    [Parameter]
+    public string GuarantorName { get; set; } = string.Empty;
+
+    [Parameter]
+    public decimal CurrentAmount { get; set; }
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private decimal _newAmount;
+    private string? _reason;
+
+    private bool IsValid => _newAmount > 0 && !string.IsNullOrWhiteSpace(_reason);
+
+    protected override void OnInitialized()
+    {
+        _newAmount = CurrentAmount;
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new UpdateGuaranteedAmountCommand
+        {
+            Id = GuarantorId,
+            NewAmount = _newAmount,
+            Reason = _reason
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.UpdateGuaranteedAmountEndpointAsync("1", GuarantorId, command),
+            Snackbar,
+            successMessage: "Guaranteed amount updated successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

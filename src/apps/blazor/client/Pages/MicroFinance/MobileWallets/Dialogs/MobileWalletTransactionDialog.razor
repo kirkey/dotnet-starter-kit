@@ -1,0 +1,116 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@(IsCredit ? Icons.Material.Filled.Add : Icons.Material.Filled.Remove)" Class="mr-2" Color="@(IsCredit ? Color.Success : Color.Warning)" />
+            @(IsCredit ? "Credit" : "Debit") Wallet - @PhoneNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText>
+                    Current Balance: <strong>@CurrentBalance.ToString("N2")</strong>
+                </MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudNumericField @bind-Value="@_amount"
+                                 Label="Amount"
+                                 Variant="Variant.Outlined"
+                                 Min="0.01M"
+                                 Max="@(IsCredit ? decimal.MaxValue : CurrentBalance)"
+                                 Adornment="Adornment.Start"
+                                 AdornmentText="KES"
+                                 Required="true"
+                                 Format="N2" />
+            </MudItem>
+            @if (!IsCredit && _amount > CurrentBalance)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Error">
+                        Amount cannot exceed current balance.
+                    </MudAlert>
+                </MudItem>
+            }
+            <MudItem xs="12">
+                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                    @if (IsCredit)
+                    {
+                        <text>New Balance after credit: <strong>@((CurrentBalance + _amount).ToString("N2"))</strong></text>
+                    }
+                    else
+                    {
+                        <text>New Balance after debit: <strong>@((CurrentBalance - _amount).ToString("N2"))</strong></text>
+                    }
+                </MudText>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="@(IsCredit ? Color.Success : Color.Warning)" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(_amount <= 0 || (!IsCredit && _amount > CurrentBalance))">
+            @(IsCredit ? "Credit" : "Debit") Wallet
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType WalletId { get; set; }
+
+    [Parameter]
+    public string PhoneNumber { get; set; } = string.Empty;
+
+    [Parameter]
+    public decimal CurrentBalance { get; set; }
+
+    [Parameter]
+    public bool IsCredit { get; set; } = true;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private decimal _amount = 0;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        if (IsCredit)
+        {
+            var command = new CreditMobileWalletCommand
+            {
+                Id = WalletId,
+                Amount = _amount
+            };
+
+            await ApiHelper.ExecuteCallGuardedAsync(
+                async () => await MicroFinanceClient.CreditMobileWalletEndpointAsync("1", WalletId, command),
+                Snackbar,
+                successMessage: $"Wallet credited successfully. New balance: {(CurrentBalance + _amount):N2}");
+        }
+        else
+        {
+            var command = new DebitMobileWalletCommand
+            {
+                Id = WalletId,
+                Amount = _amount
+            };
+
+            await ApiHelper.ExecuteCallGuardedAsync(
+                async () => await MicroFinanceClient.DebitMobileWalletEndpointAsync("1", WalletId, command),
+                Snackbar,
+                successMessage: $"Wallet debited successfully. New balance: {(CurrentBalance - _amount):N2}");
+        }
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

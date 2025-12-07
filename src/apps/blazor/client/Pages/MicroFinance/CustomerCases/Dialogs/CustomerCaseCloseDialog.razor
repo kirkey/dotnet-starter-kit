@@ -1,0 +1,75 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Done" Class="mr-2" Color="Color.Dark" />
+            Close Case - @CaseNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Typo="Typo.body2" Class="mb-4">
+                    Please provide customer satisfaction feedback before closing the case.
+                </MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudText Typo="Typo.subtitle2">Satisfaction Score</MudText>
+                <MudRating @bind-SelectedValue="_satisfactionScore" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_feedback"
+                              Label="Customer Feedback"
+                              Variant="Variant.Outlined"
+                              Lines="3"
+                              HelperText="Optional feedback from the customer" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Dark" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit">
+            Close Case
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType CaseId { get; set; }
+
+    [Parameter]
+    public string CaseNumber { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private int _satisfactionScore;
+    private string? _feedback;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new CloseCustomerCaseCommand
+        {
+            Id = CaseId,
+            SatisfactionScore = _satisfactionScore > 0 ? _satisfactionScore : null,
+            Feedback = _feedback
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.CloseCustomerCaseEndpointAsync("1", CaseId, command),
+            Snackbar,
+            successMessage: "Case closed successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

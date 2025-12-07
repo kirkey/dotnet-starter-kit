@@ -1,0 +1,112 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" />
+            Collateral Types Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Overview" IsInitiallyExpanded="true">
+                <MudText Typo="Typo.body2">
+                    Collateral Types define the categories of assets that can be pledged as security for loans. 
+                    Each type specifies valuation parameters including Loan-to-Value (LTV) ratios and depreciation 
+                    settings, ensuring consistent and fair collateral assessment across all loans.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Common Categories">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Typical Collateral Categories:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Home">
+                        <strong>Real Estate:</strong> Land, buildings, residential & commercial property
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.DirectionsCar">
+                        <strong>Vehicles:</strong> Cars, trucks, motorcycles, commercial vehicles
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Inventory">
+                        <strong>Equipment:</strong> Machinery, tools, office equipment
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Agriculture">
+                        <strong>Livestock:</strong> Cattle, poultry, other farm animals
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Savings">
+                        <strong>Financial Assets:</strong> Savings deposits, fixed deposits, shares
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Diamond">
+                        <strong>Valuables:</strong> Jewelry, gold, precious metals
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Loan-to-Value (LTV)">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Understanding LTV Ratios:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Calculate">
+                        <strong>Default LTV:</strong> Standard percentage of collateral value that can be loaned
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.TrendingUp">
+                        <strong>Maximum LTV:</strong> Highest allowable LTV with special approval
+                    </MudListItem>
+                </MudList>
+                <MudText Typo="Typo.body2" Class="mt-2">
+                    Example: If a vehicle is worth $10,000 and LTV is 70%, max loan = $7,000
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Depreciation">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Asset Depreciation Settings:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Timeline">
+                        <strong>Useful Life:</strong> Expected years the asset retains value
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.TrendingDown">
+                        <strong>Annual Rate:</strong> Yearly percentage decrease in value
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Update">
+                        <strong>Revaluation:</strong> Periodic reassessment of collateral value
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Best Practices">
+                <MudText Typo="Typo.body2">
+                    <strong>Recommended Practices:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.VerifiedUser">
+                        Set conservative LTV ratios for volatile assets
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Update">
+                        Review and update depreciation rates periodically
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Description">
+                        Document valuation methodology for each type
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Category">
+                        Use consistent categorization across branches
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Gavel">
+                        Consider legal enforceability when setting LTV
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Cancel() => MudDialog.Cancel();
+}

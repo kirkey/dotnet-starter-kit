@@ -1,0 +1,96 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Description" Class="mr-2" />
+            Document Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12" md="6">
+                <MudField Label="Name" Variant="Variant.Outlined">@Document.Name</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Status" Variant="Variant.Outlined">
+                    <MudChip T="string" Color="@(Document.IsVerified ? Color.Success : Color.Warning)" Size="Size.Small">
+                        @(Document.IsVerified ? "Verified" : "Pending")
+                    </MudChip>
+                </MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Document Type" Variant="Variant.Outlined">@Document.DocumentType</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Category" Variant="Variant.Outlined">@Document.Category</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Entity Type" Variant="Variant.Outlined">@Document.EntityType</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Entity ID" Variant="Variant.Outlined">@Document.EntityId</MudField>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudDivider Class="my-2" />
+                <MudText Typo="Typo.subtitle1" Class="mb-2">File Information</MudText>
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <MudField Label="Original File Name" Variant="Variant.Outlined">@Document.OriginalFileName</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="File Size" Variant="Variant.Outlined">@FormatFileSize(Document.FileSizeBytes)</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="MIME Type" Variant="Variant.Outlined">@Document.MimeType</MudField>
+            </MudItem>
+            <MudItem xs="12">
+                <MudField Label="File Path" Variant="Variant.Outlined">@Document.FilePath</MudField>
+            </MudItem>
+
+            @if (!string.IsNullOrEmpty(Document.Description))
+            {
+                <MudItem xs="12">
+                    <MudField Label="Description" Variant="Variant.Outlined" Lines="2">@Document.Description</MudField>
+                </MudItem>
+            }
+
+            @if (Document.IsVerified && Document.VerifiedAt.HasValue)
+            {
+                <MudItem xs="12">
+                    <MudDivider Class="my-2" />
+                    <MudText Typo="Typo.subtitle1" Class="mb-2">Verification</MudText>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Verified At" Variant="Variant.Outlined">@Document.VerifiedAt.Value.ToString("dd MMM yyyy HH:mm")</MudField>
+                </MudItem>
+            }
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DocumentResponse Document { get; set; } = null!;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private static string FormatFileSize(long bytes)
+    {
+        string[] sizes = { "B", "KB", "MB", "GB" };
+        double len = bytes;
+        int order = 0;
+        while (len >= 1024 && order < sizes.Length - 1)
+        {
+            order++;
+            len /= 1024;
+        }
+        return $"{len:0.##} {sizes[order]}";
+    }
+}

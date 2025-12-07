@@ -19,7 +19,7 @@ internal static class CashVaultSeeder
         if (existingCount > 0) return;
 
         var branches = await context.Branches
-            .Where(b => b.IsActive)
+            .Where(b => b.Status == Branch.StatusActive)
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
 
@@ -34,13 +34,13 @@ internal static class CashVaultSeeder
             var mainVault = CashVault.Create(
                 branchId: branch.Id,
                 code: $"MV-{branch.Code}",
+                name: $"{branch.Name} Main Vault",
                 vaultType: CashVault.TypeMainVault,
                 minimumBalance: 500000m,
                 maximumBalance: 5000000m,
+                openingBalance: 2000000m + random.Next(0, 1000000),
                 location: "Main vault room");
 
-            mainVault.UpdateBalance(2000000m + random.Next(0, 1000000));
-            mainVault.Activate();
             await context.CashVaults.AddAsync(mainVault, cancellationToken).ConfigureAwait(false);
             vaultCount++;
 
@@ -48,13 +48,13 @@ internal static class CashVaultSeeder
             var reserveVault = CashVault.Create(
                 branchId: branch.Id,
                 code: $"RV-{branch.Code}",
+                name: $"{branch.Name} Reserve Vault",
                 vaultType: CashVault.TypeReserve,
                 minimumBalance: 100000m,
                 maximumBalance: 1000000m,
+                openingBalance: 500000m + random.Next(0, 200000),
                 location: "Reserve storage");
 
-            reserveVault.UpdateBalance(500000m + random.Next(0, 200000));
-            reserveVault.Activate();
             await context.CashVaults.AddAsync(reserveVault, cancellationToken).ConfigureAwait(false);
             vaultCount++;
 
@@ -65,13 +65,13 @@ internal static class CashVaultSeeder
                 var tellerDrawer = CashVault.Create(
                     branchId: branch.Id,
                     code: $"TD-{branch.Code}-{i:D2}",
+                    name: $"{branch.Name} Teller Drawer {i}",
                     vaultType: CashVault.TypeTellerDrawer,
                     minimumBalance: 20000m,
                     maximumBalance: 200000m,
+                    openingBalance: 50000m + random.Next(0, 50000),
                     location: $"Teller Window {i}");
 
-                tellerDrawer.UpdateBalance(50000m + random.Next(0, 50000));
-                tellerDrawer.Activate();
                 await context.CashVaults.AddAsync(tellerDrawer, cancellationToken).ConfigureAwait(false);
                 vaultCount++;
             }

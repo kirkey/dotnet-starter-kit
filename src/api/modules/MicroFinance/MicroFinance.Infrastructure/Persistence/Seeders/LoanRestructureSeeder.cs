@@ -18,13 +18,14 @@ internal static class LoanRestructureSeeder
         var existingCount = await context.LoanRestructures.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount > 0) return;
 
+        // Get disbursed loans that might need restructuring
         var troubledLoans = await context.Loans
-            .Where(l => l.Status == Loan.StatusInArrears || l.Status == Loan.StatusRescheduled)
+            .Where(l => l.Status == Loan.StatusDisbursed)
             .Take(10)
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
 
-        if (!troubledLoans.Any()) return;
+        if (troubledLoans.Count == 0) return;
 
         var random = new Random(42);
         int restructureNumber = 19001;
@@ -48,31 +49,31 @@ internal static class LoanRestructureSeeder
             var data = restructureData[dataIndex++ % restructureData.Length];
             var requestDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-random.Next(30, 120)));
 
-            var restructure = LoanRestructure.Create(
-                loanId: loan.Id,
-                restructureNumber: $"RS-{restructureNumber++:D6}",
-                restructureType: data.Type,
-                reason: data.Reason,
-                requestDate: requestDate,
-                originalPrincipal: loan.PrincipalAmount,
-                originalInterestRate: loan.InterestRate,
-                originalTerm: loan.LoanTermMonths);
-
-            // Set new terms based on type
+            // Calculate new terms based on restructure type
             var newRate = data.Type == LoanRestructure.TypeRateReduction
                 ? loan.InterestRate * 0.8m
                 : loan.InterestRate;
             var newTerm = data.Type == LoanRestructure.TypeTermExtension
-                ? loan.LoanTermMonths + 6
-                : loan.LoanTermMonths;
+                ? loan.TermMonths + 6
+                : loan.TermMonths;
             var newPrincipal = data.Type == LoanRestructure.TypePrincipalReduction
                 ? loan.OutstandingPrincipal * 0.9m
                 : loan.OutstandingPrincipal;
+            var newInstallment = newPrincipal / newTerm;
 
-            restructure.SetNewTerms(
+            var restructure = LoanRestructure.Create(
+                loanId: loan.Id,
+                restructureNumber: $"RS-{restructureNumber++:D6}",
+                restructureType: data.Type,
+                originalPrincipal: loan.PrincipalAmount,
+                originalInterestRate: loan.InterestRate,
+                originalRemainingTerm: loan.TermMonths,
+                originalInstallmentAmount: loan.PrincipalAmount / loan.TermMonths,
                 newPrincipal: newPrincipal,
                 newInterestRate: newRate,
-                newTerm: newTerm);
+                newTerm: newTerm,
+                newInstallmentAmount: newInstallment,
+                reason: data.Reason);
 
             // Submit for approval
             restructure.SubmitForApproval();
@@ -80,18 +81,19 @@ internal static class LoanRestructureSeeder
             // Approve most restructures
             if (random.NextDouble() < 0.85)
             {
-                restructure.Approve(Guid.NewGuid(), "Credit Committee");
-                restructure.Activate(requestDate.AddDays(random.Next(7, 21)));
+                var effectiveDate = requestDate.AddDays(random.Next(7, 21));
+                restructure.Approve(Guid.NewGuid(), "Credit Committee", effectiveDate);
+                restructure.Activate();
 
                 // Complete some older ones
                 if (random.NextDouble() < 0.3)
                 {
-                    restructure.Complete("Restructured loan fully repaid");
+                    restructure.Complete();
                 }
             }
             else if (random.NextDouble() < 0.5)
             {
-                restructure.Reject("Does not meet restructuring criteria");
+                restructure.Reject(Guid.NewGuid(), "Does not meet restructuring criteria");
             }
 
             await context.LoanRestructures.AddAsync(restructure, cancellationToken).ConfigureAwait(false);

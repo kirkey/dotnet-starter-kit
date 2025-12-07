@@ -1,0 +1,122 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" />
+            Cash Vaults Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Overview" IsInitiallyExpanded="true">
+                <MudText>
+                    Cash Vaults manage physical cash holdings at branches. This module tracks vault balances,
+                    daily operations, deposits, withdrawals, and reconciliation. Each vault has a custodian
+                    responsible for its management and security.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Daily Operations">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.PlayArrow">
+                        <strong>Open Day</strong> - Start the business day by verifying the opening balance
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AddCircle">
+                        <strong>Deposit</strong> - Add cash to the vault (from teller collections, transfers, etc.)
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.RemoveCircle">
+                        <strong>Withdraw</strong> - Remove cash from the vault (for teller floats, transfers, etc.)
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Balance">
+                        <strong>Reconcile</strong> - Compare physical count with system balance and resolve discrepancies
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Stop">
+                        <strong>Close Day</strong> - End the business day after reconciliation
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Vault Types">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                        <strong>Main Vault</strong> - Primary vault for the branch, holds bulk cash
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Person">
+                        <strong>Teller Vault</strong> - Individual teller cash drawers
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Atm">
+                        <strong>ATM Vault</strong> - Cash held in ATM machines
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.LocalShipping">
+                        <strong>Cash In Transit</strong> - Cash being transported between locations
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Balance Limits">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.ArrowDownward">
+                        <strong>Minimum Balance</strong> - Alert when balance falls below this level
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.ArrowUpward">
+                        <strong>Maximum Balance</strong> - Alert when balance exceeds this level (security risk)
+                    </MudListItem>
+                </MudList>
+                <MudText Class="mt-2">
+                    Maintaining appropriate cash levels is important for:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem>- Meeting daily withdrawal demands</MudListItem>
+                    <MudListItem>- Minimizing security risk from holding excess cash</MudListItem>
+                    <MudListItem>- Optimizing cash utilization across the organization</MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Denomination Breakdown">
+                <MudText>
+                    Tracking cash by denomination helps with:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        Accurate physical counting
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        Ensuring availability of small denominations for customer needs
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        Planning cash orders from the central bank
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        Detecting counterfeit notes
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Reconciliation">
+                <MudText>
+                    Daily reconciliation is mandatory to ensure accountability:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Warning">
+                        <strong>Overage</strong> - Physical count exceeds system balance (investigate source)
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Error">
+                        <strong>Shortage</strong> - Physical count is less than system balance (potential loss)
+                    </MudListItem>
+                </MudList>
+                <MudText Class="mt-2">
+                    All discrepancies are logged for audit purposes and may require supervisor approval.
+                </MudText>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Close" Variant="Variant.Text" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

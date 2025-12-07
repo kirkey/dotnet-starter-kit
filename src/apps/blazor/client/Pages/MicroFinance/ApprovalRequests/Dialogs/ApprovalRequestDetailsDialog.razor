@@ -1,0 +1,92 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Visibility" Class="mr-2" />
+            Approval Request Details - @Request.RequestNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12" md="6">
+                <MudField Label="Request Number" Variant="Variant.Outlined">@Request.RequestNumber</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Status" Variant="Variant.Outlined">
+                    <MudChip T="string" Color="@GetStatusColor(Request.Status)" Size="Size.Small">@Request.Status</MudChip>
+                </MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Entity Type" Variant="Variant.Outlined">@Request.EntityType</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Workflow" Variant="Variant.Outlined">@Request.WorkflowName</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Approval Progress" Variant="Variant.Outlined">
+                    Level @Request.CurrentLevel of @Request.TotalLevels
+                </MudField>
+            </MudItem>
+            @if (Request.Amount.HasValue)
+            {
+                <MudItem xs="12" md="6">
+                    <MudField Label="Amount" Variant="Variant.Outlined">@Request.Amount.Value.ToString("C")</MudField>
+                </MudItem>
+            }
+            <MudItem xs="12" md="6">
+                <MudField Label="Submitted By" Variant="Variant.Outlined">@Request.SubmittedByName</MudField>
+            </MudItem>
+            @if (Request.SubmittedAt.HasValue)
+            {
+                <MudItem xs="12" md="6">
+                    <MudField Label="Submitted At" Variant="Variant.Outlined">@Request.SubmittedAt.Value.ToString("g")</MudField>
+                </MudItem>
+            }
+            @if (!string.IsNullOrEmpty(Request.BranchName))
+            {
+                <MudItem xs="12" md="6">
+                    <MudField Label="Branch" Variant="Variant.Outlined">@Request.BranchName</MudField>
+                </MudItem>
+            }
+            @if (Request.SlaHours.HasValue)
+            {
+                <MudItem xs="12" md="6">
+                    <MudField Label="SLA Hours" Variant="Variant.Outlined">@Request.SlaHours hours</MudField>
+                </MudItem>
+            }
+            @if (Request.CompletedAt.HasValue)
+            {
+                <MudItem xs="12" md="6">
+                    <MudField Label="Completed At" Variant="Variant.Outlined">@Request.CompletedAt.Value.ToString("g")</MudField>
+                </MudItem>
+            }
+            @if (!string.IsNullOrEmpty(Request.Comments))
+            {
+                <MudItem xs="12">
+                    <MudField Label="Comments" Variant="Variant.Outlined">@Request.Comments</MudField>
+                </MudItem>
+            }
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public ApprovalRequestResponse Request { get; set; } = null!;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private Color GetStatusColor(string? status) => status?.ToLowerInvariant() switch
+    {
+        "pending" => Color.Warning,
+        "approved" => Color.Success,
+        "rejected" => Color.Error,
+        "cancelled" => Color.Default,
+        _ => Color.Default
+    };
+}

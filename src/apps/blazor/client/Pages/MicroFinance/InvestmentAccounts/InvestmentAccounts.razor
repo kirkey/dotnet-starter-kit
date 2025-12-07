@@ -1,0 +1,51 @@
+@page "/microfinance/investment-accounts"
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+@using FSH.Starter.Blazor.Client.Pages.MicroFinance.InvestmentAccounts.Dialogs
+
+<MudPaper Elevation="@_elevation" Style="@_borderRadius">
+    <EntityTable @ref="_table"
+                 TEntity="InvestmentAccountResponse"
+                 TId="DefaultIdType"
+                 TViewModel="InvestmentAccountViewModel"
+                 Context="@_context"
+                 Dense="true"
+                 Striped="true"
+                 Hover="true"
+                 SearchFields="@(new[] { "AccountNumber", "MemberName", "RiskProfile" })">
+
+        <ActionsContent>
+            <MudButtonGroup OverrideStyles="false">
+                <MudIconButton Icon="@Icons.Material.Filled.Visibility"
+                               Color="Color.Info"
+                               Title="View Details"
+                               OnClick="@(() => ViewDetails(context))" />
+                @if (_canInvest)
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.AddCircle"
+                                   Color="Color.Success"
+                                   Title="Invest"
+                                   OnClick="@(() => Invest(context))" />
+                }
+                @if (_canRedeem)
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.RemoveCircle"
+                                   Color="Color.Warning"
+                                   Title="Redeem"
+                                   OnClick="@(() => Redeem(context))" />
+                }
+                @if (_canSetupSip)
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.Autorenew"
+                                   Color="Color.Primary"
+                                   Title="Setup SIP"
+                                   OnClick="@(() => SetupSip(context))" />
+                }
+            </MudButtonGroup>
+        </ActionsContent>
+
+        <ExtraActions>
+            <MudMenuItem Icon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">Help</MudMenuItem>
+        </ExtraActions>
+
+    </EntityTable>
+</MudPaper>

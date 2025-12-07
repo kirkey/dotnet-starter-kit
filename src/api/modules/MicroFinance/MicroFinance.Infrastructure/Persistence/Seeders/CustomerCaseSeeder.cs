@@ -64,21 +64,6 @@ internal static class CustomerCaseSeeder
             var member = members[random.Next(members.Count)];
             var openedAt = DateTimeOffset.UtcNow.AddDays(c.DaysAgo);
 
-            var customerCase = CustomerCase.Create(
-                caseNumber: $"CASE-{caseNumber++:D6}",
-                memberId: member.Id,
-                subject: c.Subject,
-                category: c.Category,
-                priority: c.Priority,
-                description: c.Desc,
-                channel: c.Channel);
-
-            // Assign to staff
-            if (staff.Any())
-            {
-                customerCase.Assign(staff[random.Next(staff.Count)].Id);
-            }
-
             // Set SLA based on priority
             var slaHours = c.Priority switch
             {
@@ -87,23 +72,32 @@ internal static class CustomerCaseSeeder
                 CustomerCase.PriorityMedium => 48,
                 _ => 72
             };
-            customerCase.SetSla(slaHours);
+
+            var customerCase = CustomerCase.Create(
+                caseNumber: $"CASE-{caseNumber++:D6}",
+                memberId: member.Id,
+                subject: c.Subject,
+                category: c.Category,
+                priority: c.Priority,
+                description: c.Desc,
+                channel: c.Channel,
+                slaHours: slaHours);
+
+            // Assign to staff (this also sets status to InProgress and records first response)
+            if (staff.Count > 0)
+            {
+                customerCase.Assign(staff[random.Next(staff.Count)].Id);
+            }
 
             // Process based on age
             if (c.DaysAgo < -10)
             {
-                customerCase.StartProgress();
-                customerCase.RecordFirstResponse();
-
+                // For older cases, assign if not already assigned, then resolve and close
                 if (c.DaysAgo < -20)
                 {
                     customerCase.Resolve("Issue investigated and resolved. Member notified of resolution.");
                     customerCase.Close(random.Next(3, 6), "Thank you for resolving my issue");
                 }
-            }
-            else if (c.DaysAgo < -5)
-            {
-                customerCase.StartProgress();
             }
 
             await context.CustomerCases.AddAsync(customerCase, cancellationToken).ConfigureAwait(false);

@@ -1,0 +1,139 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" />
+            Investment Accounts Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Overview" IsInitiallyExpanded="true">
+                <MudText Typo="Typo.body2">
+                    Investment Accounts allow members to invest in various financial products offered by your institution.
+                    Each account tracks investments, redemptions, and portfolio performance over time, enabling wealth
+                    building and financial growth for members.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Risk Profiles">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Member Risk Categories:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Shield">
+                        <MudChip T="string" Color="Color.Success" Size="Size.Small">Conservative</MudChip>
+                        Capital preservation focus, low-risk tolerance
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Security">
+                        <MudChip T="string" Color="Color.Info" Size="Size.Small">Moderate</MudChip>
+                        Balance between safety and growth
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Balance">
+                        <MudChip T="string" Color="Color.Warning" Size="Size.Small">Balanced</MudChip>
+                        Diversified approach across asset classes
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.TrendingUp">
+                        <MudChip T="string" Color="Color.Error" Size="Size.Small">Aggressive</MudChip>
+                        Growth-focused, higher risk tolerance
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Portfolio Metrics">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Key Performance Indicators:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                        <strong>Total Invested:</strong> Cumulative amount invested
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                        <strong>Current Value:</strong> Present market value of holdings
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.TrendingUp">
+                        <strong>Unrealized Gain/Loss:</strong> Paper profit/loss on current holdings
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <strong>Realized Gain/Loss:</strong> Actual profit/loss from completed transactions
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Key Actions">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Available Operations:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Add">
+                        <strong>Create:</strong> Open a new investment account for a member
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AddCircle">
+                        <strong>Invest:</strong> Add funds to the investment account
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.RemoveCircle">
+                        <strong>Redeem:</strong> Withdraw funds from investments
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Autorenew">
+                        <strong>Setup SIP:</strong> Configure Systematic Investment Plan
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="SIP (Systematic Investment Plan)">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>About SIP:</strong>
+                </MudText>
+                <MudText Typo="Typo.body2">
+                    SIP allows members to invest fixed amounts at regular intervals automatically. Benefits include:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Schedule">
+                        Disciplined investing through automation
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.TrendingDown">
+                        Rupee cost averaging - buy more units when prices are low
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Calculate">
+                        Power of compounding over long term
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Money">
+                        Start with small amounts
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Best Practices">
+                <MudText Typo="Typo.body2">
+                    <strong>Recommended Practices:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Assessment">
+                        Assess member's risk tolerance before recommending products
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Diversity3">
+                        Diversify investments across multiple products
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Update">
+                        Regularly review portfolio performance with members
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Info">
+                        Provide clear disclosure of risks and returns
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Lock">
+                        Consider lock-in periods when planning redemptions
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Cancel() => MudDialog.Cancel();
+}

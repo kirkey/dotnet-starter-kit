@@ -1,0 +1,88 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Cancel" Class="mr-2" Color="Color.Error" />
+            Reject Claim - @ClaimNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Class="mb-4">
+                    Please provide a reason for rejecting this insurance claim. The claimant will be notified.
+                </MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudSelect @bind-Value="@_rejectionCategory"
+                           Label="Rejection Category"
+                           Variant="Variant.Outlined"
+                           Required="true">
+                    <MudSelectItem Value="@("PolicyNotActive")">Policy Not Active</MudSelectItem>
+                    <MudSelectItem Value="@("NotCovered")">Event Not Covered</MudSelectItem>
+                    <MudSelectItem Value="@("PreExisting")">Pre-existing Condition</MudSelectItem>
+                    <MudSelectItem Value="@("InsufficientDocumentation")">Insufficient Documentation</MudSelectItem>
+                    <MudSelectItem Value="@("WaitingPeriod")">Within Waiting Period</MudSelectItem>
+                    <MudSelectItem Value="@("Fraud")">Suspected Fraud</MudSelectItem>
+                    <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="@_rejectionReason"
+                              Label="Additional Details"
+                              Variant="Variant.Outlined"
+                              Lines="4"
+                              Required="true"
+                              RequiredError="Details are required" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Error" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(string.IsNullOrWhiteSpace(_rejectionReason) || string.IsNullOrEmpty(_rejectionCategory))">
+            Reject
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType ClaimId { get; set; }
+
+    [Parameter]
+    public string ClaimNumber { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private string _rejectionReason = string.Empty;
+    private string? _rejectionCategory;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var fullReason = $"[{_rejectionCategory}] {_rejectionReason}";
+
+        var command = new RejectInsuranceClaimCommand
+        {
+            Id = ClaimId,
+            Reason = fullReason
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.RejectInsuranceClaimEndpointAsync("1", ClaimId, command),
+            Snackbar,
+            successMessage: "Claim rejected.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

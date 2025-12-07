@@ -48,9 +48,9 @@ internal static class CollectionCaseSeeder
 
             var caseStatus = daysPastDue switch
             {
-                < 15 => CollectionCase.StatusActive,
-                < 30 => CollectionCase.StatusActive,
-                < 60 => CollectionCase.StatusEscalated,
+                < 15 => CollectionCase.StatusOpen,
+                < 30 => CollectionCase.StatusInProgress,
+                < 60 => CollectionCase.StatusLegal,
                 _ => CollectionCase.StatusLegal
             };
 
@@ -66,17 +66,15 @@ internal static class CollectionCaseSeeder
                 caseNumber: $"COL-{caseNumber++:D6}",
                 loanId: loan.Id,
                 memberId: loan.MemberId,
-                assignedCollectorId: collector.Id,
                 daysPastDue: daysPastDue,
-                overdueAmount: Math.Round(overdueAmount, 2),
+                amountOverdue: Math.Round(overdueAmount, 2),
                 totalOutstanding: loan.PrincipalAmount + (loan.PrincipalAmount * loan.InterestRate / 100));
 
-            collectionCase.SetPriority(priority);
+            // Assign to collector
+            collectionCase.Assign(collector.Id);
             
-            if (caseStatus == CollectionCase.StatusEscalated)
-                collectionCase.Escalate("Exceeds 30 days past due");
-            else if (caseStatus == CollectionCase.StatusLegal)
-                collectionCase.ReferToLegal("Exceeds 60 days past due - legal action required");
+            if (caseStatus == CollectionCase.StatusLegal)
+                collectionCase.EscalateToLegal("Exceeds 60 days past due - legal action required");
 
             await context.CollectionCases.AddAsync(collectionCase, cancellationToken).ConfigureAwait(false);
             caseCount++;

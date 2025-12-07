@@ -1,0 +1,100 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Class="mr-2" Color="Color.Primary" />
+            Upgrade Tier - @AgentName
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Class="mb-4">
+                    Current Tier: <MudChip Color="@GetTierColor(CurrentTier)" Size="Size.Small">@CurrentTier</MudChip>
+                </MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudSelect @bind-Value="@_newTier"
+                           Label="New Tier"
+                           Variant="Variant.Outlined"
+                           Required="true">
+                    @if (CurrentTier == "Basic")
+                    {
+                        <MudSelectItem Value="@("Standard")">Standard</MudSelectItem>
+                        <MudSelectItem Value="@("Premium")">Premium</MudSelectItem>
+                    }
+                    else if (CurrentTier == "Standard")
+                    {
+                        <MudSelectItem Value="@("Premium")">Premium</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Info">
+                    <MudText Typo="Typo.subtitle2">Tier Benefits:</MudText>
+                    <ul>
+                        <li><strong>Basic:</strong> Standard transaction limits, 2% commission</li>
+                        <li><strong>Standard:</strong> Increased limits, 2.5% commission, priority support</li>
+                        <li><strong>Premium:</strong> Highest limits, 3% commission, dedicated account manager</li>
+                    </ul>
+                </MudAlert>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@string.IsNullOrEmpty(_newTier)">
+            Upgrade Tier
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType AgentId { get; set; }
+
+    [Parameter]
+    public string AgentName { get; set; } = string.Empty;
+
+    [Parameter]
+    public string CurrentTier { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private string? _newTier;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new UpgradeTierAgentBankingCommand
+        {
+            Id = AgentId,
+            NewTier = _newTier!
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.UpgradeTierAgentBankingEndpointAsync("1", AgentId, command),
+            Snackbar,
+            successMessage: $"Agent upgraded to {_newTier} tier successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private Color GetTierColor(string tier) => tier switch
+    {
+        "Premium" => Color.Primary,
+        "Standard" => Color.Info,
+        "Basic" => Color.Default,
+        _ => Color.Default
+    };
+}

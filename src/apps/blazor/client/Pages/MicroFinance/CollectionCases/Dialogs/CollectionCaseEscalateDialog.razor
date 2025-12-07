@@ -1,0 +1,129 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Gavel" Class="mr-2" Color="Color.Warning" />
+            Escalate to Legal - @CaseNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Warning" Class="mb-4">
+                    This action will escalate the case to legal proceedings. All collection attempts should be documented before escalation.
+                </MudAlert>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudText Class="mb-2">
+                    Days Past Due: <strong>@DaysPastDue</strong>
+                </MudText>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudText Class="mb-2">
+                    Amount Overdue: <strong>@AmountOverdue.ToString("N0")</strong>
+                </MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudSelect @bind-Value="@_escalationReason"
+                           Label="Escalation Reason"
+                           Variant="Variant.Outlined"
+                           Required="true">
+                    <MudSelectItem Value="@("NonResponsive")">Borrower Non-Responsive</MudSelectItem>
+                    <MudSelectItem Value="@("RefusingToPay")">Refusing to Pay</MudSelectItem>
+                    <MudSelectItem Value="@("DisputedDebt")">Disputed Debt</MudSelectItem>
+                    <MudSelectItem Value="@("AssetRecovery")">Asset Recovery Required</MudSelectItem>
+                    <MudSelectItem Value="@("Fraud")">Suspected Fraud</MudSelectItem>
+                    <MudSelectItem Value="@("MaxCollectionAttempts")">Maximum Collection Attempts Reached</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_legalCounsel"
+                              Label="Assigned Legal Counsel"
+                              Variant="Variant.Outlined"
+                              HelperText="Name of assigned lawyer or law firm" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_collectionSummary"
+                              Label="Collection Attempts Summary"
+                              Variant="Variant.Outlined"
+                              Lines="3"
+                              Required="true"
+                              HelperText="Document all collection attempts made before escalation" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_legalNotes"
+                              Label="Legal Notes / Instructions"
+                              Variant="Variant.Outlined"
+                              Lines="2" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudCheckBox @bind-Value="_confirmEscalation" 
+                            Color="Color.Warning">
+                    I confirm that all standard collection procedures have been exhausted
+                </MudCheckBox>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Warning" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(!IsValid)">
+            Escalate to Legal
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType CaseId { get; set; }
+
+    [Parameter]
+    public string CaseNumber { get; set; } = string.Empty;
+
+    [Parameter]
+    public int DaysPastDue { get; set; }
+
+    [Parameter]
+    public decimal AmountOverdue { get; set; }
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private string? _escalationReason;
+    private string? _legalCounsel;
+    private string? _collectionSummary;
+    private string? _legalNotes;
+    private bool _confirmEscalation;
+
+    private bool IsValid => !string.IsNullOrEmpty(_escalationReason) && 
+                            !string.IsNullOrWhiteSpace(_collectionSummary) &&
+                            _confirmEscalation;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new EscalateToLegalCollectionCaseCommand
+        {
+            Id = CaseId,
+            Reason = _escalationReason!,
+            LegalCounsel = _legalCounsel,
+            CollectionAttemptsSummary = _collectionSummary,
+            Notes = _legalNotes
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.EscalateToLegalCollectionCaseEndpointAsync("1", CaseId, command),
+            Snackbar,
+            successMessage: "Case escalated to legal successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

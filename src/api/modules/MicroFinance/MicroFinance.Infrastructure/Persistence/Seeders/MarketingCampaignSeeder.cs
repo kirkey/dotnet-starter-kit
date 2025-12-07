@@ -66,7 +66,7 @@ internal static class MarketingCampaignSeeder
 
             if (startDate <= DateOnly.FromDateTime(DateTime.UtcNow))
             {
-                campaign.Start();
+                campaign.Launch();
                 
                 // Add some metrics for active campaigns
                 var reachedPct = 0.3 + random.NextDouble() * 0.5;
@@ -74,11 +74,11 @@ internal static class MarketingCampaignSeeder
                 var conversionPct = 0.02 + random.NextDouble() * 0.08;
                 var spent = c.Budget * (0.2m + (decimal)random.NextDouble() * 0.6m);
 
-                campaign.UpdateMetrics(
-                    reachedCount: (int)(c.Target * reachedPct),
-                    responseCount: (int)(c.Target * responsePct),
-                    conversionCount: (int)(c.Target * conversionPct),
-                    spentAmount: spent);
+                // Record metrics using individual methods
+                campaign.RecordReach((int)(c.Target * reachedPct));
+                for (int i = 0; i < (int)(c.Target * responsePct); i++) campaign.RecordResponse();
+                for (int i = 0; i < (int)(c.Target * conversionPct); i++) campaign.RecordConversion();
+                campaign.RecordSpending(spent);
 
                 // Complete if end date has passed
                 if (endDate < DateOnly.FromDateTime(DateTime.UtcNow))

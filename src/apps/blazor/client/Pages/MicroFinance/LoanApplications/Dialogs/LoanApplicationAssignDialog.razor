@@ -1,0 +1,70 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.PersonAdd" Class="mr-2" Color="Color.Info" />
+            Assign Loan Officer - @ApplicationNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Class="mb-4">
+                    Assign a loan officer to review this application.
+                </MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <StaffAutocomplete @bind-Value="_selectedOfficerId"
+                                   Label="Loan Officer"
+                                   Variant="Variant.Outlined"
+                                   Required="true"
+                                   HelperText="Select the loan officer to assign" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(_selectedOfficerId == DefaultIdType.Empty)">
+            Assign
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType ApplicationId { get; set; }
+
+    [Parameter]
+    public string ApplicationNumber { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private DefaultIdType _selectedOfficerId;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new AssignLoanApplicationCommand
+        {
+            Id = ApplicationId,
+            OfficerId = _selectedOfficerId
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.AssignLoanApplicationEndpointAsync("1", ApplicationId, command),
+            Snackbar,
+            successMessage: "Application assigned successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

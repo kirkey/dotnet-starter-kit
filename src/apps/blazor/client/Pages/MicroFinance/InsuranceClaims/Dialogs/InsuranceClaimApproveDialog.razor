@@ -1,0 +1,89 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" Color="Color.Success" />
+            Approve Claim - @ClaimNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Class="mb-2">
+                    Claimed Amount: <strong>@ClaimAmount.ToString("N0")</strong>
+                </MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudNumericField @bind-Value="_approvedAmount"
+                                 Label="Approved Amount"
+                                 Variant="Variant.Outlined"
+                                 Min="1"
+                                 Format="N0"
+                                 Adornment="Adornment.Start"
+                                 AdornmentText="KES"
+                                 Required="true" />
+            </MudItem>
+            @if (_approvedAmount < ClaimAmount)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Warning">
+                        Approved amount is less than claimed. Consider documenting the reason.
+                    </MudAlert>
+                </MudItem>
+            }
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Success" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(_approvedAmount <= 0)">
+            Approve
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType ClaimId { get; set; }
+
+    [Parameter]
+    public string ClaimNumber { get; set; } = string.Empty;
+
+    [Parameter]
+    public decimal ClaimAmount { get; set; }
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private decimal _approvedAmount;
+
+    protected override void OnParametersSet()
+    {
+        _approvedAmount = ClaimAmount;
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new ApproveInsuranceClaimCommand
+        {
+            Id = ClaimId,
+            ApprovedAmount = _approvedAmount
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.ApproveInsuranceClaimEndpointAsync("1", ClaimId, command),
+            Snackbar,
+            successMessage: $"Claim approved for {_approvedAmount:N0}.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

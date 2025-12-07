@@ -1,0 +1,93 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.ArrowUpward" Class="mr-2" Color="Color.Warning" />
+            Escalate Alert - @AlertCode
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Warning" Class="mb-4">
+                    Escalating this alert will notify senior compliance officers and management.
+                </MudAlert>
+            </MudItem>
+            <MudItem xs="12">
+                <MudSelect @bind-Value="@_escalationLevel"
+                           Label="Escalation Level"
+                           Variant="Variant.Outlined"
+                           Required="true">
+                    <MudSelectItem Value="@("SeniorCompliance")">Senior Compliance Officer</MudSelectItem>
+                    <MudSelectItem Value="@("ComplianceManager")">Compliance Manager</MudSelectItem>
+                    <MudSelectItem Value="@("ChiefCompliance")">Chief Compliance Officer</MudSelectItem>
+                    <MudSelectItem Value="@("Executive")">Executive Management</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_reason"
+                              Label="Escalation Reason"
+                              Variant="Variant.Outlined"
+                              Lines="3"
+                              Required="true"
+                              HelperText="Document why this alert requires escalation" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudCheckBox @bind-Value="_urgent" Color="Color.Error">
+                    Mark as Urgent
+                </MudCheckBox>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Warning" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(!IsValid)">
+            Escalate
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType AlertId { get; set; }
+
+    [Parameter]
+    public string AlertCode { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private string? _escalationLevel;
+    private string? _reason;
+    private bool _urgent;
+
+    private bool IsValid => !string.IsNullOrEmpty(_escalationLevel) && !string.IsNullOrWhiteSpace(_reason);
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new EscalateAmlAlertCommand
+        {
+            Id = AlertId,
+            EscalationLevel = _escalationLevel!,
+            Reason = _reason!,
+            IsUrgent = _urgent
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.EscalateAmlAlertEndpointAsync("1", AlertId, command),
+            Snackbar,
+            successMessage: "Alert escalated.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

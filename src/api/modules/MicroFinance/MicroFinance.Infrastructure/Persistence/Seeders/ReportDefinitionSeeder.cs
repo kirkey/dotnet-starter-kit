@@ -57,9 +57,13 @@ internal static class ReportDefinitionSeeder
                 code: rpt.Code,
                 name: rpt.Name,
                 category: rpt.Category,
-                description: rpt.Desc,
-                frequency: rpt.Frequency,
-                isRegulatory: rpt.IsRegulatory);
+                outputFormat: ReportDefinition.FormatPdf,
+                description: rpt.Desc);
+
+            if (rpt.Frequency != "OnDemand")
+            {
+                report.ConfigureSchedule(rpt.Frequency, null, null, null);
+            }
 
             report.Activate();
             await context.ReportDefinitions.AddAsync(report, cancellationToken).ConfigureAwait(false);

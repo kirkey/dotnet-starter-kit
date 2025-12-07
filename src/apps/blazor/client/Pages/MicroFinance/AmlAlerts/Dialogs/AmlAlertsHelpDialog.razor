@@ -1,0 +1,171 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" />
+            AML Alerts Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Overview" IsInitiallyExpanded="true">
+                <MudText Typo="Typo.body2">
+                    AML (Anti-Money Laundering) Alerts is a critical compliance module that helps detect, investigate, 
+                    and report suspicious financial activities. This module automatically generates alerts based on 
+                    predefined rules and thresholds, helping your organization stay compliant with regulatory requirements.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Alert Lifecycle">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Alert Workflow:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.NotificationsActive">
+                        <strong>Generated:</strong> System automatically creates alert based on trigger rules
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.PersonAdd">
+                        <strong>Assigned:</strong> Alert is assigned to a compliance investigator
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Search">
+                        <strong>Under Investigation:</strong> Investigator reviews and gathers evidence
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <strong>Confirmed:</strong> Suspicious activity is confirmed
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Cancel">
+                        <strong>Cleared:</strong> Marked as false positive after investigation
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.ArrowUpward">
+                        <strong>Escalated:</strong> Sent to senior management for review
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Description">
+                        <strong>SAR Filed:</strong> Suspicious Activity Report submitted to authorities
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Alert Types">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Common Alert Types:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.TrendingUp">
+                        <strong>Unusual Transaction:</strong> Transaction exceeds normal patterns
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Repeat">
+                        <strong>Structured Transaction:</strong> Multiple transactions to avoid reporting thresholds
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Speed">
+                        <strong>Rapid Movement:</strong> Quick fund transfers across accounts
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                        <strong>High-Risk Country:</strong> Transaction involving sanctioned jurisdictions
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Warning">
+                        <strong>PEP Transaction:</strong> Transactions by politically exposed persons
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Severity Levels">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Alert Priority Levels:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Info">
+                        <MudChip T="string" Color="Color.Info" Size="Size.Small">Low</MudChip> 
+                        Informational, may require periodic review
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Warning">
+                        <MudChip T="string" Color="Color.Warning" Size="Size.Small">Medium</MudChip> 
+                        Needs investigation within standard timeframe
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Error">
+                        <MudChip T="string" Color="Color.Error" Size="Size.Small">High</MudChip> 
+                        Priority investigation required
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Dangerous">
+                        <MudChip T="string" Color="Color.Dark" Size="Size.Small">Critical</MudChip> 
+                        Immediate action required, potential regulatory impact
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Key Actions">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Available Operations:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.PersonAdd">
+                        <strong>Assign:</strong> Assign alert to a compliance investigator
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <strong>Confirm:</strong> Confirm the alert as suspicious activity
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Clear">
+                        <strong>Clear:</strong> Mark as false positive with justification
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.ArrowUpward">
+                        <strong>Escalate:</strong> Send to senior management for review
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Description">
+                        <strong>File SAR:</strong> Submit Suspicious Activity Report to authorities
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Regulatory Compliance">
+                <MudText Typo="Typo.body2">
+                    <strong>Important Compliance Notes:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Timer">
+                        Alerts must be reviewed within regulatory timeframes (typically 30-60 days)
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Lock">
+                        All actions are logged for audit purposes
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Gavel">
+                        SAR filings are confidential and protected by law
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.VerifiedUser">
+                        Regular training is required for compliance personnel
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Best Practices">
+                <MudText Typo="Typo.body2">
+                    <strong>Recommended Practices:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Speed">
+                        Review high-severity alerts first
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Description">
+                        Document all investigation steps thoroughly
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Group">
+                        Escalate when uncertain about disposition
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.History">
+                        Check member's transaction history for patterns
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Block">
+                        Consider temporary account restrictions for high-risk cases
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Cancel() => MudDialog.Cancel();
+}

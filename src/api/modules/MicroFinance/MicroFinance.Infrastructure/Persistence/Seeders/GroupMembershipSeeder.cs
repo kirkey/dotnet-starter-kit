@@ -1,3 +1,4 @@
+using FSH.Starter.WebApi.MicroFinance.Domain;
 using Microsoft.Extensions.Logging;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
@@ -19,7 +20,7 @@ internal static class GroupMembershipSeeder
         if (existingCount >= targetCount) return;
 
         var members = await context.Members.Where(m => m.IsActive).Take(80).ToListAsync(cancellationToken).ConfigureAwait(false);
-        var groups = await context.MemberGroups.Where(g => g.IsActive).ToListAsync(cancellationToken).ConfigureAwait(false);
+        var groups = await context.MemberGroups.Where(g => g.Status == MemberGroup.StatusActive).ToListAsync(cancellationToken).ConfigureAwait(false);
 
         if (members.Count < 20 || groups.Count < 10) return;
 

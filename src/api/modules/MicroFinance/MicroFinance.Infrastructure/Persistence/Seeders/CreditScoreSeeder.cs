@@ -19,10 +19,10 @@ internal static class CreditScoreSeeder
         if (existingCount > 0) return;
 
         var members = await context.Members.Where(m => m.IsActive).Take(60).ToListAsync(cancellationToken).ConfigureAwait(false);
-        if (!members.Any()) return;
+        if (members.Count == 0) return;
 
-        var random = new Random(42);
         int scoreCount = 0;
+        int seed = 42;
 
         foreach (var member in members)
         {
@@ -36,20 +36,10 @@ internal static class CreditScoreSeeder
             else if (income >= 15000) baseScore += 50;
             else if (income >= 10000) baseScore += 25;
             
-            // Add some randomness
-            baseScore += random.Next(-50, 100);
+            // Add some deterministic variation based on member id
+            seed = (seed * 1103515245 + 12345) & int.MaxValue;
+            baseScore += (seed % 150) - 50;
             baseScore = Math.Clamp(baseScore, 300, 850);
-
-            // Determine grade based on score
-            string grade = baseScore switch
-            {
-                >= 750 => CreditScore.GradeA,
-                >= 700 => CreditScore.GradeB,
-                >= 650 => CreditScore.GradeC,
-                >= 550 => CreditScore.GradeD,
-                >= 450 => CreditScore.GradeE,
-                _ => CreditScore.GradeF
-            };
 
             var creditScore = CreditScore.Create(
                 memberId: member.Id,
@@ -58,10 +48,7 @@ internal static class CreditScoreSeeder
                 scoreMin: 300,
                 scoreMax: 850,
                 scoreModel: "MFI Internal Model v1",
-                assessmentDate: DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-random.Next(1, 90))));
-
-            creditScore.SetGrade(grade);
-            creditScore.SetSource("Internal Credit Assessment System");
+                source: "Internal Credit Assessment System");
 
             await context.CreditScores.AddAsync(creditScore, cancellationToken).ConfigureAwait(false);
             scoreCount++;

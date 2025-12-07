@@ -1,0 +1,79 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Undo" Class="mr-2" Color="Color.Warning" />
+            Reverse Repayment
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Warning" Class="mb-4">
+                    This action will reverse the repayment and adjust the loan balance accordingly. This cannot be undone.
+                </MudAlert>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Receipt Number" Variant="Variant.Outlined">@ReceiptNumber</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Amount" Variant="Variant.Outlined">@Amount.ToString("N2")</MudField>
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_reversalReason"
+                              Label="Reversal Reason"
+                              Variant="Variant.Outlined"
+                              Lines="2"
+                              Required="true"
+                              HelperText="Provide a reason for reversing this repayment" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudCheckBox @bind-Value="_confirmReversal" Color="Color.Warning">
+                    I confirm that this reversal is necessary and authorized
+                </MudCheckBox>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Warning" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(!IsValid)">
+            Reverse Repayment
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType RepaymentId { get; set; }
+
+    [Parameter]
+    public string? ReceiptNumber { get; set; }
+
+    [Parameter]
+    public decimal Amount { get; set; }
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private string? _reversalReason;
+    private bool _confirmReversal;
+
+    private bool IsValid => !string.IsNullOrWhiteSpace(_reversalReason) && _confirmReversal;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        // Note: API endpoint would need to be created for reversing repayments
+        Snackbar.Add("Repayment reversal is not yet implemented in the API.", Severity.Info);
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

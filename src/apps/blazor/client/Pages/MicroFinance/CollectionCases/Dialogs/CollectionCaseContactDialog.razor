@@ -1,0 +1,104 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Phone" Class="mr-2" Color="Color.Primary" />
+            Record Contact - @CaseNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudSelect @bind-Value="@_contactMethod"
+                           Label="Contact Method"
+                           Variant="Variant.Outlined"
+                           Required="true">
+                    <MudSelectItem Value="@("Phone")">Phone Call</MudSelectItem>
+                    <MudSelectItem Value="@("SMS")">SMS</MudSelectItem>
+                    <MudSelectItem Value="@("Email")">Email</MudSelectItem>
+                    <MudSelectItem Value="@("Visit")">Home/Office Visit</MudSelectItem>
+                    <MudSelectItem Value="@("Letter")">Letter</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12">
+                <MudSelect @bind-Value="@_outcome"
+                           Label="Outcome"
+                           Variant="Variant.Outlined"
+                           Required="true">
+                    <MudSelectItem Value="@("Contacted")">Contacted - Promised to Pay</MudSelectItem>
+                    <MudSelectItem Value="@("Contacted")">Contacted - Disputes</MudSelectItem>
+                    <MudSelectItem Value="@("NoAnswer")">No Answer</MudSelectItem>
+                    <MudSelectItem Value="@("WrongNumber")">Wrong Number</MudSelectItem>
+                    <MudSelectItem Value="@("Disconnected")">Number Disconnected</MudSelectItem>
+                    <MudSelectItem Value="@("NotHome")">Not at Home</MudSelectItem>
+                    <MudSelectItem Value="@("LeftMessage")">Left Message</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @bind-Value="@_notes"
+                              Label="Contact Notes"
+                              Variant="Variant.Outlined"
+                              Lines="4"
+                              Required="true"
+                              HelperText="Summarize the conversation or contact attempt" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudDatePicker @bind-Date="@_nextFollowUp"
+                               Label="Next Follow-up Date"
+                               Variant="Variant.Outlined"
+                               MinDate="@DateTime.Today.AddDays(1)" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Primary" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(string.IsNullOrWhiteSpace(_notes) || string.IsNullOrEmpty(_contactMethod))">
+            Record Contact
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType CaseId { get; set; }
+
+    [Parameter]
+    public string CaseNumber { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Inject]
+    private IMicroFinanceClient MicroFinanceClient { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    private string? _contactMethod;
+    private string? _outcome;
+    private string _notes = string.Empty;
+    private DateTime? _nextFollowUp;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new RecordContactCollectionCaseCommand
+        {
+            Id = CaseId,
+            ContactMethod = _contactMethod!,
+            Outcome = _outcome!,
+            Notes = _notes,
+            NextFollowUpDate = _nextFollowUp.HasValue ? DateOnly.FromDateTime(_nextFollowUp.Value) : null
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await MicroFinanceClient.RecordContactCollectionCaseEndpointAsync("1", CaseId, command),
+            Snackbar,
+            successMessage: "Contact recorded successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

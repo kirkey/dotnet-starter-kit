@@ -53,10 +53,15 @@ internal static class CollectionStrategySeeder
                 code: strat.Code,
                 name: strat.Name,
                 triggerDaysPastDue: strat.TriggerDays,
-                maxDaysPastDue: strat.MaxDays,
                 actionType: strat.Action,
-                messageTemplate: strat.Template,
                 priority: strat.Priority);
+
+            if (strat.MaxDays.HasValue || strat.Template != null)
+            {
+                strategy.Update(
+                    maxDaysPastDue: strat.MaxDays,
+                    messageTemplate: strat.Template);
+            }
 
             await context.CollectionStrategies.AddAsync(strategy, cancellationToken).ConfigureAwait(false);
         }

@@ -48,22 +48,25 @@ internal static class InsuranceClaimSeeder
             var claimAmount = policy.CoverageAmount * (0.1m + (decimal)random.NextDouble() * 0.4m); // 10-50% of coverage
 
             var claim = InsuranceClaim.Create(
-                claimNumber: $"CLM-{claimNumber++:D6}",
                 insurancePolicyId: policy.Id,
-                memberId: policy.MemberId,
-                claimDate: claimDate,
+                claimNumber: $"CLM-{claimNumber++:D6}",
                 claimType: reason.Item1,
+                incidentDate: claimDate,
                 claimAmount: Math.Round(claimAmount, 2),
                 description: reason.Item2);
+
+            claim.File();
+            var userId = Guid.NewGuid();
+            claim.StartReview(userId);
 
             // Process claims based on random outcome
             var outcome = random.NextDouble();
             if (outcome < 0.6) // 60% approved
             {
-                claim.Approve(claimAmount * 0.9m, "Claim approved after verification");
+                claim.Approve(userId, claimAmount * 0.9m);
                 if (random.NextDouble() < 0.8)
                 {
-                    claim.Settle(claimDate.AddDays(random.Next(7, 30)));
+                    claim.Pay(claimAmount * 0.9m, $"PAY-{claimNumber:D6}", claimDate.AddDays(random.Next(7, 30)));
                 }
             }
             else if (outcome < 0.8) // 20% pending
@@ -72,7 +75,7 @@ internal static class InsuranceClaimSeeder
             }
             else // 20% rejected
             {
-                claim.Reject("Claim does not meet policy criteria");
+                claim.Reject(userId, "Claim does not meet policy criteria");
             }
 
             await context.InsuranceClaims.AddAsync(claim, cancellationToken).ConfigureAwait(false);

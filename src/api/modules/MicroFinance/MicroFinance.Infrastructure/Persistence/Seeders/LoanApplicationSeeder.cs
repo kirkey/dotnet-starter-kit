@@ -98,16 +98,16 @@ internal static class LoanApplicationSeeder
 
             var member = members[app.MemberIdx % members.Count];
             var product = products[app.ProductIdx % products.Count];
-            var appDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-random.Next(1, 60)));
 
             var application = LoanApplication.Create(
                 applicationNumber: appNum,
                 memberId: member.Id,
                 loanProductId: product.Id,
-                applicationDate: appDate,
                 requestedAmount: app.Amount,
                 requestedTermMonths: app.Term,
                 purpose: app.Purpose);
+
+            var userId = Guid.NewGuid();
 
             // Apply status transitions
             switch (app.Status)
@@ -117,34 +117,34 @@ internal static class LoanApplicationSeeder
                     break;
                 case LoanApplication.StatusUnderReview:
                     application.Submit();
-                    application.StartReview();
+                    application.AssignToOfficer(userId);
                     break;
                 case LoanApplication.StatusPendingDocuments:
                     application.Submit();
-                    application.StartReview();
+                    application.AssignToOfficer(userId);
                     application.RequestDocuments("Additional documents required");
                     break;
                 case LoanApplication.StatusPendingApproval:
                     application.Submit();
-                    application.StartReview();
+                    application.AssignToOfficer(userId);
                     application.SubmitForApproval();
                     break;
                 case LoanApplication.StatusApproved:
                     application.Submit();
-                    application.StartReview();
+                    application.AssignToOfficer(userId);
                     application.SubmitForApproval();
-                    application.Approve(app.Amount, app.Term, product.InterestRate);
+                    application.Approve(userId, app.Amount, app.Term);
                     break;
                 case LoanApplication.StatusConditionallyApproved:
                     application.Submit();
-                    application.StartReview();
+                    application.AssignToOfficer(userId);
                     application.SubmitForApproval();
-                    application.ApproveConditionally(app.Amount, "Requires additional guarantor or collateral");
+                    application.ConditionallyApprove(userId, app.Amount, app.Term, "Requires additional guarantor or collateral");
                     break;
                 case LoanApplication.StatusRejected:
                     application.Submit();
-                    application.StartReview();
-                    application.Reject(app.Purpose.Split('-').Last().Trim());
+                    application.AssignToOfficer(userId);
+                    application.Reject(userId, app.Purpose.Split('-').Last().Trim());
                     break;
                 case LoanApplication.StatusWithdrawn:
                     application.Submit();

@@ -1,0 +1,103 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Verified" Class="mr-2" Color="Color.Info" />
+            Verify Session - @SessionNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Typo="Typo.caption" Color="Color.Primary">Closing Balance</MudText>
+                <MudText>KES @ClosingBalance.ToString("N0")</MudText>
+            </MudItem>
+            @if (Variance != 0)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="@(Variance >= 0 ? Severity.Warning : Severity.Error)">
+                        <strong>Variance: KES @Variance.ToString("N0")</strong>
+                        (@(Variance >= 0 ? "Overage" : "Shortage"))
+                    </MudAlert>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_varianceExplanation"
+                                  Label="Variance Explanation"
+                                  Variant="Variant.Outlined"
+                                  Lines="2"
+                                  Required="true"
+                                  HelperText="Document the reason for the variance" />
+                </MudItem>
+            }
+            else
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Success">
+                        No variance detected. Session balanced correctly.
+                    </MudAlert>
+                </MudItem>
+            }
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_notes"
+                              Label="Verification Notes"
+                              Variant="Variant.Outlined"
+                              Lines="2" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudCheckBox @bind-Value="_confirmVerification" Color="Color.Info">
+                    I have verified the session details and approve this closure
+                </MudCheckBox>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Info" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(!IsValid)">
+            Verify Session
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType SessionId { get; set; }
+
+    [Parameter]
+    public string SessionNumber { get; set; } = string.Empty;
+
+    [Parameter]
+    public decimal ClosingBalance { get; set; }
+
+    [Parameter]
+    public decimal Variance { get; set; }
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private string? _varianceExplanation;
+    private string? _notes;
+    private bool _confirmVerification;
+
+    private bool IsValid => _confirmVerification && 
+                           (Variance == 0 || !string.IsNullOrWhiteSpace(_varianceExplanation));
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new VerifyTellerSessionCommand
+        {
+            Id = SessionId,
+            Notes = Variance != 0 ? $"Variance Explanation: {_varianceExplanation}. {_notes}" : _notes
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await Client.VerifyTellerSessionAsync("1", SessionId, command),
+            Snackbar,
+            successMessage: "Session verified successfully.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

@@ -1,0 +1,44 @@
+@page "/microfinance/approval-workflows"
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+@using FSH.Starter.Blazor.Client.Pages.MicroFinance.ApprovalWorkflows.Dialogs
+
+<MudPaper Elevation="@_elevation" Style="@_borderRadius">
+    <EntityTable @ref="_table"
+                 TEntity="ApprovalWorkflowResponse"
+                 TId="DefaultIdType"
+                 TViewModel="ApprovalWorkflowViewModel"
+                 Context="@_context"
+                 Dense="true"
+                 Striped="true"
+                 Hover="true"
+                 SearchFields="@(new[] { "Code", "Name", "EntityType" })">
+
+        <ActionsContent>
+            <MudButtonGroup OverrideStyles="false">
+                <MudIconButton Icon="@Icons.Material.Filled.Visibility"
+                               Color="Color.Info"
+                               Title="View Details"
+                               OnClick="@(() => ViewDetails(context))" />
+                @if (_canActivate && !context.IsActive)
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.CheckCircle"
+                                   Color="Color.Success"
+                                   Title="Activate"
+                                   OnClick="@(() => Activate(context))" />
+                }
+                @if (_canDeactivate && context.IsActive)
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.Cancel"
+                                   Color="Color.Warning"
+                                   Title="Deactivate"
+                                   OnClick="@(() => Deactivate(context))" />
+                }
+            </MudButtonGroup>
+        </ActionsContent>
+
+        <ExtraActions>
+            <MudMenuItem Icon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">Help</MudMenuItem>
+        </ExtraActions>
+
+    </EntityTable>
+</MudPaper>

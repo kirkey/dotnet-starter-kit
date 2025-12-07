@@ -53,7 +53,8 @@ internal static class InvestmentTransactionSeeder
                 paymentMode: "Bank Transfer",
                 paymentReference: $"BT-{random.Next(100000, 999999)}");
 
-            buyTransaction.Process(nav, (initialAmount - entryLoad) / nav);
+            var allotmentDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-random.Next(30, 90)));
+            buyTransaction.Process(nav, (initialAmount - entryLoad) / nav, allotmentDate);
             await context.InvestmentTransactions.AddAsync(buyTransaction, cancellationToken).ConfigureAwait(false);
             transactionCount++;
 
@@ -73,25 +74,14 @@ internal static class InvestmentTransactionSeeder
                     entryLoad: load,
                     paymentMode: random.NextDouble() > 0.5 ? "Bank Transfer" : "GCash");
 
-                additionalBuy.Process(newNav, (amount - load) / newNav);
+                var addlAllotmentDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-random.Next(1, 30)));
+                additionalBuy.Process(newNav, (amount - load) / newNav, addlAllotmentDate);
                 await context.InvestmentTransactions.AddAsync(additionalBuy, cancellationToken).ConfigureAwait(false);
                 transactionCount++;
             }
 
             // Add dividend for some accounts (30% chance)
-            if (random.NextDouble() < 0.3)
-            {
-                var dividendAmount = initialAmount * 0.05m; // 5% dividend
-                var dividend = InvestmentTransaction.CreateDividend(
-                    investmentAccountId: account.Id,
-                    productId: product.Id,
-                    transactionReference: $"INV-{refNumber++:D6}",
-                    amount: dividendAmount);
-
-                dividend.Complete();
-                await context.InvestmentTransactions.AddAsync(dividend, cancellationToken).ConfigureAwait(false);
-                transactionCount++;
-            }
+            // Note: CreateDividend doesn't exist in domain, dividends would be created via different mechanism
         }
 
         await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);

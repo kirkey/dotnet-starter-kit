@@ -1,0 +1,78 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Payment" Class="mr-2" />
+            Loan Repayment Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12" md="6">
+                <MudField Label="Receipt Number" Variant="Variant.Outlined">@Repayment.ReceiptNumber</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Loan Number" Variant="Variant.Outlined">@Repayment.LoanNumber</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Payment Date" Variant="Variant.Outlined">@Repayment.PaymentDate.ToString("dd MMM yyyy")</MudField>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudField Label="Payment Method" Variant="Variant.Outlined">@Repayment.PaymentMethod</MudField>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudDivider Class="my-2" />
+                <MudText Typo="Typo.subtitle1" Class="mb-2">Payment Breakdown</MudText>
+            </MudItem>
+
+            <MudItem xs="12" md="3">
+                <MudField Label="Total Amount" Variant="Variant.Outlined">@Repayment.Amount.ToString("N2")</MudField>
+            </MudItem>
+            <MudItem xs="12" md="3">
+                <MudField Label="Principal" Variant="Variant.Outlined">@Repayment.PrincipalAmount.ToString("N2")</MudField>
+            </MudItem>
+            <MudItem xs="12" md="3">
+                <MudField Label="Interest" Variant="Variant.Outlined">@Repayment.InterestAmount.ToString("N2")</MudField>
+            </MudItem>
+            <MudItem xs="12" md="3">
+                <MudField Label="Penalty" Variant="Variant.Outlined">@Repayment.PenaltyAmount.ToString("N2")</MudField>
+            </MudItem>
+
+            @if (!string.IsNullOrEmpty(Repayment.TransactionReference))
+            {
+                <MudItem xs="12" md="6">
+                    <MudField Label="Transaction Reference" Variant="Variant.Outlined">@Repayment.TransactionReference</MudField>
+                </MudItem>
+            }
+
+            @if (!string.IsNullOrEmpty(Repayment.Notes))
+            {
+                <MudItem xs="12">
+                    <MudField Label="Notes" Variant="Variant.Outlined" Lines="2">@Repayment.Notes</MudField>
+                </MudItem>
+            }
+
+            @if (Repayment.IsReversed)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Warning">
+                        This repayment has been reversed.
+                    </MudAlert>
+                </MudItem>
+            }
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public LoanRepaymentResponse Repayment { get; set; } = null!;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Cancel() => MudDialog.Cancel();
+}

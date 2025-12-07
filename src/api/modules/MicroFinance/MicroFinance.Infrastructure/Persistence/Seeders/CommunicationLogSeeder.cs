@@ -48,27 +48,29 @@ internal static class CommunicationLogSeeder
                 };
 
                 var log = CommunicationLog.Create(
-                    memberId: member.Id,
                     channel: channel,
                     recipient: recipient,
-                    subject: purpose,
-                    message: $"{purpose} - Sent via {channel} to {member.FirstName} {member.LastName}",
-                    sentAt: sentDate);
+                    body: $"{purpose} - Sent via {channel} to {member.FirstName} {member.LastName}",
+                    memberId: member.Id,
+                    subject: purpose);
 
+                // Mark as sent first
+                log.MarkSent();
+                
                 // Most messages are delivered successfully
                 if (random.NextDouble() > 0.1)
                 {
-                    log.MarkAsDelivered(sentDate.AddSeconds(random.Next(1, 60)));
+                    log.MarkDelivered();
                     
-                    // Some are read (especially SMS and push)
-                    if (channel != CommunicationLog.ChannelEmail && random.NextDouble() > 0.3)
+                    // Some are read/opened (especially email)
+                    if (channel == CommunicationLog.ChannelEmail && random.NextDouble() > 0.3)
                     {
-                        log.MarkAsRead(sentDate.AddMinutes(random.Next(1, 120)));
+                        log.MarkOpened();
                     }
                 }
                 else
                 {
-                    log.MarkAsFailed("Delivery failed - recipient unreachable");
+                    log.MarkFailed("Delivery failed - recipient unreachable");
                 }
 
                 await context.CommunicationLogs.AddAsync(log, cancellationToken).ConfigureAwait(false);

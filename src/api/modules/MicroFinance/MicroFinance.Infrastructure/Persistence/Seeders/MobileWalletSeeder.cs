@@ -54,11 +54,11 @@ internal static class MobileWalletSeeder
             if (random.NextDouble() > 0.1)
             {
                 wallet.Activate();
-                wallet.SetTier(tier);
+                wallet.UpgradeTier(tier, dailyLimit, monthlyLimit);
                 
                 // Add some balance
                 var balance = Math.Round((decimal)(random.NextDouble() * 5000), 2);
-                wallet.TopUp(balance);
+                wallet.Credit(balance, $"INITIAL-{Guid.NewGuid():N}");
             }
 
             await context.MobileWallets.AddAsync(wallet, cancellationToken).ConfigureAwait(false);

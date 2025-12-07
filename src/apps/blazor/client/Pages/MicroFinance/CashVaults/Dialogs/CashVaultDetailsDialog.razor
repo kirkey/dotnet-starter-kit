@@ -1,0 +1,107 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.AccountBalanceWallet" Class="mr-2" />
+            @Vault.Name - Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12" sm="6">
+                <MudText Typo="Typo.caption" Color="Color.Primary">Code</MudText>
+                <MudText>@Vault.Code</MudText>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudText Typo="Typo.caption" Color="Color.Primary">Name</MudText>
+                <MudText>@Vault.Name</MudText>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudText Typo="Typo.caption" Color="Color.Primary">Vault Type</MudText>
+                <MudChip T="string" Size="Size.Small">@Vault.VaultType</MudChip>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudText Typo="Typo.caption" Color="Color.Primary">Status</MudText>
+                <MudChip T="string" Size="Size.Small" Color="@GetStatusColor(Vault.Status)">@Vault.Status</MudChip>
+            </MudItem>
+            <MudItem xs="12">
+                <MudDivider Class="my-2" />
+                <MudText Typo="Typo.subtitle2" Class="mb-2">Balance Information</MudText>
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudText Typo="Typo.caption" Color="Color.Primary">Current Balance</MudText>
+                <MudText Typo="Typo.h6" Color="@(Vault.CurrentBalance < Vault.MinimumBalance ? Color.Error : Color.Success)">
+                    KES @Vault.CurrentBalance.ToString("N0")
+                </MudText>
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudText Typo="Typo.caption" Color="Color.Primary">Minimum Balance</MudText>
+                <MudText>KES @Vault.MinimumBalance.ToString("N0")</MudText>
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudText Typo="Typo.caption" Color="Color.Primary">Maximum Balance</MudText>
+                <MudText>KES @Vault.MaximumBalance.ToString("N0")</MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudDivider Class="my-2" />
+                <MudText Typo="Typo.subtitle2" Class="mb-2">Custodian & Location</MudText>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudText Typo="Typo.caption" Color="Color.Primary">Custodian</MudText>
+                <MudText>@(Vault.CustodianName ?? "Not Assigned")</MudText>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudText Typo="Typo.caption" Color="Color.Primary">Location</MudText>
+                <MudText>@(Vault.Location ?? "Not Specified")</MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudDivider Class="my-2" />
+                <MudText Typo="Typo.subtitle2" Class="mb-2">Activity</MudText>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudText Typo="Typo.caption" Color="Color.Primary">Last Opened</MudText>
+                <MudText>@(Vault.LastOpenedAt?.ToString("dd/MM/yyyy HH:mm") ?? "Never")</MudText>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudText Typo="Typo.caption" Color="Color.Primary">Last Reconciliation</MudText>
+                <MudText>@(Vault.LastReconciliationAt?.ToString("dd/MM/yyyy HH:mm") ?? "Never")</MudText>
+            </MudItem>
+            @if (Vault.CurrentBalance < Vault.MinimumBalance)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Warning" Class="mt-2">
+                        Current balance is below minimum required balance!
+                    </MudAlert>
+                </MudItem>
+            }
+            @if (Vault.CurrentBalance > Vault.MaximumBalance)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Warning" Class="mt-2">
+                        Current balance exceeds maximum allowed balance!
+                    </MudAlert>
+                </MudItem>
+            }
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Close" Variant="Variant.Text" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public CashVaultResponse Vault { get; set; } = null!;
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private Color GetStatusColor(string? status) => status switch
+    {
+        "Open" => Color.Success,
+        "Closed" => Color.Default,
+        "Reconciling" => Color.Warning,
+        _ => Color.Default
+    };
+
+    private void Close() => MudDialog.Close();
+}

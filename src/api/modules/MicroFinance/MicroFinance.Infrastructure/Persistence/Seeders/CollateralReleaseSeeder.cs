@@ -44,6 +44,9 @@ internal static class CollateralReleaseSeeder
         {
             var requestDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-random.Next(10, 60)));
             var releaseMethod = releaseMethods[random.Next(releaseMethods.Length)];
+            var recipientName = "Member Owner";
+            var recipientIdNumber = $"PSA-{random.Next(1000000000, 1999999999):D10}";
+            var recipientContact = $"+639{random.Next(100000000, 999999999)}";
 
             var release = CollateralRelease.Create(
                 collateralId: collateral.Id,
@@ -52,21 +55,19 @@ internal static class CollateralReleaseSeeder
                 requestedById: Guid.NewGuid(),
                 releaseMethod: releaseMethod);
 
-            release.SetRecipient(
-                name: "Member Owner",
-                idNumber: $"PSA-{random.Next(1000000000, 1999999999):D10}",
-                contact: $"+639{random.Next(100000000, 999999999)}");
+            // Update with recipient contact info
+            release.Update(recipientContact: recipientContact);
 
             // Most releases are processed
             var status = random.NextDouble();
             if (status < 0.7) // 70% released
             {
                 release.Approve(Guid.NewGuid());
-                release.Release(Guid.NewGuid(), requestDate.AddDays(random.Next(3, 10)));
-                release.ConfirmDocumentsReturned();
+                // Release method sets recipient name/ID and DocumentsReturned = true
+                release.Release(Guid.NewGuid(), recipientName, recipientIdNumber);
                 if (collateral.CollateralType == "Vehicle" || collateral.CollateralType == "RealEstate")
                 {
-                    release.ConfirmRegistrationCleared();
+                    release.MarkRegistrationCleared();
                 }
             }
             else if (status < 0.9) // 20% approved, pending release

@@ -1,0 +1,221 @@
+@page "/microfinance/agent-banking"
+
+<PageHeader Title="Agent Banking" Header="Agent Banking" SubHeader="Manage agent network for branchless banking services - agents handle deposits, withdrawals, and payments on behalf of the MFI." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowAgentBankingHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="AgentBankingResponse" TId="DefaultIdType" TRequest="AgentBankingViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchAgentCode"
+                          Label="Agent Code"
+                          Placeholder="Search by agent code"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchBusinessName"
+                          Label="Business Name"
+                          Placeholder="Search by business name"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Store" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Active")">Active</MudSelectItem>
+                <MudSelectItem Value="@("Pending")">Pending</MudSelectItem>
+                <MudSelectItem Value="@("Suspended")">Suspended</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchTier"
+                       Label="Tier"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Basic")">Basic</MudSelectItem>
+                <MudSelectItem Value="@("Standard")">Standard</MudSelectItem>
+                <MudSelectItem Value="@("Premium")">Premium</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (entity.Status == "Pending" && _canApprove)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success" OnClick="@(() => ApproveAgent(entity.Id))">
+                Approve
+            </MudMenuItem>
+        }
+        @if (entity.Status == "Active" && _canSuspend)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Block" IconColor="Color.Error" OnClick="@(() => ShowSuspendDialog(entity))">
+                Suspend
+            </MudMenuItem>
+        }
+        @if (_canManageFloat)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Add" IconColor="Color.Primary" OnClick="@(() => ShowCreditFloatDialog(entity))">
+                Credit Float
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Remove" IconColor="Color.Secondary" OnClick="@(() => ShowDebitFloatDialog(entity))">
+                Debit Float
+            </MudMenuItem>
+        }
+        @if (_canUpgradeTier && entity.Status == "Active")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.TrendingUp" IconColor="Color.Info" OnClick="@(() => ShowUpgradeTierDialog(entity))">
+                Upgrade Tier
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewAgentDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Agent Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.AgentCode"
+                          For="@(() => context.AgentCode)"
+                          Label="Agent Code"
+                          Variant="Variant.Filled"
+                          HelperText="Unique agent identifier (e.g., AGT-001)"
+                          Disabled="@(context.Id != DefaultIdType.Empty)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.BusinessName"
+                          For="@(() => context.BusinessName)"
+                          Label="Business Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.ContactName"
+                          For="@(() => context.ContactName)"
+                          Label="Contact Person"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Contact Details</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.PhoneNumber"
+                          For="@(() => context.PhoneNumber)"
+                          Label="Phone Number"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          InputType="InputType.Telephone" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Email"
+                          For="@(() => context.Email)"
+                          Label="Email"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Email" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="8">
+            <MudTextField @bind-Value="context.Address"
+                          For="@(() => context.Address)"
+                          Label="Address"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.GpsCoordinates"
+                          For="@(() => context.GpsCoordinates)"
+                          Label="GPS Coordinates"
+                          Variant="Variant.Filled"
+                          HelperText="e.g., -1.2921, 36.8219" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.OperatingHours"
+                          For="@(() => context.OperatingHours)"
+                          Label="Operating Hours"
+                          Variant="Variant.Filled"
+                          HelperText="e.g., Mon-Sat 8am-6pm" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Business Settings</strong></MudText>
+            <MudDivider />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.CommissionRate"
+                             For="@(() => context.CommissionRate)"
+                             Label="Commission Rate (%)"
+                             Variant="Variant.Filled"
+                             Min="0" Max="10"
+                             Step="0.1M"
+                             Format="F2" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.DailyTransactionLimit"
+                             For="@(() => context.DailyTransactionLimit)"
+                             Label="Daily Transaction Limit"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             Format="N0"
+                             Adornment="Adornment.Start"
+                             AdornmentText="KES" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.MonthlyTransactionLimit"
+                             For="@(() => context.MonthlyTransactionLimit)"
+                             Label="Monthly Transaction Limit"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             Format="N0"
+                             Adornment="Adornment.Start"
+                             AdornmentText="KES" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@_contractStartDate"
+                           Label="Contract Start Date"
+                           Variant="Variant.Filled"
+                           Required="true"
+                           DateChanged="@(date => OnContractStartDateChanged(context, date))" />
+        </MudItem>
+
+        @if (context.Id == DefaultIdType.Empty)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <BranchAutocomplete @bind-Value="context.BranchId"
+                                    Label="Linked Branch"
+                                    Variant="Variant.Filled"
+                                    HelperText="Optional parent branch" />
+            </MudItem>
+        }
+    </EditFormContent>
+</EntityTable>

@@ -19,7 +19,7 @@ internal static class AgentBankingSeeder
         if (existingCount > 0) return;
 
         var branches = await context.Branches
-            .Where(b => b.IsActive)
+            .Where(b => b.Status == Branch.StatusActive)
             .Take(5)
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
@@ -96,10 +96,9 @@ internal static class AgentBankingSeeder
                 branchId: branchId);
 
             // Activate agents
-            agentBanking.Activate();
-            agentBanking.SetTier(tier);
-            agentBanking.UpdateFloatBalance(dailyLimit * 0.5m); // Initial float
-            agentBanking.VerifyKyc();
+            agentBanking.Approve();
+            agentBanking.UpgradeTier(tier);
+            agentBanking.CreditFloat(dailyLimit * 0.5m); // Initial float
 
             await context.AgentBankings.AddAsync(agentBanking, cancellationToken).ConfigureAwait(false);
         }

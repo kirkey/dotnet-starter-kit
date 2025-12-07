@@ -49,7 +49,7 @@ internal static class CollateralInsuranceSeeder
             var insuranceType = insuranceTypes[random.Next(insuranceTypes.Length)];
             var effectiveDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-random.Next(30, 300)));
             var expiryDate = effectiveDate.AddYears(1);
-            var coverageAmount = collateral.AppraisedValue * 0.9m;
+            var coverageAmount = collateral.EstimatedValue * 0.9m;
             var premium = coverageAmount * 0.02m; // 2% of coverage
             var deductible = coverageAmount * 0.05m; // 5% deductible
 
@@ -65,8 +65,12 @@ internal static class CollateralInsuranceSeeder
                 expiryDate: expiryDate,
                 isMfiAsBeneficiary: true);
 
-            insurance.SetInsurerContact(insurer.Contact, insurer.Phone, insurer.Email);
-            insurance.SetAutoRenewal(true, 30);
+            insurance.Update(
+                insurerContact: insurer.Contact,
+                insurerPhone: insurer.Phone,
+                insurerEmail: insurer.Email,
+                autoRenewal: true,
+                renewalReminderDays: 30);
 
             // Mark as premium paid
             insurance.RecordPremiumPayment(effectiveDate.AddDays(random.Next(0, 7)), effectiveDate.AddYears(1));
@@ -74,7 +78,7 @@ internal static class CollateralInsuranceSeeder
             // Check for expired policies
             if (expiryDate < DateOnly.FromDateTime(DateTime.UtcNow))
             {
-                insurance.MarkExpired();
+                insurance.Expire();
             }
             else if ((expiryDate.ToDateTime(TimeOnly.MinValue) - DateTime.UtcNow).TotalDays < 30)
             {

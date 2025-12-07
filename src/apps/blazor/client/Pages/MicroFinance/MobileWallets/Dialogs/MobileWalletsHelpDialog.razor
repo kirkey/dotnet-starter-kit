@@ -1,0 +1,131 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" Color="Color.Info" />
+            Mobile Wallets Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="What are Mobile Wallets?" IsInitiallyExpanded="true">
+                <MudText Typo="Typo.body2" Class="pa-2">
+                    Mobile wallets allow members to access their MFI accounts through their mobile phones.
+                    They integrate with popular mobile money providers like M-Pesa, Airtel Money, and T-Kash
+                    to enable seamless digital transactions without visiting a branch.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Wallet Statuses">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.HourglassEmpty" IconColor="Color.Warning">
+                        <strong>Pending:</strong> New wallet awaiting activation
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                        <strong>Active:</strong> Wallet is operational for transactions
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Block" IconColor="Color.Error">
+                        <strong>Suspended:</strong> Wallet temporarily blocked
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Supported Providers">
+                <MudSimpleTable Dense="true">
+                    <thead>
+                        <tr>
+                            <th>Provider</th>
+                            <th>Network</th>
+                            <th>Features</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>M-Pesa</td>
+                            <td>Safaricom</td>
+                            <td>Send/Receive, Pay Bills, Buy Goods</td>
+                        </tr>
+                        <tr>
+                            <td>Airtel Money</td>
+                            <td>Airtel</td>
+                            <td>Send/Receive, Pay Bills</td>
+                        </tr>
+                        <tr>
+                            <td>T-Kash</td>
+                            <td>Telkom</td>
+                            <td>Send/Receive, Pay Bills</td>
+                        </tr>
+                    </tbody>
+                </MudSimpleTable>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Transaction Limits">
+                <MudText Typo="Typo.body2" Class="pa-2">
+                    Each wallet has configurable limits based on tier:
+                </MudText>
+                <MudSimpleTable Dense="true" Class="mt-2">
+                    <thead>
+                        <tr>
+                            <th>Tier</th>
+                            <th>Daily Limit</th>
+                            <th>Monthly Limit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Basic</td>
+                            <td>50,000</td>
+                            <td>500,000</td>
+                        </tr>
+                        <tr>
+                            <td>Standard</td>
+                            <td>150,000</td>
+                            <td>1,500,000</td>
+                        </tr>
+                        <tr>
+                            <td>Premium</td>
+                            <td>500,000</td>
+                            <td>5,000,000</td>
+                        </tr>
+                    </tbody>
+                </MudSimpleTable>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Linking to Savings">
+                <MudText Typo="Typo.body2" Class="pa-2">
+                    Link your mobile wallet to a savings account for enhanced functionality:
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.SwapHoriz">
+                        Instant transfers between wallet and savings
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AutoMode">
+                        Automatic sweep of excess balance to savings
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                        View both balances in one place
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Available Operations">
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Add">Credit - Add funds to wallet</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Remove">Debit - Withdraw from wallet</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Send">Transfer - Send to another wallet</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Receipt">Bill Pay - Pay utility bills</MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.ShoppingCart">Buy Goods - Merchant payments</MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Close" Variant="Variant.Text">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

@@ -1,0 +1,125 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" />
+            Approval Workflows Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Overview" IsInitiallyExpanded="true">
+                <MudText Typo="Typo.body2">
+                    Approval Workflows define the approval process for various entities in the microfinance system.
+                    They specify how many levels of approval are needed, who can approve at each level, and whether
+                    approvals must be sequential or can happen in parallel.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Entity Types">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Supported Entity Types:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.RequestPage">
+                        <strong>LoanApplication:</strong> Loan application approvals
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                        <strong>LoanDisbursement:</strong> Loan disbursement approvals
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Payment">
+                        <strong>PaymentRequest:</strong> Payment request approvals
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CreditCard">
+                        <strong>Withdrawal:</strong> Large withdrawal approvals
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Edit">
+                        <strong>AccountModification:</strong> Account changes approval
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Approval Modes">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Available Modes:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.LinearScale">
+                        <strong>Sequential:</strong> Approvals must happen in order (Level 1, then Level 2, etc.)
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CallSplit">
+                        <strong>Parallel:</strong> All approvers can approve simultaneously
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Amount-Based Routing">
+                <MudText Typo="Typo.body2">
+                    Workflows can be configured with minimum and maximum amounts. When a request falls within
+                    these bounds, the corresponding workflow is automatically selected. This allows different
+                    approval levels for different transaction sizes.
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Money">
+                        Small amounts: 1-2 approval levels
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                        Medium amounts: 2-3 approval levels
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.MonetizationOn">
+                        Large amounts: 3+ approval levels with senior management
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Key Actions">
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    <strong>Available Operations:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Add">
+                        <strong>Create:</strong> Define a new approval workflow
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Edit">
+                        <strong>Edit:</strong> Modify workflow configuration
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                        <strong>Activate:</strong> Enable the workflow for use
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Cancel">
+                        <strong>Deactivate:</strong> Disable the workflow (existing requests continue)
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Best Practices">
+                <MudText Typo="Typo.body2">
+                    <strong>Recommended Practices:</strong>
+                </MudText>
+                <MudList T="string" Dense="true">
+                    <MudListItem Icon="@Icons.Material.Filled.Security">
+                        Use higher priority for stricter workflows
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Speed">
+                        Use parallel mode for time-sensitive approvals
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AccountTree">
+                        Define clear escalation paths for rejections
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Update">
+                        Regularly review and update approval limits
+                    </MudListItem>
+                </MudList>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Cancel() => MudDialog.Cancel();
+}

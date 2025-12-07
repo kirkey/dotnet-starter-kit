@@ -82,15 +82,14 @@ internal static class MobileTransactionSeeder
                 if (amount <= 0) continue;
 
                 var transaction = MobileTransaction.Create(
-                    mobileWalletId: wallet.Id,
+                    walletId: wallet.Id,
                     transactionReference: txnRef,
                     transactionType: txnType,
                     amount: Math.Round(amount, 2),
-                    balanceAfter: Math.Max(0, Math.Round(currentBalance, 2)),
-                    recipientNumber: recipient,
-                    merchantName: merchant);
+                    fee: 0m,
+                    destinationPhone: recipient);
 
-                transaction.Complete();
+                transaction.Complete("Transaction completed successfully");
                 await context.MobileTransactions.AddAsync(transaction, cancellationToken).ConfigureAwait(false);
                 transactionCount++;
             }

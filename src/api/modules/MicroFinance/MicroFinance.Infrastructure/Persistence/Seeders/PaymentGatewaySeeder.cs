@@ -47,7 +47,7 @@ internal static class PaymentGatewaySeeder
                 minTransactionAmount: gw.MinAmount,
                 maxTransactionAmount: gw.MaxAmount);
 
-            gateway.ConfigureFeatures(
+            gateway.Update(
                 supportsRefunds: true,
                 supportsRecurring: gw.Bank,
                 supportsMobileWallet: gw.Mobile,

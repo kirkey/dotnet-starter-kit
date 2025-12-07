@@ -40,10 +40,9 @@ internal static class ApprovalWorkflowSeeder
                 code: wf.Code,
                 name: wf.Name,
                 entityType: wf.Entity,
-                description: wf.Desc,
-                numberOfSteps: wf.Steps,
-                minAmount: wf.MinAmount,
-                maxAmount: wf.MaxAmount);
+                numberOfLevels: wf.Steps);
+            
+            workflow.WithAmountThresholds(wf.MinAmount, wf.MaxAmount);
 
             workflow.Activate();
             await context.ApprovalWorkflows.AddAsync(workflow, cancellationToken).ConfigureAwait(false);
