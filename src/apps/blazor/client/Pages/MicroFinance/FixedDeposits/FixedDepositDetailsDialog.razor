@@ -1,0 +1,164 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.FixedDeposits
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6">Fixed Deposit Details</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Primary">@Deposit.CertificateNumber</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Member</MudText>
+                    <MudText Typo="Typo.body1">@Deposit.MemberName</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Status</MudText>
+                    <MudChip Color="@GetStatusColor(Deposit.Status)" Size="Size.Small">@Deposit.Status</MudChip>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mt-2"><strong>Deposit Details</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Principal Amount</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Primary">@Deposit.PrincipalAmount.ToString("N2")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Interest Rate</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Info">@Deposit.InterestRate.ToString("N2")%</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Term</MudText>
+                    <MudText Typo="Typo.h5">@Deposit.TermMonths months</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mt-2"><strong>Dates</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Deposit Date</MudText>
+                    <MudText Typo="Typo.body1">@Deposit.DepositDate.ToString("yyyy-MM-dd")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Maturity Date</MudText>
+                    <MudText Typo="Typo.body1">@Deposit.MaturityDate.ToString("yyyy-MM-dd")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Days to Maturity</MudText>
+                    <MudText Typo="Typo.body1">@GetDaysToMaturity()</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mt-2"><strong>Interest Details</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Interest Payout</MudText>
+                    <MudText Typo="Typo.body1">@(Deposit.InterestPayoutFrequency ?? "At Maturity")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Accrued Interest</MudText>
+                    <MudText Typo="Typo.body1">@(Deposit.AccruedInterest?.ToString("N2") ?? CalculateAccruedInterest().ToString("N2"))</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Maturity Value</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Success">@CalculateMaturityValue().ToString("N2")</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mt-2"><strong>Renewal Options</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Auto-Renew</MudText>
+                    <MudChip Color="@(Deposit.AutoRenew ? Color.Success : Color.Default)" Size="Size.Small">
+                        @(Deposit.AutoRenew ? "Yes" : "No")
+                    </MudChip>
+                </MudItem>
+
+                @if (Deposit.AutoRenew && Deposit.RenewalTermMonths.HasValue)
+                {
+                    <MudItem xs="12" md="6">
+                        <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Renewal Term</MudText>
+                        <MudText Typo="Typo.body1">@Deposit.RenewalTermMonths months</MudText>
+                    </MudItem>
+                }
+
+                @if (!string.IsNullOrEmpty(Deposit.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Notes</MudText>
+                        <MudText Typo="Typo.body2">@Deposit.Notes</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] 
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public FixedDepositResponse Deposit { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+
+    private Color GetStatusColor(string status) => status switch
+    {
+        "Active" => Color.Success,
+        "Matured" => Color.Info,
+        "Withdrawn" => Color.Warning,
+        "Renewed" => Color.Primary,
+        _ => Color.Default
+    };
+
+    private string GetDaysToMaturity()
+    {
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        var days = Deposit.MaturityDate.DayNumber - today.DayNumber;
+        if (days < 0) return "Matured";
+        if (days == 0) return "Today";
+        return $"{days} days";
+    }
+
+    private decimal CalculateAccruedInterest()
+    {
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        var depositDate = Deposit.DepositDate;
+        var daysElapsed = Math.Max(0, today.DayNumber - depositDate.DayNumber);
+        var dailyRate = Deposit.InterestRate / 100 / 365;
+        return Deposit.PrincipalAmount * dailyRate * daysElapsed;
+    }
+
+    private decimal CalculateMaturityValue()
+    {
+        var annualRate = Deposit.InterestRate / 100;
+        var termYears = Deposit.TermMonths / 12.0m;
+        var interest = Deposit.PrincipalAmount * annualRate * termYears;
+        return Deposit.PrincipalAmount + interest;
+    }
+}

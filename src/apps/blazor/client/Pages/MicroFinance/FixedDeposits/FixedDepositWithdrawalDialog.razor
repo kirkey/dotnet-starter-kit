@@ -1,0 +1,98 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.FixedDeposits
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Withdraw Fixed Deposit</MudText>
+            <MudText Typo="Typo.body2">Certificate: @Deposit.CertificateNumber (@Deposit.MemberName)</MudText>
+            
+            <MudDivider />
+
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Principal Amount</MudText>
+                    <MudText Typo="Typo.h6">@Deposit.PrincipalAmount.ToString("N2")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Earned Interest</MudText>
+                    <MudText Typo="Typo.h6" Color="Color.Info">@_earnedInterest.ToString("N2")</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Total Payout</MudText>
+                    <MudText Typo="Typo.h4" Color="Color.Success">@_totalPayout.ToString("N2")</MudText>
+                </MudItem>
+            </MudGrid>
+
+            @if (Deposit.Status != "Matured")
+            {
+                <MudAlert Severity="Severity.Warning" Dense="true">
+                    <strong>Early Withdrawal:</strong> This deposit has not yet matured. Early withdrawal may result in reduced interest.
+                </MudAlert>
+            }
+
+            <MudSelect T="string"
+                       @bind-Value="_payoutMethod"
+                       Label="Payout Method"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Cash")">Cash</MudSelectItem>
+                <MudSelectItem Value="@("TransferToSavings")">Transfer to Savings Account</MudSelectItem>
+                <MudSelectItem Value="@("Check")">Check</MudSelectItem>
+            </MudSelect>
+
+            <MudTextField @bind-Value="_notes"
+                          Label="Withdrawal Notes"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">
+            Confirm Withdrawal
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] 
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public FixedDepositResponse Deposit { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Toast { get; set; } = null!;
+
+    private decimal _earnedInterest;
+    private decimal _totalPayout;
+    private string _payoutMethod = "Cash";
+    private string? _notes;
+
+    protected override void OnInitialized()
+    {
+        // Calculate interest based on actual days held
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        var endDate = Deposit.Status == "Matured" ? Deposit.MaturityDate : today;
+        var daysHeld = Math.Max(0, endDate.DayNumber - Deposit.DepositDate.DayNumber);
+        
+        var dailyRate = Deposit.InterestRate / 100 / 365;
+        _earnedInterest = Deposit.PrincipalAmount * dailyRate * daysHeld;
+        _totalPayout = Deposit.PrincipalAmount + _earnedInterest;
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private Task Submit()
+    {
+        Toast.Add($"Fixed deposit withdrawn. Payout: {_totalPayout:N2} via {_payoutMethod}.", Severity.Success);
+        MudDialog.Close(DialogResult.Ok(true));
+        return Task.CompletedTask;
+    }
+}

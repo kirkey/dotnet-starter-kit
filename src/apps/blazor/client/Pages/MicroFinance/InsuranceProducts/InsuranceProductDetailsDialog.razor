@@ -1,0 +1,114 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InsuranceProducts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6">@Product.Name</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Primary">@Product.Code</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Status</MudText>
+                    <MudChip Color="@GetStatusColor(Product.Status)" Size="Size.Small">@Product.Status</MudChip>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Insurance Type</MudText>
+                    <MudChip Color="Color.Info" Size="Size.Small">@Product.InsuranceType</MudChip>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Provider</MudText>
+                    <MudText Typo="Typo.body1">@(Product.Provider ?? "N/A")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Currency</MudText>
+                    <MudText Typo="Typo.body1">@(Product.CurrencyCode ?? "PHP")</MudText>
+                </MudItem>
+
+                @if (!string.IsNullOrEmpty(Product.Description))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Description</MudText>
+                        <MudText Typo="Typo.body2">@Product.Description</MudText>
+                    </MudItem>
+                }
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mt-2"><strong>Coverage Details</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Minimum Coverage</MudText>
+                    <MudText Typo="Typo.body1">@Product.MinCoverage.ToString("N2")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Maximum Coverage</MudText>
+                    <MudText Typo="Typo.body1">@Product.MaxCoverage.ToString("N2")</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mt-2"><strong>Premium Details</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Premium Rate</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Primary">@Product.PremiumRate.ToString("P2")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Premium Frequency</MudText>
+                    <MudText Typo="Typo.body1">@(Product.PremiumFrequency ?? "N/A")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Waiting Period</MudText>
+                    <MudText Typo="Typo.body1">@Product.WaitingPeriodDays days</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mt-2"><strong>Policy Settings</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Mandatory with Loan</MudText>
+                    <MudChip Color="@(Product.MandatoryWithLoan ? Color.Warning : Color.Default)" Size="Size.Small">
+                        @(Product.MandatoryWithLoan ? "Yes - Required" : "No - Optional")
+                    </MudChip>
+                </MudItem>
+            </MudGrid>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] 
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public InsuranceProductResponse Product { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+
+    private Color GetStatusColor(string status) => status switch
+    {
+        "Active" => Color.Success,
+        "Inactive" => Color.Warning,
+        "Discontinued" => Color.Error,
+        _ => Color.Default
+    };
+}

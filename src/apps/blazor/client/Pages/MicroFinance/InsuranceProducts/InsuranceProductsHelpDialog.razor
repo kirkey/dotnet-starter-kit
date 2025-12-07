@@ -1,0 +1,178 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InsuranceProducts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Insurance Products Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What is Micro-Insurance?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Micro-Insurance</MudText>
+                        <MudText Typo="Typo.body2">
+                            Micro-insurance provides affordable protection to low-income members against specific risks.
+                            Products are designed with low premiums, simple terms, and fast claims processing.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Types of Micro-Insurance:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Life Insurance:</strong> Death benefit to beneficiaries<br/>
+                                • <strong>Health Insurance:</strong> Medical expense coverage<br/>
+                                • <strong>Crop Insurance:</strong> Agricultural crop protection<br/>
+                                • <strong>Livestock Insurance:</strong> Animal asset protection<br/>
+                                • <strong>Property Insurance:</strong> Home and asset coverage
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Purpose:</strong> Protects vulnerable members from financial shocks that could push them into poverty.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Credit Life Insurance">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Loan Protection Coverage</MudText>
+                        <MudText Typo="Typo.body2">
+                            Credit life insurance is often mandatory with loans. It pays off the outstanding loan 
+                            balance if the borrower dies or becomes disabled.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Features:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Coverage equals outstanding loan balance<br/>
+                                • Premium usually deducted from loan disbursement<br/>
+                                • Protects both borrower's family and MFI<br/>
+                                • May include disability coverage
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Premium Calculation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Premium = Loan Amount × Premium Rate × Term (in years)<br/><br/>
+                                Example: ₱50,000 loan, 0.5% rate, 1 year term<br/>
+                                Premium = 50,000 × 0.005 × 1 = ₱250
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Premium Rates">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Premium Calculation</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Premium Rate:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Expressed as a percentage of the coverage amount. For example, a 1% rate on 
+                                ₱100,000 coverage means ₱1,000 premium.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Premium Frequencies:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Single:</strong> One-time payment upfront<br/>
+                                • <strong>Monthly:</strong> Paid with loan installments<br/>
+                                • <strong>Quarterly:</strong> Every 3 months<br/>
+                                • <strong>Annually:</strong> Once per year
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Regulation:</strong> Premium rates may be regulated by insurance authority.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Coverage Limits">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Minimum and Maximum Coverage</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Minimum Coverage:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                The smallest amount of coverage a member can purchase. 
+                                Should be meaningful enough to provide actual protection.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Maximum Coverage:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Upper limit to manage risk exposure. May be set by:
+                                <br/>• MFI risk appetite
+                                <br/>• Reinsurance arrangements
+                                <br/>• Regulatory requirements
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Waiting Period:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Days after policy starts before claims can be made. 
+                                Prevents adverse selection and fraud.
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating an Insurance Product">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Step-by-Step Guide</MudText>
+                        
+                        <ol>
+                            <li><MudText Typo="Typo.caption">Click the <strong>+</strong> button to open the form</MudText></li>
+                            <li><MudText Typo="Typo.caption">Enter a unique <strong>Product Code</strong> (e.g., INS-CREDIT-LIFE)</MudText></li>
+                            <li><MudText Typo="Typo.caption">Provide <strong>Product Name</strong> and select <strong>Insurance Type</strong></MudText></li>
+                            <li><MudText Typo="Typo.caption">Enter <strong>Provider/Underwriter</strong> name</MudText></li>
+                            <li><MudText Typo="Typo.caption">Configure <strong>Coverage Limits</strong> (min/max)</MudText></li>
+                            <li><MudText Typo="Typo.caption">Set <strong>Premium Rate</strong> and <strong>Frequency</strong></MudText></li>
+                            <li><MudText Typo="Typo.caption">Set <strong>Waiting Period</strong> and <strong>Mandatory with Loan</strong> flag</MudText></li>
+                            <li><MudText Typo="Typo.caption">Click <strong>Save</strong> to create the product</MudText></li>
+                        </ol>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] 
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

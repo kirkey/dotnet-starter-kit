@@ -1,0 +1,164 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.ShareProducts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Share Products Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Share Products?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Member Shares</MudText>
+                        <MudText Typo="Typo.body2">
+                            Share products define ownership stakes in the microfinance institution. 
+                            Members purchase shares to become part-owners and may receive dividends based on profitability.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Concepts:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Nominal Value:</strong> Face value of each share as stated in constitution<br/>
+                                • <strong>Current Price:</strong> Market price for buying shares (may differ from nominal)<br/>
+                                • <strong>Dividends:</strong> Annual distribution of profits to shareholders<br/>
+                                • <strong>Voting Rights:</strong> Shareholders typically get votes at AGM
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Cooperative Model:</strong> In cooperatives, one member = one vote regardless of shares held.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Share Requirements">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Membership and Share Ownership</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Minimum Shares:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Most MFIs require members to purchase a minimum number of shares to become eligible for services. 
+                                This creates member commitment and builds institutional capital.
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Maximum Shares:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Setting a maximum prevents concentration of ownership and maintains democratic control.
+                                Leave empty if no maximum limit applies.
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Regulatory:</strong> Check local cooperative or MFI regulations for share capital requirements.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Transfers and Redemptions">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Share Liquidity Options</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Share Transfers:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Allows member-to-member share transfers<br/>
+                                • May require board approval<br/>
+                                • Transferee must meet membership criteria<br/>
+                                • Transfer fees may apply
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Share Redemption:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • MFI buys back shares from member<br/>
+                                • Usually when member exits<br/>
+                                • May be at nominal or current value<br/>
+                                • Subject to capital adequacy requirements
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Dividends">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Profit Distribution</MudText>
+                        <MudText Typo="Typo.body2">
+                            Dividends are distributed from net surplus (profit) based on shares held.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Dividend Calculation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Dividend = (Member's Shares / Total Shares) × Dividend Pool<br/><br/>
+                                Example: Member has 100 shares out of 10,000 total. Dividend pool is ₱100,000.<br/>
+                                Member dividend = (100/10,000) × ₱100,000 = ₱1,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Dividend Frequency:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Annually:</strong> Most common, after AGM approval<br/>
+                                • <strong>Semi-Annually:</strong> Twice per year<br/>
+                                • <strong>Quarterly:</strong> Every three months
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating a Share Product">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Step-by-Step Guide</MudText>
+                        
+                        <ol>
+                            <li><MudText Typo="Typo.caption">Click the <strong>+</strong> button to open the add product form</MudText></li>
+                            <li><MudText Typo="Typo.caption">Enter a unique <strong>Product Code</strong> (e.g., SHARE-REGULAR)</MudText></li>
+                            <li><MudText Typo="Typo.caption">Provide the <strong>Product Name</strong> and <strong>Description</strong></MudText></li>
+                            <li><MudText Typo="Typo.caption">Set <strong>Nominal Value</strong> and <strong>Current Price</strong></MudText></li>
+                            <li><MudText Typo="Typo.caption">Configure <strong>Min/Max Shares</strong> for membership</MudText></li>
+                            <li><MudText Typo="Typo.caption">Enable <strong>Transfer</strong>, <strong>Redemption</strong>, and <strong>Dividends</strong> as needed</MudText></li>
+                            <li><MudText Typo="Typo.caption">Click <strong>Save</strong> to create the product</MudText></li>
+                        </ol>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] 
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

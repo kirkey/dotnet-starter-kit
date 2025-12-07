@@ -1,0 +1,191 @@
+@page "/microfinance/insurance-products"
+
+<PageHeader Title="Insurance Products" Header="Insurance Products" SubHeader="Configure micro-insurance products for member protection." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowInsuranceProductsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="InsuranceProductResponse" TId="DefaultIdType" TRequest="InsuranceProductViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchCode"
+                          Label="Product Code"
+                          Placeholder="Search by code"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchName"
+                          Label="Product Name"
+                          Placeholder="Search by name"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.HealthAndSafety" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchInsuranceType"
+                       Label="Insurance Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Life")">Life Insurance</MudSelectItem>
+                <MudSelectItem Value="@("Health")">Health Insurance</MudSelectItem>
+                <MudSelectItem Value="@("Crop")">Crop Insurance</MudSelectItem>
+                <MudSelectItem Value="@("Livestock")">Livestock Insurance</MudSelectItem>
+                <MudSelectItem Value="@("Property")">Property Insurance</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewProductDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.People" OnClick="@(() => ViewPolicies(entity.Id))">
+            View Policies
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Product Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Code"
+                          For="@(() => context.Code)"
+                          Label="Product Code"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Unique product identifier (e.g., INS-LIFE-001)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Name"
+                          For="@(() => context.Name)"
+                          Label="Product Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="context.InsuranceType"
+                       For="@(() => context.InsuranceType)"
+                       Label="Insurance Type"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Life")">Life Insurance</MudSelectItem>
+                <MudSelectItem Value="@("Health")">Health Insurance</MudSelectItem>
+                <MudSelectItem Value="@("Crop")">Crop Insurance</MudSelectItem>
+                <MudSelectItem Value="@("Livestock")">Livestock Insurance</MudSelectItem>
+                <MudSelectItem Value="@("Property")">Property Insurance</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Provider"
+                          For="@(() => context.Provider)"
+                          Label="Insurance Provider"
+                          Variant="Variant.Filled"
+                          HelperText="Underwriting company" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="context.CurrencyCode"
+                       For="@(() => context.CurrencyCode)"
+                       Label="Currency"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("PHP")">PHP - Philippine Peso</MudSelectItem>
+                <MudSelectItem Value="@("USD")">USD - US Dollar</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Coverage Details</strong></MudText>
+            <MudDivider />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField T="decimal"
+                             @bind-Value="context.MinCoverage"
+                             For="@(() => context.MinCoverage)"
+                             Label="Minimum Coverage"
+                             Variant="Variant.Filled"
+                             Min="0" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField T="decimal"
+                             @bind-Value="context.MaxCoverage"
+                             For="@(() => context.MaxCoverage)"
+                             Label="Maximum Coverage"
+                             Variant="Variant.Filled"
+                             Min="0" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField T="decimal"
+                             @bind-Value="context.PremiumRate"
+                             For="@(() => context.PremiumRate)"
+                             Label="Premium Rate (%)"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             Max="100"
+                             Step="0.01M"
+                             HelperText="Percentage of coverage" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudSelect T="string"
+                       @bind-Value="context.PremiumFrequency"
+                       For="@(() => context.PremiumFrequency)"
+                       Label="Premium Frequency"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Single")">Single Premium</MudSelectItem>
+                <MudSelectItem Value="@("Monthly")">Monthly</MudSelectItem>
+                <MudSelectItem Value="@("Quarterly")">Quarterly</MudSelectItem>
+                <MudSelectItem Value="@("Annually")">Annually</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Policy Settings</strong></MudText>
+            <MudDivider />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="int"
+                             @bind-Value="context.WaitingPeriodDays"
+                             For="@(() => context.WaitingPeriodDays)"
+                             Label="Waiting Period (Days)"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             HelperText="Days before coverage starts" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Value="context.MandatoryWithLoan"
+                       For="@(() => context.MandatoryWithLoan)"
+                       Label="Mandatory with Loan"
+                       Color="Color.Primary" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
