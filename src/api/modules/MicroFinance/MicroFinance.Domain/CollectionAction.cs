@@ -126,8 +126,6 @@ public class CollectionAction : AuditableEntity, IAggregateRoot
     /// <summary>Gets the outcome of the action.</summary>
     public string Outcome { get; private set; } = default!;
 
-    /// <summary>Gets the description of what occurred.</summary>
-    public string? Description { get; private set; }
 
     /// <summary>Gets the promised payment amount (if applicable).</summary>
     public decimal? PromisedAmount { get; private set; }

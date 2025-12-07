@@ -42,7 +42,6 @@ public sealed class Document : AuditableEntity, IAggregateRoot
     public const string EntityGuarantor = "Guarantor";
     public const string EntityGroup = "Group";
 
-    public string Name { get; private set; } = default!;
     public string DocumentType { get; private set; } = default!;
     public string? Category { get; private set; }
     public string Status { get; private set; } = StatusActive;
@@ -51,7 +50,6 @@ public sealed class Document : AuditableEntity, IAggregateRoot
     public string FilePath { get; private set; } = default!;
     public string? MimeType { get; private set; }
     public long FileSizeBytes { get; private set; }
-    public string? Description { get; private set; }
     public string? OriginalFileName { get; private set; }
     public DateOnly? IssueDate { get; private set; }
     public DateOnly? ExpiryDate { get; private set; }

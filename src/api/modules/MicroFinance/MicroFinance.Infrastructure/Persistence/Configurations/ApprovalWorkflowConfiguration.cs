@@ -13,11 +13,6 @@ internal sealed class ApprovalWorkflowConfiguration : IEntityTypeConfiguration<A
         builder.Property(x => x.Code)
             .HasMaxLength(ApprovalWorkflowConstants.CodeMaxLength);
 
-        builder.Property(x => x.Name)
-            .HasMaxLength(ApprovalWorkflowConstants.NameMaxLength);
-
-        builder.Property(x => x.Description)
-            .HasMaxLength(ApprovalWorkflowConstants.DescriptionMaxLength);
 
         builder.Property(x => x.EntityType)
             .HasMaxLength(ApprovalWorkflowConstants.EntityTypeMaxLength);

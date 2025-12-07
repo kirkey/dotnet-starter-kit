@@ -98,8 +98,6 @@ public sealed class LoanOfficerAssignment : AuditableEntity, IAggregateRoot
 
     /// <summary>
     /// Additional notes.
-    /// </summary>
-    public string? Notes { get; private set; }
 
     // Navigation properties
     public Staff Staff { get; private set; } = null!;

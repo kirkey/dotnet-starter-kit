@@ -27,9 +27,7 @@ public sealed class CustomerSegment : AuditableEntity, IAggregateRoot
     public const string TypeValue = "Value";
     public const string TypeLifecycle = "Lifecycle";
 
-    public string Name { get; private set; } = default!;
     public string Code { get; private set; } = default!;
-    public string? Description { get; private set; }
     public string Status { get; private set; } = StatusActive;
     public string SegmentType { get; private set; } = default!;
     public string? SegmentCriteria { get; private set; }

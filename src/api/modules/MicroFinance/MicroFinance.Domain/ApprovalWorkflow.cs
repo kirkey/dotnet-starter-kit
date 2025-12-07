@@ -62,11 +62,6 @@ public class ApprovalWorkflow : AuditableEntity, IAggregateRoot
     /// <summary>Gets the unique workflow code.</summary>
     public string Code { get; private set; } = default!;
 
-    /// <summary>Gets the workflow name.</summary>
-    public string Name { get; private set; } = default!;
-
-    /// <summary>Gets the workflow description.</summary>
-    public string? Description { get; private set; }
 
     /// <summary>Gets the entity type this workflow applies to.</summary>
     public string EntityType { get; private set; } = default!;

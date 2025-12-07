@@ -88,11 +88,6 @@ public class MemberGroup : AuditableEntity, IAggregateRoot
     /// <summary>Gets the unique group code.</summary>
     public string Code { get; private set; } = default!;
 
-    /// <summary>Gets the group name.</summary>
-    public string Name { get; private set; } = default!;
-
-    /// <summary>Gets the group description.</summary>
-    public string? Description { get; private set; }
 
     /// <summary>Gets the date the group was formed.</summary>
     public DateOnly FormationDate { get; private set; }

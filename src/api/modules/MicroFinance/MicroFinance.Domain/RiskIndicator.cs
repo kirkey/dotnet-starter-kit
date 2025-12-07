@@ -66,15 +66,6 @@ public sealed class RiskIndicator : AuditableEntity, IAggregateRoot
     /// </summary>
     public string Code { get; private set; } = string.Empty;
 
-    /// <summary>
-    /// Display name of the indicator.
-    /// </summary>
-    public string Name { get; private set; } = string.Empty;
-
-    /// <summary>
-    /// Detailed description.
-    /// </summary>
-    public string? Description { get; private set; }
 
     /// <summary>
     /// Calculation formula (if applicable).
@@ -157,9 +148,6 @@ public sealed class RiskIndicator : AuditableEntity, IAggregateRoot
     public string Status { get; private set; } = StatusActive;
 
     /// <summary>
-    /// Additional notes.
-    /// </summary>
-    public string? Notes { get; private set; }
 
     // Navigation properties
     public RiskCategory RiskCategory { get; private set; } = null!;

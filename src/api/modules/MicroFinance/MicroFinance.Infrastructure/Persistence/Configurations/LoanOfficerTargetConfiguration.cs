@@ -49,8 +49,6 @@ internal sealed class LoanOfficerTargetConfiguration : IEntityTypeConfiguration<
         builder.Property(x => x.StretchBonus)
             .HasPrecision(18, 2);
 
-        builder.Property(x => x.Notes)
-            .HasMaxLength(LoanOfficerTarget.MaxLengths.Notes);
 
         // Relationships
         builder.HasOne(x => x.Staff)

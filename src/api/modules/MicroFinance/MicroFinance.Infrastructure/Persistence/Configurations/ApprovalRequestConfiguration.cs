@@ -16,6 +16,32 @@ internal sealed class ApprovalRequestConfiguration : IEntityTypeConfiguration<Ap
         builder.Property(x => x.Status)
             .HasMaxLength(128);
 
-        builder.HasIndex(x => x.Status);
+        builder.Property(x => x.RequestNumber)
+            .IsRequired()
+            .HasMaxLength(64);
+
+        builder.Property(x => x.EntityType)
+            .IsRequired()
+            .HasMaxLength(64);
+
+        // Relationships
+        builder.HasOne(x => x.Workflow)
+            .WithMany()
+            .HasForeignKey(x => x.WorkflowId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Indexes
+        builder.HasIndex(x => x.RequestNumber)
+            .IsUnique()
+            .HasDatabaseName("IX_ApprovalRequests_RequestNumber");
+
+        builder.HasIndex(x => x.WorkflowId)
+            .HasDatabaseName("IX_ApprovalRequests_WorkflowId");
+
+        builder.HasIndex(x => new { x.EntityType, x.EntityId })
+            .HasDatabaseName("IX_ApprovalRequests_Entity");
+
+        builder.HasIndex(x => x.Status)
+            .HasDatabaseName("IX_ApprovalRequests_Status");
     }
 }

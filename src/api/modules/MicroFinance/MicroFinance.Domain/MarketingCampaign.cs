@@ -34,9 +34,7 @@ public sealed class MarketingCampaign : AuditableEntity, IAggregateRoot
     public const string TypeCrossSell = "CrossSell";
     public const string TypeReactivation = "Reactivation";
 
-    public string Name { get; private set; } = default!;
     public string Code { get; private set; } = default!;
-    public string? Description { get; private set; }
     public string CampaignType { get; private set; } = default!;
     public string Status { get; private set; } = StatusDraft;
     public DateOnly StartDate { get; private set; }

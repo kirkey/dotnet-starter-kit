@@ -49,11 +49,6 @@ public class CollectionStrategy : AuditableEntity, IAggregateRoot
     /// <summary>Gets the strategy code.</summary>
     public string Code { get; private set; } = default!;
 
-    /// <summary>Gets the strategy name.</summary>
-    public string Name { get; private set; } = default!;
-
-    /// <summary>Gets the strategy description.</summary>
-    public string? Description { get; private set; }
 
     /// <summary>Gets the loan product ID (null = applies to all products).</summary>
     public DefaultIdType? LoanProductId { get; private set; }

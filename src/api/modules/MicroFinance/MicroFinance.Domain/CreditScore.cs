@@ -153,10 +153,6 @@ public sealed class CreditScore : AuditableEntity, IAggregateRoot
     /// </summary>
     public string Status { get; private set; } = StatusActive;
 
-    /// <summary>
-    /// Additional notes.
-    /// </summary>
-    public string? Notes { get; private set; }
 
     // Navigation properties
     public Member Member { get; private set; } = null!;

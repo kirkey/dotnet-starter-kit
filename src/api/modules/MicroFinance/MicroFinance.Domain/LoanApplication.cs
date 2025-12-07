@@ -168,9 +168,6 @@ public sealed class LoanApplication : AuditableEntity, IAggregateRoot
     public Guid? LoanId { get; private set; }
 
     /// <summary>
-    /// Additional notes.
-    /// </summary>
-    public string? Notes { get; private set; }
 
     // Navigation properties
     public Member Member { get; private set; } = null!;

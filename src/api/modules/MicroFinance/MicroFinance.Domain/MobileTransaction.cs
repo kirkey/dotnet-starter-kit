@@ -51,7 +51,6 @@ public sealed class MobileTransaction : AuditableEntity, IAggregateRoot
     public string? ProviderResponse { get; private set; }
     public DateTimeOffset InitiatedAt { get; private set; }
     public DateTimeOffset? CompletedAt { get; private set; }
-    public string? Notes { get; private set; }
     public string? FailureReason { get; private set; }
     public Guid? ReversalOfTransactionId { get; private set; }
     public Guid? ReversedByTransactionId { get; private set; }

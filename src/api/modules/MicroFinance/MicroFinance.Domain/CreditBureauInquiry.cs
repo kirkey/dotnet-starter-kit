@@ -118,8 +118,6 @@ public sealed class CreditBureauInquiry : AuditableEntity, IAggregateRoot
 
     /// <summary>
     /// Additional notes.
-    /// </summary>
-    public string? Notes { get; private set; }
 
     // Navigation properties
     public Member Member { get; private set; } = null!;

@@ -30,10 +30,8 @@ public sealed class CollateralType : AuditableEntity, IAggregateRoot
     public const string StatusActive = "Active";
     public const string StatusInactive = "Inactive";
 
-    public string Name { get; private set; } = default!;
     public string Code { get; private set; } = default!;
     public string Category { get; private set; } = default!;
-    public string? Description { get; private set; }
     public string Status { get; private set; } = StatusActive;
     public decimal DefaultLtvPercent { get; private set; }
     public decimal MaxLtvPercent { get; private set; }
@@ -44,7 +42,6 @@ public sealed class CollateralType : AuditableEntity, IAggregateRoot
     public int RevaluationFrequencyMonths { get; private set; }
     public bool RequiresRegistration { get; private set; }
     public string? RequiredDocuments { get; private set; }
-    public string? Notes { get; private set; }
     public int DisplayOrder { get; private set; }
 
     private CollateralType() { }

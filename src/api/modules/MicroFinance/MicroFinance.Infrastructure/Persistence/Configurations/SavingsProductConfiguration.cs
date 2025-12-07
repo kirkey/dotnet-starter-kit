@@ -14,7 +14,24 @@ internal sealed class SavingsProductConfiguration : IEntityTypeConfiguration<Sav
             .IsRequired()
             .HasMaxLength(64);
 
+        builder.Property(x => x.Name)
+            .HasMaxLength(SavingsProduct.NameMaxLength);
+
+        builder.Property(x => x.Description)
+            .HasMaxLength(SavingsProduct.DescriptionMaxLength);
+
+        builder.Property(x => x.InterestCalculation)
+            .HasMaxLength(SavingsProduct.InterestCalculationMaxLength);
+
+        builder.Property(x => x.InterestPostingFrequency)
+            .HasMaxLength(SavingsProduct.InterestPostingFrequencyMaxLength);
+
         builder.Property(x => x.InterestRate).HasPrecision(8, 4);
+        builder.Property(x => x.MinOpeningBalance).HasPrecision(18, 2);
+        builder.Property(x => x.MinBalanceForInterest).HasPrecision(18, 2);
+        builder.Property(x => x.MinWithdrawalAmount).HasPrecision(18, 2);
+        builder.Property(x => x.MaxWithdrawalPerDay).HasPrecision(18, 2);
+        builder.Property(x => x.OverdraftLimit).HasPrecision(18, 2);
 
         // Indexes
         builder.HasIndex(x => x.Code)

@@ -64,10 +64,6 @@ public sealed class LoanOfficerTarget : AuditableEntity, IAggregateRoot
     /// </summary>
     public string TargetType { get; private set; } = string.Empty;
 
-    /// <summary>
-    /// Description of the target.
-    /// </summary>
-    public string? Description { get; private set; }
 
     /// <summary>
     /// Period type (Monthly, Quarterly, Annual, etc.).
@@ -137,7 +133,6 @@ public sealed class LoanOfficerTarget : AuditableEntity, IAggregateRoot
     /// <summary>
     /// Additional notes or context.
     /// </summary>
-    public string? Notes { get; private set; }
 
     // Navigation properties
     public Staff Staff { get; private set; } = null!;

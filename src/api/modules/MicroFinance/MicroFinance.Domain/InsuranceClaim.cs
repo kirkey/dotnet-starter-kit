@@ -73,10 +73,6 @@ public sealed class InsuranceClaim : AuditableEntity, IAggregateRoot
     /// </summary>
     public DateOnly FiledDate { get; private set; }
 
-    /// <summary>
-    /// Description of the incident.
-    /// </summary>
-    public string? Description { get; private set; }
 
     /// <summary>
     /// Amount being claimed.

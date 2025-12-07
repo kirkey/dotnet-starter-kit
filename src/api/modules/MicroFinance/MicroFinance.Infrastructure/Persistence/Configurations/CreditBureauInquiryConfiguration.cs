@@ -31,8 +31,6 @@ internal sealed class CreditBureauInquiryConfiguration : IEntityTypeConfiguratio
         builder.Property(x => x.InquiryCost)
             .HasPrecision(18, 2);
 
-        builder.Property(x => x.Notes)
-            .HasMaxLength(CreditBureauInquiry.MaxLengths.Notes);
 
         // Relationships
         builder.HasOne(x => x.Member)

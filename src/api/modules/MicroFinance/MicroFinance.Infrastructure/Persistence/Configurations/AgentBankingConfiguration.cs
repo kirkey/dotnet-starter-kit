@@ -40,9 +40,63 @@ internal sealed class AgentBankingConfiguration : IEntityTypeConfiguration<Agent
         builder.Property(x => x.MonthlyVolumeProcessed)
             .HasPrecision(18, 2);
 
+        builder.Property(x => x.AgentCode)
+            .IsRequired()
+            .HasMaxLength(64);
+
+        builder.Property(x => x.BusinessName)
+            .IsRequired()
+            .HasMaxLength(256);
+
+        builder.Property(x => x.ContactName)
+            .IsRequired()
+            .HasMaxLength(256);
+
+        builder.Property(x => x.PhoneNumber)
+            .IsRequired()
+            .HasMaxLength(32);
+
+        builder.Property(x => x.Email)
+            .HasMaxLength(256);
+
+        builder.Property(x => x.Address)
+            .HasMaxLength(512);
+
+        builder.Property(x => x.GpsCoordinates)
+            .HasMaxLength(128);
+
+        builder.Property(x => x.Tier)
+            .HasMaxLength(32);
+
+        builder.Property(x => x.DeviceId)
+            .HasMaxLength(256);
+
+        builder.Property(x => x.OperatingHours)
+            .HasMaxLength(256);
+
+        // Relationships
+        builder.HasOne<Branch>()
+            .WithMany()
+            .HasForeignKey(x => x.BranchId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        builder.HasOne<Staff>()
+            .WithMany()
+            .HasForeignKey(x => x.LinkedStaffId)
+            .OnDelete(DeleteBehavior.SetNull);
+
         // Indexes
-        builder.HasIndex(x => x.BranchId);
-        builder.HasIndex(x => x.LinkedStaffId);
-        builder.HasIndex(x => x.Status);
+        builder.HasIndex(x => x.AgentCode)
+            .IsUnique()
+            .HasDatabaseName("IX_AgentBankings_AgentCode");
+
+        builder.HasIndex(x => x.BranchId)
+            .HasDatabaseName("IX_AgentBankings_BranchId");
+
+        builder.HasIndex(x => x.LinkedStaffId)
+            .HasDatabaseName("IX_AgentBankings_LinkedStaffId");
+
+        builder.HasIndex(x => x.Status)
+            .HasDatabaseName("IX_AgentBankings_Status");
     }
 }

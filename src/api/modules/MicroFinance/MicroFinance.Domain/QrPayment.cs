@@ -36,7 +36,6 @@ public sealed class QrPayment : AuditableEntity, IAggregateRoot
     public string Status { get; private set; } = StatusActive;
     public decimal? Amount { get; private set; }
     public string? Reference { get; private set; }
-    public string? Notes { get; private set; }
     public int MaxUses { get; private set; } = 1;
     public int CurrentUses { get; private set; }
     public DateTimeOffset GeneratedAt { get; private set; }
