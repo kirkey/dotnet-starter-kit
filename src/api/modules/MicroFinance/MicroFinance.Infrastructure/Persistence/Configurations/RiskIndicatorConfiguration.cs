@@ -60,7 +60,7 @@ internal sealed class RiskIndicatorConfiguration : IEntityTypeConfiguration<Risk
 
         // Relationships
         builder.HasOne(x => x.RiskCategory)
-            .WithMany()
+            .WithMany(x => x.Indicators)
             .HasForeignKey(x => x.RiskCategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 

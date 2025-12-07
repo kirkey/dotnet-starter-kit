@@ -42,12 +42,12 @@ internal sealed class RiskAlertConfiguration : IEntityTypeConfiguration<RiskAler
 
         // Relationships
         builder.HasOne(x => x.RiskCategory)
-            .WithMany()
+            .WithMany(x => x.Alerts)
             .HasForeignKey(x => x.RiskCategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(x => x.RiskIndicator)
-            .WithMany()
+            .WithMany(x => x.Alerts)
             .HasForeignKey(x => x.RiskIndicatorId)
             .OnDelete(DeleteBehavior.Restrict);
 

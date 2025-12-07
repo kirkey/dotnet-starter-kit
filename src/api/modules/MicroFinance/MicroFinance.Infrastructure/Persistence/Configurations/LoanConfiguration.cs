@@ -37,13 +37,13 @@ internal sealed class LoanConfiguration : IEntityTypeConfiguration<Loan>
         builder.Property(x => x.TotalPaid).HasPrecision(18, 2);
 
         // Relationships
-        builder.HasOne<Member>()
-            .WithMany()
+        builder.HasOne(x => x.Member)
+            .WithMany(x => x.Loans)
             .HasForeignKey(x => x.MemberId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<LoanProduct>()
-            .WithMany()
+        builder.HasOne(x => x.LoanProduct)
+            .WithMany(x => x.Loans)
             .HasForeignKey(x => x.LoanProductId)
             .OnDelete(DeleteBehavior.Restrict);
 

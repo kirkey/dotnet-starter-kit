@@ -24,7 +24,7 @@ internal sealed class LoanOfficerAssignmentConfiguration : IEntityTypeConfigurat
 
         // Relationships
         builder.HasOne(x => x.Staff)
-            .WithMany()
+            .WithMany(x => x.LoanOfficerAssignments)
             .HasForeignKey(x => x.StaffId)
             .OnDelete(DeleteBehavior.Restrict);
 

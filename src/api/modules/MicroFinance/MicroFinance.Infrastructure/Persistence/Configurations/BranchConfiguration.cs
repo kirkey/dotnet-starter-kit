@@ -63,7 +63,7 @@ internal sealed class BranchConfiguration : IEntityTypeConfiguration<Branch>
 
         // Relationships
         builder.HasOne(x => x.ParentBranch)
-            .WithMany()
+            .WithMany(x => x.ChildBranches)
             .HasForeignKey(x => x.ParentBranchId)
             .OnDelete(DeleteBehavior.Restrict);
 

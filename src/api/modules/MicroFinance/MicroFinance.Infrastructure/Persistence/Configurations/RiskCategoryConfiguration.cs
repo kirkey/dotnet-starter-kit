@@ -36,7 +36,7 @@ internal sealed class RiskCategoryConfiguration : IEntityTypeConfiguration<RiskC
 
         // Relationships
         builder.HasOne(x => x.ParentCategory)
-            .WithMany()
+            .WithMany(x => x.SubCategories)
             .HasForeignKey(x => x.ParentCategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 

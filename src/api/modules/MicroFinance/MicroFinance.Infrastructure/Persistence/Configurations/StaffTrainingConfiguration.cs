@@ -48,7 +48,7 @@ internal sealed class StaffTrainingConfiguration : IEntityTypeConfiguration<Staf
 
         // Relationships
         builder.HasOne(x => x.Staff)
-            .WithMany()
+            .WithMany(x => x.Trainings)
             .HasForeignKey(x => x.StaffId)
             .OnDelete(DeleteBehavior.Restrict);
 

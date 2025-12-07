@@ -294,6 +294,52 @@ public static class StoreModule
         builder.Services.AddKeyedScoped<IReadRepository<SalesImport>, StoreRepository<SalesImport>>("store:sales-imports");
         builder.Services.AddKeyedScoped<IRepository<SalesImportItem>, StoreRepository<SalesImportItem>>("store:sales-import-items");
         builder.Services.AddKeyedScoped<IReadRepository<SalesImportItem>, StoreRepository<SalesImportItem>>("store:sales-import-items");
+        
+        // ============================================================================
+        // KEYED REPOSITORY REGISTRATIONS - HANDLER ALIAS KEYS
+        // Some handlers use different key formats than the standard "store:{entity}" pattern.
+        // These are aliases to ensure all handler patterns resolve correctly.
+        // ============================================================================
+        
+        // store:goodsreceipts -> GoodsReceipt (handlers use no hyphen)
+        builder.Services.AddKeyedScoped<IRepository<GoodsReceipt>, StoreRepository<GoodsReceipt>>("store:goodsreceipts");
+        builder.Services.AddKeyedScoped<IReadRepository<GoodsReceipt>, StoreRepository<GoodsReceipt>>("store:goodsreceipts");
+        
+        // store:inventoryreservations -> InventoryReservation (handlers use no hyphen)
+        builder.Services.AddKeyedScoped<IRepository<InventoryReservation>, StoreRepository<InventoryReservation>>("store:inventoryreservations");
+        builder.Services.AddKeyedScoped<IReadRepository<InventoryReservation>, StoreRepository<InventoryReservation>>("store:inventoryreservations");
+        
+        // store:inventorytransactions -> InventoryTransaction (handlers use no hyphen)
+        builder.Services.AddKeyedScoped<IRepository<InventoryTransaction>, StoreRepository<InventoryTransaction>>("store:inventorytransactions");
+        builder.Services.AddKeyedScoped<IReadRepository<InventoryTransaction>, StoreRepository<InventoryTransaction>>("store:inventorytransactions");
+        
+        // store:itemsuppliers -> ItemSupplier (handlers use no hyphen)
+        builder.Services.AddKeyedScoped<IRepository<ItemSupplier>, StoreRepository<ItemSupplier>>("store:itemsuppliers");
+        builder.Services.AddKeyedScoped<IReadRepository<ItemSupplier>, StoreRepository<ItemSupplier>>("store:itemsuppliers");
+        
+        // store:lotnumbers -> LotNumber (handlers use no hyphen)
+        builder.Services.AddKeyedScoped<IRepository<LotNumber>, StoreRepository<LotNumber>>("store:lotnumbers");
+        builder.Services.AddKeyedScoped<IReadRepository<LotNumber>, StoreRepository<LotNumber>>("store:lotnumbers");
+        
+        // store:picklistitems -> PickListItem (handlers use no hyphen)
+        builder.Services.AddKeyedScoped<IRepository<PickListItem>, StoreRepository<PickListItem>>("store:picklistitems");
+        builder.Services.AddKeyedScoped<IReadRepository<PickListItem>, StoreRepository<PickListItem>>("store:picklistitems");
+        
+        // store:picklists -> PickList (handlers use no hyphen)
+        builder.Services.AddKeyedScoped<IRepository<PickList>, StoreRepository<PickList>>("store:picklists");
+        builder.Services.AddKeyedScoped<IReadRepository<PickList>, StoreRepository<PickList>>("store:picklists");
+        
+        // store:putawaytasks -> PutAwayTask (handlers use no hyphen)
+        builder.Services.AddKeyedScoped<IRepository<PutAwayTask>, StoreRepository<PutAwayTask>>("store:putawaytasks");
+        builder.Services.AddKeyedScoped<IReadRepository<PutAwayTask>, StoreRepository<PutAwayTask>>("store:putawaytasks");
+        
+        // store:serialnumbers -> SerialNumber (handlers use no hyphen)
+        builder.Services.AddKeyedScoped<IRepository<SerialNumber>, StoreRepository<SerialNumber>>("store:serialnumbers");
+        builder.Services.AddKeyedScoped<IReadRepository<SerialNumber>, StoreRepository<SerialNumber>>("store:serialnumbers");
+        
+        // store:stocklevels -> StockLevel (handlers use no hyphen)
+        builder.Services.AddKeyedScoped<IRepository<StockLevel>, StoreRepository<StockLevel>>("store:stocklevels");
+        builder.Services.AddKeyedScoped<IReadRepository<StockLevel>, StoreRepository<StockLevel>>("store:stocklevels");
 
         return builder;
     }

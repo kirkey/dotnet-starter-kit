@@ -18,7 +18,7 @@ internal sealed class FixedDepositConfiguration : IEntityTypeConfiguration<Fixed
         builder.Property(x => x.InterestEarned).HasPrecision(18, 2);
 
         // Relationships
-        builder.HasOne<Member>()
+        builder.HasOne(x => x.Member)
             .WithMany()
             .HasForeignKey(x => x.MemberId)
             .OnDelete(DeleteBehavior.Restrict);

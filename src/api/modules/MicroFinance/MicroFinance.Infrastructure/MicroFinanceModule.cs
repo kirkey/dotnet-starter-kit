@@ -11,54 +11,15 @@ public static class MicroFinanceModule
     /// <summary>
     /// Registers all microfinance endpoints with the application.
     /// All endpoints are auto-discovered by Carter via ICarterModule implementations.
-    /// This method is kept for backward compatibility but can be empty.
     /// </summary>
-    /// <param name="app">The endpoint route builder to configure.</param>
-    /// <returns>The configured endpoint route builder.</returns>
     public static IEndpointRouteBuilder MapMicroFinanceEndpoints(this IEndpointRouteBuilder app)
     {
-        // All microfinance endpoints are now auto-discovered by Carter via ICarterModule implementations.
-        // No manual endpoint mapping is required.
-        // Individual endpoint classes implement ICarterModule and are automatically registered.
         return app;
     }
 
     /// <summary>
     /// Registers microfinance services with dependency injection container.
     /// </summary>
-    /// <param name="builder">The web application builder.</param>
-    /// <returns>The configured web application builder.</returns>
-    /// <remarks>
-    /// This method registers all microfinance repositories and services in a highly organized structure:
-    /// 
-    /// 1. CORE SERVICES - DbContext, initializers, and business services
-    /// 
-    /// 2. NON-KEYED REPOSITORIES - Standard DI registrations (72 aggregate root entities)
-    ///    Used by MediatR handlers that don't use [FromKeyedServices] attribute
-    /// 
-    /// 3. KEYED REPOSITORIES - Keyed DI registrations with "microfinance" key
-    ///    For handlers that use [FromKeyedServices("microfinance")]
-    ///    
-    /// Entity Groups:
-    /// - Member Management: Member, MemberGroup, GroupMembership
-    /// - Loan Management: Loan, LoanProduct, LoanApplication, LoanRepayment, LoanSchedule, etc.
-    /// - Savings Management: SavingsProduct, SavingsAccount, SavingsTransaction, FixedDeposit
-    /// - Share Management: ShareProduct, ShareAccount, ShareTransaction
-    /// - Fee Management: FeeDefinition, FeeCharge
-    /// - Collateral Management: CollateralType, CollateralValuation, CollateralInsurance, CollateralRelease
-    /// - Collections &amp; Recovery: CollectionCase, CollectionAction, CollectionStrategy, etc.
-    /// - Risk Management: RiskCategory, RiskIndicator, RiskAlert, CreditScore, etc.
-    /// - Insurance: InsuranceProduct, InsurancePolicy, InsuranceClaim
-    /// - Investment: InvestmentProduct, InvestmentAccount, InvestmentTransaction
-    /// - Branch &amp; Staff: Branch, BranchTarget, Staff, StaffTraining, TellerSession, CashVault
-    /// - Digital Banking: MobileWallet, MobileTransaction, AgentBanking, PaymentGateway, QrPayment, UssdSession
-    /// - Workflow &amp; Approvals: ApprovalWorkflow, ApprovalRequest
-    /// - Communication &amp; Documents: Document, KycDocument, CommunicationTemplate, CommunicationLog
-    /// - Customer Relationship: CustomerCase, CustomerSegment, CustomerSurvey, MarketingCampaign
-    /// - Reporting &amp; Configuration: ReportDefinition, ReportGeneration, MfiConfiguration
-    /// 
-    /// Total: ~300+ repository registrations supporting 72 aggregate root entities
-    /// </remarks>
     public static WebApplicationBuilder RegisterMicroFinanceServices(this WebApplicationBuilder builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
@@ -70,13 +31,10 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IDbInitializer, MicroFinanceDbInitializer>();
     
         // ============================================================================
-        // NON-KEYED REPOSITORY REGISTRATIONS (for MediatR handlers without keyed services)
-        // Organized by functional area - 72 aggregate root entities total
+        // NON-KEYED REPOSITORY REGISTRATIONS
         // ============================================================================
         
-        // ----------------------------------------------------------------------------
-        // MEMBER MANAGEMENT (3 entities)
-        // ----------------------------------------------------------------------------
+        // --- Member Management ---
         builder.Services.AddScoped<IRepository<Member>, MicroFinanceRepository<Member>>();
         builder.Services.AddScoped<IReadRepository<Member>, MicroFinanceRepository<Member>>();
         builder.Services.AddScoped<IRepository<MemberGroup>, MicroFinanceRepository<MemberGroup>>();
@@ -84,9 +42,7 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IRepository<GroupMembership>, MicroFinanceRepository<GroupMembership>>();
         builder.Services.AddScoped<IReadRepository<GroupMembership>, MicroFinanceRepository<GroupMembership>>();
         
-        // ----------------------------------------------------------------------------
-        // LOAN MANAGEMENT (12 entities)
-        // ----------------------------------------------------------------------------
+        // --- Loan Management ---
         builder.Services.AddScoped<IRepository<Loan>, MicroFinanceRepository<Loan>>();
         builder.Services.AddScoped<IReadRepository<Loan>, MicroFinanceRepository<Loan>>();
         builder.Services.AddScoped<IRepository<LoanApplication>, MicroFinanceRepository<LoanApplication>>();
@@ -112,9 +68,7 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IRepository<LoanWriteOff>, MicroFinanceRepository<LoanWriteOff>>();
         builder.Services.AddScoped<IReadRepository<LoanWriteOff>, MicroFinanceRepository<LoanWriteOff>>();
         
-        // ----------------------------------------------------------------------------
-        // SAVINGS MANAGEMENT (4 entities)
-        // ----------------------------------------------------------------------------
+        // --- Savings Management ---
         builder.Services.AddScoped<IRepository<FixedDeposit>, MicroFinanceRepository<FixedDeposit>>();
         builder.Services.AddScoped<IReadRepository<FixedDeposit>, MicroFinanceRepository<FixedDeposit>>();
         builder.Services.AddScoped<IRepository<SavingsAccount>, MicroFinanceRepository<SavingsAccount>>();
@@ -124,9 +78,7 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IRepository<SavingsTransaction>, MicroFinanceRepository<SavingsTransaction>>();
         builder.Services.AddScoped<IReadRepository<SavingsTransaction>, MicroFinanceRepository<SavingsTransaction>>();
         
-        // ----------------------------------------------------------------------------
-        // SHARE MANAGEMENT (3 entities)
-        // ----------------------------------------------------------------------------
+        // --- Share Management ---
         builder.Services.AddScoped<IRepository<ShareAccount>, MicroFinanceRepository<ShareAccount>>();
         builder.Services.AddScoped<IReadRepository<ShareAccount>, MicroFinanceRepository<ShareAccount>>();
         builder.Services.AddScoped<IRepository<ShareProduct>, MicroFinanceRepository<ShareProduct>>();
@@ -134,17 +86,13 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IRepository<ShareTransaction>, MicroFinanceRepository<ShareTransaction>>();
         builder.Services.AddScoped<IReadRepository<ShareTransaction>, MicroFinanceRepository<ShareTransaction>>();
         
-        // ----------------------------------------------------------------------------
-        // FEE MANAGEMENT (2 entities)
-        // ----------------------------------------------------------------------------
+        // --- Fee Management ---
         builder.Services.AddScoped<IRepository<FeeCharge>, MicroFinanceRepository<FeeCharge>>();
         builder.Services.AddScoped<IReadRepository<FeeCharge>, MicroFinanceRepository<FeeCharge>>();
         builder.Services.AddScoped<IRepository<FeeDefinition>, MicroFinanceRepository<FeeDefinition>>();
         builder.Services.AddScoped<IReadRepository<FeeDefinition>, MicroFinanceRepository<FeeDefinition>>();
         
-        // ----------------------------------------------------------------------------
-        // COLLATERAL MANAGEMENT (4 entities)
-        // ----------------------------------------------------------------------------
+        // --- Collateral Management ---
         builder.Services.AddScoped<IRepository<CollateralInsurance>, MicroFinanceRepository<CollateralInsurance>>();
         builder.Services.AddScoped<IReadRepository<CollateralInsurance>, MicroFinanceRepository<CollateralInsurance>>();
         builder.Services.AddScoped<IRepository<CollateralRelease>, MicroFinanceRepository<CollateralRelease>>();
@@ -154,9 +102,7 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IRepository<CollateralValuation>, MicroFinanceRepository<CollateralValuation>>();
         builder.Services.AddScoped<IReadRepository<CollateralValuation>, MicroFinanceRepository<CollateralValuation>>();
         
-        // ----------------------------------------------------------------------------
-        // COLLECTIONS & RECOVERY (6 entities)
-        // ----------------------------------------------------------------------------
+        // --- Collections & Recovery ---
         builder.Services.AddScoped<IRepository<CollectionAction>, MicroFinanceRepository<CollectionAction>>();
         builder.Services.AddScoped<IReadRepository<CollectionAction>, MicroFinanceRepository<CollectionAction>>();
         builder.Services.AddScoped<IRepository<CollectionCase>, MicroFinanceRepository<CollectionCase>>();
@@ -170,9 +116,7 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IRepository<PromiseToPay>, MicroFinanceRepository<PromiseToPay>>();
         builder.Services.AddScoped<IReadRepository<PromiseToPay>, MicroFinanceRepository<PromiseToPay>>();
         
-        // ----------------------------------------------------------------------------
-        // RISK MANAGEMENT & CREDIT (7 entities)
-        // ----------------------------------------------------------------------------
+        // --- Risk Management & Credit ---
         builder.Services.AddScoped<IRepository<AmlAlert>, MicroFinanceRepository<AmlAlert>>();
         builder.Services.AddScoped<IReadRepository<AmlAlert>, MicroFinanceRepository<AmlAlert>>();
         builder.Services.AddScoped<IRepository<CreditBureauInquiry>, MicroFinanceRepository<CreditBureauInquiry>>();
@@ -188,9 +132,7 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IRepository<RiskIndicator>, MicroFinanceRepository<RiskIndicator>>();
         builder.Services.AddScoped<IReadRepository<RiskIndicator>, MicroFinanceRepository<RiskIndicator>>();
         
-        // ----------------------------------------------------------------------------
-        // INSURANCE MANAGEMENT (3 entities)
-        // ----------------------------------------------------------------------------
+        // --- Insurance Management ---
         builder.Services.AddScoped<IRepository<InsuranceClaim>, MicroFinanceRepository<InsuranceClaim>>();
         builder.Services.AddScoped<IReadRepository<InsuranceClaim>, MicroFinanceRepository<InsuranceClaim>>();
         builder.Services.AddScoped<IRepository<InsurancePolicy>, MicroFinanceRepository<InsurancePolicy>>();
@@ -198,9 +140,7 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IRepository<InsuranceProduct>, MicroFinanceRepository<InsuranceProduct>>();
         builder.Services.AddScoped<IReadRepository<InsuranceProduct>, MicroFinanceRepository<InsuranceProduct>>();
         
-        // ----------------------------------------------------------------------------
-        // INVESTMENT MANAGEMENT (3 entities)
-        // ----------------------------------------------------------------------------
+        // --- Investment Management ---
         builder.Services.AddScoped<IRepository<InvestmentAccount>, MicroFinanceRepository<InvestmentAccount>>();
         builder.Services.AddScoped<IReadRepository<InvestmentAccount>, MicroFinanceRepository<InvestmentAccount>>();
         builder.Services.AddScoped<IRepository<InvestmentProduct>, MicroFinanceRepository<InvestmentProduct>>();
@@ -208,9 +148,7 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IRepository<InvestmentTransaction>, MicroFinanceRepository<InvestmentTransaction>>();
         builder.Services.AddScoped<IReadRepository<InvestmentTransaction>, MicroFinanceRepository<InvestmentTransaction>>();
         
-        // ----------------------------------------------------------------------------
-        // BRANCH & STAFF MANAGEMENT (6 entities)
-        // ----------------------------------------------------------------------------
+        // --- Branch & Staff Management ---
         builder.Services.AddScoped<IRepository<Branch>, MicroFinanceRepository<Branch>>();
         builder.Services.AddScoped<IReadRepository<Branch>, MicroFinanceRepository<Branch>>();
         builder.Services.AddScoped<IRepository<BranchTarget>, MicroFinanceRepository<BranchTarget>>();
@@ -224,9 +162,7 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IRepository<TellerSession>, MicroFinanceRepository<TellerSession>>();
         builder.Services.AddScoped<IReadRepository<TellerSession>, MicroFinanceRepository<TellerSession>>();
         
-        // ----------------------------------------------------------------------------
-        // DIGITAL BANKING & PAYMENTS (6 entities)
-        // ----------------------------------------------------------------------------
+        // --- Digital Banking & Payments ---
         builder.Services.AddScoped<IRepository<AgentBanking>, MicroFinanceRepository<AgentBanking>>();
         builder.Services.AddScoped<IReadRepository<AgentBanking>, MicroFinanceRepository<AgentBanking>>();
         builder.Services.AddScoped<IRepository<MobileTransaction>, MicroFinanceRepository<MobileTransaction>>();
@@ -240,17 +176,13 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IRepository<UssdSession>, MicroFinanceRepository<UssdSession>>();
         builder.Services.AddScoped<IReadRepository<UssdSession>, MicroFinanceRepository<UssdSession>>();
         
-        // ----------------------------------------------------------------------------
-        // WORKFLOW & APPROVALS (2 entities)
-        // ----------------------------------------------------------------------------
+        // --- Workflow & Approvals ---
         builder.Services.AddScoped<IRepository<ApprovalRequest>, MicroFinanceRepository<ApprovalRequest>>();
         builder.Services.AddScoped<IReadRepository<ApprovalRequest>, MicroFinanceRepository<ApprovalRequest>>();
         builder.Services.AddScoped<IRepository<ApprovalWorkflow>, MicroFinanceRepository<ApprovalWorkflow>>();
         builder.Services.AddScoped<IReadRepository<ApprovalWorkflow>, MicroFinanceRepository<ApprovalWorkflow>>();
         
-        // ----------------------------------------------------------------------------
-        // COMMUNICATION & DOCUMENTS (4 entities)
-        // ----------------------------------------------------------------------------
+        // --- Communication & Documents ---
         builder.Services.AddScoped<IRepository<CommunicationLog>, MicroFinanceRepository<CommunicationLog>>();
         builder.Services.AddScoped<IReadRepository<CommunicationLog>, MicroFinanceRepository<CommunicationLog>>();
         builder.Services.AddScoped<IRepository<CommunicationTemplate>, MicroFinanceRepository<CommunicationTemplate>>();
@@ -260,9 +192,7 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IRepository<KycDocument>, MicroFinanceRepository<KycDocument>>();
         builder.Services.AddScoped<IReadRepository<KycDocument>, MicroFinanceRepository<KycDocument>>();
         
-        // ----------------------------------------------------------------------------
-        // CUSTOMER RELATIONSHIP MANAGEMENT (4 entities)
-        // ----------------------------------------------------------------------------
+        // --- Customer Relationship Management ---
         builder.Services.AddScoped<IRepository<CustomerCase>, MicroFinanceRepository<CustomerCase>>();
         builder.Services.AddScoped<IReadRepository<CustomerCase>, MicroFinanceRepository<CustomerCase>>();
         builder.Services.AddScoped<IRepository<CustomerSegment>, MicroFinanceRepository<CustomerSegment>>();
@@ -272,9 +202,7 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IRepository<MarketingCampaign>, MicroFinanceRepository<MarketingCampaign>>();
         builder.Services.AddScoped<IReadRepository<MarketingCampaign>, MicroFinanceRepository<MarketingCampaign>>();
         
-        // ----------------------------------------------------------------------------
-        // REPORTING & CONFIGURATION (3 entities)
-        // ----------------------------------------------------------------------------
+        // --- Reporting & Configuration ---
         builder.Services.AddScoped<IRepository<MfiConfiguration>, MicroFinanceRepository<MfiConfiguration>>();
         builder.Services.AddScoped<IReadRepository<MfiConfiguration>, MicroFinanceRepository<MfiConfiguration>>();
         builder.Services.AddScoped<IRepository<ReportDefinition>, MicroFinanceRepository<ReportDefinition>>();
@@ -283,228 +211,192 @@ public static class MicroFinanceModule
         builder.Services.AddScoped<IReadRepository<ReportGeneration>, MicroFinanceRepository<ReportGeneration>>();
         
         // ============================================================================
-        // KEYED REPOSITORY REGISTRATIONS - GENERIC "microfinance" KEY
-        // For handlers that use [FromKeyedServices("microfinance")]
-        // Organized by functional area - 72 aggregate root entities total
+        // KEYED REPOSITORY REGISTRATIONS - ENTITY-SPECIFIC KEYS
+        // For handlers using [FromKeyedServices("microfinance:{entity}")]
         // ============================================================================
         
-        // ----------------------------------------------------------------------------
-        // MEMBER MANAGEMENT (3 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<Member>, MicroFinanceRepository<Member>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<Member>, MicroFinanceRepository<Member>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<MemberGroup>, MicroFinanceRepository<MemberGroup>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<MemberGroup>, MicroFinanceRepository<MemberGroup>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<GroupMembership>, MicroFinanceRepository<GroupMembership>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<GroupMembership>, MicroFinanceRepository<GroupMembership>>("microfinance");
+        // --- Member Management ---
+        builder.Services.AddKeyedScoped<IRepository<Member>, MicroFinanceRepository<Member>>("microfinance:members");
+        builder.Services.AddKeyedScoped<IReadRepository<Member>, MicroFinanceRepository<Member>>("microfinance:members");
+        builder.Services.AddKeyedScoped<IRepository<MemberGroup>, MicroFinanceRepository<MemberGroup>>("microfinance:membergroups");
+        builder.Services.AddKeyedScoped<IReadRepository<MemberGroup>, MicroFinanceRepository<MemberGroup>>("microfinance:membergroups");
+        builder.Services.AddKeyedScoped<IRepository<GroupMembership>, MicroFinanceRepository<GroupMembership>>("microfinance:groupmemberships");
+        builder.Services.AddKeyedScoped<IReadRepository<GroupMembership>, MicroFinanceRepository<GroupMembership>>("microfinance:groupmemberships");
         
-        // ----------------------------------------------------------------------------
-        // LOAN MANAGEMENT (12 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<Loan>, MicroFinanceRepository<Loan>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<Loan>, MicroFinanceRepository<Loan>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<LoanApplication>, MicroFinanceRepository<LoanApplication>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<LoanApplication>, MicroFinanceRepository<LoanApplication>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<LoanCollateral>, MicroFinanceRepository<LoanCollateral>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<LoanCollateral>, MicroFinanceRepository<LoanCollateral>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<LoanDisbursementTranche>, MicroFinanceRepository<LoanDisbursementTranche>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<LoanDisbursementTranche>, MicroFinanceRepository<LoanDisbursementTranche>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<LoanGuarantor>, MicroFinanceRepository<LoanGuarantor>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<LoanGuarantor>, MicroFinanceRepository<LoanGuarantor>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<LoanOfficerAssignment>, MicroFinanceRepository<LoanOfficerAssignment>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<LoanOfficerAssignment>, MicroFinanceRepository<LoanOfficerAssignment>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<LoanOfficerTarget>, MicroFinanceRepository<LoanOfficerTarget>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<LoanOfficerTarget>, MicroFinanceRepository<LoanOfficerTarget>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<LoanProduct>, MicroFinanceRepository<LoanProduct>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<LoanProduct>, MicroFinanceRepository<LoanProduct>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<LoanRepayment>, MicroFinanceRepository<LoanRepayment>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<LoanRepayment>, MicroFinanceRepository<LoanRepayment>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<LoanRestructure>, MicroFinanceRepository<LoanRestructure>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<LoanRestructure>, MicroFinanceRepository<LoanRestructure>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<LoanSchedule>, MicroFinanceRepository<LoanSchedule>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<LoanSchedule>, MicroFinanceRepository<LoanSchedule>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<LoanWriteOff>, MicroFinanceRepository<LoanWriteOff>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<LoanWriteOff>, MicroFinanceRepository<LoanWriteOff>>("microfinance");
+        // --- Loan Management ---
+        builder.Services.AddKeyedScoped<IRepository<Loan>, MicroFinanceRepository<Loan>>("microfinance:loans");
+        builder.Services.AddKeyedScoped<IReadRepository<Loan>, MicroFinanceRepository<Loan>>("microfinance:loans");
+        builder.Services.AddKeyedScoped<IRepository<LoanApplication>, MicroFinanceRepository<LoanApplication>>("microfinance:loanapplications");
+        builder.Services.AddKeyedScoped<IReadRepository<LoanApplication>, MicroFinanceRepository<LoanApplication>>("microfinance:loanapplications");
+        builder.Services.AddKeyedScoped<IRepository<LoanCollateral>, MicroFinanceRepository<LoanCollateral>>("microfinance:loancollaterals");
+        builder.Services.AddKeyedScoped<IReadRepository<LoanCollateral>, MicroFinanceRepository<LoanCollateral>>("microfinance:loancollaterals");
+        builder.Services.AddKeyedScoped<IRepository<LoanDisbursementTranche>, MicroFinanceRepository<LoanDisbursementTranche>>("microfinance:loandisbursementtranches");
+        builder.Services.AddKeyedScoped<IReadRepository<LoanDisbursementTranche>, MicroFinanceRepository<LoanDisbursementTranche>>("microfinance:loandisbursementtranches");
+        builder.Services.AddKeyedScoped<IRepository<LoanGuarantor>, MicroFinanceRepository<LoanGuarantor>>("microfinance:loanguarantors");
+        builder.Services.AddKeyedScoped<IReadRepository<LoanGuarantor>, MicroFinanceRepository<LoanGuarantor>>("microfinance:loanguarantors");
+        builder.Services.AddKeyedScoped<IRepository<LoanOfficerAssignment>, MicroFinanceRepository<LoanOfficerAssignment>>("microfinance:loanofficerassignments");
+        builder.Services.AddKeyedScoped<IReadRepository<LoanOfficerAssignment>, MicroFinanceRepository<LoanOfficerAssignment>>("microfinance:loanofficerassignments");
+        builder.Services.AddKeyedScoped<IRepository<LoanOfficerTarget>, MicroFinanceRepository<LoanOfficerTarget>>("microfinance:loanofficertargets");
+        builder.Services.AddKeyedScoped<IReadRepository<LoanOfficerTarget>, MicroFinanceRepository<LoanOfficerTarget>>("microfinance:loanofficertargets");
+        builder.Services.AddKeyedScoped<IRepository<LoanProduct>, MicroFinanceRepository<LoanProduct>>("microfinance:loanproducts");
+        builder.Services.AddKeyedScoped<IReadRepository<LoanProduct>, MicroFinanceRepository<LoanProduct>>("microfinance:loanproducts");
+        builder.Services.AddKeyedScoped<IRepository<LoanRepayment>, MicroFinanceRepository<LoanRepayment>>("microfinance:loanrepayments");
+        builder.Services.AddKeyedScoped<IReadRepository<LoanRepayment>, MicroFinanceRepository<LoanRepayment>>("microfinance:loanrepayments");
+        builder.Services.AddKeyedScoped<IRepository<LoanRestructure>, MicroFinanceRepository<LoanRestructure>>("microfinance:loanrestructures");
+        builder.Services.AddKeyedScoped<IReadRepository<LoanRestructure>, MicroFinanceRepository<LoanRestructure>>("microfinance:loanrestructures");
+        builder.Services.AddKeyedScoped<IRepository<LoanSchedule>, MicroFinanceRepository<LoanSchedule>>("microfinance:loanschedules");
+        builder.Services.AddKeyedScoped<IReadRepository<LoanSchedule>, MicroFinanceRepository<LoanSchedule>>("microfinance:loanschedules");
+        builder.Services.AddKeyedScoped<IRepository<LoanWriteOff>, MicroFinanceRepository<LoanWriteOff>>("microfinance:loanwriteoffs");
+        builder.Services.AddKeyedScoped<IReadRepository<LoanWriteOff>, MicroFinanceRepository<LoanWriteOff>>("microfinance:loanwriteoffs");
         
-        // ----------------------------------------------------------------------------
-        // SAVINGS MANAGEMENT (4 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<FixedDeposit>, MicroFinanceRepository<FixedDeposit>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<FixedDeposit>, MicroFinanceRepository<FixedDeposit>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<SavingsAccount>, MicroFinanceRepository<SavingsAccount>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<SavingsAccount>, MicroFinanceRepository<SavingsAccount>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<SavingsProduct>, MicroFinanceRepository<SavingsProduct>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<SavingsProduct>, MicroFinanceRepository<SavingsProduct>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<SavingsTransaction>, MicroFinanceRepository<SavingsTransaction>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<SavingsTransaction>, MicroFinanceRepository<SavingsTransaction>>("microfinance");
+        // --- Savings Management ---
+        builder.Services.AddKeyedScoped<IRepository<FixedDeposit>, MicroFinanceRepository<FixedDeposit>>("microfinance:fixeddeposits");
+        builder.Services.AddKeyedScoped<IReadRepository<FixedDeposit>, MicroFinanceRepository<FixedDeposit>>("microfinance:fixeddeposits");
+        builder.Services.AddKeyedScoped<IRepository<SavingsAccount>, MicroFinanceRepository<SavingsAccount>>("microfinance:savingsaccounts");
+        builder.Services.AddKeyedScoped<IReadRepository<SavingsAccount>, MicroFinanceRepository<SavingsAccount>>("microfinance:savingsaccounts");
+        builder.Services.AddKeyedScoped<IRepository<SavingsProduct>, MicroFinanceRepository<SavingsProduct>>("microfinance:savingsproducts");
+        builder.Services.AddKeyedScoped<IReadRepository<SavingsProduct>, MicroFinanceRepository<SavingsProduct>>("microfinance:savingsproducts");
+        builder.Services.AddKeyedScoped<IRepository<SavingsTransaction>, MicroFinanceRepository<SavingsTransaction>>("microfinance:savingstransactions");
+        builder.Services.AddKeyedScoped<IReadRepository<SavingsTransaction>, MicroFinanceRepository<SavingsTransaction>>("microfinance:savingstransactions");
         
-        // ----------------------------------------------------------------------------
-        // SHARE MANAGEMENT (3 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<ShareAccount>, MicroFinanceRepository<ShareAccount>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<ShareAccount>, MicroFinanceRepository<ShareAccount>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<ShareProduct>, MicroFinanceRepository<ShareProduct>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<ShareProduct>, MicroFinanceRepository<ShareProduct>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<ShareTransaction>, MicroFinanceRepository<ShareTransaction>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<ShareTransaction>, MicroFinanceRepository<ShareTransaction>>("microfinance");
+        // --- Share Management ---
+        builder.Services.AddKeyedScoped<IRepository<ShareAccount>, MicroFinanceRepository<ShareAccount>>("microfinance:shareaccounts");
+        builder.Services.AddKeyedScoped<IReadRepository<ShareAccount>, MicroFinanceRepository<ShareAccount>>("microfinance:shareaccounts");
+        builder.Services.AddKeyedScoped<IRepository<ShareProduct>, MicroFinanceRepository<ShareProduct>>("microfinance:shareproducts");
+        builder.Services.AddKeyedScoped<IReadRepository<ShareProduct>, MicroFinanceRepository<ShareProduct>>("microfinance:shareproducts");
+        builder.Services.AddKeyedScoped<IRepository<ShareTransaction>, MicroFinanceRepository<ShareTransaction>>("microfinance:sharetransactions");
+        builder.Services.AddKeyedScoped<IReadRepository<ShareTransaction>, MicroFinanceRepository<ShareTransaction>>("microfinance:sharetransactions");
         
-        // ----------------------------------------------------------------------------
-        // FEE MANAGEMENT (2 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<FeeCharge>, MicroFinanceRepository<FeeCharge>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<FeeCharge>, MicroFinanceRepository<FeeCharge>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<FeeDefinition>, MicroFinanceRepository<FeeDefinition>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<FeeDefinition>, MicroFinanceRepository<FeeDefinition>>("microfinance");
+        // --- Fee Management ---
+        builder.Services.AddKeyedScoped<IRepository<FeeCharge>, MicroFinanceRepository<FeeCharge>>("microfinance:feecharges");
+        builder.Services.AddKeyedScoped<IReadRepository<FeeCharge>, MicroFinanceRepository<FeeCharge>>("microfinance:feecharges");
+        builder.Services.AddKeyedScoped<IRepository<FeeDefinition>, MicroFinanceRepository<FeeDefinition>>("microfinance:feedefinitions");
+        builder.Services.AddKeyedScoped<IReadRepository<FeeDefinition>, MicroFinanceRepository<FeeDefinition>>("microfinance:feedefinitions");
         
-        // ----------------------------------------------------------------------------
-        // COLLATERAL MANAGEMENT (4 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<CollateralInsurance>, MicroFinanceRepository<CollateralInsurance>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CollateralInsurance>, MicroFinanceRepository<CollateralInsurance>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<CollateralRelease>, MicroFinanceRepository<CollateralRelease>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CollateralRelease>, MicroFinanceRepository<CollateralRelease>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<CollateralType>, MicroFinanceRepository<CollateralType>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CollateralType>, MicroFinanceRepository<CollateralType>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<CollateralValuation>, MicroFinanceRepository<CollateralValuation>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CollateralValuation>, MicroFinanceRepository<CollateralValuation>>("microfinance");
+        // --- Collateral Management ---
+        builder.Services.AddKeyedScoped<IRepository<CollateralInsurance>, MicroFinanceRepository<CollateralInsurance>>("microfinance:collateralinsurances");
+        builder.Services.AddKeyedScoped<IReadRepository<CollateralInsurance>, MicroFinanceRepository<CollateralInsurance>>("microfinance:collateralinsurances");
+        builder.Services.AddKeyedScoped<IRepository<CollateralRelease>, MicroFinanceRepository<CollateralRelease>>("microfinance:collateralreleases");
+        builder.Services.AddKeyedScoped<IReadRepository<CollateralRelease>, MicroFinanceRepository<CollateralRelease>>("microfinance:collateralreleases");
+        builder.Services.AddKeyedScoped<IRepository<CollateralType>, MicroFinanceRepository<CollateralType>>("microfinance:collateraltypes");
+        builder.Services.AddKeyedScoped<IReadRepository<CollateralType>, MicroFinanceRepository<CollateralType>>("microfinance:collateraltypes");
+        builder.Services.AddKeyedScoped<IRepository<CollateralValuation>, MicroFinanceRepository<CollateralValuation>>("microfinance:collateralvaluations");
+        builder.Services.AddKeyedScoped<IReadRepository<CollateralValuation>, MicroFinanceRepository<CollateralValuation>>("microfinance:collateralvaluations");
         
-        // ----------------------------------------------------------------------------
-        // COLLECTIONS & RECOVERY (6 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<CollectionAction>, MicroFinanceRepository<CollectionAction>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CollectionAction>, MicroFinanceRepository<CollectionAction>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<CollectionCase>, MicroFinanceRepository<CollectionCase>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CollectionCase>, MicroFinanceRepository<CollectionCase>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<CollectionStrategy>, MicroFinanceRepository<CollectionStrategy>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CollectionStrategy>, MicroFinanceRepository<CollectionStrategy>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<DebtSettlement>, MicroFinanceRepository<DebtSettlement>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<DebtSettlement>, MicroFinanceRepository<DebtSettlement>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<LegalAction>, MicroFinanceRepository<LegalAction>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<LegalAction>, MicroFinanceRepository<LegalAction>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<PromiseToPay>, MicroFinanceRepository<PromiseToPay>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<PromiseToPay>, MicroFinanceRepository<PromiseToPay>>("microfinance");
+        // --- Collections & Recovery ---
+        builder.Services.AddKeyedScoped<IRepository<CollectionAction>, MicroFinanceRepository<CollectionAction>>("microfinance:collectionactions");
+        builder.Services.AddKeyedScoped<IReadRepository<CollectionAction>, MicroFinanceRepository<CollectionAction>>("microfinance:collectionactions");
+        builder.Services.AddKeyedScoped<IRepository<CollectionCase>, MicroFinanceRepository<CollectionCase>>("microfinance:collectioncases");
+        builder.Services.AddKeyedScoped<IReadRepository<CollectionCase>, MicroFinanceRepository<CollectionCase>>("microfinance:collectioncases");
+        builder.Services.AddKeyedScoped<IRepository<CollectionStrategy>, MicroFinanceRepository<CollectionStrategy>>("microfinance:collectionstrategies");
+        builder.Services.AddKeyedScoped<IReadRepository<CollectionStrategy>, MicroFinanceRepository<CollectionStrategy>>("microfinance:collectionstrategies");
+        builder.Services.AddKeyedScoped<IRepository<DebtSettlement>, MicroFinanceRepository<DebtSettlement>>("microfinance:debtsettlements");
+        builder.Services.AddKeyedScoped<IReadRepository<DebtSettlement>, MicroFinanceRepository<DebtSettlement>>("microfinance:debtsettlements");
+        builder.Services.AddKeyedScoped<IRepository<LegalAction>, MicroFinanceRepository<LegalAction>>("microfinance:legalactions");
+        builder.Services.AddKeyedScoped<IReadRepository<LegalAction>, MicroFinanceRepository<LegalAction>>("microfinance:legalactions");
+        builder.Services.AddKeyedScoped<IRepository<PromiseToPay>, MicroFinanceRepository<PromiseToPay>>("microfinance:promisetopays");
+        builder.Services.AddKeyedScoped<IReadRepository<PromiseToPay>, MicroFinanceRepository<PromiseToPay>>("microfinance:promisetopays");
         
-        // ----------------------------------------------------------------------------
-        // RISK MANAGEMENT & CREDIT (7 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<AmlAlert>, MicroFinanceRepository<AmlAlert>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<AmlAlert>, MicroFinanceRepository<AmlAlert>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<CreditBureauInquiry>, MicroFinanceRepository<CreditBureauInquiry>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CreditBureauInquiry>, MicroFinanceRepository<CreditBureauInquiry>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<CreditBureauReport>, MicroFinanceRepository<CreditBureauReport>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CreditBureauReport>, MicroFinanceRepository<CreditBureauReport>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<CreditScore>, MicroFinanceRepository<CreditScore>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CreditScore>, MicroFinanceRepository<CreditScore>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<RiskAlert>, MicroFinanceRepository<RiskAlert>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<RiskAlert>, MicroFinanceRepository<RiskAlert>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<RiskCategory>, MicroFinanceRepository<RiskCategory>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<RiskCategory>, MicroFinanceRepository<RiskCategory>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<RiskIndicator>, MicroFinanceRepository<RiskIndicator>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<RiskIndicator>, MicroFinanceRepository<RiskIndicator>>("microfinance");
+        // --- Risk Management & Credit ---
+        builder.Services.AddKeyedScoped<IRepository<AmlAlert>, MicroFinanceRepository<AmlAlert>>("microfinance:amlalerts");
+        builder.Services.AddKeyedScoped<IReadRepository<AmlAlert>, MicroFinanceRepository<AmlAlert>>("microfinance:amlalerts");
+        builder.Services.AddKeyedScoped<IRepository<CreditBureauInquiry>, MicroFinanceRepository<CreditBureauInquiry>>("microfinance:creditbureauinquiries");
+        builder.Services.AddKeyedScoped<IReadRepository<CreditBureauInquiry>, MicroFinanceRepository<CreditBureauInquiry>>("microfinance:creditbureauinquiries");
+        builder.Services.AddKeyedScoped<IRepository<CreditBureauReport>, MicroFinanceRepository<CreditBureauReport>>("microfinance:creditbureaureports");
+        builder.Services.AddKeyedScoped<IReadRepository<CreditBureauReport>, MicroFinanceRepository<CreditBureauReport>>("microfinance:creditbureaureports");
+        builder.Services.AddKeyedScoped<IRepository<CreditScore>, MicroFinanceRepository<CreditScore>>("microfinance:creditscores");
+        builder.Services.AddKeyedScoped<IReadRepository<CreditScore>, MicroFinanceRepository<CreditScore>>("microfinance:creditscores");
+        builder.Services.AddKeyedScoped<IRepository<RiskAlert>, MicroFinanceRepository<RiskAlert>>("microfinance:riskalerts");
+        builder.Services.AddKeyedScoped<IReadRepository<RiskAlert>, MicroFinanceRepository<RiskAlert>>("microfinance:riskalerts");
+        builder.Services.AddKeyedScoped<IRepository<RiskCategory>, MicroFinanceRepository<RiskCategory>>("microfinance:riskcategories");
+        builder.Services.AddKeyedScoped<IReadRepository<RiskCategory>, MicroFinanceRepository<RiskCategory>>("microfinance:riskcategories");
+        builder.Services.AddKeyedScoped<IRepository<RiskIndicator>, MicroFinanceRepository<RiskIndicator>>("microfinance:riskindicators");
+        builder.Services.AddKeyedScoped<IReadRepository<RiskIndicator>, MicroFinanceRepository<RiskIndicator>>("microfinance:riskindicators");
         
-        // ----------------------------------------------------------------------------
-        // INSURANCE MANAGEMENT (3 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<InsuranceClaim>, MicroFinanceRepository<InsuranceClaim>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<InsuranceClaim>, MicroFinanceRepository<InsuranceClaim>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<InsurancePolicy>, MicroFinanceRepository<InsurancePolicy>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<InsurancePolicy>, MicroFinanceRepository<InsurancePolicy>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<InsuranceProduct>, MicroFinanceRepository<InsuranceProduct>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<InsuranceProduct>, MicroFinanceRepository<InsuranceProduct>>("microfinance");
+        // --- Insurance Management ---
+        builder.Services.AddKeyedScoped<IRepository<InsuranceClaim>, MicroFinanceRepository<InsuranceClaim>>("microfinance:insuranceclaims");
+        builder.Services.AddKeyedScoped<IReadRepository<InsuranceClaim>, MicroFinanceRepository<InsuranceClaim>>("microfinance:insuranceclaims");
+        builder.Services.AddKeyedScoped<IRepository<InsurancePolicy>, MicroFinanceRepository<InsurancePolicy>>("microfinance:insurancepolicies");
+        builder.Services.AddKeyedScoped<IReadRepository<InsurancePolicy>, MicroFinanceRepository<InsurancePolicy>>("microfinance:insurancepolicies");
+        builder.Services.AddKeyedScoped<IRepository<InsuranceProduct>, MicroFinanceRepository<InsuranceProduct>>("microfinance:insuranceproducts");
+        builder.Services.AddKeyedScoped<IReadRepository<InsuranceProduct>, MicroFinanceRepository<InsuranceProduct>>("microfinance:insuranceproducts");
         
-        // ----------------------------------------------------------------------------
-        // INVESTMENT MANAGEMENT (3 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<InvestmentAccount>, MicroFinanceRepository<InvestmentAccount>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<InvestmentAccount>, MicroFinanceRepository<InvestmentAccount>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<InvestmentProduct>, MicroFinanceRepository<InvestmentProduct>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<InvestmentProduct>, MicroFinanceRepository<InvestmentProduct>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<InvestmentTransaction>, MicroFinanceRepository<InvestmentTransaction>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<InvestmentTransaction>, MicroFinanceRepository<InvestmentTransaction>>("microfinance");
+        // --- Investment Management ---
+        builder.Services.AddKeyedScoped<IRepository<InvestmentAccount>, MicroFinanceRepository<InvestmentAccount>>("microfinance:investmentaccounts");
+        builder.Services.AddKeyedScoped<IReadRepository<InvestmentAccount>, MicroFinanceRepository<InvestmentAccount>>("microfinance:investmentaccounts");
+        builder.Services.AddKeyedScoped<IRepository<InvestmentProduct>, MicroFinanceRepository<InvestmentProduct>>("microfinance:investmentproducts");
+        builder.Services.AddKeyedScoped<IReadRepository<InvestmentProduct>, MicroFinanceRepository<InvestmentProduct>>("microfinance:investmentproducts");
+        builder.Services.AddKeyedScoped<IRepository<InvestmentTransaction>, MicroFinanceRepository<InvestmentTransaction>>("microfinance:investmenttransactions");
+        builder.Services.AddKeyedScoped<IReadRepository<InvestmentTransaction>, MicroFinanceRepository<InvestmentTransaction>>("microfinance:investmenttransactions");
         
-        // ----------------------------------------------------------------------------
-        // BRANCH & STAFF MANAGEMENT (6 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<Branch>, MicroFinanceRepository<Branch>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<Branch>, MicroFinanceRepository<Branch>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<BranchTarget>, MicroFinanceRepository<BranchTarget>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<BranchTarget>, MicroFinanceRepository<BranchTarget>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<CashVault>, MicroFinanceRepository<CashVault>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CashVault>, MicroFinanceRepository<CashVault>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<Staff>, MicroFinanceRepository<Staff>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<Staff>, MicroFinanceRepository<Staff>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<StaffTraining>, MicroFinanceRepository<StaffTraining>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<StaffTraining>, MicroFinanceRepository<StaffTraining>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<TellerSession>, MicroFinanceRepository<TellerSession>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<TellerSession>, MicroFinanceRepository<TellerSession>>("microfinance");
+        // --- Branch & Staff Management ---
+        builder.Services.AddKeyedScoped<IRepository<Branch>, MicroFinanceRepository<Branch>>("microfinance:branches");
+        builder.Services.AddKeyedScoped<IReadRepository<Branch>, MicroFinanceRepository<Branch>>("microfinance:branches");
+        builder.Services.AddKeyedScoped<IRepository<BranchTarget>, MicroFinanceRepository<BranchTarget>>("microfinance:branchtargets");
+        builder.Services.AddKeyedScoped<IReadRepository<BranchTarget>, MicroFinanceRepository<BranchTarget>>("microfinance:branchtargets");
+        builder.Services.AddKeyedScoped<IRepository<CashVault>, MicroFinanceRepository<CashVault>>("microfinance:cashvaults");
+        builder.Services.AddKeyedScoped<IReadRepository<CashVault>, MicroFinanceRepository<CashVault>>("microfinance:cashvaults");
+        builder.Services.AddKeyedScoped<IRepository<Staff>, MicroFinanceRepository<Staff>>("microfinance:staff");
+        builder.Services.AddKeyedScoped<IReadRepository<Staff>, MicroFinanceRepository<Staff>>("microfinance:staff");
+        builder.Services.AddKeyedScoped<IRepository<StaffTraining>, MicroFinanceRepository<StaffTraining>>("microfinance:stafftrainings");
+        builder.Services.AddKeyedScoped<IReadRepository<StaffTraining>, MicroFinanceRepository<StaffTraining>>("microfinance:stafftrainings");
+        builder.Services.AddKeyedScoped<IRepository<TellerSession>, MicroFinanceRepository<TellerSession>>("microfinance:tellersessions");
+        builder.Services.AddKeyedScoped<IReadRepository<TellerSession>, MicroFinanceRepository<TellerSession>>("microfinance:tellersessions");
         
-        // ----------------------------------------------------------------------------
-        // DIGITAL BANKING & PAYMENTS (6 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<AgentBanking>, MicroFinanceRepository<AgentBanking>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<AgentBanking>, MicroFinanceRepository<AgentBanking>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<MobileTransaction>, MicroFinanceRepository<MobileTransaction>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<MobileTransaction>, MicroFinanceRepository<MobileTransaction>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<MobileWallet>, MicroFinanceRepository<MobileWallet>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<MobileWallet>, MicroFinanceRepository<MobileWallet>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<PaymentGateway>, MicroFinanceRepository<PaymentGateway>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<PaymentGateway>, MicroFinanceRepository<PaymentGateway>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<QrPayment>, MicroFinanceRepository<QrPayment>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<QrPayment>, MicroFinanceRepository<QrPayment>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<UssdSession>, MicroFinanceRepository<UssdSession>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<UssdSession>, MicroFinanceRepository<UssdSession>>("microfinance");
+        // --- Digital Banking & Payments ---
+        builder.Services.AddKeyedScoped<IRepository<AgentBanking>, MicroFinanceRepository<AgentBanking>>("microfinance:agentbankings");
+        builder.Services.AddKeyedScoped<IReadRepository<AgentBanking>, MicroFinanceRepository<AgentBanking>>("microfinance:agentbankings");
+        builder.Services.AddKeyedScoped<IRepository<MobileTransaction>, MicroFinanceRepository<MobileTransaction>>("microfinance:mobiletransactions");
+        builder.Services.AddKeyedScoped<IReadRepository<MobileTransaction>, MicroFinanceRepository<MobileTransaction>>("microfinance:mobiletransactions");
+        builder.Services.AddKeyedScoped<IRepository<MobileWallet>, MicroFinanceRepository<MobileWallet>>("microfinance:mobilewallets");
+        builder.Services.AddKeyedScoped<IReadRepository<MobileWallet>, MicroFinanceRepository<MobileWallet>>("microfinance:mobilewallets");
+        builder.Services.AddKeyedScoped<IRepository<PaymentGateway>, MicroFinanceRepository<PaymentGateway>>("microfinance:paymentgateways");
+        builder.Services.AddKeyedScoped<IReadRepository<PaymentGateway>, MicroFinanceRepository<PaymentGateway>>("microfinance:paymentgateways");
+        builder.Services.AddKeyedScoped<IRepository<QrPayment>, MicroFinanceRepository<QrPayment>>("microfinance:qrpayments");
+        builder.Services.AddKeyedScoped<IReadRepository<QrPayment>, MicroFinanceRepository<QrPayment>>("microfinance:qrpayments");
+        builder.Services.AddKeyedScoped<IRepository<UssdSession>, MicroFinanceRepository<UssdSession>>("microfinance:ussdsessions");
+        builder.Services.AddKeyedScoped<IReadRepository<UssdSession>, MicroFinanceRepository<UssdSession>>("microfinance:ussdsessions");
         
-        // ----------------------------------------------------------------------------
-        // WORKFLOW & APPROVALS (2 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<ApprovalRequest>, MicroFinanceRepository<ApprovalRequest>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<ApprovalRequest>, MicroFinanceRepository<ApprovalRequest>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<ApprovalWorkflow>, MicroFinanceRepository<ApprovalWorkflow>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<ApprovalWorkflow>, MicroFinanceRepository<ApprovalWorkflow>>("microfinance");
+        // --- Workflow & Approvals ---
+        builder.Services.AddKeyedScoped<IRepository<ApprovalRequest>, MicroFinanceRepository<ApprovalRequest>>("microfinance:approvalrequests");
+        builder.Services.AddKeyedScoped<IReadRepository<ApprovalRequest>, MicroFinanceRepository<ApprovalRequest>>("microfinance:approvalrequests");
+        builder.Services.AddKeyedScoped<IRepository<ApprovalWorkflow>, MicroFinanceRepository<ApprovalWorkflow>>("microfinance:approvalworkflows");
+        builder.Services.AddKeyedScoped<IReadRepository<ApprovalWorkflow>, MicroFinanceRepository<ApprovalWorkflow>>("microfinance:approvalworkflows");
         
-        // ----------------------------------------------------------------------------
-        // COMMUNICATION & DOCUMENTS (4 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<CommunicationLog>, MicroFinanceRepository<CommunicationLog>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CommunicationLog>, MicroFinanceRepository<CommunicationLog>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<CommunicationTemplate>, MicroFinanceRepository<CommunicationTemplate>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CommunicationTemplate>, MicroFinanceRepository<CommunicationTemplate>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<Document>, MicroFinanceRepository<Document>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<Document>, MicroFinanceRepository<Document>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<KycDocument>, MicroFinanceRepository<KycDocument>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<KycDocument>, MicroFinanceRepository<KycDocument>>("microfinance");
+        // --- Communication & Documents ---
+        builder.Services.AddKeyedScoped<IRepository<CommunicationLog>, MicroFinanceRepository<CommunicationLog>>("microfinance:communicationlogs");
+        builder.Services.AddKeyedScoped<IReadRepository<CommunicationLog>, MicroFinanceRepository<CommunicationLog>>("microfinance:communicationlogs");
+        builder.Services.AddKeyedScoped<IRepository<CommunicationTemplate>, MicroFinanceRepository<CommunicationTemplate>>("microfinance:communicationtemplates");
+        builder.Services.AddKeyedScoped<IReadRepository<CommunicationTemplate>, MicroFinanceRepository<CommunicationTemplate>>("microfinance:communicationtemplates");
+        builder.Services.AddKeyedScoped<IRepository<Document>, MicroFinanceRepository<Document>>("microfinance:documents");
+        builder.Services.AddKeyedScoped<IReadRepository<Document>, MicroFinanceRepository<Document>>("microfinance:documents");
+        builder.Services.AddKeyedScoped<IRepository<KycDocument>, MicroFinanceRepository<KycDocument>>("microfinance:kycdocuments");
+        builder.Services.AddKeyedScoped<IReadRepository<KycDocument>, MicroFinanceRepository<KycDocument>>("microfinance:kycdocuments");
         
-        // ----------------------------------------------------------------------------
-        // CUSTOMER RELATIONSHIP MANAGEMENT (4 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<CustomerCase>, MicroFinanceRepository<CustomerCase>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CustomerCase>, MicroFinanceRepository<CustomerCase>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<CustomerSegment>, MicroFinanceRepository<CustomerSegment>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CustomerSegment>, MicroFinanceRepository<CustomerSegment>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<CustomerSurvey>, MicroFinanceRepository<CustomerSurvey>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<CustomerSurvey>, MicroFinanceRepository<CustomerSurvey>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<MarketingCampaign>, MicroFinanceRepository<MarketingCampaign>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<MarketingCampaign>, MicroFinanceRepository<MarketingCampaign>>("microfinance");
+        // --- Customer Relationship Management ---
+        builder.Services.AddKeyedScoped<IRepository<CustomerCase>, MicroFinanceRepository<CustomerCase>>("microfinance:customercases");
+        builder.Services.AddKeyedScoped<IReadRepository<CustomerCase>, MicroFinanceRepository<CustomerCase>>("microfinance:customercases");
+        builder.Services.AddKeyedScoped<IRepository<CustomerSegment>, MicroFinanceRepository<CustomerSegment>>("microfinance:customersegments");
+        builder.Services.AddKeyedScoped<IReadRepository<CustomerSegment>, MicroFinanceRepository<CustomerSegment>>("microfinance:customersegments");
+        builder.Services.AddKeyedScoped<IRepository<CustomerSurvey>, MicroFinanceRepository<CustomerSurvey>>("microfinance:customersurveys");
+        builder.Services.AddKeyedScoped<IReadRepository<CustomerSurvey>, MicroFinanceRepository<CustomerSurvey>>("microfinance:customersurveys");
+        builder.Services.AddKeyedScoped<IRepository<MarketingCampaign>, MicroFinanceRepository<MarketingCampaign>>("microfinance:marketingcampaigns");
+        builder.Services.AddKeyedScoped<IReadRepository<MarketingCampaign>, MicroFinanceRepository<MarketingCampaign>>("microfinance:marketingcampaigns");
         
-        // ----------------------------------------------------------------------------
-        // REPORTING & CONFIGURATION (3 entities)
-        // ----------------------------------------------------------------------------
-        builder.Services.AddKeyedScoped<IRepository<MfiConfiguration>, MicroFinanceRepository<MfiConfiguration>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<MfiConfiguration>, MicroFinanceRepository<MfiConfiguration>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<ReportDefinition>, MicroFinanceRepository<ReportDefinition>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<ReportDefinition>, MicroFinanceRepository<ReportDefinition>>("microfinance");
-        builder.Services.AddKeyedScoped<IRepository<ReportGeneration>, MicroFinanceRepository<ReportGeneration>>("microfinance");
-        builder.Services.AddKeyedScoped<IReadRepository<ReportGeneration>, MicroFinanceRepository<ReportGeneration>>("microfinance");
+        // --- Reporting & Configuration ---
+        builder.Services.AddKeyedScoped<IRepository<MfiConfiguration>, MicroFinanceRepository<MfiConfiguration>>("microfinance:mficonfigurations");
+        builder.Services.AddKeyedScoped<IReadRepository<MfiConfiguration>, MicroFinanceRepository<MfiConfiguration>>("microfinance:mficonfigurations");
+        builder.Services.AddKeyedScoped<IRepository<ReportDefinition>, MicroFinanceRepository<ReportDefinition>>("microfinance:reportdefinitions");
+        builder.Services.AddKeyedScoped<IReadRepository<ReportDefinition>, MicroFinanceRepository<ReportDefinition>>("microfinance:reportdefinitions");
+        builder.Services.AddKeyedScoped<IRepository<ReportGeneration>, MicroFinanceRepository<ReportGeneration>>("microfinance:reportgenerations");
+        builder.Services.AddKeyedScoped<IReadRepository<ReportGeneration>, MicroFinanceRepository<ReportGeneration>>("microfinance:reportgenerations");
         
         return builder;
     }
 
     /// <summary>
     /// Applies the microfinance module to the web application.
-    /// Currently a no-op placeholder for future middleware or configuration.
     /// </summary>
-    /// <param name="app">The web application instance.</param>
-    /// <returns>The web application for chaining.</returns>
     public static WebApplication UseMicroFinanceModule(this WebApplication app)
     {
         return app;

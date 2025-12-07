@@ -36,7 +36,7 @@ internal sealed class KycDocumentConfiguration : IEntityTypeConfiguration<KycDoc
             .HasMaxLength(4096);
 
         // Relationships
-        builder.HasOne<Member>()
+        builder.HasOne(x => x.Member)
             .WithMany()
             .HasForeignKey(x => x.MemberId)
             .OnDelete(DeleteBehavior.Restrict);

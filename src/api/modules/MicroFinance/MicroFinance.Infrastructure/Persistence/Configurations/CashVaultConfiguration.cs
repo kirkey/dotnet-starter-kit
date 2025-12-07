@@ -42,7 +42,7 @@ internal sealed class CashVaultConfiguration : IEntityTypeConfiguration<CashVaul
 
         // Relationships
         builder.HasOne(x => x.Branch)
-            .WithMany()
+            .WithMany(x => x.CashVaults)
             .HasForeignKey(x => x.BranchId)
             .OnDelete(DeleteBehavior.Restrict);
 

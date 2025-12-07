@@ -36,7 +36,7 @@ internal sealed class CommunicationLogConfiguration : IEntityTypeConfiguration<C
 
         // Relationships
         builder.HasOne(x => x.Template)
-            .WithMany()
+            .WithMany(x => x.Communications)
             .HasForeignKey(x => x.TemplateId)
             .OnDelete(DeleteBehavior.Restrict);
 

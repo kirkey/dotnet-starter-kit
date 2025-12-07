@@ -39,7 +39,7 @@ internal sealed class InsuranceClaimConfiguration : IEntityTypeConfiguration<Ins
 
         // Relationships
         builder.HasOne(x => x.InsurancePolicy)
-            .WithMany()
+            .WithMany(x => x.Claims)
             .HasForeignKey(x => x.InsurancePolicyId)
             .OnDelete(DeleteBehavior.Restrict);
 

@@ -19,13 +19,13 @@ internal sealed class ShareAccountConfiguration : IEntityTypeConfiguration<Share
 
 
         // Relationships
-        builder.HasOne<Member>()
+        builder.HasOne(x => x.Member)
             .WithMany()
             .HasForeignKey(x => x.MemberId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<ShareProduct>()
-            .WithMany()
+        builder.HasOne(x => x.ShareProduct)
+            .WithMany(x => x.ShareAccounts)
             .HasForeignKey(x => x.ShareProductId)
             .OnDelete(DeleteBehavior.Restrict);
 

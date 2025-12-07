@@ -17,8 +17,8 @@ internal sealed class LoanRepaymentConfiguration : IEntityTypeConfiguration<Loan
             .HasMaxLength(32);
 
         // Relationships
-        builder.HasOne<Loan>()
-            .WithMany()
+        builder.HasOne(x => x.Loan)
+            .WithMany(x => x.LoanRepayments)
             .HasForeignKey(x => x.LoanId)
             .OnDelete(DeleteBehavior.Restrict);
 

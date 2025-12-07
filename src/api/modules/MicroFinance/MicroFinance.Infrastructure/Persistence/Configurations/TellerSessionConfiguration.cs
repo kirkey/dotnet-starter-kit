@@ -42,12 +42,12 @@ internal sealed class TellerSessionConfiguration : IEntityTypeConfiguration<Tell
 
         // Relationships
         builder.HasOne(x => x.Branch)
-            .WithMany()
+            .WithMany(x => x.TellerSessions)
             .HasForeignKey(x => x.BranchId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(x => x.CashVault)
-            .WithMany()
+            .WithMany(x => x.TellerSessions)
             .HasForeignKey(x => x.CashVaultId)
             .OnDelete(DeleteBehavior.Restrict);
 

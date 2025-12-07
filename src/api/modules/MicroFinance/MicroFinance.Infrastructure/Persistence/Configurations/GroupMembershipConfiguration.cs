@@ -17,13 +17,13 @@ internal sealed class GroupMembershipConfiguration : IEntityTypeConfiguration<Gr
             .HasMaxLength(32);
 
         // Relationships
-        builder.HasOne<Member>()
+        builder.HasOne(x => x.Member)
             .WithMany()
             .HasForeignKey(x => x.MemberId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<MemberGroup>()
-            .WithMany()
+        builder.HasOne(x => x.Group)
+            .WithMany(x => x.Memberships)
             .HasForeignKey(x => x.GroupId)
             .OnDelete(DeleteBehavior.Restrict);
 

@@ -23,17 +23,17 @@ internal sealed class PromiseToPayConfiguration : IEntityTypeConfiguration<Promi
             .HasMaxLength(4096);
 
         // Relationships
-        builder.HasOne<CollectionCase>()
-            .WithMany()
+        builder.HasOne(x => x.CollectionCase)
+            .WithMany(x => x.PromisesToPay)
             .HasForeignKey(x => x.CollectionCaseId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<Loan>()
+        builder.HasOne(x => x.Loan)
             .WithMany()
             .HasForeignKey(x => x.LoanId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<Member>()
+        builder.HasOne(x => x.Member)
             .WithMany()
             .HasForeignKey(x => x.MemberId)
             .OnDelete(DeleteBehavior.Restrict);

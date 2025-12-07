@@ -14,12 +14,12 @@ internal sealed class LoanGuarantorConfiguration : IEntityTypeConfiguration<Loan
             .HasMaxLength(32);
         
         // Relationships
-        builder.HasOne<Loan>()
-            .WithMany()
+        builder.HasOne(x => x.Loan)
+            .WithMany(x => x.LoanGuarantors)
             .HasForeignKey(x => x.LoanId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<Member>()
+        builder.HasOne(x => x.GuarantorMember)
             .WithMany()
             .HasForeignKey(x => x.GuarantorMemberId)
             .OnDelete(DeleteBehavior.Restrict);

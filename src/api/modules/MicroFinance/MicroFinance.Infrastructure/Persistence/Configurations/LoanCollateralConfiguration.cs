@@ -23,8 +23,8 @@ internal sealed class LoanCollateralConfiguration : IEntityTypeConfiguration<Loa
         builder.Property(x => x.ForcedSaleValue).HasPrecision(18, 2);
 
         // Relationships
-        builder.HasOne<Loan>()
-            .WithMany()
+        builder.HasOne(x => x.Loan)
+            .WithMany(x => x.LoanCollaterals)
             .HasForeignKey(x => x.LoanId)
             .OnDelete(DeleteBehavior.Restrict);
 

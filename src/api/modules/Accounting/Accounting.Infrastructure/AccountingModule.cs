@@ -480,6 +480,56 @@ public static class AccountingModule
         builder.Services.AddKeyedScoped<IRepository<InterCompanyTransaction>, AccountingRepository<InterCompanyTransaction>>("accounting:inter-company-transactions");
         builder.Services.AddKeyedScoped<IReadRepository<InterCompanyTransaction>, AccountingRepository<InterCompanyTransaction>>("accounting:inter-company-transactions");
         
+        // ============================================================================
+        // KEYED REPOSITORY REGISTRATIONS - HANDLER ALIAS KEYS
+        // Some handlers use different key formats than the standard "accounting:{entity}" pattern.
+        // These are aliases to ensure all handler patterns resolve correctly.
+        // ============================================================================
+        
+        // accounting:periods -> AccountingPeriod (handlers use short key)
+        builder.Services.AddKeyedScoped<IRepository<AccountingPeriod>, AccountingRepository<AccountingPeriod>>("accounting:periods");
+        builder.Services.AddKeyedScoped<IReadRepository<AccountingPeriod>, AccountingRepository<AccountingPeriod>>("accounting:periods");
+        
+        // accounting:accounts -> ChartOfAccount (handlers use "accounts" instead of "chart-of-accounts")
+        builder.Services.AddKeyedScoped<IRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:accounts");
+        builder.Services.AddKeyedScoped<IReadRepository<ChartOfAccount>, AccountingRepository<ChartOfAccount>>("accounting:accounts");
+        
+        // accounting:journals -> JournalEntry (handlers use "journals" instead of "journal-entries")
+        builder.Services.AddKeyedScoped<IRepository<JournalEntry>, AccountingRepository<JournalEntry>>("accounting:journals");
+        builder.Services.AddKeyedScoped<IReadRepository<JournalEntry>, AccountingRepository<JournalEntry>>("accounting:journals");
+        
+        // accounting:journal-lines -> JournalEntryLine (handlers use "journal-lines")
+        builder.Services.AddKeyedScoped<IRepository<JournalEntryLine>, AccountingRepository<JournalEntryLine>>("accounting:journal-lines");
+        builder.Services.AddKeyedScoped<IReadRepository<JournalEntryLine>, AccountingRepository<JournalEntryLine>>("accounting:journal-lines");
+        
+        // accounting:costCenters -> CostCenter (handlers use camelCase)
+        builder.Services.AddKeyedScoped<IRepository<CostCenter>, AccountingRepository<CostCenter>>("accounting:costCenters");
+        builder.Services.AddKeyedScoped<IReadRepository<CostCenter>, AccountingRepository<CostCenter>>("accounting:costCenters");
+        
+        // accounting:creditmemos -> CreditMemo (handlers use no hyphen)
+        builder.Services.AddKeyedScoped<IRepository<CreditMemo>, AccountingRepository<CreditMemo>>("accounting:creditmemos");
+        builder.Services.AddKeyedScoped<IReadRepository<CreditMemo>, AccountingRepository<CreditMemo>>("accounting:creditmemos");
+        
+        // accounting:debitmemos -> DebitMemo (handlers use no hyphen)
+        builder.Services.AddKeyedScoped<IRepository<DebitMemo>, AccountingRepository<DebitMemo>>("accounting:debitmemos");
+        builder.Services.AddKeyedScoped<IReadRepository<DebitMemo>, AccountingRepository<DebitMemo>>("accounting:debitmemos");
+        
+        // accounting:rateschedules -> RateSchedule (handlers use no hyphen)
+        builder.Services.AddKeyedScoped<IRepository<RateSchedule>, AccountingRepository<RateSchedule>>("accounting:rateschedules");
+        builder.Services.AddKeyedScoped<IReadRepository<RateSchedule>, AccountingRepository<RateSchedule>>("accounting:rateschedules");
+        
+        // accounting:trial-balance -> TrialBalance (handlers use singular)
+        builder.Services.AddKeyedScoped<IRepository<TrialBalance>, AccountingRepository<TrialBalance>>("accounting:trial-balance");
+        builder.Services.AddKeyedScoped<IReadRepository<TrialBalance>, AccountingRepository<TrialBalance>>("accounting:trial-balance");
+        
+        // accounting:consumption -> Consumption (handlers use singular)
+        builder.Services.AddKeyedScoped<IRepository<Consumption>, AccountingRepository<Consumption>>("accounting:consumption");
+        builder.Services.AddKeyedScoped<IReadRepository<Consumption>, AccountingRepository<Consumption>>("accounting:consumption");
+        
+        // accounting:project-costing -> ProjectCostEntry (handlers use different naming)
+        builder.Services.AddKeyedScoped<IRepository<ProjectCostEntry>, AccountingRepository<ProjectCostEntry>>("accounting:project-costing");
+        builder.Services.AddKeyedScoped<IReadRepository<ProjectCostEntry>, AccountingRepository<ProjectCostEntry>>("accounting:project-costing");
+        
         // Register Mapster mappings
         TypeAdapterConfig.GlobalSettings.Scan(typeof(AccountingMetadata).Assembly);
         

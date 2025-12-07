@@ -21,7 +21,7 @@ internal sealed class ReportGenerationConfiguration : IEntityTypeConfiguration<R
 
         // Relationships
         builder.HasOne(x => x.ReportDefinition)
-            .WithMany()
+            .WithMany(x => x.Generations)
             .HasForeignKey(x => x.ReportDefinitionId)
             .OnDelete(DeleteBehavior.Restrict);
 

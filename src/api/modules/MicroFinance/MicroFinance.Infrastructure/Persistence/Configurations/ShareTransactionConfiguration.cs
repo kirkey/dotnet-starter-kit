@@ -15,8 +15,8 @@ internal sealed class ShareTransactionConfiguration : IEntityTypeConfiguration<S
 
 
         // Relationships
-        builder.HasOne<ShareAccount>()
-            .WithMany()
+        builder.HasOne(x => x.ShareAccount)
+            .WithMany(x => x.Transactions)
             .HasForeignKey(x => x.ShareAccountId)
             .OnDelete(DeleteBehavior.Restrict);
 

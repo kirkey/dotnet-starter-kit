@@ -48,7 +48,7 @@ internal sealed class BranchTargetConfiguration : IEntityTypeConfiguration<Branc
 
         // Relationships
         builder.HasOne(x => x.Branch)
-            .WithMany()
+            .WithMany(x => x.Targets)
             .HasForeignKey(x => x.BranchId)
             .OnDelete(DeleteBehavior.Restrict);
 

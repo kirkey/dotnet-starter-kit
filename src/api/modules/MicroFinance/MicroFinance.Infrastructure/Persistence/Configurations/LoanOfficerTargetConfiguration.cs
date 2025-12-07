@@ -52,7 +52,7 @@ internal sealed class LoanOfficerTargetConfiguration : IEntityTypeConfiguration<
 
         // Relationships
         builder.HasOne(x => x.Staff)
-            .WithMany()
+            .WithMany(x => x.LoanOfficerTargets)
             .HasForeignKey(x => x.StaffId)
             .OnDelete(DeleteBehavior.Restrict);
 

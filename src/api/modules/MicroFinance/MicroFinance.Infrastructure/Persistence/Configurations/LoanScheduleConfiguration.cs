@@ -11,8 +11,8 @@ internal sealed class LoanScheduleConfiguration : IEntityTypeConfiguration<LoanS
         builder.HasKey(x => x.Id);
 
         // Relationships
-        builder.HasOne<Loan>()
-            .WithMany()
+        builder.HasOne(x => x.Loan)
+            .WithMany(x => x.LoanSchedules)
             .HasForeignKey(x => x.LoanId)
             .OnDelete(DeleteBehavior.Restrict);
 

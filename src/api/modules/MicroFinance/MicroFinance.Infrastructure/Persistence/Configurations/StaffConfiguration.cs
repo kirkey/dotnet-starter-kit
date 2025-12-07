@@ -92,7 +92,7 @@ internal sealed class StaffConfiguration : IEntityTypeConfiguration<Staff>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(x => x.ReportingManager)
-            .WithMany()
+            .WithMany(x => x.DirectReports)
             .HasForeignKey(x => x.ReportingManagerId)
             .OnDelete(DeleteBehavior.Restrict);
 

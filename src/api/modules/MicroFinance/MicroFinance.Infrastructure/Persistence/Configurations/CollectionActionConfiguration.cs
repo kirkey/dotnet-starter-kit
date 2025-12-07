@@ -34,7 +34,7 @@ internal sealed class CollectionActionConfiguration : IEntityTypeConfiguration<C
 
         // Relationships
         builder.HasOne(x => x.CollectionCase)
-            .WithMany()
+            .WithMany(x => x.CollectionActions)
             .HasForeignKey(x => x.CollectionCaseId)
             .OnDelete(DeleteBehavior.Restrict);
 
