@@ -100,9 +100,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
-
     private void Cancel() => MudDialog.Cancel();
 
     private void PrintReceipt()

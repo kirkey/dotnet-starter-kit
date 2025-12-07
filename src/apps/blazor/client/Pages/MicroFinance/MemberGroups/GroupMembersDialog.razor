@@ -40,9 +40,6 @@
     [Parameter]
     public MemberGroupResponse Group { get; set; } = null!;
 
-    [Inject]
-    private NavigationManager Navigation { get; set; } = null!;
-
     private void Close() => MudDialog.Close();
 
     private void NavigateToMembers()

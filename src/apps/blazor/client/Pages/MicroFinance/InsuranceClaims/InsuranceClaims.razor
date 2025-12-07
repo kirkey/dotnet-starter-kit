@@ -100,12 +100,13 @@
         </MudItem>
         
         <MudItem xs="12" sm="6">
-            <InsurancePolicyAutocomplete @bind-Value="context.PolicyId"
-                                         Label="Insurance Policy"
-                                         Variant="Variant.Filled"
-                                         Required="true"
-                                         HelperText="Select the policy to claim against"
-                                         Disabled="@(context.Id != DefaultIdType.Empty)" />
+            @* TODO: Create InsurancePolicyAutocomplete component *@
+            <MudTextField @bind-Value="context.PolicyNumber"
+                          Label="Insurance Policy"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Enter the policy number"
+                          Disabled="@(context.Id != DefaultIdType.Empty)" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
             <MudSelect @bind-Value="context.ClaimType"

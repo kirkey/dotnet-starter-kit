@@ -122,19 +122,21 @@
                           Disabled="@(context.Id != DefaultIdType.Empty)" />
         </MudItem>
         <MudItem xs="12" sm="6">
-            <LoanAutocomplete @bind-Value="context.LoanId"
-                              Label="Loan"
-                              Variant="Variant.Filled"
-                              Required="true"
-                              HelperText="Select the delinquent loan"
-                              Disabled="@(context.Id != DefaultIdType.Empty)" />
+            @* TODO: Create LoanAutocomplete component *@
+            <MudTextField @bind-Value="context.LoanNumber"
+                          Label="Loan"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Enter the delinquent loan number"
+                          Disabled="@(context.Id != DefaultIdType.Empty)" />
         </MudItem>
         <MudItem xs="12" sm="6">
-            <MemberAutocomplete @bind-Value="context.MemberId"
-                                Label="Member"
-                                Variant="Variant.Filled"
-                                Required="true"
-                                Disabled="@(context.Id != DefaultIdType.Empty)" />
+            @* TODO: Create MemberAutocomplete component *@
+            <MudTextField @bind-Value="context.MemberName"
+                          Label="Member"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          Disabled="@(context.Id != DefaultIdType.Empty)" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
             <MudNumericField @bind-Value="context.DaysPastDue"

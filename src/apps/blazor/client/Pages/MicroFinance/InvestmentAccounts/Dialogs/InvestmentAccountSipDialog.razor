@@ -75,9 +75,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private Client MicroFinanceClient { get; set; } = null!;
-
     private decimal _amount;
     private string? _frequency;
     private DateTime? _nextDate = DateTime.Today.AddDays(1);
@@ -104,7 +101,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.SetupSipEndpointAsync("1", AccountId, command),
+            async () => await Client.SetupSipEndpointAsync("1", AccountId, command),
             Snackbar,
             successMessage: "SIP setup completed successfully.");
 

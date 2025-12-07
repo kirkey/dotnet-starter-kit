@@ -61,9 +61,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private Client MicroFinanceClient { get; set; } = null!;
-
     private decimal _newEstimatedValue;
     private decimal? _newForcedSaleValue;
     private DateTime? _valuationDate = DateTime.Today;
@@ -85,7 +82,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.UpdateCollateralValuationEndpointAsync("1", CollateralId, command),
+            async () => await Client.UpdateCollateralValuationEndpointAsync("1", CollateralId, command),
             Snackbar,
             successMessage: "Valuation updated successfully.");
 

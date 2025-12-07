@@ -13,11 +13,12 @@
                 </MudText>
             </MudItem>
             <MudItem xs="12">
-                <StaffAutocomplete @bind-Value="_selectedCollectorId"
-                                   Label="Collections Officer"
-                                   Variant="Variant.Outlined"
-                                   Required="true"
-                                   HelperText="Select the officer to assign" />
+                @* TODO: Create StaffAutocomplete component *@
+                <MudTextField @bind-Value="_selectedCollectorName"
+                              Label="Collections Officer"
+                              Variant="Variant.Outlined"
+                              Required="true"
+                              HelperText="Enter the officer name" />
             </MudItem>
         </MudGrid>
     </DialogContent>
@@ -43,6 +44,7 @@
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
     private DefaultIdType _selectedCollectorId;
+    private string? _selectedCollectorName;
 
     private void Cancel() => MudDialog.Cancel();
 

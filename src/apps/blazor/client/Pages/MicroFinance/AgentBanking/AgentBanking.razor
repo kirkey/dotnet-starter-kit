@@ -211,10 +211,11 @@
         @if (context.Id == DefaultIdType.Empty)
         {
             <MudItem xs="12" sm="6" md="4">
-                <BranchAutocomplete @bind-Value="context.BranchId"
-                                    Label="Linked Branch"
-                                    Variant="Variant.Filled"
-                                    HelperText="Optional parent branch" />
+                @* TODO: Create BranchAutocomplete component *@
+                <MudTextField @bind-Value="context.BranchName"
+                              Label="Linked Branch"
+                              Variant="Variant.Filled"
+                              HelperText="Optional parent branch" />
             </MudItem>
         }
     </EditFormContent>

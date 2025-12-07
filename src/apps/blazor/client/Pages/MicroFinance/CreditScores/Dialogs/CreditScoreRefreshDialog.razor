@@ -71,9 +71,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private Client MicroFinanceClient { get; set; } = null!;
-
     private string _scoreType = "Internal";
     private string _scoreModel = "Default";
     private bool _confirmRefresh;
@@ -97,7 +94,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.CreateCreditScoreEndpointAsync("1", command),
+            async () => await Client.CreateCreditScoreEndpointAsync("1", command),
             Snackbar,
             successMessage: "Credit score refreshed successfully.");
 

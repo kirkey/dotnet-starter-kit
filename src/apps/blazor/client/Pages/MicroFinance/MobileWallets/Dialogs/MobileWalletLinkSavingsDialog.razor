@@ -13,12 +13,12 @@
                 </MudText>
             </MudItem>
             <MudItem xs="12">
-                <SavingsAccountAutocomplete @bind-Value="_selectedSavingsAccountId"
-                                            Label="Savings Account"
-                                            Variant="Variant.Outlined"
-                                            Required="true"
-                                            MemberId="MemberId"
-                                            HelperText="Select the savings account to link" />
+                @* TODO: Create SavingsAccountAutocomplete component *@
+                <MudTextField @bind-Value="_selectedSavingsAccountNumber"
+                              Label="Savings Account"
+                              Variant="Variant.Outlined"
+                              Required="true"
+                              HelperText="Enter the savings account number" />
             </MudItem>
             <MudItem xs="12">
                 <MudAlert Severity="Severity.Info">
@@ -57,6 +57,7 @@
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
     private DefaultIdType _selectedSavingsAccountId;
+    private string? _selectedSavingsAccountNumber;
 
     private void Cancel() => MudDialog.Cancel();
 

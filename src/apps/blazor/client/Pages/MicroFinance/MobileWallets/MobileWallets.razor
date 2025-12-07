@@ -95,12 +95,13 @@
         </MudItem>
         
         <MudItem xs="12" sm="6" md="6">
-            <MemberAutocomplete @bind-Value="context.MemberId"
-                                Label="Member"
-                                Variant="Variant.Filled"
-                                Required="true"
-                                HelperText="Select the member who owns this wallet"
-                                Disabled="@(context.Id != DefaultIdType.Empty)" />
+            @* TODO: Create MemberAutocomplete component that binds to DefaultIdType *@
+            <MudTextField @bind-Value="context.MemberName"
+                          Label="Member"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Enter member name"
+                          Disabled="@(context.Id != DefaultIdType.Empty)" />
         </MudItem>
         <MudItem xs="12" sm="6" md="6">
             <MudTextField @bind-Value="context.PhoneNumber"

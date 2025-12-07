@@ -43,9 +43,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private Client MicroFinanceClient { get; set; } = null!;
-
     private bool _confirmVerification;
 
     private void Cancel() => MudDialog.Cancel();
@@ -53,7 +50,7 @@
     private async Task Submit()
     {
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.VerifyLoanCollateralEndpointAsync("1", CollateralId),
+            async () => await Client.VerifyLoanCollateralEndpointAsync("1", CollateralId),
             Snackbar,
             successMessage: "Collateral verified successfully.");
 

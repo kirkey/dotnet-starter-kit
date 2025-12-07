@@ -66,9 +66,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private Client MicroFinanceClient { get; set; } = null!;
-
     private decimal _amount;
     private decimal _gainLoss;
     private string? _notes;
@@ -87,7 +84,7 @@
         };
 
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.RedeemFromAccountEndpointAsync("1", AccountId, command),
+            async () => await Client.RedeemFromAccountEndpointAsync("1", AccountId, command),
             Snackbar,
             successMessage: "Redemption processed successfully.");
 

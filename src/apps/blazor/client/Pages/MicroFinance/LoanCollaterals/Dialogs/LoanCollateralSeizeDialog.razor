@@ -51,9 +51,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private Client MicroFinanceClient { get; set; } = null!;
-
     private string? _seizureReason;
     private bool _confirmSeizure;
 
@@ -64,7 +61,7 @@
     private async Task Submit()
     {
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.SeizeLoanCollateralEndpointAsync("1", CollateralId),
+            async () => await Client.SeizeLoanCollateralEndpointAsync("1", CollateralId),
             Snackbar,
             successMessage: "Collateral seized successfully.");
 

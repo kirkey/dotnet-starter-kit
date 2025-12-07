@@ -107,20 +107,22 @@
         </MudItem>
         
         <MudItem xs="12" sm="6">
-            <MemberAutocomplete @bind-Value="context.MemberId"
-                                Label="Member"
-                                Variant="Variant.Filled"
-                                Required="true"
-                                HelperText="Select the applying member"
-                                Disabled="@(context.Id != DefaultIdType.Empty)" />
+            @* TODO: Create MemberAutocomplete component *@
+            <MudTextField @bind-Value="context.MemberName"
+                          Label="Member"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Enter member name"
+                          Disabled="@(context.Id != DefaultIdType.Empty)" />
         </MudItem>
         <MudItem xs="12" sm="6">
-            <LoanProductAutocomplete @bind-Value="context.LoanProductId"
-                                     Label="Loan Product"
-                                     Variant="Variant.Filled"
-                                     Required="true"
-                                     HelperText="Select loan product"
-                                     Disabled="@(context.Id != DefaultIdType.Empty)" />
+            @* TODO: Create LoanProductAutocomplete component *@
+            <MudTextField @bind-Value="context.LoanProductName"
+                          Label="Loan Product"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Enter loan product"
+                          Disabled="@(context.Id != DefaultIdType.Empty)" />
         </MudItem>
         
         <MudItem xs="12" sm="6" md="4">
@@ -144,10 +146,11 @@
                              Required="true" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MemberGroupAutocomplete @bind-Value="context.MemberGroupId"
-                                     Label="Group (Optional)"
-                                     Variant="Variant.Filled"
-                                     HelperText="For group lending" />
+            @* TODO: Create MemberGroupAutocomplete component *@
+            <MudTextField @bind-Value="context.MemberGroupName"
+                          Label="Group (Optional)"
+                          Variant="Variant.Filled"
+                          HelperText="For group lending" />
         </MudItem>
         <MudItem xs="12">
             <MudTextField @bind-Value="context.Purpose"

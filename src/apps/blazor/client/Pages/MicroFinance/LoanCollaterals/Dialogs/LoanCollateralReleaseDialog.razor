@@ -43,9 +43,6 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
-    [Inject]
-    private Client MicroFinanceClient { get; set; } = null!;
-
     private bool _confirmRelease;
 
     private void Cancel() => MudDialog.Cancel();
@@ -53,7 +50,7 @@
     private async Task Submit()
     {
         await ApiHelper.ExecuteCallGuardedAsync(
-            async () => await MicroFinanceClient.ReleaseLoanCollateralEndpointAsync("1", CollateralId),
+            async () => await Client.ReleaseLoanCollateralEndpointAsync("1", CollateralId),
             Snackbar,
             successMessage: "Collateral released successfully.");
 

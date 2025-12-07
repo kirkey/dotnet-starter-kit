@@ -13,11 +13,12 @@
                 </MudText>
             </MudItem>
             <MudItem xs="12">
-                <StaffAutocomplete @bind-Value="_selectedOfficerId"
-                                   Label="Loan Officer"
-                                   Variant="Variant.Outlined"
-                                   Required="true"
-                                   HelperText="Select the loan officer to assign" />
+                @* TODO: Create StaffAutocomplete component *@
+                <MudTextField @bind-Value="_selectedOfficerName"
+                              Label="Loan Officer"
+                              Variant="Variant.Outlined"
+                              Required="true"
+                              HelperText="Enter the loan officer name" />
             </MudItem>
         </MudGrid>
     </DialogContent>
@@ -43,6 +44,7 @@
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
     private DefaultIdType _selectedOfficerId;
+    private string? _selectedOfficerName;
 
     private void Cancel() => MudDialog.Cancel();
 
