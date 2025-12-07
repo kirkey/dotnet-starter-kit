@@ -86,6 +86,7 @@ public sealed class AccountingDbContext(
     // PERIOD-END & REPORTING
     // ============================================================================
     public DbSet<AccountingPeriod> AccountingPeriods { get; set; } = null!;
+    public DbSet<AccountReconciliation> AccountReconciliations { get; set; } = null!;
     public DbSet<FiscalPeriodClose> FiscalPeriodCloses { get; set; } = null!;
     public DbSet<PostingBatch> PostingBatches { get; set; } = null!;
     public DbSet<RegulatoryReport> RegulatoryReports { get; set; } = null!;
@@ -96,9 +97,11 @@ public sealed class AccountingDbContext(
     // UTILITY-SPECIFIC
     // ============================================================================
     public DbSet<Consumption> Consumption { get; set; } = null!;
+    public DbSet<InterconnectionAgreement> InterconnectionAgreements { get; set; } = null!;
     public DbSet<Member> Members { get; set; } = null!;
     public DbSet<Meter> Meters { get; set; } = null!;
     public DbSet<PatronageCapital> PatronageCapitals { get; set; } = null!;
+    public DbSet<PowerPurchaseAgreement> PowerPurchaseAgreements { get; set; } = null!;
     public DbSet<RateSchedule> RateSchedules { get; set; } = null!;
 
     // ============================================================================
