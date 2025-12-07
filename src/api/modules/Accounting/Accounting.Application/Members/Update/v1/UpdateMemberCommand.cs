@@ -1,9 +1,9 @@
 namespace Accounting.Application.Members.Update.v1;
 
 /// <summary>
-/// Command to update a member account.
+/// Command to update a utility member account.
 /// </summary>
-public sealed record UpdateMemberCommand(
+public sealed record UpdateUtilityMemberCommand(
     DefaultIdType Id,
     string? MemberName = null,
     string? ServiceAddress = null,

@@ -4,7 +4,7 @@ namespace Accounting.Application.Members.Responses;
 /// Response model representing a member entity.
 /// Contains member information including contact details, service information, and account status.
 /// </summary>
-public class MemberResponse
+public class UtilityMemberResponse
 {
     /// <summary>
     /// Unique identifier for the member.

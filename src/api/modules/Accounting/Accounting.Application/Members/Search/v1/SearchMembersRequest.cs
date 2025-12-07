@@ -3,9 +3,9 @@ using Accounting.Application.Members.Responses;
 namespace Accounting.Application.Members.Search.v1;
 
 /// <summary>
-/// Request to search for members with optional filters and pagination.
+/// Request to search for utility members with optional filters and pagination.
 /// </summary>
-public sealed class SearchMembersRequest : PaginationFilter, IRequest<PagedList<MemberResponse>>
+public sealed class SearchUtilityMembersRequest : PaginationFilter, IRequest<PagedList<UtilityMemberResponse>>
 {
     public string? MemberNumber { get; init; }
     public string? MemberName { get; init; }

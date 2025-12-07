@@ -1,14 +1,14 @@
 namespace Accounting.Application.Members.Activate.v1;
 
 /// <summary>
-/// Handler for activating a member account.
+/// Handler for activating a utility member account.
 /// </summary>
-public sealed class ActivateMemberHandler(
+public sealed class ActivateUtilityMemberHandler(
     [FromKeyedServices("accounting:members")] IRepository<Member> repository,
-    ILogger<ActivateMemberHandler> logger)
-    : IRequestHandler<ActivateMemberCommand, DefaultIdType>
+    ILogger<ActivateUtilityMemberHandler> logger)
+    : IRequestHandler<ActivateUtilityMemberCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(ActivateMemberCommand request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(ActivateUtilityMemberCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         

@@ -1,14 +1,14 @@
 namespace Accounting.Application.Members.Deactivate.v1;
 
 /// <summary>
-/// Handler for deactivating a member account.
+/// Handler for deactivating a utility member account.
 /// </summary>
-public sealed class DeactivateMemberHandler(
+public sealed class DeactivateUtilityMemberHandler(
     [FromKeyedServices("accounting:members")] IRepository<Member> repository,
-    ILogger<DeactivateMemberHandler> logger)
-    : IRequestHandler<DeactivateMemberCommand, DefaultIdType>
+    ILogger<DeactivateUtilityMemberHandler> logger)
+    : IRequestHandler<DeactivateUtilityMemberCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(DeactivateMemberCommand request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(DeactivateUtilityMemberCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         

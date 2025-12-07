@@ -1,14 +1,14 @@
 namespace Accounting.Application.Members.UpdateBalance.v1;
 
 /// <summary>
-/// Handler for updating a member's balance.
+/// Handler for updating a utility member's balance.
 /// </summary>
-public sealed class UpdateMemberBalanceHandler(
+public sealed class UpdateUtilityMemberBalanceHandler(
     [FromKeyedServices("accounting:members")] IRepository<Member> repository,
-    ILogger<UpdateMemberBalanceHandler> logger)
-    : IRequestHandler<UpdateMemberBalanceCommand, DefaultIdType>
+    ILogger<UpdateUtilityMemberBalanceHandler> logger)
+    : IRequestHandler<UpdateUtilityMemberBalanceCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(UpdateMemberBalanceCommand request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(UpdateUtilityMemberBalanceCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         

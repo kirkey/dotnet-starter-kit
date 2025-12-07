@@ -3,17 +3,17 @@ using Accounting.Application.Members.Responses;
 namespace Accounting.Application.Members.Get.v1;
 
 /// <summary>
-/// Handler for retrieving a member by ID.
+/// Handler for retrieving a utility member by ID.
 /// </summary>
-public sealed class GetMemberHandler(
+public sealed class GetUtilityMemberHandler(
     [FromKeyedServices("accounting:members")] IReadRepository<Member> repository)
-    : IRequestHandler<GetMemberRequest, MemberResponse>
+    : IRequestHandler<GetUtilityMemberRequest, UtilityMemberResponse>
 {
-    public async Task<MemberResponse> Handle(GetMemberRequest request, CancellationToken cancellationToken)
+    public async Task<UtilityMemberResponse> Handle(GetUtilityMemberRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var spec = new GetMemberByIdSpec(request.Id);
+        var spec = new GetUtilityMemberByIdSpec(request.Id);
         var member = await repository.FirstOrDefaultAsync(spec, cancellationToken).ConfigureAwait(false);
 
         if (member is null)

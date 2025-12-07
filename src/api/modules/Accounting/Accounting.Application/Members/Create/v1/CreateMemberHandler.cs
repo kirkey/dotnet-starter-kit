@@ -1,14 +1,14 @@
 namespace Accounting.Application.Members.Create.v1;
 
 /// <summary>
-/// Handler for creating a new member account.
+/// Handler for creating a new utility member account.
 /// </summary>
-public sealed class CreateMemberHandler(
+public sealed class CreateUtilityMemberHandler(
     [FromKeyedServices("accounting:members")] IRepository<Member> repository,
-    ILogger<CreateMemberHandler> logger)
-    : IRequestHandler<CreateMemberCommand, DefaultIdType>
+    ILogger<CreateUtilityMemberHandler> logger)
+    : IRequestHandler<CreateUtilityMemberCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(CreateUtilityMemberCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

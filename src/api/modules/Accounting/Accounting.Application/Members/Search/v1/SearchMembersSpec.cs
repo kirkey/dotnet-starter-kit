@@ -3,12 +3,12 @@ using Accounting.Application.Members.Responses;
 namespace Accounting.Application.Members.Search.v1;
 
 /// <summary>
-/// Specification for searching members with filtering and pagination.
-/// Projects results to <see cref="MemberResponse"/>.
+/// Specification for searching utility members with filtering and pagination.
+/// Projects results to <see cref="UtilityMemberResponse"/>.
 /// </summary>
-public sealed class SearchMembersSpec : EntitiesByPaginationFilterSpec<Member, MemberResponse>
+public sealed class SearchUtilityMembersSpec : EntitiesByPaginationFilterSpec<Member, UtilityMemberResponse>
 {
-    public SearchMembersSpec(SearchMembersRequest request) : base(request)
+    public SearchUtilityMembersSpec(SearchUtilityMembersRequest request) : base(request)
     {
         Query
             .OrderBy(m => m.MemberNumber, !request.HasOrderBy())

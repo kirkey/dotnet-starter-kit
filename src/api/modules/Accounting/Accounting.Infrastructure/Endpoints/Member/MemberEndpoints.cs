@@ -11,12 +11,12 @@ namespace Accounting.Infrastructure.Endpoints.Member;
 public class MemberEndpoints() : CarterModule
 {
     /// <summary>
-    /// Maps all Member endpoints to the route builder.
+    /// Maps all Utility Member endpoints to the route builder.
     /// Delegates to extension methods for Create, Read, Update, Delete, and business operation endpoints.
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("accounting/member").WithTags("member");
+        var group = app.MapGroup("accounting/utility-members").WithTags("Utility Members");
 
         group.MapMemberActivateEndpoint();
         group.MapMemberCreateEndpoint();

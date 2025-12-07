@@ -1,11 +1,11 @@
 namespace Accounting.Application.Members.Create.v1;
 
 /// <summary>
-/// Validator for CreateMemberCommand.
+/// Validator for CreateUtilityMemberCommand.
 /// </summary>
-public sealed class CreateMemberCommandValidator : AbstractValidator<CreateMemberCommand>
+public sealed class CreateUtilityMemberCommandValidator : AbstractValidator<CreateUtilityMemberCommand>
 {
-    public CreateMemberCommandValidator()
+    public CreateUtilityMemberCommandValidator()
     {
         RuleFor(x => x.MemberNumber)
             .NotEmpty()

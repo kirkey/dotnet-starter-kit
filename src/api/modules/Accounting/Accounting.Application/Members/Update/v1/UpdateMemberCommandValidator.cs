@@ -1,11 +1,11 @@
 namespace Accounting.Application.Members.Update.v1;
 
 /// <summary>
-/// Validator for UpdateMemberCommand.
+/// Validator for UpdateUtilityMemberCommand.
 /// </summary>
-public sealed class UpdateMemberCommandValidator : AbstractValidator<UpdateMemberCommand>
+public sealed class UpdateUtilityMemberCommandValidator : AbstractValidator<UpdateUtilityMemberCommand>
 {
-    public UpdateMemberCommandValidator()
+    public UpdateUtilityMemberCommandValidator()
     {
         RuleFor(x => x.Id)
             .NotEmpty()

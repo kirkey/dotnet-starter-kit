@@ -4,12 +4,12 @@ namespace Accounting.Application.Members.Delete.v1;
 /// Handler for deleting a member account.
 /// Only inactive members with no balances or transaction history can be deleted.
 /// </summary>
-public sealed class DeleteMemberHandler(
+public sealed class DeleteUtilityMemberHandler(
     [FromKeyedServices("accounting:members")] IRepository<Member> repository,
-    ILogger<DeleteMemberHandler> logger)
-    : IRequestHandler<DeleteMemberCommand, DefaultIdType>
+    ILogger<DeleteUtilityMemberHandler> logger)
+    : IRequestHandler<DeleteUtilityMemberCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(DeleteMemberCommand request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(DeleteUtilityMemberCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         

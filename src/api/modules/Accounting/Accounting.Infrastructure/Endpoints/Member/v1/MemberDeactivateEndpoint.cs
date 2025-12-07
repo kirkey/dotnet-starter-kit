@@ -4,7 +4,7 @@ using Shared.Authorization;
 namespace Accounting.Infrastructure.Endpoints.Member.v1;
 
 /// <summary>
-/// Endpoint for deactivating a member.
+/// Endpoint for deactivating a utility member.
 /// </summary>
 public static class MemberDeactivateEndpoint
 {
@@ -12,13 +12,13 @@ public static class MemberDeactivateEndpoint
     {
         group.MapPost("/{id}/deactivate", async (DefaultIdType id, ISender mediator) =>
         {
-            var command = new DeactivateMemberCommand(id);
+            var command = new DeactivateUtilityMemberCommand(id);
             var result = await mediator.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(nameof(MemberDeactivateEndpoint))
-        .WithSummary("Deactivate member")
-        .WithDescription("Deactivates a member account")
+        .WithSummary("Deactivate utility member")
+        .WithDescription("Deactivates a utility member account")
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.Accounting))
         .MapToApiVersion(1);
 

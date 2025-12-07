@@ -4,13 +4,13 @@ using Shared.Authorization;
 namespace Accounting.Infrastructure.Endpoints.Member.v1;
 
 /// <summary>
-/// Endpoint for updating a member's balance.
+/// Endpoint for updating a utility member's balance.
 /// </summary>
 public static class MemberUpdateBalanceEndpoint
 {
     internal static RouteGroupBuilder MapMemberUpdateBalanceEndpoint(this RouteGroupBuilder group)
     {
-        group.MapPut("/{id}/balance", async (DefaultIdType id, UpdateMemberBalanceCommand command, ISender mediator) =>
+        group.MapPut("/{id}/balance", async (DefaultIdType id, UpdateUtilityMemberBalanceCommand command, ISender mediator) =>
         {
             if (id != command.Id)
                 return Results.BadRequest("ID in URL does not match ID in request body");

@@ -4,7 +4,7 @@ using Shared.Authorization;
 namespace Accounting.Infrastructure.Endpoints.Member.v1;
 
 /// <summary>
-/// Endpoint for deleting a member.
+/// Endpoint for deleting a utility member.
 /// </summary>
 public static class MemberDeleteEndpoint
 {
@@ -12,7 +12,7 @@ public static class MemberDeleteEndpoint
     {
         group.MapDelete("/{id}", async (DefaultIdType id, ISender mediator) =>
         {
-            var command = new DeleteMemberCommand(id);
+            var command = new DeleteUtilityMemberCommand(id);
             var result = await mediator.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })

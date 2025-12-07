@@ -3,12 +3,12 @@ namespace Accounting.Application.Members.Update.v1;
 /// <summary>
 /// Handler for updating a member account.
 /// </summary>
-public sealed class UpdateMemberHandler(
+public sealed class UpdateUtilityMemberHandler(
     [FromKeyedServices("accounting:members")] IRepository<Member> repository,
-    ILogger<UpdateMemberHandler> logger)
-    : IRequestHandler<UpdateMemberCommand, DefaultIdType>
+    ILogger<UpdateUtilityMemberHandler> logger)
+    : IRequestHandler<UpdateUtilityMemberCommand, DefaultIdType>
 {
-    public async Task<DefaultIdType> Handle(UpdateMemberCommand request, CancellationToken cancellationToken)
+    public async Task<DefaultIdType> Handle(UpdateUtilityMemberCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         

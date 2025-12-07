@@ -3,7 +3,7 @@ namespace Accounting.Application.Members.Create.v1;
 /// <summary>
 /// Command to create a new member account.
 /// </summary>
-public sealed record CreateMemberCommand(
+public sealed record CreateUtilityMemberCommand(
     string MemberNumber,
     string MemberName,
     string ServiceAddress,
