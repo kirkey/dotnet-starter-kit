@@ -1,0 +1,206 @@
+@page "/microfinance/loan-products"
+
+<PageHeader Title="Loan Products" Header="Loan Products" SubHeader="Configure and manage loan product offerings and terms." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowLoanProductsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="LoanProductResponse" TId="DefaultIdType" TRequest="LoanProductViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchCode"
+                          Label="Product Code"
+                          Placeholder="Search by code"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Code" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchName"
+                          Label="Product Name"
+                          Placeholder="Search by name"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Label" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="bool?"
+                       @bind-Value="@SearchIsActive"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((bool?)true)">Active</MudSelectItem>
+                <MudSelectItem Value="@((bool?)false)">Inactive</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (_canActivate)
+        {
+            @if (entity.IsActive)
+            {
+                <MudMenuItem Icon="@Icons.Material.Filled.Block" OnClick="@(() => DeactivateProduct(entity.Id))">
+                    Deactivate
+                </MudMenuItem>
+            }
+            else
+            {
+                <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => ActivateProduct(entity.Id))">
+                    Activate
+                </MudMenuItem>
+            }
+        }
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Product Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Code"
+                          For="@(() => context.Code)"
+                          Label="Product Code"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Unique product identifier (e.g., LP001)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Name"
+                          For="@(() => context.Name)"
+                          Label="Product Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.InterestMethod"
+                       For="@(() => context.InterestMethod)"
+                       Label="Interest Method"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Declining")">Declining Balance</MudSelectItem>
+                <MudSelectItem Value="@("Flat")">Flat Rate</MudSelectItem>
+                <MudSelectItem Value="@("Reducing")">Reducing Balance</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Loan Amount Limits</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.MinLoanAmount"
+                             For="@(() => context.MinLoanAmount)"
+                             Label="Minimum Loan Amount"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Min="0"
+                             Adornment="Adornment.Start"
+                             AdornmentText="$" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.MaxLoanAmount"
+                             For="@(() => context.MaxLoanAmount)"
+                             Label="Maximum Loan Amount"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Min="0"
+                             Adornment="Adornment.Start"
+                             AdornmentText="$" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.InterestRate"
+                             For="@(() => context.InterestRate)"
+                             Label="Interest Rate (%)"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Min="0"
+                             Max="100"
+                             Adornment="Adornment.End"
+                             AdornmentText="%" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Term & Repayment</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField @bind-Value="context.MinTermMonths"
+                             For="@(() => context.MinTermMonths)"
+                             Label="Min Term (Months)"
+                             Variant="Variant.Filled"
+                             Min="1" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField @bind-Value="context.MaxTermMonths"
+                             For="@(() => context.MaxTermMonths)"
+                             Label="Max Term (Months)"
+                             Variant="Variant.Filled"
+                             Min="1" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudSelect @bind-Value="context.RepaymentFrequency"
+                       For="@(() => context.RepaymentFrequency)"
+                       Label="Repayment Frequency"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Weekly")">Weekly</MudSelectItem>
+                <MudSelectItem Value="@("Bi-Weekly")">Bi-Weekly</MudSelectItem>
+                <MudSelectItem Value="@("Monthly")">Monthly</MudSelectItem>
+                <MudSelectItem Value="@("Quarterly")">Quarterly</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField @bind-Value="context.GracePeriodDays"
+                             For="@(() => context.GracePeriodDays)"
+                             Label="Grace Period (Days)"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             HelperText="Days before late penalty" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Penalties</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.LatePenaltyRate"
+                             For="@(() => context.LatePenaltyRate)"
+                             Label="Late Penalty Rate (%)"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Min="0"
+                             Max="100"
+                             Adornment="Adornment.End"
+                             AdornmentText="%"
+                             HelperText="Applied to overdue amounts" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

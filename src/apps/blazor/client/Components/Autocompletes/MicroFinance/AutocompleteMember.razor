@@ -1,0 +1,125 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+@namespace FSH.Starter.Blazor.Client.Components.Autocompletes.MicroFinance
+@inject IClient Client
+
+<MudAutocomplete T="MemberResponse"
+                 @bind-Value="Value"
+                 SearchFunc="@SearchMembers"
+                 ToStringFunc="@(member => member != null ? $"{member.MemberNumber} - {member.FullName}" : string.Empty)"
+                 Label="@Label"
+                 Required="@Required"
+                 RequiredError="@RequiredError"
+                 Variant="@Variant"
+                 AdornmentIcon="@Icons.Material.Filled.Person"
+                 AdornmentColor="@AdornmentColor"
+                 HelperText="@HelperText"
+                 Disabled="@Disabled"
+                 Dense="@Dense"
+                 Clearable="@Clearable"
+                 ResetValueOnEmptyText="@ResetValueOnEmptyText" />
+
+@code {
+    /// <summary>
+    /// Gets or sets the selected member.
+    /// </summary>
+    [Parameter]
+    public MemberResponse? Value { get; set; }
+
+    /// <summary>
+    /// Gets or sets the callback when value changes.
+    /// </summary>
+    [Parameter]
+    public EventCallback<MemberResponse?> ValueChanged { get; set; }
+
+    /// <summary>
+    /// Gets or sets the label text.
+    /// </summary>
+    [Parameter]
+    public string Label { get; set; } = "Member";
+
+    /// <summary>
+    /// Gets or sets whether the field is required.
+    /// </summary>
+    [Parameter]
+    public bool Required { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets the required field error message.
+    /// </summary>
+    [Parameter]
+    public string RequiredError { get; set; } = "Member is required";
+
+    /// <summary>
+    /// Gets or sets the helper text.
+    /// </summary>
+    [Parameter]
+    public string HelperText { get; set; } = "Search by member number or name";
+
+    /// <summary>
+    /// Gets or sets the variant style.
+    /// </summary>
+    [Parameter]
+    public Variant Variant { get; set; } = Variant.Filled;
+
+    /// <summary>
+    /// Gets or sets the adornment color.
+    /// </summary>
+    [Parameter]
+    public Color AdornmentColor { get; set; } = Color.Primary;
+
+    /// <summary>
+    /// Gets or sets whether the field is disabled.
+    /// </summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether to use dense spacing.
+    /// </summary>
+    [Parameter]
+    public bool Dense { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the field is clearable.
+    /// </summary>
+    [Parameter]
+    public bool Clearable { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets whether to reset value on empty text.
+    /// </summary>
+    [Parameter]
+    public bool ResetValueOnEmptyText { get; set; } = true;
+
+    /// <summary>
+    /// Optional filter to only show active members.
+    /// </summary>
+    [Parameter]
+    public bool? ActiveOnly { get; set; }
+
+    private async Task<IEnumerable<MemberResponse>> SearchMembers(string searchValue, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(searchValue))
+        {
+            return new List<MemberResponse>();
+        }
+
+        try
+        {
+            var request = new SearchMembersCommand
+            {
+                Keyword = searchValue,
+                PageNumber = 1,
+                PageSize = 20,
+                IsActive = ActiveOnly
+            };
+
+            var response = await Client.SearchMembersAsync("1", request, cancellationToken);
+            return response?.Items ?? new List<MemberResponse>();
+        }
+        catch
+        {
+            return new List<MemberResponse>();
+        }
+    }
+}

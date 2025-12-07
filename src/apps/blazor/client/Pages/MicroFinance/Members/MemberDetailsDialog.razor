@@ -1,0 +1,213 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Members
+
+<MudDialog>
+    <DialogContent>
+        <MudContainer Style="max-height: 70vh; overflow-y: auto;">
+            @if (_loading)
+            {
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+            }
+            else if (_member != null)
+            {
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                            <MudAvatar Color="Color.Primary" Size="Size.Large">
+                                @(_member.FirstName?.Substring(0, 1))@(_member.LastName?.Substring(0, 1))
+                            </MudAvatar>
+                            <MudStack Spacing="0">
+                                <MudText Typo="Typo.h5">@_member.FullName</MudText>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">@_member.MemberNumber</MudText>
+                            </MudStack>
+                            <MudSpacer />
+                            <MudChip T="string" Color="@(_member.IsActive ? Color.Success : Color.Error)" Size="Size.Small">
+                                @(_member.IsActive ? "Active" : "Inactive")
+                            </MudChip>
+                        </MudStack>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudDivider Class="my-2" />
+                    </MudItem>
+
+                    <MudItem xs="12" md="6">
+                        <MudText Typo="Typo.subtitle2" Class="mb-2"><strong>Personal Information</strong></MudText>
+                        <MudSimpleTable Dense="true" Style="margin-bottom: 1rem;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 40%; font-weight: 500;">First Name</td>
+                                    <td>@_member.FirstName</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Last Name</td>
+                                    <td>@_member.LastName</td>
+                                </tr>
+                                @if (!string.IsNullOrEmpty(_member.MiddleName))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Middle Name</td>
+                                        <td>@_member.MiddleName</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_member.Gender))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Gender</td>
+                                        <td>@_member.Gender</td>
+                                    </tr>
+                                }
+                                @if (_member.DateOfBirth.HasValue)
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Date of Birth</td>
+                                        <td>@_member.DateOfBirth.Value.ToString("MMMM dd, yyyy")</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_member.NationalId))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">National ID</td>
+                                        <td>@_member.NationalId</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudItem>
+
+                    <MudItem xs="12" md="6">
+                        <MudText Typo="Typo.subtitle2" Class="mb-2"><strong>Contact Information</strong></MudText>
+                        <MudSimpleTable Dense="true" Style="margin-bottom: 1rem;">
+                            <tbody>
+                                @if (!string.IsNullOrEmpty(_member.Email))
+                                {
+                                    <tr>
+                                        <td style="width: 40%; font-weight: 500;">Email</td>
+                                        <td><MudLink Href="@($"mailto:{_member.Email}")">@_member.Email</MudLink></td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_member.PhoneNumber))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Phone</td>
+                                        <td><MudLink Href="@($"tel:{_member.PhoneNumber}")">@_member.PhoneNumber</MudLink></td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_member.Address))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Address</td>
+                                        <td>@_member.Address</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_member.City))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">City</td>
+                                        <td>@_member.City</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_member.State))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">State</td>
+                                        <td>@_member.State</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_member.PostalCode))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Postal Code</td>
+                                        <td>@_member.PostalCode</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(_member.Country))
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Country</td>
+                                        <td>@_member.Country</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle2" Class="mb-2"><strong>Financial Information</strong></MudText>
+                        <MudSimpleTable Dense="true" Style="margin-bottom: 1rem;">
+                            <tbody>
+                                @if (!string.IsNullOrEmpty(_member.Occupation))
+                                {
+                                    <tr>
+                                        <td style="width: 25%; font-weight: 500;">Occupation</td>
+                                        <td>@_member.Occupation</td>
+                                    </tr>
+                                }
+                                @if (_member.MonthlyIncome.HasValue)
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500;">Monthly Income</td>
+                                        <td>@_member.MonthlyIncome.Value.ToString("C2")</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td style="font-weight: 500;">Join Date</td>
+                                    <td>@_member.JoinDate.ToString("MMMM dd, yyyy")</td>
+                                </tr>
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudItem>
+
+                    @if (!string.IsNullOrEmpty(_member.Notes))
+                    {
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.subtitle2" Class="mb-2"><strong>Notes</strong></MudText>
+                            <MudPaper Class="pa-3" Elevation="0" Style="background-color: var(--mud-palette-background-gray);">
+                                <MudText Typo="Typo.body2">@_member.Notes</MudText>
+                            </MudPaper>
+                        </MudItem>
+                    }
+                </MudGrid>
+            }
+            else
+            {
+                <MudAlert Severity="Severity.Error">Member not found.</MudAlert>
+            }
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Close" Color="Color.Primary" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType MemberId { get; set; }
+
+    private MemberResponse? _member;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadMember();
+    }
+
+    private async Task LoadMember()
+    {
+        _loading = true;
+        try
+        {
+            _member = await ApiHelper.ExecuteCallGuardedAsync(
+                () => Client.GetMemberAsync("1", MemberId),
+                Snackbar);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}
