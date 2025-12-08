@@ -6,6 +6,9 @@
          Subtitle="Manage MFI insurance products and coverage options."
          BreadcrumbItems="@(new List<BreadcrumbItem> { new("MicroFinance", "/microfinance"), new("Insurance Products", "/microfinance/insurance-products", true) })">
     <ExtraActions>
+        <MudTooltip Text="Help">
+            <MudIconButton Icon="@Icons.Material.Filled.Help" Color="Color.Surface" OnClick="@ShowInsuranceProductsHelp" />
+        </MudTooltip>
         <MudTooltip Text="Refresh">
             <MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="Color.Surface" OnClick="@(() => _table.ReloadDataAsync())" />
         </MudTooltip>

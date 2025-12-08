@@ -1,0 +1,184 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.KycDocuments
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">KYC Documents Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What is KYC?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Know Your Customer Requirements</MudText>
+                        <MudText Typo="Typo.body2">
+                            KYC (Know Your Customer) is a mandatory regulatory requirement for financial institutions
+                            to verify the identity of their clients. It helps prevent fraud, money laundering, and
+                            terrorist financing while ensuring members are who they claim to be.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Required Documents:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>National ID:</strong> Government-issued identification card<br/>
+                                • <strong>Passport:</strong> For foreign nationals or additional ID<br/>
+                                • <strong>Birth Certificate:</strong> Proof of age and identity<br/>
+                                • <strong>Proof of Address:</strong> Utility bill, bank statement, or rental agreement<br/>
+                                • <strong>Photograph:</strong> Recent passport-size photo<br/>
+                                • <strong>Income Proof:</strong> Pay slips, tax returns, or business registration
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Regulatory:</strong> Failure to maintain proper KYC can result in penalties and license revocation.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Document Verification">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Verification Process</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Verification Steps:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Collect original documents from member<br/>
+                                2. Check document authenticity (security features)<br/>
+                                3. Compare photo with member's physical appearance<br/>
+                                4. Cross-verify with external databases if available<br/>
+                                5. Record verification details and date<br/>
+                                6. Store certified copies securely
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Verification Status:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Pending:</strong> Document uploaded but not yet verified<br/>
+                                • <strong>Verified:</strong> Document authenticated and approved<br/>
+                                • <strong>Rejected:</strong> Document failed verification (unclear, expired, fraudulent)<br/>
+                                • <strong>Expired:</strong> Document validity period has passed
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Document Expiry & Renewal">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Maintaining Current Documentation</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CalendarToday" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Track expiry dates for all identity documents</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Notifications" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Send renewal reminders 30-60 days before expiry</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Block" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Restrict transactions if KYC expires without renewal</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Update" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Update records promptly when new documents received</MudText>
+                            </MudListItem>
+                        </MudList>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Periodic Review:</strong> KYC should be refreshed every 2-3 years even if documents haven't expired.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Risk-Based KYC">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Tiered KYC Requirements</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Simplified KYC (Low Risk):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                For small value accounts and low-risk members<br/>
+                                • Basic identification document only<br/>
+                                • Lower transaction limits apply
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Standard KYC (Medium Risk):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                For regular accounts and average risk members<br/>
+                                • Full document set required<br/>
+                                • Address verification mandatory
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Enhanced KYC (High Risk):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                For high-value accounts or high-risk profiles<br/>
+                                • Additional verification steps<br/>
+                                • Source of funds documentation<br/>
+                                • More frequent reviews
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">KYC Management Best Practices</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Store documents securely with encryption</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Maintain audit trail of all verifications</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Train staff on document authenticity checks</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Implement automated expiry tracking</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Report suspicious documents to compliance team</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Retain documents for required regulatory period (usually 5+ years)</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

@@ -126,4 +126,17 @@ public partial class InvestmentProducts
             await _table.ReloadDataAsync();
         }
     }
+
+    /// <summary>
+    /// Show investment products help dialog.
+    /// </summary>
+    private async Task ShowInvestmentProductsHelp()
+    {
+        await DialogService.ShowAsync<InvestmentProductsHelpDialog>("Investment Products Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

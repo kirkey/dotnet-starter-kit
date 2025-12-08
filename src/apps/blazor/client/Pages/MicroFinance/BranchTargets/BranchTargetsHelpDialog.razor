@@ -1,0 +1,172 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.BranchTargets
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Branch Targets Management Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Branch Targets?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Branch Performance Targets</MudText>
+                        <MudText Typo="Typo.body2">
+                            Branch Targets define the key performance indicators (KPIs) and goals that each branch must achieve within a specified period.
+                            These targets help measure branch performance, motivate staff, and align operations with organizational objectives.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Target Categories:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Loan Disbursement:</strong> Total value and number of loans disbursed<br/>
+                                • <strong>Savings Mobilization:</strong> New deposits and savings account growth<br/>
+                                • <strong>Member Acquisition:</strong> New member enrollment targets<br/>
+                                • <strong>Collection Rate:</strong> On-time repayment percentage goals<br/>
+                                • <strong>Portfolio Quality:</strong> PAR (Portfolio at Risk) thresholds<br/>
+                                • <strong>Profitability:</strong> Revenue and cost efficiency targets
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Set SMART targets - Specific, Measurable, Achievable, Relevant, and Time-bound.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Target Types">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Types of Branch Targets</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Amount-Based Targets:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Loan disbursement volume in currency<br/>
+                                • Savings mobilization amounts<br/>
+                                • Revenue targets<br/>
+                                • Recovery amounts for delinquent loans
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Count-Based Targets:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Number of new members enrolled<br/>
+                                • Number of loans approved<br/>
+                                • Number of savings accounts opened<br/>
+                                • Number of group meetings conducted
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Percentage-Based Targets:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Collection rate percentage<br/>
+                                • PAR (Portfolio at Risk) ratio<br/>
+                                • Member retention rate<br/>
+                                • Operational self-sufficiency ratio
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Note:</strong> Balance growth targets with quality metrics to avoid reckless lending.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Target Periods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Planning and Review Cycles</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Monthly Targets:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Operational KPIs like disbursements and collections<br/>
+                                • Short-term activity tracking<br/>
+                                • Weekly progress reviews
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Quarterly Targets:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Mid-term performance assessment<br/>
+                                • Strategic initiative milestones<br/>
+                                • Budget vs actual comparisons
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Annual Targets:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Overall branch growth goals<br/>
+                                • Profitability objectives<br/>
+                                • Staff performance reviews
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Monitoring Progress">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Tracking Target Achievement</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review progress against targets weekly</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Identify underperforming areas early</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Adjust strategies based on performance data</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Celebrate achievements to motivate staff</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document lessons learned for future planning</MudText>
+                            </MudListItem>
+                        </MudList>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Use dashboards and visual reports to make target tracking accessible to all staff.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

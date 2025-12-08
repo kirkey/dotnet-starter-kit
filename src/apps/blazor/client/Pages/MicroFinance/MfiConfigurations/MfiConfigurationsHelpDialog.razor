@@ -1,0 +1,158 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.MfiConfigurations
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">MFI Configurations Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are MFI Configurations?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">System-Wide Configuration Settings</MudText>
+                        <MudText Typo="Typo.body2">
+                            MFI (Microfinance Institution) Configurations store the global settings that control how the entire system operates.
+                            These settings define business rules, default values, and operational parameters that apply across all branches and products.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Configuration Categories:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>General Settings:</strong> Organization name, logo, currency, date formats<br/>
+                                • <strong>Loan Settings:</strong> Default interest rates, grace periods, penalty rates<br/>
+                                • <strong>Savings Settings:</strong> Minimum balances, withdrawal limits, interest posting frequency<br/>
+                                • <strong>Operational Settings:</strong> Working days, holidays, approval workflows<br/>
+                                • <strong>Compliance Settings:</strong> KYC requirements, AML thresholds, reporting rules<br/>
+                                • <strong>Integration Settings:</strong> SMS gateways, payment providers, credit bureaus
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Caution:</strong> Changes to configurations can have system-wide impact. Always test in a non-production environment first.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Configuration Keys">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Common Configuration Keys</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Loan Configurations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <code>DEFAULT_INTEREST_RATE</code> - Base interest rate for new products<br/>
+                                • <code>MAX_LOAN_AMOUNT</code> - Maximum loan disbursement limit<br/>
+                                • <code>GRACE_PERIOD_DAYS</code> - Days before penalty applies<br/>
+                                • <code>PENALTY_RATE</code> - Late payment penalty percentage<br/>
+                                • <code>LOAN_APPROVAL_LEVELS</code> - Number of approval stages
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Savings Configurations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <code>MIN_SAVINGS_BALANCE</code> - Minimum account balance<br/>
+                                • <code>INTEREST_POSTING_FREQUENCY</code> - Monthly, quarterly, yearly<br/>
+                                • <code>DORMANCY_PERIOD_MONTHS</code> - Months before account becomes dormant<br/>
+                                • <code>WITHDRAWAL_LIMIT_PER_DAY</code> - Daily withdrawal ceiling
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Operational Configurations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <code>WORKING_DAYS</code> - Business operation days<br/>
+                                • <code>FISCAL_YEAR_START</code> - Beginning of financial year<br/>
+                                • <code>SESSION_TIMEOUT_MINUTES</code> - User session duration<br/>
+                                • <code>SMS_GATEWAY_ENABLED</code> - Enable/disable SMS notifications
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Managing Configurations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Best Practices for Configuration Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document all configuration changes with reasons</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Test configuration changes in a staging environment</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Maintain version history for audit purposes</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Restrict configuration access to authorized administrators</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review configurations during regulatory audits</MudText>
+                            </MudListItem>
+                        </MudList>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Important:</strong> Some configurations require system restart to take effect. Plan changes during maintenance windows.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Configuration Security">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Securing Sensitive Configurations</MudText>
+                        
+                        <MudText Typo="Typo.body2">
+                            Some configurations contain sensitive information like API keys, connection strings, and security settings.
+                            These require additional protection:
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Security Measures:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Encrypt sensitive configuration values at rest<br/>
+                                • Mask sensitive values in the UI (show only last 4 characters)<br/>
+                                • Require multi-factor authentication for configuration changes<br/>
+                                • Log all configuration access and modifications<br/>
+                                • Regular security audits of configuration settings
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Use environment-specific configurations to separate development, testing, and production settings.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

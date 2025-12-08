@@ -6,6 +6,9 @@
          Subtitle="Manage MFI investment products and offerings."
          BreadcrumbItems="@(new List<BreadcrumbItem> { new("MicroFinance", "/microfinance"), new("Investment Products", "/microfinance/investment-products", true) })">
     <ExtraActions>
+        <MudTooltip Text="Help">
+            <MudIconButton Icon="@Icons.Material.Filled.Help" Color="Color.Surface" OnClick="@ShowInvestmentProductsHelp" />
+        </MudTooltip>
         <MudTooltip Text="Refresh">
             <MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="Color.Surface" OnClick="@(() => _table.ReloadDataAsync())" />
         </MudTooltip>

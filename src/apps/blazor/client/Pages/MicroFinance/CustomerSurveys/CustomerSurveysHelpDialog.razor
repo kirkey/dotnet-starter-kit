@@ -1,0 +1,183 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CustomerSurveys
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Customer Surveys Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Customer Surveys?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Gathering Member Feedback</MudText>
+                        <MudText Typo="Typo.body2">
+                            Customer Surveys collect structured feedback from members about their experiences,
+                            needs, and satisfaction levels. This data drives service improvements and helps
+                            design products that truly meet member requirements.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Survey Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Onboarding Survey:</strong> Initial needs assessment for new members<br/>
+                                • <strong>Satisfaction Survey:</strong> Periodic feedback on services<br/>
+                                • <strong>Exit Survey:</strong> Understanding why members leave<br/>
+                                • <strong>Product Feedback:</strong> Reactions to specific products or features<br/>
+                                • <strong>Financial Literacy:</strong> Assess knowledge and training needs<br/>
+                                • <strong>Social Impact:</strong> Measure livelihood improvements
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Regular surveys help maintain member-centric service delivery.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Survey Design">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Creating Effective Surveys</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Question Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Multiple choice for easy analysis<br/>
+                                • Rating scales (1-5 or 1-10)<br/>
+                                • Yes/No for simple responses<br/>
+                                • Open-ended for detailed feedback<br/>
+                                • Ranking for prioritization
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Principles:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Keep surveys short (5-10 minutes max)<br/>
+                                • Use simple, clear language<br/>
+                                • Avoid leading questions<br/>
+                                • Include skip logic for relevant questions<br/>
+                                • Test surveys before deployment
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Translate surveys into local languages for better response rates.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Survey Administration">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Collecting Survey Responses</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.PhoneAndroid" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Mobile: SMS or app-based surveys for tech-savvy members</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Face" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">In-Person: Loan officers administer during visits</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Groups" IconColor="Color.Secondary">
+                                <MudText Typo="Typo.caption">Group Meetings: Collect feedback during regular meetings</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Phone" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Call Center: Phone surveys for follow-up</MudText>
+                            </MudListItem>
+                        </MudList>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Response Tracking:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Track completion rates by branch<br/>
+                                • Monitor response quality<br/>
+                                • Set response targets for staff<br/>
+                                • Follow up on incomplete surveys
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Analyzing Results">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Using Survey Data</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Metrics:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Net Promoter Score (NPS): Would you recommend us?<br/>
+                                • Customer Satisfaction Score (CSAT): Overall satisfaction<br/>
+                                • Customer Effort Score (CES): Ease of service<br/>
+                                • Response rates and completion times
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Analysis Approaches:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Trend analysis over time<br/>
+                                • Segment comparison (by product, branch, etc.)<br/>
+                                • Correlation with retention/default rates<br/>
+                                • Root cause analysis of complaints
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Survey Program Best Practices</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Schedule regular satisfaction surveys (quarterly/annually)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Close the feedback loop - communicate actions taken</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Protect member privacy and confidentiality</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Share positive feedback with staff for motivation</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Use insights for staff training and product development</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

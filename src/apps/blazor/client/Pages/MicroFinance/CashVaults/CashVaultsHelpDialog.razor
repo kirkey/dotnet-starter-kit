@@ -1,0 +1,180 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CashVaults
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Cash Vaults Management Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Cash Vaults?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Branch Cash Management</MudText>
+                        <MudText Typo="Typo.body2">
+                            Cash Vaults represent the physical storage locations for cash within each branch.
+                            They track the cash holdings, movements, and reconciliation to ensure accurate cash management and security.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Vault Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Main Vault:</strong> Primary secure storage for branch cash<br/>
+                                • <strong>Day Vault:</strong> Smaller vault for daily operations<br/>
+                                • <strong>ATM Vault:</strong> Cash stored in ATM machines<br/>
+                                • <strong>Teller Drawers:</strong> Cash assigned to individual tellers<br/>
+                                • <strong>Agent Float:</strong> Cash held by banking agents
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Security:</strong> Vault access should be restricted to authorized personnel only with dual control for large amounts.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Vault Operations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Daily Cash Management Activities</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Opening Procedures:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Dual custody opening with two authorized officers<br/>
+                                • Count and verify opening balance<br/>
+                                • Transfer cash to teller drawers for the day<br/>
+                                • Record all transfers in the system
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>During Operations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Replenish teller drawers as needed<br/>
+                                • Accept excess cash from tellers<br/>
+                                • Process cash for CIT (Cash In Transit) pickup<br/>
+                                • Maintain denomination records
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Closing Procedures:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Collect all cash from tellers<br/>
+                                • Count and reconcile vault balance<br/>
+                                • Prepare cash position report<br/>
+                                • Secure vault with dual control
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Cash Limits">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Cash Holdings</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Vault Limits:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Maximum Limit:</strong> Upper ceiling for cash storage (insurance coverage)<br/>
+                                • <strong>Minimum Limit:</strong> Reserve level for operations<br/>
+                                • <strong>Working Balance:</strong> Optimal operating cash level<br/>
+                                • <strong>Alert Threshold:</strong> Trigger for replenishment or pickup
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Insurance:</strong> Exceeding maximum vault limits may void insurance coverage. Always arrange CIT pickup for excess cash.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Vault Reconciliation">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Ensuring Cash Accuracy</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Perform daily vault count at close of business</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Compare physical count with system balance</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Investigate and document any differences</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Report shortages to management immediately</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Conduct surprise spot checks regularly</MudText>
+                            </MudListItem>
+                        </MudList>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Use denomination worksheets to speed up counting and reduce errors.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Security Controls">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Vault Security Best Practices</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Physical Security:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Vault room with reinforced walls and door<br/>
+                                • Time-lock safes for overnight security<br/>
+                                • CCTV coverage of vault area<br/>
+                                • Motion sensors and alarms
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Access Controls:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Dual custody for vault access<br/>
+                                • Unique combinations for each authorized user<br/>
+                                • Regular combination changes<br/>
+                                • Access log and audit trail
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

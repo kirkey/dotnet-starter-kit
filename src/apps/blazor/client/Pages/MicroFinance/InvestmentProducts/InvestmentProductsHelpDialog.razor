@@ -1,0 +1,185 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InvestmentProducts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Investment Products Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Investment Products?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Growing Member Wealth</MudText>
+                        <MudText Typo="Typo.body2">
+                            Investment Products offer members opportunities to grow their savings beyond standard
+                            interest rates. These products help members build long-term wealth while providing
+                            the MFI with stable funding sources.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Investment Product Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Fixed Deposits:</strong> Locked savings with guaranteed returns<br/>
+                                • <strong>Term Deposits:</strong> Savings for specific periods (30, 60, 90 days)<br/>
+                                • <strong>Recurring Deposits:</strong> Regular monthly contributions<br/>
+                                • <strong>Money Market:</strong> Short-term, liquid investments<br/>
+                                • <strong>Group Investment:</strong> Pooled funds from member groups<br/>
+                                • <strong>Retirement Savings:</strong> Long-term pension-style products
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Investment products complement lending by mobilizing member funds.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Product Parameters">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Configuring Investment Products</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Core Settings:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Minimum and maximum investment amounts<br/>
+                                • Investment term (duration)<br/>
+                                • Interest rate (annual percentage)<br/>
+                                • Interest payment frequency<br/>
+                                • Compounding method
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Withdrawal Rules:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Lock-in period requirements<br/>
+                                • Early withdrawal penalties<br/>
+                                • Partial withdrawal allowances<br/>
+                                • Maturity options (renew, withdraw, convert)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> Higher returns typically require longer lock-in periods.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Interest Calculations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How Returns are Calculated</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Interest Methods:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Simple Interest:</strong> Interest on principal only<br/>
+                                • <strong>Compound Interest:</strong> Interest on principal + accumulated interest<br/>
+                                • <strong>Daily Compounding:</strong> Maximum returns, calculated daily<br/>
+                                • <strong>Monthly Compounding:</strong> Interest added monthly
+                            </MudText>
+                        </div>
+
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Calculate" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Simple: P × r × t (Principal × rate × time)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Calculate" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Compound: P × (1 + r/n)^(n×t) - P</MudText>
+                            </MudListItem>
+                        </MudList>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Principal: $10,000 | Rate: 8% annual | Term: 1 year<br/>
+                                Simple Interest: $10,000 × 8% × 1 = $800<br/>
+                                Monthly Compound: $10,000 × (1 + 0.08/12)^12 - $10,000 = $830
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Risk Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Investment Risks</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Security" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Liquidity Risk: Maintain reserves for withdrawals</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.TrendingDown" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Interest Rate Risk: Fixed rates protect against market changes</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Gavel" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Regulatory Risk: Comply with deposit-taking regulations</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Balance" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Asset-Liability Mismatch: Match investment terms with loan portfolio</MudText>
+                            </MudListItem>
+                        </MudList>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Diversify investment term offerings to balance liquidity needs.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Investment Product Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Offer competitive rates compared to banks</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Clearly disclose terms, rates, and penalties</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Provide regular statements to investors</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Send maturity reminders before term ends</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track product performance and member satisfaction</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Ensure proper licensing for deposit-taking activities</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

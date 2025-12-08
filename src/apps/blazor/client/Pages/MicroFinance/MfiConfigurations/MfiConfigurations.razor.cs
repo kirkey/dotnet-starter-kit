@@ -128,4 +128,17 @@ public partial class MfiConfigurations
             CloseOnEscapeKey = true
         });
     }
+
+    /// <summary>
+    /// Show MFI configurations help dialog.
+    /// </summary>
+    private async Task ShowMfiConfigurationsHelp()
+    {
+        await DialogService.ShowAsync<MfiConfigurationsHelpDialog>("MFI Configurations Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

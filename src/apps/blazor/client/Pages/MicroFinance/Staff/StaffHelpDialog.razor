@@ -1,0 +1,156 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Staff
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Staff Management Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What is Staff Management?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Microfinance Institution Personnel</MudText>
+                        <MudText Typo="Typo.body2">
+                            Staff Management maintains records of all employees working within the microfinance institution.
+                            This includes loan officers, tellers, branch managers, and administrative personnel who interact with members and manage operations.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Staff Roles:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Loan Officers:</strong> Handle loan applications, disbursements, and collections<br/>
+                                • <strong>Tellers:</strong> Process deposits, withdrawals, and cash transactions<br/>
+                                • <strong>Branch Managers:</strong> Oversee branch operations and staff<br/>
+                                • <strong>Credit Officers:</strong> Evaluate loan applications and assess risk<br/>
+                                • <strong>Collection Officers:</strong> Follow up on delinquent accounts<br/>
+                                • <strong>Customer Service:</strong> Handle member inquiries and complaints
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Staff records are linked to user accounts for system access control.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Staff Information">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Essential Staff Data</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Personal Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Full name and identification number<br/>
+                                • Contact details (phone, email, address)<br/>
+                                • Emergency contact information<br/>
+                                • Date of birth and gender
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Employment Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Employee ID and hire date<br/>
+                                • Job title and department<br/>
+                                • Assigned branch(es)<br/>
+                                • Reporting manager<br/>
+                                • Employment status (active, on leave, terminated)
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>System Access:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • User account association<br/>
+                                • Role assignments and permissions<br/>
+                                • Transaction limits and approvals<br/>
+                                • Audit trail of activities
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Staff Assignments">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Workload and Territory Assignments</MudText>
+                        
+                        <MudText Typo="Typo.body2">
+                            Staff members, especially loan officers, are assigned specific territories, member groups, or portfolios to manage.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Assignment Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Geographic:</strong> Specific villages, neighborhoods, or districts<br/>
+                                • <strong>Portfolio:</strong> Set of loans or savings accounts to manage<br/>
+                                • <strong>Group-based:</strong> Specific member groups to supervise<br/>
+                                • <strong>Product-based:</strong> Specialization in certain loan products
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> When staff members leave, ensure proper handover of their assigned portfolios.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Performance Tracking">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Monitoring Staff Performance</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track loan disbursement vs targets</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Monitor collection rates and PAR</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review member acquisition numbers</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Assess customer satisfaction scores</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Evaluate training completion and certifications</MudText>
+                            </MudListItem>
+                        </MudList>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Use staff performance data for promotions, incentives, and training needs assessment.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

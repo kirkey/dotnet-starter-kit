@@ -114,4 +114,17 @@ public partial class InsuranceProducts
             await _table.ReloadDataAsync();
         }
     }
+
+    /// <summary>
+    /// Show insurance products help dialog.
+    /// </summary>
+    private async Task ShowInsuranceProductsHelp()
+    {
+        await DialogService.ShowAsync<InsuranceProductsHelpDialog>("Insurance Products Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

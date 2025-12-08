@@ -103,4 +103,17 @@ public partial class BranchTargets
             CloseOnEscapeKey = true
         });
     }
+
+    /// <summary>
+    /// Show branch targets help dialog.
+    /// </summary>
+    private async Task ShowBranchTargetsHelp()
+    {
+        await DialogService.ShowAsync<BranchTargetsHelpDialog>("Branch Targets Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

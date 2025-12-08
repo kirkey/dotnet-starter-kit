@@ -1,0 +1,182 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.StaffTrainings
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Staff Trainings Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Staff Trainings?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Tracking Employee Development</MudText>
+                        <MudText Typo="Typo.body2">
+                            Staff Trainings track all training programs, certifications, and skill development activities undertaken by employees.
+                            This ensures staff are competent, compliant with regulations, and continuously improving their capabilities.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Training Categories:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Onboarding:</strong> New employee orientation and basics<br/>
+                                • <strong>Product Training:</strong> Loan products, savings, insurance features<br/>
+                                • <strong>Compliance:</strong> AML, KYC, data protection, ethics<br/>
+                                • <strong>Technical:</strong> System usage, mobile applications, reporting<br/>
+                                • <strong>Soft Skills:</strong> Customer service, communication, conflict resolution<br/>
+                                • <strong>Leadership:</strong> Management, supervision, team building
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Regulatory Requirement:</strong> Many jurisdictions require annual compliance training for all financial services staff.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Training Lifecycle">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">From Scheduling to Certification</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>1. Needs Assessment:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Identify skill gaps through performance reviews<br/>
+                                • Review regulatory training requirements<br/>
+                                • Consider new product or system rollouts
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>2. Scheduling:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Plan training dates and duration<br/>
+                                • Assign trainers or external facilitators<br/>
+                                • Enroll participants and send invitations
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>3. Delivery:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Conduct classroom or online sessions<br/>
+                                • Track attendance and participation<br/>
+                                • Collect feedback from participants
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>4. Assessment:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Administer tests or practical evaluations<br/>
+                                • Record scores and pass/fail status<br/>
+                                • Issue certificates for successful completion
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>5. Follow-up:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Schedule refresher training as needed<br/>
+                                • Monitor application of skills on the job<br/>
+                                • Update training records in the system
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Mandatory Trainings">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Required Training Programs</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Annual Requirements:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Anti-Money Laundering (AML) refresher<br/>
+                                • Data protection and privacy<br/>
+                                • Code of conduct and ethics<br/>
+                                • Health and safety awareness
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Role-Specific Requirements:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Loan officers: Credit assessment methodology<br/>
+                                • Tellers: Cash handling and fraud prevention<br/>
+                                • Managers: HR policies and performance management<br/>
+                                • All staff: Customer service standards
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Compliance Alert:</strong> Staff who fail to complete mandatory training by deadlines may have system access restricted.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Training Records">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Maintaining Training Documentation</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Record training name, date, and duration</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document trainer information and materials used</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Store assessment scores and certificates</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track expiration dates for certifications</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Generate training reports for audits</MudText>
+                            </MudListItem>
+                        </MudList>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Set up automatic reminders for upcoming certification renewals.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

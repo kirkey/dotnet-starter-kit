@@ -1,0 +1,177 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CustomerSegments
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Customer Segments Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Customer Segments?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Market Segmentation for Microfinance</MudText>
+                        <MudText Typo="Typo.body2">
+                            Customer Segments categorize members into distinct groups based on shared characteristics.
+                            This enables targeted product offerings, customized services, and strategic marketing efforts
+                            to better serve diverse member needs.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Segment Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Income-Based:</strong> Low, medium, high income brackets<br/>
+                                • <strong>Occupation:</strong> Farmers, traders, salaried employees, entrepreneurs<br/>
+                                • <strong>Geographic:</strong> Urban, peri-urban, rural areas<br/>
+                                • <strong>Demographic:</strong> Youth, women, seniors, family groups<br/>
+                                • <strong>Lifecycle:</strong> New members, established members, high-value clients<br/>
+                                • <strong>Risk Profile:</strong> Low, medium, high risk categories
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Segments help tailor financial products to member capacity and needs.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Segment Criteria">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Defining Segment Boundaries</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Demographic Criteria:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Age range and life stage<br/>
+                                • Gender and family status<br/>
+                                • Education level<br/>
+                                • Location and accessibility
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Economic Criteria:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Monthly income range<br/>
+                                • Occupation type and stability<br/>
+                                • Asset ownership<br/>
+                                • Existing financial relationships
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Behavioral Criteria:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Savings patterns<br/>
+                                • Loan repayment history<br/>
+                                • Product usage frequency<br/>
+                                • Engagement with MFI services
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Product Targeting">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Matching Products to Segments</MudText>
+                        
+                        <MudText Typo="Typo.body2">
+                            Each segment should have appropriate products designed for their specific needs and capacity:
+                        </MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Agriculture" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Farmers: Agricultural loans, seasonal savings, crop insurance</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Store" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Traders: Working capital loans, mobile banking, quick disbursements</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Female" IconColor="Color.Secondary">
+                                <MudText Typo="Typo.caption">Women Groups: Group lending, micro-savings, financial literacy</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.School" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Youth: Education loans, starter savings, mobile-first services</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Business" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">SMEs: Larger loans, asset financing, business advisory</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Segment Analytics">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Performance Tracking by Segment</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Metrics:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Portfolio at Risk (PAR) by segment<br/>
+                                • Average loan size and tenure<br/>
+                                • Savings mobilization rates<br/>
+                                • Customer acquisition cost<br/>
+                                • Retention and graduation rates
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Analysis Tip:</strong> Compare segment performance to identify opportunities and risks.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Effective Segmentation</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Define clear, measurable criteria for each segment</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review and update segments annually</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Train staff on segment-specific service approaches</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track segment migration (members moving between segments)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Use segments for targeted marketing campaigns</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

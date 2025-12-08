@@ -103,4 +103,17 @@ public partial class CustomerSegments
             CloseOnEscapeKey = true
         });
     }
+
+    /// <summary>
+    /// Show customer segments help dialog.
+    /// </summary>
+    private async Task ShowCustomerSegmentsHelp()
+    {
+        await DialogService.ShowAsync<CustomerSegmentsHelpDialog>("Customer Segments Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

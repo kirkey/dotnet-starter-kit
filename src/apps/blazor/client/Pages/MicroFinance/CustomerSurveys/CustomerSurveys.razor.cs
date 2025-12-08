@@ -144,4 +144,17 @@ public partial class CustomerSurveys
             await _table.ReloadDataAsync();
         }
     }
+
+    /// <summary>
+    /// Show customer surveys help dialog.
+    /// </summary>
+    private async Task ShowCustomerSurveysHelp()
+    {
+        await DialogService.ShowAsync<CustomerSurveysHelpDialog>("Customer Surveys Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

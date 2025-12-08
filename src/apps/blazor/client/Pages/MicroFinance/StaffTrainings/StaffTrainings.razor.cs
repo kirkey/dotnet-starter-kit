@@ -104,4 +104,17 @@ public partial class StaffTrainings
             CloseOnEscapeKey = true
         });
     }
+
+    /// <summary>
+    /// Show staff trainings help dialog.
+    /// </summary>
+    private async Task ShowStaffTrainingsHelp()
+    {
+        await DialogService.ShowAsync<StaffTrainingsHelpDialog>("Staff Trainings Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

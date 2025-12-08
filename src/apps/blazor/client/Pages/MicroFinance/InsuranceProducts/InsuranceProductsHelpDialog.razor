@@ -1,0 +1,178 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InsuranceProducts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Insurance Products Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Insurance Products?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Microinsurance for Financial Protection</MudText>
+                        <MudText Typo="Typo.body2">
+                            Insurance Products provide financial protection to members against unexpected events
+                            that could impact their ability to repay loans or maintain their livelihoods.
+                            Microinsurance is designed for low-income populations with affordable premiums.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Insurance Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Credit Life:</strong> Pays off loan balance if borrower dies<br/>
+                                • <strong>Health Insurance:</strong> Covers medical expenses<br/>
+                                • <strong>Crop Insurance:</strong> Protects farmers against harvest losses<br/>
+                                • <strong>Livestock Insurance:</strong> Covers death/loss of animals<br/>
+                                • <strong>Property Insurance:</strong> Protects homes and business assets<br/>
+                                • <strong>Disability Insurance:</strong> Income replacement if disabled
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Insurance reduces risk for both members and the MFI.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Product Configuration">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Defining Insurance Product Parameters</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Coverage Details:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Coverage amount (sum insured)<br/>
+                                • Coverage period (term)<br/>
+                                • Covered events (death, illness, accident, etc.)<br/>
+                                • Exclusions and waiting periods<br/>
+                                • Beneficiary designations
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Premium Structure:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Premium rate (% of coverage or flat fee)<br/>
+                                • Payment frequency (monthly, quarterly, annual)<br/>
+                                • Premium collection method (deducted from loan, separate payment)<br/>
+                                • Grace period for premium payments
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Regulatory:</strong> Insurance products must comply with insurance regulatory requirements.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Premium Calculations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How Premiums are Determined</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Calculate" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Risk assessment based on member profile (age, occupation, health)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Timeline" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Actuarial analysis of historical claims data</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.AttachMoney" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Coverage amount multiplied by premium rate</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Groups" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Group policies may have lower per-member premiums</MudText>
+                            </MudListItem>
+                        </MudList>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Example Calculation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Loan Amount: $1,000<br/>
+                                Credit Life Rate: 0.5% monthly<br/>
+                                Monthly Premium: $1,000 × 0.5% = $5
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Claims Processing">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Handling Insurance Claims</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Claims Workflow:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. Member/beneficiary submits claim with supporting documents<br/>
+                                2. Verify coverage was active at time of event<br/>
+                                3. Review documentation (death certificate, medical reports, etc.)<br/>
+                                4. Process claim with insurance partner<br/>
+                                5. Disburse benefits to beneficiary or apply to loan balance<br/>
+                                6. Update member records
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Turnaround:</strong> Aim to process claims within 5-10 business days.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Insurance Product Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Partner with licensed insurance companies</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Explain coverage clearly to members at enrollment</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Maintain affordable premiums for target population</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Process claims quickly and fairly</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track claims ratios and product profitability</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review and update products annually based on performance</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}
