@@ -1,0 +1,80 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CashVaults
+
+<MudDialog>
+    <DialogContent>
+        <MudGrid Spacing="2">
+            <MudItem xs="12">
+                <MudText Typo="Typo.body1" Class="mb-4">
+                    Transfer cash from this vault to another vault.
+                </MudText>
+            </MudItem>
+            
+            <MudItem xs="12">
+                <AutocompleteCashVault @bind-Value="_targetVaultId"
+                                       Label="Target Vault"
+                                       Variant="Variant.Filled"
+                                       Required="true"
+                                       ExcludeVaultId="@SourceVaultId"
+                                       HelperText="Select the destination vault" />
+            </MudItem>
+            
+            <MudItem xs="12">
+                <MudNumericField @bind-Value="_amount"
+                                 Label="Transfer Amount"
+                                 Variant="Variant.Filled"
+                                 Format="N2"
+                                 Required="true"
+                                 Adornment="Adornment.Start"
+                                 AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+                                 HelperText="Amount to transfer" />
+            </MudItem>
+            
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_denominationBreakdown"
+                              Label="Denomination Breakdown"
+                              Variant="Variant.Filled"
+                              Lines="3"
+                              Placeholder="e.g., 50x$100, 20x$50..."
+                              HelperText="Optional: Breakdown of transferred denominations" />
+            </MudItem>
+            
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Warning" Dense="true">
+                    Ensure the source vault has sufficient balance before transferring.
+                </MudAlert>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => MudDialog.Cancel())">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@ConfirmTransfer" Disabled="@(!IsValid)">
+            Transfer
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType SourceVaultId { get; set; }
+
+    [Parameter]
+    public Func<Guid, decimal, string?, Task>? OnConfirm { get; set; }
+
+    private DefaultIdType _targetVaultId;
+    private decimal _amount;
+    private string? _denominationBreakdown;
+
+    private bool IsValid => _targetVaultId != DefaultIdType.Empty && _amount > 0;
+
+    private async Task ConfirmTransfer()
+    {
+        if (OnConfirm != null && IsValid)
+        {
+            await OnConfirm(_targetVaultId, _amount, _denominationBreakdown);
+        }
+        MudDialog.Close();
+    }
+}

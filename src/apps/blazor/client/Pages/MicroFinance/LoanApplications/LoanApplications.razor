@@ -1,0 +1,269 @@
+@page "/microfinance/loan-applications"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.MicroFinance
+
+<PageHeader Title="Loan Applications" Header="Loan Applications" SubHeader="Manage loan applications - submissions, reviews, approvals, and rejections." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowLoanApplicationsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="LoanApplicationResponse" TId="DefaultIdType" TRequest="LoanApplicationViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchApplicationNumber"
+                          Label="Application Number"
+                          Placeholder="Search by application number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Draft")">Draft</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Submitted")">Submitted</MudSelectItem>
+                <MudSelectItem Value="@((string?)"UnderReview")">Under Review</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Approved")">Approved</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Rejected")">Rejected</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Returned")">Returned</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Withdrawn")">Withdrawn</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Disbursed")">Disbursed</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="@SearchApplicationDateFrom"
+                           Label="Application Date From"
+                           Variant="Variant.Outlined"
+                           Clearable="true" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @* Submit - only for Draft applications *@
+        @if (entity.Status == "Draft" && _canSubmit)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Send" OnClick="@(() => SubmitApplication(entity.Id))">
+                Submit
+            </MudMenuItem>
+        }
+        
+        @* Assign - for Submitted applications *@
+        @if (entity.Status == "Submitted" && _canAssign)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.AssignmentInd" OnClick="@(() => AssignApplication(entity.Id))">
+                Assign Officer
+            </MudMenuItem>
+        }
+        
+        @* Approve/Reject/Return - for Submitted or UnderReview applications *@
+        @if ((entity.Status == "Submitted" || entity.Status == "UnderReview") && _canApprove)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success" OnClick="@(() => ApproveApplication(entity.Id))">
+                Approve
+            </MudMenuItem>
+        }
+        @if ((entity.Status == "Submitted" || entity.Status == "UnderReview") && _canReject)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel" IconColor="Color.Error" OnClick="@(() => RejectApplication(entity.Id))">
+                Reject
+            </MudMenuItem>
+        }
+        @if ((entity.Status == "Submitted" || entity.Status == "UnderReview") && _canReturn)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Undo" IconColor="Color.Warning" OnClick="@(() => ReturnApplication(entity.Id))">
+                Return for Revision
+            </MudMenuItem>
+        }
+        
+        @* Withdraw - for Draft or Submitted applications *@
+        @if ((entity.Status == "Draft" || entity.Status == "Submitted") && _canWithdraw)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.RemoveCircle" OnClick="@(() => WithdrawApplication(entity.Id))">
+                Withdraw
+            </MudMenuItem>
+        }
+        
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewApplicationDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Application Details</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <AutocompleteMember @bind-Value="context.SelectedMember"
+                                Label="Member"
+                                Required="true"
+                                HelperText="Select the member applying for this loan" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <AutocompleteLoanProduct @bind-Value="context.SelectedLoanProduct"
+                                     Label="Loan Product"
+                                     Required="true"
+                                     HelperText="Select the loan product type" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal"
+                             @bind-Value="context.RequestedAmount"
+                             For="@(() => context.RequestedAmount)"
+                             Label="Requested Amount"
+                             Variant="Variant.Filled"
+                             Min="0m"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentText="$" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="int"
+                             @bind-Value="context.RequestedTermMonths"
+                             For="@(() => context.RequestedTermMonths)"
+                             Label="Term (Months)"
+                             Variant="Variant.Filled"
+                             Min="1"
+                             Max="360" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Purpose"
+                          For="@(() => context.Purpose)"
+                          Label="Purpose"
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          HelperText="Describe the purpose of the loan" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+
+@* Approval Dialog *@
+<MudDialog @bind-Visible="_showApprovalDialog" Options="@(new DialogOptions { MaxWidth = MaxWidth.Small, FullWidth = true })">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Class="mr-2" />
+            Approve Loan Application
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudNumericField T="decimal"
+                         @bind-Value="_approvalAmount"
+                         Label="Approved Amount"
+                         Variant="Variant.Filled"
+                         Format="N2"
+                         Adornment="Adornment.Start"
+                         AdornmentText="$"
+                         Class="mb-3" />
+        <MudNumericField T="int"
+                         @bind-Value="_approvalTermMonths"
+                         Label="Approved Term (Months)"
+                         Variant="Variant.Filled"
+                         Min="1"
+                         Class="mb-3" />
+        <MudNumericField T="decimal"
+                         @bind-Value="_approvalInterestRate"
+                         Label="Interest Rate (%)"
+                         Variant="Variant.Filled"
+                         Format="N2"
+                         Min="0"
+                         Class="mb-3" />
+        <MudTextField @bind-Value="_approvalConditions"
+                      Label="Conditions (Optional)"
+                      Variant="Variant.Filled"
+                      Lines="3" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _showApprovalDialog = false)">Cancel</MudButton>
+        <MudButton Color="Color.Success" Variant="Variant.Filled" OnClick="@ConfirmApproval">Approve</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@* Rejection Dialog *@
+<MudDialog @bind-Visible="_showRejectionDialog" Options="@(new DialogOptions { MaxWidth = MaxWidth.Small, FullWidth = true })">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Class="mr-2" />
+            Reject Loan Application
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="_rejectionReason"
+                      Label="Rejection Reason"
+                      Variant="Variant.Filled"
+                      Lines="4"
+                      Required="true"
+                      HelperText="Provide a reason for rejecting this application" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _showRejectionDialog = false)">Cancel</MudButton>
+        <MudButton Color="Color.Error" Variant="Variant.Filled" OnClick="@ConfirmRejection" Disabled="@string.IsNullOrWhiteSpace(_rejectionReason)">Reject</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@* Return Dialog *@
+<MudDialog @bind-Visible="_showReturnDialog" Options="@(new DialogOptions { MaxWidth = MaxWidth.Small, FullWidth = true })">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Undo" Color="Color.Warning" Class="mr-2" />
+            Return for Revision
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="_returnReason"
+                      Label="Reason for Return"
+                      Variant="Variant.Filled"
+                      Lines="3"
+                      Required="true"
+                      Class="mb-3"
+                      HelperText="Specify what needs to be revised" />
+        <MudTextField @bind-Value="_returnNotes"
+                      Label="Additional Notes (Optional)"
+                      Variant="Variant.Filled"
+                      Lines="2" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _showReturnDialog = false)">Cancel</MudButton>
+        <MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="@ConfirmReturn" Disabled="@string.IsNullOrWhiteSpace(_returnReason)">Return</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@* Assign Officer Dialog *@
+<MudDialog @bind-Visible="_showAssignDialog" Options="@(new DialogOptions { MaxWidth = MaxWidth.Small, FullWidth = true })">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.AssignmentInd" Color="Color.Primary" Class="mr-2" />
+            Assign Loan Officer
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="_assignOfficerId"
+                      Label="Officer ID"
+                      Variant="Variant.Filled"
+                      HelperText="Enter the ID of the loan officer to assign" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _showAssignDialog = false)">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@ConfirmAssign">Assign</MudButton>
+    </DialogActions>
+</MudDialog>

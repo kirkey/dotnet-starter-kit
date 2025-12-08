@@ -1,0 +1,201 @@
+@page "/microfinance/staff"
+
+<PageHeader Title="Staff" Header="Staff" SubHeader="Manage staff members across branches including tellers, loan officers, and administrators." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowStaffHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="StaffResponse" TId="DefaultIdType" TRequest="StaffViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchEmployeeNumber"
+                          Label="Employee Number"
+                          Placeholder="Search by employee number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Badge" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchName"
+                          Label="Name"
+                          Placeholder="Search by first or last name"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Person" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Active")">Active</MudSelectItem>
+                <MudSelectItem Value="@((string?)"OnLeave")">On Leave</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Suspended")">Suspended</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Terminated")">Terminated</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchPosition"
+                          Label="Position"
+                          Placeholder="Search by position"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Work" />
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (_canManageStatus)
+        {
+            @switch (entity.Status)
+            {
+                case "Active":
+                    <MudMenuItem Icon="@Icons.Material.Filled.PauseCircle" OnClick="@(() => SuspendStaff(entity.Id))">
+                        Suspend
+                    </MudMenuItem>
+                    <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => TerminateStaff(entity.Id))">
+                        Terminate
+                    </MudMenuItem>
+                    break;
+                case "OnLeave":
+                    <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => ReinstateStaff(entity.Id))">
+                        Reinstate
+                    </MudMenuItem>
+                    <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => TerminateStaff(entity.Id))">
+                        Terminate
+                    </MudMenuItem>
+                    break;
+                case "Suspended":
+                    <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => ReinstateStaff(entity.Id))">
+                        Reinstate
+                    </MudMenuItem>
+                    <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => TerminateStaff(entity.Id))">
+                        Terminate
+                    </MudMenuItem>
+                    break;
+                case "Terminated":
+                    <MudMenuItem Icon="@Icons.Material.Filled.Replay" OnClick="@(() => ReinstateStaff(entity.Id))">
+                        Reinstate
+                    </MudMenuItem>
+                    break;
+            }
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewStaffDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Basic Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.EmployeeNumber"
+                          For="@(() => context.EmployeeNumber)"
+                          Label="Employee Number"
+                          Variant="Variant.Filled"
+                          HelperText="Unique employee identifier (e.g., EMP-001)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.FirstName"
+                          For="@(() => context.FirstName)"
+                          Label="First Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.LastName"
+                          For="@(() => context.LastName)"
+                          Label="Last Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Contact Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Email"
+                          For="@(() => context.Email)"
+                          Label="Email"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Email"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Phone"
+                          For="@(() => context.Phone)"
+                          Label="Phone"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Telephone" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Employment Details</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Position"
+                          For="@(() => context.Position)"
+                          Label="Position"
+                          Variant="Variant.Filled"
+                          HelperText="e.g., Teller, Loan Officer, Branch Manager"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.BranchId"
+                          For="@(() => context.BranchId)"
+                          Label="Branch ID"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="ID of the assigned branch" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.DateJoinedDate"
+                           For="@(() => context.DateJoinedDate)"
+                           Label="Date Joined"
+                           Variant="Variant.Filled"
+                           Required="true"
+                           HelperText="Date the staff member joined" />
+        </MudItem>
+        
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudSelect T="string"
+                           @bind-Value="context.Status"
+                           For="@(() => context.Status)"
+                           Label="Status"
+                           Variant="Variant.Filled"
+                           Disabled="true"
+                           HelperText="Use workflow actions to change status">
+                    <MudSelectItem Value="@("Active")">Active</MudSelectItem>
+                    <MudSelectItem Value="@("OnLeave")">On Leave</MudSelectItem>
+                    <MudSelectItem Value="@("Suspended")">Suspended</MudSelectItem>
+                    <MudSelectItem Value="@("Terminated")">Terminated</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+        }
+    </EditFormContent>
+</EntityTable>

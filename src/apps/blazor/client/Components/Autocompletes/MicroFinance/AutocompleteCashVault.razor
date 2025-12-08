@@ -1,0 +1,194 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+@using System.Linq.Expressions
+@namespace FSH.Starter.Blazor.Client.Components.Autocompletes.MicroFinance
+@inject IClient Client
+
+<MudAutocomplete T="CashVaultResponse"
+                 Value="_selectedVault"
+                 ValueChanged="@OnVaultSelected"
+                 SearchFunc="@SearchVaults"
+                 ToStringFunc="@(vault => vault != null ? $"{vault.Code} - {vault.Name}" : string.Empty)"
+                 Label="@Label"
+                 Required="@Required"
+                 RequiredError="@RequiredError"
+                 Variant="@Variant"
+                 AdornmentIcon="@Icons.Material.Filled.AccountBalance"
+                 AdornmentColor="@AdornmentColor"
+                 HelperText="@HelperText"
+                 Disabled="@Disabled"
+                 Dense="@Dense"
+                 Clearable="@Clearable"
+                 ResetValueOnEmptyText="@ResetValueOnEmptyText" />
+
+@code {
+    private CashVaultResponse? _selectedVault;
+    private List<CashVaultResponse> _availableVaults = new();
+
+    /// <summary>
+    /// Gets or sets the selected vault ID (Guid).
+    /// </summary>
+    [Parameter]
+    public Guid Value { get; set; }
+
+    /// <summary>
+    /// Gets or sets the callback when value changes.
+    /// </summary>
+    [Parameter]
+    public EventCallback<Guid> ValueChanged { get; set; }
+
+    /// <summary>
+    /// Expression for validation.
+    /// </summary>
+    [Parameter]
+    public Expression<Func<Guid>>? For { get; set; }
+
+    /// <summary>
+    /// Gets or sets the label text.
+    /// </summary>
+    [Parameter]
+    public string Label { get; set; } = "Cash Vault";
+
+    /// <summary>
+    /// Gets or sets whether the field is required.
+    /// </summary>
+    [Parameter]
+    public bool Required { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets the required field error message.
+    /// </summary>
+    [Parameter]
+    public string RequiredError { get; set; } = "Cash vault is required";
+
+    /// <summary>
+    /// Gets or sets the helper text.
+    /// </summary>
+    [Parameter]
+    public string HelperText { get; set; } = "Select a cash vault";
+
+    /// <summary>
+    /// Gets or sets the variant style.
+    /// </summary>
+    [Parameter]
+    public Variant Variant { get; set; } = Variant.Filled;
+
+    /// <summary>
+    /// Gets or sets the adornment color.
+    /// </summary>
+    [Parameter]
+    public Color AdornmentColor { get; set; } = Color.Primary;
+
+    /// <summary>
+    /// Gets or sets whether the field is disabled.
+    /// </summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether to use dense spacing.
+    /// </summary>
+    [Parameter]
+    public bool Dense { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the field is clearable.
+    /// </summary>
+    [Parameter]
+    public bool Clearable { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets whether to reset value on empty text.
+    /// </summary>
+    [Parameter]
+    public bool ResetValueOnEmptyText { get; set; } = true;
+
+    /// <summary>
+    /// Optional filter to only show active vaults.
+    /// </summary>
+    [Parameter]
+    public bool? ActiveOnly { get; set; } = true;
+
+    /// <summary>
+    /// Vault ID to exclude from the list (useful when selecting transfer target).
+    /// </summary>
+    [Parameter]
+    public Guid? ExcludeVaultId { get; set; }
+
+    /// <summary>
+    /// List of available vaults to select from.
+    /// If not provided, the component will attempt to load vaults.
+    /// </summary>
+    [Parameter]
+    public IEnumerable<CashVaultResponse>? AvailableVaults { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // Use provided vaults or initialize empty list
+        if (AvailableVaults != null)
+        {
+            _availableVaults = AvailableVaults.ToList();
+        }
+        
+        // Load the vault if we have a value but no selected vault
+        if (Value != Guid.Empty && (_selectedVault == null || _selectedVault.Id != Value))
+        {
+            // First check if it's in our available vaults
+            _selectedVault = _availableVaults.FirstOrDefault(v => v.Id == Value);
+            
+            // If not found and we have an API, try to load it
+            if (_selectedVault == null)
+            {
+                try
+                {
+                    _selectedVault = await Client.GetCashVaultAsync("1", Value);
+                }
+                catch
+                {
+                    _selectedVault = null;
+                }
+            }
+        }
+        else if (Value == Guid.Empty)
+        {
+            _selectedVault = null;
+        }
+    }
+
+    private async Task OnVaultSelected(CashVaultResponse? vault)
+    {
+        _selectedVault = vault;
+        var newValue = vault?.Id ?? Guid.Empty;
+        if (Value != newValue)
+        {
+            Value = newValue;
+            await ValueChanged.InvokeAsync(newValue);
+        }
+    }
+
+    private Task<IEnumerable<CashVaultResponse>> SearchVaults(string searchValue, CancellationToken cancellationToken)
+    {
+        var items = _availableVaults.AsEnumerable();
+        
+        // Filter by search text
+        if (!string.IsNullOrWhiteSpace(searchValue))
+        {
+            items = items.Where(v => 
+                (v.Code?.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                (v.Name?.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false));
+        }
+        
+        // Filter by active status if required
+        if (ActiveOnly == true)
+        {
+            items = items.Where(v => v.Status == "Active");
+        }
+        
+        // Exclude specific vault if set
+        if (ExcludeVaultId.HasValue)
+        {
+            items = items.Where(v => v.Id != ExcludeVaultId.Value);
+        }
+        
+        return Task.FromResult(items);
+    }
+}

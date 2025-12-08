@@ -1,0 +1,68 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CashVaults
+
+<MudDialog>
+    <DialogContent>
+        <MudGrid Spacing="2">
+            <MudItem xs="12">
+                <MudText Typo="Typo.body1" Class="mb-4">
+                    Reconcile the vault by performing a physical cash count.
+                </MudText>
+            </MudItem>
+            
+            <MudItem xs="12">
+                <MudNumericField @bind-Value="_physicalCount"
+                                 Label="Physical Count"
+                                 Variant="Variant.Filled"
+                                 Format="N2"
+                                 Required="true"
+                                 Adornment="Adornment.Start"
+                                 AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+                                 HelperText="Enter the actual cash amount counted" />
+            </MudItem>
+            
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_denominationBreakdown"
+                              Label="Denomination Breakdown"
+                              Variant="Variant.Filled"
+                              Lines="4"
+                              Placeholder="e.g., 100x$100, 50x$50, 100x$20..."
+                              HelperText="Optional: Breakdown of cash denominations" />
+            </MudItem>
+            
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Info" Dense="true">
+                    Any variance between the physical count and system balance will be recorded.
+                </MudAlert>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => MudDialog.Cancel())">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@ConfirmReconcile" Disabled="@(_physicalCount <= 0)">
+            Reconcile
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType VaultId { get; set; }
+
+    [Parameter]
+    public Func<decimal, string?, Task>? OnConfirm { get; set; }
+
+    private decimal _physicalCount;
+    private string? _denominationBreakdown;
+
+    private async Task ConfirmReconcile()
+    {
+        if (OnConfirm != null)
+        {
+            await OnConfirm(_physicalCount, _denominationBreakdown);
+        }
+        MudDialog.Close();
+    }
+}

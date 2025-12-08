@@ -1,0 +1,62 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CashVaults
+
+<MudDialog>
+    <DialogContent>
+        <MudGrid Spacing="2">
+            <MudItem xs="12">
+                <MudText Typo="Typo.body1" Class="mb-4">
+                    Close the day for this vault by verifying the physical cash balance.
+                </MudText>
+            </MudItem>
+            
+            <MudItem xs="12">
+                <MudNumericField @bind-Value="_verifiedBalance"
+                                 Label="Verified Balance"
+                                 Variant="Variant.Filled"
+                                 Format="N2"
+                                 Required="true"
+                                 Adornment="Adornment.Start"
+                                 AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+                                 HelperText="Enter the physically verified cash balance" />
+            </MudItem>
+            
+            <MudItem xs="12">
+                <MudTextField @bind-Value="_denominationBreakdown"
+                              Label="Denomination Breakdown"
+                              Variant="Variant.Filled"
+                              Lines="4"
+                              Placeholder="e.g., 100x$100, 50x$50, 100x$20..."
+                              HelperText="Optional: Breakdown of cash denominations" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => MudDialog.Cancel())">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@ConfirmClose" Disabled="@(_verifiedBalance <= 0)">
+            Close Day
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType VaultId { get; set; }
+
+    [Parameter]
+    public Func<decimal, string?, Task>? OnConfirm { get; set; }
+
+    private decimal _verifiedBalance;
+    private string? _denominationBreakdown;
+
+    private async Task ConfirmClose()
+    {
+        if (OnConfirm != null)
+        {
+            await OnConfirm(_verifiedBalance, _denominationBreakdown);
+        }
+        MudDialog.Close();
+    }
+}

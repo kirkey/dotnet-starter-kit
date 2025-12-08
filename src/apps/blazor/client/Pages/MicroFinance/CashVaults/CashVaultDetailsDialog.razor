@@ -1,0 +1,113 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CashVaults
+
+<MudDialog>
+    <DialogContent>
+        @if (Vault != null)
+        {
+            <MudGrid Spacing="2">
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1"><strong>Basic Information</strong></MudText>
+                    <MudDivider Class="mb-2" />
+                </MudItem>
+                
+                <MudItem xs="6" md="4">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Vault Code</MudText>
+                    <MudText>@Vault.Code</MudText>
+                </MudItem>
+                <MudItem xs="6" md="4">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Name</MudText>
+                    <MudText>@Vault.Name</MudText>
+                </MudItem>
+                <MudItem xs="6" md="4">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Vault Type</MudText>
+                    <MudChip T="string" Color="Color.Primary" Size="Size.Small">@Vault.VaultType</MudChip>
+                </MudItem>
+                <MudItem xs="6" md="4">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Status</MudText>
+                    <MudChip T="string" Color="@GetStatusColor(Vault.Status)" Size="Size.Small">@Vault.Status</MudChip>
+                </MudItem>
+                <MudItem xs="6" md="4">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Location</MudText>
+                    <MudText>@(Vault.Location ?? "-")</MudText>
+                </MudItem>
+                <MudItem xs="6" md="4">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Custodian</MudText>
+                    <MudText>@(Vault.CustodianName ?? "-")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" Class="mt-4">
+                    <MudText Typo="Typo.subtitle1"><strong>Balance Information</strong></MudText>
+                    <MudDivider Class="mb-2" />
+                </MudItem>
+                
+                <MudItem xs="6" md="3">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Current Balance</MudText>
+                    <MudText Typo="Typo.h6" Color="@GetBalanceColor(Vault.CurrentBalance, Vault.MinimumBalance, Vault.MaximumBalance)">
+                        @Vault.CurrentBalance.ToString("C")
+                    </MudText>
+                </MudItem>
+                <MudItem xs="6" md="3">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Opening Balance</MudText>
+                    <MudText>@Vault.OpeningBalance.ToString("C")</MudText>
+                </MudItem>
+                <MudItem xs="6" md="3">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Minimum Balance</MudText>
+                    <MudText Color="Color.Warning">@Vault.MinimumBalance.ToString("C")</MudText>
+                </MudItem>
+                <MudItem xs="6" md="3">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Maximum Balance</MudText>
+                    <MudText Color="Color.Info">@Vault.MaximumBalance.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" Class="mt-4">
+                    <MudText Typo="Typo.subtitle1"><strong>Reconciliation</strong></MudText>
+                    <MudDivider Class="mb-2" />
+                </MudItem>
+                
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Last Reconciliation Date</MudText>
+                    <MudText>@(Vault.LastReconciliationDate?.ToString("g") ?? "Never")</MudText>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Last Reconciled Balance</MudText>
+                    <MudText>@(Vault.LastReconciledBalance?.ToString("C") ?? "-")</MudText>
+                </MudItem>
+                
+                @if (!string.IsNullOrEmpty(Vault.Notes))
+                {
+                    <MudItem xs="12" Class="mt-4">
+                        <MudText Typo="Typo.subtitle1"><strong>Notes</strong></MudText>
+                        <MudDivider Class="mb-2" />
+                        <MudText>@Vault.Notes</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => MudDialog.Close())">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public CashVaultResponse? Vault { get; set; }
+
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Active" => Color.Success,
+        "Suspended" => Color.Warning,
+        "Closed" => Color.Error,
+        _ => Color.Default
+    };
+
+    private static Color GetBalanceColor(decimal current, decimal min, decimal max)
+    {
+        if (current < min) return Color.Error;
+        if (current > max) return Color.Warning;
+        return Color.Success;
+    }
+}

@@ -1,0 +1,177 @@
+@page "/microfinance/collateral-types"
+
+<PageHeader Title="Collateral Types" Header="Collateral Types" SubHeader="Configure and manage collateral type definitions for loan security." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowCollateralTypesHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="CollateralTypeResponse" TId="DefaultIdType" TRequest="CollateralTypeViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchCode"
+                          Label="Type Code"
+                          Placeholder="Search by code"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Code" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchName"
+                          Label="Type Name"
+                          Placeholder="Search by name"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Label" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchCategory"
+                       Label="Category"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"RealEstate")">Real Estate</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Vehicle")">Vehicle</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Equipment")">Equipment</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Inventory")">Inventory</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Securities")">Securities</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Deposit")">Deposit</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Basic Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Code"
+                          For="@(() => context.Code)"
+                          Label="Type Code"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Unique code (e.g., RE, VH, EQ)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Name"
+                          For="@(() => context.Name)"
+                          Label="Type Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.Category"
+                       For="@(() => context.Category)"
+                       Label="Category"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("RealEstate")">Real Estate</MudSelectItem>
+                <MudSelectItem Value="@("Vehicle")">Vehicle</MudSelectItem>
+                <MudSelectItem Value="@("Equipment")">Equipment</MudSelectItem>
+                <MudSelectItem Value="@("Inventory")">Inventory</MudSelectItem>
+                <MudSelectItem Value="@("Securities")">Securities</MudSelectItem>
+                <MudSelectItem Value="@("Deposit")">Deposit</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Loan-to-Value (LTV) Settings</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.DefaultLtvPercent"
+                             For="@(() => context.DefaultLtvPercent)"
+                             Label="Default LTV %"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Min="0"
+                             Max="100"
+                             Adornment="Adornment.End"
+                             AdornmentText="%"
+                             HelperText="Default loan-to-value ratio" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.MaxLtvPercent"
+                             For="@(() => context.MaxLtvPercent)"
+                             Label="Max LTV %"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Min="0"
+                             Max="100"
+                             Adornment="Adornment.End"
+                             AdornmentText="%"
+                             HelperText="Maximum allowed LTV ratio" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Depreciation Settings</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.DefaultUsefulLifeYears"
+                             For="@(() => context.DefaultUsefulLifeYears)"
+                             Label="Useful Life (Years)"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             Max="100"
+                             HelperText="Expected useful life in years" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.AnnualDepreciationRate"
+                             For="@(() => context.AnnualDepreciationRate)"
+                             Label="Annual Depreciation Rate %"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Min="0"
+                             Max="100"
+                             Adornment="Adornment.End"
+                             AdornmentText="%"
+                             HelperText="Yearly depreciation percentage" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Requirements</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox @bind-Value="context.RequiresInsurance"
+                         For="@(() => context.RequiresInsurance)"
+                         Label="Requires Insurance"
+                         Color="Color.Primary" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox @bind-Value="context.RequiresAppraisal"
+                         For="@(() => context.RequiresAppraisal)"
+                         Label="Requires Appraisal"
+                         Color="Color.Primary" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

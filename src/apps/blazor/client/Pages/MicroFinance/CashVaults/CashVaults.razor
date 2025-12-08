@@ -1,0 +1,211 @@
+@page "/microfinance/cash-vaults"
+
+<PageHeader Title="Cash Vaults" Header="Cash Vaults" SubHeader="Manage cash vaults across branches including main vaults, branch vaults, and ATM holdings." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowCashVaultsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="CashVaultResponse" TId="DefaultIdType" TRequest="CashVaultViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="3">
+            <MudTextField @bind-Value="@SearchCode"
+                          Label="Vault Code"
+                          Placeholder="Search by code"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudTextField @bind-Value="@SearchName"
+                          Label="Name"
+                          Placeholder="Search by name"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.AccountBalance" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchVaultType"
+                       Label="Vault Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"MainVault")">Main Vault</MudSelectItem>
+                <MudSelectItem Value="@((string?)"BranchVault")">Branch Vault</MudSelectItem>
+                <MudSelectItem Value="@((string?)"ATM")">ATM</MudSelectItem>
+                <MudSelectItem Value="@((string?)"SafeDeposit")">Safe Deposit</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Active")">Active</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Suspended")">Suspended</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Closed")">Closed</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (_canManageVaults)
+        {
+            @switch (entity.Status)
+            {
+                case "Active":
+                    <MudMenuItem Icon="@Icons.Material.Filled.NightsStay" OnClick="@(() => CloseDayVault(entity.Id))">
+                        Close Day
+                    </MudMenuItem>
+                    <MudMenuItem Icon="@Icons.Material.Filled.FactCheck" OnClick="@(() => ReconcileVault(entity.Id))">
+                        Reconcile
+                    </MudMenuItem>
+                    <MudMenuItem Icon="@Icons.Material.Filled.SwapHoriz" OnClick="@(() => TransferToVault(entity.Id))">
+                        Transfer
+                    </MudMenuItem>
+                    break;
+                case "Suspended":
+                    <MudMenuItem Icon="@Icons.Material.Filled.FactCheck" OnClick="@(() => ReconcileVault(entity.Id))">
+                        Reconcile
+                    </MudMenuItem>
+                    break;
+            }
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewVaultDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Basic Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Code"
+                          For="@(() => context.Code)"
+                          Label="Vault Code"
+                          Variant="Variant.Filled"
+                          HelperText="Unique vault identifier (e.g., VLT-001)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Name"
+                          For="@(() => context.Name)"
+                          Label="Vault Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="context.VaultType"
+                       For="@(() => context.VaultType)"
+                       Label="Vault Type"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("MainVault")">Main Vault</MudSelectItem>
+                <MudSelectItem Value="@("BranchVault")">Branch Vault</MudSelectItem>
+                <MudSelectItem Value="@("ATM")">ATM</MudSelectItem>
+                <MudSelectItem Value="@("SafeDeposit")">Safe Deposit</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Branch & Location</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <AutocompleteBranch @bind-Value="context.BranchId"
+                                For="@(() => context.BranchId)"
+                                Label="Branch"
+                                Variant="Variant.Filled"
+                                Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="8">
+            <MudTextField @bind-Value="context.Location"
+                          For="@(() => context.Location)"
+                          Label="Physical Location"
+                          Variant="Variant.Filled"
+                          HelperText="Room or area where vault is located" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Balance Settings</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.OpeningBalance"
+                             For="@(() => context.OpeningBalance)"
+                             Label="Opening Balance"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+                             HelperText="Initial balance when vault was created" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.MinimumBalance"
+                             For="@(() => context.MinimumBalance)"
+                             Label="Minimum Balance"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.ArrowDownward"
+                             HelperText="Alert threshold for low balance" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.MaximumBalance"
+                             For="@(() => context.MaximumBalance)"
+                             Label="Maximum Balance"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentIcon="@Icons.Material.Filled.ArrowUpward"
+                             HelperText="Maximum balance before transfer required" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Custodian</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="6">
+            <MudTextField @bind-Value="context.CustodianName"
+                          For="@(() => context.CustodianName)"
+                          Label="Custodian Name"
+                          Variant="Variant.Filled"
+                          HelperText="Person responsible for the vault" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Notes</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          HelperText="Additional notes about the vault" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

@@ -1,0 +1,172 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollateralTypes
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Collateral Types Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Collateral Types?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Collateral Type Configuration</MudText>
+                        <MudText Typo="Typo.body2">
+                            Collateral types define categories of assets that can be used as security for loans.
+                            Each type has specific parameters for valuation, loan-to-value ratios, and requirements.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Collateral Categories:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Real Estate:</strong> Land, buildings, property<br/>
+                                • <strong>Vehicle:</strong> Cars, trucks, motorcycles<br/>
+                                • <strong>Equipment:</strong> Machinery, tools, farm equipment<br/>
+                                • <strong>Inventory:</strong> Stock, raw materials, goods<br/>
+                                • <strong>Securities:</strong> Stocks, bonds, deposits<br/>
+                                • <strong>Deposit:</strong> Fixed deposits, savings as security
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Configure collateral types based on your institution's risk appetite and loan products.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Loan-to-Value (LTV) Ratios">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding LTV Settings</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Default LTV Percentage:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Standard loan amount as percentage of collateral value<br/>
+                                • Lower LTV = Less risk for the institution<br/>
+                                • Higher LTV = More attractive for borrowers<br/>
+                                • Typical range: 50-80% depending on collateral type
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Maximum LTV Percentage:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Upper limit regardless of member standing<br/>
+                                • Protects against market value fluctuations<br/>
+                                • Real estate typically 70-80%<br/>
+                                • Vehicles typically 50-70% due to depreciation
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Risk Note:</strong> Higher LTV ratios increase exposure if collateral must be liquidated.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Depreciation Settings">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Asset Value Over Time</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Useful Life (Years):</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Expected period the asset retains significant value<br/>
+                                • Real estate: 20-50 years<br/>
+                                • Vehicles: 5-10 years<br/>
+                                • Equipment: 5-15 years depending on type
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Annual Depreciation Rate:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Percentage value reduction per year<br/>
+                                • Used to recalculate collateral coverage<br/>
+                                • Vehicles: 15-20% annually<br/>
+                                • Equipment: 10-15% annually<br/>
+                                • Real estate: 0-5% (may appreciate)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Review collateral values periodically for long-term loans.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Requirements">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Collateral Requirements</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Requires Insurance:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Protects both borrower and lender<br/>
+                                • Recommended for vehicles and real estate<br/>
+                                • Coverage should exceed loan amount<br/>
+                                • Institution should be listed as beneficiary
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Requires Appraisal:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Professional valuation by licensed appraiser<br/>
+                                • Essential for real estate and high-value assets<br/>
+                                • May be waived for standardized items (e.g., new vehicles)<br/>
+                                • Reappraisal may be required for loan renewals
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Collateral Management Tips</MudText>
+                        <MudText Typo="Typo.caption">
+                            • <strong>Documentation:</strong> Maintain clear ownership records<br/>
+                            • <strong>Verification:</strong> Verify collateral before loan disbursement<br/>
+                            • <strong>Monitoring:</strong> Regularly check collateral condition and value<br/>
+                            • <strong>Diversification:</strong> Avoid concentration in single collateral types<br/>
+                            • <strong>Legal:</strong> Ensure proper registration of liens and charges<br/>
+                            • <strong>Insurance:</strong> Track policy renewals and coverage adequacy
+                        </MudText>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Cancel() => MudDialog.Close();
+}

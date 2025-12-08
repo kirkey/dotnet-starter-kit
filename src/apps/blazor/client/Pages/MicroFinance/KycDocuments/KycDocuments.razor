@@ -1,0 +1,238 @@
+@page "/microfinance/kyc-documents"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.MicroFinance
+
+<PageHeader Title="KYC Documents" Header="KYC Documents" SubHeader="Manage Know Your Customer documents for member verification and compliance." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowKycDocumentsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="KycDocumentResponse" TId="DefaultIdType" TRequest="KycDocumentViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchDocumentNumber"
+                          Label="Document Number"
+                          Placeholder="Search by document number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Numbers" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchDocumentType"
+                       Label="Document Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"NationalId")">National ID</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Passport")">Passport</MudSelectItem>
+                <MudSelectItem Value="@((string?)"DriverLicense")">Driver License</MudSelectItem>
+                <MudSelectItem Value="@((string?)"ProofOfAddress")">Proof of Address</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Photo")">Photo</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Pending")">Pending</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Verified")">Verified</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Rejected")">Rejected</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Expired")">Expired</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @* Verify - only for Pending documents *@
+        @if (entity.Status == "Pending" && _canVerify)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Verified" IconColor="Color.Success" OnClick="@(() => VerifyDocument(entity.Id))">
+                Verify
+            </MudMenuItem>
+        }
+        
+        @* Reject - only for Pending documents *@
+        @if (entity.Status == "Pending" && _canReject)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel" IconColor="Color.Error" OnClick="@(() => OpenRejectDialog(entity.Id))">
+                Reject
+            </MudMenuItem>
+        }
+        
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewDocumentDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Document Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <AutocompleteMember @bind-Value="context.SelectedMember"
+                                Label="Member"
+                                Required="true"
+                                HelperText="Select the member this document belongs to" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="context.DocumentType"
+                       For="@(() => context.DocumentType)"
+                       Label="Document Type"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("NationalId")">National ID</MudSelectItem>
+                <MudSelectItem Value="@("Passport")">Passport</MudSelectItem>
+                <MudSelectItem Value="@("DriverLicense")">Driver License</MudSelectItem>
+                <MudSelectItem Value="@("ProofOfAddress")">Proof of Address</MudSelectItem>
+                <MudSelectItem Value="@("Photo")">Photo</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.DocumentNumber"
+                          For="@(() => context.DocumentNumber)"
+                          Label="Document Number"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="e.g., Passport number, ID number" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.IssuingAuthority"
+                          For="@(() => context.IssuingAuthority)"
+                          Label="Issuing Authority"
+                          Variant="Variant.Filled"
+                          HelperText="e.g., Government agency, DMV" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Validity Dates</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.IssueDateValue"
+                           For="@(() => context.IssueDateValue)"
+                           Label="Issue Date"
+                           Variant="Variant.Filled"
+                           DateFormat="yyyy-MM-dd"
+                           HelperText="When the document was issued" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.ExpiryDateValue"
+                           For="@(() => context.ExpiryDateValue)"
+                           Label="Expiry Date"
+                           Variant="Variant.Filled"
+                           DateFormat="yyyy-MM-dd"
+                           HelperText="When the document expires (if applicable)" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>File Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.FileName"
+                          For="@(() => context.FileName)"
+                          Label="File Name"
+                          Variant="Variant.Filled"
+                          HelperText="Name of the uploaded document file" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.FilePath"
+                          For="@(() => context.FilePath)"
+                          Label="File Path"
+                          Variant="Variant.Filled"
+                          HelperText="Path or URL to the document" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.MimeType"
+                          For="@(() => context.MimeType)"
+                          Label="MIME Type"
+                          Variant="Variant.Filled"
+                          HelperText="e.g., application/pdf, image/jpeg" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="long"
+                             @bind-Value="context.FileSize"
+                             For="@(() => context.FileSize)"
+                             Label="File Size (bytes)"
+                             Variant="Variant.Filled"
+                             Min="0" />
+        </MudItem>
+        
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12">
+                <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Status Information</strong></MudText>
+                <MudDivider />
+            </MudItem>
+            
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField Value="@context.Status"
+                              Label="Status"
+                              Variant="Variant.Filled"
+                              ReadOnly="true"
+                              HelperText="Use workflow actions to change status" />
+            </MudItem>
+            
+            @if (!string.IsNullOrEmpty(context.RejectionReason))
+            {
+                <MudItem xs="12" sm="6" md="8">
+                    <MudTextField Value="@context.RejectionReason"
+                                  Label="Rejection Reason"
+                                  Variant="Variant.Filled"
+                                  ReadOnly="true" />
+                </MudItem>
+            }
+        }
+    </EditFormContent>
+</EntityTable>
+
+@* Rejection Dialog *@
+<MudDialog @bind-Visible="_showRejectionDialog">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Cancel" Class="mr-2" Color="Color.Error" />
+            Reject KYC Document
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Class="mb-4">Please provide a reason for rejecting this document.</MudText>
+        <MudTextField @bind-Value="_rejectionReason"
+                      Label="Rejection Reason"
+                      Variant="Variant.Outlined"
+                      Lines="3"
+                      Required="true"
+                      HelperText="This will be visible to the member" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@CancelRejection" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton OnClick="@ConfirmRejection" Variant="Variant.Filled" Color="Color.Error">Reject</MudButton>
+    </DialogActions>
+</MudDialog>
