@@ -18,6 +18,22 @@ internal static class AmlAlertSeeder
         var existingCount = await context.AmlAlerts.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount >= targetCount) return;
 
+        // Get the max alert number to avoid duplicates
+        var maxAlertCode = await context.AmlAlerts
+            .Select(a => a.AlertCode)
+            .OrderByDescending(c => c)
+            .FirstOrDefaultAsync(cancellationToken)
+            .ConfigureAwait(false);
+        
+        int startingAlertNumber = 14001;
+        if (!string.IsNullOrEmpty(maxAlertCode) && maxAlertCode.StartsWith("AML-", StringComparison.Ordinal))
+        {
+            if (int.TryParse(maxAlertCode.AsSpan(4), out int existingNumber))
+            {
+                startingAlertNumber = existingNumber + 1;
+            }
+        }
+
         var members = await context.Members.Take(50).ToListAsync(cancellationToken).ConfigureAwait(false);
         if (!members.Any()) return;
 
@@ -25,7 +41,7 @@ internal static class AmlAlertSeeder
         var staffIds = await context.Staff.Select(s => s.Id).ToListAsync(cancellationToken).ConfigureAwait(false);
 
         var random = new Random(42);
-        int alertNumber = 14001;
+        int alertNumber = startingAlertNumber;
         int alertCount = 0;
 
         var alertTypes = new (string Type, string Desc, string Severity)[]

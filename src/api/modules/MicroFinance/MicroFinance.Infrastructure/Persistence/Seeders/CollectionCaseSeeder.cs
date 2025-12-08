@@ -18,6 +18,22 @@ internal static class CollectionCaseSeeder
         var existingCount = await context.CollectionCases.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount >= targetCount) return;
 
+        // Get the max case number to avoid duplicates
+        var maxCaseNumber = await context.CollectionCases
+            .Select(c => c.CaseNumber)
+            .OrderByDescending(c => c)
+            .FirstOrDefaultAsync(cancellationToken)
+            .ConfigureAwait(false);
+        
+        int startingCaseNumber = 7001;
+        if (!string.IsNullOrEmpty(maxCaseNumber) && maxCaseNumber.StartsWith("COL-", StringComparison.Ordinal))
+        {
+            if (int.TryParse(maxCaseNumber.AsSpan(4), out int existingNumber))
+            {
+                startingCaseNumber = existingNumber + 1;
+            }
+        }
+
         // Get disbursed loans (simulate some are overdue)
         var disbursedLoans = await context.Loans
             .Where(l => l.Status == Loan.StatusDisbursed)
@@ -34,7 +50,7 @@ internal static class CollectionCaseSeeder
         if (!disbursedLoans.Any() || !collectors.Any()) return;
 
         var random = new Random(42);
-        int caseNumber = 7001;
+        int caseNumber = startingCaseNumber;
         int caseCount = 0;
 
         foreach (var loan in disbursedLoans)
