@@ -82,4 +82,17 @@ public partial class LoanWriteOffs
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show loan write-off help dialog.
+    /// </summary>
+    private async Task ShowLoanWriteOffHelp()
+    {
+        await DialogService.ShowAsync<LoanWriteOffHelpDialog>("Loan Write-Off Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

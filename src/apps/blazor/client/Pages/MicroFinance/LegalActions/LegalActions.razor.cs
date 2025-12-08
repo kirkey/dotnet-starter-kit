@@ -73,4 +73,17 @@ public partial class LegalActions
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show legal action help dialog.
+    /// </summary>
+    private async Task ShowLegalActionHelp()
+    {
+        await DialogService.ShowAsync<LegalActionHelpDialog>("Legal Action Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

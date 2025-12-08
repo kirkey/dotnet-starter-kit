@@ -6,6 +6,9 @@
          Subtitle="Manage loan disbursement tranches and schedules."
          BreadcrumbItems="@(new List<BreadcrumbItem> { new("MicroFinance", "/microfinance"), new("Loan Disbursement Tranches", "/microfinance/loan-disbursement-tranches", true) })">
     <ExtraActions>
+        <MudTooltip Text="Help">
+            <MudIconButton Icon="@Icons.Material.Filled.Help" Color="Color.Surface" OnClick="@ShowLoanDisbursementTrancheHelp" />
+        </MudTooltip>
         <MudTooltip Text="Refresh">
             <MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="Color.Surface" OnClick="@(() => _table.ReloadDataAsync())" />
         </MudTooltip>

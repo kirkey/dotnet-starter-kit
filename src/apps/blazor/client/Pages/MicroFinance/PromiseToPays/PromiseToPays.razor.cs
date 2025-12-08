@@ -73,4 +73,17 @@ public partial class PromiseToPays
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show promise to pay help dialog.
+    /// </summary>
+    private async Task ShowPromiseToPayHelp()
+    {
+        await DialogService.ShowAsync<PromiseToPayHelpDialog>("Promise To Pay Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

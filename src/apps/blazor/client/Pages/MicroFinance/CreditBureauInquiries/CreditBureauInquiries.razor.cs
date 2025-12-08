@@ -73,4 +73,17 @@ public partial class CreditBureauInquiries
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show Credit Bureau Inquiries help dialog.
+    /// </summary>
+    private async Task ShowCreditBureauInquiriesHelp()
+    {
+        await DialogService.ShowAsync<CreditBureauInquiriesHelpDialog>("Credit Bureau Inquiries Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

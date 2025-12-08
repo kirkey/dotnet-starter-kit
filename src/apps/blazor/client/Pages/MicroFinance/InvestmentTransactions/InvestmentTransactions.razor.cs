@@ -69,4 +69,17 @@ public partial class InvestmentTransactions
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show investment transactions help dialog.
+    /// </summary>
+    private async Task ShowInvestmentTransactionsHelp()
+    {
+        await DialogService.ShowAsync<InvestmentTransactionsHelpDialog>("Investment Transactions Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

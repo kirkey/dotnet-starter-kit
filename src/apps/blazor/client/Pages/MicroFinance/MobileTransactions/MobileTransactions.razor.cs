@@ -73,4 +73,17 @@ public partial class MobileTransactions
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show mobile transactions help dialog.
+    /// </summary>
+    private async Task ShowMobileTransactionsHelp()
+    {
+        await DialogService.ShowAsync<MobileTransactionsHelpDialog>("Mobile Transactions Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

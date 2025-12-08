@@ -11,6 +11,17 @@
         </MudTooltip>
     </ExtraActions>
     <ChildContent>
+        <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+            <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+                <MudSpacer />
+                <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+                    <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowInvestmentAccountsHelp">
+                        Help
+                    </MudButton>
+                </MudButtonGroup>
+            </MudStack>
+        </MudPaper>
+
         <EntityTable @ref="_table" TEntity="InvestmentAccountResponse" TId="DefaultIdType" TRequest="InvestmentAccountViewModel"
                      Context="Context" Elevation="_preference.Elevation" Dense="true" Bordered="true"
                      Style="@($"border-radius: {_preference.BorderRadius}px")">

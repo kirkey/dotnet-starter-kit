@@ -73,4 +73,17 @@ public partial class CollateralReleases
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show collateral release help dialog.
+    /// </summary>
+    private async Task ShowCollateralReleaseHelp()
+    {
+        await DialogService.ShowAsync<CollateralReleaseHelpDialog>("Collateral Release Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

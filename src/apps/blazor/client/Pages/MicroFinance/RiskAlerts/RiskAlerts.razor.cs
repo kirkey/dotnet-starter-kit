@@ -73,4 +73,17 @@ public partial class RiskAlerts
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show risk alert help dialog.
+    /// </summary>
+    private async Task ShowRiskAlertHelp()
+    {
+        await DialogService.ShowAsync<RiskAlertHelpDialog>("Risk Alert Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

@@ -79,4 +79,17 @@ public partial class Documents
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show document help dialog.
+    /// </summary>
+    private async Task ShowDocumentHelp()
+    {
+        await DialogService.ShowAsync<DocumentHelpDialog>("Document Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

@@ -2,6 +2,19 @@
 @using FSH.Starter.Blazor.Client.Components.EntityTable
 @using FSH.Starter.Blazor.Infrastructure.Api
 
+<PageHeader Title="Collection Actions" Header="Collection Actions" SubHeader="Manage collection activities and customer contacts." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowCollectionActionHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
 <EntityTable @ref="_table" TEntity="CollectionActionSummaryResponse" TId="DefaultIdType" TRequest="CollectionActionViewModel" Context="Context" Elevation="_preference.Elevation" BorderRadius="_preference.BorderRadius">
     <ExtraActions>
         <MudMenuItem OnClick="@(() => ViewDetails(context.Id))" Icon="@Icons.Material.Filled.Visibility" IconColor="Color.Primary">View Details</MudMenuItem>

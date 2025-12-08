@@ -81,4 +81,17 @@ public partial class InvestmentAccounts
             CloseOnEscapeKey = true
         });
     }
+
+    /// <summary>
+    /// Show investment accounts help dialog.
+    /// </summary>
+    private async Task ShowInvestmentAccountsHelp()
+    {
+        await DialogService.ShowAsync<InvestmentAccountsHelpDialog>("Investment Accounts Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

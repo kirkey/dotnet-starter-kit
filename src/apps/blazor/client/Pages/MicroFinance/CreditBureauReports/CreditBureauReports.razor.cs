@@ -73,4 +73,17 @@ public partial class CreditBureauReports
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show Credit Bureau Reports help dialog.
+    /// </summary>
+    private async Task ShowCreditBureauReportsHelp()
+    {
+        await DialogService.ShowAsync<CreditBureauReportsHelpDialog>("Credit Bureau Reports Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

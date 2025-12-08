@@ -73,4 +73,17 @@ public partial class RiskCategories
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show risk category help dialog.
+    /// </summary>
+    private async Task ShowRiskCategoryHelp()
+    {
+        await DialogService.ShowAsync<RiskCategoryHelpDialog>("Risk Category Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

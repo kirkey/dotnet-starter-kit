@@ -73,4 +73,17 @@ public partial class InsuranceClaims
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show insurance claim help dialog.
+    /// </summary>
+    private async Task ShowInsuranceClaimHelp()
+    {
+        await DialogService.ShowAsync<InsuranceClaimHelpDialog>("Insurance Claim Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

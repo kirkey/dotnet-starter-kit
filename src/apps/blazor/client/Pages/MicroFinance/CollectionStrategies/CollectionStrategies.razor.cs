@@ -73,4 +73,17 @@ public partial class CollectionStrategies
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show collection strategy help dialog.
+    /// </summary>
+    private async Task ShowCollectionStrategyHelp()
+    {
+        await DialogService.ShowAsync<CollectionStrategyHelpDialog>("Collection Strategy Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

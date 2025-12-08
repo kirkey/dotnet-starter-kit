@@ -81,4 +81,17 @@ public partial class LoanDisbursementTranches
             CloseOnEscapeKey = true
         });
     }
+
+    /// <summary>
+    /// Show loan disbursement tranche help dialog.
+    /// </summary>
+    private async Task ShowLoanDisbursementTrancheHelp()
+    {
+        await DialogService.ShowAsync<LoanDisbursementTrancheHelpDialog>("Loan Disbursement Tranche Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

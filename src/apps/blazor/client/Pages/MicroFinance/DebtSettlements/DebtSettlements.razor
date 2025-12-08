@@ -2,6 +2,19 @@
 @using FSH.Starter.Blazor.Client.Components.EntityTable
 @using FSH.Starter.Blazor.Infrastructure.Api
 
+<PageHeader Title="Debt Settlements" Header="Debt Settlements" SubHeader="Manage debt settlement agreements and negotiations." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowDebtSettlementHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
 <EntityTable @ref="_table" TEntity="DebtSettlementSummaryResponse" TId="DefaultIdType" TRequest="DebtSettlementViewModel" Context="Context" Elevation="_preference.Elevation" BorderRadius="_preference.BorderRadius">
     <ExtraActions>
         <MudMenuItem OnClick="@(() => ViewDetails(context.Id))" Icon="@Icons.Material.Filled.Visibility" IconColor="Color.Primary">View Details</MudMenuItem>

@@ -85,4 +85,17 @@ public partial class CollateralValuations
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show collateral valuation help dialog.
+    /// </summary>
+    private async Task ShowCollateralValuationHelp()
+    {
+        await DialogService.ShowAsync<CollateralValuationHelpDialog>("Collateral Valuation Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

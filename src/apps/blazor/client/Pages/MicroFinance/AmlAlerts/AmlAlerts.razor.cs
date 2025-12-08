@@ -73,4 +73,17 @@ public partial class AmlAlerts
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show AML Alerts help dialog.
+    /// </summary>
+    private async Task ShowAmlAlertsHelp()
+    {
+        await DialogService.ShowAsync<AmlAlertsHelpDialog>("AML Alerts Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

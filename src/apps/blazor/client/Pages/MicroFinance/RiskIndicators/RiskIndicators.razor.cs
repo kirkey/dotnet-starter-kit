@@ -73,4 +73,17 @@ public partial class RiskIndicators
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show risk indicator help dialog.
+    /// </summary>
+    private async Task ShowRiskIndicatorHelp()
+    {
+        await DialogService.ShowAsync<RiskIndicatorHelpDialog>("Risk Indicator Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

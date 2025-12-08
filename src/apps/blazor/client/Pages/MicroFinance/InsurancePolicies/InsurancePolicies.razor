@@ -9,6 +9,9 @@
         <MudTooltip Text="Refresh">
             <MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="Color.Surface" OnClick="@(() => _table.ReloadDataAsync())" />
         </MudTooltip>
+        <MudTooltip Text="Help">
+            <MudIconButton Icon="@Icons.Material.Filled.Help" Color="Color.Info" OnClick="@ShowInsurancePolicyHelp" />
+        </MudTooltip>
     </ExtraActions>
     <ChildContent>
         <EntityTable @ref="_table" TEntity="InsurancePolicyResponse" TId="DefaultIdType" TRequest="InsurancePolicyViewModel"

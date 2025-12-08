@@ -82,4 +82,17 @@ public partial class LoanRestructures
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show loan restructures help dialog.
+    /// </summary>
+    private async Task ShowLoanRestructuresHelp()
+    {
+        await DialogService.ShowAsync<LoanRestructuresHelpDialog>("Loan Restructures Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

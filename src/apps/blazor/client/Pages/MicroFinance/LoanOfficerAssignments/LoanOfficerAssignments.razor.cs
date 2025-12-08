@@ -77,4 +77,17 @@ public partial class LoanOfficerAssignments
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show loan officer assignment help dialog.
+    /// </summary>
+    private async Task ShowLoanOfficerAssignmentHelp()
+    {
+        await DialogService.ShowAsync<LoanOfficerAssignmentHelpDialog>("Loan Officer Assignment Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

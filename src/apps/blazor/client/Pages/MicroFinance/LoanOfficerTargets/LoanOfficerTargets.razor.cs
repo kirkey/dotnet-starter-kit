@@ -81,4 +81,17 @@ public partial class LoanOfficerTargets
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show loan officer target help dialog.
+    /// </summary>
+    private async Task ShowLoanOfficerTargetHelp()
+    {
+        await DialogService.ShowAsync<LoanOfficerTargetHelpDialog>("Loan Officer Target Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

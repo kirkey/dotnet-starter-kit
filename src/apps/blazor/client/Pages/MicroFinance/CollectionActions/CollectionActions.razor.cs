@@ -73,4 +73,17 @@ public partial class CollectionActions
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show collection action help dialog.
+    /// </summary>
+    private async Task ShowCollectionActionHelp()
+    {
+        await DialogService.ShowAsync<CollectionActionHelpDialog>("Collection Action Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

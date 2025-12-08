@@ -73,4 +73,17 @@ public partial class CollateralInsurances
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show collateral insurance help dialog.
+    /// </summary>
+    private async Task ShowCollateralInsuranceHelp()
+    {
+        await DialogService.ShowAsync<CollateralInsuranceHelpDialog>("Collateral Insurance Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

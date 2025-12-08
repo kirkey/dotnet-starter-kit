@@ -73,4 +73,17 @@ public partial class CreditScores
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show Credit Scores help dialog.
+    /// </summary>
+    private async Task ShowCreditScoresHelp()
+    {
+        await DialogService.ShowAsync<CreditScoresHelpDialog>("Credit Scores Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

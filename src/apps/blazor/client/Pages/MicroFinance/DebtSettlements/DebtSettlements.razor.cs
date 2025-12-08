@@ -73,4 +73,17 @@ public partial class DebtSettlements
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show debt settlement help dialog.
+    /// </summary>
+    private async Task ShowDebtSettlementHelp()
+    {
+        await DialogService.ShowAsync<DebtSettlementHelpDialog>("Debt Settlement Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
