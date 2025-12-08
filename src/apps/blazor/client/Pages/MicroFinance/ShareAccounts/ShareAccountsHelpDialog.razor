@@ -1,0 +1,69 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-3 mb-n1" />
+            Share Accounts Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            The Share Accounts module allows you to manage member share ownership, including purchasing, redeeming, and tracking dividends.
+        </MudText>
+
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Creating a Share Account">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Member</strong>: Select the member opening the share account.</li>
+                        <li><strong>Share Product</strong>: Choose the type of shares (e.g., Common, Preferred).</li>
+                        <li><strong>Account Number</strong>: Unique identifier (auto-generated if empty).</li>
+                        <li><strong>Opened Date</strong>: When the account was opened.</li>
+                        <li><strong>Notes</strong>: Additional information about the account.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Share Transactions">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Purchase Shares</strong>: Buy additional shares at the current price.</li>
+                        <li><strong>Redeem Shares</strong>: Sell shares back (subject to holding period).</li>
+                        <li><strong>Dividends</strong>: Earnings distributed based on share ownership.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Share Account Status">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Active</strong>: Account is open and can transact shares.</li>
+                        <li><strong>Closed</strong>: Account is closed (all shares must be redeemed first).</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Important Notes">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li>Shares represent ownership in the organization.</li>
+                        <li>Minimum shares may be required for membership.</li>
+                        <li>Share value may fluctuate based on organization performance.</li>
+                        <li>Dividends are declared annually based on profitability.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

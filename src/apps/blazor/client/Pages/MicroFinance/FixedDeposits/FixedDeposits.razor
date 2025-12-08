@@ -1,0 +1,167 @@
+@page "/microfinance/fixeddeposits"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.MicroFinance
+
+<PageHeader Title="Fixed Deposits" Header="Fixed Deposits" SubHeader="Manage member fixed deposit accounts and certificates." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowFixedDepositsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="FixedDepositResponse" TId="DefaultIdType" TRequest="FixedDepositViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchCertificateNumber"
+                          Label="Certificate Number"
+                          Placeholder="Search by certificate number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Active")">Active</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Matured")">Matured</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Closed")">Closed</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Renewed")">Renewed</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (entity.Status == "Active" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.AttachMoney" OnClick="@(() => PostInterest(entity.Id))">
+                Post Interest
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Payment" OnClick="@(() => PayInterest(entity.Id))">
+                Pay Interest
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => ClosePremature(entity.Id))">
+                Close Premature
+            </MudMenuItem>
+        }
+        @if (entity.Status == "Matured" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Autorenew" OnClick="@(() => RenewDeposit(entity.Id))">
+                Renew
+            </MudMenuItem>
+        }
+        @if ((entity.Status == "Active" || entity.Status == "Matured") && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Done" OnClick="@(() => MatureDeposit(entity.Id))">
+                Process Maturity
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewDepositDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Deposit Setup</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <AutocompleteMember @bind-Value="context.SelectedMember"
+                                Label="Member"
+                                Required="true"
+                                HelperText="Select the member for this fixed deposit" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="context.CertificateNumber"
+                          For="@(() => context.CertificateNumber)"
+                          Label="Certificate Number"
+                          Variant="Variant.Filled"
+                          HelperText="Unique certificate number for this deposit" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal"
+                             @bind-Value="context.PrincipalAmount"
+                             For="@(() => context.PrincipalAmount)"
+                             Label="Principal Amount"
+                             Variant="Variant.Filled"
+                             Min="0m"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentText="$" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal"
+                             @bind-Value="context.InterestRate"
+                             For="@(() => context.InterestRate)"
+                             Label="Interest Rate (%)"
+                             Variant="Variant.Filled"
+                             Min="0m"
+                             Max="100m"
+                             Format="N2"
+                             Adornment="Adornment.End"
+                             AdornmentText="%" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="int"
+                             @bind-Value="context.TermMonths"
+                             For="@(() => context.TermMonths)"
+                             Label="Term (Months)"
+                             Variant="Variant.Filled"
+                             Min="1"
+                             Max="120" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudDatePicker @bind-Date="_depositDate"
+                           Label="Deposit Date"
+                           Variant="Variant.Filled"
+                           HelperText="Date the deposit was made" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudSelect @bind-Value="context.MaturityInstruction"
+                       For="@(() => context.MaturityInstruction)"
+                       Label="Maturity Instruction"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("TransferToSavings")">Transfer to Savings</MudSelectItem>
+                <MudSelectItem Value="@("Reinvest")">Reinvest</MudSelectItem>
+                <MudSelectItem Value="@("Payout")">Payout</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <AutocompleteSavingsProduct @bind-Value="context.SelectedSavingsProduct"
+                                        Label="Savings Product (Optional)"
+                                        HelperText="Optional linked savings product" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          HelperText="Additional notes about the fixed deposit" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

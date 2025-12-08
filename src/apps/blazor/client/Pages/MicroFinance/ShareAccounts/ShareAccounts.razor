@@ -1,0 +1,108 @@
+@page "/microfinance/share-accounts"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.MicroFinance
+
+<PageHeader Title="Share Accounts" Header="Share Accounts" SubHeader="Manage member share accounts and equity ownership." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowShareAccountsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="ShareAccountResponse" TId="DefaultIdType" TRequest="ShareAccountViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchAccountNumber"
+                          Label="Account Number"
+                          Placeholder="Search by account number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Active")">Active</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Closed")">Closed</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (entity.Status == "Active" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Add" OnClick="@(() => PurchaseShares(entity.Id))">
+                Purchase Shares
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Remove" OnClick="@(() => RedeemShares(entity.Id))">
+                Redeem Shares
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Close" OnClick="@(() => CloseAccount(entity.Id))">
+                Close Account
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewAccountDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Account Setup</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <AutocompleteMember @bind-Value="context.SelectedMember"
+                                Label="Member"
+                                Required="true"
+                                HelperText="Select the member for this share account" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <AutocompleteShareProduct @bind-Value="context.SelectedShareProduct"
+                                      Label="Share Product"
+                                      Required="true"
+                                      HelperText="Select the share product type" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="context.AccountNumber"
+                          For="@(() => context.AccountNumber)"
+                          Label="Account Number"
+                          Variant="Variant.Filled"
+                          HelperText="Unique account number (auto-generated if empty)" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudDatePicker @bind-Date="_openedDate"
+                           Label="Opened Date"
+                           Variant="Variant.Filled"
+                           HelperText="Date the account was opened" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          HelperText="Additional notes about the share account" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

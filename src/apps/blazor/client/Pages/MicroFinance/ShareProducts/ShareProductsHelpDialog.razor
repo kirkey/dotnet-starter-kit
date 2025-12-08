@@ -1,0 +1,69 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-3 mb-n1" />
+            Share Products Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            The Share Products module allows you to configure different types of member shares with their ownership rules and dividend settings.
+        </MudText>
+
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Creating a Share Product">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Code</strong>: Unique identifier code (e.g., COMMON, PREFERRED).</li>
+                        <li><strong>Name</strong>: Display name for the share type.</li>
+                        <li><strong>Description</strong>: Detailed explanation of the share type.</li>
+                        <li><strong>Nominal Value</strong>: Par value (face value) of each share.</li>
+                        <li><strong>Current Price</strong>: Current market price per share.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Share Limits">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Min Shares for Membership</strong>: Minimum number of shares required to become a member.</li>
+                        <li><strong>Max Shares per Member</strong>: Maximum shares a single member can own (optional).</li>
+                        <li><strong>Min Holding Period</strong>: Minimum time (in months) before shares can be redeemed.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Share Options">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Allow Transfer</strong>: Whether members can transfer shares to other members.</li>
+                        <li><strong>Allow Redemption</strong>: Whether members can sell shares back to the organization.</li>
+                        <li><strong>Pays Dividends</strong>: Whether shareholders receive dividend payments.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Common Share Types">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Common Shares</strong>: Standard shares with voting rights and dividend eligibility.</li>
+                        <li><strong>Preferred Shares</strong>: Priority dividend payments, may have limited voting rights.</li>
+                        <li><strong>Membership Shares</strong>: Required for membership, often with restrictions on transfer.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

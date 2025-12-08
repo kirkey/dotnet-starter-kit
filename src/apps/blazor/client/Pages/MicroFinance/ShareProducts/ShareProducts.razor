@@ -1,0 +1,158 @@
+@page "/microfinance/share-products"
+
+<PageHeader Title="Share Products" Header="Share Products" SubHeader="Manage share product types and their configurations for member ownership." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowShareProductsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="ShareProductResponse" TId="DefaultIdType" TRequest="ShareProductViewModel" Context="@Context">
+    <ExtraActions Context="entity">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewProductDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Basic Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Code"
+                          For="@(() => context.Code)"
+                          Label="Code"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Unique product code (e.g., COMMON, PREFERRED)" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="8">
+            <MudTextField @bind-Value="context.Name"
+                          For="@(() => context.Name)"
+                          Label="Name"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Display name for the share product" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          HelperText="Detailed description of the share product" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Pricing</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudNumericField T="decimal"
+                             @bind-Value="context.NominalValue"
+                             For="@(() => context.NominalValue)"
+                             Label="Nominal Value"
+                             Variant="Variant.Filled"
+                             Min="0m"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentText="$"
+                             HelperText="Par value of each share" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudNumericField T="decimal"
+                             @bind-Value="context.CurrentPrice"
+                             For="@(() => context.CurrentPrice)"
+                             Label="Current Price"
+                             Variant="Variant.Filled"
+                             Min="0m"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentText="$"
+                             HelperText="Current market price per share" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Share Limits</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="int"
+                             @bind-Value="context.MinSharesForMembership"
+                             For="@(() => context.MinSharesForMembership)"
+                             Label="Min Shares for Membership"
+                             Variant="Variant.Filled"
+                             Min="1"
+                             HelperText="Minimum shares required to become a member" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="int?"
+                             @bind-Value="context.MaxSharesPerMember"
+                             For="@(() => context.MaxSharesPerMember)"
+                             Label="Max Shares per Member"
+                             Variant="Variant.Filled"
+                             Min="1"
+                             HelperText="Maximum shares a member can hold" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="int?"
+                             @bind-Value="context.MinHoldingPeriodMonths"
+                             For="@(() => context.MinHoldingPeriodMonths)"
+                             Label="Min Holding Period (Months)"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             HelperText="Minimum time before shares can be redeemed" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Options</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox @bind-Value="context.AllowTransfer"
+                         For="@(() => context.AllowTransfer)"
+                         Label="Allow Transfer"
+                         Color="Color.Primary" />
+            <MudText Typo="Typo.caption" Class="mud-text-secondary">Allow transfers between members</MudText>
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox @bind-Value="context.AllowRedemption"
+                         For="@(() => context.AllowRedemption)"
+                         Label="Allow Redemption"
+                         Color="Color.Primary" />
+            <MudText Typo="Typo.caption" Class="mud-text-secondary">Allow members to sell back shares</MudText>
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox @bind-Value="context.PaysDividends"
+                         For="@(() => context.PaysDividends)"
+                         Label="Pays Dividends"
+                         Color="Color.Primary" />
+            <MudText Typo="Typo.caption" Class="mud-text-secondary">Share product pays dividends</MudText>
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

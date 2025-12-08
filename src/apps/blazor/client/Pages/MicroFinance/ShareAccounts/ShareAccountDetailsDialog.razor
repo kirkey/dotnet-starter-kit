@@ -1,0 +1,151 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Share" Class="mr-3 mb-n1" />
+            Share Account Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" />
+        }
+        else if (_account != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Account Information</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Account Number</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_account.AccountNumber</strong></MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Status</MudText>
+                    <MudChip T="string" Color="@GetStatusColor(_account.Status)" Size="Size.Small">@_account.Status</MudChip>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Number of Shares</MudText>
+                    <MudText Typo="Typo.h6" Color="Color.Primary">@_account.NumberOfShares</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Financial Summary</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Total Share Value</MudText>
+                    <MudText Typo="Typo.h6" Color="Color.Success">@_account.TotalShareValue.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Total Purchases</MudText>
+                    <MudText Typo="Typo.body1">@_account.TotalPurchases.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Total Redemptions</MudText>
+                    <MudText Typo="Typo.body1">@_account.TotalRedemptions.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Net Investment</MudText>
+                    <MudText Typo="Typo.body1">@((_account.TotalPurchases - _account.TotalRedemptions).ToString("C"))</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Dividends</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Dividends Earned</MudText>
+                    <MudText Typo="Typo.body1" Color="Color.Success">@_account.TotalDividendsEarned.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Dividends Paid</MudText>
+                    <MudText Typo="Typo.body1">@_account.TotalDividendsPaid.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Unpaid Dividends</MudText>
+                    <MudText Typo="Typo.body1" Color="Color.Warning">@((_account.TotalDividendsEarned - _account.TotalDividendsPaid).ToString("C"))</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Dates</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Opened Date</MudText>
+                    <MudText Typo="Typo.body1">@_account.OpenedDate.ToString("d")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Closed Date</MudText>
+                    <MudText Typo="Typo.body1">@(_account.ClosedDate?.ToString("d") ?? "N/A")</MudText>
+                </MudItem>
+                
+                @if (!string.IsNullOrWhiteSpace(_account.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Notes</strong></MudText>
+                        <MudDivider />
+                    </MudItem>
+                    
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.body1">@_account.Notes</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Error">Unable to load share account details.</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType AccountId { get; set; }
+
+    private ShareAccountResponse? _account;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _account = await Client.GetShareAccountAsync("1", AccountId);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private Color GetStatusColor(string? status) => status switch
+    {
+        "Active" => Color.Success,
+        "Closed" => Color.Default,
+        _ => Color.Default
+    };
+
+    private void Close() => MudDialog.Close();
+}

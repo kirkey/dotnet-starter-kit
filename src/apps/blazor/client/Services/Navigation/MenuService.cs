@@ -227,10 +227,13 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Product Catalog", IsGroupHeader = true },
                         new MenuSectionSubItemModel { Title = "Savings Products", Icon = Icons.Material.Filled.Savings, Href = "/microfinance/savings-products", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Loan Products", Icon = Icons.Material.Filled.CreditScore, Href = "/microfinance/loan-products", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Share Products", Icon = Icons.Material.Filled.Share, Href = "/microfinance/share-products", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                         
                         // ========== ACCOUNTS ==========
                         new MenuSectionSubItemModel { Title = "Accounts", IsGroupHeader = true },
                         new MenuSectionSubItemModel { Title = "Savings Accounts", Icon = Icons.Material.Filled.AccountBalance, Href = "/microfinance/savings-accounts", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Fixed Deposits", Icon = Icons.Material.Filled.Lock, Href = "/microfinance/fixeddeposits", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Share Accounts", Icon = Icons.Material.Filled.Share, Href = "/microfinance/share-accounts", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Loans", Icon = Icons.Material.Filled.MonetizationOn, Href = "/microfinance/loans", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Loan Repayments", Icon = Icons.Material.Filled.Payment, Href = "/microfinance/loan-repayments", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                     ]

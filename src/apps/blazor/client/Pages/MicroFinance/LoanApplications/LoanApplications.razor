@@ -1,0 +1,137 @@
+@page "/microfinance/loan-applications"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.MicroFinance
+
+<PageHeader Title="Loan Applications" Header="Loan Applications" SubHeader="Manage loan applications through the approval workflow." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowLoanApplicationsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="LoanApplicationResponse" TId="DefaultIdType" TRequest="LoanApplicationViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchApplicationNumber"
+                          Label="Application Number"
+                          Placeholder="Search by application number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Draft")">Draft</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Submitted")">Submitted</MudSelectItem>
+                <MudSelectItem Value="@((string?)"UnderReview")">Under Review</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Approved")">Approved</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Rejected")">Rejected</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Withdrawn")">Withdrawn</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (entity.Status == "Draft" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Send" OnClick="@(() => SubmitApplication(entity.Id))">
+                Submit
+            </MudMenuItem>
+        }
+        @if (entity.Status == "Submitted" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.AssignmentInd" OnClick="@(() => AssignApplication(entity.Id))">
+                Assign
+            </MudMenuItem>
+        }
+        @if (entity.Status == "UnderReview" && _canApprove)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.RateReview" OnClick="@(() => ReviewApplication(entity.Id))">
+                Review
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => ApproveApplication(entity.Id))">
+                Approve
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => RejectApplication(entity.Id))">
+                Reject
+            </MudMenuItem>
+        }
+        @if ((entity.Status == "Draft" || entity.Status == "Submitted") && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Undo" OnClick="@(() => WithdrawApplication(entity.Id))">
+                Withdraw
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewApplicationDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Application Details</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <AutocompleteMember @bind-Value="context.SelectedMember"
+                                Label="Member"
+                                Required="true"
+                                HelperText="Select the member applying for the loan" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <AutocompleteLoanProduct @bind-Value="context.SelectedLoanProduct"
+                                     Label="Loan Product"
+                                     Required="true"
+                                     HelperText="Select the loan product type" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal"
+                             @bind-Value="context.RequestedAmount"
+                             For="@(() => context.RequestedAmount)"
+                             Label="Requested Amount"
+                             Variant="Variant.Filled"
+                             Min="0m"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentText="$" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="int"
+                             @bind-Value="context.RequestedTermMonths"
+                             For="@(() => context.RequestedTermMonths)"
+                             Label="Term (Months)"
+                             Variant="Variant.Filled"
+                             Min="1"
+                             Max="360" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Purpose"
+                          For="@(() => context.Purpose)"
+                          Label="Purpose"
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          HelperText="Describe the purpose of the loan" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

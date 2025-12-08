@@ -1,0 +1,140 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Share" Class="mr-3 mb-n1" />
+            Share Product Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" />
+        }
+        else if (_product != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Basic Information</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Code</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_product.Code</strong></MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Name</MudText>
+                    <MudText Typo="Typo.body1">@_product.Name</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Status</MudText>
+                    <MudChip T="string" Color="@(_product.IsActive ? Color.Success : Color.Default)" Size="Size.Small">
+                        @(_product.IsActive ? "Active" : "Inactive")
+                    </MudChip>
+                </MudItem>
+                
+                @if (!string.IsNullOrWhiteSpace(_product.Description))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.caption">Description</MudText>
+                        <MudText Typo="Typo.body1">@_product.Description</MudText>
+                    </MudItem>
+                }
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Pricing</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Nominal Value</MudText>
+                    <MudText Typo="Typo.h6" Color="Color.Primary">@_product.NominalValue.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Current Price</MudText>
+                    <MudText Typo="Typo.h6" Color="Color.Success">@_product.CurrentPrice.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Share Limits</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Min Shares for Membership</MudText>
+                    <MudText Typo="Typo.body1">@_product.MinSharesForMembership</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Max Shares per Member</MudText>
+                    <MudText Typo="Typo.body1">@(_product.MaxSharesPerMember?.ToString() ?? "No Limit")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Min Holding Period</MudText>
+                    <MudText Typo="Typo.body1">@(_product.MinHoldingPeriodMonths?.ToString() ?? "None") months</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Options</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.caption">Allow Transfer</MudText>
+                    <MudIcon Icon="@(_product.AllowTransfer ? Icons.Material.Filled.Check : Icons.Material.Filled.Close)"
+                             Color="@(_product.AllowTransfer ? Color.Success : Color.Error)" />
+                </MudItem>
+                
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.caption">Allow Redemption</MudText>
+                    <MudIcon Icon="@(_product.AllowRedemption ? Icons.Material.Filled.Check : Icons.Material.Filled.Close)"
+                             Color="@(_product.AllowRedemption ? Color.Success : Color.Error)" />
+                </MudItem>
+                
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.caption">Pays Dividends</MudText>
+                    <MudIcon Icon="@(_product.PaysDividends ? Icons.Material.Filled.Check : Icons.Material.Filled.Close)"
+                             Color="@(_product.PaysDividends ? Color.Success : Color.Error)" />
+                </MudItem>
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Error">Unable to load share product details.</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType ProductId { get; set; }
+
+    private ShareProductResponse? _product;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _product = await Client.GetShareProductAsync("1", ProductId);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

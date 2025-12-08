@@ -1,0 +1,124 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+@namespace FSH.Starter.Blazor.Client.Components.Autocompletes.MicroFinance
+@inject IClient Client
+
+<MudAutocomplete T="ShareProductResponse"
+                 @bind-Value="Value"
+                 SearchFunc="@SearchShareProducts"
+                 ToStringFunc="@(product => product != null ? $"{product.Code} - {product.Name}" : string.Empty)"
+                 Label="@Label"
+                 Required="@Required"
+                 RequiredError="@RequiredError"
+                 Variant="@Variant"
+                 AdornmentIcon="@Icons.Material.Filled.Share"
+                 AdornmentColor="@AdornmentColor"
+                 HelperText="@HelperText"
+                 Disabled="@Disabled"
+                 Dense="@Dense"
+                 Clearable="@Clearable"
+                 ResetValueOnEmptyText="@ResetValueOnEmptyText" />
+
+@code {
+    /// <summary>
+    /// Gets or sets the selected share product.
+    /// </summary>
+    [Parameter]
+    public ShareProductResponse? Value { get; set; }
+
+    /// <summary>
+    /// Gets or sets the callback when value changes.
+    /// </summary>
+    [Parameter]
+    public EventCallback<ShareProductResponse?> ValueChanged { get; set; }
+
+    /// <summary>
+    /// Gets or sets the label text.
+    /// </summary>
+    [Parameter]
+    public string Label { get; set; } = "Share Product";
+
+    /// <summary>
+    /// Gets or sets whether the field is required.
+    /// </summary>
+    [Parameter]
+    public bool Required { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets the required field error message.
+    /// </summary>
+    [Parameter]
+    public string RequiredError { get; set; } = "Share Product is required";
+
+    /// <summary>
+    /// Gets or sets the helper text.
+    /// </summary>
+    [Parameter]
+    public string HelperText { get; set; } = "Search by code or name";
+
+    /// <summary>
+    /// Gets or sets the variant style.
+    /// </summary>
+    [Parameter]
+    public Variant Variant { get; set; } = Variant.Filled;
+
+    /// <summary>
+    /// Gets or sets the adornment color.
+    /// </summary>
+    [Parameter]
+    public Color AdornmentColor { get; set; } = Color.Primary;
+
+    /// <summary>
+    /// Gets or sets whether the field is disabled.
+    /// </summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether to use dense spacing.
+    /// </summary>
+    [Parameter]
+    public bool Dense { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the field is clearable.
+    /// </summary>
+    [Parameter]
+    public bool Clearable { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets whether to reset value on empty text.
+    /// </summary>
+    [Parameter]
+    public bool ResetValueOnEmptyText { get; set; } = true;
+
+    /// <summary>
+    /// Optional filter to only show active share products.
+    /// </summary>
+    [Parameter]
+    public bool? ActiveOnly { get; set; } = true;
+
+    private async Task<IEnumerable<ShareProductResponse>> SearchShareProducts(string searchValue, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(searchValue))
+        {
+            return new List<ShareProductResponse>();
+        }
+
+        try
+        {
+            var request = new SearchShareProductsCommand
+            {
+                Keyword = searchValue,
+                PageNumber = 1,
+                PageSize = 20
+            };
+
+            var response = await Client.SearchShareProductsAsync("1", request, cancellationToken);
+            return response?.Items ?? new List<ShareProductResponse>();
+        }
+        catch
+        {
+            return new List<ShareProductResponse>();
+        }
+    }
+}

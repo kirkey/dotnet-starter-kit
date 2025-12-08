@@ -1,0 +1,158 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.AccountBalance" Class="mr-3 mb-n1" />
+            Fixed Deposit Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" />
+        }
+        else if (_deposit != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Certificate Information</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Certificate Number</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_deposit.CertificateNumber</strong></MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Status</MudText>
+                    <MudChip T="string" Color="@GetStatusColor(_deposit.Status)" Size="Size.Small">@_deposit.Status</MudChip>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Maturity Instruction</MudText>
+                    <MudText Typo="Typo.body1">@_deposit.MaturityInstruction</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Financial Details</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Principal Amount</MudText>
+                    <MudText Typo="Typo.h6" Color="Color.Primary">@_deposit.PrincipalAmount.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Interest Rate</MudText>
+                    <MudText Typo="Typo.body1">@_deposit.InterestRate.ToString("F2")%</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Term</MudText>
+                    <MudText Typo="Typo.body1">@_deposit.TermMonths months</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Maturity Value</MudText>
+                    <MudText Typo="Typo.body1" Color="Color.Success">@((_deposit.PrincipalAmount + _deposit.InterestEarned).ToString("C"))</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Interest Tracking</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Interest Earned</MudText>
+                    <MudText Typo="Typo.body1" Color="Color.Success">@_deposit.InterestEarned.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Interest Paid</MudText>
+                    <MudText Typo="Typo.body1">@_deposit.InterestPaid.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Unpaid Interest</MudText>
+                    <MudText Typo="Typo.body1" Color="Color.Warning">@((_deposit.InterestEarned - _deposit.InterestPaid).ToString("C"))</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Important Dates</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Deposit Date</MudText>
+                    <MudText Typo="Typo.body1">@_deposit.DepositDate.ToString("d")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Maturity Date</MudText>
+                    <MudText Typo="Typo.body1">@_deposit.MaturityDate.ToString("d")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Closed Date</MudText>
+                    <MudText Typo="Typo.body1">@(_deposit.ClosedDate?.ToString("d") ?? "N/A")</MudText>
+                </MudItem>
+                
+                @if (!string.IsNullOrWhiteSpace(_deposit.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Notes</strong></MudText>
+                        <MudDivider />
+                    </MudItem>
+                    
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.body1">@_deposit.Notes</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Error">Unable to load fixed deposit details.</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType DepositId { get; set; }
+
+    private FixedDepositResponse? _deposit;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _deposit = await Client.GetFixedDepositAsync("1", DepositId);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private Color GetStatusColor(string? status) => status switch
+    {
+        "Active" => Color.Primary,
+        "Matured" => Color.Success,
+        "Renewed" => Color.Info,
+        "Closed" => Color.Default,
+        _ => Color.Default
+    };
+
+    private void Close() => MudDialog.Close();
+}

@@ -1,0 +1,74 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-3 mb-n1" />
+            Fixed Deposits Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            The Fixed Deposits module allows you to manage member fixed deposit accounts, interest calculations, and maturity processing.
+        </MudText>
+
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Creating a Fixed Deposit">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Member</strong>: Select the member opening the fixed deposit.</li>
+                        <li><strong>Certificate Number</strong>: Unique identifier for the deposit certificate.</li>
+                        <li><strong>Principal Amount</strong>: The amount being deposited.</li>
+                        <li><strong>Interest Rate</strong>: Annual interest rate percentage.</li>
+                        <li><strong>Term (Months)</strong>: Duration of the fixed deposit.</li>
+                        <li><strong>Deposit Date</strong>: When the deposit was made.</li>
+                        <li><strong>Maturity Instruction</strong>: What happens when the deposit matures.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Fixed Deposit Lifecycle">
+                <MudText Typo="Typo.body2">
+                    <ol>
+                        <li><strong>Active</strong>: Deposit is earning interest.</li>
+                        <li><strong>Matured</strong>: Deposit has reached maturity date.</li>
+                        <li><strong>Renewed</strong>: Deposit was renewed for another term.</li>
+                        <li><strong>Closed</strong>: Deposit was closed (at maturity or prematurely).</li>
+                    </ol>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Maturity Instructions">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Transfer to Savings</strong>: Principal + interest transferred to linked savings account.</li>
+                        <li><strong>Reinvest</strong>: Automatically create a new fixed deposit with principal + interest.</li>
+                        <li><strong>Payout</strong>: Cash or cheque payment to the member.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Fixed Deposit Actions">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Post Interest</strong>: Record monthly interest earned on the deposit.</li>
+                        <li><strong>Pay Interest</strong>: Pay out accumulated interest to the member.</li>
+                        <li><strong>Process Maturity</strong>: Handle the deposit when it reaches maturity.</li>
+                        <li><strong>Renew</strong>: Roll over a matured deposit for another term.</li>
+                        <li><strong>Close Premature</strong>: Close the deposit before maturity (penalties may apply).</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}
