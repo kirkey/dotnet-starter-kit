@@ -31,11 +31,11 @@ public partial class CustomerCases
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthState.GetAuthenticationStateAsync();
-        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Create)).Succeeded;
-        _canAssign = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Update)).Succeeded;
-        _canEscalate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Update)).Succeeded;
-        _canResolve = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Update)).Succeeded;
-        _canClose = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Close)).Succeeded;
+        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Create, FshResources.CustomerCases))).Succeeded;
+        _canAssign = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.CustomerCases))).Succeeded;
+        _canEscalate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.CustomerCases))).Succeeded;
+        _canResolve = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.CustomerCases))).Succeeded;
+        _canClose = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Close, FshResources.CustomerCases))).Succeeded;
 
         _elevation = ClientPreference.Elevation;
         _borderRadius = $"border-radius: {ClientPreference.BorderRadius}px";
@@ -43,8 +43,7 @@ public partial class CustomerCases
         _context = new EntityServerTableContext<CustomerCaseResponse, DefaultIdType, CustomerCaseViewModel>(
             entityName: "Customer Case",
             entityNamePlural: "Customer Cases",
-            entityResource: FshResources.MicroFinance,
-            searchAction: FshActions.Search,
+            entityResource: FshResources.CustomerCases,
             fields:
             [
                 new EntityField<CustomerCaseResponse>(c => c.CaseNumber!, "Case #", "CaseNumber"),

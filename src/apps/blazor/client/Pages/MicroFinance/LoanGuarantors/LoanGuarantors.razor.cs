@@ -29,16 +29,16 @@ public partial class LoanGuarantors
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthState.GetAuthenticationStateAsync();
-        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.LoanGuarantors.Create)).Succeeded;
-        _canUpdate = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.LoanGuarantors.Update)).Succeeded;
-        _canDelete = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.LoanGuarantors.Delete)).Succeeded;
-        _canApprove = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.LoanGuarantors.Approve)).Succeeded;
-        _canReject = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.LoanGuarantors.Reject)).Succeeded;
+        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Create, FshResources.LoanGuarantors))).Succeeded;
+        _canUpdate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.LoanGuarantors))).Succeeded;
+        _canDelete = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Delete, FshResources.LoanGuarantors))).Succeeded;
+        _canApprove = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Approve, FshResources.LoanGuarantors))).Succeeded;
+        _canReject = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Reject, FshResources.LoanGuarantors))).Succeeded;
 
         _context = new EntityServerTableContext<LoanGuarantorResponse, DefaultIdType, LoanGuarantorViewModel>(
             entityName: "Loan Guarantor",
             entityNamePlural: "Loan Guarantors",
-            entityResource: FSHResources.LoanGuarantors,
+            entityResource: FshResources.LoanGuarantors,
             fields: new List<EntityField<LoanGuarantorResponse>>
             {
                 new EntityField<LoanGuarantorResponse>(g => g.GuarantorName, "Guarantor", "GuarantorName"),

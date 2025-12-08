@@ -89,12 +89,12 @@ public partial class CollectionCases
 
         // Check permissions
         var state = await AuthState;
-        _canAssign = await AuthService.HasPermissionAsync(state.User, FshPermissions.CollectionCases.Assign);
-        _canRecordContact = await AuthService.HasPermissionAsync(state.User, FshPermissions.CollectionCases.RecordContact);
-        _canRecordRecovery = await AuthService.HasPermissionAsync(state.User, FshPermissions.CollectionCases.RecordRecovery);
-        _canEscalateToLegal = await AuthService.HasPermissionAsync(state.User, FshPermissions.CollectionCases.EscalateToLegal);
-        _canSettle = await AuthService.HasPermissionAsync(state.User, FshPermissions.CollectionCases.Settle);
-        _canClose = await AuthService.HasPermissionAsync(state.User, FshPermissions.CollectionCases.Close);
+        _canAssign = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.CollectionCases);
+        _canRecordContact = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.CollectionCases);
+        _canRecordRecovery = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.CollectionCases);
+        _canEscalateToLegal = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.CollectionCases);
+        _canSettle = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.CollectionCases);
+        _canClose = await AuthService.HasPermissionAsync(state.User, FshActions.Close, FshResources.CollectionCases);
 
         Context = new EntityServerTableContext<CollectionCaseResponse, DefaultIdType, CollectionCaseViewModel>(
             fields:
@@ -152,13 +152,10 @@ public partial class CollectionCases
                 return response.Id;
             },
             deleteFunc: async id => await Client.DeleteCollectionCaseEndpointAsync("1", id),
-            exportAction: string.Empty,
-            entityTypeName: "Collection Case",
-            entityTypeNamePlural: "Collection Cases",
-            createPermission: FshPermissions.CollectionCases.Create,
-            updatePermission: FshPermissions.CollectionCases.Update,
-            deletePermission: FshPermissions.CollectionCases.Delete,
-            searchPermission: FshPermissions.CollectionCases.View
+            entityName: "Collection Case",
+            entityNamePlural: "Collection Cases",
+            entityResource: FshResources.CollectionCases,
+            hasExtraActionsFunc: () => true
         );
     }
 

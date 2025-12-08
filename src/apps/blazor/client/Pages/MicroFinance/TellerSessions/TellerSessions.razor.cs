@@ -30,17 +30,17 @@ public partial class TellerSessions
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthState.GetAuthenticationStateAsync();
-        _canOpen = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.TellerSessions.Open)).Succeeded;
-        _canClose = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.TellerSessions.Close)).Succeeded;
-        _canPause = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.TellerSessions.Pause)).Succeeded;
-        _canResume = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.TellerSessions.Resume)).Succeeded;
-        _canVerify = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.TellerSessions.Verify)).Succeeded;
-        _canRecordTransaction = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.TellerSessions.RecordTransaction)).Succeeded;
+        _canOpen = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Create, FshResources.TellerSessions))).Succeeded;
+        _canClose = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Close, FshResources.TellerSessions))).Succeeded;
+        _canPause = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.TellerSessions))).Succeeded;
+        _canResume = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.TellerSessions))).Succeeded;
+        _canVerify = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Approve, FshResources.TellerSessions))).Succeeded;
+        _canRecordTransaction = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Create, FshResources.TellerSessions))).Succeeded;
 
         _context = new EntityServerTableContext<TellerSessionResponse, DefaultIdType, TellerSessionViewModel>(
             entityName: "Teller Session",
             entityNamePlural: "Teller Sessions",
-            entityResource: FSHResources.TellerSessions,
+            entityResource: FshResources.TellerSessions,
             fields: new List<EntityField<TellerSessionResponse>>
             {
                 new EntityField<TellerSessionResponse>(s => s.SessionNumber, "Session #", "SessionNumber"),

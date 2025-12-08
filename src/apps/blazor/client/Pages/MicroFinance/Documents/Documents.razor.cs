@@ -29,9 +29,9 @@ public partial class Documents
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthState.GetAuthenticationStateAsync();
-        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Create)).Succeeded;
-        _canVerify = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Update)).Succeeded;
-        _canDownload = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.View)).Succeeded;
+        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Create, FshResources.Documents))).Succeeded;
+        _canVerify = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.Documents))).Succeeded;
+        _canDownload = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.View, FshResources.Documents))).Succeeded;
 
         _elevation = ClientPreference.Elevation;
         _borderRadius = $"border-radius: {ClientPreference.BorderRadius}px";
@@ -39,8 +39,7 @@ public partial class Documents
         _context = new EntityServerTableContext<DocumentResponse, DefaultIdType, DocumentViewModel>(
             entityName: "Document",
             entityNamePlural: "Documents",
-            entityResource: FshResources.MicroFinance,
-            searchAction: FshActions.Search,
+            entityResource: FshResources.Documents,
             fields:
             [
                 new EntityField<DocumentResponse>(d => d.Name!, "Name", "Name"),

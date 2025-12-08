@@ -263,7 +263,7 @@ public class MenuService : IMenuService
                         // ========== WORKFLOW & COMPLIANCE ==========
                         new MenuSectionSubItemModel { Title = "Workflow & Compliance", IsGroupHeader = true },
                         new MenuSectionSubItemModel { Title = "Approval Workflows", Icon = Icons.Material.Filled.AccountTree, Href = "/microfinance/approval-workflows", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
-                        new MenuSectionSubItemModel { Title = "Approval Requests", Icon = Icons.Material.Filled.ApprovalDelegation, Href = "/microfinance/approval-requests", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Approval Requests", Icon = Icons.Material.Filled.Approval, Href = "/microfinance/approval-requests", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Collection Cases", Icon = Icons.Material.Filled.Gavel, Href = "/microfinance/collection-cases", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "AML Alerts", Icon = Icons.Material.Filled.Security, Href = "/microfinance/aml-alerts", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                         

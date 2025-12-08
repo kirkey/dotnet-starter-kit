@@ -31,18 +31,18 @@ public partial class CashVaults
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthState.GetAuthenticationStateAsync();
-        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.CashVaults.Create)).Succeeded;
-        _canUpdate = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.CashVaults.Update)).Succeeded;
-        _canDelete = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.CashVaults.Delete)).Succeeded;
-        _canDeposit = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.CashVaults.Deposit)).Succeeded;
-        _canWithdraw = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.CashVaults.Withdraw)).Succeeded;
-        _canReconcile = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.CashVaults.Reconcile)).Succeeded;
-        _canOpenDay = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.CashVaults.OpenDay)).Succeeded;
+        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Create, FshResources.CashVaults))).Succeeded;
+        _canUpdate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.CashVaults))).Succeeded;
+        _canDelete = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Delete, FshResources.CashVaults))).Succeeded;
+        _canDeposit = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Deposit, FshResources.CashVaults))).Succeeded;
+        _canWithdraw = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Withdraw, FshResources.CashVaults))).Succeeded;
+        _canReconcile = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.CashVaults))).Succeeded;
+        _canOpenDay = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.CashVaults))).Succeeded;
 
         _context = new EntityServerTableContext<CashVaultResponse, DefaultIdType, CashVaultViewModel>(
             entityName: "Cash Vault",
             entityNamePlural: "Cash Vaults",
-            entityResource: FSHResources.CashVaults,
+            entityResource: FshResources.CashVaults,
             fields: new List<EntityField<CashVaultResponse>>
             {
                 new EntityField<CashVaultResponse>(vault => vault.Code, "Code", "Code"),

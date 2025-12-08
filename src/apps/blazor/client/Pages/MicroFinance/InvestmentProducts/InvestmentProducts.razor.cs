@@ -33,17 +33,16 @@ public partial class InvestmentProducts
         _borderRadius = $"border-radius: {ClientPreference.BorderRadius}px";
 
         var authState = await AuthState.GetAuthenticationStateAsync();
-        _canCreate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.InvestmentProductsCreate)).Succeeded;
-        _canUpdate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.InvestmentProductsUpdate)).Succeeded;
-        _canDelete = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.InvestmentProductsDelete)).Succeeded;
-        _canView = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.InvestmentProductsView)).Succeeded;
+        _canCreate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.Create, FshResources.InvestmentProducts))).Succeeded;
+        _canUpdate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.Update, FshResources.InvestmentProducts))).Succeeded;
+        _canDelete = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.Delete, FshResources.InvestmentProducts))).Succeeded;
+        _canView = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.View, FshResources.InvestmentProducts))).Succeeded;
         _canUpdateNav = _canUpdate;
 
         _context = new EntityServerTableContext<InvestmentProductResponse, DefaultIdType, InvestmentProductViewModel>(
             entityName: "Investment Product",
             entityNamePlural: "Investment Products",
-            entityResource: FshResources.MicroFinance,
-            searchAction: FshActions.View,
+            entityResource: FshResources.InvestmentProducts,
             fields:
             [
                 new EntityField<InvestmentProductResponse>(e => e.Code, "Code", "Code"),

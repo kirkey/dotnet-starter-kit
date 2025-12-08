@@ -70,12 +70,12 @@ public partial class LoanApplications
 
         // Check permissions
         var state = await AuthState;
-        _canSubmit = await AuthService.HasPermissionAsync(state.User, FshPermissions.LoanApplications.Submit);
-        _canAssign = await AuthService.HasPermissionAsync(state.User, FshPermissions.LoanApplications.Assign);
-        _canReview = await AuthService.HasPermissionAsync(state.User, FshPermissions.LoanApplications.Review);
-        _canApprove = await AuthService.HasPermissionAsync(state.User, FshPermissions.LoanApplications.Approve);
-        _canReject = await AuthService.HasPermissionAsync(state.User, FshPermissions.LoanApplications.Reject);
-        _canWithdraw = await AuthService.HasPermissionAsync(state.User, FshPermissions.LoanApplications.Withdraw);
+        _canSubmit = await AuthService.HasPermissionAsync(state.User, FshActions.Submit, FshResources.LoanApplications);
+        _canAssign = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.LoanApplications);
+        _canReview = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.LoanApplications);
+        _canApprove = await AuthService.HasPermissionAsync(state.User, FshActions.Approve, FshResources.LoanApplications);
+        _canReject = await AuthService.HasPermissionAsync(state.User, FshActions.Reject, FshResources.LoanApplications);
+        _canWithdraw = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.LoanApplications);
 
         Context = new EntityServerTableContext<LoanApplicationResponse, DefaultIdType, LoanApplicationViewModel>(
             fields:
@@ -127,13 +127,10 @@ public partial class LoanApplications
                 return response.Id;
             },
             deleteFunc: async id => await Client.DeleteLoanApplicationEndpointAsync("1", id),
-            exportAction: string.Empty,
-            entityTypeName: "Loan Application",
-            entityTypeNamePlural: "Loan Applications",
-            createPermission: FshPermissions.LoanApplications.Create,
-            updatePermission: FshPermissions.LoanApplications.Update,
-            deletePermission: FshPermissions.LoanApplications.Delete,
-            searchPermission: FshPermissions.LoanApplications.View
+            entityName: "Loan Application",
+            entityNamePlural: "Loan Applications",
+            entityResource: FshResources.LoanApplications,
+            hasExtraActionsFunc: () => true
         );
     }
 

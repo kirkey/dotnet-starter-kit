@@ -32,12 +32,12 @@ public partial class LoanCollaterals
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthState.GetAuthenticationStateAsync();
-        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Create)).Succeeded;
-        _canVerify = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Update)).Succeeded;
-        _canUpdateValuation = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Update)).Succeeded;
-        _canPledge = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Update)).Succeeded;
-        _canRelease = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Update)).Succeeded;
-        _canSeize = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Update)).Succeeded;
+        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Create, FshResources.LoanCollaterals))).Succeeded;
+        _canVerify = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.LoanCollaterals))).Succeeded;
+        _canUpdateValuation = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.LoanCollaterals))).Succeeded;
+        _canPledge = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.LoanCollaterals))).Succeeded;
+        _canRelease = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.LoanCollaterals))).Succeeded;
+        _canSeize = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.LoanCollaterals))).Succeeded;
 
         _elevation = ClientPreference.Elevation;
         _borderRadius = $"border-radius: {ClientPreference.BorderRadius}px";
@@ -45,8 +45,7 @@ public partial class LoanCollaterals
         _context = new EntityServerTableContext<LoanCollateralResponse, DefaultIdType, LoanCollateralViewModel>(
             entityName: "Loan Collateral",
             entityNamePlural: "Loan Collaterals",
-            entityResource: FshResources.MicroFinance,
-            searchAction: FshActions.Search,
+            entityResource: FshResources.LoanCollaterals,
             fields:
             [
                 new EntityField<LoanCollateralResponse>(c => c.LoanNumber!, "Loan #", "LoanNumber"),

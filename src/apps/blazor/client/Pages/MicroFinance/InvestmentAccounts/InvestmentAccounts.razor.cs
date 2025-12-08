@@ -35,10 +35,10 @@ public partial class InvestmentAccounts
         _borderRadius = $"border-radius: {ClientPreference.BorderRadius}px";
 
         var authState = await AuthState.GetAuthenticationStateAsync();
-        _canCreate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.InvestmentAccountsCreate)).Succeeded;
-        _canUpdate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.InvestmentAccountsUpdate)).Succeeded;
-        _canDelete = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.InvestmentAccountsDelete)).Succeeded;
-        _canView = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.InvestmentAccountsView)).Succeeded;
+        _canCreate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.Create, FshResources.InvestmentAccounts))).Succeeded;
+        _canUpdate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.Update, FshResources.InvestmentAccounts))).Succeeded;
+        _canDelete = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.Delete, FshResources.InvestmentAccounts))).Succeeded;
+        _canView = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.View, FshResources.InvestmentAccounts))).Succeeded;
         _canInvest = _canUpdate;
         _canRedeem = _canUpdate;
         _canSetupSip = _canUpdate;
@@ -46,8 +46,7 @@ public partial class InvestmentAccounts
         _context = new EntityServerTableContext<InvestmentAccountResponse, DefaultIdType, InvestmentAccountViewModel>(
             entityName: "Investment Account",
             entityNamePlural: "Investment Accounts",
-            entityResource: FshResources.MicroFinance,
-            searchAction: FshActions.View,
+            entityResource: FshResources.InvestmentAccounts,
             fields:
             [
                 new EntityField<InvestmentAccountResponse>(e => e.AccountNumber, "Account #", "AccountNumber"),

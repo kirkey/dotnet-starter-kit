@@ -96,10 +96,10 @@ public partial class AgentBanking
 
         // Check permissions
         var state = await AuthState;
-        _canApprove = await AuthService.HasPermissionAsync(state.User, FshPermissions.AgentBankings.Approve);
-        _canSuspend = await AuthService.HasPermissionAsync(state.User, FshPermissions.AgentBankings.Suspend);
-        _canManageFloat = await AuthService.HasPermissionAsync(state.User, FshPermissions.AgentBankings.ManageFloat);
-        _canUpgradeTier = await AuthService.HasPermissionAsync(state.User, FshPermissions.AgentBankings.UpgradeTier);
+        _canApprove = await AuthService.HasPermissionAsync(state.User, FshActions.Approve, FshResources.AgentBanking);
+        _canSuspend = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.AgentBanking);
+        _canManageFloat = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.AgentBanking);
+        _canUpgradeTier = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.AgentBanking);
 
         Context = new EntityServerTableContext<AgentBankingResponse, DefaultIdType, AgentBankingViewModel>(
             fields:
@@ -181,13 +181,10 @@ public partial class AgentBanking
                 await Client.UpdateAgentBankingEndpointAsync("1", id, command);
             },
             deleteFunc: async id => await Client.DeleteAgentBankingEndpointAsync("1", id),
-            exportAction: string.Empty,
-            entityTypeName: "Agent",
-            entityTypeNamePlural: "Agents",
-            createPermission: FshPermissions.AgentBankings.Create,
-            updatePermission: FshPermissions.AgentBankings.Update,
-            deletePermission: FshPermissions.AgentBankings.Delete,
-            searchPermission: FshPermissions.AgentBankings.View
+            entityName: "Agent",
+            entityNamePlural: "Agents",
+            entityResource: FshResources.AgentBanking,
+            hasExtraActionsFunc: () => true
         );
     }
 

@@ -78,10 +78,10 @@ public partial class MobileWallets
 
         // Check permissions
         var state = await AuthState;
-        _canActivate = await AuthService.HasPermissionAsync(state.User, FshPermissions.MobileWallets.Activate);
-        _canSuspend = await AuthService.HasPermissionAsync(state.User, FshPermissions.MobileWallets.Suspend);
-        _canManageBalance = await AuthService.HasPermissionAsync(state.User, FshPermissions.MobileWallets.ManageBalance);
-        _canLinkSavings = await AuthService.HasPermissionAsync(state.User, FshPermissions.MobileWallets.LinkSavings);
+        _canActivate = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.MobileWallets);
+        _canSuspend = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.MobileWallets);
+        _canManageBalance = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.MobileWallets);
+        _canLinkSavings = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.MobileWallets);
 
         Context = new EntityServerTableContext<MobileWalletResponse, DefaultIdType, MobileWalletViewModel>(
             fields:
@@ -134,13 +134,10 @@ public partial class MobileWallets
                 return response.Id;
             },
             deleteFunc: async id => await Client.DeleteMobileWalletEndpointAsync("1", id),
-            exportAction: string.Empty,
-            entityTypeName: "Mobile Wallet",
-            entityTypeNamePlural: "Mobile Wallets",
-            createPermission: FshPermissions.MobileWallets.Create,
-            updatePermission: FshPermissions.MobileWallets.Update,
-            deletePermission: FshPermissions.MobileWallets.Delete,
-            searchPermission: FshPermissions.MobileWallets.View
+            entityName: "Mobile Wallet",
+            entityNamePlural: "Mobile Wallets",
+            entityResource: FshResources.MobileWallets,
+            hasExtraActionsFunc: () => true
         );
     }
 

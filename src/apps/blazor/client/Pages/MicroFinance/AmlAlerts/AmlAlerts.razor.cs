@@ -32,18 +32,18 @@ public partial class AmlAlerts
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthState.GetAuthenticationStateAsync();
-        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.AmlAlerts.Create)).Succeeded;
-        _canAssign = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.AmlAlerts.Assign)).Succeeded;
-        _canConfirm = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.AmlAlerts.Confirm)).Succeeded;
-        _canClear = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.AmlAlerts.Clear)).Succeeded;
-        _canEscalate = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.AmlAlerts.Escalate)).Succeeded;
-        _canFileSar = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.AmlAlerts.FileSar)).Succeeded;
-        _canClose = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.AmlAlerts.Close)).Succeeded;
+        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Create, FshResources.AmlAlerts))).Succeeded;
+        _canAssign = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.AmlAlerts))).Succeeded;
+        _canConfirm = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.AmlAlerts))).Succeeded;
+        _canClear = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.AmlAlerts))).Succeeded;
+        _canEscalate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.AmlAlerts))).Succeeded;
+        _canFileSar = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Create, FshResources.AmlAlerts))).Succeeded;
+        _canClose = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.AmlAlerts))).Succeeded;
 
         _context = new EntityServerTableContext<AmlAlertResponse, DefaultIdType, AmlAlertViewModel>(
             entityName: "AML Alert",
             entityNamePlural: "AML Alerts",
-            entityResource: FSHResources.AmlAlerts,
+            entityResource: FshResources.AmlAlerts,
             fields: new List<EntityField<AmlAlertResponse>>
             {
                 new EntityField<AmlAlertResponse>(a => a.AlertCode, "Alert Code", "AlertCode"),

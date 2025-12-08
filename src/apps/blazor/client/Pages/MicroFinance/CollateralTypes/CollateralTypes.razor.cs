@@ -29,9 +29,9 @@ public partial class CollateralTypes
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthState.GetAuthenticationStateAsync();
-        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Create)).Succeeded;
-        _canUpdate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Update)).Succeeded;
-        _canView = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.View)).Succeeded;
+        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Create, FshResources.CollateralTypes))).Succeeded;
+        _canUpdate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.CollateralTypes))).Succeeded;
+        _canView = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.View, FshResources.CollateralTypes))).Succeeded;
 
         _elevation = ClientPreference.Elevation;
         _borderRadius = $"border-radius: {ClientPreference.BorderRadius}px";
@@ -39,8 +39,7 @@ public partial class CollateralTypes
         _context = new EntityServerTableContext<CollateralTypeResponse, DefaultIdType, CollateralTypeViewModel>(
             entityName: "Collateral Type",
             entityNamePlural: "Collateral Types",
-            entityResource: FshResources.MicroFinance,
-            searchAction: FshActions.Search,
+            entityResource: FshResources.CollateralTypes,
             fields:
             [
                 new EntityField<CollateralTypeResponse>(ct => ct.Code!, "Code", "Code"),

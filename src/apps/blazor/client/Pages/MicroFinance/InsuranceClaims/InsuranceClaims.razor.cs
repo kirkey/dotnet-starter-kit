@@ -81,10 +81,10 @@ public partial class InsuranceClaims
 
         // Check permissions
         var state = await AuthState;
-        _canReview = await AuthService.HasPermissionAsync(state.User, FshPermissions.InsuranceClaims.Review);
-        _canApprove = await AuthService.HasPermissionAsync(state.User, FshPermissions.InsuranceClaims.Approve);
-        _canReject = await AuthService.HasPermissionAsync(state.User, FshPermissions.InsuranceClaims.Reject);
-        _canSettle = await AuthService.HasPermissionAsync(state.User, FshPermissions.InsuranceClaims.Settle);
+        _canReview = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.InsuranceClaims);
+        _canApprove = await AuthService.HasPermissionAsync(state.User, FshActions.Approve, FshResources.InsuranceClaims);
+        _canReject = await AuthService.HasPermissionAsync(state.User, FshActions.Reject, FshResources.InsuranceClaims);
+        _canSettle = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.InsuranceClaims);
 
         Context = new EntityServerTableContext<InsuranceClaimResponse, DefaultIdType, InsuranceClaimViewModel>(
             fields:
@@ -137,13 +137,10 @@ public partial class InsuranceClaims
                 return response.Id;
             },
             deleteFunc: async id => await Client.DeleteInsuranceClaimEndpointAsync("1", id),
-            exportAction: string.Empty,
-            entityTypeName: "Insurance Claim",
-            entityTypeNamePlural: "Insurance Claims",
-            createPermission: FshPermissions.InsuranceClaims.Create,
-            updatePermission: FshPermissions.InsuranceClaims.Update,
-            deletePermission: FshPermissions.InsuranceClaims.Delete,
-            searchPermission: FshPermissions.InsuranceClaims.View
+            entityName: "Insurance Claim",
+            entityNamePlural: "Insurance Claims",
+            entityResource: FshResources.InsuranceClaims,
+            hasExtraActionsFunc: () => true
         );
     }
 

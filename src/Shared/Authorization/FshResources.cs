@@ -33,10 +33,35 @@ public static class FshResources
     // MicroFinance - Granular Resources
     public const string MicroFinance = nameof(MicroFinance);
     public const string Members = nameof(Members);
+    public const string MemberGroups = nameof(MemberGroups);
     public const string LoanProducts = nameof(LoanProducts);
     public const string Loans = nameof(Loans);
     public const string LoanRepayments = nameof(LoanRepayments);
+    public const string LoanCollaterals = nameof(LoanCollaterals);
+    public const string LoanGuarantors = nameof(LoanGuarantors);
+    public const string LoanApplications = nameof(LoanApplications);
     public const string SavingsProducts = nameof(SavingsProducts);
     public const string SavingsAccounts = nameof(SavingsAccounts);
     public const string SavingsTransactions = nameof(SavingsTransactions);
+    public const string ShareProducts = nameof(ShareProducts);
+    public const string ShareAccounts = nameof(ShareAccounts);
+    public const string FixedDeposits = nameof(FixedDeposits);
+    public const string InsuranceProducts = nameof(InsuranceProducts);
+    public const string InsuranceClaims = nameof(InsuranceClaims);
+    public const string InvestmentProducts = nameof(InvestmentProducts);
+    public const string InvestmentAccounts = nameof(InvestmentAccounts);
+    public const string Branches = nameof(Branches);
+    public const string Staff = nameof(Staff);
+    public const string CashVaults = nameof(CashVaults);
+    public const string TellerSessions = nameof(TellerSessions);
+    public const string AgentBanking = nameof(AgentBanking);
+    public const string MobileWallets = nameof(MobileWallets);
+    public const string AmlAlerts = nameof(AmlAlerts);
+    public const string CreditScores = nameof(CreditScores);
+    public const string CollectionCases = nameof(CollectionCases);
+    public const string CustomerCases = nameof(CustomerCases);
+    public const string CollateralTypes = nameof(CollateralTypes);
+    public const string ApprovalWorkflows = nameof(ApprovalWorkflows);
+    public const string ApprovalRequests = nameof(ApprovalRequests);
+    public const string Documents = nameof(Documents);
 }

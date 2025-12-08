@@ -34,18 +34,17 @@ public partial class ApprovalRequests
         _borderRadius = $"border-radius: {ClientPreference.BorderRadius}px";
 
         var authState = await AuthState.GetAuthenticationStateAsync();
-        _canCreate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.ApprovalRequestsCreate)).Succeeded;
-        _canUpdate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.ApprovalRequestsUpdate)).Succeeded;
-        _canDelete = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.ApprovalRequestsDelete)).Succeeded;
-        _canView = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.ApprovalRequestsView)).Succeeded;
-        _canApprove = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.ApprovalRequestsApprove)).Succeeded;
+        _canCreate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.Create, FshResources.ApprovalRequests))).Succeeded;
+        _canUpdate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.Update, FshResources.ApprovalRequests))).Succeeded;
+        _canDelete = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.Delete, FshResources.ApprovalRequests))).Succeeded;
+        _canView = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.View, FshResources.ApprovalRequests))).Succeeded;
+        _canApprove = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.Approve, FshResources.ApprovalRequests))).Succeeded;
         _canCancel = _canUpdate;
 
         _context = new EntityServerTableContext<ApprovalRequestResponse, DefaultIdType, ApprovalRequestViewModel>(
             entityName: "Approval Request",
             entityNamePlural: "Approval Requests",
-            entityResource: FshResources.MicroFinance,
-            searchAction: FshActions.View,
+            entityResource: FshResources.ApprovalRequests,
             fields:
             [
                 new EntityField<ApprovalRequestResponse>(e => e.RequestNumber, "Request #", "RequestNumber"),

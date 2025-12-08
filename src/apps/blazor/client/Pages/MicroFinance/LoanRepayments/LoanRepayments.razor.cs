@@ -30,10 +30,10 @@ public partial class LoanRepayments
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthState.GetAuthenticationStateAsync();
-        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Create)).Succeeded;
-        _canView = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.View)).Succeeded;
-        _canReverse = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.Update)).Succeeded;
-        _canPrint = (await AuthorizationService.AuthorizeAsync(state.User, FshPermissions.MicroFinance.View)).Succeeded;
+        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Create, FshResources.LoanRepayments))).Succeeded;
+        _canView = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.View, FshResources.LoanRepayments))).Succeeded;
+        _canReverse = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.LoanRepayments))).Succeeded;
+        _canPrint = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.View, FshResources.LoanRepayments))).Succeeded;
 
         _elevation = ClientPreference.Elevation;
         _borderRadius = $"border-radius: {ClientPreference.BorderRadius}px";
@@ -41,8 +41,7 @@ public partial class LoanRepayments
         _context = new EntityServerTableContext<LoanRepaymentResponse, DefaultIdType, LoanRepaymentViewModel>(
             entityName: "Loan Repayment",
             entityNamePlural: "Loan Repayments",
-            entityResource: FshResources.MicroFinance,
-            searchAction: FshActions.Search,
+            entityResource: FshResources.LoanRepayments,
             fields:
             [
                 new EntityField<LoanRepaymentResponse>(r => r.LoanNumber!, "Loan #", "LoanNumber"),

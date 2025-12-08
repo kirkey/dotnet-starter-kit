@@ -34,18 +34,17 @@ public partial class ApprovalWorkflows
         _borderRadius = $"border-radius: {ClientPreference.BorderRadius}px";
 
         var authState = await AuthState.GetAuthenticationStateAsync();
-        _canCreate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.ApprovalWorkflowsCreate)).Succeeded;
-        _canUpdate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.ApprovalWorkflowsUpdate)).Succeeded;
-        _canDelete = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.ApprovalWorkflowsDelete)).Succeeded;
-        _canView = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermissions.ApprovalWorkflowsView)).Succeeded;
+        _canCreate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.Create, FshResources.ApprovalWorkflows))).Succeeded;
+        _canUpdate = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.Update, FshResources.ApprovalWorkflows))).Succeeded;
+        _canDelete = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.Delete, FshResources.ApprovalWorkflows))).Succeeded;
+        _canView = (await AuthorizationService.AuthorizeAsync(authState.User, FshPermission.NameFor(FshActions.View, FshResources.ApprovalWorkflows))).Succeeded;
         _canActivate = _canUpdate;
         _canDeactivate = _canUpdate;
 
         _context = new EntityServerTableContext<ApprovalWorkflowResponse, DefaultIdType, ApprovalWorkflowViewModel>(
             entityName: "Approval Workflow",
             entityNamePlural: "Approval Workflows",
-            entityResource: FshResources.MicroFinance,
-            searchAction: FshActions.View,
+            entityResource: FshResources.ApprovalWorkflows,
             fields:
             [
                 new EntityField<ApprovalWorkflowResponse>(e => e.Code, "Code", "Code"),

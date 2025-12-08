@@ -28,14 +28,14 @@ public partial class CreditScores
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthState.GetAuthenticationStateAsync();
-        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.CreditScores.Create)).Succeeded;
-        _canUpdate = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.CreditScores.Update)).Succeeded;
-        _canDelete = (await AuthorizationService.AuthorizeAsync(state.User, FSHPermissions.CreditScores.Delete)).Succeeded;
+        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Create, FshResources.CreditScores))).Succeeded;
+        _canUpdate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.CreditScores))).Succeeded;
+        _canDelete = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Delete, FshResources.CreditScores))).Succeeded;
 
         _context = new EntityServerTableContext<CreditScoreResponse, DefaultIdType, CreditScoreViewModel>(
             entityName: "Credit Score",
             entityNamePlural: "Credit Scores",
-            entityResource: FSHResources.CreditScores,
+            entityResource: FshResources.CreditScores,
             fields: new List<EntityField<CreditScoreResponse>>
             {
                 new EntityField<CreditScoreResponse>(s => s.MemberName, "Member", "MemberName"),
