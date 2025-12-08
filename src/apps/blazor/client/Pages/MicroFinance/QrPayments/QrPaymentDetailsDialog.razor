@@ -1,0 +1,74 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.QrPayments
+
+<MudDialog>
+    <DialogContent>
+        @if (QrPayment != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" Class="d-flex justify-center">
+                    <MudPaper Class="pa-4" Elevation="2">
+                        <MudText Typo="Typo.h6" Align="Align.Center" Class="mb-2">@QrPayment.QrCode</MudText>
+                        <MudText Typo="Typo.caption" Align="Align.Center">Scan to Pay</MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="QR Type">@QrPayment.QrType</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Status">
+                        <MudChip T="string" Color="@GetStatusColor(QrPayment.Status)" Size="Size.Small">@QrPayment.Status</MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Amount">@QrPayment.Amount?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Reference">@QrPayment.Reference</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Max Uses">@QrPayment.MaxUses</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Current Uses">@QrPayment.CurrentUses</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Generated At">@QrPayment.GeneratedAt.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Expires At">@QrPayment.ExpiresAt?.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Last Used At">@QrPayment.LastUsedAt?.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                @if (!string.IsNullOrEmpty(QrPayment.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Notes">@QrPayment.Notes</MudField>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public QrPaymentResponse? QrPayment { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status?.ToLower() switch
+    {
+        "active" => Color.Success,
+        "expired" => Color.Error,
+        "used" => Color.Info,
+        "pending" => Color.Warning,
+        _ => Color.Default
+    };
+}

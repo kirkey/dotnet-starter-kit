@@ -1,0 +1,100 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.UssdSessions
+
+<MudDialog>
+    <DialogContent>
+        @if (UssdSession != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Session ID">@UssdSession.SessionId</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Status">
+                        <MudChip T="string" Color="@GetStatusColor(UssdSession.Status)" Size="Size.Small">@UssdSession.Status</MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Phone Number">@UssdSession.PhoneNumber</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Service Code">@UssdSession.ServiceCode</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Language">@UssdSession.Language</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Is Authenticated">
+                        <MudIcon Icon="@(UssdSession.IsAuthenticated == true ? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.Cancel)" 
+                                 Color="@(UssdSession.IsAuthenticated == true ? Color.Success : Color.Error)" />
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Current Menu">@UssdSession.CurrentMenu</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Menu Level">@UssdSession.MenuLevel</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Current Operation">@UssdSession.CurrentOperation</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Step Count">@UssdSession.StepCount</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Started At">@UssdSession.StartedAt.ToString("yyyy-MM-dd HH:mm:ss")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Last Activity">@UssdSession.LastActivityAt?.ToString("yyyy-MM-dd HH:mm:ss")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Ended At">@UssdSession.EndedAt?.ToString("yyyy-MM-dd HH:mm:ss")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Timeout (Seconds)">@UssdSession.SessionTimeoutSeconds</MudField>
+                </MudItem>
+                @if (!string.IsNullOrEmpty(UssdSession.LastInput))
+                {
+                    <MudItem xs="12" md="6">
+                        <MudField Label="Last Input">@UssdSession.LastInput</MudField>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrEmpty(UssdSession.LastOutput))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Last Output">@UssdSession.LastOutput</MudField>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrEmpty(UssdSession.ErrorMessage))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Error Message">
+                            <MudText Color="Color.Error">@UssdSession.ErrorMessage</MudText>
+                        </MudField>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public UssdSessionResponse? UssdSession { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status?.ToLower() switch
+    {
+        "active" => Color.Success,
+        "completed" => Color.Info,
+        "timedout" => Color.Warning,
+        "error" or "failed" => Color.Error,
+        _ => Color.Default
+    };
+}

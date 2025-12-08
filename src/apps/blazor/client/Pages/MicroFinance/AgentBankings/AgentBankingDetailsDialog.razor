@@ -1,0 +1,136 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.AgentBankings
+
+<MudDialog>
+    <DialogContent>
+        @if (AgentBanking != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Agent Code">@AgentBanking.AgentCode</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Status">
+                        <MudChip T="string" Color="@GetStatusColor(AgentBanking.Status)" Size="Size.Small">@AgentBanking.Status</MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Business Name">@AgentBanking.BusinessName</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Contact Name">@AgentBanking.ContactName</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Phone Number">@AgentBanking.PhoneNumber</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Email">@AgentBanking.Email</MudField>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudField Label="Address">@AgentBanking.Address</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="GPS Coordinates">@AgentBanking.GpsCoordinates</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Operating Hours">@AgentBanking.OperatingHours</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Tier">@AgentBanking.Tier</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="KYC Verified">
+                        <MudIcon Icon="@(AgentBanking.IsKycVerified == true ? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.Cancel)" 
+                                 Color="@(AgentBanking.IsKycVerified == true ? Color.Success : Color.Error)" />
+                    </MudField>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudDivider Class="my-2" />
+                    <MudText Typo="Typo.subtitle1">Financial Details</MudText>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudField Label="Float Balance">@AgentBanking.FloatBalance?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudField Label="Min Float Balance">@AgentBanking.MinFloatBalance?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudField Label="Max Float Balance">@AgentBanking.MaxFloatBalance?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudField Label="Commission Rate">@AgentBanking.CommissionRate?.ToString("P2")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudField Label="Total Commission Earned">@AgentBanking.TotalCommissionEarned?.ToString("C")</MudField>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudDivider Class="my-2" />
+                    <MudText Typo="Typo.subtitle1">Transaction Limits & Volume</MudText>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Daily Transaction Limit">@AgentBanking.DailyTransactionLimit?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Monthly Transaction Limit">@AgentBanking.MonthlyTransactionLimit?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Daily Volume Processed">@AgentBanking.DailyVolumeProcessed?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Monthly Volume Processed">@AgentBanking.MonthlyVolumeProcessed?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Today's Transactions">@AgentBanking.TotalTransactionsToday</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Month's Transactions">@AgentBanking.TotalTransactionsMonth</MudField>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudDivider Class="my-2" />
+                    <MudText Typo="Typo.subtitle1">Dates</MudText>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Contract Start">@AgentBanking.ContractStartDate?.ToString("yyyy-MM-dd")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Contract End">@AgentBanking.ContractEndDate?.ToString("yyyy-MM-dd")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Last Training">@AgentBanking.LastTrainingDate?.ToString("yyyy-MM-dd")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Last Audit">@AgentBanking.LastAuditDate?.ToString("yyyy-MM-dd")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Device ID">@AgentBanking.DeviceId</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Created On">@AgentBanking.CreatedOn.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public AgentBankingResponse? AgentBanking { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status?.ToLower() switch
+    {
+        "active" => Color.Success,
+        "suspended" or "inactive" => Color.Error,
+        "pending" => Color.Warning,
+        _ => Color.Default
+    };
+}

@@ -1,0 +1,105 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.PaymentGateways
+
+<MudDialog>
+    <DialogContent>
+        @if (PaymentGateway != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Name">@PaymentGateway.Name</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Provider">@PaymentGateway.Provider</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Status">
+                        <MudChip T="string" Color="@GetStatusColor(PaymentGateway.Status)" Size="Size.Small">@PaymentGateway.Status</MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Test Mode">
+                        <MudIcon Icon="@(PaymentGateway.IsTestMode == true ? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.Cancel)" 
+                                 Color="@(PaymentGateway.IsTestMode == true ? Color.Warning : Color.Success)" />
+                        @(PaymentGateway.IsTestMode == true ? "Test Mode" : "Production")
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Merchant ID">@PaymentGateway.MerchantId</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Webhook URL">@PaymentGateway.WebhookUrl</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Transaction Fee (%)">@PaymentGateway.TransactionFeePercent?.ToString("P2")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Transaction Fee (Fixed)">@PaymentGateway.TransactionFeeFixed?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Min Transaction">@PaymentGateway.MinTransactionAmount?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Max Transaction">@PaymentGateway.MaxTransactionAmount?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Timeout (Seconds)">@PaymentGateway.TimeoutSeconds</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Retry Attempts">@PaymentGateway.RetryAttempts</MudField>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle2" Class="mb-2">Supported Features</MudText>
+                    <MudChipSet T="string" ReadOnly>
+                        @if (PaymentGateway.SupportsRefunds == true)
+                        {
+                            <MudChip T="string" Color="Color.Primary" Size="Size.Small">Refunds</MudChip>
+                        }
+                        @if (PaymentGateway.SupportsRecurring == true)
+                        {
+                            <MudChip T="string" Color="Color.Primary" Size="Size.Small">Recurring</MudChip>
+                        }
+                        @if (PaymentGateway.SupportsMobileWallet == true)
+                        {
+                            <MudChip T="string" Color="Color.Primary" Size="Size.Small">Mobile Wallet</MudChip>
+                        }
+                        @if (PaymentGateway.SupportsCardPayments == true)
+                        {
+                            <MudChip T="string" Color="Color.Primary" Size="Size.Small">Card Payments</MudChip>
+                        }
+                        @if (PaymentGateway.SupportsBankTransfer == true)
+                        {
+                            <MudChip T="string" Color="Color.Primary" Size="Size.Small">Bank Transfer</MudChip>
+                        }
+                    </MudChipSet>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Last Successful Connection">@PaymentGateway.LastSuccessfulConnection?.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Created On">@PaymentGateway.CreatedOn.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public PaymentGatewayResponse? PaymentGateway { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status?.ToLower() switch
+    {
+        "active" or "enabled" => Color.Success,
+        "disabled" or "inactive" => Color.Error,
+        "pending" => Color.Warning,
+        _ => Color.Default
+    };
+}
