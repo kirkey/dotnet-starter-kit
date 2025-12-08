@@ -1,0 +1,98 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CreditScores
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Credit Scores Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Credit Scores?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Member Creditworthiness Assessment</MudText>
+                        <MudText Typo="Typo.body2">
+                            Credit Scores provide a numerical rating of member creditworthiness based on
+                            their financial history, repayment behavior, and other factors. Higher scores
+                            indicate lower credit risk.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Scoring Factors:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Loan repayment history<br/>
+                                • Account tenure with MFI<br/>
+                                • Savings pattern consistency<br/>
+                                • External credit bureau data<br/>
+                                • Debt-to-income ratio<br/>
+                                • Number of active loans
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Score Ranges">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Score Levels</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Star" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Excellent (750+): Premium rates, higher limits</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.ThumbUp" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Good (650-749): Standard terms available</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Help" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Fair (550-649): Higher rates, more collateral</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Warning" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Poor (below 550): Limited approval, guarantor required</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Credit Score Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Update scores regularly (monthly/quarterly)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Validate with external bureau data</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Use scores consistently in loan decisions</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Allow members to dispute inaccuracies</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

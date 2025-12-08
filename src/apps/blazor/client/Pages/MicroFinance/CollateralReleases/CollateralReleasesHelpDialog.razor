@@ -1,0 +1,100 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollateralReleases
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Collateral Releases Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Collateral Releases?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Returning Pledged Assets</MudText>
+                        <MudText Typo="Typo.body2">
+                            Collateral Releases track the process of returning pledged assets to borrowers
+                            once loans are fully repaid. It includes verification, documentation, and
+                            formal handover of collateral documents or physical assets.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Release Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Full release (loan fully repaid)<br/>
+                                • Partial release (excess collateral)<br/>
+                                • Substitution release (collateral replaced)<br/>
+                                • Legal release (title deed, vehicle log book)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Prompt collateral release improves member satisfaction.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Release Process">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Steps for Release</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Verify loan is fully cleared (no outstanding balance)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Search" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Locate collateral documents in secure storage</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Description" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Prepare release authorization documents</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.PersonPin" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Obtain member signature confirming receipt</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Release Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Process releases within 7 days of loan closure</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Maintain proper chain of custody records</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Verify member identity before release</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Keep copy of release acknowledgment</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

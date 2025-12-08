@@ -1,0 +1,100 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollectionCases
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Collection Cases Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Collection Cases?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Delinquent Accounts</MudText>
+                        <MudText Typo="Typo.body2">
+                            Collection Cases group delinquent loans for structured recovery efforts.
+                            Each case tracks the full history of collection activities, member responses,
+                            and recovery progress for an overdue account.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Case Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Member and loan details<br/>
+                                • Days past due and amount overdue<br/>
+                                • Assigned collection officer<br/>
+                                • Case status and priority<br/>
+                                • Action history and next steps
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Case Status">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Case Lifecycle</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Add" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Open: New case created for delinquent account</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Pending" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">In Progress: Active collection efforts underway</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Resolved: Full payment received</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Gavel" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Legal: Escalated to legal proceedings</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Close" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Closed: Written off or fully recovered</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Case Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review cases daily for urgent actions</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document all member interactions</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Set clear follow-up dates</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Escalate unresolved cases promptly</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

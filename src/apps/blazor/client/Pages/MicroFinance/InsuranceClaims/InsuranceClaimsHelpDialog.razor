@@ -1,0 +1,101 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InsuranceClaims
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Insurance Claims Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Insurance Claims?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Processing Insurance Benefits</MudText>
+                        <MudText Typo="Typo.body2">
+                            Insurance Claims track requests for benefits under insurance policies when
+                            covered events occur. Claims processing ensures prompt and fair payment
+                            of benefits to members or their beneficiaries.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Claim Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Death claim (credit life)<br/>
+                                • Disability claim<br/>
+                                • Health/Medical claim<br/>
+                                • Crop loss claim<br/>
+                                • Livestock claim<br/>
+                                • Property damage claim
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Claims Process">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Stages of Claim Processing</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.NoteAdd" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Claim Submission: Member/beneficiary files claim</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Search" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Verification: Confirm policy and coverage</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.FactCheck" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Documentation: Collect supporting documents</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.ThumbUp" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Approval: Claim approved by insurer</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Payments" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Payment: Benefits disbursed</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Claims Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">File claims promptly after event</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Collect complete documentation upfront</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Communicate status updates to beneficiaries</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Process claims within SLA timelines</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

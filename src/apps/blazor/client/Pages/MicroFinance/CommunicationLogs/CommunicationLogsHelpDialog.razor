@@ -1,0 +1,99 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CommunicationLogs
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Communication Logs Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Communication Logs?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Member Interaction History</MudText>
+                        <MudText Typo="Typo.body2">
+                            Communication Logs record all interactions with members across different
+                            channels. This provides a complete history of communications for service
+                            continuity and compliance.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Communication Channels:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Phone calls<br/>
+                                • SMS messages<br/>
+                                • Email correspondence<br/>
+                                • In-branch visits<br/>
+                                • Mobile app notifications<br/>
+                                • WhatsApp/chat<br/>
+                                • Letters/notices
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Log Information">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">What's Recorded</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.DateRange" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Date, time, and duration</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Person" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Staff member involved</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Description" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Subject and notes</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.NextPlan" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Follow-up actions required</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Log Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Log all significant interactions</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Record outcome and next steps</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review logs before contacting member</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track follow-up reminders</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

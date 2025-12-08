@@ -1,0 +1,99 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Documents
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Documents Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Documents?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Digital Document Management</MudText>
+                        <MudText Typo="Typo.body2">
+                            Documents store scanned copies and digital files related to member accounts,
+                            loan applications, and KYC requirements. All critical paperwork is digitized
+                            for easy retrieval and secure storage.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Document Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • ID cards and passports<br/>
+                                • Loan agreements<br/>
+                                • Collateral documentation<br/>
+                                • Proof of income<br/>
+                                • Business licenses<br/>
+                                • Guarantor documents<br/>
+                                • Insurance policies
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Document Status">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Lifecycle States</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Upload" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Pending: Uploaded, awaiting verification</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Verified: Confirmed valid and complete</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Cancel" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Rejected: Invalid or illegible</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Archive" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Expired: Past validity date</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Document Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Verify documents before acceptance</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track expiry dates for renewables</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Ensure clear, legible scans</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Apply retention policy for old documents</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

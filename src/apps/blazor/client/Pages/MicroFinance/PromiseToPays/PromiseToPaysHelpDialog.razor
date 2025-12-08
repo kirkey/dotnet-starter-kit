@@ -1,0 +1,97 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.PromiseToPays
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Promise to Pay Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What is Promise to Pay?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Member Payment Commitments</MudText>
+                        <MudText Typo="Typo.body2">
+                            Promise to Pay (PTP) records a member's commitment to make a specific payment
+                            by a specific date. It's a key collection tool that creates accountability
+                            and provides a clear follow-up mechanism.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>PTP Details:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Promised amount<br/>
+                                • Promise date and payment date<br/>
+                                • Payment method (cash, transfer, etc.)<br/>
+                                • Source of funds<br/>
+                                • Outcome (kept, broken, partial)
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="PTP Tracking">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Commitments</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Event" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Record PTP with specific date and amount</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Notifications" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Send reminder before due date</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track payment receipt on due date</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Warning" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Follow up immediately if broken</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Effective PTP Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Confirm member's ability to pay promised amount</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Get commitment on realistic dates (not too far)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track PTP keep rate as officer metric</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Escalate repeated broken promises</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

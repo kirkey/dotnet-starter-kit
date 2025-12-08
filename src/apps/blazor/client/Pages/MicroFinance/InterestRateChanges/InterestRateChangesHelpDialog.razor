@@ -1,0 +1,94 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InterestRateChanges
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Interest Rate Changes Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Interest Rate Changes?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Rate Modifications</MudText>
+                        <MudText Typo="Typo.body2">
+                            Interest Rate Changes track modifications to interest rates on member accounts.
+                            This applies to both loan and savings products when rates are adjusted due to
+                            policy changes, market conditions, or special circumstances.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Change Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Policy rate revision (all products)<br/>
+                                • Individual account adjustment<br/>
+                                • Promotional rate application<br/>
+                                • Risk-based repricing<br/>
+                                • Variable rate reset
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Rate Change Process">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How Changes Apply</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.DateRange" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Effective date determines when rate applies</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Compare" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Old and new rates recorded for audit</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Notifications" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Member notification may be required</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Rate Change Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document justification for all changes</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Notify members in advance when required</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Maintain complete rate history</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Ensure regulatory compliance</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

@@ -1,0 +1,96 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.RiskCategories
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Risk Categories Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Risk Categories?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Risk Classification Framework</MudText>
+                        <MudText Typo="Typo.body2">
+                            Risk Categories define the framework for classifying different types of
+                            risks the MFI faces. This enables consistent risk assessment, reporting,
+                            and mitigation strategies.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Standard Categories:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Credit Risk<br/>
+                                • Operational Risk<br/>
+                                • Market Risk<br/>
+                                • Liquidity Risk<br/>
+                                • Compliance/Regulatory Risk<br/>
+                                • Fraud Risk<br/>
+                                • Strategic Risk
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Category Hierarchy">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Organization Structure</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Folder" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Parent categories (e.g., Credit Risk)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.FolderOpen" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Sub-categories (e.g., Default Risk, Concentration Risk)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Label" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Risk indicators linked to categories</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Category Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Align categories with regulatory requirements</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Define clear ownership per category</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Assign risk appetite thresholds</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review categories annually</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

@@ -1,0 +1,98 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollectionActions
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Collection Actions Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Collection Actions?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Delinquent Account Recovery</MudText>
+                        <MudText Typo="Typo.body2">
+                            Collection Actions are specific activities performed to recover overdue loan
+                            payments. They provide a structured approach to collections with escalating
+                            actions based on delinquency severity.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Action Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Phone call reminders<br/>
+                                • SMS/Email notifications<br/>
+                                • Home/Business visits<br/>
+                                • Demand letters<br/>
+                                • Guarantor contact<br/>
+                                • Legal notices
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Escalation Path">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Escalating Actions by Days Past Due</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.LooksOne" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">1-7 days: Friendly reminder calls/SMS</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.LooksTwo" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">8-30 days: Personal visit, formal demand letter</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Looks3" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">31-90 days: Guarantor engagement, collateral notice</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Looks4" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">90+ days: Legal action, collateral seizure</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Effective Collections</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document all collection activities</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Follow consistent escalation timelines</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Remain professional and respectful</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Understand member's situation before action</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

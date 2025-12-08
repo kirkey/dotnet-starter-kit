@@ -1,0 +1,100 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CreditBureauInquiries
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Credit Bureau Inquiries Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Credit Bureau Inquiries?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">External Credit Checks</MudText>
+                        <MudText Typo="Typo.body2">
+                            Credit Bureau Inquiries record requests made to external credit reference
+                            bureaus for member credit information. Each inquiry is logged for compliance
+                            and member disclosure purposes.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Inquiry Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Hard inquiry (for loan applications)<br/>
+                                • Soft inquiry (for monitoring)<br/>
+                                • Account review inquiry<br/>
+                                • Pre-qualification check
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Hard inquiries may affect member's credit score.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Inquiry Information">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">What's Retrieved</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Score" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Credit score from bureau</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.AccountBalance" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Existing credit obligations</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.History" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Payment history across lenders</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Warning" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Defaults, delinquencies, collections</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Inquiry Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Obtain member consent before inquiry</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Avoid duplicate inquiries within 30 days</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Record reason for each inquiry</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Disclose inquiry to member on request</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

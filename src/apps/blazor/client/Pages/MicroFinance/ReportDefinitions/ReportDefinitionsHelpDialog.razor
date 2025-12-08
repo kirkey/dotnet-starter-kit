@@ -1,0 +1,98 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.ReportDefinitions
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Report Definitions Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Report Definitions?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Report Templates and Configuration</MudText>
+                        <MudText Typo="Typo.body2">
+                            Report Definitions specify the structure, data sources, and formatting
+                            for system reports. Each definition serves as a template that can be
+                            executed on demand or scheduled.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Definition Elements:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Report name and description<br/>
+                                • Data sources and queries<br/>
+                                • Parameters and filters<br/>
+                                • Output format (PDF, Excel, etc.)<br/>
+                                • Column definitions<br/>
+                                • Grouping and subtotals
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Report Categories">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Common Report Types</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.AccountBalance" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Financial: P&L, Balance Sheet, Trial Balance</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.TrendingUp" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Portfolio: PAR, Aging, Disbursements</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Gavel" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Regulatory: Compliance, Prudential</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Group" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Operational: Staff, Branch, Activity</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Report Definition Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Use clear, descriptive names</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document report purpose and users</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Test reports before deployment</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review and retire unused reports</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

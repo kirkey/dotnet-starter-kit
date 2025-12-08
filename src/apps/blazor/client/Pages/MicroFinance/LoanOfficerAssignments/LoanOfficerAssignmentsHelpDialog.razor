@@ -1,0 +1,130 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanOfficerAssignments
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Loan Officer Assignments Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Loan Officer Assignments?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Officer-Client Relationships</MudText>
+                        <MudText Typo="Typo.body2">
+                            Loan Officer Assignments link members and their loan accounts to specific loan officers
+                            who are responsible for relationship management, monitoring, and collections.
+                            This ensures accountability and personalized service.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Assignment Details:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Loan officer and member/loan pairing<br/>
+                                • Assignment effective date<br/>
+                                • Primary vs. backup officer designation<br/>
+                                • Assignment reason (new account, transfer, etc.)<br/>
+                                • Assignment history and changes
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Consistent officer assignments improve member relationships and repayment rates.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Assignment Reasons">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Why Assignments Change</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.PersonAdd" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">New Account: Initial assignment for new member</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.SwapHoriz" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Transfer: Member moved to different officer's portfolio</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Balance" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Rebalancing: Portfolio redistribution for workload balance</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Officer Departure: Reassignment due to staff leaving</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.TrendingUp" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Escalation: Problem account moved to specialist</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Portfolio Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Officer Portfolios</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Portfolio Considerations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Maximum accounts per officer (typically 200-400)<br/>
+                                • Geographic concentration for efficient field visits<br/>
+                                • Product specialization (agriculture, SME, etc.)<br/>
+                                • Risk distribution across portfolios<br/>
+                                • Experience level matching to account complexity
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Workload:</strong> Overloaded officers may struggle to maintain collection efficiency.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Assignment Management Best Practices</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Maintain balanced portfolios across officers</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document all assignment changes with reasons</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Ensure smooth handovers when changing officers</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track performance metrics by officer portfolio</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Notify members when their officer changes</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

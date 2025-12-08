@@ -1,0 +1,95 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.RiskIndicators
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Risk Indicators Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Risk Indicators?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Key Risk Metrics</MudText>
+                        <MudText Typo="Typo.body2">
+                            Risk Indicators are measurable metrics that signal the level of risk in
+                            specific areas. They provide early warning signals and help track risk
+                            trends over time.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Indicators:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Portfolio at Risk (PAR)<br/>
+                                • Non-performing loan ratio<br/>
+                                • Loan concentration by sector<br/>
+                                • Average days in arrears<br/>
+                                • Write-off ratio<br/>
+                                • Customer complaint rate
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Threshold Levels">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Traffic Light System</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Circle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Green: Within acceptable range</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Circle" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Amber: Approaching limit, monitor closely</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Circle" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Red: Exceeded threshold, action required</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Indicator Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Define clear calculation methodology</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Set appropriate threshold levels</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Calculate and report regularly</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track trends over time</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

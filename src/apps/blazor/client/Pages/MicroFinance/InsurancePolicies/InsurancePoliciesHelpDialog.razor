@@ -1,0 +1,130 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InsurancePolicies
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Insurance Policies Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Insurance Policies?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Member Insurance Coverage Records</MudText>
+                        <MudText Typo="Typo.body2">
+                            Insurance Policies represent active coverage for individual members. Each policy
+                            links a member to an insurance product and tracks premiums, coverage periods,
+                            and claims history.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Policy Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Policy number and effective dates<br/>
+                                • Insurance product and coverage amount<br/>
+                                • Premium amount and payment schedule<br/>
+                                • Named beneficiaries<br/>
+                                • Policy status (Active, Lapsed, Cancelled, Claimed)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Credit life policies are often mandatory and linked to loan accounts.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Policy Lifecycle">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Policy Status</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Add" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">New: Policy created and awaiting activation</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Check" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Active: Coverage is in effect after first premium paid</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Warning" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Grace Period: Premium overdue but coverage continues</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Close" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Lapsed: Coverage ended due to non-payment</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.MoneyOff" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Claimed: Benefit paid out, policy terminated</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Premium Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Collecting and Tracking Premiums</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Collection Methods:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Deduction from loan disbursement (upfront)<br/>
+                                • Monthly deduction from savings account<br/>
+                                • Cash payment at branch<br/>
+                                • Mobile money transfer<br/>
+                                • Group collection during meetings
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Grace Period:</strong> Typical 15-30 day grace period before policy lapses.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Insurance Policy Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Verify beneficiary information is up to date</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Send premium reminders before due dates</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track policies approaching expiry or renewal</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Maintain accurate claims history</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Ensure coverage amounts align with loan balances</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

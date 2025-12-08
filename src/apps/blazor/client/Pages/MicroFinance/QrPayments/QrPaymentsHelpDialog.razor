@@ -1,0 +1,95 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.QrPayments
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">QR Payments Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are QR Payments?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Scan-to-Pay Transactions</MudText>
+                        <MudText Typo="Typo.body2">
+                            QR Payments enable members to make or receive payments by scanning QR codes.
+                            This provides a contactless, fast payment method using smartphones or
+                            point-of-sale devices.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>QR Payment Uses:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Merchant payments<br/>
+                                • Person-to-person transfers<br/>
+                                • Bill payments<br/>
+                                • Loan repayments<br/>
+                                • Event/registration fees<br/>
+                                • Agent transactions
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="QR Types">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Code Formats</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.QrCode2" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Static QR: Fixed merchant/account code</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.QrCodeScanner" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Dynamic QR: Transaction-specific code</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Payment" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Amount-included: Pre-filled payment</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">QR Payment Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Verify payment before confirming service</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Display clear payment confirmation</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Monitor for fraudulent QR codes</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Provide transaction receipts</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

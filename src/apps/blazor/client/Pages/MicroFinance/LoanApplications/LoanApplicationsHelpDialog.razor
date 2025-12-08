@@ -1,0 +1,134 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanApplications
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Loan Applications Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Loan Applications?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Processing Member Loan Requests</MudText>
+                        <MudText Typo="Typo.body2">
+                            Loan Applications track member requests for credit from initial submission through
+                            approval and disbursement. They capture all information needed for credit assessment
+                            and decision-making.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Application Components:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Member information and loan history<br/>
+                                • Requested loan amount and purpose<br/>
+                                • Selected loan product and terms<br/>
+                                • Income and expense details<br/>
+                                • Proposed collateral and guarantors<br/>
+                                • Supporting documents
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Strong applications have complete documentation and clear loan purpose.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Application Workflow">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Stages of Loan Processing</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Edit" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Draft: Application being prepared by loan officer</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Send" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Submitted: Application submitted for review</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Search" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Under Review: Credit assessment in progress</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.ThumbUp" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Approved: Loan approved pending disbursement</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.ThumbDown" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Rejected: Application declined with reasons</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.AttachMoney" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Disbursed: Loan funds released to member</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Credit Assessment">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Evaluating Loan Applications</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>5 Cs of Credit:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Character:</strong> Repayment history and reliability<br/>
+                                • <strong>Capacity:</strong> Ability to repay from income<br/>
+                                • <strong>Capital:</strong> Member's own investment/savings<br/>
+                                • <strong>Collateral:</strong> Security for the loan<br/>
+                                • <strong>Conditions:</strong> Purpose and economic environment
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>DTI Ratio:</strong> Debt-to-Income ratio should typically not exceed 40%.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Loan Application Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Complete all fields before submission</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Verify income documentation authenticity</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Conduct site visits for business loans</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document rejection reasons clearly</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Process applications within SLA timelines</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

@@ -1,0 +1,98 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.ApprovalWorkflows
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Approval Workflows Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Approval Workflows?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Multi-Level Authorization Paths</MudText>
+                        <MudText Typo="Typo.body2">
+                            Approval Workflows define the sequence of approvals required for different
+                            transaction types. They enforce segregation of duties and ensure proper
+                            authorization controls.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Workflow Elements:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Approval levels (maker/checker)<br/>
+                                • Threshold-based routing<br/>
+                                • Role-based assignments<br/>
+                                • Escalation rules<br/>
+                                • SLA timeframes<br/>
+                                • Parallel vs sequential steps
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Workflow Types">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Common Workflows</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.AccountBalance" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Loan approval (multi-tier by amount)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Payment" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Disbursement authorization</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.MoneyOff" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Write-off approval (committee)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Edit" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Account modification review</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Workflow Design</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Balance control with efficiency</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Define backup approvers</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Set reasonable SLA times</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review workflows periodically</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

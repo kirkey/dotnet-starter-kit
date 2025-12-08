@@ -1,0 +1,98 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollateralValuations
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Collateral Valuations Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Collateral Valuations?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Assessing Collateral Worth</MudText>
+                        <MudText Typo="Typo.body2">
+                            Collateral Valuations determine the current market value of assets pledged as
+                            loan security. Accurate valuations are critical for setting appropriate loan
+                            amounts and ensuring adequate coverage.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Valuation Methods:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Market comparison (similar assets sold recently)<br/>
+                                • Professional appraisal (certified valuers)<br/>
+                                • Book value (depreciated cost)<br/>
+                                • Forced sale value (quick liquidation estimate)
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>LTV:</strong> Loan-to-Value ratio typically should not exceed 70-80% of collateral value.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Valuation Process">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How Valuations Work</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.LocationOn" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Site visit to physically inspect asset</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.PhotoCamera" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Document with photos and measurements</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Compare" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Compare with market data</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Description" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Prepare formal valuation report</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Re-Valuation">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">When to Re-Value</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Triggers:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Loan renewal or top-up request<br/>
+                                • Annual portfolio review requirement<br/>
+                                • Market conditions change significantly<br/>
+                                • Collateral damage or improvement<br/>
+                                • Account becomes delinquent
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

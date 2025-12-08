@@ -1,0 +1,98 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.AgentBankings
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Agent Banking Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What is Agent Banking?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Third-Party Service Delivery</MudText>
+                        <MudText Typo="Typo.body2">
+                            Agent Banking extends MFI services through authorized third-party agents
+                            (shops, kiosks, individuals). Agents perform basic transactions on behalf
+                            of the MFI, expanding reach to underserved areas.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Agent Services:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Cash deposits/withdrawals<br/>
+                                • Loan repayments<br/>
+                                • Account balance inquiry<br/>
+                                • Bill payments<br/>
+                                • Money transfers<br/>
+                                • Account opening assistance
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Agent Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Agent Lifecycle</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.PersonAdd" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Recruitment and vetting</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.School" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Training and certification</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.AccountBalanceWallet" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Float management</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.MonitorHeart" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Performance monitoring</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Agent Network Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Monitor agent liquidity levels</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track transaction volumes</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Conduct regular agent visits</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Address customer complaints promptly</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

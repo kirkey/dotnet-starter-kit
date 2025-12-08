@@ -1,0 +1,105 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanRestructures
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Loan Restructures Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What is Loan Restructuring?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Modifying Loan Terms for Recovery</MudText>
+                        <MudText Typo="Typo.body2">
+                            Loan Restructuring modifies the terms of an existing loan to help struggling
+                            borrowers continue repayment. It's a recovery tool that can prevent default
+                            while allowing the member to fulfill their obligations.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Restructuring Options:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Term Extension:</strong> Longer repayment period, lower installments<br/>
+                                • <strong>Interest Reduction:</strong> Lower rate to reduce burden<br/>
+                                • <strong>Moratorium:</strong> Payment holiday for principal<br/>
+                                • <strong>Principal Reduction:</strong> Write-off portion of outstanding<br/>
+                                • <strong>Payment Rescheduling:</strong> Change payment frequency
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Regulatory:</strong> Restructured loans typically require separate reporting and provisioning.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="When to Restructure">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Restructuring Criteria</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Event" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Member facing temporary financial hardship</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.ShowChart" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Demonstrated willingness to pay</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.MoneyOff" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Current terms are unsustainable</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Reasonable prospect of recovery</MudText>
+                            </MudListItem>
+                        </MudList>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Assessment:</strong> Conduct fresh affordability analysis before approving restructure.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Restructuring Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document restructure justification thoroughly</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Set realistic new terms based on current capacity</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Monitor restructured loans closely</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Limit restructures per member (usually max 1-2)</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

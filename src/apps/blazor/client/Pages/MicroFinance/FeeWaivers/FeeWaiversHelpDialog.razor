@@ -1,0 +1,102 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.FeeWaivers
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Fee Waivers Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Fee Waivers?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Waiving Fees and Charges</MudText>
+                        <MudText Typo="Typo.body2">
+                            Fee Waivers allow authorized staff to reduce or eliminate fees that would
+                            normally apply to member accounts. This can be used for customer retention,
+                            promotional offers, or correcting billing errors.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Waiver Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Late payment fees<br/>
+                                • Processing fees<br/>
+                                • Annual/maintenance fees<br/>
+                                • Penalty interest<br/>
+                                • Early redemption fees<br/>
+                                • Statement/document fees
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Control:</strong> Fee waivers require appropriate authorization levels.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Waiver Reasons">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Common Justifications</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Campaign" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Promotional campaign/new member offer</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Handshake" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Customer retention/goodwill</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Error" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">System/billing error correction</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Support" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Hardship consideration</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Waiver Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document waiver reason clearly</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Enforce approval authority limits</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track waiver totals by staff member</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review waiver trends for policy issues</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

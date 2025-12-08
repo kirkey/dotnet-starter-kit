@@ -1,0 +1,104 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LegalActions
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Legal Actions Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Legal Actions?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Legal Recovery Proceedings</MudText>
+                        <MudText Typo="Typo.body2">
+                            Legal Actions track court proceedings and legal remedies pursued for loan
+                            recovery. These are typically last-resort actions after all other collection
+                            efforts have been exhausted.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Legal Action Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Demand notice/Letter before action<br/>
+                                • Civil suit for recovery<br/>
+                                • Collateral foreclosure/repossession<br/>
+                                • Garnishment of wages/accounts<br/>
+                                • Bankruptcy proceedings
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Cost:</strong> Legal action is expensive - ensure recovery potential justifies costs.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Legal Process">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Stages of Legal Action</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Mail" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Lawyer's demand letter (14-30 day notice)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Gavel" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">File suit in appropriate court</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.EventNote" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Court hearings and proceedings</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Assignment" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Judgment/Decree obtained</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.PlayArrow" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Execution of judgment</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Legal Action Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Maintain complete documentation trail</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Work with experienced legal counsel</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track all legal costs for recovery calculation</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Remain open to settlement during proceedings</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

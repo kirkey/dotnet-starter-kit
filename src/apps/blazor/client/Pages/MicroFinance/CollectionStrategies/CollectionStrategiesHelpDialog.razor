@@ -1,0 +1,94 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollectionStrategies
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Collection Strategies Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Collection Strategies?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Systematic Recovery Approaches</MudText>
+                        <MudText Typo="Typo.body2">
+                            Collection Strategies define the rules, timelines, and actions for recovering
+                            delinquent loans. Different strategies may apply to different loan types,
+                            risk levels, or delinquency stages.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Strategy Components:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Action triggers (days past due thresholds)<br/>
+                                • Required actions at each stage<br/>
+                                • Escalation rules and timelines<br/>
+                                • Communication templates<br/>
+                                • Assignment rules (officer, team, external)
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Strategy Types">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Common Approaches</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Phone" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Soft Touch: Reminders, flexible payment plans</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.DirectionsWalk" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Active Pursuit: Frequent visits, guarantor engagement</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Gavel" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Intensive: Legal action, collateral seizure</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Strategy Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Tailor strategies to loan type and risk level</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review strategy effectiveness quarterly</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Train staff on strategy execution</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Balance recovery with member relationship</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

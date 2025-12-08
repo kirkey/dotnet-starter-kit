@@ -1,0 +1,101 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.DebtSettlements
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Debt Settlements Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Debt Settlements?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Negotiated Debt Resolution</MudText>
+                        <MudText Typo="Typo.body2">
+                            Debt Settlements are negotiated agreements to resolve outstanding debt for less
+                            than the full amount owed. They allow recovery of partial amounts from borrowers
+                            who cannot pay in full but are willing to settle.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Settlement Components:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Original outstanding amount<br/>
+                                • Proposed settlement amount<br/>
+                                • Settlement discount percentage<br/>
+                                • Payment terms (lump sum or installments)<br/>
+                                • Settlement date and deadline
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Approval:</strong> Settlements typically require senior management or Board approval.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="When to Settle">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Settlement Criteria</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.MoneyOff" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Borrower demonstrably unable to pay full amount</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.AttachMoney" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Settlement amount exceeds likely recovery via legal action</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Timer" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Extended delinquency with no resolution</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Calculate" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Cost-benefit analysis favors settlement</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Settlement Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document borrower's financial inability</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Get written settlement agreement signed</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Collect payment before closing case</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track settlement patterns for policy review</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

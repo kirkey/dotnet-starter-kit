@@ -1,0 +1,99 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CommunicationTemplates
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Communication Templates Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Communication Templates?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Standardized Message Templates</MudText>
+                        <MudText Typo="Typo.body2">
+                            Communication Templates are pre-defined message formats used for consistent
+                            member communications. They support variable substitution to personalize
+                            messages with member data.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Template Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Welcome messages<br/>
+                                • Payment reminders<br/>
+                                • Loan approval notifications<br/>
+                                • Collection notices<br/>
+                                • Account statements<br/>
+                                • Marketing messages<br/>
+                                • Regulatory disclosures
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Template Variables">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Dynamic Content</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Person" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">{memberName} - Member's full name</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.AccountBalance" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">{accountNumber} - Account number</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.AttachMoney" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">{amount} - Transaction/balance amount</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.DateRange" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">{dueDate} - Payment due date</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Template Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Keep messages clear and concise</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Test templates before deployment</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Ensure regulatory compliance</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review templates periodically</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

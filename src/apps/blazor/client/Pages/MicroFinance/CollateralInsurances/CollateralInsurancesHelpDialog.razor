@@ -1,0 +1,101 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollateralInsurances
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Collateral Insurance Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What is Collateral Insurance?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Protecting Pledged Assets</MudText>
+                        <MudText Typo="Typo.body2">
+                            Collateral Insurance provides coverage for assets pledged as security for loans.
+                            It protects both the borrower and the MFI against loss, damage, or destruction
+                            of collateral during the loan term.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Coverage Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Property/Building insurance<br/>
+                                • Vehicle insurance<br/>
+                                • Equipment and machinery coverage<br/>
+                                • Livestock insurance<br/>
+                                • Inventory/stock insurance
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Requirement:</strong> Most secured loans require collateral insurance as a condition.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Insurance Requirements">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Policy Requirements</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.AttachMoney" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Coverage amount should equal or exceed loan balance</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Business" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">MFI named as loss payee on policy</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.DateRange" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Coverage period matches loan term</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Description" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Copy of policy maintained in loan file</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Insurance Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track policy expiry dates and renewal</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Verify insurance coverage before disbursement</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Process claims promptly when events occur</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Partner with reliable insurance providers</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

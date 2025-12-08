@@ -1,0 +1,127 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanDisbursementTranches
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Loan Disbursement Tranches Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Disbursement Tranches?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Phased Loan Disbursements</MudText>
+                        <MudText Typo="Typo.body2">
+                            Disbursement Tranches allow loans to be released in multiple installments rather
+                            than a single lump sum. This is common for construction loans, agricultural loans,
+                            or large business loans where funds are needed at different project stages.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Tranche Information:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Tranche number and amount<br/>
+                                • Scheduled disbursement date<br/>
+                                • Release conditions/milestones<br/>
+                                • Actual disbursement date and status<br/>
+                                • Running total of disbursed amount
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Benefit:</strong> Tranched disbursements reduce risk and ensure funds are used as intended.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Common Use Cases">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">When to Use Tranched Disbursements</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Construction" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Construction: Foundation, walls, roof, finishing</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Agriculture" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Agriculture: Planting, cultivation, harvest seasons</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.School" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Education: Semester-based tuition payments</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Business" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Business Expansion: Equipment, inventory, working capital phases</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Release Conditions">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Milestone-Based Release</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Typical Conditions:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Verification of previous tranche utilization<br/>
+                                • Completion of milestone (construction stage, etc.)<br/>
+                                • Submission of progress reports<br/>
+                                • Site inspection approval<br/>
+                                • No overdue repayments on previous tranches
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Monitoring:</strong> Field visits should verify milestone completion before next tranche release.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Tranche Management Best Practices</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Define clear milestones at loan approval</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document release conditions in writing</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Conduct inspections before each release</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Maintain photos/evidence of milestone completion</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track both scheduled and actual disbursement dates</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

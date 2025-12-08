@@ -1,0 +1,95 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CreditBureauReports
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Credit Bureau Reports Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Credit Bureau Reports?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Outbound Data Submissions</MudText>
+                        <MudText Typo="Typo.body2">
+                            Credit Bureau Reports track data submissions the MFI makes to credit
+                            reference bureaus. Reporting member loan and payment data helps build
+                            the national credit ecosystem.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Data Reported:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Loan account details<br/>
+                                • Payment history<br/>
+                                • Account balances<br/>
+                                • Delinquency status<br/>
+                                • Account closures<br/>
+                                • Write-offs and settlements
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Reporting Schedule">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Submission Frequency</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Today" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Daily: New accounts and payments</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Monthly: Full portfolio update</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Autorenew" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Ad-hoc: Status changes, closures</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Reporting Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Validate data before submission</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Submit on schedule to avoid penalties</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Correct errors promptly when identified</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Handle member disputes within timeframe</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

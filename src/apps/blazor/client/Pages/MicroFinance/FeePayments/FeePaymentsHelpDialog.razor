@@ -1,0 +1,98 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.FeePayments
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Fee Payments Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Fee Payments?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Recording Fee Collections</MudText>
+                        <MudText Typo="Typo.body2">
+                            Fee Payments record the collection of various fees and charges from member
+                            accounts. This tracks both automatic deductions and manual fee payments
+                            across all account types.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Fee Types Collected:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Loan processing fees<br/>
+                                • Insurance premiums<br/>
+                                • Account maintenance fees<br/>
+                                • Late payment penalties<br/>
+                                • Early settlement fees<br/>
+                                • Service charges
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Payment Methods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How Fees are Collected</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.RemoveCircle" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Automatic deduction from savings</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.AttachMoney" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Cash payment at branch</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Calculate" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Deducted from loan disbursement</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.PhoneAndroid" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Mobile money payment</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Fee Payment Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Apply correct fee type and amount</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Issue receipts for all fee payments</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Reconcile fee income daily</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track outstanding fees for follow-up</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

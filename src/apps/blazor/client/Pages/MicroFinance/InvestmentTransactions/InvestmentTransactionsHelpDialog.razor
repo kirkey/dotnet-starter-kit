@@ -1,0 +1,95 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InvestmentTransactions
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Investment Transactions Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Investment Transactions?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Investment Account Activity</MudText>
+                        <MudText Typo="Typo.body2">
+                            Investment Transactions record all activities on member investment accounts,
+                            including deposits, withdrawals, interest credits, and rollovers. They provide
+                            a complete audit trail of investment movements.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Transaction Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Initial deposit<br/>
+                                • Additional deposit (top-up)<br/>
+                                • Interest credit<br/>
+                                • Partial withdrawal<br/>
+                                • Full withdrawal<br/>
+                                • Rollover to new term
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Interest Posting">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How Interest is Applied</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Calculate" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Daily calculation of accrued interest</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Event" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Periodic posting (monthly/quarterly)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.AttachMoney" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Compounded or paid out as configured</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Transaction Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Verify transaction amounts before posting</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Send transaction confirmations to members</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Calculate early withdrawal penalties correctly</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Reconcile investment accounts regularly</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

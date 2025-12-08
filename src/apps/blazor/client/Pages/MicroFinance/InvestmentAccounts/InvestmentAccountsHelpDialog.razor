@@ -1,0 +1,125 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InvestmentAccounts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Investment Accounts Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Investment Accounts?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Member Investment Holdings</MudText>
+                        <MudText Typo="Typo.body2">
+                            Investment Accounts represent individual member investments in available investment products.
+                            Each account tracks the principal amount, interest earned, maturity dates, and transaction history.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Account Details:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Account number and opening date<br/>
+                                • Linked investment product<br/>
+                                • Principal amount invested<br/>
+                                • Interest rate and term<br/>
+                                • Maturity date and status
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Members can have multiple investment accounts across different products.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Account Operations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Investment Account Actions</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Add" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Open: Create new investment account with initial deposit</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.AddCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Top-up: Add additional funds (if product allows)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.RemoveCircle" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Partial Withdrawal: Remove funds before maturity (may have penalty)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Autorenew" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Rollover: Renew investment at maturity</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Close" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Close: Withdraw full amount and close account</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Interest Tracking">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Monitoring Investment Returns</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Interest Details:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Accrued interest to date<br/>
+                                • Interest paid out (if periodic payments)<br/>
+                                • Projected interest at maturity<br/>
+                                • Effective annual yield
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Compounding:</strong> Compound interest accounts earn interest on previously earned interest.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Investment Account Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Provide regular statements showing interest earned</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Send maturity reminders 7-14 days in advance</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Clearly explain early withdrawal penalties</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Offer rollover options with potentially better rates</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

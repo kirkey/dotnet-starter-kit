@@ -1,0 +1,102 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanWriteOffs
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Loan Write-Offs Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Loan Write-Offs?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Removing Uncollectible Loans</MudText>
+                        <MudText Typo="Typo.body2">
+                            Loan Write-Offs remove loans from the active portfolio when recovery is
+                            deemed impossible. This is an accounting action that recognizes the loss
+                            and cleans up the portfolio, though collection efforts may continue.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Write-Off Reasons:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Borrower death with no estate or insurance<br/>
+                                • Borrower absconded and untraceable<br/>
+                                • Extended delinquency (typically 365+ days)<br/>
+                                • Fraud or misrepresentation discovered<br/>
+                                • Court judgment confirms non-recovery
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Impact:</strong> Write-offs directly reduce profitability and are a key portfolio health metric.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Write-Off Process">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Required Steps</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Search" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Document all collection efforts attempted</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Assignment" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Prepare write-off recommendation with evidence</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Gavel" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Obtain required approvals (often Board level)</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Calculate" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Process accounting entries</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Post Write-Off">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">After the Write-Off</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Ongoing Activities:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Continue collection efforts on written-off accounts<br/>
+                                • Track recoveries separately<br/>
+                                • Update member status (may block future lending)<br/>
+                                • Report to credit bureaus if applicable
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Success" Dense="true">
+                            <strong>Recovery:</strong> Amounts recovered on written-off loans improve the recovery rate metric.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

@@ -1,0 +1,98 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.ApprovalRequests
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Approval Requests Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Approval Requests?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Workflow Authorization</MudText>
+                        <MudText Typo="Typo.body2">
+                            Approval Requests track items pending authorization in the system. Loan
+                            applications, disbursements, write-offs, and other critical actions may
+                            require approval from authorized personnel.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Request Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Loan application approval<br/>
+                                • Disbursement authorization<br/>
+                                • Write-off requests<br/>
+                                • Fee waiver approvals<br/>
+                                • Limit override requests<br/>
+                                • Account opening approvals
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Approval Status">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Request States</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Pending" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Pending: Awaiting review</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Approved: Authorization granted</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Cancel" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">Rejected: Authorization denied</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Undo" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Returned: Sent back for corrections</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Request Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Process requests within SLA time</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Provide clear rejection reasons</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Escalate overdue requests</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Maintain approval audit trail</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

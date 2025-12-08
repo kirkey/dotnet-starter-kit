@@ -1,0 +1,123 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanOfficerTargets
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Loan Officer Targets Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Loan Officer Targets?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Individual Performance Goals</MudText>
+                        <MudText Typo="Typo.body2">
+                            Loan Officer Targets set measurable performance goals for individual officers.
+                            These targets drive productivity, ensure accountability, and align officer
+                            activities with organizational objectives.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Target Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Disbursement targets (amount and count)<br/>
+                                • Collection targets (recovery rate)<br/>
+                                • New client acquisition<br/>
+                                • Portfolio quality (PAR limits)<br/>
+                                • Savings mobilization
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Note:</strong> Targets should be SMART: Specific, Measurable, Achievable, Relevant, Time-bound.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Target Setting">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How Targets are Determined</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.History" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Historical performance baseline</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.TrendingUp" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Growth expectations from management</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Map" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Territory potential and market size</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Person" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Officer experience level</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Performance Tracking">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Monitoring Achievement</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Metrics:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Actual vs. target achievement percentage<br/>
+                                • Month-to-date and year-to-date progress<br/>
+                                • Trend analysis (improving/declining)<br/>
+                                • Peer comparison rankings
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Balance:</strong> Target quality metrics (PAR) alongside volume metrics.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Target Management Best Practices</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Set realistic but challenging targets</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review and adjust targets quarterly</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Link incentives to target achievement</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Provide regular feedback and coaching</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

@@ -1,0 +1,105 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.AmlAlerts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">AML Alerts Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are AML Alerts?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Anti-Money Laundering Monitoring</MudText>
+                        <MudText Typo="Typo.body2">
+                            AML Alerts are system-generated notifications when transaction patterns
+                            or account activities suggest potential money laundering. These alerts
+                            require investigation to ensure regulatory compliance.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Alert Triggers:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Large cash transactions above threshold<br/>
+                                • Structuring (multiple transactions below threshold)<br/>
+                                • Unusual transaction patterns<br/>
+                                • High-risk country involvement<br/>
+                                • Politically exposed person (PEP) matches<br/>
+                                • Sanctions list matches
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Critical:</strong> All AML alerts must be reviewed within regulatory timeframes.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Alert Status">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Investigation States</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Warning" IconColor="Color.Error">
+                                <MudText Typo="Typo.caption">New: Pending initial review</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Search" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Under Investigation: Being reviewed</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Report" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">SAR Filed: Suspicious Activity Report submitted</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Close" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Closed: False positive or resolved</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Investigation Requirements">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Best Practices</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review alerts within 24-48 hours</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document all investigation steps</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Escalate true positives to compliance officer</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">File SAR within regulatory deadline</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Maintain 5-7 year records</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

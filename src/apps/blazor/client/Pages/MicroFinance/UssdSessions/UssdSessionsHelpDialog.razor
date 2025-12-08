@@ -1,0 +1,98 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.UssdSessions
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">USSD Sessions Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are USSD Sessions?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Mobile Phone Banking Access</MudText>
+                        <MudText Typo="Typo.body2">
+                            USSD (Unstructured Supplementary Service Data) Sessions track member
+                            interactions via simple mobile phone menus. USSD enables banking services
+                            on basic phones without internet connectivity.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>USSD Services:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Balance inquiry<br/>
+                                • Mini-statement<br/>
+                                • Fund transfers<br/>
+                                • Loan repayment<br/>
+                                • PIN change<br/>
+                                • Bill payment
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Session Tracking">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">What's Recorded</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Phone" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Mobile number and session ID</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Menu" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Menu navigation path</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Timer" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Session duration</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.ExitToApp" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Completion/drop-off status</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">USSD Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Keep menus simple and intuitive</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Monitor session drop-off rates</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Ensure session timeout security</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Track failed transaction patterns</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

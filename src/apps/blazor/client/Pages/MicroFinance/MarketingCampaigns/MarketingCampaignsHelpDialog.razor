@@ -1,0 +1,98 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.MarketingCampaigns
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Marketing Campaigns Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Marketing Campaigns?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Targeted Member Outreach</MudText>
+                        <MudText Typo="Typo.body2">
+                            Marketing Campaigns manage promotional outreach to members and prospects.
+                            Campaigns can target specific segments with tailored offers and track
+                            response rates and conversions.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Campaign Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Product promotion<br/>
+                                • Cross-sell/up-sell offers<br/>
+                                • Seasonal campaigns<br/>
+                                • Member retention<br/>
+                                • New product launch<br/>
+                                • Dormant account reactivation
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Campaign Metrics">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Performance Tracking</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.Group" IconColor="Color.Primary">
+                                <MudText Typo="Typo.caption">Target audience size</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Email" IconColor="Color.Info">
+                                <MudText Typo="Typo.caption">Message delivery/open rates</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.TouchApp" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Click-through rates</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.TrendingUp" IconColor="Color.Warning">
+                                <MudText Typo="Typo.caption">Conversion rates and ROI</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Campaign Management</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Segment audience appropriately</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Personalize messages when possible</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Respect opt-out preferences</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Analyze results and optimize</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}
