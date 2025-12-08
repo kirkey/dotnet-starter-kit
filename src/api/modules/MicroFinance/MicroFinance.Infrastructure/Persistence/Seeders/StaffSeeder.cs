@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for staff members including loan officers, tellers, and managers.
-/// Creates diverse staff for testing assignments and workflows.
+/// Creates diverse staff for realistic demo database.
 /// </summary>
 internal static class StaffSeeder
 {
@@ -14,7 +14,7 @@ internal static class StaffSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
-        const int targetCount = 15;
+        const int targetCount = 30;
         var existingCount = await context.Staff.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount >= targetCount) return;
 
@@ -45,6 +45,23 @@ internal static class StaffSeeder
             ("EMP-013", "Christopher", "Lim", Staff.RoleCollectionOfficer, Staff.TypeFullTime, "Collection Officer", "christopher.lim@mfi.org", 1),
             ("EMP-014", "Nancy", "Sy", Staff.RoleCustomerService, Staff.TypeFullTime, "Customer Service Rep", "nancy.sy@mfi.org", 1),
             ("EMP-015", "Mark", "Go", Staff.RoleCompliance, Staff.TypeFullTime, "Compliance Officer", "mark.go@mfi.org", 0),
+            
+            // Additional Staff for Demo (16-30)
+            ("EMP-016", "Carlo", "Cruz", Staff.RoleLoanOfficer, Staff.TypeFullTime, "Loan Officer", "carlo.cruz@mfi.org", 3),
+            ("EMP-017", "Angela", "Diaz", Staff.RoleLoanOfficer, Staff.TypeFullTime, "Loan Officer", "angela.diaz@mfi.org", 4),
+            ("EMP-018", "Ramon", "Garcia", Staff.RoleTeller, Staff.TypeFullTime, "Teller", "ramon.garcia@mfi.org", 2),
+            ("EMP-019", "Cristina", "Lopez", Staff.RoleTeller, Staff.TypeFullTime, "Teller", "cristina.lopez@mfi.org", 3),
+            ("EMP-020", "Eduardo", "Martinez", Staff.RoleTeller, Staff.TypePartTime, "Part-Time Teller", "eduardo.martinez@mfi.org", 4),
+            ("EMP-021", "Lucia", "Torres", Staff.RoleCustomerService, Staff.TypeFullTime, "Customer Service Rep", "lucia.torres@mfi.org", 2),
+            ("EMP-022", "Antonio", "Reyes", Staff.RoleCollectionOfficer, Staff.TypeFullTime, "Senior Collection Officer", "antonio.reyes@mfi.org", 0),
+            ("EMP-023", "Elena", "Fernandez", Staff.RoleCollectionOfficer, Staff.TypeFullTime, "Collection Officer", "elena.fernandez@mfi.org", 3),
+            ("EMP-024", "Jose", "Villanueva", Staff.RoleAccountant, Staff.TypeFullTime, "Accountant", "jose.villanueva@mfi.org", 1),
+            ("EMP-025", "Maria", "Bautista", Staff.RoleAccountant, Staff.TypeFullTime, "Accountant", "maria.bautista@mfi.org", 2),
+            ("EMP-026", "Pedro", "Aquino", Staff.RoleLoanOfficer, Staff.TypeFullTime, "Senior Loan Officer", "pedro.aquino@mfi.org", 0),
+            ("EMP-027", "Rosa", "Santiago", Staff.RoleCustomerService, Staff.TypeFullTime, "Customer Service Lead", "rosa.santiago@mfi.org", 0),
+            ("EMP-028", "Luis", "Mendoza", Staff.RoleBranchManager, Staff.TypeFullTime, "Branch Manager - Laguna", "luis.mendoza@mfi.org", 3),
+            ("EMP-029", "Carmen", "Ramos", Staff.RoleBranchManager, Staff.TypeFullTime, "Branch Manager - Cavite", "carmen.ramos@mfi.org", 4),
+            ("EMP-030", "Francisco", "Tan", Staff.RoleCompliance, Staff.TypeFullTime, "AML Officer", "francisco.tan@mfi.org", 0),
         };
 
         var hireDate = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-3));

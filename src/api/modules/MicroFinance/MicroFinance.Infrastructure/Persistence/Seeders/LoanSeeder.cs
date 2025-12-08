@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for loans with comprehensive test data.
-/// Creates 60 loans across all statuses for testing approval, disbursement, and repayment workflows.
+/// Creates 150 loans across all statuses for realistic demo database.
 /// </summary>
 internal static class LoanSeeder
 {
@@ -14,11 +14,11 @@ internal static class LoanSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
-        const int targetCount = 60;
+        const int targetCount = 150;
         var existingCount = await context.Loans.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount >= targetCount) return;
 
-        var members = await context.Members.Where(m => m.IsActive).Take(60).ToListAsync(cancellationToken).ConfigureAwait(false);
+        var members = await context.Members.Where(m => m.IsActive).Take(150).ToListAsync(cancellationToken).ConfigureAwait(false);
         var products = await context.LoanProducts.Where(p => p.IsActive).ToListAsync(cancellationToken).ConfigureAwait(false);
 
         if (members.Count < 10 || products.Count < 3) return;
@@ -103,6 +103,107 @@ internal static class LoanSeeder
             (57, personalLoan, 4000, 18, "Motorcycle sidecar for business", "Disbursed"),
             (58, microBusiness, 22000, 36, "Laundry shop equipment", "Disbursed"),
             (59, eduLoan, 7000, 24, "Culinary arts program", "Disbursed"),
+            
+            // Additional 90 loans for comprehensive demo (Loan 60-149)
+            // More Pending Loans
+            (60, agriLoan, 6500, 12, "Cassava farming inputs", "Pending"),
+            (61, microBusiness, 9000, 18, "Cellphone repair shop equipment", "Pending"),
+            (62, personalLoan, 2800, 12, "Home appliance purchase", "Pending"),
+            (63, eduLoan, 4500, 24, "Accounting certification course", "Pending"),
+            (64, emergencyLoan, 700, 3, "Emergency dental procedure", "Pending"),
+            (65, agriLoan, 8500, 12, "Goat farming startup", "Pending"),
+            (66, microBusiness, 11000, 24, "Internet cafe equipment", "Pending"),
+            (67, personalLoan, 3200, 18, "Wedding expenses", "Pending"),
+            (68, agriLoan, 5500, 6, "Seasonal vegetable inputs", "Pending"),
+            (69, microBusiness, 14000, 24, "Water refilling station equipment", "Pending"),
+            (70, eduLoan, 5000, 18, "Welding certification", "Pending"),
+            (71, personalLoan, 1500, 6, "Medical checkup expenses", "Pending"),
+            (72, emergencyLoan, 900, 3, "Flood damage repairs", "Pending"),
+            (73, agriLoan, 7500, 12, "Tilapia pond inputs", "Pending"),
+            (74, microBusiness, 8000, 18, "Printing shop equipment", "Pending"),
+            
+            // More Approved Loans
+            (75, agriLoan, 9500, 12, "Coffee plantation inputs", "Approved"),
+            (76, microBusiness, 16000, 24, "Hardware store inventory", "Approved"),
+            (77, personalLoan, 3800, 18, "Motorcycle purchase", "Approved"),
+            (78, eduLoan, 6500, 24, "IT bootcamp tuition", "Approved"),
+            (79, emergencyLoan, 1200, 6, "Hospitalization expenses", "Approved"),
+            (80, agriLoan, 10500, 12, "Cacao farming inputs", "Approved"),
+            (81, microBusiness, 13000, 24, "Bicycle rental business", "Approved"),
+            (82, personalLoan, 2500, 12, "Computer purchase for WFH", "Approved"),
+            (83, eduLoan, 3500, 18, "Driving school tuition", "Approved"),
+            (84, agriLoan, 6000, 12, "Organic vegetable farming", "Approved"),
+            (85, microBusiness, 18000, 36, "Motorcycle spare parts shop", "Approved"),
+            (86, personalLoan, 4200, 24, "Home improvement loan", "Approved"),
+            (87, emergencyLoan, 800, 3, "Emergency surgery down payment", "Approved"),
+            (88, eduLoan, 7500, 36, "Engineering review course", "Approved"),
+            (89, agriLoan, 8000, 12, "Mushroom farming inputs", "Approved"),
+            
+            // More Disbursed/Active Loans
+            (90, microBusiness, 19000, 36, "Coffee shop setup", "Disbursed"),
+            (91, agriLoan, 12500, 12, "Rice milling equipment", "Disbursed"),
+            (92, personalLoan, 5500, 24, "Solar panel installation", "Disbursed"),
+            (93, eduLoan, 8500, 36, "Medical technician course", "Disbursed"),
+            (94, microBusiness, 21000, 36, "Auto parts store", "Disbursed"),
+            (95, emergencyLoan, 1800, 6, "Typhoon damage repairs", "Disbursed"),
+            (96, agriLoan, 9000, 12, "Vegetable greenhouse", "Disbursed"),
+            (97, microBusiness, 14500, 24, "Carwash business expansion", "Disbursed"),
+            (98, personalLoan, 3500, 18, "Educational laptop purchase", "Disbursed"),
+            (99, eduLoan, 6000, 24, "Bartending course", "Disbursed"),
+            (100, agriLoan, 11500, 12, "Dairy cattle purchase", "Disbursed"),
+            (101, microBusiness, 23000, 36, "Pharmacy inventory", "Disbursed"),
+            (102, personalLoan, 4800, 24, "Renovation for home business", "Disbursed"),
+            (103, emergencyLoan, 2200, 6, "Vehicle accident repairs", "Disbursed"),
+            (104, eduLoan, 9000, 36, "Pilot training course", "Disbursed"),
+            (105, agriLoan, 7000, 12, "Fruit orchard inputs", "Disbursed"),
+            (106, microBusiness, 17000, 24, "Clothing boutique inventory", "Disbursed"),
+            (107, personalLoan, 2200, 12, "Emergency travel expenses", "Disbursed"),
+            (108, agriLoan, 8500, 12, "Corn processing equipment", "Disbursed"),
+            (109, microBusiness, 20000, 36, "Food processing business", "Disbursed"),
+            (110, eduLoan, 5500, 24, "Culinary training", "Disbursed"),
+            (111, agriLoan, 6500, 12, "Aquaculture pond inputs", "Disbursed"),
+            (112, microBusiness, 12000, 24, "Salon equipment upgrade", "Disbursed"),
+            (113, personalLoan, 3000, 18, "Home security installation", "Disbursed"),
+            (114, emergencyLoan, 1500, 6, "House fire emergency", "Disbursed"),
+            (115, agriLoan, 10000, 12, "Hydroponic farming setup", "Disbursed"),
+            (116, microBusiness, 25000, 36, "Cooperative store setup", "Disbursed"),
+            (117, eduLoan, 7000, 24, "Maritime training", "Disbursed"),
+            (118, personalLoan, 4500, 24, "Working capital for freelancing", "Disbursed"),
+            (119, agriLoan, 5000, 6, "Seasonal crop inputs", "Disbursed"),
+            
+            // More Rejected Loans
+            (120, microBusiness, 100000, 60, "Factory setup - amount too high", "Rejected"),
+            (121, personalLoan, 25000, 12, "Gambling debt - purpose not allowed", "Rejected"),
+            (122, agriLoan, 50000, 36, "Land purchase - outside scope", "Rejected"),
+            (123, eduLoan, 30000, 12, "Overseas study - no guarantor", "Rejected"),
+            (124, microBusiness, 75000, 48, "Franchise - insufficient collateral", "Rejected"),
+            (125, emergencyLoan, 10000, 3, "Amount exceeds emergency limit", "Rejected"),
+            (126, personalLoan, 20000, 6, "Poor credit history", "Rejected"),
+            (127, agriLoan, 45000, 24, "Farm expansion - no land title", "Rejected"),
+            (128, microBusiness, 60000, 36, "Business not viable - market analysis", "Rejected"),
+            (129, eduLoan, 35000, 24, "Program not accredited", "Rejected"),
+            
+            // Final batch of mixed statuses
+            (130, agriLoan, 4500, 12, "Vegetable seedlings purchase", "Pending"),
+            (131, microBusiness, 7500, 18, "Street food cart business", "Pending"),
+            (132, personalLoan, 1800, 9, "Funeral expenses loan", "Approved"),
+            (133, eduLoan, 3000, 12, "Computer literacy course", "Approved"),
+            (134, agriLoan, 5500, 12, "Chicken farming inputs", "Disbursed"),
+            (135, microBusiness, 9500, 18, "Photocopying business", "Disbursed"),
+            (136, emergencyLoan, 600, 2, "Medical emergency", "Disbursed"),
+            (137, personalLoan, 2400, 12, "Furniture purchase", "Disbursed"),
+            (138, eduLoan, 4000, 18, "Skills training", "Disbursed"),
+            (139, agriLoan, 6200, 12, "Livestock feed purchase", "Disbursed"),
+            (140, microBusiness, 11500, 24, "Mini grocery expansion", "Disbursed"),
+            (141, personalLoan, 3300, 18, "Motorcycle repair shop tools", "Disbursed"),
+            (142, agriLoan, 7800, 12, "Fish cage materials", "Pending"),
+            (143, microBusiness, 13500, 24, "Appliance repair tools", "Approved"),
+            (144, eduLoan, 5200, 24, "Dressmaking course", "Disbursed"),
+            (145, emergencyLoan, 1100, 6, "Earthquake damage repairs", "Disbursed"),
+            (146, personalLoan, 2700, 12, "Medical equipment for home care", "Disbursed"),
+            (147, agriLoan, 8200, 12, "Organic fertilizer production", "Pending"),
+            (148, microBusiness, 16500, 36, "Mobile phone accessories", "Disbursed"),
+            (149, eduLoan, 6800, 24, "Caregiving certification", "Approved"),
         };
 
         int loanNumber = 3001;

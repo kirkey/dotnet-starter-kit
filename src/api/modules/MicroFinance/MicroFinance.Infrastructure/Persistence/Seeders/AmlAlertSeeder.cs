@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for AML alerts.
-/// Creates anti-money laundering alert records.
+/// Creates anti-money laundering alert records for demo database.
 /// </summary>
 internal static class AmlAlertSeeder
 {
@@ -14,10 +14,11 @@ internal static class AmlAlertSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
+        const int targetCount = 50;
         var existingCount = await context.AmlAlerts.CountAsync(cancellationToken).ConfigureAwait(false);
-        if (existingCount > 0) return;
+        if (existingCount >= targetCount) return;
 
-        var members = await context.Members.Take(20).ToListAsync(cancellationToken).ConfigureAwait(false);
+        var members = await context.Members.Take(50).ToListAsync(cancellationToken).ConfigureAwait(false);
         if (!members.Any()) return;
 
         // Get staff IDs for assignments/clearances

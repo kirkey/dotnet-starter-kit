@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for share transactions.
-/// Creates purchase and dividend history for share accounts.
+/// Creates purchase and dividend history for share accounts - demo database.
 /// </summary>
 internal static class ShareTransactionSeeder
 {
@@ -14,20 +14,22 @@ internal static class ShareTransactionSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
+        const int targetCount = 250;
         var existingCount = await context.ShareTransactions.CountAsync(cancellationToken).ConfigureAwait(false);
-        if (existingCount > 0) return; // Already seeded
+        if (existingCount >= targetCount) return;
 
         var shareAccounts = await context.ShareAccounts
             .Include(s => s.ShareProduct)
             .Where(s => s.Status == ShareAccount.StatusActive)
+            .Take(100)
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
 
         if (!shareAccounts.Any()) return;
 
         var random = new Random(42);
-        int transactionCount = 0;
-        int refNumber = 8001;
+        int transactionCount = existingCount;
+        int refNumber = 8001 + existingCount;
 
         foreach (var account in shareAccounts)
         {

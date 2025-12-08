@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for savings transactions with comprehensive test data.
-/// Creates 250+ transactions for savings accounts to test deposits, withdrawals, and transaction history.
+/// Creates 500+ transactions for savings accounts for realistic demo database.
 /// </summary>
 internal static class SavingsTransactionSeeder
 {
@@ -14,13 +14,13 @@ internal static class SavingsTransactionSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
-        const int targetCount = 250;
+        const int targetCount = 500;
         var existingCount = await context.SavingsTransactions.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount >= targetCount) return;
 
         var accounts = await context.SavingsAccounts
             .Where(sa => sa.Status == SavingsAccount.StatusActive)
-            .Take(50)
+            .Take(100)
             .ToListAsync(cancellationToken).ConfigureAwait(false);
 
         if (accounts.Count < 5) return;

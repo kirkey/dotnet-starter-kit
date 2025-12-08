@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for member groups.
-/// Creates 20 solidarity groups for group lending and savings.
+/// Creates 35 solidarity groups for realistic demo database.
 /// </summary>
 internal static class MemberGroupSeeder
 {
@@ -14,7 +14,7 @@ internal static class MemberGroupSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
-        const int targetCount = 20;
+        const int targetCount = 35;
         var existingCount = await context.MemberGroups.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount >= targetCount) return;
 
@@ -42,6 +42,23 @@ internal static class MemberGroupSeeder
             ("GRP-018", "Kooperatiba ng mga Mangga Growers", "Mango farmers group", "Agricultural Center, Guimaras", MemberGroup.FrequencyBiweekly, "Tuesday"),
             ("GRP-019", "Samahan ng mga Overseas Workers Family", "OFW families support group", "OWWA Office, Pasay", MemberGroup.FrequencyMonthly, "Sunday"),
             ("GRP-020", "Grupo ng mga Digital Freelancers", "Online workers savings", "Co-working Space, BGC", MemberGroup.FrequencyWeekly, "Saturday"),
+            
+            // Additional groups (21-35)
+            ("GRP-021", "Samahan ng mga Tricycle Drivers", "Tricycle operators group", "Terminal, Rizal", MemberGroup.FrequencyWeekly, "Tuesday"),
+            ("GRP-022", "Kababaihan sa Palawan", "Palawan women's savings", "Town Hall, Puerto Princesa", MemberGroup.FrequencyBiweekly, "Wednesday"),
+            ("GRP-023", "Grupo ng mga Factory Workers", "Factory employees savings", "Industrial Zone, Cavite", MemberGroup.FrequencyBiweekly, "Thursday"),
+            ("GRP-024", "Samahan ng mga Sari-Sari Store Owners", "Convenience store operators", "Community Center, Caloocan", MemberGroup.FrequencyWeekly, "Monday"),
+            ("GRP-025", "Kooperatiba ng mga Coconut Farmers", "Coconut farmers group", "Coco Hall, Quezon Province", MemberGroup.FrequencyMonthly, "Saturday"),
+            ("GRP-026", "Grupo ng mga Call Center Agents", "BPO workers savings", "Eastwood Hall, Quezon City", MemberGroup.FrequencyBiweekly, "Friday"),
+            ("GRP-027", "Samahan ng mga Nanay sa Malabon", "Mothers savings group", "Barangay Hall, Malabon", MemberGroup.FrequencyWeekly, "Wednesday"),
+            ("GRP-028", "Kooperatiba ng mga Hog Raisers", "Pig farmers cooperative", "Livestock Center, Bulacan", MemberGroup.FrequencyBiweekly, "Tuesday"),
+            ("GRP-029", "Grupo ng mga Senior Citizens", "Elderly savings group", "Senior Center, Manila", MemberGroup.FrequencyMonthly, "Thursday"),
+            ("GRP-030", "Samahan ng mga Labandera", "Laundry workers group", "Community Center, Mandaluyong", MemberGroup.FrequencyWeekly, "Saturday"),
+            ("GRP-031", "Kooperatiba ng mga Panaderos", "Bakers cooperative", "Bakery Association, Pampanga", MemberGroup.FrequencyBiweekly, "Monday"),
+            ("GRP-032", "Grupo ng mga Online Sellers", "E-commerce sellers group", "Digital Hub, Pasig", MemberGroup.FrequencyWeekly, "Sunday"),
+            ("GRP-033", "Samahan ng mga Vegetable Growers", "Vegetable farmers group", "Agri Center, Benguet", MemberGroup.FrequencyBiweekly, "Wednesday"),
+            ("GRP-034", "Grupo ng mga Security Guards", "Security personnel savings", "Training Center, Makati", MemberGroup.FrequencyBiweekly, "Friday"),
+            ("GRP-035", "Samahan ng mga Ambulant Vendors", "Street vendors collective", "Public Plaza, Manila", MemberGroup.FrequencyWeekly, "Saturday"),
         };
 
         for (int i = existingCount; i < groups.Length; i++)

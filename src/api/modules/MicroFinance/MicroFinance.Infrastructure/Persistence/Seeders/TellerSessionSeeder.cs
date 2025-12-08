@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for teller sessions.
-/// Creates sample teller sessions with transaction history.
+/// Creates sample teller sessions with transaction history for demo database.
 /// </summary>
 internal static class TellerSessionSeeder
 {
@@ -14,12 +14,13 @@ internal static class TellerSessionSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
+        const int targetCount = 60;
         var existingCount = await context.TellerSessions.CountAsync(cancellationToken).ConfigureAwait(false);
-        if (existingCount > 0) return;
+        if (existingCount >= targetCount) return;
 
         var tellerDrawers = await context.CashVaults
             .Where(v => v.VaultType == CashVault.TypeTellerDrawer && v.Status == CashVault.StatusActive)
-            .Take(10)
+            .Take(15)
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
 

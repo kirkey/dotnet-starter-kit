@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for insurance policies.
-/// Creates policies for members with various insurance products.
+/// Creates policies for members with various insurance products for demo database.
 /// </summary>
 internal static class InsurancePolicySeeder
 {
@@ -14,12 +14,13 @@ internal static class InsurancePolicySeeder
         string tenant,
         CancellationToken cancellationToken)
     {
+        const int targetCount = 80;
         var existingCount = await context.InsurancePolicies.CountAsync(cancellationToken).ConfigureAwait(false);
-        if (existingCount > 0) return;
+        if (existingCount >= targetCount) return;
 
-        var members = await context.Members.Where(m => m.IsActive).Take(30).ToListAsync(cancellationToken).ConfigureAwait(false);
+        var members = await context.Members.Where(m => m.IsActive).Take(80).ToListAsync(cancellationToken).ConfigureAwait(false);
         var products = await context.InsuranceProducts.Where(p => p.Status == InsuranceProduct.StatusActive).ToListAsync(cancellationToken).ConfigureAwait(false);
-        var disbursedLoans = await context.Loans.Where(l => l.Status == Loan.StatusDisbursed).Take(20).ToListAsync(cancellationToken).ConfigureAwait(false);
+        var disbursedLoans = await context.Loans.Where(l => l.Status == Loan.StatusDisbursed).Take(50).ToListAsync(cancellationToken).ConfigureAwait(false);
 
         if (!members.Any() || !products.Any()) return;
 

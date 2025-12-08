@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for loan applications.
-/// Creates loan applications in various stages of the approval process.
+/// Creates loan applications in various stages for demo database.
 /// </summary>
 internal static class LoanApplicationSeeder
 {
@@ -14,11 +14,11 @@ internal static class LoanApplicationSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
-        const int targetCount = 40;
+        const int targetCount = 100;
         var existingCount = await context.LoanApplications.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount >= targetCount) return;
 
-        var members = await context.Members.Where(m => m.IsActive).Take(40).ToListAsync(cancellationToken).ConfigureAwait(false);
+        var members = await context.Members.Where(m => m.IsActive).Take(100).ToListAsync(cancellationToken).ConfigureAwait(false);
         var products = await context.LoanProducts.Where(p => p.IsActive).ToListAsync(cancellationToken).ConfigureAwait(false);
 
         if (!members.Any() || !products.Any()) return;

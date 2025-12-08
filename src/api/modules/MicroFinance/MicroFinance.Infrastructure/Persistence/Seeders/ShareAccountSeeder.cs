@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for share accounts.
-/// Creates 40 share accounts for testing share capital and dividends.
+/// Creates 100 share accounts for realistic demo database.
 /// </summary>
 internal static class ShareAccountSeeder
 {
@@ -14,11 +14,11 @@ internal static class ShareAccountSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
-        const int targetCount = 40;
+        const int targetCount = 100;
         var existingCount = await context.ShareAccounts.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount >= targetCount) return;
 
-        var members = await context.Members.Where(m => m.IsActive).Take(40).ToListAsync(cancellationToken).ConfigureAwait(false);
+        var members = await context.Members.Where(m => m.IsActive).Take(100).ToListAsync(cancellationToken).ConfigureAwait(false);
         var products = await context.ShareProducts.ToListAsync(cancellationToken).ConfigureAwait(false);
 
         if (members.Count < 1 || products.Count < 1) return;

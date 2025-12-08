@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for collection cases.
-/// Creates collection cases for overdue loans.
+/// Creates collection cases for overdue loans for demo database.
 /// </summary>
 internal static class CollectionCaseSeeder
 {
@@ -14,19 +14,20 @@ internal static class CollectionCaseSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
+        const int targetCount = 40;
         var existingCount = await context.CollectionCases.CountAsync(cancellationToken).ConfigureAwait(false);
-        if (existingCount > 0) return;
+        if (existingCount >= targetCount) return;
 
         // Get disbursed loans (simulate some are overdue)
         var disbursedLoans = await context.Loans
             .Where(l => l.Status == Loan.StatusDisbursed)
-            .Take(15)
+            .Take(40)
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
 
         var collectors = await context.Staff
             .Where(s => s.Role == Staff.RoleLoanOfficer && s.Status == Staff.StatusActive)
-            .Take(5)
+            .Take(10)
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
 

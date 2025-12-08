@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for investment transactions.
-/// Creates buy/sell/dividend transactions for investment accounts.
+/// Creates buy/sell/dividend transactions for investment accounts - demo database.
 /// </summary>
 internal static class InvestmentTransactionSeeder
 {
@@ -14,12 +14,13 @@ internal static class InvestmentTransactionSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
+        const int targetCount = 150;
         var existingCount = await context.InvestmentTransactions.CountAsync(cancellationToken).ConfigureAwait(false);
-        if (existingCount > 0) return;
+        if (existingCount >= targetCount) return;
 
         var accounts = await context.InvestmentAccounts
             .Where(a => a.Status == InvestmentAccount.StatusActive)
-            .Take(20)
+            .Take(50)
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
 

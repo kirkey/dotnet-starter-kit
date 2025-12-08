@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for fixed deposits.
-/// Creates 30 fixed deposits with varying terms and amounts.
+/// Creates 75 fixed deposits with varying terms and amounts for demo database.
 /// </summary>
 internal static class FixedDepositSeeder
 {
@@ -14,11 +14,11 @@ internal static class FixedDepositSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
-        const int targetCount = 30;
+        const int targetCount = 75;
         var existingCount = await context.FixedDeposits.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount >= targetCount) return;
 
-        var members = await context.Members.Where(m => m.IsActive && m.MonthlyIncome >= 20000).Take(30).ToListAsync(cancellationToken).ConfigureAwait(false);
+        var members = await context.Members.Where(m => m.IsActive && m.MonthlyIncome >= 20000).Take(75).ToListAsync(cancellationToken).ConfigureAwait(false);
 
         if (members.Count < 1) return;
 

@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for loan repayments with comprehensive test data.
-/// Creates 150+ repayment history for disbursed loans to test repayment recording and tracking.
+/// Creates 400+ repayment history for disbursed loans for realistic demo database.
 /// </summary>
 internal static class LoanRepaymentSeeder
 {
@@ -14,14 +14,14 @@ internal static class LoanRepaymentSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
-        const int targetCount = 150;
+        const int targetCount = 400;
         var existingCount = await context.LoanRepayments.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount >= targetCount) return;
 
         // Get disbursed loans that should have repayments
         var disbursedLoans = await context.Loans
             .Where(l => l.Status == Loan.StatusDisbursed)
-            .Take(40)
+            .Take(100)
             .ToListAsync(cancellationToken).ConfigureAwait(false);
 
         if (disbursedLoans.Count < 3) return;

@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;
 
 /// <summary>
 /// Seeder for KYC documents.
-/// Creates sample identity documents for members.
+/// Creates sample identity documents for members - demo database.
 /// </summary>
 internal static class KycDocumentSeeder
 {
@@ -14,10 +14,11 @@ internal static class KycDocumentSeeder
         string tenant,
         CancellationToken cancellationToken)
     {
+        const int targetCount = 200;
         var existingCount = await context.KycDocuments.CountAsync(cancellationToken).ConfigureAwait(false);
-        if (existingCount > 0) return;
+        if (existingCount >= targetCount) return;
 
-        var members = await context.Members.Take(50).ToListAsync(cancellationToken).ConfigureAwait(false);
+        var members = await context.Members.Take(150).ToListAsync(cancellationToken).ConfigureAwait(false);
         if (!members.Any()) return;
 
         // Get staff IDs for verification (staff must be seeded before KYC documents)
