@@ -1,0 +1,134 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Assessment" Class="mr-3" />Report Generation Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (ReportGeneration != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Report Definition ID</MudText>
+                    <MudText Typo="Typo.body1">@ReportGeneration.ReportDefinitionId</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Status</MudText>
+                    <MudChip Color="@GetStatusColor(ReportGeneration.Status)" Size="Size.Small">@ReportGeneration.Status</MudChip>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Trigger</MudText>
+                    <MudText Typo="Typo.body1">@(ReportGeneration.Trigger ?? "N/A")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Output Format</MudText>
+                    <MudText Typo="Typo.body1">@ReportGeneration.OutputFormat</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Report Start Date</MudText>
+                    <MudText Typo="Typo.body1">@(ReportGeneration.ReportStartDate?.ToString("d") ?? "N/A")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Report End Date</MudText>
+                    <MudText Typo="Typo.body1">@(ReportGeneration.ReportEndDate?.ToString("d") ?? "N/A")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Started At</MudText>
+                    <MudText Typo="Typo.body1">@(ReportGeneration.StartedAt?.ToString("g") ?? "Not Started")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Completed At</MudText>
+                    <MudText Typo="Typo.body1">@(ReportGeneration.CompletedAt?.ToString("g") ?? "Not Completed")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Duration</MudText>
+                    <MudText Typo="Typo.body1">@GetDuration()</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Record Count</MudText>
+                    <MudText Typo="Typo.body1">@(ReportGeneration.RecordCount?.ToString("N0") ?? "N/A")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">File Size</MudText>
+                    <MudText Typo="Typo.body1">@GetFileSize()</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Output File</MudText>
+                    <MudText Typo="Typo.body1">@(ReportGeneration.OutputFile ?? "N/A")</MudText>
+                </MudItem>
+                @if (!string.IsNullOrWhiteSpace(ReportGeneration.Parameters))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.caption" Color="Color.Default">Parameters</MudText>
+                        <MudPaper Class="pa-2 mt-1" Elevation="0" Style="background-color: var(--mud-palette-background-grey);">
+                            <MudText Typo="Typo.body2" Style="font-family: monospace; white-space: pre-wrap;">@ReportGeneration.Parameters</MudText>
+                        </MudPaper>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrWhiteSpace(ReportGeneration.ErrorMessage))
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Error">@ReportGeneration.ErrorMessage</MudAlert>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        @if (ReportGeneration?.Status == "Completed")
+        {
+            <MudButton Color="Color.Success" StartIcon="@Icons.Material.Filled.Download" OnClick="@DownloadReport">Download</MudButton>
+        }
+        <MudButton Color="Color.Default" OnClick="@Cancel">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public ReportGenerationResponse? ReportGeneration { get; set; }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private Color GetStatusColor(string? status)
+    {
+        return status switch
+        {
+            "Pending" => Color.Default,
+            "Processing" => Color.Info,
+            "Completed" => Color.Success,
+            "Failed" => Color.Error,
+            "Cancelled" => Color.Warning,
+            _ => Color.Default
+        };
+    }
+
+    private string GetDuration()
+    {
+        if (ReportGeneration?.StartedAt == null || ReportGeneration?.CompletedAt == null)
+            return "N/A";
+        var duration = ReportGeneration.CompletedAt.Value - ReportGeneration.StartedAt.Value;
+        return duration.TotalMinutes >= 1
+            ? $"{duration.TotalMinutes:F1} minutes"
+            : $"{duration.TotalSeconds:F1} seconds";
+    }
+
+    private string GetFileSize()
+    {
+        if (ReportGeneration?.FileSizeBytes == null)
+            return "N/A";
+        var bytes = ReportGeneration.FileSizeBytes.Value;
+        if (bytes >= 1048576)
+            return $"{bytes / 1048576.0:F2} MB";
+        if (bytes >= 1024)
+            return $"{bytes / 1024.0:F2} KB";
+        return $"{bytes} bytes";
+    }
+
+    private void DownloadReport()
+    {
+        // TODO: Implement download when API supports it
+        MudDialog.Cancel();
+    }
+}

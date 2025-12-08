@@ -1,0 +1,30 @@
+@page "/microfinance/report-generations"
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<PageHeader Title="Report Generations" Header="Report Generations" SubHeader="View and manage generated reports." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowReportGenerationsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="ReportGenerationResponse" TId="DefaultIdType" TRequest="ReportGenerationViewModel" Context="Context" Elevation="_preference.Elevation" BorderRadius="_preference.BorderRadius">
+    <ExtraActions>
+        <MudMenuItem OnClick="@(() => ViewDetails(context.Id))" Icon="@Icons.Material.Filled.Visibility" IconColor="Color.Primary">View Details</MudMenuItem>
+        @if (context.Status == "Completed")
+        {
+            <MudMenuItem OnClick="@(() => DownloadReport(context.Id))" Icon="@Icons.Material.Filled.Download" IconColor="Color.Success">Download</MudMenuItem>
+        }
+        @if (context.Status == "Pending" || context.Status == "Processing")
+        {
+            <MudMenuItem OnClick="@(() => CancelReport(context.Id))" Icon="@Icons.Material.Filled.Cancel" IconColor="Color.Warning">Cancel</MudMenuItem>
+        }
+    </ExtraActions>
+</EntityTable>

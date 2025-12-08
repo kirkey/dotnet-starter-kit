@@ -329,7 +329,7 @@ public class MenuService : IMenuService
                         // ========== REPORTING ==========
                         new MenuSectionSubItemModel { Title = "Reporting", IsGroupHeader = true },
                         new MenuSectionSubItemModel { Title = "Report Definitions", Icon = Icons.Material.Filled.ListAlt, Href = "/microfinance/report-definitions", Action = FshActions.View, Resource = FshResources.ReportDefinitions, PageStatus = PageStatus.InProgress },
-                        new MenuSectionSubItemModel { Title = "Report Generations", Icon = Icons.Material.Filled.Print, Href = "/microfinance/report-generations", Action = FshActions.View, Resource = FshResources.ReportGenerations, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Report Generations", Icon = Icons.Material.Filled.Print, Href = "/microfinance/report-generations", Action = FshActions.View, Resource = FshResources.ReportGenerations, PageStatus = PageStatus.Completed },
                     ]
                 },
                 
