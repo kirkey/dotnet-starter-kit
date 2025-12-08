@@ -1,0 +1,52 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InvestmentTransactions
+
+<MudDialog>
+    <DialogContent>
+        @if (Transaction is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>Reference</strong></td><td>@Transaction.TransactionReference</td></tr>
+                    <tr><td><strong>Account ID</strong></td><td>@Transaction.InvestmentAccountId</td></tr>
+                    <tr><td><strong>Product ID</strong></td><td>@Transaction.ProductId</td></tr>
+                    <tr><td><strong>Transaction Type</strong></td><td>@Transaction.TransactionType</td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Transaction.Status)" Size="Size.Small">@Transaction.Status</MudChip></td></tr>
+                    <tr><td><strong>Amount</strong></td><td>@Transaction.Amount.ToString("N2")</td></tr>
+                    <tr><td><strong>Units</strong></td><td>@(Transaction.Units?.ToString("N4") ?? "N/A")</td></tr>
+                    <tr><td><strong>NAV at Transaction</strong></td><td>@(Transaction.NavAtTransaction?.ToString("N4") ?? "N/A")</td></tr>
+                    <tr><td><strong>Entry Load</strong></td><td>@(Transaction.EntryLoadAmount?.ToString("N2") ?? "N/A")</td></tr>
+                    <tr><td><strong>Exit Load</strong></td><td>@(Transaction.ExitLoadAmount?.ToString("N2") ?? "N/A")</td></tr>
+                    <tr><td><strong>Net Amount</strong></td><td class="mud-info-text">@Transaction.NetAmount.ToString("N2")</td></tr>
+                    <tr><td><strong>Gain/Loss</strong></td><td class="@(Transaction.GainLoss >= 0 ? "mud-success-text" : "mud-error-text")">@(Transaction.GainLoss?.ToString("N2") ?? "N/A")</td></tr>
+                    <tr><td><strong>Payment Mode</strong></td><td>@(Transaction.PaymentMode ?? "N/A")</td></tr>
+                    <tr><td><strong>Requested At</strong></td><td>@Transaction.RequestedAt.ToString("yyyy-MM-dd HH:mm")</td></tr>
+                    <tr><td><strong>Processed At</strong></td><td>@(Transaction.ProcessedAt?.ToString("yyyy-MM-dd HH:mm") ?? "Not processed")</td></tr>
+                    <tr><td><strong>Allotment Date</strong></td><td>@(Transaction.AllotmentDate?.ToString("yyyy-MM-dd") ?? "N/A")</td></tr>
+                    <tr><td><strong>Notes</strong></td><td>@(Transaction.Notes ?? "N/A")</td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No transaction data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public InvestmentTransactionResponse? Transaction { get; set; }
+    private void Close() => MudDialog.Close();
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Pending" => Color.Warning,
+        "Completed" => Color.Success,
+        "Failed" => Color.Error,
+        "Cancelled" => Color.Default,
+        "Processing" => Color.Info,
+        _ => Color.Default
+    };
+}

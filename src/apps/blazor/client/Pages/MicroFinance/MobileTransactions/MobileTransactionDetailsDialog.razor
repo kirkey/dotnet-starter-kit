@@ -1,0 +1,48 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.MobileTransactions
+
+<MudDialog>
+    <DialogContent>
+        @if (Transaction is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>Reference</strong></td><td>@Transaction.TransactionReference</td></tr>
+                    <tr><td><strong>Wallet ID</strong></td><td>@Transaction.WalletId</td></tr>
+                    <tr><td><strong>Transaction Type</strong></td><td>@Transaction.TransactionType</td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Transaction.Status)" Size="Size.Small">@Transaction.Status</MudChip></td></tr>
+                    <tr><td><strong>Amount</strong></td><td>@Transaction.Amount.ToString("N2")</td></tr>
+                    <tr><td><strong>Fee</strong></td><td>@Transaction.Fee.ToString("N2")</td></tr>
+                    <tr><td><strong>Net Amount</strong></td><td class="mud-info-text">@Transaction.NetAmount.ToString("N2")</td></tr>
+                    <tr><td><strong>Source Phone</strong></td><td>@(Transaction.SourcePhone ?? "N/A")</td></tr>
+                    <tr><td><strong>Destination Phone</strong></td><td>@(Transaction.DestinationPhone ?? "N/A")</td></tr>
+                    <tr><td><strong>Provider Reference</strong></td><td>@(Transaction.ProviderReference ?? "N/A")</td></tr>
+                    <tr><td><strong>Initiated At</strong></td><td>@Transaction.InitiatedAt.ToString("yyyy-MM-dd HH:mm")</td></tr>
+                    <tr><td><strong>Completed At</strong></td><td>@(Transaction.CompletedAt?.ToString("yyyy-MM-dd HH:mm") ?? "Not completed")</td></tr>
+                    <tr><td><strong>Failure Reason</strong></td><td class="mud-error-text">@(Transaction.FailureReason ?? "N/A")</td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No transaction data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public MobileTransactionResponse? Transaction { get; set; }
+    private void Close() => MudDialog.Close();
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Pending" => Color.Warning,
+        "Completed" => Color.Success,
+        "Failed" => Color.Error,
+        "Cancelled" => Color.Default,
+        "Processing" => Color.Info,
+        _ => Color.Default
+    };
+}

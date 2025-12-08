@@ -1,0 +1,71 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LegalActions
+
+<MudDialog>
+    <DialogContent>
+        @if (LegalAction is not null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <tbody>
+                            <tr><td><strong>Case Reference</strong></td><td>@LegalAction.CaseReference</td></tr>
+                            <tr><td><strong>Loan ID</strong></td><td>@LegalAction.LoanId</td></tr>
+                            <tr><td><strong>Member ID</strong></td><td>@LegalAction.MemberId</td></tr>
+                            <tr><td><strong>Action Type</strong></td><td>@LegalAction.ActionType</td></tr>
+                            <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(LegalAction.Status)" Size="Size.Small">@LegalAction.Status</MudChip></td></tr>
+                            <tr><td><strong>Court Name</strong></td><td>@(LegalAction.CourtName ?? "N/A")</td></tr>
+                            <tr><td><strong>Lawyer Name</strong></td><td>@(LegalAction.LawyerName ?? "N/A")</td></tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <tbody>
+                            <tr><td><strong>Initiated Date</strong></td><td>@LegalAction.InitiatedDate.ToString("yyyy-MM-dd")</td></tr>
+                            <tr><td><strong>Filed Date</strong></td><td>@(LegalAction.FiledDate?.ToString("yyyy-MM-dd") ?? "Not filed")</td></tr>
+                            <tr><td><strong>Next Hearing</strong></td><td>@(LegalAction.NextHearingDate?.ToString("yyyy-MM-dd") ?? "N/A")</td></tr>
+                            <tr><td><strong>Judgment Date</strong></td><td>@(LegalAction.JudgmentDate?.ToString("yyyy-MM-dd") ?? "N/A")</td></tr>
+                            <tr><td><strong>Closed Date</strong></td><td>@(LegalAction.ClosedDate?.ToString("yyyy-MM-dd") ?? "Open")</td></tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <tbody>
+                            <tr><td><strong>Claim Amount</strong></td><td>@LegalAction.ClaimAmount.ToString("N2")</td></tr>
+                            <tr><td><strong>Judgment Amount</strong></td><td>@(LegalAction.JudgmentAmount?.ToString("N2") ?? "N/A")</td></tr>
+                            <tr><td><strong>Amount Recovered</strong></td><td class="mud-success-text">@LegalAction.AmountRecovered.ToString("N2")</td></tr>
+                            <tr><td><strong>Legal Costs</strong></td><td>@LegalAction.LegalCosts.ToString("N2")</td></tr>
+                            <tr><td><strong>Court Fees</strong></td><td>@LegalAction.CourtFees.ToString("N2")</td></tr>
+                            <tr><td><strong>Judgment Summary</strong></td><td>@(LegalAction.JudgmentSummary ?? "N/A")</td></tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+            </MudGrid>
+        }
+        else
+        {
+            <MudText>No legal action data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public LegalActionResponse? LegalAction { get; set; }
+    private void Close() => MudDialog.Close();
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Initiated" => Color.Info,
+        "Filed" => Color.Warning,
+        "InProgress" => Color.Warning,
+        "JudgmentReceived" => Color.Success,
+        "Enforcing" => Color.Info,
+        "Closed" => Color.Default,
+        "Withdrawn" => Color.Error,
+        _ => Color.Default
+    };
+}

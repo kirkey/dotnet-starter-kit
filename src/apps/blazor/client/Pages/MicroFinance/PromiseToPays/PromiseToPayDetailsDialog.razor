@@ -1,0 +1,46 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.PromiseToPays
+
+<MudDialog>
+    <DialogContent>
+        @if (Promise is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>Loan ID</strong></td><td>@Promise.LoanId</td></tr>
+                    <tr><td><strong>Member ID</strong></td><td>@Promise.MemberId</td></tr>
+                    <tr><td><strong>Case ID</strong></td><td>@Promise.CollectionCaseId</td></tr>
+                    <tr><td><strong>Promise Date</strong></td><td>@Promise.PromiseDate.ToString("yyyy-MM-dd")</td></tr>
+                    <tr><td><strong>Promised Payment Date</strong></td><td>@Promise.PromisedPaymentDate.ToString("yyyy-MM-dd")</td></tr>
+                    <tr><td><strong>Promised Amount</strong></td><td>@Promise.PromisedAmount.ToString("N2")</td></tr>
+                    <tr><td><strong>Actual Amount Paid</strong></td><td class="@(Promise.ActualAmountPaid >= Promise.PromisedAmount ? "mud-success-text" : "mud-warning-text")">@Promise.ActualAmountPaid.ToString("N2")</td></tr>
+                    <tr><td><strong>Actual Payment Date</strong></td><td>@(Promise.ActualPaymentDate?.ToString("yyyy-MM-dd") ?? "Not yet paid")</td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Promise.Status)" Size="Size.Small">@Promise.Status</MudChip></td></tr>
+                    <tr><td><strong>Reschedule Count</strong></td><td>@Promise.RescheduleCount</td></tr>
+                    <tr><td><strong>Breach Reason</strong></td><td>@(Promise.BreachReason ?? "N/A")</td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No promise data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public PromiseToPayResponse? Promise { get; set; }
+    private void Close() => MudDialog.Close();
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Pending" => Color.Warning,
+        "Kept" => Color.Success,
+        "Broken" => Color.Error,
+        "Rescheduled" => Color.Info,
+        "PartiallyKept" => Color.Warning,
+        _ => Color.Default
+    };
+}

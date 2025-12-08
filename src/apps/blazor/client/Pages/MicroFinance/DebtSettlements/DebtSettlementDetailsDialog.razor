@@ -1,0 +1,63 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.DebtSettlements
+
+<MudDialog>
+    <DialogContent>
+        @if (Settlement is not null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <tbody>
+                            <tr><td><strong>Reference</strong></td><td>@Settlement.ReferenceNumber</td></tr>
+                            <tr><td><strong>Loan ID</strong></td><td>@Settlement.LoanId</td></tr>
+                            <tr><td><strong>Member ID</strong></td><td>@Settlement.MemberId</td></tr>
+                            <tr><td><strong>Case ID</strong></td><td>@Settlement.CollectionCaseId</td></tr>
+                            <tr><td><strong>Settlement Type</strong></td><td>@Settlement.SettlementType</td></tr>
+                            <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Settlement.Status)" Size="Size.Small">@Settlement.Status</MudChip></td></tr>
+                            <tr><td><strong>Justification</strong></td><td>@(Settlement.Justification ?? "N/A")</td></tr>
+                            <tr><td><strong>Terms</strong></td><td>@(Settlement.Terms ?? "N/A")</td></tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <tbody>
+                            <tr><td><strong>Original Outstanding</strong></td><td>@Settlement.OriginalOutstanding.ToString("N2")</td></tr>
+                            <tr><td><strong>Discount Amount</strong></td><td class="mud-success-text">@Settlement.DiscountAmount.ToString("N2")</td></tr>
+                            <tr><td><strong>Discount %</strong></td><td class="mud-success-text">@Settlement.DiscountPercentage.ToString("N2")%</td></tr>
+                            <tr><td><strong>Settlement Amount</strong></td><td class="mud-info-text">@Settlement.SettlementAmount.ToString("N2")</td></tr>
+                            <tr><td><strong>Amount Paid</strong></td><td class="mud-success-text">@Settlement.AmountPaid.ToString("N2")</td></tr>
+                            <tr><td><strong>Remaining Balance</strong></td><td class="@(Settlement.RemainingBalance > 0 ? "mud-warning-text" : "mud-success-text")">@Settlement.RemainingBalance.ToString("N2")</td></tr>
+                            <tr><td><strong>Proposed Date</strong></td><td>@Settlement.ProposedDate.ToString("yyyy-MM-dd")</td></tr>
+                            <tr><td><strong>Due Date</strong></td><td>@Settlement.DueDate.ToString("yyyy-MM-dd")</td></tr>
+                            <tr><td><strong>Completed Date</strong></td><td>@(Settlement.CompletedDate?.ToString("yyyy-MM-dd") ?? "Not completed")</td></tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+            </MudGrid>
+        }
+        else
+        {
+            <MudText>No settlement data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public DebtSettlementResponse? Settlement { get; set; }
+    private void Close() => MudDialog.Close();
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Proposed" => Color.Info,
+        "Approved" => Color.Success,
+        "Rejected" => Color.Error,
+        "InProgress" => Color.Warning,
+        "Completed" => Color.Success,
+        "Cancelled" => Color.Default,
+        _ => Color.Default
+    };
+}

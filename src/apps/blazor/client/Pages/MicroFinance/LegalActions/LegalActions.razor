@@ -1,0 +1,9 @@
+@page "/microfinance/legal-actions"
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<EntityTable @ref="_table" TEntity="LegalActionResponse" TId="DefaultIdType" TRequest="LegalActionViewModel" Context="Context" Elevation="_preference.Elevation" BorderRadius="_preference.BorderRadius">
+    <ExtraActions>
+        <MudMenuItem OnClick="@(() => ViewDetails(context.Id))" Icon="@Icons.Material.Filled.Visibility" IconColor="Color.Primary">View Details</MudMenuItem>
+    </ExtraActions>
+</EntityTable>
