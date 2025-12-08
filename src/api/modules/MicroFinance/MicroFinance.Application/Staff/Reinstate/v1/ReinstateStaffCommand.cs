@@ -6,5 +6,5 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Reinstate.v1;
 /// <summary>
 /// Command for reinstating a suspended staff member.
 /// </summary>
-public sealed record ReinstateStaffCommand(Guid Id) : IRequest<ReinstateStaffResponse>;
+public sealed record ReinstateStaffCommand(DefaultIdType Id) : IRequest<ReinstateStaffResponse>;
 

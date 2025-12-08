@@ -2,16 +2,23 @@ using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.InsuranceProducts.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InsuranceProducts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InsuranceProducts.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.InsuranceProducts.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
+/// <summary>
+/// Endpoint configuration for Insurance Products.
+/// </summary>
 public class InsuranceProductEndpoints : CarterModule
 {
-
     private const string ActivateInsuranceProduct = "ActivateInsuranceProduct";
     private const string CreateInsuranceProduct = "CreateInsuranceProduct";
     private const string GetInsuranceProduct = "GetInsuranceProduct";
+    private const string SearchInsuranceProducts = "SearchInsuranceProducts";
 
+    /// <summary>
+    /// Maps all Insurance Product endpoints to the route builder.
+    /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/insurance-products").WithTags("Insurance Products");
@@ -38,6 +45,17 @@ public class InsuranceProductEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
+        group.MapPost("/search", async ([FromBody] SearchInsuranceProductsCommand command, ISender sender) =>
+            {
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(SearchInsuranceProducts)
+            .WithSummary("Searches insurance products with filters and pagination")
+            .Produces<PagedList<InsuranceProductResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
         group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivateInsuranceProductCommand(id)).ConfigureAwait(false);
@@ -46,8 +64,7 @@ public class InsuranceProductEndpoints : CarterModule
             .WithName(ActivateInsuranceProduct)
             .WithSummary("Activates an insurance product")
             .Produces<ActivateInsuranceProductResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Activate, FshResources.MicroFinance))
             .MapToApiVersion(1);
-
     }
 }

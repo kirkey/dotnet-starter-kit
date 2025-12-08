@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.Search.v1;
 public class SearchFixedDepositsCommand : PaginationFilter, IRequest<PagedList<FixedDepositResponse>>
 {
     public string? CertificateNumber { get; set; }
-    public Guid? MemberId { get; set; }
+    public DefaultIdType? MemberId { get; set; }
     public string? Status { get; set; }
     public DateOnly? DepositDateFrom { get; set; }
     public DateOnly? DepositDateTo { get; set; }

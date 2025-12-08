@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Specificatio
 
 public sealed class ShareAccountByMemberIdSpec : Specification<ShareAccount>
 {
-    public ShareAccountByMemberIdSpec(Guid memberId)
+    public ShareAccountByMemberIdSpec(DefaultIdType memberId)
     {
         Query.Where(sa => sa.MemberId == memberId);
     }

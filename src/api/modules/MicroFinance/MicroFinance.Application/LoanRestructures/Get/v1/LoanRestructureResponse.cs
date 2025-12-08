@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanRestructures.Get.v1;
 
 public sealed record LoanRestructureResponse(
-    Guid Id,
-    Guid LoanId,
+    DefaultIdType Id,
+    DefaultIdType LoanId,
     string RestructureNumber,
     string RestructureType,
     string? Reason,
@@ -20,6 +20,6 @@ public sealed record LoanRestructureResponse(
     decimal WaivedAmount,
     decimal RestructureFee,
     string Status,
-    Guid? ApprovedByUserId,
+    DefaultIdType? ApprovedByUserId,
     string? ApprovedBy,
     DateTime? ApprovedAt);

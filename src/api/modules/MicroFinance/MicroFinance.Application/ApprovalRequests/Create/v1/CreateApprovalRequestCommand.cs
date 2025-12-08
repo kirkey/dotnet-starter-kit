@@ -7,12 +7,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Create.v1
 /// </summary>
 public sealed record CreateApprovalRequestCommand(
     string RequestNumber,
-    Guid WorkflowId,
+    DefaultIdType WorkflowId,
     string EntityType,
-    Guid EntityId,
+    DefaultIdType EntityId,
     int TotalLevels,
-    Guid SubmittedById,
+    DefaultIdType SubmittedById,
     decimal? Amount = null,
-    Guid? BranchId = null,
+    DefaultIdType? BranchId = null,
     string? Comments = null,
     int? SlaHours = null) : IRequest<CreateApprovalRequestResponse>;

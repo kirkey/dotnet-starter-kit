@@ -3,7 +3,7 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanWriteOffs.Create.v1;
 
 public sealed record CreateLoanWriteOffCommand(
-    Guid LoanId,
+    DefaultIdType LoanId,
     string WriteOffNumber,
     string WriteOffType,
     string Reason,

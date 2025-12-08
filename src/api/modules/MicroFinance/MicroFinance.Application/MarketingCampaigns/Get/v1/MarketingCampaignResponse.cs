@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Get.v1;
 /// Response containing marketing campaign details.
 /// </summary>
 public sealed record MarketingCampaignResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Name,
     string Code,
     string? Description,

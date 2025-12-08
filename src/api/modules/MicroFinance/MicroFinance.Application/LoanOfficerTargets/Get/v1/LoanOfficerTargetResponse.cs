@@ -4,8 +4,8 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerTargets.Get.v1;
 /// Response containing loan officer target details.
 /// </summary>
 public sealed record LoanOfficerTargetResponse(
-    Guid Id,
-    Guid StaffId,
+    DefaultIdType Id,
+    DefaultIdType StaffId,
     string TargetType,
     string? Description,
     string Period,

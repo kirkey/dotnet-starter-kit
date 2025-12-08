@@ -5,8 +5,8 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.Loans.Search.v1;
 
 public class SearchLoansCommand : PaginationFilter, IRequest<PagedList<LoanSummaryResponse>>
 {
-    public Guid? MemberId { get; set; }
-    public Guid? LoanProductId { get; set; }
+    public DefaultIdType? MemberId { get; set; }
+    public DefaultIdType? LoanProductId { get; set; }
     public string? LoanNumber { get; set; }
     public string? Status { get; set; }
     public DateOnly? ApplicationDateFrom { get; set; }
@@ -19,8 +19,8 @@ public class SearchLoansCommand : PaginationFilter, IRequest<PagedList<LoanSumma
 }
 
 public sealed record LoanSummaryResponse(
-    Guid Id,
-    Guid MemberId,
+    DefaultIdType Id,
+    DefaultIdType MemberId,
     string MemberName,
     string MemberNumber,
     string LoanProductName,

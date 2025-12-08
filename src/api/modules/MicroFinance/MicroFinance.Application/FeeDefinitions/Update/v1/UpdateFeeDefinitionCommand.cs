@@ -4,7 +4,7 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.FeeDefinitions.Update.v1;
 
 public sealed record UpdateFeeDefinitionCommand(
-    Guid Id,
+    DefaultIdType Id,
     [property: DefaultValue("Updated Processing Fee")] string? Name,
     [property: DefaultValue("Updated description")] string? Description,
     [property: DefaultValue(2.0)] decimal? Amount,

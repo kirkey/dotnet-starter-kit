@@ -7,7 +7,7 @@ public sealed record CreateRiskCategoryCommand(
     string Name,
     string RiskType,
     string? Description = null,
-    Guid? ParentCategoryId = null,
+    DefaultIdType? ParentCategoryId = null,
     string DefaultSeverity = "Medium",
     decimal WeightFactor = 1.0m,
     decimal? AlertThreshold = null,

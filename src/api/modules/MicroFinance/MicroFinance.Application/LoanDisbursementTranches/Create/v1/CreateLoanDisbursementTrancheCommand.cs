@@ -3,7 +3,7 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.Create.v1;
 
 public sealed record CreateLoanDisbursementTrancheCommand(
-    Guid LoanId,
+    DefaultIdType LoanId,
     int TrancheSequence,
     string TrancheNumber,
     DateOnly ScheduledDate,

@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerTargets.RecordP
 /// Response from recording loan officer target progress.
 /// </summary>
 public sealed record RecordLoanOfficerProgressResponse(
-    Guid Id,
+    DefaultIdType Id,
     decimal AchievedValue,
     decimal AchievementPercentage,
     string Status,

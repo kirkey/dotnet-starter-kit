@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CustomerSurveys.Get.v1;
 /// </summary>
 public sealed class CustomerSurveyByIdSpec : Specification<CustomerSurvey>, ISingleResultSpecification<CustomerSurvey>
 {
-    public CustomerSurveyByIdSpec(Guid id)
+    public CustomerSurveyByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

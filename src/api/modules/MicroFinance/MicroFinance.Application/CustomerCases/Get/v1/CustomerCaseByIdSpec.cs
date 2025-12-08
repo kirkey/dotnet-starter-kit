@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CustomerCases.Get.v1;
 /// </summary>
 public sealed class CustomerCaseByIdSpec : Specification<CustomerCase, CustomerCaseResponse>
 {
-    public CustomerCaseByIdSpec(Guid id)
+    public CustomerCaseByIdSpec(DefaultIdType id)
     {
         Query.Where(c => c.Id == id);
 

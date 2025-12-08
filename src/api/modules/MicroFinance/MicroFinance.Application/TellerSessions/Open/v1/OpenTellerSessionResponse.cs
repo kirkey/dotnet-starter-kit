@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.Open.v1;
 
 public sealed record OpenTellerSessionResponse(
-    Guid Id,
+    DefaultIdType Id,
     string SessionNumber,
     string TellerName,
     decimal OpeningBalance,

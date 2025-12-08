@@ -13,12 +13,12 @@ public class SearchMobileTransactionsCommand : PaginationFilter, IRequest<PagedL
     /// <summary>
     /// Filter by wallet ID.
     /// </summary>
-    public Guid? WalletId { get; set; }
+    public DefaultIdType? WalletId { get; set; }
 
     /// <summary>
     /// Filter by member ID.
     /// </summary>
-    public Guid? MemberId { get; set; }
+    public DefaultIdType? MemberId { get; set; }
 
     /// <summary>
     /// Filter by transaction type.

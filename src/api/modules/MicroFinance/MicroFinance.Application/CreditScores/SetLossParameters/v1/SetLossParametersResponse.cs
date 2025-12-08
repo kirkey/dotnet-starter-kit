@@ -4,5 +4,5 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CreditScores.SetLossParame
 /// Response after setting loss parameters.
 /// </summary>
 public sealed record SetLossParametersResponse(
-    Guid Id,
+    DefaultIdType Id,
     decimal? ExpectedLoss);

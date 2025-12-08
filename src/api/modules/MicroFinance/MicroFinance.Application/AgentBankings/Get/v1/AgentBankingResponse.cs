@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.Get.v1;
 
 public sealed record AgentBankingResponse(
-    Guid Id,
+    DefaultIdType Id,
     string AgentCode,
     string BusinessName,
     string ContactName,
@@ -11,8 +11,8 @@ public sealed record AgentBankingResponse(
     string? GpsCoordinates,
     string Status,
     string Tier,
-    Guid? BranchId,
-    Guid? LinkedStaffId,
+    DefaultIdType? BranchId,
+    DefaultIdType? LinkedStaffId,
     decimal FloatBalance,
     decimal MinFloatBalance,
     decimal MaxFloatBalance,

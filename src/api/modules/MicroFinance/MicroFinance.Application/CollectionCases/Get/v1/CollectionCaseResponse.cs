@@ -1,11 +1,11 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.CollectionCases.Get.v1;
 
 public sealed record CollectionCaseResponse(
-    Guid Id,
+    DefaultIdType Id,
     string CaseNumber,
-    Guid LoanId,
-    Guid MemberId,
-    Guid? AssignedCollectorId,
+    DefaultIdType LoanId,
+    DefaultIdType MemberId,
+    DefaultIdType? AssignedCollectorId,
     string Status,
     string Priority,
     string Classification,

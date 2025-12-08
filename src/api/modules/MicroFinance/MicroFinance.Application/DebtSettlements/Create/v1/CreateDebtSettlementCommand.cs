@@ -4,13 +4,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.DebtSettlements.Create.v1;
 
 public sealed record CreateDebtSettlementCommand(
     string ReferenceNumber,
-    Guid CollectionCaseId,
-    Guid LoanId,
-    Guid MemberId,
+    DefaultIdType CollectionCaseId,
+    DefaultIdType LoanId,
+    DefaultIdType MemberId,
     string SettlementType,
     decimal OriginalOutstanding,
     decimal SettlementAmount,
     DateOnly DueDate,
     string Terms,
-    Guid ProposedById,
+    DefaultIdType ProposedById,
     int? NumberOfInstallments = null) : IRequest<CreateDebtSettlementResponse>;

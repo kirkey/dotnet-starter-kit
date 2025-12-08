@@ -1,11 +1,11 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.CollectionStrategies.Get.v1;
 
 public sealed record CollectionStrategyResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Code,
     string Name,
     string? Description,
-    Guid? LoanProductId,
+    DefaultIdType? LoanProductId,
     int TriggerDaysPastDue,
     int? MaxDaysPastDue,
     decimal? MinOutstandingAmount,

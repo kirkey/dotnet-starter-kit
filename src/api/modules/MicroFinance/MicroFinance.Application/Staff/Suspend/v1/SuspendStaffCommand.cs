@@ -6,5 +6,5 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Suspend.v1;
 /// <summary>
 /// Command for suspending a staff member.
 /// </summary>
-public sealed record SuspendStaffCommand(Guid Id, string? Reason = null) : IRequest<SuspendStaffResponse>;
+public sealed record SuspendStaffCommand(DefaultIdType Id, string? Reason = null) : IRequest<SuspendStaffResponse>;
 

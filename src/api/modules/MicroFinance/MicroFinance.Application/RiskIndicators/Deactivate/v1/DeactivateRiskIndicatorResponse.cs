@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Deactivate.
 /// <summary>
 /// Response from deactivating a risk indicator.
 /// </summary>
-public sealed record DeactivateRiskIndicatorResponse(Guid Id, string Status);
+public sealed record DeactivateRiskIndicatorResponse(DefaultIdType Id, string Status);

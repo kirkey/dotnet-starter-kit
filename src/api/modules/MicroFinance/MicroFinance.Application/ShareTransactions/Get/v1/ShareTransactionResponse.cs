@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.ShareTransactions.Get.v1;
 
 public sealed record ShareTransactionResponse(
-    Guid Id,
-    Guid ShareAccountId,
+    DefaultIdType Id,
+    DefaultIdType ShareAccountId,
     string Reference,
     string TransactionType,
     int NumberOfShares,

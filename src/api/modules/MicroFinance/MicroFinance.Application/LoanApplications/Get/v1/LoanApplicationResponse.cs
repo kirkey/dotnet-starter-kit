@@ -4,11 +4,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Get.v1;
 /// Response containing loan application details.
 /// </summary>
 public sealed record LoanApplicationResponse(
-    Guid Id,
+    DefaultIdType Id,
     string ApplicationNumber,
-    Guid MemberId,
-    Guid LoanProductId,
-    Guid? MemberGroupId,
+    DefaultIdType MemberId,
+    DefaultIdType LoanProductId,
+    DefaultIdType? MemberGroupId,
     decimal RequestedAmount,
     decimal? ApprovedAmount,
     int RequestedTermMonths,
@@ -16,9 +16,9 @@ public sealed record LoanApplicationResponse(
     string? Purpose,
     string Status,
     DateOnly ApplicationDate,
-    Guid? AssignedOfficerId,
+    DefaultIdType? AssignedOfficerId,
     DateTime? AssignedAt,
     DateTime? DecisionAt,
-    Guid? DecisionByUserId,
+    DefaultIdType? DecisionByUserId,
     string? RejectionReason,
-    Guid? LoanId);
+    DefaultIdType? LoanId);

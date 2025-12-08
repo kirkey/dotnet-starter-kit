@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Launch.
 /// <summary>
 /// Response from launching a marketing campaign.
 /// </summary>
-public sealed record LaunchMarketingCampaignResponse(Guid Id, string Status);
+public sealed record LaunchMarketingCampaignResponse(DefaultIdType Id, string Status);

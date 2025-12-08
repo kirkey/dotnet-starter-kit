@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.SavingsTransactions.Specif
 
 public sealed class SavingsTransactionByIdSpec : Specification<SavingsTransaction>, ISingleResultSpecification<SavingsTransaction>
 {
-    public SavingsTransactionByIdSpec(Guid id)
+    public SavingsTransactionByIdSpec(DefaultIdType id)
     {
         Query.Where(t => t.Id == id);
     }

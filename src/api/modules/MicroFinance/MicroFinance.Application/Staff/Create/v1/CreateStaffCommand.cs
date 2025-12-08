@@ -11,6 +11,6 @@ public sealed record CreateStaffCommand(
     string Role,
     DateOnly JoiningDate,
     string EmploymentType = "FullTime",
-    Guid? BranchId = null,
+    DefaultIdType? BranchId = null,
     string? Department = null,
-    Guid? UserId = null) : IRequest<CreateStaffResponse>;
+    DefaultIdType? UserId = null) : IRequest<CreateStaffResponse>;

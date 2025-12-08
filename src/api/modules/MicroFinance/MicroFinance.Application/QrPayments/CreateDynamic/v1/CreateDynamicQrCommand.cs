@@ -7,5 +7,5 @@ public sealed record CreateDynamicQrCommand(
     decimal Amount,
     string Reference,
     DateTimeOffset ExpiresAt,
-    Guid? WalletId = null,
-    Guid? MemberId = null) : IRequest<CreateDynamicQrResponse>;
+    DefaultIdType? WalletId = null,
+    DefaultIdType? MemberId = null) : IRequest<CreateDynamicQrResponse>;

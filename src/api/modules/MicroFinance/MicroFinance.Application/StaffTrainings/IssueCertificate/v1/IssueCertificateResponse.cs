@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.StaffTrainings.IssueCertif
 /// Response from issuing a training certificate.
 /// </summary>
 public sealed record IssueCertificateResponse(
-    Guid Id,
+    DefaultIdType Id,
     string CertificationNumber,
     DateOnly CertificationDate,
     DateOnly? ExpiryDate);

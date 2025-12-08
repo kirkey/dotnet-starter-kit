@@ -1,12 +1,12 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.FeeCharges.Get.v1;
 
 public sealed record FeeChargeResponse(
-    Guid Id,
-    Guid FeeDefinitionId,
-    Guid MemberId,
-    Guid? LoanId,
-    Guid? SavingsAccountId,
-    Guid? ShareAccountId,
+    DefaultIdType Id,
+    DefaultIdType FeeDefinitionId,
+    DefaultIdType MemberId,
+    DefaultIdType? LoanId,
+    DefaultIdType? SavingsAccountId,
+    DefaultIdType? ShareAccountId,
     string Reference,
     DateOnly ChargeDate,
     DateOnly? DueDate,

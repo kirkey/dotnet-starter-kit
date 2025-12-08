@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Reconcile.v1;
 
 public sealed record ReconcileCashVaultResponse(
-    Guid Id,
+    DefaultIdType Id,
     decimal ExpectedBalance,
     decimal ActualBalance,
     decimal Variance,

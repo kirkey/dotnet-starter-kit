@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerTargets.Get.v1;
 /// </summary>
 public sealed class LoanOfficerTargetByIdSpec : Specification<LoanOfficerTarget>, ISingleResultSpecification<LoanOfficerTarget>
 {
-    public LoanOfficerTargetByIdSpec(Guid id)
+    public LoanOfficerTargetByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.Loans.Specifications;
 
 public sealed class LoansByMemberIdSpec : Specification<Loan>
 {
-    public LoansByMemberIdSpec(Guid memberId, bool? isActive = null)
+    public LoansByMemberIdSpec(DefaultIdType memberId, bool? isActive = null)
     {
         Query.Where(l => l.MemberId == memberId);
 

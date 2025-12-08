@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Complet
 /// Response from completing a marketing campaign.
 /// </summary>
 public sealed record CompleteMarketingCampaignResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Status,
     int ConversionCount,
     decimal? ConversionRate,

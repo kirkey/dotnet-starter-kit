@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.Renew.v1;
 /// Response after renewing fixed deposit.
 /// </summary>
 public sealed record RenewFixedDepositResponse(
-    Guid DepositId,
+    DefaultIdType DepositId,
     string Status,
     int TermMonths,
     decimal InterestRate,

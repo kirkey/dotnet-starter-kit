@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CommunicationLogs.MarkDeli
 /// <summary>
 /// Response after marking a communication as delivered.
 /// </summary>
-public sealed record MarkCommunicationDeliveredResponse(Guid Id, string DeliveryStatus, DateTime DeliveredAt);
+public sealed record MarkCommunicationDeliveredResponse(DefaultIdType Id, string DeliveryStatus, DateTime DeliveredAt);

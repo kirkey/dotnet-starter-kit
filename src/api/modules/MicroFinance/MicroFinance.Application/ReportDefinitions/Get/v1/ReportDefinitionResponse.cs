@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.ReportDefinitions.Get.v1;
 
 public sealed record ReportDefinitionResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Code,
     string Name,
     string Category,

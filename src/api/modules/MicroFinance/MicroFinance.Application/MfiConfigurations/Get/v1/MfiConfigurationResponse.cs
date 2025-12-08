@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.MfiConfigurations.Get.v1;
 
 public sealed record MfiConfigurationResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Key,
     string Value,
     string Category,
@@ -12,6 +12,6 @@ public sealed record MfiConfigurationResponse(
     bool RequiresRestart,
     string? DefaultValue,
     string? ValidationRules,
-    Guid? BranchId,
+    DefaultIdType? BranchId,
     int DisplayOrder,
     DateTimeOffset CreatedOn);

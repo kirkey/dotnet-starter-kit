@@ -4,9 +4,9 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CreditScores.Get.v1;
 /// Response containing credit score details.
 /// </summary>
 public sealed record CreditScoreResponse(
-    Guid Id,
-    Guid MemberId,
-    Guid? LoanId,
+    DefaultIdType Id,
+    DefaultIdType MemberId,
+    DefaultIdType? LoanId,
     string ScoreType,
     string? ScoreModel,
     decimal Score,

@@ -6,7 +6,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.StaffTrainings.Schedule.v1
 /// Command to schedule a new training for a staff member.
 /// </summary>
 public sealed record ScheduleStaffTrainingCommand(
-    Guid StaffId,
+    DefaultIdType StaffId,
     string TrainingName,
     string TrainingType,
     string DeliveryMethod,

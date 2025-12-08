@@ -6,7 +6,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Create.v1;
 /// Command to create a new risk indicator.
 /// </summary>
 public sealed record CreateRiskIndicatorCommand(
-    Guid RiskCategoryId,
+    DefaultIdType RiskCategoryId,
     string Code,
     string Name,
     string Direction,

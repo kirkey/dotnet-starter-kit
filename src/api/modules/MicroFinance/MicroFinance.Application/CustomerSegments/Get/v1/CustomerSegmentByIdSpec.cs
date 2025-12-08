@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CustomerSegments.Get.v1;
 
 public sealed class CustomerSegmentByIdSpec : Specification<CustomerSegment>, ISingleResultSpecification<CustomerSegment>
 {
-    public CustomerSegmentByIdSpec(Guid id)
+    public CustomerSegmentByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

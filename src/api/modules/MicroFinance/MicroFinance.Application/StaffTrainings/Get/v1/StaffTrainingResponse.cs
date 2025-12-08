@@ -4,8 +4,8 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.StaffTrainings.Get.v1;
 /// Response containing staff training details.
 /// </summary>
 public sealed record StaffTrainingResponse(
-    Guid Id,
-    Guid StaffId,
+    DefaultIdType Id,
+    DefaultIdType StaffId,
     string? TrainingCode,
     string TrainingName,
     string? Description,

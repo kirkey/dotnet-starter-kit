@@ -9,7 +9,7 @@ public sealed record CreateDocumentCommand(
     string Name,
     string DocumentType,
     string EntityType,
-    Guid EntityId,
+    DefaultIdType EntityId,
     string FilePath,
     long FileSizeBytes,
     string? MimeType = null,

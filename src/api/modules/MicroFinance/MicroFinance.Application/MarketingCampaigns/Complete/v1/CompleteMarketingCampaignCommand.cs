@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Complet
 /// <summary>
 /// Command to complete a marketing campaign.
 /// </summary>
-public sealed record CompleteMarketingCampaignCommand(Guid Id) : IRequest<CompleteMarketingCampaignResponse>;
+public sealed record CompleteMarketingCampaignCommand(DefaultIdType Id) : IRequest<CompleteMarketingCampaignResponse>;

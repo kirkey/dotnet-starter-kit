@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.InsuranceProducts.Get.v1;
 
 public sealed record InsuranceProductResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Code,
     string Name,
     string InsuranceType,

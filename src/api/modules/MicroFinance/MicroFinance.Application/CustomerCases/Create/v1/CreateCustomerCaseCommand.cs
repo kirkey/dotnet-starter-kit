@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CustomerCases.Create.v1;
 /// </summary>
 public sealed record CreateCustomerCaseCommand(
     string CaseNumber,
-    Guid MemberId,
+    DefaultIdType MemberId,
     string Subject,
     string Category,
     string Description,

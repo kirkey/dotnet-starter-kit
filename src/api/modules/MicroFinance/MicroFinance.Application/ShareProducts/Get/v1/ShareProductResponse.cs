@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.ShareProducts.Get.v1;
 
 public sealed record ShareProductResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Code,
     string Name,
     string? Description,

@@ -6,6 +6,6 @@ public sealed record CreateUssdSessionCommand(
     string SessionId,
     string PhoneNumber,
     string ServiceCode,
-    Guid? MemberId = null,
-    Guid? WalletId = null,
+    DefaultIdType? MemberId = null,
+    DefaultIdType? WalletId = null,
     string? Language = null) : IRequest<CreateUssdSessionResponse>;

@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.UpdateValu
 /// Response after updating collateral valuation.
 /// </summary>
 public sealed record UpdateCollateralValuationResponse(
-    Guid Id,
+    DefaultIdType Id,
     decimal EstimatedValue,
     decimal? ForcedSaleValue,
     DateOnly ValuationDate);

@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.Mature.v1;
 /// Response after maturing fixed deposit.
 /// </summary>
 public sealed record MatureFixedDepositResponse(
-    Guid DepositId,
+    DefaultIdType DepositId,
     string Status,
     DateOnly? ClosedDate,
     string Message);

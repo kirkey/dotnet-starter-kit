@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Specificat
 
 public sealed class LoanCollateralByIdSpec : Specification<LoanCollateral>, ISingleResultSpecification<LoanCollateral>
 {
-    public LoanCollateralByIdSpec(Guid id)
+    public LoanCollateralByIdSpec(DefaultIdType id)
     {
         Query.Where(lc => lc.Id == id);
     }

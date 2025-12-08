@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.MarkBroken.v
 /// <summary>
 /// Command to mark a promise to pay as broken.
 /// </summary>
-public sealed record MarkPromiseBrokenCommand(Guid PromiseId, string Reason) : IRequest<MarkPromiseBrokenResponse>;
+public sealed record MarkPromiseBrokenCommand(DefaultIdType PromiseId, string Reason) : IRequest<MarkPromiseBrokenResponse>;

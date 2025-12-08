@@ -17,7 +17,7 @@ public class SearchMemberGroupsCommand : PaginationFilter, IRequest<PagedList<Me
     /// <summary>
     /// Filter by loan officer ID.
     /// </summary>
-    public Guid? LoanOfficerId { get; set; }
+    public DefaultIdType? LoanOfficerId { get; set; }
 
     /// <summary>
     /// Filter by meeting frequency.

@@ -6,9 +6,9 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CollectionActions.Create.v
 /// Command to create a new collection action.
 /// </summary>
 public sealed record CreateCollectionActionCommand(
-    Guid CollectionCaseId,
-    Guid LoanId,
+    DefaultIdType CollectionCaseId,
+    DefaultIdType LoanId,
     string ActionType,
-    Guid PerformedById,
+    DefaultIdType PerformedById,
     string Outcome,
     string? Description = null) : IRequest<CreateCollectionActionResponse>;

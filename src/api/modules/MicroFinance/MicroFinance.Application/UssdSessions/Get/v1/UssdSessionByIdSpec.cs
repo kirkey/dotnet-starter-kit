@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.UssdSessions.Get.v1;
 
 public sealed class UssdSessionByIdSpec : Specification<UssdSession>
 {
-    public UssdSessionByIdSpec(Guid id)
+    public UssdSessionByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

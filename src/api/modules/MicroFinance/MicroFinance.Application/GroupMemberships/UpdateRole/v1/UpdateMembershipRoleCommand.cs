@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.UpdateRol
 /// <summary>
 /// Command to update a member's role in a group.
 /// </summary>
-public sealed record UpdateMembershipRoleCommand(Guid Id, string Role) : IRequest<UpdateMembershipRoleResponse>;
+public sealed record UpdateMembershipRoleCommand(DefaultIdType Id, string Role) : IRequest<UpdateMembershipRoleResponse>;

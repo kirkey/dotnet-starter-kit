@@ -1,9 +1,9 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.CreditBureauReports.Get.v1;
 
 public sealed record CreditBureauReportResponse(
-    Guid Id,
-    Guid MemberId,
-    Guid? InquiryId,
+    DefaultIdType Id,
+    DefaultIdType MemberId,
+    DefaultIdType? InquiryId,
     string ReportNumber,
     string BureauName,
     DateTime ReportDate,

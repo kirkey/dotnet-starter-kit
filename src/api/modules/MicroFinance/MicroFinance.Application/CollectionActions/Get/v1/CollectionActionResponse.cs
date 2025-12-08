@@ -4,12 +4,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CollectionActions.Get.v1;
 /// Response containing collection action details.
 /// </summary>
 public sealed record CollectionActionResponse(
-    Guid Id,
-    Guid CollectionCaseId,
-    Guid LoanId,
+    DefaultIdType Id,
+    DefaultIdType CollectionCaseId,
+    DefaultIdType LoanId,
     string ActionType,
     DateTime ActionDateTime,
-    Guid PerformedById,
+    DefaultIdType PerformedById,
     string? ContactMethod,
     string? PhoneNumberCalled,
     string? ContactPerson,

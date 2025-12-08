@@ -1,24 +1,38 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.Invest.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.Redeem.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.SetupSip.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class InvestmentAccountEndpoints : CarterModule
 {
-
     private const string CreateInvestmentAccount = "CreateInvestmentAccount";
     private const string GetInvestmentAccount = "GetInvestmentAccount";
     private const string InvestInAccount = "InvestInAccount";
     private const string RedeemFromAccount = "RedeemFromAccount";
+    private const string SearchInvestmentAccounts = "SearchInvestmentAccounts";
     private const string SetupSip = "SetupSip";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/investment-accounts").WithTags("Investment Accounts");
+
+        // Search accounts
+        group.MapPost("/search", async (SearchInvestmentAccountsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command);
+            return Results.Ok(result);
+        })
+        .WithName(SearchInvestmentAccounts)
+        .WithSummary("Search investment accounts")
+        .Produces<PagedList<InvestmentAccountResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/", async (CreateInvestmentAccountCommand command, ISender sender) =>
         {

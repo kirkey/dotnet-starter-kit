@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanSchedules.Specificatio
 
 public sealed class LoanSchedulesByLoanIdSpec : Specification<LoanSchedule>
 {
-    public LoanSchedulesByLoanIdSpec(Guid loanId)
+    public LoanSchedulesByLoanIdSpec(DefaultIdType loanId)
     {
         Query.Where(ls => ls.LoanId == loanId)
              .OrderBy(ls => ls.InstallmentNumber);

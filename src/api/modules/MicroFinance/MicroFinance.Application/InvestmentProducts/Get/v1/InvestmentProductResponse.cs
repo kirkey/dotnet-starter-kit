@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.Get.v1;
 
 public sealed record InvestmentProductResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Name,
     string Code,
     string ProductType,

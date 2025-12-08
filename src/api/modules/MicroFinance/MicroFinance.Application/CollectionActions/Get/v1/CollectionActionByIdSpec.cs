@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CollectionActions.Get.v1;
 /// </summary>
 public sealed class CollectionActionByIdSpec : Specification<CollectionAction, CollectionActionResponse>
 {
-    public CollectionActionByIdSpec(Guid id)
+    public CollectionActionByIdSpec(DefaultIdType id)
     {
         Query.Where(c => c.Id == id);
 

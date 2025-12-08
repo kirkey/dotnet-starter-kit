@@ -6,6 +6,6 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Reject.v1
 /// Command to reject an approval request.
 /// </summary>
 public sealed record RejectApprovalRequestCommand(
-    Guid Id,
-    Guid ApproverId,
+    DefaultIdType Id,
+    DefaultIdType ApproverId,
     string Reason) : IRequest<RejectApprovalRequestResponse>;

@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Specificat
 /// </summary>
 public sealed class InsuranceClaimByIdSpec : Specification<InsuranceClaim>, ISingleResultSpecification<InsuranceClaim>
 {
-    public InsuranceClaimByIdSpec(Guid id)
+    public InsuranceClaimByIdSpec(DefaultIdType id)
     {
         Query.Where(c => c.Id == id);
     }

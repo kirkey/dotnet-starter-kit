@@ -4,9 +4,9 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CommunicationLogs.Get.v1;
 /// Response containing communication log details.
 /// </summary>
 public sealed record CommunicationLogResponse(
-    Guid Id,
-    Guid? MemberId,
-    Guid? LoanId,
+    DefaultIdType Id,
+    DefaultIdType? MemberId,
+    DefaultIdType? LoanId,
     string Channel,
     string Recipient,
     string? Subject,

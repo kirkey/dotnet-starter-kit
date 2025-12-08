@@ -10,7 +10,7 @@ public sealed record CreateBranchCommand(
     [property: DefaultValue("BR-001")] string Code,
     [property: DefaultValue("Main Branch")] string Name,
     [property: DefaultValue("Branch")] string BranchType,
-    [property: DefaultValue(null)] Guid? ParentBranchId = null,
+    [property: DefaultValue(null)] DefaultIdType? ParentBranchId = null,
     [property: DefaultValue("123 Main St")] string? Address = null,
     [property: DefaultValue("Manila")] string? City = null,
     [property: DefaultValue("Metro Manila")] string? State = null,

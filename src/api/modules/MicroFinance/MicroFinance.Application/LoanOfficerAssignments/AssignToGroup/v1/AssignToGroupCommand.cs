@@ -3,8 +3,8 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerAssignments.AssignToGroup.v1;
 
 public sealed record AssignToGroupCommand(
-    Guid StaffId,
-    Guid MemberGroupId,
+    DefaultIdType StaffId,
+    DefaultIdType MemberGroupId,
     DateOnly? AssignmentDate = null,
-    Guid? PreviousStaffId = null,
+    DefaultIdType? PreviousStaffId = null,
     string? Reason = null) : IRequest<AssignToGroupResponse>;

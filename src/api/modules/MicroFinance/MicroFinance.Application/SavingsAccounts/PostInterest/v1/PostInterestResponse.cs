@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.PostIntere
 /// Response after posting interest.
 /// </summary>
 public sealed record PostInterestResponse(
-    Guid AccountId,
+    DefaultIdType AccountId,
     decimal InterestAmount,
     decimal NewBalance,
     decimal TotalInterestEarned,

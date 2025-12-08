@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Specificati
 
 public sealed class LoanGuarantorByIdSpec : Specification<LoanGuarantor>, ISingleResultSpecification<LoanGuarantor>
 {
-    public LoanGuarantorByIdSpec(Guid id)
+    public LoanGuarantorByIdSpec(DefaultIdType id)
     {
         Query.Where(lg => lg.Id == id);
     }

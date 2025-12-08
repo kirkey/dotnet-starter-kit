@@ -2,6 +2,7 @@ using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.QrPayments.CreateDynamic.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.QrPayments.CreateStatic.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.QrPayments.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.QrPayments.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -10,10 +11,10 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class QrPaymentEndpoints : CarterModule
 {
-
     private const string CreateDynamicQr = "CreateDynamicQr";
     private const string CreateStaticQr = "CreateStaticQr";
     private const string GetQrPayment = "GetQrPayment";
+    private const string SearchQrPayments = "SearchQrPayments";
 
     /// <summary>
     /// Maps all QR Payment endpoints to the route builder.
@@ -53,6 +54,17 @@ public class QrPaymentEndpoints : CarterModule
             .WithSummary("Gets a QR payment by ID")
             .Produces<QrPaymentResponse>()
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPost("/search", async ([FromBody] SearchQrPaymentsCommand command, ISender sender) =>
+            {
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(SearchQrPayments)
+            .WithSummary("Searches QR payments with filters and pagination")
+            .Produces<PagedList<QrPaymentResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
     }
 }

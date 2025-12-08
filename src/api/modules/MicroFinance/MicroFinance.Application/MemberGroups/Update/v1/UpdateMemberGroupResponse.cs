@@ -4,6 +4,6 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Update.v1;
 /// Response returned after updating a member group.
 /// </summary>
 public sealed record UpdateMemberGroupResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Name,
     string Status);

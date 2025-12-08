@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Deactiva
 /// <summary>
 /// Command to deactivate an approval workflow.
 /// </summary>
-public sealed record DeactivateApprovalWorkflowCommand(Guid Id) : IRequest<DeactivateApprovalWorkflowResponse>;
+public sealed record DeactivateApprovalWorkflowCommand(DefaultIdType Id) : IRequest<DeactivateApprovalWorkflowResponse>;

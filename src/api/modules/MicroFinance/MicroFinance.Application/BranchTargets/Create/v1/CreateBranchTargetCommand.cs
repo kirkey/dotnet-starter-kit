@@ -6,7 +6,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.Create.v1;
 /// Command to create a new branch target.
 /// </summary>
 public sealed record CreateBranchTargetCommand(
-    Guid BranchId,
+    DefaultIdType BranchId,
     string TargetType,
     string Period,
     DateOnly PeriodStart,

@@ -3,7 +3,7 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.CreditBureauInquiries.Complete.v1;
 
 public sealed record CompleteInquiryCommand(
-    Guid Id,
+    DefaultIdType Id,
     string ReferenceNumber,
     int? CreditScore = null,
-    Guid? CreditReportId = null) : IRequest<CompleteInquiryResponse>;
+    DefaultIdType? CreditReportId = null) : IRequest<CompleteInquiryResponse>;

@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Suspend.v
 /// <summary>
 /// Response after suspending membership.
 /// </summary>
-public sealed record SuspendMembershipResponse(Guid Id, string Status, string Message);
+public sealed record SuspendMembershipResponse(DefaultIdType Id, string Status, string Message);

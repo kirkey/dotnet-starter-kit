@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.UpdateRol
 /// <summary>
 /// Response after updating membership role.
 /// </summary>
-public sealed record UpdateMembershipRoleResponse(Guid Id, string Role, string Message);
+public sealed record UpdateMembershipRoleResponse(DefaultIdType Id, string Role, string Message);

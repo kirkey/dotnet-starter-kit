@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.Create.v
 /// <summary>
 /// Response after creating an insurance policy.
 /// </summary>
-public sealed record CreateInsurancePolicyResponse(Guid Id, string PolicyNumber);
+public sealed record CreateInsurancePolicyResponse(DefaultIdType Id, string PolicyNumber);

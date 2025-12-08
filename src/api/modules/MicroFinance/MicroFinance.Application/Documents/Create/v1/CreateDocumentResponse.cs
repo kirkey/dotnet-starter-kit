@@ -4,8 +4,8 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.Documents.Create.v1;
 /// Response after creating a document.
 /// </summary>
 public sealed record CreateDocumentResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Name,
     string DocumentType,
     string EntityType,
-    Guid EntityId);
+    DefaultIdType EntityId);

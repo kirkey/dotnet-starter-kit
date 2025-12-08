@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Specification
 
 public sealed class LoanProductByIdSpec : Specification<LoanProduct>, ISingleResultSpecification<LoanProduct>
 {
-    public LoanProductByIdSpec(Guid id)
+    public LoanProductByIdSpec(DefaultIdType id)
     {
         Query.Where(lp => lp.Id == id);
     }

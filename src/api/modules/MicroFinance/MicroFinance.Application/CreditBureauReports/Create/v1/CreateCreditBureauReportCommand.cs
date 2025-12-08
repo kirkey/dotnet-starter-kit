@@ -3,11 +3,11 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.CreditBureauReports.Create.v1;
 
 public sealed record CreateCreditBureauReportCommand(
-    Guid MemberId,
+    DefaultIdType MemberId,
     string ReportNumber,
     string BureauName,
     DateTime ReportDate,
-    Guid? InquiryId = null,
+    DefaultIdType? InquiryId = null,
     int? CreditScore = null,
     int? ScoreMin = null,
     int? ScoreMax = null,

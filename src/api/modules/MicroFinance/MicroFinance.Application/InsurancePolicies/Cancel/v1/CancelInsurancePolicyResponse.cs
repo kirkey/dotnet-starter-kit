@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.Cancel.v
 /// <summary>
 /// Response after cancelling an insurance policy.
 /// </summary>
-public sealed record CancelInsurancePolicyResponse(Guid Id, string Status);
+public sealed record CancelInsurancePolicyResponse(DefaultIdType Id, string Status);

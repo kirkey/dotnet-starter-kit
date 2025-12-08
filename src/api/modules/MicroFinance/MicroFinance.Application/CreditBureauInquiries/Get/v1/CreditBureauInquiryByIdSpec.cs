@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CreditBureauInquiries.Get.
 
 public sealed class CreditBureauInquiryByIdSpec : Specification<CreditBureauInquiry>, ISingleResultSpecification<CreditBureauInquiry>
 {
-    public CreditBureauInquiryByIdSpec(Guid id)
+    public CreditBureauInquiryByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

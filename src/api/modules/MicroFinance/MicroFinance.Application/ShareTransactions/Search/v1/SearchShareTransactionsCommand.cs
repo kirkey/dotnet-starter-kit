@@ -6,7 +6,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ShareTransactions.Search.v
 
 public class SearchShareTransactionsCommand : PaginationFilter, IRequest<PagedList<ShareTransactionResponse>>
 {
-    public Guid? ShareAccountId { get; set; }
+    public DefaultIdType? ShareAccountId { get; set; }
     public string? Reference { get; set; }
     public string? TransactionType { get; set; }
     public DateOnly? DateFrom { get; set; }

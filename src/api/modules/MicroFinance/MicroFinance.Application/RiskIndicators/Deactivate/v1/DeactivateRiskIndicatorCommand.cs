@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Deactivate.
 /// <summary>
 /// Command to deactivate a risk indicator.
 /// </summary>
-public sealed record DeactivateRiskIndicatorCommand(Guid Id) : IRequest<DeactivateRiskIndicatorResponse>;
+public sealed record DeactivateRiskIndicatorCommand(DefaultIdType Id) : IRequest<DeactivateRiskIndicatorResponse>;

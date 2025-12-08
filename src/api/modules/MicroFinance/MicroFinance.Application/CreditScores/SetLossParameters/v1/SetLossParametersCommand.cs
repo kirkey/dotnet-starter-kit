@@ -6,7 +6,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CreditScores.SetLossParame
 /// Command to set loss parameters for risk calculation.
 /// </summary>
 public sealed record SetLossParametersCommand(
-    Guid CreditScoreId,
+    DefaultIdType CreditScoreId,
     decimal? ProbabilityOfDefault,
     decimal? LossGivenDefault,
     decimal? ExposureAtDefault) : IRequest<SetLossParametersResponse>;

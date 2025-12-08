@@ -1,9 +1,9 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.InvestmentTransactions.Get.v1;
 
 public sealed record InvestmentTransactionResponse(
-    Guid Id,
-    Guid InvestmentAccountId,
-    Guid ProductId,
+    DefaultIdType Id,
+    DefaultIdType InvestmentAccountId,
+    DefaultIdType ProductId,
     string TransactionReference,
     string TransactionType,
     string Status,

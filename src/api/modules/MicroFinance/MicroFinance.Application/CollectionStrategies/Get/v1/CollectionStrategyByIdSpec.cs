@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CollectionStrategies.Get.v
 
 public sealed class CollectionStrategyByIdSpec : Specification<CollectionStrategy>, ISingleResultSpecification<CollectionStrategy>
 {
-    public CollectionStrategyByIdSpec(Guid id)
+    public CollectionStrategyByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.PostInterest
 /// Response after posting interest.
 /// </summary>
 public sealed record PostFixedDepositInterestResponse(
-    Guid DepositId,
+    DefaultIdType DepositId,
     decimal InterestAmount,
     decimal TotalInterestEarned,
     string Message);

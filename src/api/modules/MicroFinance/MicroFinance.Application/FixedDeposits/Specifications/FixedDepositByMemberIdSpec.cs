@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.Specificatio
 
 public sealed class FixedDepositByMemberIdSpec : Specification<FixedDeposit>
 {
-    public FixedDepositByMemberIdSpec(Guid memberId)
+    public FixedDepositByMemberIdSpec(DefaultIdType memberId)
     {
         Query.Where(fd => fd.MemberId == memberId);
     }

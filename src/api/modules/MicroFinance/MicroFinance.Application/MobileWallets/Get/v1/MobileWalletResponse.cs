@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.MobileWallets.Get.v1;
 
 public sealed record MobileWalletResponse(
-    Guid Id,
-    Guid MemberId,
+    DefaultIdType Id,
+    DefaultIdType MemberId,
     string PhoneNumber,
     string Provider,
     string? ExternalWalletId,
@@ -15,4 +15,4 @@ public sealed record MobileWalletResponse(
     decimal MonthlyUsed,
     DateOnly? LastActivityDate,
     bool IsLinkedToBankAccount,
-    Guid? LinkedSavingsAccountId);
+    DefaultIdType? LinkedSavingsAccountId);

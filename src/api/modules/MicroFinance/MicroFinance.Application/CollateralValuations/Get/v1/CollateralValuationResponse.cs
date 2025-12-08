@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Get.v1;
 
 public sealed record CollateralValuationResponse(
-    Guid Id,
-    Guid CollateralId,
+    DefaultIdType Id,
+    DefaultIdType CollateralId,
     string ValuationReference,
     string Status,
     DateOnly ValuationDate,
@@ -20,6 +20,6 @@ public sealed record CollateralValuationResponse(
     string? Condition,
     string? Notes,
     string? DocumentPath,
-    Guid? ApprovedById,
+    DefaultIdType? ApprovedById,
     DateOnly? ApprovedDate,
     string? RejectionReason);

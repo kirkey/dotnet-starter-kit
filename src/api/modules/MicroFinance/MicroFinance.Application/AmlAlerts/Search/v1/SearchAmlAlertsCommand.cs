@@ -32,5 +32,5 @@ public class SearchAmlAlertsCommand : PaginationFilter, IRequest<PagedList<AmlAl
     /// <summary>
     /// Filter by member ID.
     /// </summary>
-    public Guid? MemberId { get; set; }
+    public DefaultIdType? MemberId { get; set; }
 }

@@ -3,7 +3,7 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Create.v1;
 
 public sealed record CreateCollateralValuationCommand(
-    Guid CollateralId,
+    DefaultIdType CollateralId,
     string ValuationReference,
     DateOnly ValuationDate,
     string ValuationMethod,

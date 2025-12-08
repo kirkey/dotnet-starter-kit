@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Get.v1;
 
 public sealed record LoanCollateralResponse(
-    Guid Id,
-    Guid LoanId,
+    DefaultIdType Id,
+    DefaultIdType LoanId,
     string CollateralType,
     string Description,
     decimal EstimatedValue,

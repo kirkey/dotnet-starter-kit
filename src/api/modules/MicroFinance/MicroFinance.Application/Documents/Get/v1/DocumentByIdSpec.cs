@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.Documents.Get.v1;
 /// </summary>
 public sealed class DocumentByIdSpec : Specification<Document, DocumentResponse>
 {
-    public DocumentByIdSpec(Guid id)
+    public DocumentByIdSpec(DefaultIdType id)
     {
         Query.Where(d => d.Id == id);
 

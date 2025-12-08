@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.PostInterest
 /// <summary>
 /// Command to post interest to a fixed deposit.
 /// </summary>
-public sealed record PostFixedDepositInterestCommand(Guid DepositId, decimal InterestAmount) : IRequest<PostFixedDepositInterestResponse>;
+public sealed record PostFixedDepositInterestCommand(DefaultIdType DepositId, decimal InterestAmount) : IRequest<PostFixedDepositInterestResponse>;

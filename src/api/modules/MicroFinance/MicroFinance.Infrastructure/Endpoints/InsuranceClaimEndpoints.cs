@@ -3,6 +3,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Reject.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Review.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Settle.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Submit.v1;
 
@@ -10,17 +11,29 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class InsuranceClaimEndpoints : CarterModule
 {
-
     private const string ApproveInsuranceClaim = "ApproveInsuranceClaim";
     private const string GetInsuranceClaim = "GetInsuranceClaim";
     private const string RejectInsuranceClaim = "RejectInsuranceClaim";
     private const string ReviewInsuranceClaim = "ReviewInsuranceClaim";
+    private const string SearchInsuranceClaims = "SearchInsuranceClaims";
     private const string SettleInsuranceClaim = "SettleInsuranceClaim";
     private const string SubmitInsuranceClaim = "SubmitInsuranceClaim";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/insurance-claims").WithTags("Insurance Claims");
+
+        // Search Claims
+        group.MapPost("/search", async (SearchInsuranceClaimsCommand command, ISender sender) =>
+            {
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(SearchInsuranceClaims)
+            .WithSummary("Searches insurance claims")
+            .Produces<PagedList<InsuranceClaimResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         // Submit Claim
         group.MapPost("/", async (SubmitInsuranceClaimCommand command, ISender sender) =>

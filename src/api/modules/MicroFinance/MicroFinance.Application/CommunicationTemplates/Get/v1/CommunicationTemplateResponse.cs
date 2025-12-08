@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.CommunicationTemplates.Get.v1;
 
 public sealed record CommunicationTemplateResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Code,
     string Name,
     string Channel,

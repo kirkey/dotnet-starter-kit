@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Launch.
 /// <summary>
 /// Command to launch a marketing campaign.
 /// </summary>
-public sealed record LaunchMarketingCampaignCommand(Guid Id) : IRequest<LaunchMarketingCampaignResponse>;
+public sealed record LaunchMarketingCampaignCommand(DefaultIdType Id) : IRequest<LaunchMarketingCampaignResponse>;

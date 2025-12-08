@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.Get.v1;
 
 public sealed record LoanDisbursementTrancheResponse(
-    Guid Id,
-    Guid LoanId,
+    DefaultIdType Id,
+    DefaultIdType LoanId,
     int TrancheSequence,
     string TrancheNumber,
     DateOnly ScheduledDate,
@@ -17,6 +17,6 @@ public sealed record LoanDisbursementTrancheResponse(
     string? Milestone,
     bool MilestoneVerified,
     string Status,
-    Guid? ApprovedByUserId,
+    DefaultIdType? ApprovedByUserId,
     DateTime? ApprovedAt,
-    Guid? DisbursedByUserId);
+    DefaultIdType? DisbursedByUserId);

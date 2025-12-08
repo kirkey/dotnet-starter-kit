@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerTargets.RecordP
 /// <summary>
 /// Command to record progress towards a loan officer target.
 /// </summary>
-public sealed record RecordLoanOfficerProgressCommand(Guid Id, decimal AchievedValue) : IRequest<RecordLoanOfficerProgressResponse>;
+public sealed record RecordLoanOfficerProgressCommand(DefaultIdType Id, decimal AchievedValue) : IRequest<RecordLoanOfficerProgressResponse>;

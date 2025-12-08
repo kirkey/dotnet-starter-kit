@@ -2,4 +2,4 @@ using MediatR;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.Get.v1;
 
-public sealed record GetLoanDisbursementTrancheRequest(Guid Id) : IRequest<LoanDisbursementTrancheResponse>;
+public sealed record GetLoanDisbursementTrancheRequest(DefaultIdType Id) : IRequest<LoanDisbursementTrancheResponse>;

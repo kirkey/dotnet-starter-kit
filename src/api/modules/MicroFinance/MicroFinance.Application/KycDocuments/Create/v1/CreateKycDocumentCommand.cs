@@ -3,7 +3,7 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.KycDocuments.Create.v1;
 
 public sealed record CreateKycDocumentCommand(
-    Guid MemberId,
+    DefaultIdType MemberId,
     string DocumentType,
     string FileName,
     string FilePath,

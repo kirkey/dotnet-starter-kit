@@ -8,6 +8,6 @@ public sealed record CreateAmlAlertCommand(
     string Severity,
     string TriggerRule,
     string Description,
-    Guid? MemberId = null,
-    Guid? TransactionId = null,
+    DefaultIdType? MemberId = null,
+    DefaultIdType? TransactionId = null,
     decimal? TransactionAmount = null) : IRequest<CreateAmlAlertResponse>;

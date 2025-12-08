@@ -4,16 +4,16 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CustomerCases.Get.v1;
 /// Response containing customer case details.
 /// </summary>
 public sealed record CustomerCaseResponse(
-    Guid Id,
+    DefaultIdType Id,
     string CaseNumber,
-    Guid MemberId,
+    DefaultIdType MemberId,
     string Subject,
     string Category,
     string Priority,
     string Status,
     string Description,
     string Channel,
-    Guid? AssignedToId,
+    DefaultIdType? AssignedToId,
     DateTimeOffset OpenedAt,
     DateTimeOffset? FirstResponseAt,
     DateTimeOffset? ResolvedAt,

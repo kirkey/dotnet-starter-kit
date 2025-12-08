@@ -1,11 +1,11 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.Loans.Get.v1;
 
 public sealed record LoanResponse(
-    Guid Id,
-    Guid MemberId,
+    DefaultIdType Id,
+    DefaultIdType MemberId,
     string MemberName,
     string MemberNumber,
-    Guid LoanProductId,
+    DefaultIdType LoanProductId,
     string LoanProductName,
     string LoanNumber,
     decimal PrincipalAmount,
@@ -30,7 +30,7 @@ public sealed record LoanResponse(
 );
 
 public sealed record LoanScheduleDto(
-    Guid Id,
+    DefaultIdType Id,
     int InstallmentNumber,
     DateOnly DueDate,
     decimal PrincipalAmount,
@@ -42,7 +42,7 @@ public sealed record LoanScheduleDto(
 );
 
 public sealed record LoanRepaymentDto(
-    Guid Id,
+    DefaultIdType Id,
     DateOnly RepaymentDate,
     decimal TotalAmount,
     decimal PrincipalAmount,
@@ -53,8 +53,8 @@ public sealed record LoanRepaymentDto(
 );
 
 public sealed record LoanGuarantorDto(
-    Guid Id,
-    Guid GuarantorMemberId,
+    DefaultIdType Id,
+    DefaultIdType GuarantorMemberId,
     string? GuarantorName,
     string? Relationship,
     decimal GuaranteedAmount,
@@ -62,7 +62,7 @@ public sealed record LoanGuarantorDto(
 );
 
 public sealed record LoanCollateralDto(
-    Guid Id,
+    DefaultIdType Id,
     string CollateralType,
     string Description,
     decimal EstimatedValue,

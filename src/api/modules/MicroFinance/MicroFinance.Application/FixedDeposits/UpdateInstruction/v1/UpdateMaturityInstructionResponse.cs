@@ -4,6 +4,6 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.UpdateInstru
 /// Response after updating instruction.
 /// </summary>
 public sealed record UpdateMaturityInstructionResponse(
-    Guid DepositId,
+    DefaultIdType DepositId,
     string MaturityInstruction,
     string Message);

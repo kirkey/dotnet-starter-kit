@@ -4,5 +4,5 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Reinstate.v1;
 /// <summary>
 /// Response after reinstating a staff member.
 /// </summary>
-public sealed record ReinstateStaffResponse(Guid Id, string Status);
+public sealed record ReinstateStaffResponse(DefaultIdType Id, string Status);
 

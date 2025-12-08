@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.InsuranceProducts.Specific
 
 public sealed class InsuranceProductByIdSpec : Specification<InsuranceProduct>, ISingleResultSpecification<InsuranceProduct>
 {
-    public InsuranceProductByIdSpec(Guid id)
+    public InsuranceProductByIdSpec(DefaultIdType id)
     {
         Query.Where(p => p.Id == id);
     }

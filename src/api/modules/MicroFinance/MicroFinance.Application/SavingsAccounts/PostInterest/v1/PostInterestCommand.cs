@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.PostIntere
 /// <summary>
 /// Command to post interest to a savings account.
 /// </summary>
-public sealed record PostInterestCommand(Guid AccountId, decimal InterestAmount) : IRequest<PostInterestResponse>;
+public sealed record PostInterestCommand(DefaultIdType AccountId, decimal InterestAmount) : IRequest<PostInterestResponse>;

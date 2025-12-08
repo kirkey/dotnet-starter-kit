@@ -3,7 +3,7 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanRestructures.Create.v1;
 
 public sealed record CreateLoanRestructureCommand(
-    Guid LoanId,
+    DefaultIdType LoanId,
     string RestructureNumber,
     string RestructureType,
     decimal OriginalPrincipal,

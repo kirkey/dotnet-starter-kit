@@ -3,7 +3,7 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.Create.v1;
 
 public sealed record CreateCollateralInsuranceCommand(
-    Guid CollateralId,
+    DefaultIdType CollateralId,
     string PolicyNumber,
     string InsurerName,
     string InsuranceType,

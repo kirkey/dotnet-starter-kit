@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanWriteOffs.Get.v1;
 
 public sealed record LoanWriteOffResponse(
-    Guid Id,
-    Guid LoanId,
+    DefaultIdType Id,
+    DefaultIdType LoanId,
     string WriteOffNumber,
     string WriteOffType,
     string Reason,
@@ -17,6 +17,6 @@ public sealed record LoanWriteOffResponse(
     int DaysPastDue,
     int CollectionAttempts,
     string Status,
-    Guid? ApprovedByUserId,
+    DefaultIdType? ApprovedByUserId,
     string? ApprovedBy,
     DateTime? ApprovedAt);

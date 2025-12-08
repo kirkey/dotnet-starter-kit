@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.Get.v1;
 /// </summary>
 public sealed class PromiseToPayByIdSpec : Specification<PromiseToPay, PromiseToPayResponse>
 {
-    public PromiseToPayByIdSpec(Guid id)
+    public PromiseToPayByIdSpec(DefaultIdType id)
     {
         Query.Where(p => p.Id == id);
 

@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Reactivat
 /// <summary>
 /// Response after reactivating membership.
 /// </summary>
-public sealed record ReactivateMembershipResponse(Guid Id, string Status, string Message);
+public sealed record ReactivateMembershipResponse(DefaultIdType Id, string Status, string Message);

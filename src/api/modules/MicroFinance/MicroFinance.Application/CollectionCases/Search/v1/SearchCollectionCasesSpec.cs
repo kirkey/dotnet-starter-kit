@@ -22,9 +22,9 @@ public class SearchCollectionCasesSpec : EntitiesByPaginationFilterSpec<Collecti
             .OrderByDescending(c => c.OpenedDate, !command.HasOrderBy())
             .ThenBy(c => c.CaseNumber)
             .Where(c => c.Status == command.Status!, !string.IsNullOrWhiteSpace(command.Status))
-            .Where(c => c.LoanId == command.LoanId!.Value, command.LoanId.HasValue && command.LoanId.Value != Guid.Empty)
-            .Where(c => c.MemberId == command.MemberId!.Value, command.MemberId.HasValue && command.MemberId.Value != Guid.Empty)
-            .Where(c => c.AssignedCollectorId == command.AssignedToId!.Value, command.AssignedToId.HasValue && command.AssignedToId.Value != Guid.Empty)
+            .Where(c => c.LoanId == command.LoanId!.Value, command.LoanId.HasValue && command.LoanId.Value != DefaultIdType.Empty)
+            .Where(c => c.MemberId == command.MemberId!.Value, command.MemberId.HasValue && command.MemberId.Value != DefaultIdType.Empty)
+            .Where(c => c.AssignedCollectorId == command.AssignedToId!.Value, command.AssignedToId.HasValue && command.AssignedToId.Value != DefaultIdType.Empty)
             .Where(c => c.Priority == command.Priority!, !string.IsNullOrWhiteSpace(command.Priority))
             .Where(c => c.Classification == command.Classification!, !string.IsNullOrWhiteSpace(command.Classification))
             .Where(c => c.CaseNumber.Contains(command.Keyword!), !string.IsNullOrEmpty(command.Keyword));

@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.Specific
 /// </summary>
 public sealed class InsurancePolicyByIdSpec : Specification<InsurancePolicy>, ISingleResultSpecification<InsurancePolicy>
 {
-    public InsurancePolicyByIdSpec(Guid id)
+    public InsurancePolicyByIdSpec(DefaultIdType id)
     {
         Query.Where(p => p.Id == id);
     }

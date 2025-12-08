@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Withdraw.
 /// <summary>
 /// Response after withdrawing membership.
 /// </summary>
-public sealed record WithdrawMembershipResponse(Guid Id, string Status, DateOnly? LeaveDate, string Message);
+public sealed record WithdrawMembershipResponse(DefaultIdType Id, string Status, DateOnly? LeaveDate, string Message);

@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.FeeDefinitions.Specificati
 
 public sealed class FeeDefinitionByIdSpec : Specification<FeeDefinition>, ISingleResultSpecification<FeeDefinition>
 {
-    public FeeDefinitionByIdSpec(Guid id)
+    public FeeDefinitionByIdSpec(DefaultIdType id)
     {
         Query.Where(fd => fd.Id == id);
     }

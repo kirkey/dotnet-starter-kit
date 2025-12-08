@@ -1,10 +1,10 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Get.v1;
 
 public sealed record ShareAccountResponse(
-    Guid Id,
+    DefaultIdType Id,
     string AccountNumber,
-    Guid MemberId,
-    Guid ShareProductId,
+    DefaultIdType MemberId,
+    DefaultIdType ShareProductId,
     int NumberOfShares,
     decimal TotalShareValue,
     decimal TotalPurchases,

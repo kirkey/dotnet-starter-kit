@@ -6,7 +6,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerTargets.Create.
 /// Command to create a new loan officer target.
 /// </summary>
 public sealed record CreateLoanOfficerTargetCommand(
-    Guid StaffId,
+    DefaultIdType StaffId,
     string TargetType,
     string Period,
     DateOnly PeriodStart,

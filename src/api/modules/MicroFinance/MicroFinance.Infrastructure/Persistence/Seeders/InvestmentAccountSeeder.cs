@@ -1,4 +1,3 @@
-using FSH.Starter.WebApi.MicroFinance.Domain;
 using Microsoft.Extensions.Logging;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Persistence.Seeders;

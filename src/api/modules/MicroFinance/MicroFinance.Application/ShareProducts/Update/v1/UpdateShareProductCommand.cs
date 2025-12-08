@@ -4,7 +4,7 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.ShareProducts.Update.v1;
 
 public sealed record UpdateShareProductCommand(
-    Guid Id,
+    DefaultIdType Id,
     [property: DefaultValue("Updated Common Shares")] string? Name,
     [property: DefaultValue("Updated description")] string? Description,
     [property: DefaultValue(110)] decimal? CurrentPrice,

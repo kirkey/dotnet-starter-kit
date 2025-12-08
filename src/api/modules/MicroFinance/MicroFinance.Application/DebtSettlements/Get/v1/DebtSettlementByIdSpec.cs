@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.DebtSettlements.Get.v1;
 
 public sealed class DebtSettlementByIdSpec : Specification<DebtSettlement>, ISingleResultSpecification<DebtSettlement>
 {
-    public DebtSettlementByIdSpec(Guid id)
+    public DebtSettlementByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

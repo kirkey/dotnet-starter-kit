@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CommunicationLogs.MarkDeli
 /// <summary>
 /// Command to mark a communication as delivered.
 /// </summary>
-public sealed record MarkCommunicationDeliveredCommand(Guid LogId) : IRequest<MarkCommunicationDeliveredResponse>;
+public sealed record MarkCommunicationDeliveredCommand(DefaultIdType LogId) : IRequest<MarkCommunicationDeliveredResponse>;

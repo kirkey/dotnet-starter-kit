@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.Get.v1;
 
 public sealed record InvestmentAccountResponse(
-    Guid Id,
-    Guid MemberId,
+    DefaultIdType Id,
+    DefaultIdType MemberId,
     string AccountNumber,
     string Status,
     string RiskProfile,
@@ -16,7 +16,7 @@ public sealed record InvestmentAccountResponse(
     int HoldingsCount,
     DateOnly? FirstInvestmentDate,
     DateOnly? LastTransactionDate,
-    Guid? AssignedAdvisorId,
+    DefaultIdType? AssignedAdvisorId,
     bool HasSip,
     decimal? SipAmount,
     string? SipFrequency,

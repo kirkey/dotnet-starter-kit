@@ -4,11 +4,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Get.v1;
 /// Response DTO for a savings account.
 /// </summary>
 public sealed record SavingsAccountResponse(
-    Guid Id,
+    DefaultIdType Id,
     string AccountNumber,
-    Guid MemberId,
+    DefaultIdType MemberId,
     string? MemberName,
-    Guid SavingsProductId,
+    DefaultIdType SavingsProductId,
     string? ProductName,
     decimal Balance,
     decimal TotalDeposits,

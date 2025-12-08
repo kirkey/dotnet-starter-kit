@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CustomerSurveys.Complete.v
 /// <summary>
 /// Response from completing a customer survey.
 /// </summary>
-public sealed record CompleteCustomerSurveyResponse(Guid Id, string Status, int TotalResponses, decimal? AverageScore);
+public sealed record CompleteCustomerSurveyResponse(DefaultIdType Id, string Status, int TotalResponses, decimal? AverageScore);

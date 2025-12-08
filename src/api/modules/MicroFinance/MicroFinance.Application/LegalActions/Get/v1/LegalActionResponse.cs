@@ -1,10 +1,10 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.LegalActions.Get.v1;
 
 public sealed record LegalActionResponse(
-    Guid Id,
-    Guid CollectionCaseId,
-    Guid LoanId,
-    Guid MemberId,
+    DefaultIdType Id,
+    DefaultIdType CollectionCaseId,
+    DefaultIdType LoanId,
+    DefaultIdType MemberId,
     string? CaseReference,
     string ActionType,
     string Status,

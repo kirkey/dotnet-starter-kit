@@ -4,8 +4,8 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Get.v1;
 /// Response containing risk indicator details.
 /// </summary>
 public sealed record RiskIndicatorResponse(
-    Guid Id,
-    Guid RiskCategoryId,
+    DefaultIdType Id,
+    DefaultIdType RiskCategoryId,
     string Code,
     string Name,
     string? Description,

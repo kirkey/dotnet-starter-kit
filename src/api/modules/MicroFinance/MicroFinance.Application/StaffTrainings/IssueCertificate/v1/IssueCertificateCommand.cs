@@ -6,7 +6,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.StaffTrainings.IssueCertif
 /// Command to issue a certificate for completed training.
 /// </summary>
 public sealed record IssueCertificateCommand(
-    Guid Id,
+    DefaultIdType Id,
     string CertificationNumber,
     DateOnly? CertificationDate = null,
     DateOnly? ExpiryDate = null) : IRequest<IssueCertificateResponse>;

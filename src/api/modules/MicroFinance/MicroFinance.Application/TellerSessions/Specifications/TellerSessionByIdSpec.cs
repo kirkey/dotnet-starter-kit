@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.Specificati
 
 public sealed class TellerSessionByIdSpec : Specification<TellerSession>, ISingleResultSpecification<TellerSession>
 {
-    public TellerSessionByIdSpec(Guid id)
+    public TellerSessionByIdSpec(DefaultIdType id)
     {
         Query.Where(s => s.Id == id);
     }

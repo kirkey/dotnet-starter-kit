@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Get.v1;
 
 public sealed record LoanProductResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Code,
     string Name,
     string? Description,

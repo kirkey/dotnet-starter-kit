@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ReportGenerations.Get.v1;
 
 public sealed class ReportGenerationByIdSpec : Specification<ReportGeneration>
 {
-    public ReportGenerationByIdSpec(Guid id)
+    public ReportGenerationByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

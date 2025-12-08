@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Withdraw.
 /// <summary>
 /// Response after withdrawing a loan application.
 /// </summary>
-public sealed record WithdrawLoanApplicationResponse(Guid Id, string Status);
+public sealed record WithdrawLoanApplicationResponse(DefaultIdType Id, string Status);

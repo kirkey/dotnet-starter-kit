@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Get.v1;
 /// </summary>
 public sealed class RiskAlertByIdSpec : Specification<RiskAlert, RiskAlertResponse>
 {
-    public RiskAlertByIdSpec(Guid id)
+    public RiskAlertByIdSpec(DefaultIdType id)
     {
         Query.Where(r => r.Id == id);
 

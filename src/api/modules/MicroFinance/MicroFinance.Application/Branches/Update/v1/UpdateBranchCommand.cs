@@ -3,7 +3,7 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.Branches.Update.v1;
 
 public sealed record UpdateBranchCommand(
-    Guid Id,
+    DefaultIdType Id,
     string? Name = null,
     string? Address = null,
     string? City = null,

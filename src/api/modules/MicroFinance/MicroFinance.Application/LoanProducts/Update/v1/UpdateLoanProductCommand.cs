@@ -4,7 +4,7 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Update.v1;
 
 public sealed record UpdateLoanProductCommand(
-    Guid Id,
+    DefaultIdType Id,
     [property: DefaultValue("Personal Loan Updated")] string? Name,
     [property: DefaultValue("Updated description")] string? Description,
     [property: DefaultValue(2000)] decimal? MinLoanAmount,

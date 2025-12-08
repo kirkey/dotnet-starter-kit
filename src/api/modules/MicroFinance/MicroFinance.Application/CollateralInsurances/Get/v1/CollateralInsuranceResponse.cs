@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.Get.v1;
 
 public sealed record CollateralInsuranceResponse(
-    Guid Id,
-    Guid CollateralId,
+    DefaultIdType Id,
+    DefaultIdType CollateralId,
     string PolicyNumber,
     string InsurerName,
     string InsuranceType,

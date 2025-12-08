@@ -6,11 +6,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Update.v1;
 /// Command to update a member group's information.
 /// </summary>
 public sealed record UpdateMemberGroupCommand(
-    Guid Id,
+    DefaultIdType Id,
     string? Name,
     string? Description,
-    Guid? LeaderMemberId,
-    Guid? LoanOfficerId,
+    DefaultIdType? LeaderMemberId,
+    DefaultIdType? LoanOfficerId,
     string? MeetingLocation,
     string? MeetingFrequency,
     string? MeetingDay,

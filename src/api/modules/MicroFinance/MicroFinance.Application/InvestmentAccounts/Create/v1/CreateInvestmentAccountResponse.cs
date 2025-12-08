@@ -1,6 +1,6 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.Create.v1;
 
 public sealed record CreateInvestmentAccountResponse(
-    Guid Id,
+    DefaultIdType Id,
     string AccountNumber,
     string RiskProfile);

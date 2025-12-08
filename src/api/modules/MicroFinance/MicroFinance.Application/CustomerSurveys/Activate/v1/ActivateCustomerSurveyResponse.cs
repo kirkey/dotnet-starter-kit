@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CustomerSurveys.Activate.v
 /// <summary>
 /// Response from activating a customer survey.
 /// </summary>
-public sealed record ActivateCustomerSurveyResponse(Guid Id, string Status);
+public sealed record ActivateCustomerSurveyResponse(DefaultIdType Id, string Status);

@@ -4,6 +4,6 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.RecordPaymen
 /// Response after recording payment against a promise.
 /// </summary>
 public sealed record RecordPromisePaymentResponse(
-    Guid Id,
+    DefaultIdType Id,
     decimal ActualAmountPaid,
     string Status);

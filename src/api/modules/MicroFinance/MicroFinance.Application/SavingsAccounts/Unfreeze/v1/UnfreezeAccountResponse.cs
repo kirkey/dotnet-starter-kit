@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Unfreeze.v
 /// <summary>
 /// Response after unfreezing account.
 /// </summary>
-public sealed record UnfreezeAccountResponse(Guid AccountId, string Status, string Message);
+public sealed record UnfreezeAccountResponse(DefaultIdType AccountId, string Status, string Message);

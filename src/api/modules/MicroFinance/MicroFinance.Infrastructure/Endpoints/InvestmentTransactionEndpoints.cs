@@ -3,20 +3,33 @@ using FSH.Starter.WebApi.MicroFinance.Application.InvestmentTransactions.Complet
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentTransactions.CreateBuy.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentTransactions.CreateSell.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentTransactions.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.InvestmentTransactions.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class InvestmentTransactionEndpoints : CarterModule
 {
-
     private const string CompleteInvestmentTransaction = "CompleteInvestmentTransaction";
     private const string CreateBuyTransaction = "CreateBuyTransaction";
     private const string CreateSellTransaction = "CreateSellTransaction";
     private const string GetInvestmentTransaction = "GetInvestmentTransaction";
+    private const string SearchInvestmentTransactions = "SearchInvestmentTransactions";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/investment-transactions").WithTags("Investment Transactions");
+
+        // Search transactions
+        group.MapPost("/search", async (SearchInvestmentTransactionsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command);
+            return Results.Ok(result);
+        })
+        .WithName(SearchInvestmentTransactions)
+        .WithSummary("Search investment transactions")
+        .Produces<PagedList<InvestmentTransactionResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .MapToApiVersion(1);
 
         group.MapPost("/buy", async (CreateBuyTransactionCommand command, ISender sender) =>
         {

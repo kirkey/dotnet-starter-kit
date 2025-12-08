@@ -1,12 +1,12 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.Branches.Get.v1;
 
 public sealed record BranchResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Code,
     string Name,
     string BranchType,
     string Status,
-    Guid? ParentBranchId,
+    DefaultIdType? ParentBranchId,
     string? Address,
     string? City,
     string? State,

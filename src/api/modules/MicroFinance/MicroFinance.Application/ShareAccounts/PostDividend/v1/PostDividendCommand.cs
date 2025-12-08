@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.PostDividend
 /// <summary>
 /// Command to post dividend earnings to a share account.
 /// </summary>
-public sealed record PostDividendCommand(Guid ShareAccountId, decimal DividendAmount) : IRequest<PostDividendResponse>;
+public sealed record PostDividendCommand(DefaultIdType ShareAccountId, decimal DividendAmount) : IRequest<PostDividendResponse>;

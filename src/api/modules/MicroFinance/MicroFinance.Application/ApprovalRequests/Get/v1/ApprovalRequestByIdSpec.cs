@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Get.v1;
 /// </summary>
 public sealed class ApprovalRequestByIdSpec : Specification<ApprovalRequest>, ISingleResultSpecification<ApprovalRequest>
 {
-    public ApprovalRequestByIdSpec(Guid id)
+    public ApprovalRequestByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MfiConfigurations.Get.v1;
 
 public sealed class MfiConfigurationByIdSpec : Specification<MfiConfiguration>
 {
-    public MfiConfigurationByIdSpec(Guid id)
+    public MfiConfigurationByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

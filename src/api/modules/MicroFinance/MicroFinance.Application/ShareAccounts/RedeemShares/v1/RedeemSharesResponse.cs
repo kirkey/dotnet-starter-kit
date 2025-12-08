@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.RedeemShares
 /// Response after redeeming shares.
 /// </summary>
 public sealed record RedeemSharesResponse(
-    Guid AccountId,
+    DefaultIdType AccountId,
     int SharesRedeemed,
     decimal TotalAmount,
     int RemainingShares,

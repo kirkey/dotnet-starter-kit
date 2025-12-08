@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Get.v1;
 
 public sealed record PaymentGatewayResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Name,
     string Provider,
     string Status,

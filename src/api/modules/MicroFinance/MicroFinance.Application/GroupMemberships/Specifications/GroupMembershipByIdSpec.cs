@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Specifica
 
 public sealed class GroupMembershipByIdSpec : Specification<GroupMembership>, ISingleResultSpecification<GroupMembership>
 {
-    public GroupMembershipByIdSpec(Guid id)
+    public GroupMembershipByIdSpec(DefaultIdType id)
     {
         Query.Where(gm => gm.Id == id);
     }

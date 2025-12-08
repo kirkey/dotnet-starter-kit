@@ -3,7 +3,7 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.AgentBankings.Update.v1;
 
 public sealed record UpdateAgentBankingCommand(
-    Guid Id,
+    DefaultIdType Id,
     string? BusinessName = null,
     string? ContactName = null,
     string? PhoneNumber = null,

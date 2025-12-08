@@ -17,7 +17,7 @@ public sealed class CreateInsurancePolicyHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var policyNumber = $"INS-{DateTime.UtcNow:yyyyMMdd}-{Guid.NewGuid().ToString()[..8].ToUpperInvariant()}";
+        var policyNumber = $"INS-{DateTime.UtcNow:yyyyMMdd}-{DefaultIdType.NewGuid().ToString()[..8].ToUpperInvariant()}";
 
         var policy = InsurancePolicy.Create(
             request.InsuranceProductId,

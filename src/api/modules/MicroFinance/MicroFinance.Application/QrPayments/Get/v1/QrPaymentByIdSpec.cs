@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.QrPayments.Get.v1;
 
 public sealed class QrPaymentByIdSpec : Specification<QrPayment>
 {
-    public QrPaymentByIdSpec(Guid id)
+    public QrPaymentByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

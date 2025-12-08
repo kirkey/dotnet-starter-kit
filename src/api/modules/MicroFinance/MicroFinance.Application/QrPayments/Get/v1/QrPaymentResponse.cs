@@ -1,10 +1,10 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.QrPayments.Get.v1;
 
 public sealed record QrPaymentResponse(
-    Guid Id,
-    Guid? WalletId,
-    Guid? MemberId,
-    Guid? AgentId,
+    DefaultIdType Id,
+    DefaultIdType? WalletId,
+    DefaultIdType? MemberId,
+    DefaultIdType? AgentId,
     string QrCode,
     string QrType,
     string Status,
@@ -16,4 +16,4 @@ public sealed record QrPaymentResponse(
     DateTimeOffset GeneratedAt,
     DateTimeOffset? ExpiresAt,
     DateTimeOffset? LastUsedAt,
-    Guid? LastTransactionId);
+    DefaultIdType? LastTransactionId);

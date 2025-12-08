@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.StaffTrainings.Get.v1;
 /// </summary>
 public sealed class StaffTrainingByIdSpec : Specification<StaffTraining>, ISingleResultSpecification<StaffTraining>
 {
-    public StaffTrainingByIdSpec(Guid id)
+    public StaffTrainingByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

@@ -5,5 +5,5 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.Specifi
 
 public sealed class InvestmentAccountByIdSpec : Specification<InvestmentAccount>, ISingleResultSpecification<InvestmentAccount>
 {
-    public InvestmentAccountByIdSpec(Guid id) => Query.Where(x => x.Id == id);
+    public InvestmentAccountByIdSpec(DefaultIdType id) => Query.Where(x => x.Id == id);
 }

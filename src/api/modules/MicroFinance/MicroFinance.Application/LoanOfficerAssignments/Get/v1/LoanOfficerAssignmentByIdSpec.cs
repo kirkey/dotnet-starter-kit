@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerAssignments.Get
 
 public sealed class LoanOfficerAssignmentByIdSpec : Specification<LoanOfficerAssignment>, ISingleResultSpecification<LoanOfficerAssignment>
 {
-    public LoanOfficerAssignmentByIdSpec(Guid id)
+    public LoanOfficerAssignmentByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

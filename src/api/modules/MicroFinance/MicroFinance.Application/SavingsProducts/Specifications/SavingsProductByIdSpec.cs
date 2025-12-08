@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Specificat
 
 public sealed class SavingsProductByIdSpec : Specification<SavingsProduct>, ISingleResultSpecification<SavingsProduct>
 {
-    public SavingsProductByIdSpec(Guid id)
+    public SavingsProductByIdSpec(DefaultIdType id)
     {
         Query.Where(sp => sp.Id == id);
     }

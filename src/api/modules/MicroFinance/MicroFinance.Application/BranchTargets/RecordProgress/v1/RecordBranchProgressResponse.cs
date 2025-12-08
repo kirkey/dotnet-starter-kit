@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.RecordProgre
 /// Response from recording branch target progress.
 /// </summary>
 public sealed record RecordBranchProgressResponse(
-    Guid Id,
+    DefaultIdType Id,
     decimal AchievedValue,
     decimal AchievementPercentage,
     string Status);

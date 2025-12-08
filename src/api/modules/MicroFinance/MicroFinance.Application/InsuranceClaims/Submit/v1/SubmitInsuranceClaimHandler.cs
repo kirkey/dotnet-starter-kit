@@ -17,7 +17,7 @@ public sealed class SubmitInsuranceClaimHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var claimNumber = $"CLM-{DateTime.UtcNow:yyyyMMdd}-{Guid.NewGuid().ToString()[..8].ToUpperInvariant()}";
+        var claimNumber = $"CLM-{DateTime.UtcNow:yyyyMMdd}-{DefaultIdType.NewGuid().ToString()[..8].ToUpperInvariant()}";
 
         var claim = InsuranceClaim.Create(
             request.PolicyId,

@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.GroupMemberships.Reactivat
 /// <summary>
 /// Command to reactivate a suspended group membership.
 /// </summary>
-public sealed record ReactivateMembershipCommand(Guid Id) : IRequest<ReactivateMembershipResponse>;
+public sealed record ReactivateMembershipCommand(DefaultIdType Id) : IRequest<ReactivateMembershipResponse>;

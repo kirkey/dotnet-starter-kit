@@ -6,6 +6,6 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Approve.v
 /// Command to approve the current level of an approval request.
 /// </summary>
 public sealed record ApproveRequestLevelCommand(
-    Guid Id,
-    Guid ApproverId,
+    DefaultIdType Id,
+    DefaultIdType ApproverId,
     string? Comments = null) : IRequest<ApproveRequestLevelResponse>;

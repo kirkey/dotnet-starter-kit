@@ -6,13 +6,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.FeeCharges.Create.v1;
 /// Command to create a new fee charge.
 /// </summary>
 public sealed record CreateFeeChargeCommand(
-    Guid FeeDefinitionId,
-    Guid MemberId,
+    DefaultIdType FeeDefinitionId,
+    DefaultIdType MemberId,
     string Reference,
     decimal Amount,
-    Guid? LoanId = null,
-    Guid? SavingsAccountId = null,
-    Guid? ShareAccountId = null,
+    DefaultIdType? LoanId = null,
+    DefaultIdType? SavingsAccountId = null,
+    DefaultIdType? ShareAccountId = null,
     DateOnly? ChargeDate = null,
     DateOnly? DueDate = null,
     string? Notes = null) : IRequest<CreateFeeChargeResponse>;

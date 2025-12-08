@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanSchedules.Get.v1;
 
 public sealed record LoanScheduleResponse(
-    Guid Id,
-    Guid LoanId,
+    DefaultIdType Id,
+    DefaultIdType LoanId,
     int InstallmentNumber,
     DateOnly DueDate,
     decimal PrincipalAmount,

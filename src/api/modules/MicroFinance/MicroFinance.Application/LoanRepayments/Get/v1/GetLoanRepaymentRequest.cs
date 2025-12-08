@@ -6,4 +6,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanRepayments.Get.v1;
 /// Request to retrieve a loan repayment by its ID.
 /// </summary>
 /// <param name="Id">The unique identifier of the loan repayment.</param>
-public record GetLoanRepaymentRequest(Guid Id) : IRequest<LoanRepaymentResponse>;
+public record GetLoanRepaymentRequest(DefaultIdType Id) : IRequest<LoanRepaymentResponse>;

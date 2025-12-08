@@ -4,5 +4,5 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Update.v1;
 /// <summary>
 /// Response after updating a staff member.
 /// </summary>
-public sealed record UpdateStaffResponse(Guid Id);
+public sealed record UpdateStaffResponse(DefaultIdType Id);
 

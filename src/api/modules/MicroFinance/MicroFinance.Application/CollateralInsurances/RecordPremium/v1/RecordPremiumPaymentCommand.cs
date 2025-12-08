@@ -3,6 +3,6 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.RecordPremium.v1;
 
 public sealed record RecordCollateralInsurancePremiumCommand(
-    Guid Id,
+    DefaultIdType Id,
     DateOnly PaymentDate,
     DateOnly NextDueDate) : IRequest<RecordCollateralInsurancePremiumResponse>;

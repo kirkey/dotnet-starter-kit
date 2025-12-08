@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CollateralTypes.Get.v1;
 /// </summary>
 public sealed class CollateralTypeByIdSpec : Specification<CollateralType, CollateralTypeResponse>
 {
-    public CollateralTypeByIdSpec(Guid id)
+    public CollateralTypeByIdSpec(DefaultIdType id)
     {
         Query.Where(c => c.Id == id);
 

@@ -4,14 +4,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Get.v1;
 /// Response containing approval workflow details.
 /// </summary>
 public sealed record ApprovalWorkflowResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Code,
     string Name,
     string? Description,
     string EntityType,
     decimal? MinAmount,
     decimal? MaxAmount,
-    Guid? BranchId,
+    DefaultIdType? BranchId,
     int NumberOfLevels,
     bool IsSequential,
     bool IsActive,

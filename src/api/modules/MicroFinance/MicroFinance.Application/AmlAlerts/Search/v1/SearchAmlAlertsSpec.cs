@@ -24,7 +24,7 @@ public class SearchAmlAlertsSpec : EntitiesByPaginationFilterSpec<AmlAlert, AmlA
             .Where(a => a.Status == command.Status!, !string.IsNullOrWhiteSpace(command.Status))
             .Where(a => a.Severity == command.Severity!, !string.IsNullOrWhiteSpace(command.Severity))
             .Where(a => a.AlertType == command.AlertType!, !string.IsNullOrWhiteSpace(command.AlertType))
-            .Where(a => a.MemberId == command.MemberId!.Value, command.MemberId.HasValue && command.MemberId.Value != Guid.Empty)
+            .Where(a => a.MemberId == command.MemberId!.Value, command.MemberId.HasValue && command.MemberId.Value != DefaultIdType.Empty)
             .Where(a => a.AlertCode.Contains(command.Keyword!) ||
                        a.Description.Contains(command.Keyword!) ||
                        a.TriggerRule.Contains(command.Keyword!),

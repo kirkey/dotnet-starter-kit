@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CollectionCases.Specificat
 
 public sealed class CollectionCaseByIdSpec : Specification<CollectionCase>, ISingleResultSpecification<CollectionCase>
 {
-    public CollectionCaseByIdSpec(Guid id)
+    public CollectionCaseByIdSpec(DefaultIdType id)
     {
         Query.Where(c => c.Id == id);
     }

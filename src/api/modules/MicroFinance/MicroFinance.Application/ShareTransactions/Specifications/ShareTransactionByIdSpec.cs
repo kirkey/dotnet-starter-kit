@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ShareTransactions.Specific
 
 public sealed class ShareTransactionByIdSpec : Specification<ShareTransaction>, ISingleResultSpecification<ShareTransaction>
 {
-    public ShareTransactionByIdSpec(Guid id)
+    public ShareTransactionByIdSpec(DefaultIdType id)
     {
         Query.Where(t => t.Id == id);
     }

@@ -4,13 +4,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.Documents.Get.v1;
 /// Response containing document details.
 /// </summary>
 public sealed record DocumentResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Name,
     string DocumentType,
     string? Category,
     string Status,
     string EntityType,
-    Guid EntityId,
+    DefaultIdType EntityId,
     string FilePath,
     string? MimeType,
     long FileSizeBytes,

@@ -4,8 +4,8 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Get.v1;
 /// Response containing insurance claim details.
 /// </summary>
 public sealed record InsuranceClaimResponse(
-    Guid Id,
-    Guid InsurancePolicyId,
+    DefaultIdType Id,
+    DefaultIdType InsurancePolicyId,
     string ClaimNumber,
     string ClaimType,
     decimal ClaimAmount,

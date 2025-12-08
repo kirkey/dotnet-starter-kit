@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MobileTransactions.Get.v1;
 
 public sealed class MobileTransactionByIdSpec : Specification<MobileTransaction>, ISingleResultSpecification<MobileTransaction>
 {
-    public MobileTransactionByIdSpec(Guid id)
+    public MobileTransactionByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

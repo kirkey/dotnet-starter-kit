@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CommunicationLogs.Create.v
 /// Response after creating a communication log.
 /// </summary>
 public sealed record CreateCommunicationLogResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Channel,
     string Recipient,
     string DeliveryStatus);

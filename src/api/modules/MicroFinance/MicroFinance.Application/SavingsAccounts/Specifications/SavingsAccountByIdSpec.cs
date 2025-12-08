@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Specificat
 
 public sealed class SavingsAccountByIdSpec : Specification<SavingsAccount>, ISingleResultSpecification<SavingsAccount>
 {
-    public SavingsAccountByIdSpec(Guid id)
+    public SavingsAccountByIdSpec(DefaultIdType id)
     {
         Query.Where(sa => sa.Id == id)
             .Include(sa => sa.Member)

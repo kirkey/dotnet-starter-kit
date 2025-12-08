@@ -12,7 +12,7 @@ public sealed record CreateAgentBankingCommand(
     decimal DailyTransactionLimit,
     decimal MonthlyTransactionLimit,
     DateOnly ContractStartDate,
-    Guid? BranchId = null,
+    DefaultIdType? BranchId = null,
     string? Email = null,
     string? GpsCoordinates = null,
     string? OperatingHours = null) : IRequest<CreateAgentBankingResponse>;

@@ -1,20 +1,20 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.CreditBureauInquiries.Get.v1;
 
 public sealed record CreditBureauInquiryResponse(
-    Guid Id,
-    Guid MemberId,
-    Guid? LoanId,
+    DefaultIdType Id,
+    DefaultIdType MemberId,
+    DefaultIdType? LoanId,
     string InquiryNumber,
     string BureauName,
     string Purpose,
     DateTime InquiryDate,
     string? RequestedBy,
-    Guid? RequestedByUserId,
+    DefaultIdType? RequestedByUserId,
     string? ReferenceNumber,
     string Status,
     DateTime? ResponseReceivedAt,
     int? CreditScore,
-    Guid? CreditReportId,
+    DefaultIdType? CreditReportId,
     decimal? InquiryCost,
     string? ErrorMessage,
     string? Notes);

@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Get.v1;
 /// </summary>
 public sealed class ApprovalWorkflowByIdSpec : Specification<ApprovalWorkflow>, ISingleResultSpecification<ApprovalWorkflow>
 {
-    public ApprovalWorkflowByIdSpec(Guid id)
+    public ApprovalWorkflowByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

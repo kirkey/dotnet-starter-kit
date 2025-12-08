@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Get.v
 
 public sealed class CollateralValuationByIdSpec : Specification<CollateralValuation>, ISingleResultSpecification<CollateralValuation>
 {
-    public CollateralValuationByIdSpec(Guid id)
+    public CollateralValuationByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

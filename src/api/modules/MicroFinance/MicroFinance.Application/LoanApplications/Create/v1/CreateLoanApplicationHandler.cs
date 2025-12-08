@@ -17,7 +17,7 @@ public sealed class CreateLoanApplicationHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var applicationNumber = $"LA-{DateTime.UtcNow:yyyyMMdd}-{Guid.NewGuid().ToString()[..8].ToUpperInvariant()}";
+        var applicationNumber = $"LA-{DateTime.UtcNow:yyyyMMdd}-{DefaultIdType.NewGuid().ToString()[..8].ToUpperInvariant()}";
 
         var application = LoanApplication.Create(
             applicationNumber,

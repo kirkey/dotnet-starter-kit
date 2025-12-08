@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Submit.v1;
 /// Command to submit a new insurance claim.
 /// </summary>
 public sealed record SubmitInsuranceClaimCommand(
-    [property: DefaultValue("00000000-0000-0000-0000-000000000000")] Guid PolicyId,
+    [property: DefaultValue("00000000-0000-0000-0000-000000000000")] DefaultIdType PolicyId,
     [property: DefaultValue("Death")] string ClaimType,
     [property: DefaultValue(500000)] decimal ClaimAmount,
     [property: DefaultValue("2025-01-10")] DateOnly IncidentDate,

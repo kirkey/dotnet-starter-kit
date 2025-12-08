@@ -10,10 +10,10 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Search.v1;
 public sealed class SearchSavingsAccountsCommand : PaginationFilter, IRequest<PagedList<SavingsAccountResponse>>
 {
     /// <summary>Filter by member ID.</summary>
-    public Guid? MemberId { get; set; }
+    public DefaultIdType? MemberId { get; set; }
 
     /// <summary>Filter by savings product ID.</summary>
-    public Guid? SavingsProductId { get; set; }
+    public DefaultIdType? SavingsProductId { get; set; }
 
     /// <summary>Filter by account status.</summary>
     public string? Status { get; set; }

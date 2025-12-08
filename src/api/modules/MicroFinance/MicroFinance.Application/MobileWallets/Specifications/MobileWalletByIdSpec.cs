@@ -5,5 +5,5 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MobileWallets.Specificatio
 
 public sealed class MobileWalletByIdSpec : Specification<MobileWallet>, ISingleResultSpecification<MobileWallet>
 {
-    public MobileWalletByIdSpec(Guid id) => Query.Where(x => x.Id == id);
+    public MobileWalletByIdSpec(DefaultIdType id) => Query.Where(x => x.Id == id);
 }

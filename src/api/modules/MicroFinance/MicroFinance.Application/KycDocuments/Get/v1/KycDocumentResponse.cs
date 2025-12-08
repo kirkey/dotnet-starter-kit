@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.KycDocuments.Get.v1;
 
 public sealed record KycDocumentResponse(
-    Guid Id,
-    Guid MemberId,
+    DefaultIdType Id,
+    DefaultIdType MemberId,
     string DocumentType,
     string? DocumentNumber,
     string FileName,
@@ -14,6 +14,6 @@ public sealed record KycDocumentResponse(
     string? IssuingAuthority,
     string Status,
     DateTime? VerifiedAt,
-    Guid? VerifiedById,
+    DefaultIdType? VerifiedById,
     string? RejectionReason,
     bool IsPrimary);

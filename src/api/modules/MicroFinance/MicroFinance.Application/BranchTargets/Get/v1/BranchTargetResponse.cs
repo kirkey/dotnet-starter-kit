@@ -4,8 +4,8 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.Get.v1;
 /// Response containing branch target details.
 /// </summary>
 public sealed record BranchTargetResponse(
-    Guid Id,
-    Guid BranchId,
+    DefaultIdType Id,
+    DefaultIdType BranchId,
     string TargetType,
     string? Description,
     string Period,

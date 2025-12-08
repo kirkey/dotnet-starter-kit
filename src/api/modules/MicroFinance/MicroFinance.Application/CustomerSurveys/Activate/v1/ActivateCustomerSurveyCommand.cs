@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CustomerSurveys.Activate.v
 /// <summary>
 /// Command to activate a customer survey.
 /// </summary>
-public sealed record ActivateCustomerSurveyCommand(Guid Id) : IRequest<ActivateCustomerSurveyResponse>;
+public sealed record ActivateCustomerSurveyCommand(DefaultIdType Id) : IRequest<ActivateCustomerSurveyResponse>;

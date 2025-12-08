@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Get.v1;
 
 public sealed record CashVaultResponse(
-    Guid Id,
-    Guid BranchId,
+    DefaultIdType Id,
+    DefaultIdType BranchId,
     string Code,
     string Name,
     string VaultType,
@@ -13,7 +13,7 @@ public sealed record CashVaultResponse(
     decimal MaximumBalance,
     string? Location,
     string? CustodianName,
-    Guid? CustodianUserId,
+    DefaultIdType? CustodianUserId,
     DateTime? LastReconciliationDate,
     decimal? LastReconciledBalance,
     string? Notes);

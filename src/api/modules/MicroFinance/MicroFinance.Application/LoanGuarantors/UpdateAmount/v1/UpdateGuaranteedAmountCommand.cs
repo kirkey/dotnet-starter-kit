@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.UpdateAmoun
 /// <summary>
 /// Command to update the guaranteed amount.
 /// </summary>
-public sealed record UpdateGuaranteedAmountCommand(Guid Id, decimal GuaranteedAmount) : IRequest<UpdateGuaranteedAmountResponse>;
+public sealed record UpdateGuaranteedAmountCommand(DefaultIdType Id, decimal GuaranteedAmount) : IRequest<UpdateGuaranteedAmountResponse>;

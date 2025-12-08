@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Get.v1;
 /// </summary>
 public sealed class MarketingCampaignByIdSpec : Specification<MarketingCampaign>, ISingleResultSpecification<MarketingCampaign>
 {
-    public MarketingCampaignByIdSpec(Guid id)
+    public MarketingCampaignByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

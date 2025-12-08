@@ -6,6 +6,6 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.RedeemShares
 /// Command to redeem (sell back) shares from an account.
 /// </summary>
 public sealed record RedeemSharesCommand(
-    Guid ShareAccountId,
+    DefaultIdType ShareAccountId,
     int NumberOfShares,
     decimal PricePerShare) : IRequest<RedeemSharesResponse>;

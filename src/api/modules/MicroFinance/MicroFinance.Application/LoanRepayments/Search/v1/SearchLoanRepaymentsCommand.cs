@@ -12,7 +12,7 @@ public class SearchLoanRepaymentsCommand : PaginationFilter, IRequest<PagedList<
     /// <summary>
     /// Filter by loan ID.
     /// </summary>
-    public Guid? LoanId { get; set; }
+    public DefaultIdType? LoanId { get; set; }
 
     /// <summary>
     /// Filter by payment method.

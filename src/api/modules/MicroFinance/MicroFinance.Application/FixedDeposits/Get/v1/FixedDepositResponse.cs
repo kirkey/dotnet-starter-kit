@@ -1,11 +1,11 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.Get.v1;
 
 public sealed record FixedDepositResponse(
-    Guid Id,
+    DefaultIdType Id,
     string CertificateNumber,
-    Guid MemberId,
-    Guid? SavingsProductId,
-    Guid? LinkedSavingsAccountId,
+    DefaultIdType MemberId,
+    DefaultIdType? SavingsProductId,
+    DefaultIdType? LinkedSavingsAccountId,
     decimal PrincipalAmount,
     decimal InterestRate,
     int TermMonths,

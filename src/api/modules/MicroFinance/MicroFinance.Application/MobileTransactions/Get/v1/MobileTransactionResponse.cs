@@ -1,8 +1,8 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.MobileTransactions.Get.v1;
 
 public sealed record MobileTransactionResponse(
-    Guid Id,
-    Guid WalletId,
+    DefaultIdType Id,
+    DefaultIdType WalletId,
     string TransactionReference,
     string TransactionType,
     string Status,
@@ -11,9 +11,9 @@ public sealed record MobileTransactionResponse(
     decimal NetAmount,
     string? SourcePhone,
     string? DestinationPhone,
-    Guid? RecipientWalletId,
-    Guid? LinkedLoanId,
-    Guid? LinkedSavingsAccountId,
+    DefaultIdType? RecipientWalletId,
+    DefaultIdType? LinkedLoanId,
+    DefaultIdType? LinkedSavingsAccountId,
     string? ProviderReference,
     DateTimeOffset InitiatedAt,
     DateTimeOffset? CompletedAt,

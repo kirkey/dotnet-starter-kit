@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Get.v1;
 /// Response containing risk alert details.
 /// </summary>
 public sealed record RiskAlertResponse(
-    Guid Id,
+    DefaultIdType Id,
     string AlertNumber,
     string Title,
     string? Description,
@@ -15,7 +15,7 @@ public sealed record RiskAlertResponse(
     decimal? ActualValue,
     decimal? Variance,
     DateTime AlertedAt,
-    Guid? AssignedToUserId,
+    DefaultIdType? AssignedToUserId,
     bool IsEscalated,
     int EscalationLevel,
     DateTime? DueDate,

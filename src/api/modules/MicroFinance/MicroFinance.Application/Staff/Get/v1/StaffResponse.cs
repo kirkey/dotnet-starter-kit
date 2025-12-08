@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Get.v1;
 
 public sealed record StaffResponse(
-    Guid Id,
+    DefaultIdType Id,
     string EmployeeNumber,
     string FirstName,
     string LastName,
@@ -13,11 +13,11 @@ public sealed record StaffResponse(
     string Role,
     string EmploymentType,
     string Status,
-    Guid? BranchId,
+    DefaultIdType? BranchId,
     string? Department,
     DateOnly JoiningDate,
     DateOnly? ConfirmationDate,
-    Guid? ReportingManagerId,
+    DefaultIdType? ReportingManagerId,
     string? ReportingTo,
     bool CanApproveLoan,
     decimal? LoanApprovalLimit);

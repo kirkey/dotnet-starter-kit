@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.PayDividend.
 /// Response after paying dividend.
 /// </summary>
 public sealed record PayDividendResponse(
-    Guid AccountId,
+    DefaultIdType AccountId,
     decimal AmountPaid,
     decimal TotalDividendsPaid,
     string Message);

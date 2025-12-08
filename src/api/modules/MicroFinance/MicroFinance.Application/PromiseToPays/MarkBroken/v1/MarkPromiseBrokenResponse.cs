@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.MarkBroken.v
 /// <summary>
 /// Response after marking a promise as broken.
 /// </summary>
-public sealed record MarkPromiseBrokenResponse(Guid Id, string Status, string BreachReason);
+public sealed record MarkPromiseBrokenResponse(DefaultIdType Id, string Status, string BreachReason);

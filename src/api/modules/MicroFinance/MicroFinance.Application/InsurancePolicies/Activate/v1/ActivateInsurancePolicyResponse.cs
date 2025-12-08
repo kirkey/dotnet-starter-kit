@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.Activate
 /// <summary>
 /// Response after activating an insurance policy.
 /// </summary>
-public sealed record ActivateInsurancePolicyResponse(Guid Id, string Status);
+public sealed record ActivateInsurancePolicyResponse(DefaultIdType Id, string Status);

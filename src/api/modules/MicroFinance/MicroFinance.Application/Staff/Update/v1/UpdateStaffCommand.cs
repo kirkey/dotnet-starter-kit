@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Update.v1;
 /// Command for updating a staff member.
 /// </summary>
 public sealed record UpdateStaffCommand(
-    Guid Id,
+    DefaultIdType Id,
     string? FirstName,
     string? LastName,
     string? MiddleName,

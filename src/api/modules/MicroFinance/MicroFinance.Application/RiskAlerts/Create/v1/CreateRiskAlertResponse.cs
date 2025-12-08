@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Create.v1;
 /// Response after creating a risk alert.
 /// </summary>
 public sealed record CreateRiskAlertResponse(
-    Guid Id,
+    DefaultIdType Id,
     string AlertNumber,
     string Title,
     string Severity,

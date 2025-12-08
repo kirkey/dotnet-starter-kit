@@ -4,5 +4,5 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Deactivate.v1
 /// Response returned after deactivating a member group.
 /// </summary>
 public sealed record DeactivateMemberGroupResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Status);

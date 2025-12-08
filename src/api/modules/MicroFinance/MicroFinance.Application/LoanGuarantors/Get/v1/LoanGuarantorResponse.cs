@@ -1,9 +1,9 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanGuarantors.Get.v1;
 
 public sealed record LoanGuarantorResponse(
-    Guid Id,
-    Guid LoanId,
-    Guid GuarantorMemberId,
+    DefaultIdType Id,
+    DefaultIdType LoanId,
+    DefaultIdType GuarantorMemberId,
     decimal GuaranteedAmount,
     string? Relationship,
     DateOnly GuaranteeDate,

@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Withdraw.
 /// <summary>
 /// Command to withdraw a loan application by the applicant.
 /// </summary>
-public sealed record WithdrawLoanApplicationCommand(Guid Id) : IRequest<WithdrawLoanApplicationResponse>;
+public sealed record WithdrawLoanApplicationCommand(DefaultIdType Id) : IRequest<WithdrawLoanApplicationResponse>;

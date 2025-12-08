@@ -6,6 +6,6 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.RecordPaymen
 /// Command to record payment against a promise to pay.
 /// </summary>
 public sealed record RecordPromisePaymentCommand(
-    Guid PromiseId,
+    DefaultIdType PromiseId,
     decimal Amount,
     DateOnly PaymentDate) : IRequest<RecordPromisePaymentResponse>;

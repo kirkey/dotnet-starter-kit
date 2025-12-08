@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CustomerSurveys.Get.v1;
 /// Response containing customer survey details.
 /// </summary>
 public sealed record CustomerSurveyResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Title,
     string? Description,
     string SurveyType,

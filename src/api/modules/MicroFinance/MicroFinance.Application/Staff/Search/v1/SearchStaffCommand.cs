@@ -33,7 +33,7 @@ public class SearchStaffCommand : PaginationFilter, IRequest<PagedList<StaffResp
     /// <summary>
     /// Filter by branch ID.
     /// </summary>
-    public Guid? BranchId { get; set; }
+    public DefaultIdType? BranchId { get; set; }
 
     /// <summary>
     /// Filter by role.

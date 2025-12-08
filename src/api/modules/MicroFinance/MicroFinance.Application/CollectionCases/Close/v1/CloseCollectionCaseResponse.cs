@@ -4,5 +4,5 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CollectionCases.Close.v1;
 /// Response returned after closing a collection case.
 /// </summary>
 public sealed record CloseCollectionCaseResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Status);

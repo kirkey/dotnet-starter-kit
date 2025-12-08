@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CommunicationTemplates.Get
 
 public sealed class CommunicationTemplateByIdSpec : Specification<CommunicationTemplate>, ISingleResultSpecification<CommunicationTemplate>
 {
-    public CommunicationTemplateByIdSpec(Guid id)
+    public CommunicationTemplateByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

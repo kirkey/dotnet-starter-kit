@@ -4,19 +4,19 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Get.v1;
 /// Response containing approval request details.
 /// </summary>
 public sealed record ApprovalRequestResponse(
-    Guid Id,
+    DefaultIdType Id,
     string RequestNumber,
-    Guid WorkflowId,
+    DefaultIdType WorkflowId,
     string EntityType,
-    Guid EntityId,
+    DefaultIdType EntityId,
     decimal? Amount,
     string Status,
     int CurrentLevel,
     int TotalLevels,
     DateTime SubmittedAt,
-    Guid SubmittedById,
+    DefaultIdType SubmittedById,
     DateTime? CompletedAt,
-    Guid? BranchId,
+    DefaultIdType? BranchId,
     DateTime? SlaDueAt,
     string? Comments,
     string? RejectionReason);

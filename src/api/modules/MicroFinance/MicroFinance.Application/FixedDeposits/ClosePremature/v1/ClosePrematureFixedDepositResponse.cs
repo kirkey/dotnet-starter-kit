@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.ClosePrematu
 /// Response after premature closure.
 /// </summary>
 public sealed record ClosePrematureFixedDepositResponse(
-    Guid DepositId,
+    DefaultIdType DepositId,
     string Status,
     DateOnly? ClosedDate,
     string Message);

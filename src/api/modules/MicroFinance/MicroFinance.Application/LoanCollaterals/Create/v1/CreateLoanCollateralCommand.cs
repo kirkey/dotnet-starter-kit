@@ -4,7 +4,7 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.LoanCollaterals.Create.v1;
 
 public sealed record CreateLoanCollateralCommand(
-    [property: DefaultValue("00000000-0000-0000-0000-000000000000")] Guid LoanId,
+    [property: DefaultValue("00000000-0000-0000-0000-000000000000")] DefaultIdType LoanId,
     [property: DefaultValue("RealEstate")] string CollateralType,
     [property: DefaultValue("2-bedroom house with land title")] string Description,
     [property: DefaultValue(500000)] decimal EstimatedValue,

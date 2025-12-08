@@ -3,8 +3,8 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.CollateralReleases.Create.v1;
 
 public sealed record CreateCollateralReleaseCommand(
-    Guid CollateralId,
-    Guid LoanId,
+    DefaultIdType CollateralId,
+    DefaultIdType LoanId,
     string ReleaseReference,
-    Guid RequestedById,
+    DefaultIdType RequestedById,
     string? ReleaseMethod = null) : IRequest<CreateCollateralReleaseResponse>;

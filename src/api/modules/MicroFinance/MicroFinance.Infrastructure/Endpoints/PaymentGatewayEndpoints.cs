@@ -2,6 +2,7 @@ using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -10,10 +11,10 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class PaymentGatewayEndpoints : CarterModule
 {
-
     private const string ActivatePaymentGateway = "ActivatePaymentGateway";
     private const string CreatePaymentGateway = "CreatePaymentGateway";
     private const string GetPaymentGateway = "GetPaymentGateway";
+    private const string SearchPaymentGateways = "SearchPaymentGateways";
 
     /// <summary>
     /// Maps all Payment Gateway endpoints to the route builder.
@@ -44,6 +45,17 @@ public class PaymentGatewayEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
+        group.MapPost("/search", async ([FromBody] SearchPaymentGatewaysCommand command, ISender sender) =>
+            {
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(SearchPaymentGateways)
+            .WithSummary("Searches payment gateways with filters and pagination")
+            .Produces<PagedList<PaymentGatewayResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
         group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivatePaymentGatewayCommand(id)).ConfigureAwait(false);
@@ -52,7 +64,7 @@ public class PaymentGatewayEndpoints : CarterModule
             .WithName(ActivatePaymentGateway)
             .WithSummary("Activates a payment gateway")
             .Produces<ActivatePaymentGatewayResponse>()
-            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .RequirePermission(FshPermission.NameFor(FshActions.Activate, FshResources.MicroFinance))
             .MapToApiVersion(1);
     }
 }

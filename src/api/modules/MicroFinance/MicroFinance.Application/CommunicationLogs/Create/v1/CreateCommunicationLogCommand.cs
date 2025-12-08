@@ -9,8 +9,8 @@ public sealed record CreateCommunicationLogCommand(
     string Channel,
     string Recipient,
     string Body,
-    Guid? MemberId = null,
-    Guid? LoanId = null,
-    Guid? TemplateId = null,
+    DefaultIdType? MemberId = null,
+    DefaultIdType? LoanId = null,
+    DefaultIdType? TemplateId = null,
     string? Subject = null,
-    Guid? SentByUserId = null) : IRequest<CreateCommunicationLogResponse>;
+    DefaultIdType? SentByUserId = null) : IRequest<CreateCommunicationLogResponse>;

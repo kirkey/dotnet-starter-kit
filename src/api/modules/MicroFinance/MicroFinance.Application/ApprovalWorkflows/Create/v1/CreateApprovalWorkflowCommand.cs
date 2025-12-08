@@ -13,6 +13,6 @@ public sealed record CreateApprovalWorkflowCommand(
     string? Description = null,
     decimal? MinAmount = null,
     decimal? MaxAmount = null,
-    Guid? BranchId = null,
+    DefaultIdType? BranchId = null,
     bool IsSequential = true,
     int Priority = 100) : IRequest<CreateApprovalWorkflowResponse>;

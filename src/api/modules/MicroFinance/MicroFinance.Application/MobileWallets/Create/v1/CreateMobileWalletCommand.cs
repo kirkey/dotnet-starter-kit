@@ -3,7 +3,7 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.MobileWallets.Create.v1;
 
 public sealed record CreateMobileWalletCommand(
-    Guid MemberId,
+    DefaultIdType MemberId,
     string PhoneNumber,
     string Provider,
     decimal DailyLimit,

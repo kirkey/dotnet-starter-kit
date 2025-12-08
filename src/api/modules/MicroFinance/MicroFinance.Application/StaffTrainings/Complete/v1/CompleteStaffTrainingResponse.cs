@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.StaffTrainings.Complete.v1
 /// Response from completing a staff training.
 /// </summary>
 public sealed record CompleteStaffTrainingResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Status,
     decimal? Score,
     DateOnly? CompletionDate);

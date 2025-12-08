@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Get.v1;
 
 public sealed class PaymentGatewayByIdSpec : Specification<PaymentGateway>
 {
-    public PaymentGatewayByIdSpec(Guid id)
+    public PaymentGatewayByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

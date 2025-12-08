@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.MobileWallets.Create.v1;
 
 public sealed record CreateMobileWalletResponse(
-    Guid Id,
+    DefaultIdType Id,
     string PhoneNumber,
     string Provider,
     string Status);

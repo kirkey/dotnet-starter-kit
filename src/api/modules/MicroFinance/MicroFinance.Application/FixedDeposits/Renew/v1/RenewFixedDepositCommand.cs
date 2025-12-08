@@ -6,6 +6,6 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.FixedDeposits.Renew.v1;
 /// Command to renew a matured fixed deposit.
 /// </summary>
 public sealed record RenewFixedDepositCommand(
-    Guid DepositId,
+    DefaultIdType DepositId,
     int? NewTermMonths = null,
     decimal? NewInterestRate = null) : IRequest<RenewFixedDepositResponse>;

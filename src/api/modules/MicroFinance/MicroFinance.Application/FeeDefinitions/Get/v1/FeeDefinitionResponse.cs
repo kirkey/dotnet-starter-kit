@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.FeeDefinitions.Get.v1;
 
 public sealed record FeeDefinitionResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Code,
     string Name,
     string? Description,

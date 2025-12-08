@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.G
 
 public sealed class LoanDisbursementTrancheByIdSpec : Specification<LoanDisbursementTranche>, ISingleResultSpecification<LoanDisbursementTranche>
 {
-    public LoanDisbursementTrancheByIdSpec(Guid id)
+    public LoanDisbursementTrancheByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

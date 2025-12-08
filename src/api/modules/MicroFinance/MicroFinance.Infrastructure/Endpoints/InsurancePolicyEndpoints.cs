@@ -1,24 +1,38 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.Cancel.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.RecordPremium.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
 public class InsurancePolicyEndpoints : CarterModule
 {
-
     private const string ActivateInsurancePolicy = "ActivateInsurancePolicy";
     private const string CancelInsurancePolicy = "CancelInsurancePolicy";
     private const string CreateInsurancePolicy = "CreateInsurancePolicy";
     private const string GetInsurancePolicy = "GetInsurancePolicy";
     private const string RecordInsurancePolicyPremiumPayment = "RecordInsurancePolicyPremiumPayment";
+    private const string SearchInsurancePolicies = "SearchInsurancePolicies";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/insurance-policies").WithTags("Insurance Policies");
+
+        // Search Policies
+        group.MapPost("/search", async (SearchInsurancePoliciesCommand command, ISender sender) =>
+            {
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(SearchInsurancePolicies)
+            .WithSummary("Searches insurance policies")
+            .Produces<PagedList<InsurancePolicyResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
 
         // CRUD Operations
         group.MapPost("/", async (CreateInsurancePolicyCommand command, ISender sender) =>

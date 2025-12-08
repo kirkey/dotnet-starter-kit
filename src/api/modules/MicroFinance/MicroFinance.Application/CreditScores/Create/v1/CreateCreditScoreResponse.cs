@@ -4,8 +4,8 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CreditScores.Create.v1;
 /// Response after creating a credit score.
 /// </summary>
 public sealed record CreateCreditScoreResponse(
-    Guid Id,
-    Guid MemberId,
+    DefaultIdType Id,
+    DefaultIdType MemberId,
     string ScoreType,
     decimal Score,
     string Grade,

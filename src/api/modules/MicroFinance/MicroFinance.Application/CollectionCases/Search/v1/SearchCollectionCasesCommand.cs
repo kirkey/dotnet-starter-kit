@@ -20,17 +20,17 @@ public class SearchCollectionCasesCommand : PaginationFilter, IRequest<PagedList
     /// <summary>
     /// Filter by loan ID.
     /// </summary>
-    public Guid? LoanId { get; set; }
+    public DefaultIdType? LoanId { get; set; }
 
     /// <summary>
     /// Filter by member ID (borrower).
     /// </summary>
-    public Guid? MemberId { get; set; }
+    public DefaultIdType? MemberId { get; set; }
 
     /// <summary>
     /// Filter by assigned collector ID.
     /// </summary>
-    public Guid? AssignedToId { get; set; }
+    public DefaultIdType? AssignedToId { get; set; }
 
     /// <summary>
     /// Filter by priority level (LOW, MEDIUM, HIGH, CRITICAL).

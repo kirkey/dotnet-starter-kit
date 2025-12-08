@@ -6,7 +6,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Update.v1;
 /// Command to update a savings product.
 /// </summary>
 public sealed record UpdateSavingsProductCommand(
-    Guid Id,
+    DefaultIdType Id,
     string? Name,
     string? Description,
     decimal? InterestRate,

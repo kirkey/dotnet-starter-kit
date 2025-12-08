@@ -1,10 +1,10 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.AmlAlerts.Get.v1;
 
 public sealed record AmlAlertResponse(
-    Guid Id,
+    DefaultIdType Id,
     string AlertCode,
-    Guid? MemberId,
-    Guid? TransactionId,
+    DefaultIdType? MemberId,
+    DefaultIdType? TransactionId,
     string AlertType,
     string Severity,
     string Status,
@@ -14,7 +14,7 @@ public sealed record AmlAlertResponse(
     DateTime AlertedAt,
     DateTime? InvestigationStartedAt,
     DateTime? ResolvedAt,
-    Guid? AssignedToId,
+    DefaultIdType? AssignedToId,
     string? ResolutionNotes,
     string? SarReference,
     DateOnly? SarFiledDate,

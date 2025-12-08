@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Get.v1;
 /// </summary>
 public sealed class RiskIndicatorByIdSpec : Specification<RiskIndicator>, ISingleResultSpecification<RiskIndicator>
 {
-    public RiskIndicatorByIdSpec(Guid id)
+    public RiskIndicatorByIdSpec(DefaultIdType id)
     {
         Query.Where(x => x.Id == id);
     }

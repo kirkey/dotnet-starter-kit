@@ -3,8 +3,8 @@ using MediatR;
 namespace FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.Create.v1;
 
 public sealed record CreateInvestmentAccountCommand(
-    Guid MemberId,
+    DefaultIdType MemberId,
     string AccountNumber,
     string RiskProfile,
-    Guid? AssignedAdvisorId = null,
+    DefaultIdType? AssignedAdvisorId = null,
     string? InvestmentGoal = null) : IRequest<CreateInvestmentAccountResponse>;

@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CommunicationLogs.Get.v1;
 /// </summary>
 public sealed class CommunicationLogByIdSpec : Specification<CommunicationLog, CommunicationLogResponse>
 {
-    public CommunicationLogByIdSpec(Guid id)
+    public CommunicationLogByIdSpec(DefaultIdType id)
     {
         Query.Where(c => c.Id == id);
 

@@ -1,11 +1,11 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.Get.v1;
 
 public sealed record TellerSessionResponse(
-    Guid Id,
-    Guid BranchId,
-    Guid CashVaultId,
+    DefaultIdType Id,
+    DefaultIdType BranchId,
+    DefaultIdType CashVaultId,
     string SessionNumber,
-    Guid TellerUserId,
+    DefaultIdType TellerUserId,
     string TellerName,
     DateOnly SessionDate,
     DateTime StartTime,
@@ -18,6 +18,6 @@ public sealed record TellerSessionResponse(
     decimal? Variance,
     int TransactionCount,
     string Status,
-    Guid? SupervisorUserId,
+    DefaultIdType? SupervisorUserId,
     string? SupervisorName,
     DateTime? SupervisorVerificationTime);

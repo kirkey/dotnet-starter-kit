@@ -6,7 +6,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MobileWallets.Search.v1;
 
 public class SearchMobileWalletsCommand : PaginationFilter, IRequest<PagedList<MobileWalletResponse>>
 {
-    public Guid? MemberId { get; set; }
+    public DefaultIdType? MemberId { get; set; }
     public string? Status { get; set; }
     public string? Tier { get; set; }
     public string? Provider { get; set; }

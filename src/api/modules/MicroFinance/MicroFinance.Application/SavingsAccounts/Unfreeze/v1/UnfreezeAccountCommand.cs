@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Unfreeze.v
 /// <summary>
 /// Command to unfreeze a savings account.
 /// </summary>
-public sealed record UnfreezeAccountCommand(Guid AccountId) : IRequest<UnfreezeAccountResponse>;
+public sealed record UnfreezeAccountCommand(DefaultIdType AccountId) : IRequest<UnfreezeAccountResponse>;

@@ -3,4 +3,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Deactiva
 /// <summary>
 /// Response from deactivating an approval workflow.
 /// </summary>
-public sealed record DeactivateApprovalWorkflowResponse(Guid Id, bool IsActive);
+public sealed record DeactivateApprovalWorkflowResponse(DefaultIdType Id, bool IsActive);

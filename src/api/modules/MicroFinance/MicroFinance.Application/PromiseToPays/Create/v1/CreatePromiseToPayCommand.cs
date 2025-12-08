@@ -6,10 +6,10 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.Create.v1;
 /// Command to create a new promise to pay.
 /// </summary>
 public sealed record CreatePromiseToPayCommand(
-    Guid CollectionCaseId,
-    Guid LoanId,
-    Guid MemberId,
+    DefaultIdType CollectionCaseId,
+    DefaultIdType LoanId,
+    DefaultIdType MemberId,
     DateOnly PromisedPaymentDate,
     decimal PromisedAmount,
-    Guid RecordedById,
-    Guid? CollectionActionId = null) : IRequest<CreatePromiseToPayResponse>;
+    DefaultIdType RecordedById,
+    DefaultIdType? CollectionActionId = null) : IRequest<CreatePromiseToPayResponse>;

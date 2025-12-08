@@ -4,5 +4,5 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Suspend.v1;
 /// <summary>
 /// Response after suspending a staff member.
 /// </summary>
-public sealed record SuspendStaffResponse(Guid Id, string Status);
+public sealed record SuspendStaffResponse(DefaultIdType Id, string Status);
 

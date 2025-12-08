@@ -19,14 +19,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Get.v1;
 /// <param name="Notes">Internal notes about the group.</param>
 /// <param name="MemberCount">The number of members in the group.</param>
 public record MemberGroupResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Code,
     string Name,
     string? Description,
     DateOnly FormationDate,
-    Guid? LeaderMemberId,
+    DefaultIdType? LeaderMemberId,
     string? LeaderName,
-    Guid? LoanOfficerId,
+    DefaultIdType? LoanOfficerId,
     string? MeetingLocation,
     string? MeetingFrequency,
     string? MeetingDay,

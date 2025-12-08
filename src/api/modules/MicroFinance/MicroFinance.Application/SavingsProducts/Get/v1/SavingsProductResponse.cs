@@ -1,7 +1,7 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Get.v1;
 
 public sealed record SavingsProductResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Code,
     string Name,
     string? Description,

@@ -1,14 +1,14 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.ReportGenerations.Get.v1;
 
 public sealed record ReportGenerationResponse(
-    Guid Id,
-    Guid ReportDefinitionId,
-    Guid? RequestedByUserId,
+    DefaultIdType Id,
+    DefaultIdType ReportDefinitionId,
+    DefaultIdType? RequestedByUserId,
     string Trigger,
     string? Parameters,
     DateOnly? ReportStartDate,
     DateOnly? ReportEndDate,
-    Guid? BranchId,
+    DefaultIdType? BranchId,
     string? OutputFormat,
     string? OutputFile,
     long? FileSizeBytes,

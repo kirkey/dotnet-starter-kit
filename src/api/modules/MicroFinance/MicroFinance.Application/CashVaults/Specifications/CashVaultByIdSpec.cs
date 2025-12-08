@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Specifications;
 
 public sealed class CashVaultByIdSpec : Specification<CashVault>, ISingleResultSpecification<CashVault>
 {
-    public CashVaultByIdSpec(Guid id)
+    public CashVaultByIdSpec(DefaultIdType id)
     {
         Query.Where(v => v.Id == id);
     }

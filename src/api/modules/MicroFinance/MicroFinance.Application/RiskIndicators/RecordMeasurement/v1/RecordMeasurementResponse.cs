@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.RecordMeasu
 /// Response from recording a risk indicator measurement.
 /// </summary>
 public sealed record RecordMeasurementResponse(
-    Guid Id,
+    DefaultIdType Id,
     decimal CurrentValue,
     decimal? PreviousValue,
     string CurrentHealth,

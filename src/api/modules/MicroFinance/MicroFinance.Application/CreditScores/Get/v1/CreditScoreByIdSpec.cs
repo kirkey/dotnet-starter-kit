@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CreditScores.Get.v1;
 /// </summary>
 public sealed class CreditScoreByIdSpec : Specification<CreditScore, CreditScoreResponse>
 {
-    public CreditScoreByIdSpec(Guid id)
+    public CreditScoreByIdSpec(DefaultIdType id)
     {
         Query.Where(c => c.Id == id);
 

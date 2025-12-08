@@ -8,7 +8,7 @@ public class SearchAgentBankingsCommand : PaginationFilter, IRequest<PagedList<A
 {
     public string? Status { get; set; }
     public string? Tier { get; set; }
-    public Guid? BranchId { get; set; }
+    public DefaultIdType? BranchId { get; set; }
     public string? AgentCode { get; set; }
     public string? BusinessName { get; set; }
     public string? PhoneNumber { get; set; }

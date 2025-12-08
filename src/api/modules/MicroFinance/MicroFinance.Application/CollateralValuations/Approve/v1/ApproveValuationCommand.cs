@@ -2,4 +2,4 @@ using MediatR;
 
 namespace FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Approve.v1;
 
-public sealed record ApproveValuationCommand(Guid Id, Guid ApprovedById) : IRequest<ApproveValuationResponse>;
+public sealed record ApproveValuationCommand(DefaultIdType Id, DefaultIdType ApprovedById) : IRequest<ApproveValuationResponse>;

@@ -5,7 +5,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.Branches.Specifications;
 
 public sealed class BranchByIdSpec : Specification<Branch>, ISingleResultSpecification<Branch>
 {
-    public BranchByIdSpec(Guid id)
+    public BranchByIdSpec(DefaultIdType id)
     {
         Query.Where(b => b.Id == id);
     }

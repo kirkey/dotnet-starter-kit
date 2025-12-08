@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.InsurancePolicies.Activate
 /// <summary>
 /// Command to activate an insurance policy after first premium payment.
 /// </summary>
-public sealed record ActivateInsurancePolicyCommand(Guid Id) : IRequest<ActivateInsurancePolicyResponse>;
+public sealed record ActivateInsurancePolicyCommand(DefaultIdType Id) : IRequest<ActivateInsurancePolicyResponse>;

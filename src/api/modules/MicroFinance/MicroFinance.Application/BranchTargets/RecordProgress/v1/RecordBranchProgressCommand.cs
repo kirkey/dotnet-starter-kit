@@ -5,4 +5,4 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.RecordProgre
 /// <summary>
 /// Command to record progress towards a branch target.
 /// </summary>
-public sealed record RecordBranchProgressCommand(Guid Id, decimal AchievedValue) : IRequest<RecordBranchProgressResponse>;
+public sealed record RecordBranchProgressCommand(DefaultIdType Id, decimal AchievedValue) : IRequest<RecordBranchProgressResponse>;

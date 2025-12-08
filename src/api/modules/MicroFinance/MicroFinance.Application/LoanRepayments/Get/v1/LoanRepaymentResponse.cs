@@ -16,8 +16,8 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanRepayments.Get.v1;
 /// <param name="PaymentMethod">The payment method.</param>
 /// <param name="Notes">Internal notes.</param>
 public record LoanRepaymentResponse(
-    Guid Id,
-    Guid LoanId,
+    DefaultIdType Id,
+    DefaultIdType LoanId,
     string? LoanAccountNumber,
     string? MemberName,
     string ReceiptNumber,

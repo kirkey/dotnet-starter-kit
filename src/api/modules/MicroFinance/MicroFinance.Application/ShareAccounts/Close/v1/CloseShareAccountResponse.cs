@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Close.v1;
 /// Response after closing share account.
 /// </summary>
 public sealed record CloseShareAccountResponse(
-    Guid AccountId,
+    DefaultIdType AccountId,
     string Status,
     DateOnly? ClosedDate,
     string Message);

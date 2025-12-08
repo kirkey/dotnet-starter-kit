@@ -1,12 +1,12 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Get.v1;
 
 public sealed record RiskCategoryResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Code,
     string Name,
     string? Description,
     string RiskType,
-    Guid? ParentCategoryId,
+    DefaultIdType? ParentCategoryId,
     string DefaultSeverity,
     decimal WeightFactor,
     decimal? AlertThreshold,

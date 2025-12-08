@@ -1,5 +1,5 @@
 namespace FSH.Starter.WebApi.MicroFinance.Application.MobileWallets.Credit.v1;
 
 public sealed record CreditMobileWalletResponse(
-    Guid Id,
+    DefaultIdType Id,
     decimal Balance);

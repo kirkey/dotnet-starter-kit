@@ -4,7 +4,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.CollateralTypes.Create.v1;
 /// Response after creating a collateral type.
 /// </summary>
 public sealed record CreateCollateralTypeResponse(
-    Guid Id,
+    DefaultIdType Id,
     string Name,
     string Code,
     string Category,

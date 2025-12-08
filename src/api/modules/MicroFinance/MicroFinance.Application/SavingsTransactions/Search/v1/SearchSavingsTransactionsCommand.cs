@@ -6,7 +6,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.SavingsTransactions.Search
 
 public class SearchSavingsTransactionsCommand : PaginationFilter, IRequest<PagedList<SavingsTransactionResponse>>
 {
-    public Guid? SavingsAccountId { get; set; }
+    public DefaultIdType? SavingsAccountId { get; set; }
     public string? Reference { get; set; }
     public string? TransactionType { get; set; }
     public DateOnly? DateFrom { get; set; }
