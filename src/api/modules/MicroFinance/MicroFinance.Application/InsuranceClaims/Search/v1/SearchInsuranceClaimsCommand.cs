@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Search.v1;
 /// <summary>
 /// Command to search insurance claims.
 /// </summary>
-public sealed record SearchInsuranceClaimsCommand : PaginationFilter, IRequest<PagedList<InsuranceClaimResponse>>
+public class SearchInsuranceClaimsCommand : PaginationFilter, IRequest<PagedList<InsuranceClaimResponse>>
 {
     /// <summary>
     /// Filter by insurance policy ID.

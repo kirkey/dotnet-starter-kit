@@ -1,9 +1,11 @@
 using Carter;
+using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.CloseDay.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Deposit.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.OpenDay.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Reconcile.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.TransferToVault.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Withdraw.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -11,11 +13,13 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 public class CashVaultEndpoints : CarterModule
 {
 
+    private const string CloseDayVault = "CloseDayVault";
     private const string CreateCashVault = "CreateCashVault";
     private const string DepositCash = "DepositCash";
     private const string GetCashVault = "GetCashVault";
     private const string OpenVaultDay = "OpenVaultDay";
     private const string ReconcileVault = "ReconcileVault";
+    private const string TransferBetweenVaults = "TransferBetweenVaults";
     private const string WithdrawCash = "WithdrawCash";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
@@ -93,6 +97,29 @@ public class CashVaultEndpoints : CarterModule
             .WithSummary("Performs end-of-day reconciliation")
             .Produces<ReconcileCashVaultResponse>()
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/close-day", async (DefaultIdType id, CloseDayCashVaultCommand command, ISender sender) =>
+            {
+                if (id != command.CashVaultId) return Results.BadRequest("ID mismatch");
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(CloseDayVault)
+            .WithSummary("Closes the vault for the business day")
+            .Produces<CloseDayCashVaultResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPost("/transfer", async (TransferToVaultCommand command, ISender sender) =>
+            {
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(TransferBetweenVaults)
+            .WithSummary("Transfers cash between vaults")
+            .Produces<TransferToVaultResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Transfer, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
     }

@@ -1,4 +1,6 @@
 using Carter;
+using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Activate.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Close.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ShareAccounts.Get.v1;
@@ -16,6 +18,8 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 public class ShareAccountEndpoints : CarterModule
 {
 
+    private const string ActivateShareAccount = "ActivateShareAccount";
+    private const string ApproveShareAccount = "ApproveShareAccount";
     private const string CloseShareAccount = "CloseShareAccount";
     private const string CreateShareAccount = "CreateShareAccount";
     private const string GetShareAccount = "GetShareAccount";
@@ -123,6 +127,29 @@ public class ShareAccountEndpoints : CarterModule
             .WithSummary("Closes a share account")
             .Produces<CloseShareAccountResponse>()
             .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        shareAccountsGroup.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveShareAccountCommand command, ISender sender) =>
+            {
+                if (id != command.ShareAccountId) return Results.BadRequest("ID mismatch");
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(ApproveShareAccount)
+            .WithSummary("Approves a pending share account")
+            .Produces<ApproveShareAccountResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        shareAccountsGroup.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+            {
+                var response = await sender.Send(new ActivateShareAccountCommand(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(ActivateShareAccount)
+            .WithSummary("Activates an approved share account")
+            .Produces<ActivateShareAccountResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Activate, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
     }

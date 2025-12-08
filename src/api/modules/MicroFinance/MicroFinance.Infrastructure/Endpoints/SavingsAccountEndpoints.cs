@@ -1,4 +1,5 @@
 using Carter;
+using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Close.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsAccounts.Deposit.v1;
@@ -18,6 +19,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 public class SavingsAccountEndpoints : CarterModule
 {
 
+    private const string ActivateSavingsAccount = "ActivateSavingsAccount";
     private const string CloseSavingsAccount = "CloseSavingsAccount";
     private const string CreateSavingsAccount = "CreateSavingsAccount";
     private const string DepositToSavingsAccount = "DepositToSavingsAccount";
@@ -172,6 +174,17 @@ public class SavingsAccountEndpoints : CarterModule
             .WithSummary("Closes a savings account")
             .Produces<CloseAccountResponse>()
             .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        savingsAccountsGroup.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+            {
+                var response = await sender.Send(new ActivateSavingsAccountCommand(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(ActivateSavingsAccount)
+            .WithSummary("Activates a pending savings account")
+            .Produces<ActivateSavingsAccountResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Activate, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
     }

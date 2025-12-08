@@ -4,6 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Assign.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Reject.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Return.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Review.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Submit.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Withdraw.v1;
@@ -18,6 +19,7 @@ public class LoanApplicationEndpoints : CarterModule
     private const string CreateLoanApplication = "CreateLoanApplication";
     private const string GetLoanApplication = "GetLoanApplication";
     private const string RejectLoanApplication = "RejectLoanApplication";
+    private const string ReturnLoanApplication = "ReturnLoanApplication";
     private const string ReviewLoanApplication = "ReviewLoanApplication";
     private const string SubmitLoanApplication = "SubmitLoanApplication";
     private const string WithdrawLoanApplication = "WithdrawLoanApplication";
@@ -118,6 +120,18 @@ public class LoanApplicationEndpoints : CarterModule
             .WithSummary("Withdraws a loan application by the applicant")
             .Produces<WithdrawLoanApplicationResponse>()
             .RequirePermission(FshPermission.NameFor(FshActions.Withdraw, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/return", async (DefaultIdType id, ReturnLoanApplicationCommand command, ISender sender) =>
+            {
+                if (id != command.LoanApplicationId) return Results.BadRequest("ID mismatch");
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(ReturnLoanApplication)
+            .WithSummary("Returns a loan application to the applicant for corrections")
+            .Produces<ReturnLoanApplicationResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Return, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
     }

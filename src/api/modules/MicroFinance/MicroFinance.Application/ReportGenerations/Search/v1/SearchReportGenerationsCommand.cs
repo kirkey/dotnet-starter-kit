@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.ReportGenerations.Search.v
 /// <summary>
 /// Command to search report generations.
 /// </summary>
-public sealed record SearchReportGenerationsCommand : PaginationFilter, IRequest<PagedList<ReportGenerationResponse>>
+public class SearchReportGenerationsCommand : PaginationFilter, IRequest<PagedList<ReportGenerationResponse>>
 {
     /// <summary>
     /// Filter by report definition ID.

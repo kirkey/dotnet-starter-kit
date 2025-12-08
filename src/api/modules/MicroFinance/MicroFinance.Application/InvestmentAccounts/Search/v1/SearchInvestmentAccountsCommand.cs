@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.Search.
 /// <summary>
 /// Command to search investment accounts.
 /// </summary>
-public sealed record SearchInvestmentAccountsCommand : PaginationFilter, IRequest<PagedList<InvestmentAccountResponse>>
+public class SearchInvestmentAccountsCommand : PaginationFilter, IRequest<PagedList<InvestmentAccountResponse>>
 {
     /// <summary>
     /// Filter by member ID.

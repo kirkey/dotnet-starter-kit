@@ -50,6 +50,8 @@ public class ShareAccount : AuditableEntity, IAggregateRoot
     public const int NotesMaxLength = 4096;
 
     // Share Account Statuses
+    public const string StatusPending = "Pending";
+    public const string StatusApproved = "Approved";
     public const string StatusActive = "Active";
     public const string StatusInactive = "Inactive";
     public const string StatusClosed = "Closed";
@@ -136,13 +138,48 @@ public class ShareAccount : AuditableEntity, IAggregateRoot
         DateOnly? openedDate = null,
         string? notes = null)
     {
-        return new ShareAccount(
+        var account = new ShareAccount(
             DefaultIdType.NewGuid(),
             accountNumber,
             memberId,
             shareProductId,
             openedDate ?? DateOnly.FromDateTime(DateTime.UtcNow),
             notes);
+        
+        // New share accounts start in Pending status
+        account.Status = StatusPending;
+        return account;
+    }
+
+    /// <summary>
+    /// Approves the share account application.
+    /// </summary>
+    public ShareAccount Approve(string? notes = null)
+    {
+        if (Status != StatusPending)
+            throw new InvalidOperationException($"Cannot approve account in {Status} status. Only Pending accounts can be approved.");
+
+        Status = StatusApproved;
+        if (!string.IsNullOrWhiteSpace(notes))
+        {
+            Notes = string.IsNullOrWhiteSpace(Notes) ? $"Approved: {notes}" : $"{Notes}\nApproved: {notes}";
+        }
+        
+        QueueDomainEvent(new ShareAccountApproved { AccountId = Id });
+        return this;
+    }
+
+    /// <summary>
+    /// Activates an approved share account.
+    /// </summary>
+    public ShareAccount Activate()
+    {
+        if (Status != StatusApproved)
+            throw new InvalidOperationException($"Cannot activate account in {Status} status. Only Approved accounts can be activated.");
+
+        Status = StatusActive;
+        QueueDomainEvent(new ShareAccountActivated { AccountId = Id });
+        return this;
     }
 
     /// <summary>

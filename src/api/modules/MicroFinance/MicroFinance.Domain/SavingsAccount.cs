@@ -135,7 +135,7 @@ public class SavingsAccount : AuditableEntity, IAggregateRoot
         DateOnly? openedDate = null,
         string? notes = null)
     {
-        return new SavingsAccount(
+        var account = new SavingsAccount(
             DefaultIdType.NewGuid(),
             accountNumber,
             memberId,
@@ -143,6 +143,27 @@ public class SavingsAccount : AuditableEntity, IAggregateRoot
             openingBalance,
             openedDate ?? DateOnly.FromDateTime(DateTime.UtcNow),
             notes);
+        
+        // Set status to Pending for new accounts that need activation
+        if (openingBalance == 0)
+        {
+            account.Status = StatusPending;
+        }
+        
+        return account;
+    }
+
+    /// <summary>
+    /// Activates a pending account.
+    /// </summary>
+    public SavingsAccount Activate()
+    {
+        if (Status != StatusPending)
+            throw new InvalidOperationException($"Cannot activate account in {Status} status. Only Pending accounts can be activated.");
+
+        Status = StatusActive;
+        QueueDomainEvent(new SavingsAccountActivated { AccountId = Id });
+        return this;
     }
 
     /// <summary>

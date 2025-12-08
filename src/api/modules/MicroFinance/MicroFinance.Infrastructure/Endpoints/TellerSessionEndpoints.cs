@@ -7,6 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.RecordCashIn.v1
 using FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.RecordCashOut.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.Resume.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.Search.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.TransferCash.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.Verify.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -22,6 +23,7 @@ public class TellerSessionEndpoints : CarterModule
     private const string RecordCashOut = "RecordCashOut";
     private const string ResumeTellerSession = "ResumeTellerSession";
     private const string SearchTellerSessions = "SearchTellerSessions";
+    private const string TransferCashTeller = "TransferCashTeller";
     private const string VerifyTellerSession = "VerifyTellerSession";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
@@ -136,6 +138,19 @@ public class TellerSessionEndpoints : CarterModule
             .WithSummary("Searches teller sessions with filtering")
             .Produces<PagedList<TellerSessionResponse>>()
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        // Cash Transfer
+        group.MapPost("/{id:guid}/transfer-cash", async (DefaultIdType id, TransferCashCommand command, ISender sender) =>
+            {
+                if (id != command.TellerSessionId) return Results.BadRequest("ID mismatch");
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(TransferCashTeller)
+            .WithSummary("Transfers cash to/from the vault")
+            .Produces<TransferCashResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Transfer, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
     }

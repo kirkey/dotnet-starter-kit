@@ -53,3 +53,9 @@ public sealed record SavingsTransactionCreated : DomainEvent
     public SavingsTransaction? SavingsTransaction { get; init; }
 }
 
+/// <summary>Domain event raised when a savings account is activated.</summary>
+public sealed record SavingsAccountActivated : DomainEvent
+{
+    public DefaultIdType AccountId { get; init; }
+}
+

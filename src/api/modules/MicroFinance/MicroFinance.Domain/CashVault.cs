@@ -273,4 +273,47 @@ public sealed class CashVault : AuditableEntity, IAggregateRoot
         Status = StatusActive;
         QueueDomainEvent(new CashVaultUnlocked(Id));
     }
+
+    /// <summary>
+    /// Closes the vault for the business day.
+    /// </summary>
+    public void CloseDay(decimal verifiedBalance, string? denominationBreakdown = null)
+    {
+        var difference = verifiedBalance - CurrentBalance;
+        
+        if (denominationBreakdown is not null)
+        {
+            DenominationBreakdown = denominationBreakdown;
+        }
+
+        LastReconciliationDate = DateTime.UtcNow;
+        LastReconciledBalance = verifiedBalance;
+        CurrentBalance = verifiedBalance;
+
+        if (difference != 0)
+        {
+            QueueDomainEvent(new CashVaultDiscrepancyFound(Id, CurrentBalance, verifiedBalance, difference));
+        }
+
+        QueueDomainEvent(new CashVaultDayClosed(Id, verifiedBalance));
+    }
+
+    /// <summary>
+    /// Transfers cash to another vault.
+    /// </summary>
+    public void TransferTo(CashVault targetVault, decimal amount, string? denominationBreakdown = null)
+    {
+        if (amount <= 0) throw new ArgumentException("Transfer amount must be positive.", nameof(amount));
+        if (amount > CurrentBalance) throw new InvalidOperationException("Insufficient vault balance for transfer.");
+        if (targetVault.Id == Id) throw new InvalidOperationException("Cannot transfer to the same vault.");
+
+        // Withdraw from this vault
+        var previousBalance = CurrentBalance;
+        CurrentBalance -= amount;
+
+        // Deposit to target vault
+        targetVault.Deposit(amount, denominationBreakdown);
+
+        QueueDomainEvent(new CashVaultTransferred(Id, targetVault.Id, amount, previousBalance, CurrentBalance));
+    }
 }

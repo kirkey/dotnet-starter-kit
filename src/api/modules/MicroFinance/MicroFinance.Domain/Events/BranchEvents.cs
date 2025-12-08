@@ -74,3 +74,19 @@ public sealed record TellerSessionVerified(
     Guid SessionId,
     Guid SupervisorUserId,
     string SupervisorName) : DomainEvent;
+
+public sealed record TellerSessionCashTransferred(
+    Guid SessionId,
+    decimal Amount,
+    bool IsTransferIn,
+    string Reference,
+    decimal ExpectedBalance) : DomainEvent;
+
+public sealed record CashVaultDayClosed(Guid VaultId, decimal VerifiedBalance) : DomainEvent;
+
+public sealed record CashVaultTransferred(
+    Guid SourceVaultId,
+    Guid TargetVaultId,
+    decimal Amount,
+    decimal PreviousBalance,
+    decimal NewBalance) : DomainEvent;

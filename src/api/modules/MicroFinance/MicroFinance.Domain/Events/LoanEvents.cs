@@ -58,3 +58,10 @@ public sealed record LoanRepaymentCreated : DomainEvent
     public LoanRepayment? LoanRepayment { get; init; }
 }
 
+/// <summary>Domain event raised when a loan repayment is reversed.</summary>
+public sealed record LoanRepaymentReversed : DomainEvent
+{
+    public DefaultIdType LoanRepaymentId { get; init; }
+    public string? Reason { get; init; }
+}
+

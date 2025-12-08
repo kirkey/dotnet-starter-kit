@@ -34,7 +34,10 @@ public sealed class GetInsurancePolicyHandler(
             policy.Status,
             policy.LoanId,
             policy.BeneficiaryName,
-            policy.TotalPremiumPaid,
-            policy.Claims.Count);
+            policy.BeneficiaryRelation,
+            policy.BeneficiaryContact,
+            policy.NextPremiumDue,
+            policy.WaitingPeriodEnd,
+            policy.TotalPremiumPaid);
     }
 }

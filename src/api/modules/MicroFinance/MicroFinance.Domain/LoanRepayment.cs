@@ -103,6 +103,22 @@ public class LoanRepayment : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new LoanRepaymentCreated { LoanRepayment = this });
     }
 
+    /// <summary>Maximum length for status. (2^5 = 32)</summary>
+    public const int StatusMaxLength = 32;
+
+    // Repayment Statuses
+    public const string StatusActive = "Active";
+    public const string StatusReversed = "Reversed";
+
+    /// <summary>Gets the current status of the repayment.</summary>
+    public string Status { get; private set; } = StatusActive;
+
+    /// <summary>Gets the reason for reversal if reversed.</summary>
+    public string? ReversalReason { get; private set; }
+
+    /// <summary>Gets the date of reversal if reversed.</summary>
+    public DateOnly? ReversedDate { get; private set; }
+
     /// <summary>
     /// Creates a new LoanRepayment instance.
     /// </summary>
@@ -126,6 +142,25 @@ public class LoanRepayment : AuditableEntity, IAggregateRoot
             penaltyAmount,
             paymentMethod,
             notes);
+    }
+
+    /// <summary>
+    /// Reverses the loan repayment.
+    /// </summary>
+    public LoanRepayment Reverse(string reason)
+    {
+        if (Status == StatusReversed)
+            throw new InvalidOperationException("Repayment is already reversed.");
+
+        if (string.IsNullOrWhiteSpace(reason))
+            throw new ArgumentException("Reversal reason is required.", nameof(reason));
+
+        Status = StatusReversed;
+        ReversalReason = reason.Trim();
+        ReversedDate = DateOnly.FromDateTime(DateTime.UtcNow);
+
+        QueueDomainEvent(new LoanRepaymentReversed { LoanRepaymentId = Id, Reason = reason });
+        return this;
     }
 }
 

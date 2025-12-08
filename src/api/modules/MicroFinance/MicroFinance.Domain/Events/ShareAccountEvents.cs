@@ -42,3 +42,15 @@ public sealed record ShareTransactionCreated : DomainEvent
 {
     public ShareTransaction? ShareTransaction { get; init; }
 }
+
+/// <summary>Domain event raised when a share account is approved.</summary>
+public sealed record ShareAccountApproved : DomainEvent
+{
+    public DefaultIdType AccountId { get; init; }
+}
+
+/// <summary>Domain event raised when a share account is activated.</summary>
+public sealed record ShareAccountActivated : DomainEvent
+{
+    public DefaultIdType AccountId { get; init; }
+}

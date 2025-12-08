@@ -1,6 +1,7 @@
 using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanRepayments.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanRepayments.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanRepayments.Reverse.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanRepayments.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -14,6 +15,7 @@ public class LoanRepaymentEndpoints : CarterModule
     private const string CreateLoanRepayment = "CreateLoanRepayment";
     private const string GetLoanRepayment = "GetLoanRepayment";
     private const string GetLoanRepaymentsByLoan = "GetLoanRepaymentsByLoan";
+    private const string ReverseLoanRepayment = "ReverseLoanRepayment";
     private const string SearchLoanRepayments = "SearchLoanRepayments";
 
     /// <summary>
@@ -71,6 +73,18 @@ public class LoanRepaymentEndpoints : CarterModule
             .WithSummary("Gets all repayments for a specific loan")
             .Produces<PagedList<LoanRepaymentResponse>>()
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        loanRepaymentsGroup.MapPost("/{id:guid}/reverse", async (DefaultIdType id, ReverseLoanRepaymentCommand command, ISender sender) =>
+            {
+                if (id != command.LoanRepaymentId) return Results.BadRequest("ID mismatch");
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(ReverseLoanRepayment)
+            .WithSummary("Reverses a loan repayment")
+            .Produces<ReverseLoanRepaymentResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
     }
 }

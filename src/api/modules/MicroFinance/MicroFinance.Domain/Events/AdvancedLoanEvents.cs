@@ -44,3 +44,4 @@ public sealed record LoanApplicationRejected(Guid ApplicationId, Guid RejectedBy
 public sealed record LoanApplicationWithdrawn(Guid ApplicationId) : DomainEvent;
 public sealed record LoanApplicationDisbursed(Guid ApplicationId, Guid LoanId) : DomainEvent;
 public sealed record LoanApplicationExpired(Guid ApplicationId) : DomainEvent;
+public sealed record LoanApplicationReturned(Guid ApplicationId, string Reason) : DomainEvent;

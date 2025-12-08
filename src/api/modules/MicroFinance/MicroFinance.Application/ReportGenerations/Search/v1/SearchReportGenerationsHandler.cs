@@ -1,6 +1,5 @@
 using FSH.Framework.Core.Paging;
 using FSH.Framework.Core.Persistence;
-using FSH.Framework.Core.Specifications;
 using FSH.Starter.WebApi.MicroFinance.Application.ReportGenerations.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Domain;
 using MediatR;
@@ -19,17 +18,12 @@ public sealed class SearchReportGenerationsHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var spec = new EntitiesByPaginationFilterSpec<ReportGeneration, ReportGenerationResponse>(
-            new PaginationFilter
-            {
-                PageNumber = request.PageNumber,
-                PageSize = request.PageSize,
-                Keyword = request.Keyword,
-                OrderBy = request.OrderBy
-            });
+        var spec = new SearchReportGenerationsSpecs(request);
 
-        return await repository.PaginatedListAsync(spec, request.PageNumber, request.PageSize, cancellationToken)
-            .ConfigureAwait(false);
+        var items = await repository.ListAsync(spec, cancellationToken).ConfigureAwait(false);
+        var totalCount = await repository.CountAsync(spec, cancellationToken).ConfigureAwait(false);
+
+        return new PagedList<ReportGenerationResponse>(items, request.PageNumber, request.PageSize, totalCount);
     }
 }
 

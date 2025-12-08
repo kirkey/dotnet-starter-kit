@@ -43,4 +43,5 @@ public static class FshActions
     public const string Deactivate = nameof(Deactivate);
     public const string Suspend = nameof(Suspend);
     public const string Renew = nameof(Renew);
+    public const string Return = nameof(Return);
 }

@@ -273,4 +273,34 @@ public sealed class TellerSession : AuditableEntity, IAggregateRoot
 
         QueueDomainEvent(new TellerSessionVerified(Id, supervisorUserId, supervisorName));
     }
+
+    /// <summary>
+    /// Transfers cash to/from the vault or another teller.
+    /// </summary>
+    public void TransferCash(decimal amount, bool isTransferIn, string reference)
+    {
+        if (Status != StatusOpen && Status != StatusPaused)
+            throw new InvalidOperationException("Cannot transfer cash on a closed session.");
+
+        if (amount <= 0)
+            throw new ArgumentException("Transfer amount must be positive.", nameof(amount));
+
+        if (isTransferIn)
+        {
+            // Receiving cash from vault
+            TotalCashIn += amount;
+        }
+        else
+        {
+            // Sending cash to vault
+            if (amount > ExpectedClosingBalance)
+                throw new InvalidOperationException("Insufficient cash in drawer for this transfer.");
+            TotalCashOut += amount;
+        }
+
+        ExpectedClosingBalance = OpeningBalance + TotalCashIn - TotalCashOut;
+        TransactionCount++;
+
+        QueueDomainEvent(new TellerSessionCashTransferred(Id, amount, isTransferIn, reference, ExpectedClosingBalance));
+    }
 }

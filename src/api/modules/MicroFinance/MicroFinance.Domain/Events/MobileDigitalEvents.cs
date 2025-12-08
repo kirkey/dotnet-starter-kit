@@ -13,6 +13,10 @@ public sealed record MobileWalletActivated(Guid WalletId, string PhoneNumber) : 
 public sealed record MobileWalletCredited(Guid WalletId, decimal Amount, string TransactionRef) : DomainEvent;
 public sealed record MobileWalletDebited(Guid WalletId, decimal Amount, string TransactionRef) : DomainEvent;
 public sealed record MobileWalletSuspended(Guid WalletId, string Reason) : DomainEvent;
+public sealed record MobileWalletBlocked(Guid WalletId, string Reason) : DomainEvent;
+public sealed record MobileWalletUnblocked(Guid WalletId) : DomainEvent;
+public sealed record MobileWalletReactivated(Guid WalletId) : DomainEvent;
+public sealed record MobileWalletClosed(Guid WalletId, string? Reason) : DomainEvent;
 public sealed record MobileWalletLinkedToAccount(Guid WalletId, Guid SavingsAccountId) : DomainEvent;
 public sealed record MobileWalletTierUpgraded(Guid WalletId, string NewTier) : DomainEvent;
 

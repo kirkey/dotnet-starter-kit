@@ -371,4 +371,28 @@ public sealed class LoanApplication : AuditableEntity, IAggregateRoot
         Status = StatusExpired;
         QueueDomainEvent(new LoanApplicationExpired(Id));
     }
+
+    /// <summary>
+    /// Returns the application to the applicant for corrections.
+    /// </summary>
+    public void Return(string reason, string? notes = null)
+    {
+        if (Status != StatusUnderReview && Status != StatusPendingApproval && Status != StatusPendingDocuments)
+            throw new InvalidOperationException("Application cannot be returned at this stage.");
+
+        if (string.IsNullOrWhiteSpace(reason))
+            throw new ArgumentException("Return reason is required.", nameof(reason));
+
+        Status = StatusDraft;
+        if (!string.IsNullOrWhiteSpace(notes))
+        {
+            Notes = string.IsNullOrWhiteSpace(Notes) ? $"Returned: {reason}\n{notes}" : $"{Notes}\nReturned: {reason}\n{notes}";
+        }
+        else
+        {
+            Notes = string.IsNullOrWhiteSpace(Notes) ? $"Returned: {reason}" : $"{Notes}\nReturned: {reason}";
+        }
+
+        QueueDomainEvent(new LoanApplicationReturned(Id, reason));
+    }
 }

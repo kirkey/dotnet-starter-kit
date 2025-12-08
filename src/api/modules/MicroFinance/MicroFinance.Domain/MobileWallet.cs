@@ -141,4 +141,64 @@ public sealed class MobileWallet : AuditableEntity, IAggregateRoot
         QueueDomainEvent(new MobileWalletUpdated(this));
         return this;
     }
+
+    /// <summary>
+    /// Blocks the wallet for fraud prevention or compliance.
+    /// </summary>
+    public MobileWallet Block(string reason)
+    {
+        if (Status == StatusBlocked)
+            throw new InvalidOperationException("Wallet is already blocked.");
+
+        Status = StatusBlocked;
+        QueueDomainEvent(new MobileWalletBlocked(Id, reason));
+        return this;
+    }
+
+    /// <summary>
+    /// Unblocks a blocked wallet.
+    /// </summary>
+    public MobileWallet Unblock()
+    {
+        if (Status != StatusBlocked)
+            throw new InvalidOperationException("Only blocked wallets can be unblocked.");
+
+        Status = StatusActive;
+        QueueDomainEvent(new MobileWalletUnblocked(Id));
+        return this;
+    }
+
+    /// <summary>
+    /// Reactivates a suspended wallet.
+    /// </summary>
+    public MobileWallet Reactivate()
+    {
+        if (Status != StatusSuspended)
+            throw new InvalidOperationException("Only suspended wallets can be reactivated.");
+
+        Status = StatusActive;
+        QueueDomainEvent(new MobileWalletReactivated(Id));
+        return this;
+    }
+
+    /// <summary>
+    /// Closes the wallet permanently.
+    /// </summary>
+    public MobileWallet Close(string? reason = null)
+    {
+        if (Status == StatusInactive)
+            throw new InvalidOperationException("Wallet is already closed.");
+
+        if (Balance > 0)
+            throw new InvalidOperationException("Cannot close wallet with non-zero balance. Transfer funds first.");
+
+        Status = StatusInactive;
+        if (!string.IsNullOrWhiteSpace(reason))
+        {
+            Notes = string.IsNullOrWhiteSpace(Notes) ? $"Closed: {reason}" : $"{Notes}\nClosed: {reason}";
+        }
+
+        QueueDomainEvent(new MobileWalletClosed(Id, reason));
+        return this;
+    }
 }
