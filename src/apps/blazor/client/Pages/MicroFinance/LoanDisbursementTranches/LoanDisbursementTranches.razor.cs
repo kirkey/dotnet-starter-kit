@@ -87,7 +87,7 @@ public partial class LoanDisbursementTranches
     /// </summary>
     private async Task ShowLoanDisbursementTrancheHelp()
     {
-        await DialogService.ShowAsync<LoanDisbursementTrancheHelpDialog>("Loan Disbursement Tranche Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<LoanDisbursementTranchesHelpDialog>("Loan Disbursement Tranche Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

@@ -105,7 +105,7 @@ public partial class ReportDefinitions
     /// </summary>
     private async Task ShowReportDefinitionHelp()
     {
-        await DialogService.ShowAsync<ReportDefinitionHelpDialog>("Report Definition Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<ReportDefinitionsHelpDialog>("Report Definition Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

@@ -85,7 +85,7 @@ public partial class Documents
     /// </summary>
     private async Task ShowDocumentHelp()
     {
-        await DialogService.ShowAsync<DocumentHelpDialog>("Document Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<DocumentsHelpDialog>("Document Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

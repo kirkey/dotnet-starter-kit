@@ -79,7 +79,7 @@ public partial class ApprovalRequests
     /// </summary>
     private async Task ShowApprovalRequestHelp()
     {
-        await DialogService.ShowAsync<ApprovalRequestHelpDialog>("Approval Request Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<ApprovalRequestsHelpDialog>("Approval Request Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

@@ -79,7 +79,7 @@ public partial class RiskAlerts
     /// </summary>
     private async Task ShowRiskAlertHelp()
     {
-        await DialogService.ShowAsync<RiskAlertHelpDialog>("Risk Alert Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<RiskAlertsHelpDialog>("Risk Alert Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

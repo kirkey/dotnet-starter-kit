@@ -75,7 +75,7 @@ public partial class QrPayments
     /// </summary>
     private async Task ShowQrPaymentHelp()
     {
-        await DialogService.ShowAsync<QrPaymentHelpDialog>("QR Payment Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<QrPaymentsHelpDialog>("QR Payment Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

@@ -133,7 +133,7 @@ public partial class InsurancePolicies
     /// </summary>
     private async Task ShowInsurancePolicyHelp()
     {
-        await DialogService.ShowAsync<InsurancePolicyHelpDialog>("Insurance Policy Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<InsurancePoliciesHelpDialog>("Insurance Policy Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

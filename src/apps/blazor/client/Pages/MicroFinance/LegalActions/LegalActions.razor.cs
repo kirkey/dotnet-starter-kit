@@ -79,7 +79,7 @@ public partial class LegalActions
     /// </summary>
     private async Task ShowLegalActionHelp()
     {
-        await DialogService.ShowAsync<LegalActionHelpDialog>("Legal Action Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<LegalActionsHelpDialog>("Legal Action Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

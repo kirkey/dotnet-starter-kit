@@ -79,7 +79,7 @@ public partial class CommunicationLogs
     /// </summary>
     private async Task ShowCommunicationLogHelp()
     {
-        await DialogService.ShowAsync<CommunicationLogHelpDialog>("Communication Log Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<CommunicationLogsHelpDialog>("Communication Log Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

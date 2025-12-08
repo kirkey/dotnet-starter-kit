@@ -87,7 +87,7 @@ public partial class LoanOfficerTargets
     /// </summary>
     private async Task ShowLoanOfficerTargetHelp()
     {
-        await DialogService.ShowAsync<LoanOfficerTargetHelpDialog>("Loan Officer Target Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<LoanOfficerTargetsHelpDialog>("Loan Officer Target Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

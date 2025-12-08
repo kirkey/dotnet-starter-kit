@@ -88,7 +88,7 @@ public partial class UssdSessions
     /// </summary>
     private async Task ShowUssdSessionHelp()
     {
-        await DialogService.ShowAsync<UssdSessionHelpDialog>("USSD Session Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<UssdSessionsHelpDialog>("USSD Session Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

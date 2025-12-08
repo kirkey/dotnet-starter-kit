@@ -79,7 +79,7 @@ public partial class CollectionStrategies
     /// </summary>
     private async Task ShowCollectionStrategyHelp()
     {
-        await DialogService.ShowAsync<CollectionStrategyHelpDialog>("Collection Strategy Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<CollectionStrategiesHelpDialog>("Collection Strategy Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

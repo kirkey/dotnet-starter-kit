@@ -91,7 +91,7 @@ public partial class CollateralValuations
     /// </summary>
     private async Task ShowCollateralValuationHelp()
     {
-        await DialogService.ShowAsync<CollateralValuationHelpDialog>("Collateral Valuation Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<CollateralValuationsHelpDialog>("Collateral Valuation Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

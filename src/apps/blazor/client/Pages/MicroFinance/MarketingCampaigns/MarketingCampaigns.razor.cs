@@ -79,7 +79,7 @@ public partial class MarketingCampaigns
     /// </summary>
     private async Task ShowMarketingCampaignHelp()
     {
-        await DialogService.ShowAsync<MarketingCampaignHelpDialog>("Marketing Campaign Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<MarketingCampaignsHelpDialog>("Marketing Campaign Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

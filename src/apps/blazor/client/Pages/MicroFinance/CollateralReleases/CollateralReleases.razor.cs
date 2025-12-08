@@ -79,7 +79,7 @@ public partial class CollateralReleases
     /// </summary>
     private async Task ShowCollateralReleaseHelp()
     {
-        await DialogService.ShowAsync<CollateralReleaseHelpDialog>("Collateral Release Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<CollateralReleasesHelpDialog>("Collateral Release Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

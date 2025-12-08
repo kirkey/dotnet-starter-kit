@@ -79,7 +79,7 @@ public partial class CommunicationTemplates
     /// </summary>
     private async Task ShowCommunicationTemplateHelp()
     {
-        await DialogService.ShowAsync<CommunicationTemplateHelpDialog>("Communication Template Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<CommunicationTemplatesHelpDialog>("Communication Template Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

@@ -79,7 +79,7 @@ public partial class PromiseToPays
     /// </summary>
     private async Task ShowPromiseToPayHelp()
     {
-        await DialogService.ShowAsync<PromiseToPayHelpDialog>("Promise To Pay Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<PromiseToPaysHelpDialog>("Promise To Pay Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

@@ -79,7 +79,7 @@ public partial class CollateralInsurances
     /// </summary>
     private async Task ShowCollateralInsuranceHelp()
     {
-        await DialogService.ShowAsync<CollateralInsuranceHelpDialog>("Collateral Insurance Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<CollateralInsurancesHelpDialog>("Collateral Insurance Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

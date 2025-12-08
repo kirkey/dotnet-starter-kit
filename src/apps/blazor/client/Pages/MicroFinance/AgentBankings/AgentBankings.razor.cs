@@ -113,7 +113,7 @@ public partial class AgentBankings
     /// </summary>
     private async Task ShowAgentBankingHelp()
     {
-        await DialogService.ShowAsync<AgentBankingHelpDialog>("Agent Banking Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<AgentBankingsHelpDialog>("Agent Banking Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

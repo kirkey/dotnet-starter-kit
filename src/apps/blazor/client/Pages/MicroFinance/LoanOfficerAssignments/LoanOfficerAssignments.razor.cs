@@ -83,7 +83,7 @@ public partial class LoanOfficerAssignments
     /// </summary>
     private async Task ShowLoanOfficerAssignmentHelp()
     {
-        await DialogService.ShowAsync<LoanOfficerAssignmentHelpDialog>("Loan Officer Assignment Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<LoanOfficerAssignmentsHelpDialog>("Loan Officer Assignment Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

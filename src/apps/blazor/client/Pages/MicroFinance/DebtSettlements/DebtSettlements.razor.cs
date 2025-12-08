@@ -79,7 +79,7 @@ public partial class DebtSettlements
     /// </summary>
     private async Task ShowDebtSettlementHelp()
     {
-        await DialogService.ShowAsync<DebtSettlementHelpDialog>("Debt Settlement Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<DebtSettlementsHelpDialog>("Debt Settlement Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,

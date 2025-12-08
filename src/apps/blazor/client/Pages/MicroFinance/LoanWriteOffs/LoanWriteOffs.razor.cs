@@ -88,7 +88,7 @@ public partial class LoanWriteOffs
     /// </summary>
     private async Task ShowLoanWriteOffHelp()
     {
-        await DialogService.ShowAsync<LoanWriteOffHelpDialog>("Loan Write-Off Help", new DialogParameters(), new DialogOptions
+        await DialogService.ShowAsync<LoanWriteOffsHelpDialog>("Loan Write-Off Help", new DialogParameters(), new DialogOptions
         {
             MaxWidth = MaxWidth.Large,
             FullWidth = true,
