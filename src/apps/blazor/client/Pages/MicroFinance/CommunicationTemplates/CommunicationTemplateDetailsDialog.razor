@@ -1,0 +1,78 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CommunicationTemplates
+
+<MudDialog>
+    <DialogContent>
+        @if (Template != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Code">@Template.Code</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Name">@Template.Name</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Channel">@Template.Channel</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Category">@Template.Category</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Language">@Template.Language</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Status">
+                        <MudChip T="string" Color="@GetStatusColor(Template.Status)" Size="Size.Small">@Template.Status</MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Requires Approval">
+                        <MudChip T="string" Color="@(Template.RequiresApproval ? Color.Warning : Color.Success)" Size="Size.Small">
+                            @(Template.RequiresApproval ? "Yes" : "No")
+                        </MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudField Label="Subject">@Template.Subject</MudField>
+                </MudItem>
+                @if (!string.IsNullOrEmpty(Template.Body))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Body">
+                            <MudPaper Class="pa-2" Elevation="0" Style="max-height:200px;overflow-y:auto;">
+                                @Template.Body
+                            </MudPaper>
+                        </MudField>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrEmpty(Template.Placeholders))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Placeholders">@Template.Placeholders</MudField>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public CommunicationTemplateResponse? Template { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status?.ToLower() switch
+    {
+        "active" or "approved" => Color.Success,
+        "draft" => Color.Warning,
+        "inactive" or "disabled" => Color.Error,
+        _ => Color.Default
+    };
+}

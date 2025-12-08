@@ -1,0 +1,81 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.ApprovalRequests
+
+<MudDialog>
+    <DialogContent>
+        @if (ApprovalRequest != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Request Number">@ApprovalRequest.RequestNumber</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Entity Type">@ApprovalRequest.EntityType</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Amount">@ApprovalRequest.Amount?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Status">
+                        <MudChip T="string" Color="@GetStatusColor(ApprovalRequest.Status)" Size="Size.Small">@ApprovalRequest.Status</MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle2" Class="mb-2">Approval Progress</MudText>
+                    <MudProgressLinear Value="@GetProgress()" Color="Color.Primary" Size="Size.Large" />
+                    <MudText Typo="Typo.caption">Level @ApprovalRequest.CurrentLevel of @ApprovalRequest.TotalLevels</MudText>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Submitted At">@ApprovalRequest.SubmittedAt.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Completed At">@ApprovalRequest.CompletedAt?.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="SLA Due At">@ApprovalRequest.SlaDueAt?.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                @if (!string.IsNullOrEmpty(ApprovalRequest.Comments))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Comments">@ApprovalRequest.Comments</MudField>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrEmpty(ApprovalRequest.RejectionReason))
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Error">
+                            <strong>Rejection Reason:</strong> @ApprovalRequest.RejectionReason
+                        </MudAlert>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public ApprovalRequestResponse? ApprovalRequest { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status?.ToLower() switch
+    {
+        "approved" or "completed" => Color.Success,
+        "pending" or "in progress" => Color.Warning,
+        "rejected" or "cancelled" => Color.Error,
+        _ => Color.Default
+    };
+
+    private double GetProgress()
+    {
+        if (ApprovalRequest?.TotalLevels > 0)
+            return (double)ApprovalRequest.CurrentLevel / ApprovalRequest.TotalLevels * 100;
+        return 0;
+    }
+}

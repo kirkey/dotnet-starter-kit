@@ -1,0 +1,74 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CommunicationLogs
+
+<MudDialog>
+    <DialogContent>
+        @if (Log != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Channel">@Log.Channel</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Recipient">@Log.Recipient</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Subject">@Log.Subject</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Delivery Status">
+                        <MudChip T="string" Color="@GetStatusColor(Log.DeliveryStatus)" Size="Size.Small">@Log.DeliveryStatus</MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Sent At">@Log.SentAt?.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Delivered At">@Log.DeliveredAt?.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Retry Count">@Log.RetryCount</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Cost">@Log.Cost?.ToString("C")</MudField>
+                </MudItem>
+                @if (!string.IsNullOrEmpty(Log.Body))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Body">
+                            <MudPaper Class="pa-2" Elevation="0" Style="max-height:200px;overflow-y:auto;">
+                                @Log.Body
+                            </MudPaper>
+                        </MudField>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrEmpty(Log.ErrorMessage))
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Error">@Log.ErrorMessage</MudAlert>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public CommunicationLogResponse? Log { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status?.ToLower() switch
+    {
+        "delivered" or "sent" => Color.Success,
+        "pending" or "queued" => Color.Warning,
+        "failed" or "bounced" => Color.Error,
+        _ => Color.Default
+    };
+}

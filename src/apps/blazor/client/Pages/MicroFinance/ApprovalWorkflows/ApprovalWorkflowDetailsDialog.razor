@@ -1,0 +1,65 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.ApprovalWorkflows
+
+<MudDialog>
+    <DialogContent>
+        @if (Workflow != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Code">@Workflow.Code</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Name">@Workflow.Name</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Entity Type">@Workflow.EntityType</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Number of Levels">@Workflow.NumberOfLevels</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Min Amount">@Workflow.MinAmount?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Max Amount">@Workflow.MaxAmount?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Sequential">
+                        <MudChip T="string" Color="@(Workflow.IsSequential ? Color.Info : Color.Default)" Size="Size.Small">
+                            @(Workflow.IsSequential ? "Yes" : "No")
+                        </MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Active">
+                        <MudChip T="string" Color="@(Workflow.IsActive ? Color.Success : Color.Error)" Size="Size.Small">
+                            @(Workflow.IsActive ? "Yes" : "No")
+                        </MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Priority">@Workflow.Priority</MudField>
+                </MudItem>
+                @if (!string.IsNullOrEmpty(Workflow.Description))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Description">@Workflow.Description</MudField>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public ApprovalWorkflowResponse? Workflow { get; set; }
+
+    private void Close() => MudDialog.Close();
+}
