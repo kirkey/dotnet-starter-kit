@@ -1,8 +1,10 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Reject.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Submit.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -14,6 +16,7 @@ public class CollateralValuationEndpoints : CarterModule
     private const string CreateCollateralValuation = "CreateCollateralValuation";
     private const string GetCollateralValuation = "GetCollateralValuation";
     private const string RejectValuation = "RejectValuation";
+    private const string SearchCollateralValuations = "SearchCollateralValuations";
     private const string SubmitValuation = "SubmitValuation";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
@@ -73,6 +76,17 @@ public class CollateralValuationEndpoints : CarterModule
         .WithSummary("Reject a collateral valuation")
         .Produces<RejectValuationResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchCollateralValuationsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchCollateralValuations)
+        .WithSummary("Search collateral valuations")
+        .Produces<PagedList<CollateralValuationSummaryResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

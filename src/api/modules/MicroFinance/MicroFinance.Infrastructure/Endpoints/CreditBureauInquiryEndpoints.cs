@@ -1,7 +1,9 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.CreditBureauInquiries.Complete.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CreditBureauInquiries.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CreditBureauInquiries.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.CreditBureauInquiries.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -11,6 +13,7 @@ public class CreditBureauInquiryEndpoints : CarterModule
     private const string CompleteInquiry = "CompleteInquiry";
     private const string CreateCreditBureauInquiry = "CreateCreditBureauInquiry";
     private const string GetCreditBureauInquiry = "GetCreditBureauInquiry";
+    private const string SearchCreditBureauInquiries = "SearchCreditBureauInquiries";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -51,6 +54,17 @@ public class CreditBureauInquiryEndpoints : CarterModule
         .WithSummary("Complete a credit bureau inquiry")
         .Produces<CompleteInquiryResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchCreditBureauInquiriesCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchCreditBureauInquiries)
+        .WithSummary("Search credit bureau inquiries")
+        .Produces<PagedList<CreditBureauInquirySummaryResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

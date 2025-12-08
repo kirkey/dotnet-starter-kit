@@ -1,9 +1,11 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanWriteOffs.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanWriteOffs.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanWriteOffs.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanWriteOffs.Process.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanWriteOffs.RecordRecovery.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanWriteOffs.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -15,6 +17,7 @@ public class LoanWriteOffEndpoints : CarterModule
     private const string GetLoanWriteOff = "GetLoanWriteOff";
     private const string ProcessWriteOff = "ProcessWriteOff";
     private const string RecordWriteOffRecovery = "RecordWriteOffRecovery";
+    private const string SearchLoanWriteOffs = "SearchLoanWriteOffs";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -68,13 +71,24 @@ public class LoanWriteOffEndpoints : CarterModule
         group.MapPost("/{id:guid}/record-recovery", async (DefaultIdType id, RecordRecoveryRequest request, ISender sender) =>
         {
             var command = new RecordWriteOffRecoveryCommand(id, request.Amount, request.Notes);
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(RecordWriteOffRecovery)
         .WithSummary("Record recovery on write-off")
         .Produces<RecordWriteOffRecoveryResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchLoanWriteOffsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchLoanWriteOffs)
+        .WithSummary("Search loan write-offs")
+        .Produces<PagedList<LoanWriteOffSummaryResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

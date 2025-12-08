@@ -1,8 +1,10 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerAssignments.AssignToGroup.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerAssignments.AssignToMember.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerAssignments.End.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerAssignments.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerAssignments.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerAssignments.Transfer.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -14,6 +16,7 @@ public class LoanOfficerAssignmentEndpoints : CarterModule
     private const string AssignToMember = "AssignToMember";
     private const string EndAssignment = "EndAssignment";
     private const string GetLoanOfficerAssignment = "GetLoanOfficerAssignment";
+    private const string SearchLoanOfficerAssignments = "SearchLoanOfficerAssignments";
     private const string TransferAssignment = "TransferAssignment";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
@@ -74,6 +77,17 @@ public class LoanOfficerAssignmentEndpoints : CarterModule
         .WithName(EndAssignment)
         .WithSummary("End loan officer assignment")
         .Produces<EndAssignmentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchLoanOfficerAssignmentsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchLoanOfficerAssignments)
+        .WithSummary("Search loan officer assignments")
+        .Produces<PagedList<LoanOfficerAssignmentSummaryResponse>>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 

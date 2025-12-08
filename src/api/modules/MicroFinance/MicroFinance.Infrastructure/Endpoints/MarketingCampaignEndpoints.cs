@@ -1,9 +1,11 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Complete.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Launch.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -15,6 +17,7 @@ public class MarketingCampaignEndpoints : CarterModule
     private const string CreateMarketingCampaign = "CreateMarketingCampaign";
     private const string GetMarketingCampaign = "GetMarketingCampaign";
     private const string LaunchMarketingCampaign = "LaunchMarketingCampaign";
+    private const string SearchMarketingCampaigns = "SearchMarketingCampaigns";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -74,6 +77,17 @@ public class MarketingCampaignEndpoints : CarterModule
         .WithSummary("Complete marketing campaign")
         .Produces<CompleteMarketingCampaignResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchMarketingCampaignsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchMarketingCampaigns)
+        .WithSummary("Search marketing campaigns")
+        .Produces<PagedList<MarketingCampaignSummaryResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

@@ -1,8 +1,10 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -13,6 +15,7 @@ public class RiskCategoryEndpoints : CarterModule
     private const string CreateRiskCategory = "CreateRiskCategory";
     private const string DeactivateRiskCategory = "DeactivateRiskCategory";
     private const string GetRiskCategory = "GetRiskCategory";
+    private const string SearchRiskCategories = "SearchRiskCategories";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -59,6 +62,17 @@ public class RiskCategoryEndpoints : CarterModule
         .WithName(DeactivateRiskCategory)
         .WithSummary("Deactivate risk category")
         .Produces<DeactivateRiskCategoryResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchRiskCategoriesCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchRiskCategories)
+        .WithSummary("Search risk categories")
+        .Produces<PagedList<RiskCategorySummaryResponse>>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 

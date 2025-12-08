@@ -1,7 +1,9 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.CommunicationTemplates.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CommunicationTemplates.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CommunicationTemplates.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.CommunicationTemplates.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -11,6 +13,7 @@ public class CommunicationTemplateEndpoints : CarterModule
     private const string ActivateCommunicationTemplate = "ActivateCommunicationTemplate";
     private const string CreateCommunicationTemplate = "CreateCommunicationTemplate";
     private const string GetCommunicationTemplate = "GetCommunicationTemplate";
+    private const string SearchCommunicationTemplates = "SearchCommunicationTemplates";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -46,6 +49,17 @@ public class CommunicationTemplateEndpoints : CarterModule
         .WithName(ActivateCommunicationTemplate)
         .WithSummary("Activate a communication template")
         .Produces<ActivateTemplateResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchCommunicationTemplatesCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchCommunicationTemplates)
+        .WithSummary("Search communication templates")
+        .Produces<PagedList<CommunicationTemplateSummaryResponse>>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 

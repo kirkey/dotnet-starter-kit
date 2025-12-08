@@ -1,9 +1,11 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.RecordMeasurement.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -15,6 +17,7 @@ public class RiskIndicatorEndpoints : CarterModule
     private const string DeactivateRiskIndicator = "DeactivateRiskIndicator";
     private const string GetRiskIndicator = "GetRiskIndicator";
     private const string RecordRiskIndicatorMeasurement = "RecordRiskIndicatorMeasurement";
+    private const string SearchRiskIndicators = "SearchRiskIndicators";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -73,6 +76,17 @@ public class RiskIndicatorEndpoints : CarterModule
         .WithName(DeactivateRiskIndicator)
         .WithSummary("Deactivate risk indicator")
         .Produces<DeactivateRiskIndicatorResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchRiskIndicatorsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchRiskIndicators)
+        .WithSummary("Search risk indicators")
+        .Produces<PagedList<RiskIndicatorSummaryResponse>>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 

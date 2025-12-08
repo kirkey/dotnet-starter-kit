@@ -1,4 +1,5 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Assign.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Create.v1;
@@ -6,6 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Reject.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Return.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Review.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Submit.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Withdraw.v1;
 
@@ -21,6 +23,7 @@ public class LoanApplicationEndpoints : CarterModule
     private const string RejectLoanApplication = "RejectLoanApplication";
     private const string ReturnLoanApplication = "ReturnLoanApplication";
     private const string ReviewLoanApplication = "ReviewLoanApplication";
+    private const string SearchLoanApplications = "SearchLoanApplications";
     private const string SubmitLoanApplication = "SubmitLoanApplication";
     private const string WithdrawLoanApplication = "WithdrawLoanApplication";
 
@@ -132,6 +135,17 @@ public class LoanApplicationEndpoints : CarterModule
             .WithSummary("Returns a loan application to the applicant for corrections")
             .Produces<ReturnLoanApplicationResponse>()
             .RequirePermission(FshPermission.NameFor(FshActions.Return, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchLoanApplicationsCommand command, ISender sender) =>
+            {
+                var result = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(result);
+            })
+            .WithName(SearchLoanApplications)
+            .WithSummary("Search loan applications")
+            .Produces<PagedList<LoanApplicationSummaryResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
     }

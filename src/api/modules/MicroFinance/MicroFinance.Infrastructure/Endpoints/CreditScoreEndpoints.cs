@@ -1,6 +1,8 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.CreditScores.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CreditScores.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.CreditScores.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CreditScores.SetLossParameters.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -10,6 +12,7 @@ public class CreditScoreEndpoints : CarterModule
 
     private const string CreateCreditScore = "CreateCreditScore";
     private const string GetCreditScore = "GetCreditScore";
+    private const string SearchCreditScores = "SearchCreditScores";
     private const string SetCreditScoreLossParameters = "SetCreditScoreLossParameters";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
@@ -50,6 +53,17 @@ public class CreditScoreEndpoints : CarterModule
         .WithName(SetCreditScoreLossParameters)
         .WithSummary("Set loss parameters for risk calculation")
         .Produces<SetLossParametersResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchCreditScoresCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchCreditScores)
+        .WithSummary("Search credit scores")
+        .Produces<PagedList<CreditScoreSummaryResponse>>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 

@@ -1,8 +1,10 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.RecordPremium.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.Renew.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -13,6 +15,7 @@ public class CollateralInsuranceEndpoints : CarterModule
     private const string GetCollateralInsurance = "GetCollateralInsurance";
     private const string RecordCollateralInsurancePremiumPayment = "RecordCollateralInsurancePremiumPayment";
     private const string RenewInsurance = "RenewInsurance";
+    private const string SearchCollateralInsurances = "SearchCollateralInsurances";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -60,6 +63,17 @@ public class CollateralInsuranceEndpoints : CarterModule
         .WithSummary("Renew collateral insurance")
         .Produces<RenewInsuranceResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Renew, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchCollateralInsurancesCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchCollateralInsurances)
+        .WithSummary("Search collateral insurances")
+        .Produces<PagedList<CollateralInsuranceSummaryResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

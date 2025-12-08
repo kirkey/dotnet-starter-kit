@@ -1,8 +1,10 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.CustomerSegments.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CustomerSegments.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CustomerSegments.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CustomerSegments.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.CustomerSegments.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -13,6 +15,7 @@ public class CustomerSegmentEndpoints : CarterModule
     private const string CreateCustomerSegment = "CreateCustomerSegment";
     private const string DeactivateCustomerSegment = "DeactivateCustomerSegment";
     private const string GetCustomerSegment = "GetCustomerSegment";
+    private const string SearchCustomerSegments = "SearchCustomerSegments";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -59,6 +62,17 @@ public class CustomerSegmentEndpoints : CarterModule
         .WithName(DeactivateCustomerSegment)
         .WithSummary("Deactivate customer segment")
         .Produces<DeactivateCustomerSegmentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchCustomerSegmentsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchCustomerSegments)
+        .WithSummary("Search customer segments")
+        .Produces<PagedList<CustomerSegmentSummaryResponse>>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 

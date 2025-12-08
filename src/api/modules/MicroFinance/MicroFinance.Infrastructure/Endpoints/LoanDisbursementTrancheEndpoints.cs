@@ -1,8 +1,10 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.Disburse.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.VerifyMilestone.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -14,6 +16,7 @@ public class LoanDisbursementTrancheEndpoints : CarterModule
     private const string CreateLoanDisbursementTranche = "CreateLoanDisbursementTranche";
     private const string DisburseTranche = "DisburseTranche";
     private const string GetLoanDisbursementTranche = "GetLoanDisbursementTranche";
+    private const string SearchLoanDisbursementTranches = "SearchLoanDisbursementTranches";
     private const string VerifyTrancheMilestone = "VerifyTrancheMilestone";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
@@ -75,6 +78,17 @@ public class LoanDisbursementTrancheEndpoints : CarterModule
         .WithSummary("Disburse tranche")
         .Produces<DisburseTrancheResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Disburse, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchLoanDisbursementTranchesCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchLoanDisbursementTranches)
+        .WithSummary("Search loan disbursement tranches")
+        .Produces<PagedList<LoanDisbursementTrancheSummaryResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

@@ -1,7 +1,9 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.RecordProgress.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -11,6 +13,7 @@ public class BranchTargetEndpoints : CarterModule
     private const string CreateBranchTarget = "CreateBranchTarget";
     private const string GetBranchTarget = "GetBranchTarget";
     private const string RecordBranchProgress = "RecordBranchProgress";
+    private const string SearchBranchTargets = "SearchBranchTargets";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -48,6 +51,17 @@ public class BranchTargetEndpoints : CarterModule
         .WithSummary("Record progress towards branch target")
         .Produces<RecordBranchProgressResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchBranchTargetsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchBranchTargets)
+        .WithSummary("Search branch targets")
+        .Produces<PagedList<BranchTargetSummaryResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

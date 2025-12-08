@@ -1,10 +1,12 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Acknowledge.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Assign.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Escalate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Resolve.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -17,6 +19,7 @@ public class RiskAlertEndpoints : CarterModule
     private const string EscalateRiskAlert = "EscalateRiskAlert";
     private const string GetRiskAlert = "GetRiskAlert";
     private const string ResolveRiskAlert = "ResolveRiskAlert";
+    private const string SearchRiskAlerts = "SearchRiskAlerts";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -85,6 +88,17 @@ public class RiskAlertEndpoints : CarterModule
         .WithName(ResolveRiskAlert)
         .WithSummary("Resolve a risk alert")
         .Produces<ResolveRiskAlertResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchRiskAlertsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchRiskAlerts)
+        .WithSummary("Search risk alerts")
+        .Produces<PagedList<RiskAlertSummaryResponse>>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 

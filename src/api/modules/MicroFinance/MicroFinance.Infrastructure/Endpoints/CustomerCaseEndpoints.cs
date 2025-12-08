@@ -1,10 +1,12 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.CustomerCases.Assign.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CustomerCases.Close.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CustomerCases.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CustomerCases.Escalate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CustomerCases.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CustomerCases.Resolve.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.CustomerCases.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -17,6 +19,7 @@ public class CustomerCaseEndpoints : CarterModule
     private const string EscalateCustomerCase = "EscalateCustomerCase";
     private const string GetCustomerCase = "GetCustomerCase";
     private const string ResolveCustomerCase = "ResolveCustomerCase";
+    private const string SearchCustomerCases = "SearchCustomerCases";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -86,6 +89,17 @@ public class CustomerCaseEndpoints : CarterModule
         .WithSummary("Close a customer case")
         .Produces<CloseCustomerCaseResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchCustomerCasesCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchCustomerCases)
+        .WithSummary("Search customer cases")
+        .Produces<PagedList<CustomerCaseSummaryResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

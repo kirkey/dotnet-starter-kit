@@ -1,10 +1,12 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.CloseDay.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Deposit.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.OpenDay.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Reconcile.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.TransferToVault.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CashVaults.Withdraw.v1;
 
@@ -19,6 +21,7 @@ public class CashVaultEndpoints : CarterModule
     private const string GetCashVault = "GetCashVault";
     private const string OpenVaultDay = "OpenVaultDay";
     private const string ReconcileVault = "ReconcileVault";
+    private const string SearchCashVaults = "SearchCashVaults";
     private const string TransferBetweenVaults = "TransferBetweenVaults";
     private const string WithdrawCash = "WithdrawCash";
 
@@ -120,6 +123,17 @@ public class CashVaultEndpoints : CarterModule
             .WithSummary("Transfers cash between vaults")
             .Produces<TransferToVaultResponse>()
             .RequirePermission(FshPermission.NameFor(FshActions.Transfer, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchCashVaultsCommand command, ISender sender) =>
+            {
+                var result = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(result);
+            })
+            .WithName(SearchCashVaults)
+            .WithSummary("Search cash vaults")
+            .Produces<PagedList<CashVaultSummaryResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
     }

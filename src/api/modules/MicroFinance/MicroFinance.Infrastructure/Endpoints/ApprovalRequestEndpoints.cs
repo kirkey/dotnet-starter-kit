@@ -1,9 +1,11 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Cancel.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Reject.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -15,6 +17,7 @@ public class ApprovalRequestEndpoints : CarterModule
     private const string CreateApprovalRequest = "CreateApprovalRequest";
     private const string GetApprovalRequest = "GetApprovalRequest";
     private const string RejectApprovalRequest = "RejectApprovalRequest";
+    private const string SearchApprovalRequests = "SearchApprovalRequests";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -76,6 +79,17 @@ public class ApprovalRequestEndpoints : CarterModule
         .WithSummary("Cancel an approval request")
         .Produces<CancelApprovalRequestResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Cancel, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchApprovalRequestsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchApprovalRequests)
+        .WithSummary("Search approval requests")
+        .Produces<PagedList<ApprovalRequestSummaryResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

@@ -1,8 +1,10 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralReleases.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralReleases.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralReleases.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.CollateralReleases.Release.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.CollateralReleases.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -13,6 +15,7 @@ public class CollateralReleaseEndpoints : CarterModule
     private const string CreateCollateralRelease = "CreateCollateralRelease";
     private const string GetCollateralRelease = "GetCollateralRelease";
     private const string CompleteCollateralRelease = "CompleteCollateralRelease";
+    private const string SearchCollateralReleases = "SearchCollateralReleases";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -64,6 +67,17 @@ public class CollateralReleaseEndpoints : CarterModule
         .WithName(CompleteCollateralRelease)
         .WithSummary("Complete collateral release")
         .Produces<CompleteCollateralReleaseResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchCollateralReleasesCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchCollateralReleases)
+        .WithSummary("Search collateral releases")
+        .Produces<PagedList<CollateralReleaseSummaryResponse>>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 

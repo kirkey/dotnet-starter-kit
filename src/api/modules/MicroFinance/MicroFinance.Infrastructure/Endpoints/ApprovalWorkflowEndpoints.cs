@@ -1,8 +1,10 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.ApprovalWorkflows.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -13,6 +15,7 @@ public class ApprovalWorkflowEndpoints : CarterModule
     private const string CreateApprovalWorkflow = "CreateApprovalWorkflow";
     private const string DeactivateApprovalWorkflow = "DeactivateApprovalWorkflow";
     private const string GetApprovalWorkflow = "GetApprovalWorkflow";
+    private const string SearchApprovalWorkflows = "SearchApprovalWorkflows";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -59,6 +62,17 @@ public class ApprovalWorkflowEndpoints : CarterModule
         .WithName(DeactivateApprovalWorkflow)
         .WithSummary("Deactivate approval workflow")
         .Produces<DeactivateApprovalWorkflowResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchApprovalWorkflowsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchApprovalWorkflows)
+        .WithSummary("Search approval workflows")
+        .Produces<PagedList<ApprovalWorkflowSummaryResponse>>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 

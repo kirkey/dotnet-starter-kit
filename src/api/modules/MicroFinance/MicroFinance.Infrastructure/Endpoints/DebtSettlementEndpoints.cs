@@ -1,8 +1,10 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.DebtSettlements.Approve.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.DebtSettlements.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.DebtSettlements.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.DebtSettlements.RecordPayment.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.DebtSettlements.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -13,6 +15,7 @@ public class DebtSettlementEndpoints : CarterModule
     private const string CreateDebtSettlement = "CreateDebtSettlement";
     private const string GetDebtSettlement = "GetDebtSettlement";
     private const string RecordSettlementPayment = "RecordSettlementPayment";
+    private const string SearchDebtSettlements = "SearchDebtSettlements";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -60,6 +63,17 @@ public class DebtSettlementEndpoints : CarterModule
         .WithSummary("Record payment for a debt settlement")
         .Produces<RecordSettlementPaymentResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchDebtSettlementsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchDebtSettlements)
+        .WithSummary("Search debt settlements")
+        .Produces<PagedList<DebtSettlementSummaryResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }

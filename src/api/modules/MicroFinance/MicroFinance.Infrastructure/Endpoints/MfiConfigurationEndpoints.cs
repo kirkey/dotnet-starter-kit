@@ -1,6 +1,8 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.MfiConfigurations.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MfiConfigurations.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.MfiConfigurations.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.MfiConfigurations.Update.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -13,6 +15,7 @@ public class MfiConfigurationEndpoints : CarterModule
 
     private const string CreateMfiConfiguration = "CreateMfiConfiguration";
     private const string GetMfiConfiguration = "GetMfiConfiguration";
+    private const string SearchMfiConfigurations = "SearchMfiConfigurations";
     private const string UpdateMfiConfiguration = "UpdateMfiConfiguration";
 
     /// <summary>
@@ -54,6 +57,17 @@ public class MfiConfigurationEndpoints : CarterModule
             .WithSummary("Updates an MFI configuration value")
             .Produces<UpdateMfiConfigurationResponse>()
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchMfiConfigurationsCommand command, ISender sender) =>
+            {
+                var result = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(result);
+            })
+            .WithName(SearchMfiConfigurations)
+            .WithSummary("Search MFI configurations")
+            .Produces<PagedList<MfiConfigurationSummaryResponse>>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
     }
 }

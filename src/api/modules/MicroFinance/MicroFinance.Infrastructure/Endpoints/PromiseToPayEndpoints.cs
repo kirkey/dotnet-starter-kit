@@ -1,8 +1,10 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.MarkBroken.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.RecordPayment.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.PromiseToPays.Search.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -13,6 +15,7 @@ public class PromiseToPayEndpoints : CarterModule
     private const string GetPromiseToPay = "GetPromiseToPay";
     private const string MarkPromiseBroken = "MarkPromiseBroken";
     private const string RecordPromisePayment = "RecordPromisePayment";
+    private const string SearchPromiseToPays = "SearchPromiseToPays";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -59,6 +62,17 @@ public class PromiseToPayEndpoints : CarterModule
         .WithName(MarkPromiseBroken)
         .WithSummary("Mark a promise as broken")
         .Produces<MarkPromiseBrokenResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchPromiseToPaysCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchPromiseToPays)
+        .WithSummary("Search promise to pays")
+        .Produces<PagedList<PromiseToPaySummaryResponse>>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 

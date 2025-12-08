@@ -1,7 +1,9 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.KycDocuments.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.KycDocuments.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.KycDocuments.Reject.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.KycDocuments.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.KycDocuments.Verify.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -12,6 +14,7 @@ public class KycDocumentEndpoints : CarterModule
     private const string CreateKycDocument = "CreateKycDocument";
     private const string GetKycDocument = "GetKycDocument";
     private const string RejectKycDocument = "RejectKycDocument";
+    private const string SearchKycDocuments = "SearchKycDocuments";
     private const string VerifyKycDocument = "VerifyKycDocument";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
@@ -62,6 +65,17 @@ public class KycDocumentEndpoints : CarterModule
         .WithSummary("Reject KYC document")
         .Produces<RejectKycDocumentResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/search", async (SearchKycDocumentsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(SearchKycDocuments)
+        .WithSummary("Search KYC documents")
+        .Produces<PagedList<KycDocumentSummaryResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
     }
