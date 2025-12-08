@@ -23,7 +23,7 @@ public class RiskCategoryEndpoints : CarterModule
 
         group.MapPost("/", async (CreateRiskCategoryCommand command, ISender sender) =>
         {
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Created($"/microfinance/risk-categories/{result.Id}", result);
         })
         .WithName(CreateRiskCategory)
@@ -34,7 +34,7 @@ public class RiskCategoryEndpoints : CarterModule
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
-            var result = await sender.Send(new GetRiskCategoryRequest(id));
+            var result = await sender.Send(new GetRiskCategoryRequest(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(GetRiskCategory)
@@ -45,7 +45,7 @@ public class RiskCategoryEndpoints : CarterModule
 
         group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
         {
-            var result = await sender.Send(new ActivateRiskCategoryCommand(id));
+            var result = await sender.Send(new ActivateRiskCategoryCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(ActivateRiskCategory)
@@ -56,7 +56,7 @@ public class RiskCategoryEndpoints : CarterModule
 
         group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
         {
-            var result = await sender.Send(new DeactivateRiskCategoryCommand(id));
+            var result = await sender.Send(new DeactivateRiskCategoryCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(DeactivateRiskCategory)

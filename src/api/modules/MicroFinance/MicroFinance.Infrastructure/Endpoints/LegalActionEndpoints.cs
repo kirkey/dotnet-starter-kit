@@ -25,7 +25,7 @@ public class LegalActionEndpoints : CarterModule
 
         group.MapPost("/", async (CreateLegalActionCommand command, ISender sender) =>
         {
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Created($"/microfinance/legal-actions/{result.Id}", result);
         })
         .WithName(CreateLegalAction)
@@ -36,7 +36,7 @@ public class LegalActionEndpoints : CarterModule
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
-            var result = await sender.Send(new GetLegalActionRequest(id));
+            var result = await sender.Send(new GetLegalActionRequest(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(GetLegalAction)
@@ -47,7 +47,7 @@ public class LegalActionEndpoints : CarterModule
 
         group.MapPost("/search", async ([FromBody] SearchLegalActionsCommand command, ISender sender) =>
         {
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(SearchLegalActions)
@@ -59,7 +59,7 @@ public class LegalActionEndpoints : CarterModule
         group.MapPost("/{id:guid}/file-case", async (DefaultIdType id, FileCaseRequest request, ISender sender) =>
         {
             var command = new FileCaseCommand(id, request.FiledDate, request.CaseReference, request.CourtName, request.CourtFees);
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(FileCase)

@@ -23,24 +23,24 @@ public class SavingsTransactionEndpoints : CarterModule
 
         transactionsGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
         {
-            var response = await mediator.Send(new GetSavingsTransactionRequest(id));
+            var response = await mediator.Send(new GetSavingsTransactionRequest(id)).ConfigureAwait(false);
             return Results.Ok(response);
         })
         .WithName(GetSavingsTransaction)
         .WithSummary("Gets a savings transaction by ID")
         .Produces<SavingsTransactionResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.SavingsTransactions))
         .MapToApiVersion(1);
 
         transactionsGroup.MapPost("/search", async (SearchSavingsTransactionsCommand request, ISender mediator) =>
         {
-            var response = await mediator.Send(request);
+            var response = await mediator.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
         .WithName(SearchSavingsTransactions)
         .WithSummary("Searches savings transactions with pagination")
         .Produces<PagedList<SavingsTransactionResponse>>()
-        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.SavingsTransactions))
         .MapToApiVersion(1);
 
         transactionsGroup.MapGet("/by-account/{accountId:guid}", async (DefaultIdType accountId, ISender mediator) =>
@@ -51,7 +51,7 @@ public class SavingsTransactionEndpoints : CarterModule
                 PageNumber = 1,
                 PageSize = 100
             };
-            var response = await mediator.Send(request);
+            var response = await mediator.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
         .WithName(GetSavingsTransactionsByAccount)

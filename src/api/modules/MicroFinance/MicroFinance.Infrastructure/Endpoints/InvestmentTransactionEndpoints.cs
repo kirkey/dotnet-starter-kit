@@ -22,7 +22,7 @@ public class InvestmentTransactionEndpoints : CarterModule
         // Search transactions
         group.MapPost("/search", async (SearchInvestmentTransactionsCommand command, ISender sender) =>
         {
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(SearchInvestmentTransactions)
@@ -33,7 +33,7 @@ public class InvestmentTransactionEndpoints : CarterModule
 
         group.MapPost("/buy", async (CreateBuyTransactionCommand command, ISender sender) =>
         {
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Created($"/microfinance/investment-transactions/{result.Id}", result);
         })
         .WithName(CreateBuyTransaction)
@@ -44,7 +44,7 @@ public class InvestmentTransactionEndpoints : CarterModule
 
         group.MapPost("/sell", async (CreateSellTransactionCommand command, ISender sender) =>
         {
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Created($"/microfinance/investment-transactions/{result.Id}", result);
         })
         .WithName(CreateSellTransaction)
@@ -55,7 +55,7 @@ public class InvestmentTransactionEndpoints : CarterModule
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
-            var result = await sender.Send(new GetInvestmentTransactionRequest(id));
+            var result = await sender.Send(new GetInvestmentTransactionRequest(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(GetInvestmentTransaction)
@@ -66,7 +66,7 @@ public class InvestmentTransactionEndpoints : CarterModule
 
         group.MapPost("/{id:guid}/complete", async (DefaultIdType id, CompleteTransactionRequest? request, ISender sender) =>
         {
-            var result = await sender.Send(new CompleteTransactionCommand(id, request?.GainLoss));
+            var result = await sender.Send(new CompleteTransactionCommand(id, request?.GainLoss)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(CompleteInvestmentTransaction)

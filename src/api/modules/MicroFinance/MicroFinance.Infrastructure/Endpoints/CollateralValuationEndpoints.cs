@@ -25,7 +25,7 @@ public class CollateralValuationEndpoints : CarterModule
 
         group.MapPost("/", async (CreateCollateralValuationCommand command, ISender sender) =>
         {
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Created($"/microfinance/collateral-valuations/{result.Id}", result);
         })
         .WithName(CreateCollateralValuation)
@@ -36,7 +36,7 @@ public class CollateralValuationEndpoints : CarterModule
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
-            var result = await sender.Send(new GetCollateralValuationRequest(id));
+            var result = await sender.Send(new GetCollateralValuationRequest(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(GetCollateralValuation)
@@ -47,7 +47,7 @@ public class CollateralValuationEndpoints : CarterModule
 
         group.MapPost("/{id:guid}/submit", async (DefaultIdType id, ISender sender) =>
         {
-            var result = await sender.Send(new SubmitValuationCommand(id));
+            var result = await sender.Send(new SubmitValuationCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(SubmitValuation)
@@ -58,7 +58,7 @@ public class CollateralValuationEndpoints : CarterModule
 
         group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveRequest request, ISender sender) =>
         {
-            var result = await sender.Send(new ApproveValuationCommand(id, request.ApprovedById));
+            var result = await sender.Send(new ApproveValuationCommand(id, request.ApprovedById)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(ApproveValuation)
@@ -69,7 +69,7 @@ public class CollateralValuationEndpoints : CarterModule
 
         group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectRequest request, ISender sender) =>
         {
-            var result = await sender.Send(new RejectValuationCommand(id, request.Reason));
+            var result = await sender.Send(new RejectValuationCommand(id, request.Reason)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(RejectValuation)

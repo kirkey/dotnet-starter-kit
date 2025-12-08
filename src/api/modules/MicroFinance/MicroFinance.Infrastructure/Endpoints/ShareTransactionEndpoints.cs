@@ -23,24 +23,24 @@ public class ShareTransactionEndpoints : CarterModule
 
         transactionsGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
         {
-            var response = await mediator.Send(new GetShareTransactionRequest(id));
+            var response = await mediator.Send(new GetShareTransactionRequest(id)).ConfigureAwait(false);
             return Results.Ok(response);
         })
         .WithName(GetShareTransaction)
         .WithSummary("Gets a share transaction by ID")
         .Produces<ShareTransactionResponse>()
-        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.ShareTransactions))
         .MapToApiVersion(1);
 
         transactionsGroup.MapPost("/search", async (SearchShareTransactionsCommand request, ISender mediator) =>
         {
-            var response = await mediator.Send(request);
+            var response = await mediator.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
         .WithName(SearchShareTransactions)
         .WithSummary("Searches share transactions with pagination")
         .Produces<PagedList<ShareTransactionResponse>>()
-        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.ShareTransactions))
         .MapToApiVersion(1);
 
         transactionsGroup.MapGet("/by-account/{accountId:guid}", async (DefaultIdType accountId, ISender mediator) =>
@@ -51,7 +51,7 @@ public class ShareTransactionEndpoints : CarterModule
                 PageNumber = 1,
                 PageSize = 100
             };
-            var response = await mediator.Send(request);
+            var response = await mediator.Send(request).ConfigureAwait(false);
             return Results.Ok(response);
         })
         .WithName(GetShareTransactionsByAccount)

@@ -29,7 +29,7 @@ public class StaffEndpoints : CarterModule
 
         group.MapPost("/", async (CreateStaffCommand command, ISender sender) =>
         {
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Created($"/microfinance/staff/{result.Id}", result);
         })
         .WithName(CreateStaff)
@@ -40,7 +40,7 @@ public class StaffEndpoints : CarterModule
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
-            var result = await sender.Send(new GetStaffRequest(id));
+            var result = await sender.Send(new GetStaffRequest(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(GetStaff)
@@ -51,7 +51,7 @@ public class StaffEndpoints : CarterModule
 
         group.MapPost("/search", async ([FromBody] SearchStaffCommand command, ISender sender) =>
         {
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(SearchStaff)
@@ -66,7 +66,7 @@ public class StaffEndpoints : CarterModule
             {
                 return Results.BadRequest("ID mismatch");
             }
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(UpdateStaff)
@@ -81,7 +81,7 @@ public class StaffEndpoints : CarterModule
             {
                 return Results.BadRequest("ID mismatch");
             }
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(SuspendStaff)
@@ -92,7 +92,7 @@ public class StaffEndpoints : CarterModule
 
         group.MapPost("/{id:guid}/reinstate", async (DefaultIdType id, ISender sender) =>
         {
-            var result = await sender.Send(new ReinstateStaffCommand(id));
+            var result = await sender.Send(new ReinstateStaffCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(ReinstateStaff)

@@ -23,7 +23,7 @@ public class DebtSettlementEndpoints : CarterModule
 
         group.MapPost("/", async (CreateDebtSettlementCommand command, ISender sender) =>
         {
-            var result = await sender.Send(command);
+            var result = await sender.Send(command).ConfigureAwait(false);
             return Results.Created($"/microfinance/debt-settlements/{result.Id}", result);
         })
         .WithName(CreateDebtSettlement)
@@ -34,7 +34,7 @@ public class DebtSettlementEndpoints : CarterModule
 
         group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
-            var result = await sender.Send(new GetDebtSettlementRequest(id));
+            var result = await sender.Send(new GetDebtSettlementRequest(id)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(GetDebtSettlement)
@@ -45,7 +45,7 @@ public class DebtSettlementEndpoints : CarterModule
 
         group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveSettlementRequest request, ISender sender) =>
         {
-            var result = await sender.Send(new ApproveSettlementCommand(id, request.ApprovedById));
+            var result = await sender.Send(new ApproveSettlementCommand(id, request.ApprovedById)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(ApproveSettlement)
@@ -56,7 +56,7 @@ public class DebtSettlementEndpoints : CarterModule
 
         group.MapPost("/{id:guid}/record-payment", async (DefaultIdType id, SettlementPaymentRequest request, ISender sender) =>
         {
-            var result = await sender.Send(new RecordSettlementPaymentCommand(id, request.Amount));
+            var result = await sender.Send(new RecordSettlementPaymentCommand(id, request.Amount)).ConfigureAwait(false);
             return Results.Ok(result);
         })
         .WithName(RecordSettlementPayment)
