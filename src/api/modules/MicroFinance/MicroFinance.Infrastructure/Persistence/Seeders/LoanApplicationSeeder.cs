@@ -24,6 +24,9 @@ internal static class LoanApplicationSeeder
 
         if (!members.Any() || !products.Any()) return;
 
+        // Get staff IDs for officer assignments
+        var staffIds = await context.Staff.Select(s => s.Id).ToListAsync(cancellationToken).ConfigureAwait(false);
+
         var random = new Random(42);
         int appNumber = 6001;
 
@@ -107,7 +110,7 @@ internal static class LoanApplicationSeeder
                 requestedTermMonths: app.Term,
                 purpose: app.Purpose);
 
-            var userId = Guid.NewGuid();
+            var userId = staffIds.Any() ? staffIds[random.Next(staffIds.Count)] : Guid.Empty;
 
             // Apply status transitions
             switch (app.Status)

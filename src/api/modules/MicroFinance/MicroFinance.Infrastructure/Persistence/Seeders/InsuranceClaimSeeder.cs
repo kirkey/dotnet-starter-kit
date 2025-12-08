@@ -26,6 +26,10 @@ internal static class InsuranceClaimSeeder
 
         if (!policies.Any()) return;
 
+        // Get staff IDs for approvals/reviews
+        var staffIds = await context.Staff.Select(s => s.Id).ToListAsync(cancellationToken).ConfigureAwait(false);
+        if (!staffIds.Any()) return;
+
         var random = new Random(42);
         int claimNumber = 12001;
         int claimCount = 0;
@@ -56,7 +60,7 @@ internal static class InsuranceClaimSeeder
                 description: reason.Item2);
 
             claim.File();
-            var userId = Guid.NewGuid();
+            var userId = staffIds[random.Next(staffIds.Count)];
             claim.StartReview(userId);
 
             // Process claims based on random outcome

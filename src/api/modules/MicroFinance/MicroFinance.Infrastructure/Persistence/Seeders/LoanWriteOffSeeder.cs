@@ -27,6 +27,10 @@ internal static class LoanWriteOffSeeder
 
         if (defaultedLoans.Count == 0) return;
 
+        // Get staff IDs for approvals
+        var staffIds = await context.Staff.Select(s => s.Id).ToListAsync(cancellationToken).ConfigureAwait(false);
+        if (!staffIds.Any()) return;
+
         var random = new Random(42);
         int writeOffNumber = 18001;
         int writeOffCount = 0;
@@ -65,7 +69,7 @@ internal static class LoanWriteOffSeeder
             if (random.NextDouble() < 0.7)
             {
                 var writeOffDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(-random.Next(30, 90)));
-                writeOff.Approve(Guid.NewGuid(), "Compliance Manager", writeOffDate);
+                writeOff.Approve(staffIds[random.Next(staffIds.Count)], "Compliance Manager", writeOffDate);
                 writeOff.Process();
 
                 // Some have partial recovery

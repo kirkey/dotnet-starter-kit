@@ -34,6 +34,10 @@ internal static class CollateralReleaseSeeder
 
         if (!collaterals.Any()) return;
 
+        // Get staff IDs for approvals/releases
+        var staffIds = await context.Staff.Select(s => s.Id).ToListAsync(cancellationToken).ConfigureAwait(false);
+        if (!staffIds.Any()) return;
+
         var random = new Random(42);
         int releaseNumber = 25001;
         int releaseCount = 0;
@@ -52,7 +56,7 @@ internal static class CollateralReleaseSeeder
                 collateralId: collateral.Id,
                 loanId: collateral.LoanId,
                 releaseReference: $"REL-{releaseNumber++:D6}",
-                requestedById: Guid.NewGuid(),
+                requestedById: staffIds[random.Next(staffIds.Count)],
                 releaseMethod: releaseMethod);
 
             // Update with recipient contact info
@@ -62,9 +66,9 @@ internal static class CollateralReleaseSeeder
             var status = random.NextDouble();
             if (status < 0.7) // 70% released
             {
-                release.Approve(Guid.NewGuid());
+                release.Approve(staffIds[random.Next(staffIds.Count)]);
                 // Release method sets recipient name/ID and DocumentsReturned = true
-                release.Release(Guid.NewGuid(), recipientName, recipientIdNumber);
+                release.Release(staffIds[random.Next(staffIds.Count)], recipientName, recipientIdNumber);
                 if (collateral.CollateralType == "Vehicle" || collateral.CollateralType == "RealEstate")
                 {
                     release.MarkRegistrationCleared();
@@ -72,7 +76,7 @@ internal static class CollateralReleaseSeeder
             }
             else if (status < 0.9) // 20% approved, pending release
             {
-                release.Approve(Guid.NewGuid());
+                release.Approve(staffIds[random.Next(staffIds.Count)]);
             }
             // 10% still pending
 

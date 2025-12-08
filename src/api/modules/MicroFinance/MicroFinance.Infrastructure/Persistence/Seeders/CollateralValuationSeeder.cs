@@ -25,6 +25,9 @@ internal static class CollateralValuationSeeder
 
         if (!collaterals.Any()) return;
 
+        // Get staff IDs for approvals
+        var staffIds = await context.Staff.Select(s => s.Id).ToListAsync(cancellationToken).ConfigureAwait(false);
+
         var random = new Random(42);
         int valuationNumber = 21001;
         int valuationCount = 0;
@@ -63,9 +66,9 @@ internal static class CollateralValuationSeeder
 
             // Submit and approve most valuations
             valuation.Submit();
-            if (random.NextDouble() < 0.9)
+            if (random.NextDouble() < 0.9 && staffIds.Any())
             {
-                valuation.Approve(Guid.NewGuid());
+                valuation.Approve(staffIds[random.Next(staffIds.Count)]);
             }
 
             // Check for expiry

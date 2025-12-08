@@ -23,6 +23,9 @@ internal static class DocumentSeeder
 
         if (!members.Any()) return;
 
+        // Get staff IDs for verification (staff must be seeded before documents)
+        var staffIds = await context.Staff.Select(s => s.Id).ToListAsync(cancellationToken).ConfigureAwait(false);
+
         var random = new Random(42);
         int docCount = 0;
 
@@ -41,7 +44,8 @@ internal static class DocumentSeeder
                 category: "Profile",
                 originalFileName: "profile_photo.jpg");
 
-            photo.Verify(Guid.NewGuid());
+            if (staffIds.Any())
+                photo.Verify(staffIds[random.Next(staffIds.Count)]);
             await context.Documents.AddAsync(photo, cancellationToken).ConfigureAwait(false);
             docCount++;
 
@@ -62,8 +66,8 @@ internal static class DocumentSeeder
                 expiryDate: DateOnly.FromDateTime(DateTime.UtcNow.AddYears(random.Next(1, 5))),
                 issuingAuthority: "Philippine Statistics Authority");
 
-            if (random.NextDouble() > 0.2)
-                idDoc.Verify(Guid.NewGuid());
+            if (random.NextDouble() > 0.2 && staffIds.Any())
+                idDoc.Verify(staffIds[random.Next(staffIds.Count)]);
 
             await context.Documents.AddAsync(idDoc, cancellationToken).ConfigureAwait(false);
             docCount++;
@@ -102,7 +106,8 @@ internal static class DocumentSeeder
                 category: "Legal",
                 originalFileName: "loan_contract.pdf");
 
-            contract.Verify(Guid.NewGuid());
+            if (staffIds.Any())
+                contract.Verify(staffIds[random.Next(staffIds.Count)]);
             await context.Documents.AddAsync(contract, cancellationToken).ConfigureAwait(false);
             docCount++;
 

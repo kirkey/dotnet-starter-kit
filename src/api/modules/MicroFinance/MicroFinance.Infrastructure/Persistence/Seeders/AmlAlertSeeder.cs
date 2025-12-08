@@ -21,6 +21,9 @@ internal static class AmlAlertSeeder
         var members = await context.Members.Take(20).ToListAsync(cancellationToken).ConfigureAwait(false);
         if (!members.Any()) return;
 
+        // Get staff IDs for assignments/clearances
+        var staffIds = await context.Staff.Select(s => s.Id).ToListAsync(cancellationToken).ConfigureAwait(false);
+
         var random = new Random(42);
         int alertNumber = 14001;
         int alertCount = 0;
@@ -57,17 +60,17 @@ internal static class AmlAlertSeeder
             {
                 alert.Escalate("Escalated for senior compliance review");
             }
-            else if (outcome < 0.4)
+            else if (outcome < 0.4 && staffIds.Any())
             {
-                alert.AssignTo(Guid.NewGuid());
+                alert.AssignTo(staffIds[random.Next(staffIds.Count)]);
                 if (random.NextDouble() < 0.3)
                 {
-                    alert.Clear(Guid.NewGuid(), "False positive - legitimate business transaction. Reviewed KYC documentation");
+                    alert.Clear(staffIds[random.Next(staffIds.Count)], "False positive - legitimate business transaction. Reviewed KYC documentation");
                 }
             }
-            else if (outcome < 0.7)
+            else if (outcome < 0.7 && staffIds.Any())
             {
-                alert.Clear(Guid.NewGuid(), "False positive - within normal transaction range. Compared with historical pattern");
+                alert.Clear(staffIds[random.Next(staffIds.Count)], "False positive - within normal transaction range. Compared with historical pattern");
             }
 
             await context.AmlAlerts.AddAsync(alert, cancellationToken).ConfigureAwait(false);

@@ -26,6 +26,10 @@ internal static class PromiseToPaySeeder
 
         if (!collectionCases.Any()) return;
 
+        // Get staff IDs for recordedBy (staff must be seeded before promises)
+        var staffIds = await context.Staff.Select(s => s.Id).ToListAsync(cancellationToken).ConfigureAwait(false);
+        if (!staffIds.Any()) return;
+
         var random = new Random(42);
         int promiseCount = 0;
 
@@ -46,7 +50,7 @@ internal static class PromiseToPaySeeder
                     memberId: collectionCase.MemberId,
                     promisedPaymentDate: promisedDate,
                     promisedAmount: promisedAmount,
-                    recordedById: Guid.NewGuid())
+                    recordedById: staffIds[random.Next(staffIds.Count)])
                     .WithPaymentMethod(paymentMethods[random.Next(paymentMethods.Length)])
                     .WithNotes("Member committed to payment during follow-up call");
 

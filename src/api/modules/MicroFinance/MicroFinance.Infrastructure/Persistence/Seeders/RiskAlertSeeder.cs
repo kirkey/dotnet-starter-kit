@@ -20,6 +20,9 @@ internal static class RiskAlertSeeder
 
         var riskCategories = await context.RiskCategories.Take(5).ToListAsync(cancellationToken).ConfigureAwait(false);
 
+        // Get staff IDs for acknowledgments/assignments
+        var staffIds = await context.Staff.Select(s => s.Id).ToListAsync(cancellationToken).ConfigureAwait(false);
+
         var random = new Random(42);
         int alertNumber = 22001;
 
@@ -65,23 +68,23 @@ internal static class RiskAlertSeeder
                 description: a.Desc);
 
             // Process based on age
-            if (a.DaysAgo < -20)
+            if (a.DaysAgo < -20 && staffIds.Any())
             {
-                alert.Acknowledge(Guid.NewGuid());
-                alert.Assign(Guid.NewGuid());
-                alert.Resolve(Guid.NewGuid(), "Root cause identified and corrective action taken. Implemented controls to prevent recurrence.");
+                alert.Acknowledge(staffIds[random.Next(staffIds.Count)]);
+                alert.Assign(staffIds[random.Next(staffIds.Count)]);
+                alert.Resolve(staffIds[random.Next(staffIds.Count)], "Root cause identified and corrective action taken. Implemented controls to prevent recurrence.");
             }
-            else if (a.DaysAgo < -10)
+            else if (a.DaysAgo < -10 && staffIds.Any())
             {
-                alert.Acknowledge(Guid.NewGuid());
+                alert.Acknowledge(staffIds[random.Next(staffIds.Count)]);
                 if (a.Severity == RiskAlert.SeverityCritical || a.Severity == RiskAlert.SeverityHigh)
                 {
-                    alert.Assign(Guid.NewGuid());
+                    alert.Assign(staffIds[random.Next(staffIds.Count)]);
                 }
             }
-            else if (a.DaysAgo < -5)
+            else if (a.DaysAgo < -5 && staffIds.Any())
             {
-                alert.Acknowledge(Guid.NewGuid());
+                alert.Acknowledge(staffIds[random.Next(staffIds.Count)]);
             }
 
             await context.RiskAlerts.AddAsync(alert, cancellationToken).ConfigureAwait(false);

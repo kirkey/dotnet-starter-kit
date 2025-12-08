@@ -63,8 +63,12 @@ internal static class TellerSessionSeeder
 
                 // Add some transaction activity
                 var cashIn = random.Next(50000, 200000);
-                var cashOut = random.Next(30000, 150000);
                 session.RecordCashIn(cashIn);
+                
+                // Ensure cashOut doesn't exceed available balance (opening + cashIn)
+                var availableBalance = openingBalance + cashIn;
+                var maxCashOut = Math.Min(150000, (int)(availableBalance * 0.8m)); // Leave 20% buffer
+                var cashOut = random.Next(10000, Math.Max(10001, maxCashOut));
                 session.RecordCashOut(cashOut);
 
                 // Close past sessions

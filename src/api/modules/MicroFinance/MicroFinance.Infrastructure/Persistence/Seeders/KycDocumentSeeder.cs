@@ -21,6 +21,9 @@ internal static class KycDocumentSeeder
         var members = await context.Members.Take(50).ToListAsync(cancellationToken).ConfigureAwait(false);
         if (!members.Any()) return;
 
+        // Get staff IDs for verification (staff must be seeded before KYC documents)
+        var staffIds = await context.Staff.Select(s => s.Id).ToListAsync(cancellationToken).ConfigureAwait(false);
+
         var random = new Random(42);
         int docCount = 0;
 
@@ -69,9 +72,10 @@ internal static class KycDocumentSeeder
                 }
 
                 // Most documents are verified for active members
-                if (member.IsActive && random.NextDouble() > 0.2)
+                if (member.IsActive && random.NextDouble() > 0.2 && staffIds.Any())
                 {
-                    kycDoc.Verify(Guid.NewGuid(), "Verified during onboarding");
+                    var verifierId = staffIds[random.Next(staffIds.Count)];
+                    kycDoc.Verify(verifierId, "Verified during onboarding");
                 }
 
                 await context.KycDocuments.AddAsync(kycDoc, cancellationToken).ConfigureAwait(false);

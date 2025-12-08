@@ -27,6 +27,10 @@ internal static class LoanRestructureSeeder
 
         if (troubledLoans.Count == 0) return;
 
+        // Get staff IDs for approvals
+        var staffIds = await context.Staff.Select(s => s.Id).ToListAsync(cancellationToken).ConfigureAwait(false);
+        if (!staffIds.Any()) return;
+
         var random = new Random(42);
         int restructureNumber = 19001;
         int restructureCount = 0;
@@ -82,7 +86,7 @@ internal static class LoanRestructureSeeder
             if (random.NextDouble() < 0.85)
             {
                 var effectiveDate = requestDate.AddDays(random.Next(7, 21));
-                restructure.Approve(Guid.NewGuid(), "Credit Committee", effectiveDate);
+                restructure.Approve(staffIds[random.Next(staffIds.Count)], "Credit Committee", effectiveDate);
                 restructure.Activate();
 
                 // Complete some older ones
@@ -93,7 +97,7 @@ internal static class LoanRestructureSeeder
             }
             else if (random.NextDouble() < 0.5)
             {
-                restructure.Reject(Guid.NewGuid(), "Does not meet restructuring criteria");
+                restructure.Reject(staffIds[random.Next(staffIds.Count)], "Does not meet restructuring criteria");
             }
 
             await context.LoanRestructures.AddAsync(restructure, cancellationToken).ConfigureAwait(false);

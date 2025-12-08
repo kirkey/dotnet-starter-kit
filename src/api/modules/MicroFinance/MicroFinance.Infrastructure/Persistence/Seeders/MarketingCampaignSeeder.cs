@@ -18,6 +18,9 @@ internal static class MarketingCampaignSeeder
         var existingCount = await context.MarketingCampaigns.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount > 0) return;
 
+        // Get staff IDs for approvals
+        var staffIds = await context.Staff.Select(s => s.Id).ToListAsync(cancellationToken).ConfigureAwait(false);
+
         var random = new Random(42);
 
         var campaigns = new (string Name, string Code, string Type, string Channels, decimal Budget, int Target, string Desc, int DaysAgo, int Duration)[]
@@ -62,7 +65,8 @@ internal static class MarketingCampaignSeeder
                 endDate: endDate);
 
             // Approve and potentially activate based on dates
-            campaign.Approve(Guid.NewGuid());
+            if (staffIds.Any())
+                campaign.Approve(staffIds[random.Next(staffIds.Count)]);
 
             if (startDate <= DateOnly.FromDateTime(DateTime.UtcNow))
             {
