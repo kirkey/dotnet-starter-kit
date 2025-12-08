@@ -1,0 +1,80 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.RiskIndicators
+
+<MudDialog>
+    <DialogContent>
+        @if (Indicator is not null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <tbody>
+                            <tr><td><strong>Code</strong></td><td>@Indicator.Code</td></tr>
+                            <tr><td><strong>Name</strong></td><td>@Indicator.Name</td></tr>
+                            <tr><td><strong>Description</strong></td><td>@(Indicator.Description ?? "N/A")</td></tr>
+                            <tr><td><strong>Formula</strong></td><td>@(Indicator.Formula ?? "N/A")</td></tr>
+                            <tr><td><strong>Unit</strong></td><td>@(Indicator.Unit ?? "N/A")</td></tr>
+                            <tr><td><strong>Direction</strong></td><td>@(Indicator.Direction ?? "N/A")</td></tr>
+                            <tr><td><strong>Frequency</strong></td><td>@(Indicator.Frequency ?? "N/A")</td></tr>
+                            <tr><td><strong>Data Source</strong></td><td>@(Indicator.DataSource ?? "N/A")</td></tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <tbody>
+                            <tr><td><strong>Target Value</strong></td><td>@(Indicator.TargetValue?.ToString("N2") ?? "N/A")</td></tr>
+                            <tr><td><strong>Current Value</strong></td><td class="@GetHealthClass(Indicator.CurrentHealth)">@(Indicator.CurrentValue?.ToString("N2") ?? "N/A")</td></tr>
+                            <tr><td><strong>Previous Value</strong></td><td>@(Indicator.PreviousValue?.ToString("N2") ?? "N/A")</td></tr>
+                            <tr><td><strong>Health</strong></td><td><MudChip T="string" Color="@GetHealthColor(Indicator.CurrentHealth)" Size="Size.Small">@(Indicator.CurrentHealth ?? "N/A")</MudChip></td></tr>
+                            <tr><td><strong>Last Measured</strong></td><td>@(Indicator.LastMeasuredAt?.ToString("yyyy-MM-dd HH:mm") ?? "Never")</td></tr>
+                            <tr><td><strong>Weight Factor</strong></td><td>@Indicator.WeightFactor.ToString("N2")</td></tr>
+                            <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@(Indicator.Status == "Active" ? Color.Success : Color.Default)" Size="Size.Small">@Indicator.Status</MudChip></td></tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle2" Class="mt-2">Thresholds</MudText>
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <tbody>
+                            <tr>
+                                <td><strong>Green</strong></td><td class="mud-success-text">@(Indicator.GreenThreshold?.ToString("N2") ?? "N/A")</td>
+                                <td><strong>Yellow</strong></td><td class="mud-warning-text">@(Indicator.YellowThreshold?.ToString("N2") ?? "N/A")</td>
+                                <td><strong>Orange</strong></td><td style="color: orange;">@(Indicator.OrangeThreshold?.ToString("N2") ?? "N/A")</td>
+                                <td><strong>Red</strong></td><td class="mud-error-text">@(Indicator.RedThreshold?.ToString("N2") ?? "N/A")</td>
+                            </tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+            </MudGrid>
+        }
+        else
+        {
+            <MudText>No indicator data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public RiskIndicatorResponse? Indicator { get; set; }
+    private void Close() => MudDialog.Close();
+    private static Color GetHealthColor(string? health) => health switch
+    {
+        "Green" => Color.Success,
+        "Yellow" => Color.Warning,
+        "Orange" => Color.Warning,
+        "Red" => Color.Error,
+        _ => Color.Default
+    };
+    private static string GetHealthClass(string? health) => health switch
+    {
+        "Green" => "mud-success-text",
+        "Yellow" => "mud-warning-text",
+        "Orange" => "mud-warning-text",
+        "Red" => "mud-error-text",
+        _ => ""
+    };
+}

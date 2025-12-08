@@ -1,0 +1,45 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.RiskCategories
+
+<MudDialog>
+    <DialogContent>
+        @if (Category is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>Code</strong></td><td>@Category.Code</td></tr>
+                    <tr><td><strong>Name</strong></td><td>@Category.Name</td></tr>
+                    <tr><td><strong>Description</strong></td><td>@(Category.Description ?? "N/A")</td></tr>
+                    <tr><td><strong>Risk Type</strong></td><td>@Category.RiskType</td></tr>
+                    <tr><td><strong>Severity</strong></td><td><MudChip T="string" Color="@GetSeverityColor(Category.DefaultSeverity)" Size="Size.Small">@Category.DefaultSeverity</MudChip></td></tr>
+                    <tr><td><strong>Weight Factor</strong></td><td>@Category.WeightFactor.ToString("N2")</td></tr>
+                    <tr><td><strong>Alert Threshold</strong></td><td>@(Category.AlertThreshold?.ToString("N2") ?? "N/A")</td></tr>
+                    <tr><td><strong>Requires Escalation</strong></td><td>@(Category.RequiresEscalation ? "Yes" : "No")</td></tr>
+                    <tr><td><strong>Escalation Hours</strong></td><td>@(Category.EscalationHours?.ToString() ?? "N/A") hours</td></tr>
+                    <tr><td><strong>Display Order</strong></td><td>@Category.DisplayOrder</td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@(Category.Status == "Active" ? Color.Success : Color.Default)" Size="Size.Small">@Category.Status</MudChip></td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No category data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public RiskCategoryResponse? Category { get; set; }
+    private void Close() => MudDialog.Close();
+    private static Color GetSeverityColor(string? severity) => severity switch
+    {
+        "Critical" => Color.Error,
+        "High" => Color.Error,
+        "Medium" => Color.Warning,
+        "Low" => Color.Info,
+        _ => Color.Default
+    };
+}

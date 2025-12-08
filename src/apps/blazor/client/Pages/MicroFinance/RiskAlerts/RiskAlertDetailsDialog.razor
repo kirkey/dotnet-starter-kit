@@ -1,0 +1,58 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.RiskAlerts
+
+<MudDialog>
+    <DialogContent>
+        @if (Alert is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>Alert Number</strong></td><td>@Alert.AlertNumber</td></tr>
+                    <tr><td><strong>Title</strong></td><td>@Alert.Title</td></tr>
+                    <tr><td><strong>Description</strong></td><td>@(Alert.Description ?? "N/A")</td></tr>
+                    <tr><td><strong>Severity</strong></td><td><MudChip T="string" Color="@GetSeverityColor(Alert.Severity)" Size="Size.Small">@Alert.Severity</MudChip></td></tr>
+                    <tr><td><strong>Source</strong></td><td>@Alert.Source</td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Alert.Status)" Size="Size.Small">@Alert.Status</MudChip></td></tr>
+                    <tr><td><strong>Threshold Value</strong></td><td>@(Alert.ThresholdValue?.ToString("N2") ?? "N/A")</td></tr>
+                    <tr><td><strong>Actual Value</strong></td><td class="mud-error-text">@(Alert.ActualValue?.ToString("N2") ?? "N/A")</td></tr>
+                    <tr><td><strong>Variance</strong></td><td class="mud-error-text">@(Alert.Variance?.ToString("N2") ?? "N/A")</td></tr>
+                    <tr><td><strong>Alerted At</strong></td><td>@Alert.AlertedAt.ToString("yyyy-MM-dd HH:mm")</td></tr>
+                    <tr><td><strong>Escalated</strong></td><td>@(Alert.IsEscalated ? $"Yes (Level {Alert.EscalationLevel})" : "No")</td></tr>
+                    <tr><td><strong>Overdue</strong></td><td class="@(Alert.IsOverdue ? "mud-error-text" : "")">@(Alert.IsOverdue ? "Yes" : "No")</td></tr>
+                    <tr><td><strong>Due Date</strong></td><td>@(Alert.DueDate?.ToString("yyyy-MM-dd") ?? "N/A")</td></tr>
+                    <tr><td><strong>Resolution</strong></td><td>@(Alert.Resolution ?? "Pending")</td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No alert data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public RiskAlertResponse? Alert { get; set; }
+    private void Close() => MudDialog.Close();
+    private static Color GetSeverityColor(string? severity) => severity switch
+    {
+        "Critical" => Color.Error,
+        "High" => Color.Error,
+        "Medium" => Color.Warning,
+        "Low" => Color.Info,
+        _ => Color.Default
+    };
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "New" => Color.Info,
+        "Acknowledged" => Color.Warning,
+        "InProgress" => Color.Warning,
+        "Resolved" => Color.Success,
+        "Closed" => Color.Default,
+        "Escalated" => Color.Error,
+        _ => Color.Default
+    };
+}

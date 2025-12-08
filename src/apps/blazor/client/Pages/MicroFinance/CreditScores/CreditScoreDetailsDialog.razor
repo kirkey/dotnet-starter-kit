@@ -1,0 +1,61 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CreditScores
+
+<MudDialog>
+    <DialogContent>
+        @if (Score is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>Member ID</strong></td><td>@Score.MemberId</td></tr>
+                    <tr><td><strong>Loan ID</strong></td><td>@(Score.LoanId?.ToString() ?? "N/A")</td></tr>
+                    <tr><td><strong>Score Type</strong></td><td>@Score.ScoreType</td></tr>
+                    <tr><td><strong>Score Model</strong></td><td>@Score.ScoreModel</td></tr>
+                    <tr><td><strong>Score</strong></td><td class="@GetScoreClass(Score.Score, Score.ScoreMin, Score.ScoreMax)"><strong>@Score.Score.ToString("N0")</strong></td></tr>
+                    <tr><td><strong>Score Range</strong></td><td>@Score.ScoreMin.ToString("N0") - @Score.ScoreMax.ToString("N0")</td></tr>
+                    <tr><td><strong>Percentile</strong></td><td>@Score.ScorePercentile.ToString("N1")%</td></tr>
+                    <tr><td><strong>Grade</strong></td><td><MudChip T="string" Color="@GetGradeColor(Score.Grade)" Size="Size.Small">@Score.Grade</MudChip></td></tr>
+                    <tr><td><strong>Probability of Default</strong></td><td class="@(Score.ProbabilityOfDefault > 10 ? "mud-error-text" : "")">@(Score.ProbabilityOfDefault?.ToString("N2") ?? "N/A")%</td></tr>
+                    <tr><td><strong>Expected Loss</strong></td><td>@(Score.ExpectedLoss?.ToString("N2") ?? "N/A")</td></tr>
+                    <tr><td><strong>Scored At</strong></td><td>@Score.ScoredAt.ToString("yyyy-MM-dd HH:mm")</td></tr>
+                    <tr><td><strong>Valid Until</strong></td><td>@(Score.ValidUntil?.ToString("yyyy-MM-dd") ?? "N/A")</td></tr>
+                    <tr><td><strong>Source</strong></td><td>@(Score.Source ?? "N/A")</td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@(Score.IsValid ? Color.Success : Color.Default)" Size="Size.Small">@(Score.IsValid ? "Valid" : Score.Status)</MudChip></td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No score data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public CreditScoreResponse? Score { get; set; }
+    private void Close() => MudDialog.Close();
+    private static Color GetGradeColor(string? grade) => grade switch
+    {
+        "A" or "A+" or "A-" => Color.Success,
+        "B" or "B+" or "B-" => Color.Info,
+        "C" or "C+" or "C-" => Color.Warning,
+        "D" or "D+" or "D-" => Color.Warning,
+        "E" or "F" => Color.Error,
+        _ => Color.Default
+    };
+    private static string GetScoreClass(decimal score, decimal min, decimal max)
+    {
+        var range = max - min;
+        var normalized = (score - min) / range;
+        return normalized switch
+        {
+            >= 0.7m => "mud-success-text",
+            >= 0.5m => "mud-info-text",
+            >= 0.3m => "mud-warning-text",
+            _ => "mud-error-text"
+        };
+    }
+}

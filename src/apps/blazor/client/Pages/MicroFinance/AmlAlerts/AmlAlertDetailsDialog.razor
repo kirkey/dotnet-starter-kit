@@ -1,0 +1,70 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.AmlAlerts
+
+<MudDialog>
+    <DialogContent>
+        @if (Alert is not null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <tbody>
+                            <tr><td><strong>Alert Code</strong></td><td>@Alert.AlertCode</td></tr>
+                            <tr><td><strong>Alert Type</strong></td><td>@Alert.AlertType</td></tr>
+                            <tr><td><strong>Severity</strong></td><td><MudChip T="string" Color="@GetSeverityColor(Alert.Severity)" Size="Size.Small">@Alert.Severity</MudChip></td></tr>
+                            <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Alert.Status)" Size="Size.Small">@Alert.Status</MudChip></td></tr>
+                            <tr><td><strong>Description</strong></td><td>@(Alert.Description ?? "N/A")</td></tr>
+                            <tr><td><strong>Trigger Rule</strong></td><td>@(Alert.TriggerRule ?? "N/A")</td></tr>
+                            <tr><td><strong>Member ID</strong></td><td>@(Alert.MemberId?.ToString() ?? "N/A")</td></tr>
+                            <tr><td><strong>Transaction Amount</strong></td><td>@(Alert.TransactionAmount?.ToString("N2") ?? "N/A")</td></tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <tbody>
+                            <tr><td><strong>Alerted At</strong></td><td>@Alert.AlertedAt.ToString("yyyy-MM-dd HH:mm")</td></tr>
+                            <tr><td><strong>Investigation Started</strong></td><td>@(Alert.InvestigationStartedAt?.ToString("yyyy-MM-dd HH:mm") ?? "Not started")</td></tr>
+                            <tr><td><strong>Resolved At</strong></td><td>@(Alert.ResolvedAt?.ToString("yyyy-MM-dd HH:mm") ?? "Not resolved")</td></tr>
+                            <tr><td><strong>Requires Reporting</strong></td><td class="@(Alert.RequiresReporting ? "mud-error-text" : "")">@(Alert.RequiresReporting ? "Yes" : "No")</td></tr>
+                            <tr><td><strong>SAR Reference</strong></td><td>@(Alert.SarReference ?? "N/A")</td></tr>
+                            <tr><td><strong>SAR Filed Date</strong></td><td>@(Alert.SarFiledDate?.ToString("yyyy-MM-dd") ?? "Not filed")</td></tr>
+                            <tr><td><strong>Resolution Notes</strong></td><td>@(Alert.ResolutionNotes ?? "N/A")</td></tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+            </MudGrid>
+        }
+        else
+        {
+            <MudText>No alert data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public AmlAlertResponse? Alert { get; set; }
+    private void Close() => MudDialog.Close();
+    private static Color GetSeverityColor(string? severity) => severity switch
+    {
+        "Critical" => Color.Error,
+        "High" => Color.Error,
+        "Medium" => Color.Warning,
+        "Low" => Color.Info,
+        _ => Color.Default
+    };
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "New" => Color.Info,
+        "UnderInvestigation" => Color.Warning,
+        "Escalated" => Color.Error,
+        "Cleared" => Color.Success,
+        "Confirmed" => Color.Error,
+        "SarFiled" => Color.Warning,
+        "Closed" => Color.Default,
+        _ => Color.Default
+    };
+}
