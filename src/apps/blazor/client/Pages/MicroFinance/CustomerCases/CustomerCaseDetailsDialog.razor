@@ -1,0 +1,106 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CustomerCases
+
+<MudDialog>
+    <DialogContent>
+        @if (CustomerCase != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Case Number">@CustomerCase.CaseNumber</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Subject">@CustomerCase.Subject</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Category">@CustomerCase.Category</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Priority">
+                        <MudChip T="string" Color="@GetPriorityColor(CustomerCase.Priority)" Size="Size.Small">@CustomerCase.Priority</MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Status">
+                        <MudChip T="string" Color="@GetStatusColor(CustomerCase.Status)" Size="Size.Small">@CustomerCase.Status</MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Channel">@CustomerCase.Channel</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Opened At">@CustomerCase.OpenedAt.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="First Response At">@CustomerCase.FirstResponseAt?.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Resolved At">@CustomerCase.ResolvedAt?.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Closed At">@CustomerCase.ClosedAt?.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Escalation Level">@CustomerCase.EscalationLevel</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="SLA Breached">
+                        <MudChip T="string" Color="@(CustomerCase.SlaBreached ? Color.Error : Color.Success)" Size="Size.Small">
+                            @(CustomerCase.SlaBreached ? "Yes" : "No")
+                        </MudChip>
+                    </MudField>
+                </MudItem>
+                @if (CustomerCase.CustomerSatisfactionScore.HasValue)
+                {
+                    <MudItem xs="12" md="6">
+                        <MudField Label="Satisfaction Score">
+                            <MudRating SelectedValue="@CustomerCase.CustomerSatisfactionScore.Value" MaxValue="5" ReadOnly="true" />
+                        </MudField>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrEmpty(CustomerCase.Description))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Description">@CustomerCase.Description</MudField>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrEmpty(CustomerCase.Resolution))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Resolution">@CustomerCase.Resolution</MudField>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public CustomerCaseResponse? CustomerCase { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status?.ToLower() switch
+    {
+        "resolved" or "closed" => Color.Success,
+        "open" or "in progress" => Color.Info,
+        "pending" => Color.Warning,
+        "escalated" => Color.Error,
+        _ => Color.Default
+    };
+
+    private static Color GetPriorityColor(string? priority) => priority?.ToLower() switch
+    {
+        "critical" => Color.Error,
+        "high" => Color.Warning,
+        "medium" => Color.Info,
+        "low" => Color.Default,
+        _ => Color.Default
+    };
+}

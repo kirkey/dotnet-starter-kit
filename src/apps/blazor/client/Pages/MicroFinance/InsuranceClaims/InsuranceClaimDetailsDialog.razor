@@ -1,0 +1,73 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InsuranceClaims
+
+<MudDialog>
+    <DialogContent>
+        @if (Claim != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Claim Number">@Claim.ClaimNumber</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Claim Type">@Claim.ClaimType</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Claim Amount">@Claim.ClaimAmount.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Approved Amount">@Claim.ApprovedAmount?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Incident Date">@Claim.IncidentDate.ToString("yyyy-MM-dd")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Filed Date">@Claim.FiledDate.ToString("yyyy-MM-dd")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Status">
+                        <MudChip T="string" Color="@GetStatusColor(Claim.Status)" Size="Size.Small">@Claim.Status</MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Payment Date">@Claim.PaymentDate?.ToString("yyyy-MM-dd")</MudField>
+                </MudItem>
+                @if (!string.IsNullOrEmpty(Claim.Description))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Description">@Claim.Description</MudField>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrEmpty(Claim.RejectionReason))
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Error">
+                            <strong>Rejection Reason:</strong> @Claim.RejectionReason
+                        </MudAlert>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public InsuranceClaimResponse? Claim { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status?.ToLower() switch
+    {
+        "approved" or "paid" or "settled" => Color.Success,
+        "pending" or "under review" => Color.Warning,
+        "rejected" or "denied" => Color.Error,
+        "submitted" => Color.Info,
+        _ => Color.Default
+    };
+}

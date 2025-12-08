@@ -32,11 +32,11 @@ public partial class RiskIndicators
             fields:
             [
                 new EntityField<RiskIndicatorSummaryResponse>(dto => dto.Code, "Code", "Code"),
-                new EntityField<RiskIndicatorSummaryResponse>(dto => dto.Name, "Name", "Name"),
-                new EntityField<RiskIndicatorSummaryResponse>(dto => dto.CurrentValue, "Current", "CurrentValue", typeof(decimal)),
+                new EntityField<RiskIndicatorSummaryResponse>(dto => dto.Formula, "Formula", "Formula"),
+                new EntityField<RiskIndicatorSummaryResponse>(dto => dto.Unit, "Unit", "Unit"),
+                new EntityField<RiskIndicatorSummaryResponse>(dto => dto.Direction, "Direction", "Direction"),
                 new EntityField<RiskIndicatorSummaryResponse>(dto => dto.TargetValue, "Target", "TargetValue", typeof(decimal)),
-                new EntityField<RiskIndicatorSummaryResponse>(dto => dto.CurrentHealth, "Health", "CurrentHealth"),
-                new EntityField<RiskIndicatorSummaryResponse>(dto => dto.Status, "Status", "Status"),
+                new EntityField<RiskIndicatorSummaryResponse>(dto => dto.Frequency, "Frequency", "Frequency"),
             ],
             searchFunc: async filter =>
             {

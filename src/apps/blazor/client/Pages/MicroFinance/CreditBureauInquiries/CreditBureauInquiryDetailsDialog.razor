@@ -1,0 +1,76 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CreditBureauInquiries
+
+<MudDialog>
+    <DialogContent>
+        @if (Inquiry != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Inquiry Number">@Inquiry.InquiryNumber</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Bureau Name">@Inquiry.BureauName</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Purpose">@Inquiry.Purpose</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Inquiry Date">@Inquiry.InquiryDate.ToString("yyyy-MM-dd")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Requested By">@Inquiry.RequestedBy</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Reference Number">@Inquiry.ReferenceNumber</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Status">
+                        <MudChip T="string" Color="@GetStatusColor(Inquiry.Status)" Size="Size.Small">@Inquiry.Status</MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Credit Score">@Inquiry.CreditScore</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Inquiry Cost">@Inquiry.InquiryCost?.ToString("C")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Response Received">@Inquiry.ResponseReceivedAt?.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                @if (!string.IsNullOrEmpty(Inquiry.ErrorMessage))
+                {
+                    <MudItem xs="12">
+                        <MudAlert Severity="Severity.Error">@Inquiry.ErrorMessage</MudAlert>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrEmpty(Inquiry.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Notes">@Inquiry.Notes</MudField>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public CreditBureauInquiryResponse? Inquiry { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status?.ToLower() switch
+    {
+        "completed" => Color.Success,
+        "pending" => Color.Warning,
+        "failed" or "error" => Color.Error,
+        _ => Color.Default
+    };
+}

@@ -1,0 +1,9 @@
+@page "/microfinance/customer-cases"
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<EntityTable @ref="_table" TEntity="CustomerCaseSummaryResponse" TId="DefaultIdType" TRequest="CustomerCaseViewModel" Context="Context" Elevation="_preference.Elevation" BorderRadius="_preference.BorderRadius">
+    <ExtraActions>
+        <MudMenuItem OnClick="@(() => ViewDetails(context.Id))" Icon="@Icons.Material.Filled.Visibility" IconColor="Color.Primary">View Details</MudMenuItem>
+    </ExtraActions>
+</EntityTable>

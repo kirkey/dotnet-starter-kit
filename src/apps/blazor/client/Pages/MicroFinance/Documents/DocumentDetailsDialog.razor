@@ -1,0 +1,106 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Documents
+
+<MudDialog>
+    <DialogContent>
+        @if (Document != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Name">@Document.Name</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Document Type">@Document.DocumentType</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Category">@Document.Category</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Status">
+                        <MudChip T="string" Color="@GetStatusColor(Document.Status)" Size="Size.Small">@Document.Status</MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Entity Type">@Document.EntityType</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Original File Name">@Document.OriginalFileName</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="MIME Type">@Document.MimeType</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="File Size">@FormatFileSize(Document.FileSizeBytes)</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Issue Date">@Document.IssueDate?.ToString("yyyy-MM-dd")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Expiry Date">@Document.ExpiryDate?.ToString("yyyy-MM-dd")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Issuing Authority">@Document.IssuingAuthority</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Document Number">@Document.DocumentNumber</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Verified">
+                        <MudChip T="string" Color="@(Document.IsVerified ? Color.Success : Color.Warning)" Size="Size.Small">
+                            @(Document.IsVerified ? "Yes" : "No")
+                        </MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Verified At">@Document.VerifiedAt?.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Required">
+                        <MudChip T="string" Color="@(Document.IsRequired ? Color.Error : Color.Default)" Size="Size.Small">
+                            @(Document.IsRequired ? "Yes" : "No")
+                        </MudChip>
+                    </MudField>
+                </MudItem>
+                @if (!string.IsNullOrEmpty(Document.Description))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Description">@Document.Description</MudField>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DocumentResponse? Document { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status?.ToLower() switch
+    {
+        "approved" or "verified" => Color.Success,
+        "pending" => Color.Warning,
+        "rejected" or "expired" => Color.Error,
+        _ => Color.Default
+    };
+
+    private static string FormatFileSize(long bytes)
+    {
+        string[] sizes = ["B", "KB", "MB", "GB"];
+        int order = 0;
+        double size = bytes;
+        while (size >= 1024 && order < sizes.Length - 1)
+        {
+            order++;
+            size /= 1024;
+        }
+        return $"{size:0.##} {sizes[order]}";
+    }
+}
