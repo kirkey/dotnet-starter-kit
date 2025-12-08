@@ -30,16 +30,16 @@
                     <MudField Label="Webhook URL">@PaymentGateway.WebhookUrl</MudField>
                 </MudItem>
                 <MudItem xs="12" md="6">
-                    <MudField Label="Transaction Fee (%)">@PaymentGateway.TransactionFeePercent?.ToString("P2")</MudField>
+                    <MudField Label="Transaction Fee (%)">@PaymentGateway.TransactionFeePercent.ToString("P2")</MudField>
                 </MudItem>
                 <MudItem xs="12" md="6">
-                    <MudField Label="Transaction Fee (Fixed)">@PaymentGateway.TransactionFeeFixed?.ToString("C")</MudField>
+                    <MudField Label="Transaction Fee (Fixed)">@PaymentGateway.TransactionFeeFixed.ToString("C")</MudField>
                 </MudItem>
                 <MudItem xs="12" md="6">
-                    <MudField Label="Min Transaction">@PaymentGateway.MinTransactionAmount?.ToString("C")</MudField>
+                    <MudField Label="Min Transaction">@PaymentGateway.MinTransactionAmount.ToString("C")</MudField>
                 </MudItem>
                 <MudItem xs="12" md="6">
-                    <MudField Label="Max Transaction">@PaymentGateway.MaxTransactionAmount?.ToString("C")</MudField>
+                    <MudField Label="Max Transaction">@PaymentGateway.MaxTransactionAmount.ToString("C")</MudField>
                 </MudItem>
                 <MudItem xs="12" md="6">
                     <MudField Label="Timeout (Seconds)">@PaymentGateway.TimeoutSeconds</MudField>
@@ -50,23 +50,23 @@
                 <MudItem xs="12">
                     <MudText Typo="Typo.subtitle2" Class="mb-2">Supported Features</MudText>
                     <MudChipSet T="string" ReadOnly>
-                        @if (PaymentGateway.SupportsRefunds == true)
+                        @if (PaymentGateway.SupportsRefunds)
                         {
                             <MudChip T="string" Color="Color.Primary" Size="Size.Small">Refunds</MudChip>
                         }
-                        @if (PaymentGateway.SupportsRecurring == true)
+                        @if (PaymentGateway.SupportsRecurring)
                         {
                             <MudChip T="string" Color="Color.Primary" Size="Size.Small">Recurring</MudChip>
                         }
-                        @if (PaymentGateway.SupportsMobileWallet == true)
+                        @if (PaymentGateway.SupportsMobileWallet)
                         {
                             <MudChip T="string" Color="Color.Primary" Size="Size.Small">Mobile Wallet</MudChip>
                         }
-                        @if (PaymentGateway.SupportsCardPayments == true)
+                        @if (PaymentGateway.SupportsCardPayments)
                         {
                             <MudChip T="string" Color="Color.Primary" Size="Size.Small">Card Payments</MudChip>
                         }
-                        @if (PaymentGateway.SupportsBankTransfer == true)
+                        @if (PaymentGateway.SupportsBankTransfer)
                         {
                             <MudChip T="string" Color="Color.Primary" Size="Size.Small">Bank Transfer</MudChip>
                         }

@@ -49,19 +49,19 @@
                     <MudText Typo="Typo.subtitle1">Financial Details</MudText>
                 </MudItem>
                 <MudItem xs="12" md="4">
-                    <MudField Label="Float Balance">@AgentBanking.FloatBalance?.ToString("C")</MudField>
+                    <MudField Label="Float Balance">@AgentBanking.FloatBalance.ToString("C")</MudField>
                 </MudItem>
                 <MudItem xs="12" md="4">
-                    <MudField Label="Min Float Balance">@AgentBanking.MinFloatBalance?.ToString("C")</MudField>
+                    <MudField Label="Min Float Balance">@AgentBanking.MinFloatBalance.ToString("C")</MudField>
                 </MudItem>
                 <MudItem xs="12" md="4">
-                    <MudField Label="Max Float Balance">@AgentBanking.MaxFloatBalance?.ToString("C")</MudField>
+                    <MudField Label="Max Float Balance">@AgentBanking.MaxFloatBalance.ToString("C")</MudField>
                 </MudItem>
                 <MudItem xs="12" md="4">
-                    <MudField Label="Commission Rate">@AgentBanking.CommissionRate?.ToString("P2")</MudField>
+                    <MudField Label="Commission Rate">@AgentBanking.CommissionRate.ToString("P2")</MudField>
                 </MudItem>
                 <MudItem xs="12" md="4">
-                    <MudField Label="Total Commission Earned">@AgentBanking.TotalCommissionEarned?.ToString("C")</MudField>
+                    <MudField Label="Total Commission Earned">@AgentBanking.TotalCommissionEarned.ToString("C")</MudField>
                 </MudItem>
                 
                 <MudItem xs="12">
@@ -69,16 +69,16 @@
                     <MudText Typo="Typo.subtitle1">Transaction Limits & Volume</MudText>
                 </MudItem>
                 <MudItem xs="12" md="6">
-                    <MudField Label="Daily Transaction Limit">@AgentBanking.DailyTransactionLimit?.ToString("C")</MudField>
+                    <MudField Label="Daily Transaction Limit">@AgentBanking.DailyTransactionLimit.ToString("C")</MudField>
                 </MudItem>
                 <MudItem xs="12" md="6">
-                    <MudField Label="Monthly Transaction Limit">@AgentBanking.MonthlyTransactionLimit?.ToString("C")</MudField>
+                    <MudField Label="Monthly Transaction Limit">@AgentBanking.MonthlyTransactionLimit.ToString("C")</MudField>
                 </MudItem>
                 <MudItem xs="12" md="6">
-                    <MudField Label="Daily Volume Processed">@AgentBanking.DailyVolumeProcessed?.ToString("C")</MudField>
+                    <MudField Label="Daily Volume Processed">@AgentBanking.DailyVolumeProcessed.ToString("C")</MudField>
                 </MudItem>
                 <MudItem xs="12" md="6">
-                    <MudField Label="Monthly Volume Processed">@AgentBanking.MonthlyVolumeProcessed?.ToString("C")</MudField>
+                    <MudField Label="Monthly Volume Processed">@AgentBanking.MonthlyVolumeProcessed.ToString("C")</MudField>
                 </MudItem>
                 <MudItem xs="12" md="6">
                     <MudField Label="Today's Transactions">@AgentBanking.TotalTransactionsToday</MudField>
@@ -92,7 +92,7 @@
                     <MudText Typo="Typo.subtitle1">Dates</MudText>
                 </MudItem>
                 <MudItem xs="12" md="6">
-                    <MudField Label="Contract Start">@AgentBanking.ContractStartDate?.ToString("yyyy-MM-dd")</MudField>
+                    <MudField Label="Contract Start">@AgentBanking.ContractStartDate.ToString("yyyy-MM-dd")</MudField>
                 </MudItem>
                 <MudItem xs="12" md="6">
                     <MudField Label="Contract End">@AgentBanking.ContractEndDate?.ToString("yyyy-MM-dd")</MudField>

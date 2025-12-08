@@ -10,7 +10,7 @@ public class AgentBankingViewModel
     public decimal CommissionRate { get; set; }
     public decimal DailyTransactionLimit { get; set; }
     public decimal MonthlyTransactionLimit { get; set; }
-    public DateTime? ContractStartDate { get; set; }
+    public DateTimeOffset ContractStartDate { get; set; }
     public Guid? BranchId { get; set; }
     public string? Email { get; set; }
     public string? GpsCoordinates { get; set; }

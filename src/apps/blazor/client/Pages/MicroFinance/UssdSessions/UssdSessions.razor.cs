@@ -50,6 +50,8 @@ public partial class UssdSessions
                 var result = await Client.SearchUssdSessionsAsync("1", request).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<UssdSessionResponse>>();
             },
+            enableAdvancedSearch: true,
+            idFunc: dto => dto.Id,
             createFunc: async vm =>
             {
                 var command = new CreateUssdSessionCommand
@@ -61,24 +63,8 @@ public partial class UssdSessions
                     WalletId = vm.WalletId,
                     Language = vm.Language
                 };
-                var result = await Client.CreateUssdSessionAsync("1", command).ConfigureAwait(false);
-                return result.Id;
+                await Client.CreateUssdSessionAsync("1", command).ConfigureAwait(false);
             },
-            updateFunc: async (id, vm) =>
-            {
-                var command = new UpdateUssdSessionCommand
-                {
-                    Id = id,
-                    SessionId = vm.SessionId,
-                    PhoneNumber = vm.PhoneNumber,
-                    ServiceCode = vm.ServiceCode,
-                    Language = vm.Language
-                };
-                await Client.UpdateUssdSessionAsync("1", id, command).ConfigureAwait(false);
-            },
-            deleteFunc: async id => await Client.DeleteUssdSessionAsync("1", id).ConfigureAwait(false),
-            enableAdvancedSearch: true,
-            idFunc: dto => dto.Id,
             entityName: "USSD Session",
             entityNamePlural: "USSD Sessions",
             entityResource: FshResources.UssdSessions,

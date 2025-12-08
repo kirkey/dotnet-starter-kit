@@ -50,6 +50,8 @@ public partial class AgentBankings
                 var result = await Client.SearchAgentBankingsAsync("1", request).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<AgentBankingResponse>>();
             },
+            enableAdvancedSearch: true,
+            idFunc: dto => dto.Id,
             createFunc: async vm =>
             {
                 var command = new CreateAgentBankingCommand
@@ -68,15 +70,13 @@ public partial class AgentBankings
                     GpsCoordinates = vm.GpsCoordinates,
                     OperatingHours = vm.OperatingHours
                 };
-                var result = await Client.CreateAgentBankingAsync("1", command).ConfigureAwait(false);
-                return result.Id;
+                await Client.CreateAgentBankingAsync("1", command).ConfigureAwait(false);
             },
             updateFunc: async (id, vm) =>
             {
                 var command = new UpdateAgentBankingCommand
                 {
                     Id = id,
-                    AgentCode = vm.AgentCode,
                     BusinessName = vm.BusinessName,
                     ContactName = vm.ContactName,
                     PhoneNumber = vm.PhoneNumber,
@@ -90,9 +90,6 @@ public partial class AgentBankings
                 };
                 await Client.UpdateAgentBankingAsync("1", id, command).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeleteAgentBankingAsync("1", id).ConfigureAwait(false),
-            enableAdvancedSearch: true,
-            idFunc: dto => dto.Id,
             entityName: "Agent Banking",
             entityNamePlural: "Agent Bankings",
             entityResource: FshResources.AgentBankings,

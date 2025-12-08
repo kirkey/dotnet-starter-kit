@@ -1,0 +1,92 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.ReportDefinitions
+
+<MudDialog>
+    <DialogContent>
+        @if (ReportDefinition != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Code">@ReportDefinition.Code</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Name">@ReportDefinition.Name</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Category">@ReportDefinition.Category</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Output Format">
+                        <MudChip T="string" Color="Color.Primary" Size="Size.Small">@ReportDefinition.OutputFormat</MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Status">
+                        <MudChip T="string" Color="@GetStatusColor(ReportDefinition.Status)" Size="Size.Small">@ReportDefinition.Status</MudChip>
+                    </MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Scheduled">
+                        <MudIcon Icon="@(ReportDefinition.IsScheduled == true ? Icons.Material.Filled.Schedule : Icons.Material.Filled.Cancel)" 
+                                 Color="@(ReportDefinition.IsScheduled == true ? Color.Success : Color.Default)" />
+                        @(ReportDefinition.IsScheduled == true ? "Yes" : "No")
+                    </MudField>
+                </MudItem>
+                @if (ReportDefinition.IsScheduled == true)
+                {
+                    <MudItem xs="12" md="4">
+                        <MudField Label="Frequency">@ReportDefinition.ScheduleFrequency</MudField>
+                    </MudItem>
+                    <MudItem xs="12" md="4">
+                        <MudField Label="Schedule Day">@ReportDefinition.ScheduleDay</MudField>
+                    </MudItem>
+                    <MudItem xs="12" md="4">
+                        <MudField Label="Schedule Time">@ReportDefinition.ScheduleTime</MudField>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrEmpty(ReportDefinition.Description))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Description">@ReportDefinition.Description</MudField>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrEmpty(ReportDefinition.ParametersDefinition))
+                {
+                    <MudItem xs="12">
+                        <MudField Label="Parameters Definition">
+                            <MudText Typo="Typo.body2" Class="mud-text-secondary" Style="white-space: pre-wrap; font-family: monospace; max-height: 150px; overflow-y: auto;">
+                                @ReportDefinition.ParametersDefinition
+                            </MudText>
+                        </MudField>
+                    </MudItem>
+                }
+                <MudItem xs="12" md="6">
+                    <MudField Label="Last Generated">@ReportDefinition.LastGeneratedAt?.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudField Label="Created On">@ReportDefinition.CreatedOn.ToString("yyyy-MM-dd HH:mm")</MudField>
+                </MudItem>
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public ReportDefinitionResponse? ReportDefinition { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status?.ToLower() switch
+    {
+        "active" or "enabled" => Color.Success,
+        "disabled" or "inactive" => Color.Error,
+        "draft" => Color.Warning,
+        _ => Color.Default
+    };
+}

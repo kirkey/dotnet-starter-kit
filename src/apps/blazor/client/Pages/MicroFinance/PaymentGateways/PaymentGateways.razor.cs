@@ -49,6 +49,8 @@ public partial class PaymentGateways
                 var result = await Client.SearchPaymentGatewaysAsync("1", request).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<PaymentGatewayResponse>>();
             },
+            enableAdvancedSearch: true,
+            idFunc: dto => dto.Id,
             createFunc: async vm =>
             {
                 var command = new CreatePaymentGatewayCommand
@@ -60,8 +62,7 @@ public partial class PaymentGateways
                     MinTransactionAmount = vm.MinTransactionAmount,
                     MaxTransactionAmount = vm.MaxTransactionAmount
                 };
-                var result = await Client.CreatePaymentGatewayAsync("1", command).ConfigureAwait(false);
-                return result.Id;
+                await Client.CreatePaymentGatewayAsync("1", command).ConfigureAwait(false);
             },
             updateFunc: async (id, vm) =>
             {
@@ -69,7 +70,6 @@ public partial class PaymentGateways
                 {
                     Id = id,
                     Name = vm.Name,
-                    Provider = vm.Provider,
                     TransactionFeePercent = vm.TransactionFeePercent,
                     TransactionFeeFixed = vm.TransactionFeeFixed,
                     MinTransactionAmount = vm.MinTransactionAmount,
@@ -77,9 +77,6 @@ public partial class PaymentGateways
                 };
                 await Client.UpdatePaymentGatewayAsync("1", id, command).ConfigureAwait(false);
             },
-            deleteFunc: async id => await Client.DeletePaymentGatewayAsync("1", id).ConfigureAwait(false),
-            enableAdvancedSearch: true,
-            idFunc: dto => dto.Id,
             entityName: "Payment Gateway",
             entityNamePlural: "Payment Gateways",
             entityResource: FshResources.PaymentGateways,
