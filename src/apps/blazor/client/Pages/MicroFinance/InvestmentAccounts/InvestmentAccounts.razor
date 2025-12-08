@@ -1,0 +1,89 @@
+@page "/microfinance/investment-accounts"
+@using FSH.Starter.Blazor.Client.Pages.MicroFinance.InvestmentAccounts
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+
+<FshPage Title="Investment Accounts"
+         Subtitle="Manage customer investment accounts."
+         BreadcrumbItems="@(new List<BreadcrumbItem> { new("MicroFinance", "/microfinance"), new("Investment Accounts", "/microfinance/investment-accounts", true) })">
+    <ExtraActions>
+        <MudTooltip Text="Refresh">
+            <MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="Color.Surface" OnClick="@(() => _table.ReloadDataAsync())" />
+        </MudTooltip>
+    </ExtraActions>
+    <ChildContent>
+        <EntityTable @ref="_table" TEntity="InvestmentAccountResponse" TId="DefaultIdType" TRequest="InvestmentAccountViewModel"
+                     Context="Context" Elevation="_preference.Elevation" Dense="true" Bordered="true"
+                     Style="@($"border-radius: {_preference.BorderRadius}px")">
+            <ActionsContent>
+                <MudMenuItem Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => ViewDetails(context.Id))">
+                    View Details
+                </MudMenuItem>
+            </ActionsContent>
+
+            <EditFormContent Context="context">
+                @if (context.Id != DefaultIdType.Empty)
+                {
+                    <MudItem xs="12" md="6">
+                        <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+                    </MudItem>
+                }
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Account Information</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField @bind-Value="context.AccountNumber"
+                                  For="@(() => context.AccountNumber)"
+                                  Label="Account Number"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField @bind-Value="context.CustomerId"
+                                  For="@(() => context.CustomerId)"
+                                  Label="Customer ID"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField @bind-Value="context.ProductId"
+                                  For="@(() => context.ProductId)"
+                                  Label="Product ID"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudNumericField @bind-Value="context.InvestedAmount"
+                                     For="@(() => context.InvestedAmount)"
+                                     Label="Invested Amount"
+                                     Variant="Variant.Filled"
+                                     Format="N2"
+                                     Required="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudDatePicker @bind-Date="context.OpeningDate"
+                                   For="@(() => context.OpeningDate)"
+                                   Label="Opening Date"
+                                   Variant="Variant.Filled"
+                                   DateFormat="yyyy-MM-dd" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudDatePicker @bind-Date="context.MaturityDate"
+                                   For="@(() => context.MaturityDate)"
+                                   Label="Maturity Date"
+                                   Variant="Variant.Filled"
+                                   DateFormat="yyyy-MM-dd" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="context.Notes"
+                                  For="@(() => context.Notes)"
+                                  Label="Notes"
+                                  Variant="Variant.Filled"
+                                  Lines="3" />
+                </MudItem>
+            </EditFormContent>
+        </EntityTable>
+    </ChildContent>
+</FshPage>

@@ -1,0 +1,47 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InsuranceProducts
+
+<MudDialog>
+    <DialogContent>
+        @if (Product is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>ID</strong></td><td>@Product.Id</td></tr>
+                    <tr><td><strong>Code</strong></td><td>@Product.Code</td></tr>
+                    <tr><td><strong>Name</strong></td><td>@Product.Name</td></tr>
+                    <tr><td><strong>Insurance Type</strong></td><td>@Product.InsuranceType</td></tr>
+                    <tr><td><strong>Provider</strong></td><td>@Product.Provider</td></tr>
+                    <tr><td><strong>Min Coverage</strong></td><td>@Product.MinCoverage.ToString("N2")</td></tr>
+                    <tr><td><strong>Max Coverage</strong></td><td>@Product.MaxCoverage.ToString("N2")</td></tr>
+                    <tr><td><strong>Premium Calculation</strong></td><td>@Product.PremiumCalculation</td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Product.Status)" Size="Size.Small">@Product.Status</MudChip></td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No product data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public InsuranceProductResponse? Product { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Active" => Color.Success,
+        "Inactive" => Color.Default,
+        "Suspended" => Color.Warning,
+        _ => Color.Default
+    };
+}

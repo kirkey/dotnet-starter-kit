@@ -1,0 +1,112 @@
+@page "/microfinance/insurance-policies"
+@using FSH.Starter.Blazor.Client.Pages.MicroFinance.InsurancePolicies
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+
+<FshPage Title="Insurance Policies"
+         Subtitle="Manage customer insurance policies."
+         BreadcrumbItems="@(new List<BreadcrumbItem> { new("MicroFinance", "/microfinance"), new("Insurance Policies", "/microfinance/insurance-policies", true) })">
+    <ExtraActions>
+        <MudTooltip Text="Refresh">
+            <MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="Color.Surface" OnClick="@(() => _table.ReloadDataAsync())" />
+        </MudTooltip>
+    </ExtraActions>
+    <ChildContent>
+        <EntityTable @ref="_table" TEntity="InsurancePolicyResponse" TId="DefaultIdType" TRequest="InsurancePolicyViewModel"
+                     Context="Context" Elevation="_preference.Elevation" Dense="true" Bordered="true"
+                     Style="@($"border-radius: {_preference.BorderRadius}px")">
+            <ActionsContent>
+                <MudMenuItem Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => ViewDetails(context.Id))">
+                    View Details
+                </MudMenuItem>
+                @if (_canActivate && context.Status == "Pending")
+                {
+                    <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => ActivatePolicy(context.Id))">
+                        Activate
+                    </MudMenuItem>
+                }
+                @if (_canCancel && context.Status == "Active")
+                {
+                    <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => CancelPolicy(context.Id))">
+                        Cancel
+                    </MudMenuItem>
+                }
+            </ActionsContent>
+
+            <EditFormContent Context="context">
+                @if (context.Id != DefaultIdType.Empty)
+                {
+                    <MudItem xs="12" md="6">
+                        <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+                    </MudItem>
+                }
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Policy Information</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField @bind-Value="context.PolicyNumber"
+                                  For="@(() => context.PolicyNumber)"
+                                  Label="Policy Number"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField @bind-Value="context.CustomerId"
+                                  For="@(() => context.CustomerId)"
+                                  Label="Customer ID"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField @bind-Value="context.ProductId"
+                                  For="@(() => context.ProductId)"
+                                  Label="Product ID"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudNumericField @bind-Value="context.CoverageAmount"
+                                     For="@(() => context.CoverageAmount)"
+                                     Label="Coverage Amount"
+                                     Variant="Variant.Filled"
+                                     Format="N2"
+                                     Required="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudNumericField @bind-Value="context.PremiumAmount"
+                                     For="@(() => context.PremiumAmount)"
+                                     Label="Premium Amount"
+                                     Variant="Variant.Filled"
+                                     Format="N2" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudSelect @bind-Value="context.PaymentFrequency"
+                               For="@(() => context.PaymentFrequency)"
+                               Label="Payment Frequency"
+                               Variant="Variant.Filled">
+                        <MudSelectItem Value="@("Monthly")">Monthly</MudSelectItem>
+                        <MudSelectItem Value="@("Quarterly")">Quarterly</MudSelectItem>
+                        <MudSelectItem Value="@("Annual")">Annual</MudSelectItem>
+                        <MudSelectItem Value="@("Single")">Single</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudDatePicker @bind-Date="context.StartDate"
+                                   For="@(() => context.StartDate)"
+                                   Label="Start Date"
+                                   Variant="Variant.Filled"
+                                   DateFormat="yyyy-MM-dd" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudDatePicker @bind-Date="context.EndDate"
+                                   For="@(() => context.EndDate)"
+                                   Label="End Date"
+                                   Variant="Variant.Filled"
+                                   DateFormat="yyyy-MM-dd" />
+                </MudItem>
+            </EditFormContent>
+        </EntityTable>
+    </ChildContent>
+</FshPage>

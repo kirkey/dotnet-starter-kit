@@ -1,0 +1,48 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InsurancePolicies
+
+<MudDialog>
+    <DialogContent>
+        @if (Policy is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>ID</strong></td><td>@Policy.Id</td></tr>
+                    <tr><td><strong>Policy Number</strong></td><td>@Policy.PolicyNumber</td></tr>
+                    <tr><td><strong>Member ID</strong></td><td>@Policy.MemberId</td></tr>
+                    <tr><td><strong>Insurance Product ID</strong></td><td>@Policy.InsuranceProductId</td></tr>
+                    <tr><td><strong>Coverage Amount</strong></td><td>@Policy.CoverageAmount.ToString("N2")</td></tr>
+                    <tr><td><strong>Premium Amount</strong></td><td>@Policy.PremiumAmount.ToString("N2")</td></tr>
+                    <tr><td><strong>Start Date</strong></td><td>@Policy.StartDate.ToString("yyyy-MM-dd")</td></tr>
+                    <tr><td><strong>End Date</strong></td><td>@Policy.EndDate.ToString("yyyy-MM-dd")</td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Policy.Status)" Size="Size.Small">@Policy.Status</MudChip></td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No policy data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public InsurancePolicyResponse? Policy { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Active" => Color.Success,
+        "Pending" => Color.Warning,
+        "Cancelled" => Color.Error,
+        "Expired" => Color.Default,
+        _ => Color.Default
+    };
+}

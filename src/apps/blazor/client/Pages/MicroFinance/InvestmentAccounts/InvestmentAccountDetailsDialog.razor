@@ -1,0 +1,62 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InvestmentAccounts
+
+<MudDialog>
+    <DialogContent>
+        @if (Account is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>ID</strong></td><td>@Account.Id</td></tr>
+                    <tr><td><strong>Account Number</strong></td><td>@Account.AccountNumber</td></tr>
+                    <tr><td><strong>Member ID</strong></td><td>@Account.MemberId</td></tr>
+                    <tr><td><strong>Risk Profile</strong></td><td>@Account.RiskProfile</td></tr>
+                    <tr><td><strong>Total Invested</strong></td><td>@Account.TotalInvested.ToString("N2")</td></tr>
+                    <tr><td><strong>Current Value</strong></td><td>@Account.CurrentValue.ToString("N2")</td></tr>
+                    <tr><td><strong>Return</strong></td><td class="@GetReturnClass(Account)">@GetReturnDisplay(Account)</td></tr>
+                    <tr><td><strong>First Investment</strong></td><td>@(Account.FirstInvestmentDate?.ToString("yyyy-MM-dd") ?? "N/A")</td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Account.Status)" Size="Size.Small">@Account.Status</MudChip></td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No account data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public InvestmentAccountResponse? Account { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Active" => Color.Success,
+        "Pending" => Color.Warning,
+        "Closed" => Color.Default,
+        "Matured" => Color.Info,
+        _ => Color.Default
+    };
+
+    private static string GetReturnClass(InvestmentAccountResponse account)
+    {
+        var returnValue = account.CurrentValue - account.TotalInvested;
+        return returnValue >= 0 ? "mud-success-text" : "mud-error-text";
+    }
+
+    private static string GetReturnDisplay(InvestmentAccountResponse account)
+    {
+        var returnValue = account.CurrentValue - account.TotalInvested;
+        var percentage = account.TotalInvested > 0 ? (returnValue / account.TotalInvested) * 100 : 0;
+        var sign = returnValue >= 0 ? "+" : "";
+        return $"{sign}{returnValue:N2} ({sign}{percentage:N2}%)";
+    }
+}

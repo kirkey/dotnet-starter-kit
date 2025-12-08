@@ -1,0 +1,86 @@
+@page "/microfinance/loan-disbursement-tranches"
+@using FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanDisbursementTranches
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+
+<FshPage Title="Loan Disbursement Tranches"
+         Subtitle="Manage loan disbursement tranches and schedules."
+         BreadcrumbItems="@(new List<BreadcrumbItem> { new("MicroFinance", "/microfinance"), new("Loan Disbursement Tranches", "/microfinance/loan-disbursement-tranches", true) })">
+    <ExtraActions>
+        <MudTooltip Text="Refresh">
+            <MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="Color.Surface" OnClick="@(() => _table.ReloadDataAsync())" />
+        </MudTooltip>
+    </ExtraActions>
+    <ChildContent>
+        <EntityTable @ref="_table" TEntity="LoanDisbursementTrancheSummaryResponse" TId="DefaultIdType" TRequest="LoanDisbursementTrancheViewModel"
+                     Context="Context" Elevation="_preference.Elevation" Dense="true" Bordered="true"
+                     Style="@($"border-radius: {_preference.BorderRadius}px")">
+            <ActionsContent>
+                <MudMenuItem Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => ViewDetails(context.Id))">
+                    View Details
+                </MudMenuItem>
+            </ActionsContent>
+
+            <EditFormContent Context="context">
+                @if (context.Id != DefaultIdType.Empty)
+                {
+                    <MudItem xs="12" md="6">
+                        <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+                    </MudItem>
+                }
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Tranche Information</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField @bind-Value="context.LoanId"
+                                  For="@(() => context.LoanId)"
+                                  Label="Loan ID"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudNumericField @bind-Value="context.TrancheNumber"
+                                     For="@(() => context.TrancheNumber)"
+                                     Label="Tranche Number"
+                                     Variant="Variant.Filled"
+                                     Required="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudNumericField @bind-Value="context.Amount"
+                                     For="@(() => context.Amount)"
+                                     Label="Amount"
+                                     Variant="Variant.Filled"
+                                     Format="N2"
+                                     Required="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudDatePicker @bind-Date="context.ScheduledDate"
+                                   For="@(() => context.ScheduledDate)"
+                                   Label="Scheduled Date"
+                                   Variant="Variant.Filled"
+                                   DateFormat="yyyy-MM-dd" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudSelect @bind-Value="context.DisbursementMethod"
+                               For="@(() => context.DisbursementMethod)"
+                               Label="Disbursement Method"
+                               Variant="Variant.Filled">
+                        <MudSelectItem Value="@("BankTransfer")">Bank Transfer</MudSelectItem>
+                        <MudSelectItem Value="@("Cash")">Cash</MudSelectItem>
+                        <MudSelectItem Value="@("Check")">Check</MudSelectItem>
+                        <MudSelectItem Value="@("MobileMoney")">Mobile Money</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="context.Notes"
+                                  For="@(() => context.Notes)"
+                                  Label="Notes"
+                                  Variant="Variant.Filled"
+                                  Lines="3" />
+                </MudItem>
+            </EditFormContent>
+        </EntityTable>
+    </ChildContent>
+</FshPage>

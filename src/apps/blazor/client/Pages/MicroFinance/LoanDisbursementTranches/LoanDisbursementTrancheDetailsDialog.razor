@@ -1,0 +1,49 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanDisbursementTranches
+
+<MudDialog>
+    <DialogContent>
+        @if (Tranche is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>ID</strong></td><td>@Tranche.Id</td></tr>
+                    <tr><td><strong>Loan ID</strong></td><td>@Tranche.LoanId</td></tr>
+                    <tr><td><strong>Tranche Number</strong></td><td>@Tranche.TrancheNumber</td></tr>
+                    <tr><td><strong>Amount</strong></td><td>@Tranche.Amount.ToString("N2")</td></tr>
+                    <tr><td><strong>Scheduled Date</strong></td><td>@Tranche.ScheduledDate.ToString("yyyy-MM-dd")</td></tr>
+                    <tr><td><strong>Disbursed Date</strong></td><td>@(Tranche.DisbursedDate?.ToString("yyyy-MM-dd") ?? "Not Disbursed")</td></tr>
+                    <tr><td><strong>Disbursement Method</strong></td><td>@Tranche.DisbursementMethod</td></tr>
+                    <tr><td><strong>Reference Number</strong></td><td>@Tranche.ReferenceNumber</td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Tranche.Status)" Size="Size.Small">@Tranche.Status</MudChip></td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No tranche data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public LoanDisbursementTrancheResponse? Tranche { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Pending" => Color.Warning,
+        "Scheduled" => Color.Info,
+        "Disbursed" => Color.Success,
+        "Cancelled" => Color.Error,
+        "Failed" => Color.Error,
+        _ => Color.Default
+    };
+}

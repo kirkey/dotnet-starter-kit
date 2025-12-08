@@ -1,0 +1,54 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InvestmentProducts
+
+<MudDialog>
+    <DialogContent>
+        @if (Product is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>ID</strong></td><td>@Product.Id</td></tr>
+                    <tr><td><strong>Code</strong></td><td>@Product.Code</td></tr>
+                    <tr><td><strong>Name</strong></td><td>@Product.Name</td></tr>
+                    <tr><td><strong>Product Type</strong></td><td>@Product.ProductType</td></tr>
+                    <tr><td><strong>Min Investment</strong></td><td>@Product.MinimumInvestment.ToString("N2")</td></tr>
+                    <tr><td><strong>Max Investment</strong></td><td>@(Product.MaximumInvestment?.ToString("N2") ?? "N/A")</td></tr>
+                    <tr><td><strong>Expected Return</strong></td><td>@Product.ExpectedReturnMin.ToString("N2")% - @Product.ExpectedReturnMax.ToString("N2")%</td></tr>
+                    <tr><td><strong>Risk Level</strong></td><td><MudChip T="string" Color="@GetRiskColor(Product.RiskLevel)" Size="Size.Small">@Product.RiskLevel</MudChip></td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Product.Status)" Size="Size.Small">@Product.Status</MudChip></td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No product data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public InvestmentProductResponse? Product { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Active" => Color.Success,
+        "Inactive" => Color.Default,
+        _ => Color.Default
+    };
+
+    private static Color GetRiskColor(string? riskLevel) => riskLevel switch
+    {
+        "Low" => Color.Success,
+        "Medium" => Color.Warning,
+        "High" => Color.Error,
+        _ => Color.Default
+    };
+}

@@ -1,0 +1,116 @@
+@page "/microfinance/investment-products"
+@using FSH.Starter.Blazor.Client.Pages.MicroFinance.InvestmentProducts
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+
+<FshPage Title="Investment Products"
+         Subtitle="Manage MFI investment products and offerings."
+         BreadcrumbItems="@(new List<BreadcrumbItem> { new("MicroFinance", "/microfinance"), new("Investment Products", "/microfinance/investment-products", true) })">
+    <ExtraActions>
+        <MudTooltip Text="Refresh">
+            <MudIconButton Icon="@Icons.Material.Filled.Refresh" Color="Color.Surface" OnClick="@(() => _table.ReloadDataAsync())" />
+        </MudTooltip>
+    </ExtraActions>
+    <ChildContent>
+        <EntityTable @ref="_table" TEntity="InvestmentProductResponse" TId="DefaultIdType" TRequest="InvestmentProductViewModel"
+                     Context="Context" Elevation="_preference.Elevation" Dense="true" Bordered="true"
+                     Style="@($"border-radius: {_preference.BorderRadius}px")">
+            <ActionsContent>
+                <MudMenuItem Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => ViewDetails(context.Id))">
+                    View Details
+                </MudMenuItem>
+                @if (_canActivate && context.Status != "Active")
+                {
+                    <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => ActivateProduct(context.Id))">
+                        Activate
+                    </MudMenuItem>
+                }
+                @if (_canDeactivate && context.Status == "Active")
+                {
+                    <MudMenuItem Icon="@Icons.Material.Filled.Block" OnClick="@(() => DeactivateProduct(context.Id))">
+                        Deactivate
+                    </MudMenuItem>
+                }
+            </ActionsContent>
+
+            <EditFormContent Context="context">
+                @if (context.Id != DefaultIdType.Empty)
+                {
+                    <MudItem xs="12" md="6">
+                        <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+                    </MudItem>
+                }
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Product Information</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField @bind-Value="context.Code"
+                                  For="@(() => context.Code)"
+                                  Label="Code"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField @bind-Value="context.Name"
+                                  For="@(() => context.Name)"
+                                  Label="Name"
+                                  Variant="Variant.Filled"
+                                  Required="true" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudSelect @bind-Value="context.ProductType"
+                               For="@(() => context.ProductType)"
+                               Label="Product Type"
+                               Variant="Variant.Filled"
+                               Required="true">
+                        <MudSelectItem Value="@("FixedDeposit")">Fixed Deposit</MudSelectItem>
+                        <MudSelectItem Value="@("MutualFund")">Mutual Fund</MudSelectItem>
+                        <MudSelectItem Value="@("Bond")">Bond</MudSelectItem>
+                        <MudSelectItem Value="@("Equity")">Equity</MudSelectItem>
+                        <MudSelectItem Value="@("MoneyMarket")">Money Market</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudNumericField @bind-Value="context.MinInvestment"
+                                     For="@(() => context.MinInvestment)"
+                                     Label="Min Investment"
+                                     Variant="Variant.Filled"
+                                     Format="N2" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudNumericField @bind-Value="context.MaxInvestment"
+                                     For="@(() => context.MaxInvestment)"
+                                     Label="Max Investment"
+                                     Variant="Variant.Filled"
+                                     Format="N2" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudNumericField @bind-Value="context.ExpectedReturn"
+                                     For="@(() => context.ExpectedReturn)"
+                                     Label="Expected Return %"
+                                     Variant="Variant.Filled"
+                                     Format="N2" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudSelect @bind-Value="context.RiskLevel"
+                               For="@(() => context.RiskLevel)"
+                               Label="Risk Level"
+                               Variant="Variant.Filled">
+                        <MudSelectItem Value="@("Low")">Low</MudSelectItem>
+                        <MudSelectItem Value="@("Medium")">Medium</MudSelectItem>
+                        <MudSelectItem Value="@("High")">High</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="context.Description"
+                                  For="@(() => context.Description)"
+                                  Label="Description"
+                                  Variant="Variant.Filled"
+                                  Lines="3" />
+                </MudItem>
+            </EditFormContent>
+        </EntityTable>
+    </ChildContent>
+</FshPage>
