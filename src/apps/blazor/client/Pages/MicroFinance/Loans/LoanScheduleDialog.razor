@@ -1,0 +1,115 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Loans
+
+<MudDialog>
+    <DialogContent>
+        <MudContainer Style="max-height: 70vh; overflow-y: auto;">
+            @if (_loading)
+            {
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+            }
+            else if (_loan != null && _loan.Schedules?.Any() == true)
+            {
+                <MudText Typo="Typo.subtitle1" Class="mb-3">
+                    Loan @_loan.LoanNumber - @_loan.MemberName
+                </MudText>
+                
+                <MudTable Items="@_loan.Schedules" Dense="true" Hover="true" Bordered="true" Striped="true">
+                    <HeaderContent>
+                        <MudTh Style="text-align: center;">#</MudTh>
+                        <MudTh>Due Date</MudTh>
+                        <MudTh Style="text-align: right;">Principal</MudTh>
+                        <MudTh Style="text-align: right;">Interest</MudTh>
+                        <MudTh Style="text-align: right;">Total Due</MudTh>
+                        <MudTh Style="text-align: right;">Paid</MudTh>
+                        <MudTh Style="text-align: center;">Status</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="#" Style="text-align: center;">@context.InstallmentNumber</MudTd>
+                        <MudTd DataLabel="Due Date">@context.DueDate.ToString("MMM dd, yyyy")</MudTd>
+                        <MudTd DataLabel="Principal" Style="text-align: right;">@context.PrincipalAmount.ToString("N2")</MudTd>
+                        <MudTd DataLabel="Interest" Style="text-align: right;">@context.InterestAmount.ToString("N2")</MudTd>
+                        <MudTd DataLabel="Total" Style="text-align: right;"><strong>@context.TotalAmount.ToString("N2")</strong></MudTd>
+                        <MudTd DataLabel="Paid" Style="text-align: right;">@context.PaidAmount.ToString("N2")</MudTd>
+                        <MudTd DataLabel="Status" Style="text-align: center;">
+                            @if (context.IsPaid)
+                            {
+                                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" />
+                            }
+                            else if (context.DueDate < DateOnly.FromDateTime(DateTime.Today))
+                            {
+                                <MudIcon Icon="@Icons.Material.Filled.Warning" Color="Color.Error" Size="Size.Small" />
+                            }
+                            else
+                            {
+                                <MudIcon Icon="@Icons.Material.Filled.Schedule" Color="Color.Default" Size="Size.Small" />
+                            }
+                        </MudTd>
+                    </RowTemplate>
+                    <FooterContent>
+                        <MudTh colspan="2"><strong>Total</strong></MudTh>
+                        <MudTh Style="text-align: right;"><strong>@_loan.Schedules.Sum(s => s.PrincipalAmount).ToString("N2")</strong></MudTh>
+                        <MudTh Style="text-align: right;"><strong>@_loan.Schedules.Sum(s => s.InterestAmount).ToString("N2")</strong></MudTh>
+                        <MudTh Style="text-align: right;"><strong>@_loan.Schedules.Sum(s => s.TotalAmount).ToString("N2")</strong></MudTh>
+                        <MudTh Style="text-align: right;"><strong>@_loan.Schedules.Sum(s => s.PaidAmount).ToString("N2")</strong></MudTh>
+                        <MudTh></MudTh>
+                    </FooterContent>
+                </MudTable>
+                
+                <MudStack Row="true" Class="mt-3" Spacing="4">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                        <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" />
+                        <MudText Typo="Typo.caption">Paid</MudText>
+                    </MudStack>
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                        <MudIcon Icon="@Icons.Material.Filled.Warning" Color="Color.Error" Size="Size.Small" />
+                        <MudText Typo="Typo.caption">Overdue</MudText>
+                    </MudStack>
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                        <MudIcon Icon="@Icons.Material.Filled.Schedule" Color="Color.Default" Size="Size.Small" />
+                        <MudText Typo="Typo.caption">Upcoming</MudText>
+                    </MudStack>
+                </MudStack>
+            }
+            else
+            {
+                <MudAlert Severity="Severity.Info">No repayment schedule available.</MudAlert>
+            }
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Close" Color="Color.Primary" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType LoanId { get; set; }
+
+    private LoanResponse? _loan;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLoan();
+    }
+
+    private async Task LoadLoan()
+    {
+        _loading = true;
+        try
+        {
+            _loan = await ApiHelper.ExecuteCallGuardedAsync(
+                () => Client.GetLoanAsync("1", LoanId),
+                Snackbar);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

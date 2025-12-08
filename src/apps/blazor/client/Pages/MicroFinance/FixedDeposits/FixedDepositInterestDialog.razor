@@ -1,0 +1,98 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.FixedDeposits
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Interest Calculation</MudText>
+            <MudText Typo="Typo.body2">Certificate: @Deposit.CertificateNumber</MudText>
+            
+            <MudDivider />
+
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Principal Amount</MudText>
+                    <MudText Typo="Typo.h6">@Deposit.PrincipalAmount.ToString("N2")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Interest Rate (Annual)</MudText>
+                    <MudText Typo="Typo.h6">@Deposit.InterestRate.ToString("N2")%</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Term</MudText>
+                    <MudText Typo="Typo.body1">@Deposit.TermMonths months</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Days Elapsed</MudText>
+                    <MudText Typo="Typo.body1">@_daysElapsed days</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Accrued Interest (to date)</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Info">@_accruedInterest.ToString("N2")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Total Interest (at maturity)</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Primary">@_totalInterest.ToString("N2")</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Current Value</MudText>
+                    <MudText Typo="Typo.h5">@(_accruedInterest + Deposit.PrincipalAmount).ToString("N2")</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Maturity Value</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Success">@_maturityValue.ToString("N2")</MudText>
+                </MudItem>
+            </MudGrid>
+
+            <MudAlert Severity="Severity.Info" Dense="true">
+                <strong>Calculation Method:</strong> Simple Interest = Principal × Rate × Time
+            </MudAlert>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] 
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public FixedDepositResponse Deposit { get; set; } = null!;
+
+    private int _daysElapsed;
+    private decimal _accruedInterest;
+    private decimal _totalInterest;
+    private decimal _maturityValue;
+
+    protected override void OnInitialized()
+    {
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        _daysElapsed = Math.Max(0, today.DayNumber - Deposit.DepositDate.DayNumber);
+        
+        var dailyRate = Deposit.InterestRate / 100 / 365;
+        _accruedInterest = Deposit.PrincipalAmount * dailyRate * _daysElapsed;
+
+        var annualRate = Deposit.InterestRate / 100;
+        var termYears = Deposit.TermMonths / 12.0m;
+        _totalInterest = Deposit.PrincipalAmount * annualRate * termYears;
+        _maturityValue = Deposit.PrincipalAmount + _totalInterest;
+    }
+
+    private void Close() => MudDialog.Close();
+}

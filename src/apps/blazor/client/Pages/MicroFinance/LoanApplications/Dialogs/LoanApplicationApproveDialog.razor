@@ -1,0 +1,97 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" Color="Color.Success" />
+            Approve Application - @ApplicationNumber
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Class="mb-2">
+                    Requested: <strong>@RequestedAmount.ToString("N0")</strong> for <strong>@RequestedTermMonths months</strong>
+                </MudText>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudNumericField @bind-Value="_approvedAmount"
+                                 Label="Approved Amount"
+                                 Variant="Variant.Outlined"
+                                 Min="1000"
+                                 Format="N0"
+                                 Adornment="Adornment.Start"
+                                 AdornmentText="KES"
+                                 Required="true" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudNumericField @bind-Value="_approvedTermMonths"
+                                 Label="Approved Term (Months)"
+                                 Variant="Variant.Outlined"
+                                 Min="1"
+                                 Max="60"
+                                 Required="true" />
+            </MudItem>
+            @if (_approvedAmount < RequestedAmount)
+            {
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Warning">
+                        Approved amount is less than requested. Consider documenting the reason.
+                    </MudAlert>
+                </MudItem>
+            }
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="Color.Success" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit" 
+                   Disabled="@(_approvedAmount <= 0 || _approvedTermMonths <= 0)">
+            Approve
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public DefaultIdType ApplicationId { get; set; }
+
+    [Parameter]
+    public string ApplicationNumber { get; set; } = string.Empty;
+
+    [Parameter]
+    public decimal RequestedAmount { get; set; }
+
+    [Parameter]
+    public int RequestedTermMonths { get; set; }
+
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private decimal _approvedAmount;
+    private int _approvedTermMonths;
+
+    protected override void OnParametersSet()
+    {
+        _approvedAmount = RequestedAmount;
+        _approvedTermMonths = RequestedTermMonths;
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var command = new ApproveLoanApplicationCommand
+        {
+            Id = ApplicationId,
+            ApprovedAmount = _approvedAmount,
+            ApprovedTermMonths = _approvedTermMonths
+        };
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            async () => await Client.ApproveLoanApplicationEndpointAsync("1", ApplicationId, command),
+            Snackbar,
+            successMessage: $"Application approved for {_approvedAmount:N0} over {_approvedTermMonths} months.");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

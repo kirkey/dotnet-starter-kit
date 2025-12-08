@@ -1,0 +1,222 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanProducts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Loan Products Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Loan Products?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Loan Product Configuration</MudText>
+                        <MudText Typo="Typo.body2">
+                            Loan products define the terms and conditions for different types of loans offered by your institution. 
+                            Each product specifies interest rates, loan limits, repayment schedules, and other parameters.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Components:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Interest Rate:</strong> Annual percentage charged on the loan<br/>
+                                • <strong>Interest Method:</strong> How interest is calculated over time<br/>
+                                • <strong>Loan Limits:</strong> Minimum and maximum amounts allowed<br/>
+                                • <strong>Term:</strong> Duration range for the loan<br/>
+                                • <strong>Repayment Frequency:</strong> How often payments are due<br/>
+                                • <strong>Penalties:</strong> Charges for late payments
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Design products that meet specific client needs while maintaining portfolio quality.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Interest Calculation Methods">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Interest Methods</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Declining Balance:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Interest calculated on remaining principal only<br/>
+                                • Most common and borrower-friendly method<br/>
+                                • Interest decreases as principal is paid<br/>
+                                • Lower total interest cost for borrower<br/>
+                                • Example: 12% on $10,000, after $2,000 paid = 12% on $8,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Flat Rate:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Interest calculated on original principal throughout<br/>
+                                • Simpler to calculate and explain<br/>
+                                • Higher effective interest rate<br/>
+                                • Total interest known upfront<br/>
+                                • Example: 12% flat on $10,000 for 12 months = $1,200 interest
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Reducing Balance:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Similar to declining balance<br/>
+                                • Interest recalculated each period<br/>
+                                • May account for partial payments<br/>
+                                • Common in formal banking
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Transparency:</strong> Always disclose the effective annual rate (EAR) to borrowers for comparison.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Repayment Frequencies">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Choosing the Right Frequency</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Weekly:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • 52 payments per year<br/>
+                                • Best for daily wage earners<br/>
+                                • Smaller, more manageable amounts<br/>
+                                • Higher operational cost for collections
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Bi-Weekly:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • 26 payments per year<br/>
+                                • Aligns with bi-weekly pay cycles<br/>
+                                • Good for salary earners paid every two weeks
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Monthly:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • 12 payments per year<br/>
+                                • Most common for salaried employees<br/>
+                                • Standard for larger loans<br/>
+                                • Lower collection overhead
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Quarterly:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • 4 payments per year<br/>
+                                • For seasonal income (farmers, merchants)<br/>
+                                • Larger individual payments<br/>
+                                • Higher risk of default
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Grace Period & Penalties">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Delinquency</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Grace Period:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Buffer time after due date before penalties<br/>
+                                • Typically 3-7 days for microfinance<br/>
+                                • Accounts for weekends, holidays, payment processing<br/>
+                                • Shows understanding of client circumstances
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Late Penalty Rate:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Additional charge on overdue amounts<br/>
+                                • Encourages timely payment<br/>
+                                • Should be disclosed upfront<br/>
+                                • Typically 1-5% of overdue amount<br/>
+                                • May be flat fee or percentage
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Balance:</strong> Penalties should encourage payment but not trap borrowers in debt cycles.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Product Design Tips">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Best Practices for Loan Products</MudText>
+                        
+                        <MudList T="string" Dense="true">
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Match product terms to client cash flows</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Start with conservative limits for new borrowers</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Ensure interest covers costs plus margin</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Document all terms clearly in loan agreements</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Review and update products periodically</MudText>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                                <MudText Typo="Typo.caption">Test new products with pilot groups first</MudText>
+                            </MudListItem>
+                        </MudList>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

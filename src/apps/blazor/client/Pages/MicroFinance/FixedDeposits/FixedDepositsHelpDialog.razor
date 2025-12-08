@@ -1,0 +1,185 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.FixedDeposits
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Fixed Deposits Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Fixed Deposits?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Time Deposits</MudText>
+                        <MudText Typo="Typo.body2">
+                            Fixed deposits (also called time deposits or term deposits) are savings products where 
+                            members deposit money for a fixed period at a predetermined interest rate.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Key Features:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Higher interest rates than regular savings<br/>
+                                • Fixed term (e.g., 3, 6, 12, 24 months)<br/>
+                                • Principal locked until maturity<br/>
+                                • Early withdrawal may incur penalties
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Benefit:</strong> Fixed deposits provide stable, predictable returns and help members develop savings discipline.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Interest Calculation">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">How Interest is Calculated</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Simple Interest Formula:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Interest = Principal × Rate × Time<br/><br/>
+                                Example: ₱100,000 at 5% for 12 months<br/>
+                                Interest = 100,000 × 0.05 × 1 = ₱5,000<br/>
+                                Maturity Value = ₱105,000
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>For Partial Year Terms:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                Interest = Principal × Rate × (Months / 12)<br/><br/>
+                                Example: ₱100,000 at 5% for 6 months<br/>
+                                Interest = 100,000 × 0.05 × (6/12) = ₱2,500
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Interest Payout Options">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">When Interest is Paid</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>At Maturity:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Interest paid when term ends<br/>
+                                • Maximum compounding effect<br/>
+                                • Best for long-term savings goals
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Monthly/Quarterly/Annually:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Interest credited periodically<br/>
+                                • Provides regular income stream<br/>
+                                • Lower effective yield than at-maturity<br/>
+                                • Good for retirees needing income
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Maturity and Renewal">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">What Happens at Maturity</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Options at Maturity:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                1. <strong>Withdraw:</strong> Receive principal + interest<br/>
+                                2. <strong>Renew Principal Only:</strong> Withdraw interest, rollover principal<br/>
+                                3. <strong>Renew All:</strong> Rollover principal + interest<br/>
+                                4. <strong>Auto-Renew:</strong> Automatic renewal at prevailing rate
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Important:</strong> If not withdrawn within grace period, deposits may be auto-renewed or converted to regular savings.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Early Withdrawal">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Premature Withdrawal Penalties</MudText>
+                        <MudText Typo="Typo.body2">
+                            Withdrawing before maturity typically results in reduced interest.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Penalty Structures:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Interest reduced to savings rate<br/>
+                                • Percentage deduction from interest earned<br/>
+                                • Flat penalty fee<br/>
+                                • Forfeiture of all interest
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Consider keeping emergency funds in regular savings to avoid early withdrawal from fixed deposits.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating a Fixed Deposit">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Step-by-Step Guide</MudText>
+                        
+                        <ol>
+                            <li><MudText Typo="Typo.caption">Click the <strong>+</strong> button to open the form</MudText></li>
+                            <li><MudText Typo="Typo.caption">Certificate number is auto-generated or enter custom</MudText></li>
+                            <li><MudText Typo="Typo.caption">Select the <strong>Member</strong> making the deposit</MudText></li>
+                            <li><MudText Typo="Typo.caption">Enter the <strong>Principal Amount</strong></MudText></li>
+                            <li><MudText Typo="Typo.caption">Set the <strong>Interest Rate</strong> (annual)</MudText></li>
+                            <li><MudText Typo="Typo.caption">Choose the <strong>Term</strong> in months</MudText></li>
+                            <li><MudText Typo="Typo.caption">Select <strong>Deposit Date</strong> (maturity auto-calculated)</MudText></li>
+                            <li><MudText Typo="Typo.caption">Choose <strong>Interest Payout</strong> frequency</MudText></li>
+                            <li><MudText Typo="Typo.caption">Configure <strong>Auto-Renew</strong> if desired</MudText></li>
+                            <li><MudText Typo="Typo.caption">Click <strong>Save</strong> to create the deposit</MudText></li>
+                        </ol>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Next:</strong> Issue fixed deposit certificate to the member.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] 
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

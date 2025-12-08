@@ -1,0 +1,200 @@
+@page "/microfinance/branches"
+
+<PageHeader Title="Branches" Header="Branches" SubHeader="Manage MFI branch network - offices and service delivery points." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowBranchesHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="BranchResponse" TId="DefaultIdType" TRequest="BranchViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchCode"
+                          Label="Branch Code"
+                          Placeholder="Search by code"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Tag" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchCity"
+                          Label="City"
+                          Placeholder="Search by city"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.LocationCity" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchBranchType"
+                       Label="Branch Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Headquarters")">Headquarters</MudSelectItem>
+                <MudSelectItem Value="@("Regional")">Regional</MudSelectItem>
+                <MudSelectItem Value="@("Branch")">Branch</MudSelectItem>
+                <MudSelectItem Value="@("SubBranch")">Sub-Branch</MudSelectItem>
+                <MudSelectItem Value="@("Agency")">Agency</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (_canActivate || _canDeactivate)
+        {
+            @if (entity.Status == "Active")
+            {
+                @if (_canDeactivate)
+                {
+                    <MudMenuItem Icon="@Icons.Material.Filled.Block" OnClick="@(() => DeactivateBranch(entity.Id))">
+                        Deactivate
+                    </MudMenuItem>
+                }
+            }
+            else if (entity.Status == "Inactive")
+            {
+                @if (_canActivate)
+                {
+                    <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => ActivateBranch(entity.Id))">
+                        Activate
+                    </MudMenuItem>
+                }
+            }
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewBranchDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Basic Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Code"
+                          For="@(() => context.Code)"
+                          Label="Branch Code"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Unique branch identifier (e.g., BR-001)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Name"
+                          For="@(() => context.Name)"
+                          Label="Branch Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="context.BranchType"
+                       For="@(() => context.BranchType)"
+                       Label="Branch Type"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Headquarters")">Headquarters</MudSelectItem>
+                <MudSelectItem Value="@("Regional")">Regional</MudSelectItem>
+                <MudSelectItem Value="@("Branch")">Branch</MudSelectItem>
+                <MudSelectItem Value="@("SubBranch")">Sub-Branch</MudSelectItem>
+                <MudSelectItem Value="@("Agency")">Agency</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Location</strong></MudText>
+            <MudDivider />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Address"
+                          For="@(() => context.Address)"
+                          Label="Address"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudTextField @bind-Value="context.City"
+                          For="@(() => context.City)"
+                          Label="City"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudTextField @bind-Value="context.State"
+                          For="@(() => context.State)"
+                          Label="State/Province"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudTextField @bind-Value="context.PostalCode"
+                          For="@(() => context.PostalCode)"
+                          Label="Postal Code"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudTextField @bind-Value="context.Country"
+                          For="@(() => context.Country)"
+                          Label="Country"
+                          Variant="Variant.Filled" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Contact & Operations</strong></MudText>
+            <MudDivider />
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Phone"
+                          For="@(() => context.Phone)"
+                          Label="Phone"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Telephone" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Email"
+                          For="@(() => context.Email)"
+                          Label="Email"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Email" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.OpeningDateDate"
+                           For="@(() => context.OpeningDateDate)"
+                           Label="Opening Date"
+                           Variant="Variant.Filled"
+                           DateFormat="yyyy-MM-dd" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.CashHoldingLimit"
+                             For="@(() => context.CashHoldingLimit)"
+                             Label="Cash Holding Limit"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentText="₱" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

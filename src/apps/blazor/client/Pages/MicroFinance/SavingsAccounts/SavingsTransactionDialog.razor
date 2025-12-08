@@ -1,0 +1,131 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.SavingsAccounts
+
+<MudDialog>
+    <DialogContent>
+        <EditForm Model="@_model" OnValidSubmit="@Submit">
+            <DataAnnotationsValidator />
+            <MudGrid Spacing="2">
+                <MudItem xs="12">
+                    <MudAlert Severity="@(TransactionType == "Deposit" ? Severity.Success : Severity.Warning)">
+                        <strong>@TransactionType</strong>
+                    </MudAlert>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudNumericField @bind-Value="_model.Amount"
+                                     Label="Amount"
+                                     Variant="Variant.Filled"
+                                     Format="N2"
+                                     Min="0.01M"
+                                     Adornment="Adornment.Start"
+                                     AdornmentText="$"
+                                     Required="true" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudDatePicker @bind-Date="_model.TransactionDate"
+                                   Label="Transaction Date"
+                                   Variant="Variant.Filled"
+                                   Required="true"
+                                   DateFormat="yyyy-MM-dd" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudSelect @bind-Value="_model.PaymentMethod"
+                               Label="Payment Method"
+                               Variant="Variant.Filled"
+                               Required="true">
+                        <MudSelectItem Value="@("Cash")">Cash</MudSelectItem>
+                        <MudSelectItem Value="@("Check")">Check</MudSelectItem>
+                        <MudSelectItem Value="@("Bank Transfer")">Bank Transfer</MudSelectItem>
+                        <MudSelectItem Value="@("Mobile Money")">Mobile Money</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_model.Reference"
+                                  Label="Reference Number"
+                                  Variant="Variant.Filled"
+                                  HelperText="Check number, transfer reference, etc." />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_model.Notes"
+                                  Label="Notes"
+                                  Variant="Variant.Filled"
+                                  Lines="2" />
+                </MudItem>
+            </MudGrid>
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel" Variant="Variant.Text">Cancel</MudButton>
+        <MudButton Color="@(TransactionType == "Deposit" ? Color.Success : Color.Warning)" 
+                   Variant="Variant.Filled" 
+                   OnClick="@Submit">
+            Record @TransactionType
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType AccountId { get; set; }
+
+    [Parameter]
+    public string TransactionType { get; set; } = "Deposit";
+
+    private TransactionModel _model = new();
+
+    private class TransactionModel
+    {
+        public decimal Amount { get; set; }
+        public DateTime? TransactionDate { get; set; } = DateTime.Today;
+        public string PaymentMethod { get; set; } = "Cash";
+        public string? Reference { get; set; }
+        public string? Notes { get; set; }
+    }
+
+    private async Task Submit()
+    {
+        if (_model.Amount <= 0)
+        {
+            Snackbar.Add("Please enter a valid amount.", Severity.Warning);
+            return;
+        }
+
+        if (TransactionType == "Deposit")
+        {
+            var command = new DepositCommand
+            {
+                AccountId = AccountId,
+                Amount = _model.Amount,
+                PaymentMethod = _model.PaymentMethod,
+                TransactionReference = _model.Reference,
+                Notes = _model.Notes
+            };
+
+            await ApiHelper.ExecuteCallGuardedAsync(
+                () => Client.DepositToSavingsAccountAsync("1", AccountId, command),
+                Snackbar,
+                successMessage: "Deposit recorded successfully.");
+        }
+        else
+        {
+            var command = new WithdrawCommand
+            {
+                AccountId = AccountId,
+                Amount = _model.Amount,
+                PaymentMethod = _model.PaymentMethod,
+                Notes = _model.Notes
+            };
+
+            await ApiHelper.ExecuteCallGuardedAsync(
+                () => Client.WithdrawFromSavingsAccountAsync("1", AccountId, command),
+                Snackbar,
+                successMessage: "Withdrawal recorded successfully.");
+        }
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

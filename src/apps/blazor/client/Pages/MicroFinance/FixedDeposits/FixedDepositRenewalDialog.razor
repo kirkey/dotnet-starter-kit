@@ -1,0 +1,122 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.FixedDeposits
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Renew Fixed Deposit</MudText>
+            <MudText Typo="Typo.body2">Certificate: @Deposit.CertificateNumber (@Deposit.MemberName)</MudText>
+            
+            <MudDivider />
+
+            <MudAlert Severity="Severity.Info" Dense="true">
+                <strong>Current Deposit:</strong> @Deposit.PrincipalAmount.ToString("N2") at @Deposit.InterestRate.ToString("N2")% for @Deposit.TermMonths months
+            </MudAlert>
+
+            <MudSelect T="string"
+                       @bind-Value="_renewalOption"
+                       Label="Renewal Option"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("RenewAll")">Renew Principal + Interest</MudSelectItem>
+                <MudSelectItem Value="@("RenewPrincipalOnly")">Renew Principal Only (Withdraw Interest)</MudSelectItem>
+            </MudSelect>
+
+            <MudNumericField T="int"
+                             @bind-Value="_newTermMonths"
+                             Label="New Term (Months)"
+                             Variant="Variant.Filled"
+                             Min="1"
+                             Required="true" />
+
+            <MudNumericField T="decimal"
+                             @bind-Value="_newInterestRate"
+                             Label="New Interest Rate (%)"
+                             Variant="Variant.Filled"
+                             Min="0"
+                             Max="100"
+                             Step="0.1M"
+                             HelperText="Enter the prevailing rate" />
+
+            <MudDivider />
+
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Renewal Principal</MudText>
+                    <MudText Typo="Typo.h6" Color="Color.Primary">@GetRenewalPrincipal().ToString("N2")</MudText>
+                </MudItem>
+
+                @if (_renewalOption == "RenewPrincipalOnly")
+                {
+                    <MudItem xs="12" md="6">
+                        <MudText Typo="Typo.subtitle2" Class="mud-text-secondary">Interest to Withdraw</MudText>
+                        <MudText Typo="Typo.h6" Color="Color.Success">@GetInterestToWithdraw().ToString("N2")</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+
+            <MudTextField @bind-Value="_notes"
+                          Label="Renewal Notes"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit" Disabled="@(!IsValid)">
+            Renew
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] 
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public FixedDepositResponse Deposit { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Toast { get; set; } = null!;
+
+    private string _renewalOption = "RenewAll";
+    private int _newTermMonths = 12;
+    private decimal _newInterestRate = 5.0m;
+    private string? _notes;
+
+    private bool IsValid => _newTermMonths > 0 && _newInterestRate >= 0;
+
+    protected override void OnInitialized()
+    {
+        _newTermMonths = Deposit.TermMonths;
+        _newInterestRate = Deposit.InterestRate;
+    }
+
+    private decimal GetMaturityInterest()
+    {
+        var annualRate = Deposit.InterestRate / 100;
+        var termYears = Deposit.TermMonths / 12.0m;
+        return Deposit.PrincipalAmount * annualRate * termYears;
+    }
+
+    private decimal GetRenewalPrincipal()
+    {
+        var interest = GetMaturityInterest();
+        return _renewalOption == "RenewAll" 
+            ? Deposit.PrincipalAmount + interest 
+            : Deposit.PrincipalAmount;
+    }
+
+    private decimal GetInterestToWithdraw()
+    {
+        return GetMaturityInterest();
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private Task Submit()
+    {
+        Toast.Add($"Fixed deposit renewed for {_newTermMonths} months at {_newInterestRate}%.", Severity.Success);
+        MudDialog.Close(DialogResult.Ok(true));
+        return Task.CompletedTask;
+    }
+}

@@ -1,0 +1,175 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Branches
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Branch Management Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What is Branch Management?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding the Branch Network</MudText>
+                        <MudText Typo="Typo.body2">
+                            Branch management maintains the organizational structure of your MFI's physical presence. 
+                            Branches are the service delivery points where members access financial services.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Branch Hierarchy:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Headquarters:</strong> Main office, central administration<br/>
+                                • <strong>Regional:</strong> Oversees multiple branches in a geographic area<br/>
+                                • <strong>Branch:</strong> Full-service office with complete operations<br/>
+                                • <strong>Sub-Branch:</strong> Satellite office with limited services<br/>
+                                • <strong>Agency:</strong> Partner location or agent banking point
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Best Practice:</strong> Establish a clear branch hierarchy for effective reporting and management oversight.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Branch Operations">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Key Branch Functions</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Front Office:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Member enrollment and KYC verification<br/>
+                                • Account opening and management<br/>
+                                • Loan applications and disbursements<br/>
+                                • Deposits and withdrawals<br/>
+                                • Customer service and inquiries
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Back Office:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Cash management and vault operations<br/>
+                                • Document processing and filing<br/>
+                                • Reporting and compliance<br/>
+                                • Staff scheduling and supervision
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Field Operations:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Loan officer deployment<br/>
+                                • Group meeting facilitation<br/>
+                                • Collections and monitoring<br/>
+                                • Member outreach and education
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Branch Status">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Status Definitions</MudText>
+                        
+                        <MudSimpleTable Dense="true" Hover="true">
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><MudChip T="string" Color="Color.Success" Size="Size.Small">Active</MudChip></td>
+                                    <td>Branch is operational and serving members</td>
+                                </tr>
+                                <tr>
+                                    <td><MudChip T="string" Color="Color.Warning" Size="Size.Small">Inactive</MudChip></td>
+                                    <td>Branch is temporarily closed or not operational</td>
+                                </tr>
+                                <tr>
+                                    <td><MudChip T="string" Color="Color.Error" Size="Size.Small">Closed</MudChip></td>
+                                    <td>Branch is permanently closed, historical record only</td>
+                                </tr>
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Cash Management">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Branch Cash Operations</MudText>
+                        <MudText Typo="Typo.body2">
+                            Each branch has a cash holding limit to manage liquidity and security risks.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Cash Flow Management:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Daily opening/closing balances<br/>
+                                • Cash replenishment from headquarters<br/>
+                                • Excess cash transfers to bank<br/>
+                                • Vault reconciliation<br/>
+                                • Insurance coverage for cash holdings
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Security:</strong> Never exceed the cash holding limit. Request pickup or bank deposit for excess cash.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Creating a New Branch">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Step-by-Step Guide</MudText>
+                        
+                        <ol>
+                            <li><MudText Typo="Typo.caption">Click the <strong>+</strong> button to open the add branch form</MudText></li>
+                            <li><MudText Typo="Typo.caption">Enter a unique <strong>Branch Code</strong> (e.g., BR-MAKATI-01)</MudText></li>
+                            <li><MudText Typo="Typo.caption">Provide the <strong>Branch Name</strong> and select <strong>Branch Type</strong></MudText></li>
+                            <li><MudText Typo="Typo.caption">Enter the complete <strong>Address</strong> and contact information</MudText></li>
+                            <li><MudText Typo="Typo.caption">Set the <strong>Opening Date</strong> and <strong>Cash Holding Limit</strong></MudText></li>
+                            <li><MudText Typo="Typo.caption">Click <strong>Save</strong> to create the branch</MudText></li>
+                        </ol>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> After creating a branch, assign a manager and configure cash vaults.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] 
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

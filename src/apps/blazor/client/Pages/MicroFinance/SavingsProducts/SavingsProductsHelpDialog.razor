@@ -1,0 +1,197 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.SavingsProducts
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6">Savings Products Help</MudText>
+
+            <MudExpansionPanels Elevation="@_preference.Elevation">
+                <MudExpansionPanel Text="What are Savings Products?">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Understanding Savings Product Configuration</MudText>
+                        <MudText Typo="Typo.body2">
+                            Savings products define the terms and conditions for different types of savings accounts. 
+                            Each product specifies interest rates, minimum balances, withdrawal limits, and other parameters.
+                        </MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Common Product Types:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Regular Savings:</strong> Flexible deposits and withdrawals<br/>
+                                • <strong>Fixed Deposit:</strong> Locked for a term, higher interest<br/>
+                                • <strong>Minor Savings:</strong> For children under 18<br/>
+                                • <strong>Group Savings:</strong> For member groups<br/>
+                                • <strong>Compulsory Savings:</strong> Required for loan eligibility
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Info" Dense="true">
+                            <strong>Tip:</strong> Create products that incentivize savings while remaining sustainable for your institution.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Interest Settings">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Configuring Interest</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Interest Rate:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Annual percentage yield (APY)<br/>
+                                • Higher rates attract more deposits<br/>
+                                • Must be sustainable for the institution<br/>
+                                • Consider cost of funds and operational costs
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Interest Calculation:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • <strong>Daily:</strong> Interest calculated on daily balance<br/>
+                                • <strong>Monthly:</strong> Based on average monthly balance<br/>
+                                • <strong>Quarterly:</strong> Based on quarterly average<br/>
+                                • Daily calculation is most accurate and fair
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Interest Posting:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • When interest is credited to accounts<br/>
+                                • More frequent = better for members<br/>
+                                • Monthly posting is most common<br/>
+                                • Quarterly/Annual reduces transaction volume
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Balance Requirements">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Setting Balance Limits</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Minimum Opening Balance:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Amount required to open an account<br/>
+                                • Should be accessible for target market<br/>
+                                • Too high excludes poor members<br/>
+                                • Too low may attract dormant accounts
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Minimum Balance for Interest:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Balance required to earn interest<br/>
+                                • Encourages members to maintain savings<br/>
+                                • Should be achievable for most members<br/>
+                                • Can be zero for inclusive products
+                            </MudText>
+                        </div>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Withdrawal Limits">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Managing Withdrawals</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Minimum Withdrawal:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Smallest amount that can be withdrawn<br/>
+                                • Reduces transaction costs<br/>
+                                • Should be reasonable for members
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Maximum Daily Withdrawal:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Daily withdrawal limit<br/>
+                                • Protects against fraud<br/>
+                                • Manages liquidity<br/>
+                                • Leave empty for unlimited
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Warning" Dense="true">
+                            <strong>Liquidity:</strong> Set limits that balance member needs with institution's cash flow.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Overdraft Settings">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle2">Overdraft Protection</MudText>
+                        
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Allow Overdraft:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Enables withdrawals beyond balance<br/>
+                                • Acts as an automatic credit line<br/>
+                                • Useful for emergency needs<br/>
+                                • Higher risk for institution
+                            </MudText>
+                        </div>
+
+                        <div>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                <strong>Overdraft Limit:</strong>
+                            </MudText>
+                            <MudText Typo="Typo.caption">
+                                • Maximum negative balance allowed<br/>
+                                • Should be based on member's capacity<br/>
+                                • Often linked to savings history<br/>
+                                • Interest usually charged on overdraft
+                            </MudText>
+                        </div>
+
+                        <MudAlert Severity="Severity.Error" Dense="true">
+                            <strong>Risk:</strong> Overdrafts are essentially unsecured credit. Enable with caution.
+                        </MudAlert>
+                    </MudStack>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private ClientPreference _preference = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}
