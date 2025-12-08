@@ -37,6 +37,18 @@
     </AdvancedSearchContent>
 
     <ExtraActions Context="entity">
+        @if (entity.Status == "Pending" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.ThumbUp" OnClick="@(() => ApproveAccount(entity.Id))">
+                Approve
+            </MudMenuItem>
+        }
+        @if (entity.Status == "Approved" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => ActivateAccount(entity.Id))">
+                Activate
+            </MudMenuItem>
+        }
         @if (entity.Status == "Active" && _canManage)
         {
             <MudMenuItem Icon="@Icons.Material.Filled.Add" OnClick="@(() => PurchaseShares(entity.Id))">

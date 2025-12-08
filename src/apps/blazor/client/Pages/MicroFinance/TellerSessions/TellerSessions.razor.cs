@@ -28,6 +28,13 @@ public partial class TellerSessions
     // Permission flags
     private bool _canManage;
 
+    // Transfer cash dialog state
+    private bool _transferCashDialogVisible;
+    private DefaultIdType _selectedSessionId;
+    private decimal _transferAmount;
+    private bool _isTransferIn;
+    private string? _transferReference;
+
     /// <summary>
     /// Client UI preferences for styling.
     /// </summary>
@@ -180,5 +187,51 @@ public partial class TellerSessions
                 successMessage: "Session verified successfully.");
             await _table.ReloadDataAsync();
         }
+    }
+
+    /// <summary>
+    /// Show transfer cash dialog.
+    /// </summary>
+    private void ShowTransferCashDialog(DefaultIdType id)
+    {
+        _selectedSessionId = id;
+        _transferAmount = 0;
+        _isTransferIn = true;
+        _transferReference = null;
+        _transferCashDialogVisible = true;
+    }
+
+    /// <summary>
+    /// Execute cash transfer for teller session.
+    /// </summary>
+    private async Task ExecuteTransferCash()
+    {
+        if (_selectedSessionId == DefaultIdType.Empty || _transferAmount <= 0)
+        {
+            return;
+        }
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            () => Client.TransferCashTellerAsync("1", _selectedSessionId, new TransferCashCommand
+            {
+                TellerSessionId = _selectedSessionId,
+                Amount = _transferAmount,
+                IsTransferIn = _isTransferIn,
+                Reference = _transferReference
+            }),
+            successMessage: _isTransferIn 
+                ? $"Successfully received {_transferAmount:C} into teller session." 
+                : $"Successfully transferred {_transferAmount:C} out of teller session.");
+
+        _transferCashDialogVisible = false;
+        await _table.ReloadDataAsync();
+    }
+
+    /// <summary>
+    /// Cancel transfer cash dialog.
+    /// </summary>
+    private void CancelTransferCash()
+    {
+        _transferCashDialogVisible = false;
     }
 }

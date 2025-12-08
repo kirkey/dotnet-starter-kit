@@ -38,6 +38,12 @@
     </AdvancedSearchContent>
 
     <ExtraActions Context="entity">
+        @if (entity.Status == "Pending" && _canDeposit)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => ActivateAccount(entity.Id))">
+                Activate
+            </MudMenuItem>
+        }
         @if (entity.Status == "Active" && _canDeposit)
         {
             <MudMenuItem Icon="@Icons.Material.Filled.Add" OnClick="@(() => ShowDepositDialog(entity))">

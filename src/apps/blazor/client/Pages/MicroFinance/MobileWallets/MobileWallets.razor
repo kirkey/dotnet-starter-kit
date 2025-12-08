@@ -66,6 +66,27 @@
             <MudMenuItem Icon="@Icons.Material.Filled.Pause" OnClick="@(() => SuspendWallet(entity.Id))">
                 Suspend
             </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Block" OnClick="@(() => BlockWallet(entity.Id))">
+                Block
+            </MudMenuItem>
+        }
+        @if (entity.Status == "Blocked" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.LockOpen" OnClick="@(() => UnblockWallet(entity.Id))">
+                Unblock
+            </MudMenuItem>
+        }
+        @if (entity.Status == "Inactive" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Refresh" OnClick="@(() => ReactivateWallet(entity.Id))">
+                Reactivate
+            </MudMenuItem>
+        }
+        @if ((entity.Status == "Active" || entity.Status == "Suspended" || entity.Status == "Blocked") && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Close" OnClick="@(() => CloseWallet(entity.Id))">
+                Close
+            </MudMenuItem>
         }
         <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewWalletDetails(entity.Id))">
             View Details

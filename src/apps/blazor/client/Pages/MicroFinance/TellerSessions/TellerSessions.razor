@@ -31,6 +31,9 @@
     <ExtraActions Context="entity">
         @if (entity.Status == "Open" && _canManage)
         {
+            <MudMenuItem Icon="@Icons.Material.Filled.SwapHoriz" OnClick="@(() => ShowTransferCashDialog(entity.Id))">
+                Transfer Cash
+            </MudMenuItem>
             <MudMenuItem Icon="@Icons.Material.Filled.Lock" OnClick="@(() => CloseSession(entity.Id))">
                 Close Session
             </MudMenuItem>
@@ -112,3 +115,38 @@
     </EditFormContent>
 </EntityTable>
 
+@* Transfer Cash Dialog *@
+<MudDialog @bind-Visible="_transferCashDialogVisible">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.SwapHoriz" Class="mr-2" /> Transfer Cash
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudSwitch @bind-Value="_isTransferIn"
+                       Label="@(_isTransferIn ? "Receiving Cash (In)" : "Sending Cash (Out)")"
+                       Color="Color.Primary" />
+            <MudNumericField @bind-Value="_transferAmount"
+                             Label="Amount"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Min="0.01m"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentText="$"
+                             HelperText="Amount to transfer" />
+            <MudTextField @bind-Value="_transferReference"
+                          Label="Reference"
+                          Variant="Variant.Filled"
+                          HelperText="Optional reference for this transfer" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="CancelTransferCash">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="ExecuteTransferCash" 
+                   Disabled="@(_transferAmount <= 0)">
+            Transfer
+        </MudButton>
+    </DialogActions>
+</MudDialog>

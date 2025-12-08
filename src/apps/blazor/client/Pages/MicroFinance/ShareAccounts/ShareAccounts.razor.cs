@@ -259,4 +259,44 @@ public partial class ShareAccounts
             await _table.ReloadDataAsync();
         }
     }
+
+    /// <summary>
+    /// Approve a pending share account.
+    /// </summary>
+    private async Task ApproveAccount(DefaultIdType id)
+    {
+        var result = await DialogService.ShowMessageBox(
+            "Approve Account",
+            "Are you sure you want to approve this share account?",
+            yesText: "Approve",
+            cancelText: "Cancel");
+
+        if (result == true)
+        {
+            await ApiHelper.ExecuteCallGuardedAsync(
+                () => Client.ApproveShareAccountAsync("1", id, new ApproveShareAccountCommand { ShareAccountId = id }),
+                successMessage: "Share account approved successfully.");
+            await _table.ReloadDataAsync();
+        }
+    }
+
+    /// <summary>
+    /// Activate an approved share account.
+    /// </summary>
+    private async Task ActivateAccount(DefaultIdType id)
+    {
+        var result = await DialogService.ShowMessageBox(
+            "Activate Account",
+            "Are you sure you want to activate this share account? The member will be able to purchase and redeem shares.",
+            yesText: "Activate",
+            cancelText: "Cancel");
+
+        if (result == true)
+        {
+            await ApiHelper.ExecuteCallGuardedAsync(
+                () => Client.ActivateShareAccountAsync("1", id),
+                successMessage: "Share account activated successfully.");
+            await _table.ReloadDataAsync();
+        }
+    }
 }

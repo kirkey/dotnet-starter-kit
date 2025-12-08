@@ -222,4 +222,24 @@ public partial class SavingsAccounts
         _withdrawDialogVisible = false;
         await _table.ReloadDataAsync();
     }
+
+    /// <summary>
+    /// Activate a pending savings account.
+    /// </summary>
+    private async Task ActivateAccount(DefaultIdType id)
+    {
+        var result = await DialogService.ShowMessageBox(
+            "Activate Account",
+            "Are you sure you want to activate this savings account? The member will be able to perform deposits and withdrawals.",
+            yesText: "Activate",
+            cancelText: "Cancel");
+
+        if (result == true)
+        {
+            await ApiHelper.ExecuteCallGuardedAsync(
+                () => Client.ActivateSavingsAccountAsync("1", id),
+                successMessage: "Savings account activated successfully.");
+            await _table.ReloadDataAsync();
+        }
+    }
 }

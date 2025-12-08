@@ -193,4 +193,80 @@ public partial class MobileWallets
             await _table.ReloadDataAsync();
         }
     }
+
+    /// <summary>
+    /// Block a wallet.
+    /// </summary>
+    private async Task BlockWallet(DefaultIdType id)
+    {
+        var result = await DialogService.ShowMessageBox(
+            "Block Wallet",
+            "Are you sure you want to block this mobile wallet? This is typically done for security reasons (e.g., fraud detection).",
+            "Block", cancelText: "Cancel");
+
+        if (result == true)
+        {
+            await ApiHelper.ExecuteCallGuardedAsync(
+                () => Client.BlockMobileWalletAsync("1", id, new BlockMobileWalletRequest { Reason = "Blocked by administrator" }),
+                successMessage: "Wallet blocked successfully.");
+            await _table.ReloadDataAsync();
+        }
+    }
+
+    /// <summary>
+    /// Unblock a wallet.
+    /// </summary>
+    private async Task UnblockWallet(DefaultIdType id)
+    {
+        var result = await DialogService.ShowMessageBox(
+            "Unblock Wallet",
+            "Are you sure you want to unblock this mobile wallet?",
+            "Unblock", cancelText: "Cancel");
+
+        if (result == true)
+        {
+            await ApiHelper.ExecuteCallGuardedAsync(
+                () => Client.UnblockMobileWalletAsync("1", id),
+                successMessage: "Wallet unblocked successfully.");
+            await _table.ReloadDataAsync();
+        }
+    }
+
+    /// <summary>
+    /// Reactivate an inactive wallet.
+    /// </summary>
+    private async Task ReactivateWallet(DefaultIdType id)
+    {
+        var result = await DialogService.ShowMessageBox(
+            "Reactivate Wallet",
+            "Are you sure you want to reactivate this inactive mobile wallet?",
+            "Reactivate", cancelText: "Cancel");
+
+        if (result == true)
+        {
+            await ApiHelper.ExecuteCallGuardedAsync(
+                () => Client.ReactivateMobileWalletAsync("1", id),
+                successMessage: "Wallet reactivated successfully.");
+            await _table.ReloadDataAsync();
+        }
+    }
+
+    /// <summary>
+    /// Close a wallet permanently.
+    /// </summary>
+    private async Task CloseWallet(DefaultIdType id)
+    {
+        var result = await DialogService.ShowMessageBox(
+            "Close Wallet",
+            "Are you sure you want to close this mobile wallet permanently? This action cannot be undone.",
+            "Close", cancelText: "Cancel");
+
+        if (result == true)
+        {
+            await ApiHelper.ExecuteCallGuardedAsync(
+                () => Client.CloseMobileWalletAsync("1", id, new CloseMobileWalletRequest { Reason = "Closed by administrator" }),
+                successMessage: "Wallet closed successfully.");
+            await _table.ReloadDataAsync();
+        }
+    }
 }

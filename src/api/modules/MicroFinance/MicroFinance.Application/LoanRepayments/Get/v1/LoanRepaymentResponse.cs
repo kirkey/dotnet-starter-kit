@@ -15,6 +15,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.LoanRepayments.Get.v1;
 /// <param name="TotalAmount">The total amount paid.</param>
 /// <param name="PaymentMethod">The payment method.</param>
 /// <param name="Notes">Internal notes.</param>
+/// <param name="Status">The repayment status (Completed, Reversed).</param>
 public record LoanRepaymentResponse(
     DefaultIdType Id,
     DefaultIdType LoanId,
@@ -27,4 +28,5 @@ public record LoanRepaymentResponse(
     decimal PenaltyAmount,
     decimal TotalAmount,
     string PaymentMethod,
-    string? Notes);
+    string? Notes,
+    string Status = "Completed");

@@ -25,6 +25,9 @@ public partial class LoanRepayments
     [Inject]
     protected IAuthorizationService AuthService { get; set; } = null!;
 
+    // Permission flags
+    private bool _canReverse;
+
     /// <summary>
     /// Client UI preferences for styling.
     /// </summary>
@@ -108,6 +111,10 @@ public partial class LoanRepayments
             entityNamePlural: "Loan Repayments",
             entityResource: FshResources.MicroFinance,
             hasExtraActionsFunc: () => true);
+
+        // Check permissions for extra actions
+        var state = await AuthState;
+        _canReverse = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.MicroFinance);
     }
 
     /// <summary>
@@ -151,5 +158,29 @@ public partial class LoanRepayments
             "Print Receipt",
             "Receipt printing functionality will be implemented in a future update.",
             yesText: "OK");
+    }
+
+    /// <summary>
+    /// Reverse a loan repayment transaction.
+    /// </summary>
+    private async Task ReverseRepayment(DefaultIdType id)
+    {
+        var result = await DialogService.ShowMessageBox(
+            "Reverse Repayment",
+            "Are you sure you want to reverse this repayment? This will restore the loan balance and mark the repayment as reversed.",
+            yesText: "Reverse",
+            cancelText: "Cancel");
+
+        if (result == true)
+        {
+            await ApiHelper.ExecuteCallGuardedAsync(
+                () => Client.ReverseLoanRepaymentAsync("1", id, new ReverseLoanRepaymentCommand
+                {
+                    LoanRepaymentId = id,
+                    Reason = "Reversed by administrator"
+                }),
+                successMessage: "Repayment reversed successfully.");
+            await _table.ReloadDataAsync();
+        }
     }
 }

@@ -44,6 +44,12 @@
         <MudMenuItem Icon="@Icons.Material.Filled.Print" OnClick="@(() => PrintReceipt(entity.Id))">
             Print Receipt
         </MudMenuItem>
+        @if (entity.Status != "Reversed" && _canReverse)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Undo" OnClick="@(() => ReverseRepayment(entity.Id))">
+                Reverse
+            </MudMenuItem>
+        }
     </ExtraActions>
 
     <EditFormContent Context="context">
