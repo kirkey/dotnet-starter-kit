@@ -91,7 +91,7 @@ public partial class CollateralTypes
                 new EntityField<CollateralTypeResponse>(dto => dto.DefaultLtvPercent, "Default LTV %", "DefaultLtvPercent", typeof(decimal)),
                 new EntityField<CollateralTypeResponse>(dto => dto.MaxLtvPercent, "Max LTV %", "MaxLtvPercent", typeof(decimal)),
                 new EntityField<CollateralTypeResponse>(dto => dto.RequiresInsurance, "Insurance", "RequiresInsurance", typeof(bool)),
-                new EntityField<CollateralTypeResponse>(dto => dto.RequiresAppraisal, "Appraisal", typeof(bool)),
+                new EntityField<CollateralTypeResponse>(dto => dto.RequiresAppraisal, "Appraisal", "RequiresAppraisal", typeof(bool)),
                 new EntityField<CollateralTypeResponse>(dto => dto.Status, "Status", "Status"),
             ],
             searchFunc: async filter =>
@@ -111,10 +111,6 @@ public partial class CollateralTypes
             createFunc: async viewModel =>
             {
                 await Client.CreateCollateralTypeAsync("1", viewModel.Adapt<CreateCollateralTypeCommand>()).ConfigureAwait(false);
-            },
-            updateFunc: async (id, viewModel) =>
-            {
-                await Client.UpdateCollateralTypeAsync("1", id, viewModel.Adapt<UpdateCollateralTypeCommand>()).ConfigureAwait(false);
             },
             getDetailsFunc: async id =>
             {

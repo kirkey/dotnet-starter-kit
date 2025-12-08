@@ -137,11 +137,10 @@ public partial class LoanApplications
                 // In a real implementation, you would call Client.SearchLoanApplicationsAsync()
                 var response = new PaginationResponse<LoanApplicationResponse>
                 {
-                    Data = new List<LoanApplicationResponse>(),
+                    Items = new List<LoanApplicationResponse>(),
                     CurrentPage = filter.PageNumber,
                     PageSize = filter.PageSize,
-                    TotalCount = 0,
-                    TotalPages = 0
+                    TotalCount = 0
                 };
                 return await Task.FromResult(response);
             },

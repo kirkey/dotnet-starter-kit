@@ -323,7 +323,7 @@ public class MenuService : IMenuService
                         
                         // ========== CASH MANAGEMENT ==========
                         new MenuSectionSubItemModel { Title = "Cash Management", IsGroupHeader = true },
-                        new MenuSectionSubItemModel { Title = "Cash Vaults", Icon = Icons.Material.Filled.SafetyDepositBox, Href = "/microfinance/cash-vaults", Action = FshActions.View, Resource = FshResources.CashVaults, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Cash Vaults", Icon = Icons.Material.Filled.AccountBalance, Href = "/microfinance/cash-vaults", Action = FshActions.View, Resource = FshResources.CashVaults, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Teller Sessions", Icon = Icons.Material.Filled.PointOfSale, Href = "/microfinance/teller-sessions", Action = FshActions.View, Resource = FshResources.TellerSessions, PageStatus = PageStatus.InProgress },
                         
                         // ========== REPORTING ==========

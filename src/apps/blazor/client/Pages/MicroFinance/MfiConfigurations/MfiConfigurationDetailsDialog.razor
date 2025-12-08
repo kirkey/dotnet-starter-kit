@@ -1,0 +1,79 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <DialogContent>
+        <MudSimpleTable Dense="true" Bordered="true" Striped="true" Elevation="0">
+            <tbody>
+                <tr>
+                    <td><strong>Key</strong></td>
+                    <td>@Configuration.Key</td>
+                </tr>
+                <tr>
+                    <td><strong>Value</strong></td>
+                    <td>@(Configuration.IsEncrypted ? "******" : Configuration.Value)</td>
+                </tr>
+                <tr>
+                    <td><strong>Category</strong></td>
+                    <td>@Configuration.Category</td>
+                </tr>
+                <tr>
+                    <td><strong>Data Type</strong></td>
+                    <td>@Configuration.DataType</td>
+                </tr>
+                <tr>
+                    <td><strong>Description</strong></td>
+                    <td>@Configuration.Description</td>
+                </tr>
+                <tr>
+                    <td><strong>Default Value</strong></td>
+                    <td>@Configuration.DefaultValue</td>
+                </tr>
+                <tr>
+                    <td><strong>Encrypted</strong></td>
+                    <td>
+                        <MudChip T="string" Size="Size.Small" Color="@(Configuration.IsEncrypted ? Color.Warning : Color.Default)">
+                            @(Configuration.IsEncrypted ? "Yes" : "No")
+                        </MudChip>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Editable</strong></td>
+                    <td>
+                        <MudChip T="string" Size="Size.Small" Color="@(Configuration.IsEditable ? Color.Success : Color.Error)">
+                            @(Configuration.IsEditable ? "Yes" : "No")
+                        </MudChip>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Requires Restart</strong></td>
+                    <td>
+                        <MudChip T="string" Size="Size.Small" Color="@(Configuration.RequiresRestart ? Color.Warning : Color.Default)">
+                            @(Configuration.RequiresRestart ? "Yes" : "No")
+                        </MudChip>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Display Order</strong></td>
+                    <td>@Configuration.DisplayOrder</td>
+                </tr>
+                <tr>
+                    <td><strong>Created On</strong></td>
+                    <td>@Configuration.CreatedOn.ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+            </tbody>
+        </MudSimpleTable>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public MfiConfigurationResponse Configuration { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

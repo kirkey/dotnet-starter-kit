@@ -1,0 +1,157 @@
+@page "/microfinance/customer-segments"
+
+<PageHeader Title="Customer Segments" Header="Customer Segments" SubHeader="Manage customer segmentation for targeted services and pricing." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="CustomerSegmentSummaryResponse" TId="DefaultIdType" TRequest="CustomerSegmentViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchSegmentType"
+                       Label="Segment Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Income")">Income-Based</MudSelectItem>
+                <MudSelectItem Value="@("Geographic")">Geographic</MudSelectItem>
+                <MudSelectItem Value="@("Behavioral")">Behavioral</MudSelectItem>
+                <MudSelectItem Value="@("Demographic")">Demographic</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Active")">Active</MudSelectItem>
+                <MudSelectItem Value="@("Inactive")">Inactive</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Segment Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Name"
+                          For="@(() => context.Name)"
+                          Label="Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Code"
+                          For="@(() => context.Code)"
+                          Label="Code"
+                          Variant="Variant.Filled"
+                          HelperText="e.g., SEG-001" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.SegmentType"
+                       For="@(() => context.SegmentType)"
+                       Label="Segment Type"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Income")">Income-Based</MudSelectItem>
+                <MudSelectItem Value="@("Geographic")">Geographic</MudSelectItem>
+                <MudSelectItem Value="@("Behavioral")">Behavioral</MudSelectItem>
+                <MudSelectItem Value="@("Demographic")">Demographic</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.Priority"
+                             For="@(() => context.Priority)"
+                             Label="Priority"
+                             Variant="Variant.Filled"
+                             Min="1"
+                             HelperText="Lower = Higher Priority" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.RiskLevel"
+                       For="@(() => context.RiskLevel)"
+                       Label="Risk Level"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Low")">Low</MudSelectItem>
+                <MudSelectItem Value="@("Medium")">Medium</MudSelectItem>
+                <MudSelectItem Value="@("High")">High</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.SegmentCriteria"
+                          For="@(() => context.SegmentCriteria)"
+                          Label="Segment Criteria"
+                          Variant="Variant.Filled"
+                          Lines="2"
+                          HelperText="Define criteria for segment membership" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Income Thresholds</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.MinIncomeLevel"
+                             For="@(() => context.MinIncomeLevel)"
+                             Label="Minimum Income"
+                             Variant="Variant.Filled"
+                             Format="N2" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.MaxIncomeLevel"
+                             For="@(() => context.MaxIncomeLevel)"
+                             Label="Maximum Income"
+                             Variant="Variant.Filled"
+                             Format="N2" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Pricing Modifiers</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.DefaultInterestModifier"
+                             For="@(() => context.DefaultInterestModifier)"
+                             Label="Interest Modifier (%)"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             HelperText="+/- percentage points" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.DefaultFeeModifier"
+                             For="@(() => context.DefaultFeeModifier)"
+                             Label="Fee Modifier (%)"
+                             Variant="Variant.Filled"
+                             Format="N2"
+                             HelperText="+/- percentage" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

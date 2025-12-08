@@ -1,0 +1,107 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <DialogContent>
+        <MudSimpleTable Dense="true" Bordered="true" Striped="true" Elevation="0">
+            <tbody>
+                <tr>
+                    <td><strong>Title</strong></td>
+                    <td>@Survey.Title</td>
+                </tr>
+                <tr>
+                    <td><strong>Description</strong></td>
+                    <td>@Survey.Description</td>
+                </tr>
+                <tr>
+                    <td><strong>Survey Type</strong></td>
+                    <td>@Survey.SurveyType</td>
+                </tr>
+                <tr>
+                    <td><strong>Status</strong></td>
+                    <td>
+                        <MudChip T="string" Size="Size.Small" Color="@GetStatusColor(Survey.Status)">
+                            @Survey.Status
+                        </MudChip>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Start Date</strong></td>
+                    <td>@Survey.StartDate.ToString("yyyy-MM-dd")</td>
+                </tr>
+                <tr>
+                    <td><strong>End Date</strong></td>
+                    <td>@(Survey.EndDate?.ToString("yyyy-MM-dd") ?? "-")</td>
+                </tr>
+                <tr>
+                    <td><strong>Anonymous</strong></td>
+                    <td>
+                        <MudChip T="string" Size="Size.Small" Color="@(Survey.IsAnonymous ? Color.Info : Color.Default)">
+                            @(Survey.IsAnonymous ? "Yes" : "No")
+                        </MudChip>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Total Responses</strong></td>
+                    <td>@Survey.TotalResponses.ToString("N0")</td>
+                </tr>
+                <tr>
+                    <td><strong>Average Score</strong></td>
+                    <td>
+                        @if (Survey.AverageScore.HasValue)
+                        {
+                            <MudRating ReadOnly="true" SelectedValue="@((int)Math.Round(Survey.AverageScore.Value))" MaxValue="5" Size="Size.Small" />
+                            <span class="ml-2">@Survey.AverageScore.Value.ToString("N1")</span>
+                        }
+                        else
+                        {
+                            <span>-</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>NPS Score</strong></td>
+                    <td>
+                        @if (Survey.NpsScore.HasValue)
+                        {
+                            <MudChip T="string" Size="Size.Small" Color="@GetNpsColor(Survey.NpsScore.Value)">
+                                @Survey.NpsScore.Value
+                            </MudChip>
+                        }
+                        else
+                        {
+                            <span>-</span>
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </MudSimpleTable>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public CustomerSurveyResponse Survey { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+
+    private Color GetStatusColor(string? status) => status switch
+    {
+        "Active" => Color.Success,
+        "Draft" => Color.Default,
+        "Closed" => Color.Info,
+        _ => Color.Default
+    };
+
+    private Color GetNpsColor(int nps) => nps switch
+    {
+        >= 50 => Color.Success,
+        >= 0 => Color.Warning,
+        _ => Color.Error
+    };
+}

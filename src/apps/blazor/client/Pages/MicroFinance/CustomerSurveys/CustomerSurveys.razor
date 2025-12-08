@@ -1,0 +1,121 @@
+@page "/microfinance/customer-surveys"
+
+<PageHeader Title="Customer Surveys" Header="Customer Surveys" SubHeader="Manage customer feedback surveys and satisfaction tracking." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="CustomerSurveySummaryResponse" TId="DefaultIdType" TRequest="CustomerSurveyViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchSurveyType"
+                       Label="Survey Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Satisfaction")">Satisfaction</MudSelectItem>
+                <MudSelectItem Value="@("NPS")">NPS</MudSelectItem>
+                <MudSelectItem Value="@("ProductFeedback")">Product Feedback</MudSelectItem>
+                <MudSelectItem Value="@("ServiceQuality")">Service Quality</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Draft")">Draft</MudSelectItem>
+                <MudSelectItem Value="@("Active")">Active</MudSelectItem>
+                <MudSelectItem Value="@("Closed")">Closed</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+        @if (_canActivate && entity.Status == "Draft")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.PlayArrow" OnClick="@(() => ActivateSurvey(entity.Id))">
+                Activate
+            </MudMenuItem>
+        }
+        @if (_canComplete && entity.Status == "Active")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => CompleteSurvey(entity.Id))">
+                Complete
+            </MudMenuItem>
+        }
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Survey Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="context.Title"
+                          For="@(() => context.Title)"
+                          Label="Title"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudSelect @bind-Value="context.SurveyType"
+                       For="@(() => context.SurveyType)"
+                       Label="Survey Type"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Satisfaction")">Satisfaction</MudSelectItem>
+                <MudSelectItem Value="@("NPS")">NPS</MudSelectItem>
+                <MudSelectItem Value="@("ProductFeedback")">Product Feedback</MudSelectItem>
+                <MudSelectItem Value="@("ServiceQuality")">Service Quality</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCheckBox @bind-Value="context.IsAnonymous"
+                         For="@(() => context.IsAnonymous)"
+                         Label="Anonymous Responses"
+                         Color="Color.Primary" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="3" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Survey Period</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.StartDate"
+                           For="@(() => context.StartDate)"
+                           Label="Start Date"
+                           Variant="Variant.Filled"
+                           DateFormat="yyyy-MM-dd" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.EndDate"
+                           For="@(() => context.EndDate)"
+                           Label="End Date"
+                           Variant="Variant.Filled"
+                           DateFormat="yyyy-MM-dd" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

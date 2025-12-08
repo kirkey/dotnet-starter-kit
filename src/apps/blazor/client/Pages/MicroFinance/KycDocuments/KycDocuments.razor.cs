@@ -110,11 +110,10 @@ public partial class KycDocuments
                 // In production, this would be replaced with actual search endpoint when available.
                 var response = new PaginationResponse<KycDocumentResponse>
                 {
-                    Data = new List<KycDocumentResponse>(),
+                    Items = new List<KycDocumentResponse>(),
                     CurrentPage = filter.PageNumber,
                     PageSize = filter.PageSize,
-                    TotalCount = 0,
-                    TotalPages = 0
+                    TotalCount = 0
                 };
                 return await Task.FromResult(response);
             },

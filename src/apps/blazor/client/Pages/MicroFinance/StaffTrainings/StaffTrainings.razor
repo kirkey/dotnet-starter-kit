@@ -1,0 +1,196 @@
+@page "/microfinance/staff-trainings"
+
+<PageHeader Title="Staff Trainings" Header="Staff Trainings" SubHeader="Manage training records for staff members." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="StaffTrainingSummaryResponse" TId="DefaultIdType" TRequest="StaffTrainingViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchTrainingType"
+                       Label="Training Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Orientation")">Orientation</MudSelectItem>
+                <MudSelectItem Value="@("Technical")">Technical</MudSelectItem>
+                <MudSelectItem Value="@("Compliance")">Compliance</MudSelectItem>
+                <MudSelectItem Value="@("Leadership")">Leadership</MudSelectItem>
+                <MudSelectItem Value="@("Product")">Product</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Scheduled")">Scheduled</MudSelectItem>
+                <MudSelectItem Value="@("InProgress")">In Progress</MudSelectItem>
+                <MudSelectItem Value="@("Completed")">Completed</MudSelectItem>
+                <MudSelectItem Value="@("Cancelled")">Cancelled</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Training Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.StaffId"
+                          For="@(() => context.StaffId)"
+                          Label="Staff ID"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Enter the staff member ID" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.TrainingCode"
+                          For="@(() => context.TrainingCode)"
+                          Label="Training Code"
+                          Variant="Variant.Filled"
+                          HelperText="e.g., TRN-001" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.TrainingName"
+                          For="@(() => context.TrainingName)"
+                          Label="Training Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.TrainingType"
+                       For="@(() => context.TrainingType)"
+                       Label="Training Type"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Orientation")">Orientation</MudSelectItem>
+                <MudSelectItem Value="@("Technical")">Technical</MudSelectItem>
+                <MudSelectItem Value="@("Compliance")">Compliance</MudSelectItem>
+                <MudSelectItem Value="@("Leadership")">Leadership</MudSelectItem>
+                <MudSelectItem Value="@("Product")">Product</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.DeliveryMethod"
+                       For="@(() => context.DeliveryMethod)"
+                       Label="Delivery Method"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("InPerson")">In Person</MudSelectItem>
+                <MudSelectItem Value="@("Online")">Online</MudSelectItem>
+                <MudSelectItem Value="@("Hybrid")">Hybrid</MudSelectItem>
+                <MudSelectItem Value="@("SelfPaced")">Self-Paced</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Provider"
+                          For="@(() => context.Provider)"
+                          Label="Provider"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Location"
+                          For="@(() => context.Location)"
+                          Label="Location"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Schedule & Duration</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="3">
+            <MudDatePicker @bind-Date="context.StartDate"
+                           For="@(() => context.StartDate)"
+                           Label="Start Date"
+                           Variant="Variant.Filled"
+                           DateFormat="yyyy-MM-dd" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudDatePicker @bind-Date="context.EndDate"
+                           For="@(() => context.EndDate)"
+                           Label="End Date"
+                           Variant="Variant.Filled"
+                           DateFormat="yyyy-MM-dd" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField @bind-Value="context.DurationHours"
+                             For="@(() => context.DurationHours)"
+                             Label="Duration (Hours)"
+                             Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField @bind-Value="context.TrainingCost"
+                             For="@(() => context.TrainingCost)"
+                             Label="Training Cost"
+                             Variant="Variant.Filled"
+                             Format="N2" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Assessment & Certification</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField @bind-Value="context.Score"
+                             For="@(() => context.Score)"
+                             Label="Score"
+                             Variant="Variant.Filled"
+                             Format="N1" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField @bind-Value="context.PassingScore"
+                             For="@(() => context.PassingScore)"
+                             Label="Passing Score"
+                             Variant="Variant.Filled"
+                             Format="N1" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCheckBox @bind-Value="context.IsMandatory"
+                         For="@(() => context.IsMandatory)"
+                         Label="Mandatory Training"
+                         Color="Color.Primary" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCheckBox @bind-Value="context.CertificateIssued"
+                         For="@(() => context.CertificateIssued)"
+                         Label="Certificate Issued"
+                         Color="Color.Success" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

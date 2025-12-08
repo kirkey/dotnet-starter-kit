@@ -1,0 +1,158 @@
+@page "/microfinance/branch-targets"
+
+<PageHeader Title="Branch Targets" Header="Branch Targets" SubHeader="Manage performance targets for branches." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="BranchTargetSummaryResponse" TId="DefaultIdType" TRequest="BranchTargetViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchTargetType"
+                       Label="Target Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Disbursements")">Disbursements</MudSelectItem>
+                <MudSelectItem Value="@("Collections")">Collections</MudSelectItem>
+                <MudSelectItem Value="@("NewAccounts")">New Accounts</MudSelectItem>
+                <MudSelectItem Value="@("NPL")">NPL</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("Active")">Active</MudSelectItem>
+                <MudSelectItem Value="@("InProgress")">In Progress</MudSelectItem>
+                <MudSelectItem Value="@("Achieved")">Achieved</MudSelectItem>
+                <MudSelectItem Value="@("Missed")">Missed</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Target Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.BranchId"
+                          For="@(() => context.BranchId)"
+                          Label="Branch ID"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Enter the branch ID" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.TargetType"
+                       For="@(() => context.TargetType)"
+                       Label="Target Type"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("Disbursements")">Disbursements</MudSelectItem>
+                <MudSelectItem Value="@("Collections")">Collections</MudSelectItem>
+                <MudSelectItem Value="@("NewAccounts")">New Accounts</MudSelectItem>
+                <MudSelectItem Value="@("NPL")">NPL</MudSelectItem>
+                <MudSelectItem Value="@("Savings")">Savings</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.Period"
+                       For="@(() => context.Period)"
+                       Label="Period"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Monthly")">Monthly</MudSelectItem>
+                <MudSelectItem Value="@("Quarterly")">Quarterly</MudSelectItem>
+                <MudSelectItem Value="@("Yearly")">Yearly</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.PeriodStartDate"
+                           For="@(() => context.PeriodStartDate)"
+                           Label="Period Start"
+                           Variant="Variant.Filled"
+                           DateFormat="yyyy-MM-dd" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.PeriodEndDate"
+                           For="@(() => context.PeriodEndDate)"
+                           Label="Period End"
+                           Variant="Variant.Filled"
+                           DateFormat="yyyy-MM-dd" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Target Values</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField @bind-Value="context.TargetValue"
+                             For="@(() => context.TargetValue)"
+                             Label="Target Value"
+                             Variant="Variant.Filled"
+                             Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudTextField @bind-Value="context.MetricUnit"
+                          For="@(() => context.MetricUnit)"
+                          Label="Metric Unit"
+                          Variant="Variant.Filled"
+                          HelperText="e.g., USD, Count, %" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField @bind-Value="context.MinimumThreshold"
+                             For="@(() => context.MinimumThreshold)"
+                             Label="Minimum Threshold"
+                             Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField @bind-Value="context.StretchTarget"
+                             For="@(() => context.StretchTarget)"
+                             Label="Stretch Target"
+                             Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudNumericField @bind-Value="context.Weight"
+                             For="@(() => context.Weight)"
+                             Label="Weight"
+                             Variant="Variant.Filled"
+                             Min="0" Max="100"
+                             HelperText="0-100%" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

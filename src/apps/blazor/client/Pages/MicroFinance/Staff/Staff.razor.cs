@@ -105,8 +105,8 @@ public partial class Staff
                 new EntityField<StaffResponse>(dto => dto.LastName, "Last Name", "LastName"),
                 new EntityField<StaffResponse>(dto => dto.Email, "Email", "Email"),
                 new EntityField<StaffResponse>(dto => dto.Phone, "Phone", "Phone"),
-                new EntityField<StaffResponse>(dto => dto.Position, "Position", "Position"),
-                new EntityField<StaffResponse>(dto => dto.DateJoined, "Date Joined", "DateJoined", typeof(DateOnly)),
+                new EntityField<StaffResponse>(dto => dto.JobTitle, "Job Title", "JobTitle"),
+                new EntityField<StaffResponse>(dto => dto.JoiningDate, "Joining Date", "JoiningDate", typeof(DateTimeOffset)),
                 new EntityField<StaffResponse>(dto => dto.Status, "Status", "Status"),
             ],
             searchFunc: async filter =>
@@ -216,8 +216,8 @@ public partial class Staff
         if (confirmed == true)
         {
             await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.TerminateStaffAsync("1", id, new TerminateStaffCommand { Id = id }),
-                successMessage: "Staff member terminated successfully.");
+                () => Client.SuspendStaffAsync("1", id, new SuspendStaffCommand { Id = id }),
+                successMessage: "Staff member suspended successfully.");
             await _table.ReloadDataAsync();
         }
     }
@@ -236,7 +236,7 @@ public partial class Staff
         if (confirmed == true)
         {
             await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.ReinstateStaffAsync("1", id, new ReinstateStaffCommand { Id = id }),
+                () => Client.ReinstateStaffAsync("1", id),
                 successMessage: "Staff member reinstated successfully.");
             await _table.ReloadDataAsync();
         }
@@ -271,9 +271,9 @@ public partial class Staff
             <tr><td><strong>Name:</strong></td><td>{staff.FirstName} {staff.LastName}</td></tr>
             <tr><td><strong>Email:</strong></td><td>{staff.Email}</td></tr>
             <tr><td><strong>Phone:</strong></td><td>{staff.Phone}</td></tr>
-            <tr><td><strong>Position:</strong></td><td>{staff.Position}</td></tr>
+            <tr><td><strong>Job Title:</strong></td><td>{staff.JobTitle}</td></tr>
             <tr><td><strong>Branch ID:</strong></td><td>{staff.BranchId}</td></tr>
-            <tr><td><strong>Date Joined:</strong></td><td>{staff.DateJoined:yyyy-MM-dd}</td></tr>
+            <tr><td><strong>Joining Date:</strong></td><td>{staff.JoiningDate:yyyy-MM-dd}</td></tr>
             <tr><td><strong>Status:</strong></td><td>{staff.Status}</td></tr>
         </table>
         """;

@@ -1,0 +1,123 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <DialogContent>
+        <MudSimpleTable Dense="true" Bordered="true" Striped="true" Elevation="0">
+            <tbody>
+                <tr>
+                    <td><strong>Training Code</strong></td>
+                    <td>@Training.TrainingCode</td>
+                </tr>
+                <tr>
+                    <td><strong>Training Name</strong></td>
+                    <td>@Training.TrainingName</td>
+                </tr>
+                <tr>
+                    <td><strong>Description</strong></td>
+                    <td>@Training.Description</td>
+                </tr>
+                <tr>
+                    <td><strong>Training Type</strong></td>
+                    <td>@Training.TrainingType</td>
+                </tr>
+                <tr>
+                    <td><strong>Delivery Method</strong></td>
+                    <td>@Training.DeliveryMethod</td>
+                </tr>
+                <tr>
+                    <td><strong>Provider</strong></td>
+                    <td>@Training.Provider</td>
+                </tr>
+                <tr>
+                    <td><strong>Location</strong></td>
+                    <td>@Training.Location</td>
+                </tr>
+                <tr>
+                    <td><strong>Start Date</strong></td>
+                    <td>@Training.StartDate.ToString("yyyy-MM-dd")</td>
+                </tr>
+                <tr>
+                    <td><strong>End Date</strong></td>
+                    <td>@(Training.EndDate?.ToString("yyyy-MM-dd") ?? "-")</td>
+                </tr>
+                <tr>
+                    <td><strong>Duration (Hours)</strong></td>
+                    <td>@(Training.DurationHours?.ToString() ?? "-")</td>
+                </tr>
+                <tr>
+                    <td><strong>Score</strong></td>
+                    <td>@(Training.Score?.ToString("N1") ?? "-") / @(Training.PassingScore?.ToString("N1") ?? "-")</td>
+                </tr>
+                <tr>
+                    <td><strong>Status</strong></td>
+                    <td>
+                        <MudChip T="string" Size="Size.Small" Color="@GetStatusColor(Training.Status)">
+                            @Training.Status
+                        </MudChip>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Mandatory</strong></td>
+                    <td>
+                        <MudChip T="string" Size="Size.Small" Color="@(Training.IsMandatory ? Color.Warning : Color.Default)">
+                            @(Training.IsMandatory ? "Yes" : "No")
+                        </MudChip>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Certificate Issued</strong></td>
+                    <td>
+                        <MudChip T="string" Size="Size.Small" Color="@(Training.CertificateIssued ? Color.Success : Color.Default)">
+                            @(Training.CertificateIssued ? "Yes" : "No")
+                        </MudChip>
+                    </td>
+                </tr>
+                @if (Training.CertificateIssued)
+                {
+                    <tr>
+                        <td><strong>Certification Number</strong></td>
+                        <td>@Training.CertificationNumber</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Certification Date</strong></td>
+                        <td>@(Training.CertificationDate?.ToString("yyyy-MM-dd") ?? "-")</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Expiry Date</strong></td>
+                        <td>@(Training.CertificationExpiryDate?.ToString("yyyy-MM-dd") ?? "-")</td>
+                    </tr>
+                }
+                <tr>
+                    <td><strong>Training Cost</strong></td>
+                    <td>@(Training.TrainingCost?.ToString("C") ?? "-")</td>
+                </tr>
+                <tr>
+                    <td><strong>Notes</strong></td>
+                    <td>@Training.Notes</td>
+                </tr>
+            </tbody>
+        </MudSimpleTable>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public StaffTrainingResponse Training { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+
+    private Color GetStatusColor(string? status) => status switch
+    {
+        "Completed" => Color.Success,
+        "InProgress" => Color.Info,
+        "Scheduled" => Color.Default,
+        "Cancelled" => Color.Error,
+        _ => Color.Default
+    };
+}

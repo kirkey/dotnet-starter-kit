@@ -1,0 +1,100 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <DialogContent>
+        <MudSimpleTable Dense="true" Bordered="true" Striped="true" Elevation="0">
+            <tbody>
+                <tr>
+                    <td><strong>Target Type</strong></td>
+                    <td>@Target.TargetType</td>
+                </tr>
+                <tr>
+                    <td><strong>Description</strong></td>
+                    <td>@Target.Description</td>
+                </tr>
+                <tr>
+                    <td><strong>Period</strong></td>
+                    <td>@Target.Period</td>
+                </tr>
+                <tr>
+                    <td><strong>Period Start</strong></td>
+                    <td>@Target.PeriodStart.ToString("yyyy-MM-dd")</td>
+                </tr>
+                <tr>
+                    <td><strong>Period End</strong></td>
+                    <td>@Target.PeriodEnd.ToString("yyyy-MM-dd")</td>
+                </tr>
+                <tr>
+                    <td><strong>Target Value</strong></td>
+                    <td>@Target.TargetValue.ToString("N2") @Target.MetricUnit</td>
+                </tr>
+                <tr>
+                    <td><strong>Achieved Value</strong></td>
+                    <td>@Target.AchievedValue.ToString("N2") @Target.MetricUnit</td>
+                </tr>
+                <tr>
+                    <td><strong>Achievement %</strong></td>
+                    <td>
+                        <MudProgressLinear Color="@GetProgressColor(Target.AchievementPercentage)" 
+                                          Value="@((double)Math.Min(Target.AchievementPercentage, 100))" 
+                                          Class="my-2" />
+                        @Target.AchievementPercentage.ToString("N1")%
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Status</strong></td>
+                    <td>
+                        <MudChip T="string" Size="Size.Small" Color="@GetStatusColor(Target.Status)">
+                            @Target.Status
+                        </MudChip>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Minimum Threshold</strong></td>
+                    <td>@(Target.MinimumThreshold?.ToString("N2") ?? "-")</td>
+                </tr>
+                <tr>
+                    <td><strong>Stretch Target</strong></td>
+                    <td>@(Target.StretchTarget?.ToString("N2") ?? "-")</td>
+                </tr>
+                <tr>
+                    <td><strong>Weight</strong></td>
+                    <td>@Target.Weight.ToString("N0")%</td>
+                </tr>
+                <tr>
+                    <td><strong>Notes</strong></td>
+                    <td>@Target.Notes</td>
+                </tr>
+            </tbody>
+        </MudSimpleTable>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public BranchTargetResponse Target { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+
+    private Color GetProgressColor(decimal percentage) => percentage switch
+    {
+        >= 100 => Color.Success,
+        >= 75 => Color.Info,
+        >= 50 => Color.Warning,
+        _ => Color.Error
+    };
+
+    private Color GetStatusColor(string? status) => status switch
+    {
+        "Achieved" => Color.Success,
+        "Active" or "InProgress" => Color.Info,
+        "Missed" => Color.Error,
+        _ => Color.Default
+    };
+}

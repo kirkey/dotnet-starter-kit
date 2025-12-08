@@ -1,0 +1,87 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <DialogContent>
+        <MudSimpleTable Dense="true" Bordered="true" Striped="true" Elevation="0">
+            <tbody>
+                <tr>
+                    <td><strong>Code</strong></td>
+                    <td>@Segment.Code</td>
+                </tr>
+                <tr>
+                    <td><strong>Name</strong></td>
+                    <td>@Segment.Name</td>
+                </tr>
+                <tr>
+                    <td><strong>Description</strong></td>
+                    <td>@Segment.Description</td>
+                </tr>
+                <tr>
+                    <td><strong>Segment Type</strong></td>
+                    <td>@Segment.SegmentType</td>
+                </tr>
+                <tr>
+                    <td><strong>Status</strong></td>
+                    <td>
+                        <MudChip T="string" Size="Size.Small" Color="@(Segment.Status == "Active" ? Color.Success : Color.Default)">
+                            @Segment.Status
+                        </MudChip>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Priority</strong></td>
+                    <td>@Segment.Priority</td>
+                </tr>
+                <tr>
+                    <td><strong>Member Count</strong></td>
+                    <td>@Segment.MemberCount.ToString("N0")</td>
+                </tr>
+                <tr>
+                    <td><strong>Segment Criteria</strong></td>
+                    <td>@Segment.SegmentCriteria</td>
+                </tr>
+                <tr>
+                    <td><strong>Risk Level</strong></td>
+                    <td>
+                        <MudChip T="string" Size="Size.Small" Color="@GetRiskColor(Segment.RiskLevel)">
+                            @Segment.RiskLevel
+                        </MudChip>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Income Range</strong></td>
+                    <td>@(Segment.MinIncomeLevel?.ToString("N0") ?? "0") - @(Segment.MaxIncomeLevel?.ToString("N0") ?? "∞")</td>
+                </tr>
+                <tr>
+                    <td><strong>Interest Modifier</strong></td>
+                    <td>@(Segment.DefaultInterestModifier?.ToString("+0.00;-0.00;0") ?? "0")%</td>
+                </tr>
+                <tr>
+                    <td><strong>Fee Modifier</strong></td>
+                    <td>@(Segment.DefaultFeeModifier?.ToString("+0.00;-0.00;0") ?? "0")%</td>
+                </tr>
+            </tbody>
+        </MudSimpleTable>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public CustomerSegmentResponse Segment { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+
+    private Color GetRiskColor(string? risk) => risk switch
+    {
+        "Low" => Color.Success,
+        "Medium" => Color.Warning,
+        "High" => Color.Error,
+        _ => Color.Default
+    };
+}

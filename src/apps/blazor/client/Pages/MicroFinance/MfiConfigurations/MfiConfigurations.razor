@@ -1,0 +1,138 @@
+@page "/microfinance/mfi-configurations"
+
+<PageHeader Title="MFI Configurations" Header="MFI Configurations" SubHeader="Manage system configuration settings for the microfinance institution." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="MfiConfigurationSummaryResponse" TId="DefaultIdType" TRequest="MfiConfigurationViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchKey"
+                          Label="Key"
+                          Placeholder="Search by key"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Key" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string"
+                       @bind-Value="@SearchCategory"
+                       Label="Category"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@("General")">General</MudSelectItem>
+                <MudSelectItem Value="@("Loan")">Loan</MudSelectItem>
+                <MudSelectItem Value="@("Savings")">Savings</MudSelectItem>
+                <MudSelectItem Value="@("Security")">Security</MudSelectItem>
+                <MudSelectItem Value="@("Integration")">Integration</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Configuration Details</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Key"
+                          For="@(() => context.Key)"
+                          Label="Key"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Unique configuration key" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Value"
+                          For="@(() => context.Value)"
+                          Label="Value"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.Category"
+                       For="@(() => context.Category)"
+                       Label="Category"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("General")">General</MudSelectItem>
+                <MudSelectItem Value="@("Loan")">Loan</MudSelectItem>
+                <MudSelectItem Value="@("Savings")">Savings</MudSelectItem>
+                <MudSelectItem Value="@("Security")">Security</MudSelectItem>
+                <MudSelectItem Value="@("Integration")">Integration</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.DataType"
+                       For="@(() => context.DataType)"
+                       Label="Data Type"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("String")">String</MudSelectItem>
+                <MudSelectItem Value="@("Integer")">Integer</MudSelectItem>
+                <MudSelectItem Value="@("Decimal")">Decimal</MudSelectItem>
+                <MudSelectItem Value="@("Boolean")">Boolean</MudSelectItem>
+                <MudSelectItem Value="@("DateTime")">DateTime</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.DefaultValue"
+                          For="@(() => context.DefaultValue)"
+                          Label="Default Value"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.DisplayOrder"
+                             For="@(() => context.DisplayOrder)"
+                             Label="Display Order"
+                             Variant="Variant.Filled" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Settings</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox @bind-Value="context.IsEncrypted"
+                         For="@(() => context.IsEncrypted)"
+                         Label="Encrypted"
+                         Color="Color.Primary" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox @bind-Value="context.IsEditable"
+                         For="@(() => context.IsEditable)"
+                         Label="Editable"
+                         Color="Color.Primary" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudCheckBox @bind-Value="context.RequiresRestart"
+                         For="@(() => context.RequiresRestart)"
+                         Label="Requires Restart"
+                         Color="Color.Warning" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
