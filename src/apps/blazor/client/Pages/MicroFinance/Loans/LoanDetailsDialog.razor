@@ -1,156 +1,135 @@
-@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Loans
+@using MudBlazor
 
 <MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.MonetizationOn" Class="mr-3 mb-n1" />
+            Loan Details
+        </MudText>
+    </TitleContent>
     <DialogContent>
-        <MudContainer Style="max-height: 70vh; overflow-y: auto;">
-            @if (_loading)
-            {
-                <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
-            }
-            else if (_loan != null)
-            {
-                <MudGrid>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" />
+        }
+        else if (_loan != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Loan Information</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Loan Number</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_loan.LoanNumber</strong></MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Status</MudText>
+                    <MudChip T="string" Color="@GetStatusColor(_loan.Status)" Size="Size.Small">@_loan.Status</MudChip>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Member</MudText>
+                    <MudText Typo="Typo.body1">@_loan.MemberName</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Product</MudText>
+                    <MudText Typo="Typo.body1">@_loan.LoanProductName</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Financial Details</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Principal Amount</MudText>
+                    <MudText Typo="Typo.h6" Color="Color.Primary">@_loan.PrincipalAmount.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Interest Rate</MudText>
+                    <MudText Typo="Typo.body1">@_loan.InterestRate.ToString("F2")%</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Term</MudText>
+                    <MudText Typo="Typo.body1">@_loan.TermMonths months</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Repayment Frequency</MudText>
+                    <MudText Typo="Typo.body1">@_loan.RepaymentFrequency</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Outstanding Balances</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Outstanding Principal</MudText>
+                    <MudText Typo="Typo.body1" Color="Color.Warning">@_loan.OutstandingPrincipal.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Outstanding Interest</MudText>
+                    <MudText Typo="Typo.body1" Color="Color.Warning">@_loan.OutstandingInterest.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Total Outstanding</MudText>
+                    <MudText Typo="Typo.body1" Color="Color.Error">@((_loan.OutstandingPrincipal + _loan.OutstandingInterest).ToString("C"))</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Dates</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Application Date</MudText>
+                    <MudText Typo="Typo.body1">@_loan.ApplicationDate.ToString("d")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Approval Date</MudText>
+                    <MudText Typo="Typo.body1">@(_loan.ApprovalDate?.ToString("d") ?? "N/A")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Disbursement Date</MudText>
+                    <MudText Typo="Typo.body1">@(_loan.DisbursementDate?.ToString("d") ?? "N/A")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Expected End Date</MudText>
+                    <MudText Typo="Typo.body1">@(_loan.ExpectedEndDate?.ToString("d") ?? "N/A")</MudText>
+                </MudItem>
+                
+                @if (!string.IsNullOrWhiteSpace(_loan.Purpose))
+                {
                     <MudItem xs="12">
-                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
-                            <MudIcon Icon="@Icons.Material.Filled.AccountBalance" Size="Size.Large" Color="Color.Primary" />
-                            <MudStack Spacing="0">
-                                <MudText Typo="Typo.h5">Loan @_loan.LoanNumber</MudText>
-                                <MudText Typo="Typo.caption" Color="Color.Secondary">@_loan.MemberName (@_loan.MemberNumber)</MudText>
-                            </MudStack>
-                            <MudSpacer />
-                            <MudChip T="string" Color="@GetStatusColor(_loan.Status)" Size="Size.Medium">
-                                @_loan.Status
-                            </MudChip>
-                        </MudStack>
+                        <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Purpose</strong></MudText>
+                        <MudDivider />
                     </MudItem>
-
+                    
                     <MudItem xs="12">
-                        <MudDivider Class="my-2" />
+                        <MudText Typo="Typo.body1">@_loan.Purpose</MudText>
                     </MudItem>
-
-                    <MudItem xs="12" md="6">
-                        <MudText Typo="Typo.subtitle2" Class="mb-2"><strong>Loan Information</strong></MudText>
-                        <MudSimpleTable Dense="true" Style="margin-bottom: 1rem;">
-                            <tbody>
-                                <tr>
-                                    <td style="width: 45%; font-weight: 500;">Product</td>
-                                    <td>@_loan.LoanProductName</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight: 500;">Principal Amount</td>
-                                    <td><strong>@_loan.PrincipalAmount.ToString("C2")</strong></td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight: 500;">Interest Rate</td>
-                                    <td>@_loan.InterestRate.ToString("N2")%</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight: 500;">Term</td>
-                                    <td>@_loan.TermMonths months</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight: 500;">Repayment Frequency</td>
-                                    <td>@_loan.RepaymentFrequency</td>
-                                </tr>
-                                @if (!string.IsNullOrEmpty(_loan.Purpose))
-                                {
-                                    <tr>
-                                        <td style="font-weight: 500;">Purpose</td>
-                                        <td>@_loan.Purpose</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </MudSimpleTable>
-                    </MudItem>
-
-                    <MudItem xs="12" md="6">
-                        <MudText Typo="Typo.subtitle2" Class="mb-2"><strong>Key Dates</strong></MudText>
-                        <MudSimpleTable Dense="true" Style="margin-bottom: 1rem;">
-                            <tbody>
-                                <tr>
-                                    <td style="width: 45%; font-weight: 500;">Application Date</td>
-                                    <td>@_loan.ApplicationDate.ToString("MMM dd, yyyy")</td>
-                                </tr>
-                                @if (_loan.ApprovalDate.HasValue)
-                                {
-                                    <tr>
-                                        <td style="font-weight: 500;">Approval Date</td>
-                                        <td>@_loan.ApprovalDate.Value.ToString("MMM dd, yyyy")</td>
-                                    </tr>
-                                }
-                                @if (_loan.DisbursementDate.HasValue)
-                                {
-                                    <tr>
-                                        <td style="font-weight: 500;">Disbursement Date</td>
-                                        <td>@_loan.DisbursementDate.Value.ToString("MMM dd, yyyy")</td>
-                                    </tr>
-                                }
-                                @if (_loan.ExpectedEndDate.HasValue)
-                                {
-                                    <tr>
-                                        <td style="font-weight: 500;">Expected End Date</td>
-                                        <td>@_loan.ExpectedEndDate.Value.ToString("MMM dd, yyyy")</td>
-                                    </tr>
-                                }
-                                @if (_loan.ActualEndDate.HasValue)
-                                {
-                                    <tr>
-                                        <td style="font-weight: 500;">Actual End Date</td>
-                                        <td>@_loan.ActualEndDate.Value.ToString("MMM dd, yyyy")</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </MudSimpleTable>
-                    </MudItem>
-
-                    <MudItem xs="12">
-                        <MudText Typo="Typo.subtitle2" Class="mb-2"><strong>Balance Summary</strong></MudText>
-                        <MudGrid>
-                            <MudItem xs="6" sm="3">
-                                <MudPaper Class="pa-3 text-center" Elevation="1">
-                                    <MudText Typo="Typo.caption">Outstanding Principal</MudText>
-                                    <MudText Typo="Typo.h6" Color="Color.Primary">@_loan.OutstandingPrincipal.ToString("C2")</MudText>
-                                </MudPaper>
-                            </MudItem>
-                            <MudItem xs="6" sm="3">
-                                <MudPaper Class="pa-3 text-center" Elevation="1">
-                                    <MudText Typo="Typo.caption">Outstanding Interest</MudText>
-                                    <MudText Typo="Typo.h6" Color="Color.Warning">@_loan.OutstandingInterest.ToString("C2")</MudText>
-                                </MudPaper>
-                            </MudItem>
-                            <MudItem xs="6" sm="3">
-                                <MudPaper Class="pa-3 text-center" Elevation="1">
-                                    <MudText Typo="Typo.caption">Total Paid</MudText>
-                                    <MudText Typo="Typo.h6" Color="Color.Success">@_loan.TotalPaid.ToString("C2")</MudText>
-                                </MudPaper>
-                            </MudItem>
-                            <MudItem xs="6" sm="3">
-                                <MudPaper Class="pa-3 text-center" Elevation="1">
-                                    <MudText Typo="Typo.caption">Total Outstanding</MudText>
-                                    <MudText Typo="Typo.h6" Color="Color.Error">@((_loan.OutstandingPrincipal + _loan.OutstandingInterest).ToString("C2"))</MudText>
-                                </MudPaper>
-                            </MudItem>
-                        </MudGrid>
-                    </MudItem>
-
-                    @if (!string.IsNullOrEmpty(_loan.RejectionReason))
-                    {
-                        <MudItem xs="12">
-                            <MudAlert Severity="Severity.Error">
-                                <strong>Rejection Reason:</strong> @_loan.RejectionReason
-                            </MudAlert>
-                        </MudItem>
-                    }
-                </MudGrid>
-            }
-            else
-            {
-                <MudAlert Severity="Severity.Error">Loan not found.</MudAlert>
-            }
-        </MudContainer>
+                }
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Error">Unable to load loan details.</MudAlert>
+        }
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="@Close" Color="Color.Primary" Variant="Variant.Filled">Close</MudButton>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -166,17 +145,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadLoan();
-    }
-
-    private async Task LoadLoan()
-    {
-        _loading = true;
         try
         {
-            _loan = await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.GetLoanAsync("1", LoanId),
-                Snackbar);
+            _loan = await Client.GetLoanAsync("1", LoanId);
         }
         finally
         {
@@ -184,15 +155,15 @@
         }
     }
 
-    private Color GetStatusColor(string status) => status switch
+    private Color GetStatusColor(string? status) => status switch
     {
-        "Pending" => Color.Warning,
-        "Approved" => Color.Info,
+        "Pending" => Color.Info,
+        "Approved" => Color.Success,
         "Disbursed" => Color.Primary,
-        "Active" => Color.Success,
-        "Completed" => Color.Default,
-        "Defaulted" => Color.Error,
+        "Active" => Color.Primary,
+        "Closed" => Color.Default,
         "Rejected" => Color.Error,
+        "WrittenOff" => Color.Error,
         _ => Color.Default
     };
 

@@ -1,128 +1,155 @@
-using FSH.Starter.Blazor.Client.Components.EntityTable;
-using FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanRepayments.Dialogs;
-using FSH.Starter.Blazor.Infrastructure.Api;
-using FSH.Starter.Blazor.Shared;
-using Mapster;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
-
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanRepayments;
 
+/// <summary>
+/// Loan Repayments page logic. Provides Create and Search operations over LoanRepayment entities.
+/// Manages loan repayment transactions.
+/// </summary>
 public partial class LoanRepayments
 {
+    /// <summary>
+    /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
+    /// </summary>
+    protected EntityServerTableContext<LoanRepaymentResponse, DefaultIdType, LoanRepaymentViewModel> Context { get; set; } = null!;
+
+    private EntityTable<LoanRepaymentResponse, DefaultIdType, LoanRepaymentViewModel> _table = null!;
+
+    /// <summary>
+    /// Authorization state for permission checks.
+    /// </summary>
+    [CascadingParameter]
+    protected Task<AuthenticationState> AuthState { get; set; } = null!;
+
+    /// <summary>
+    /// Authorization service for permission checks.
+    /// </summary>
     [Inject]
-    protected IAuthorizationService AuthorizationService { get; set; } = null!;
+    protected IAuthorizationService AuthService { get; set; } = null!;
 
-    [Inject]
-    protected ClientPreference ClientPreference { get; set; } = null!;
+    /// <summary>
+    /// Client UI preferences for styling.
+    /// </summary>
+    private ClientPreference _preference = new();
 
-    private EntityServerTableContext<LoanRepaymentResponse, DefaultIdType, LoanRepaymentViewModel> _context = null!;
-    private EntityTable<LoanRepaymentResponse, DefaultIdType, LoanRepaymentViewModel>? _table;
+    // Advanced search filters
+    private string? _searchReceiptNumber;
+    private string? SearchReceiptNumber
+    {
+        get => _searchReceiptNumber;
+        set
+        {
+            _searchReceiptNumber = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
 
-    private bool _canCreate;
-    private bool _canView;
-    private bool _canReverse;
-    private bool _canPrint;
-    private int _elevation;
-    private string _borderRadius = string.Empty;
+    private string? _searchPaymentMethod;
+    private string? SearchPaymentMethod
+    {
+        get => _searchPaymentMethod;
+        set
+        {
+            _searchPaymentMethod = value;
+            _ = _table.ReloadDataAsync();
+        }
+    }
 
+    /// <summary>
+    /// Initializes the table context with loan repayment-specific configuration.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
-        var state = await AuthState.GetAuthenticationStateAsync();
-        _canCreate = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Create, FshResources.LoanRepayments))).Succeeded;
-        _canView = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.View, FshResources.LoanRepayments))).Succeeded;
-        _canReverse = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.Update, FshResources.LoanRepayments))).Succeeded;
-        _canPrint = (await AuthorizationService.AuthorizeAsync(state.User, FshPermission.NameFor(FshActions.View, FshResources.LoanRepayments))).Succeeded;
+        // Load initial preference from localStorage
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
 
-        _elevation = ClientPreference.Elevation;
-        _borderRadius = $"border-radius: {ClientPreference.BorderRadius}px";
+        Courier.SubscribeWeak<NotificationWrapper<ClientPreference>>(wrapper =>
+        {
+            _preference.Elevation = ClientPreference.SetClientPreference(wrapper.Notification);
+            _preference.BorderRadius = ClientPreference.SetClientBorderRadius(wrapper.Notification);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
 
-        _context = new EntityServerTableContext<LoanRepaymentResponse, DefaultIdType, LoanRepaymentViewModel>(
-            entityName: "Loan Repayment",
-            entityNamePlural: "Loan Repayments",
-            entityResource: FshResources.LoanRepayments,
+        Context = new EntityServerTableContext<LoanRepaymentResponse, DefaultIdType, LoanRepaymentViewModel>(
             fields:
             [
-                new EntityField<LoanRepaymentResponse>(r => r.LoanNumber!, "Loan #", "LoanNumber"),
-                new EntityField<LoanRepaymentResponse>(r => r.Amount, "Amount", "Amount", typeof(decimal)),
-                new EntityField<LoanRepaymentResponse>(r => r.PrincipalAmount, "Principal", "PrincipalAmount", typeof(decimal)),
-                new EntityField<LoanRepaymentResponse>(r => r.InterestAmount, "Interest", "InterestAmount", typeof(decimal)),
-                new EntityField<LoanRepaymentResponse>(r => r.PaymentMethod!, "Method", "PaymentMethod"),
-                new EntityField<LoanRepaymentResponse>(r => r.PaymentDate, "Date", "PaymentDate"),
-                new EntityField<LoanRepaymentResponse>(r => r.ReceiptNumber!, "Receipt #", "ReceiptNumber"),
+                new EntityField<LoanRepaymentResponse>(dto => dto.ReceiptNumber, "Receipt #", "ReceiptNumber"),
+                new EntityField<LoanRepaymentResponse>(dto => dto.LoanAccountNumber, "Loan Account", "LoanAccountNumber"),
+                new EntityField<LoanRepaymentResponse>(dto => dto.MemberName, "Member", "MemberName"),
+                new EntityField<LoanRepaymentResponse>(dto => dto.TotalAmount, "Total Amount", "TotalAmount", typeof(decimal)),
+                new EntityField<LoanRepaymentResponse>(dto => dto.PrincipalAmount, "Principal", "PrincipalAmount", typeof(decimal)),
+                new EntityField<LoanRepaymentResponse>(dto => dto.InterestAmount, "Interest", "InterestAmount", typeof(decimal)),
+                new EntityField<LoanRepaymentResponse>(dto => dto.RepaymentDate, "Date", "RepaymentDate", typeof(DateTimeOffset)),
+                new EntityField<LoanRepaymentResponse>(dto => dto.PaymentMethod, "Payment Method", "PaymentMethod"),
             ],
-            enableAdvancedSearch: false,
-            idFunc: r => r.Id,
             searchFunc: async filter =>
             {
-                var response = await Client.SearchLoanRepaymentsEndpointAsync("1", new SearchLoanRepaymentsCommand
+                var request = new SearchLoanRepaymentsCommand
                 {
                     PageNumber = filter.PageNumber,
                     PageSize = filter.PageSize,
                     Keyword = filter.Keyword,
-                    OrderBy = filter.OrderBy ?? []
-                });
-
-                return response.Adapt<PaginationResponse<LoanRepaymentResponse>>();
+                    OrderBy = filter.OrderBy,
+                    PaymentMethod = _searchPaymentMethod
+                };
+                var result = await Client.SearchLoanRepaymentsAsync("1", request).ConfigureAwait(false);
+                return result.Adapt<PaginationResponse<LoanRepaymentResponse>>();
             },
-            createFunc: async vm =>
+            enableAdvancedSearch: true,
+            idFunc: dto => dto.Id,
+            createFunc: async viewModel =>
             {
-                var command = vm.Adapt<CreateLoanRepaymentCommand>();
-                await Client.CreateLoanRepaymentAsync("1", command);
+                await Client.CreateLoanRepaymentAsync("1", viewModel.Adapt<CreateLoanRepaymentCommand>()).ConfigureAwait(false);
             },
-            getDetailsFunc: async id =>
-            {
-                var response = await Client.GetLoanRepaymentEndpointAsync("1", id);
-                return response.Adapt<LoanRepaymentViewModel>();
-            },
+            // No update or delete for loan repayments - they are financial transactions
+            entityName: "Loan Repayment",
+            entityNamePlural: "Loan Repayments",
+            entityResource: FshResources.MicroFinance,
             hasExtraActionsFunc: () => true);
     }
 
-    private async Task ViewDetails(LoanRepaymentResponse repayment)
+    /// <summary>
+    /// Show loan repayments help dialog.
+    /// </summary>
+    private async Task ShowLoanRepaymentsHelp()
+    {
+        await DialogService.ShowAsync<LoanRepaymentsHelpDialog>("Loan Repayments Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
+
+    /// <summary>
+    /// View repayment details in a dialog.
+    /// </summary>
+    private async Task ViewRepaymentDetails(DefaultIdType id)
     {
         var parameters = new DialogParameters
         {
-            { nameof(LoanRepaymentDetailsDialog.Repayment), repayment }
+            { nameof(LoanRepaymentDetailsDialog.RepaymentId), id }
         };
 
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
-        await DialogService.ShowAsync<LoanRepaymentDetailsDialog>("Loan Repayment Details", parameters, options);
+        await DialogService.ShowAsync<LoanRepaymentDetailsDialog>("Loan Repayment Details", parameters, new DialogOptions
+        {
+            MaxWidth = MaxWidth.Medium,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
     }
 
-    private async Task ReverseRepayment(LoanRepaymentResponse repayment)
+    /// <summary>
+    /// Print receipt for a repayment.
+    /// </summary>
+    private async Task PrintReceipt(DefaultIdType id)
     {
-        var parameters = new DialogParameters
-        {
-            { nameof(LoanRepaymentReverseDialog.RepaymentId), repayment.Id },
-            { nameof(LoanRepaymentReverseDialog.ReceiptNumber), repayment.ReceiptNumber },
-            { nameof(LoanRepaymentReverseDialog.Amount), repayment.Amount }
-        };
-
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true };
-        var dialog = await DialogService.ShowAsync<LoanRepaymentReverseDialog>("Reverse Repayment", parameters, options);
-        var result = await dialog.Result;
-
-        if (result is { Canceled: false })
-        {
-            await _table!.ReloadDataAsync();
-        }
-    }
-
-    private async Task PrintReceipt(LoanRepaymentResponse repayment)
-    {
-        var parameters = new DialogParameters
-        {
-            { nameof(LoanRepaymentReceiptDialog.Repayment), repayment }
-        };
-
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
-        await DialogService.ShowAsync<LoanRepaymentReceiptDialog>("Payment Receipt", parameters, options);
-    }
-
-    private async Task ShowHelp()
-    {
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
-        await DialogService.ShowAsync<LoanRepaymentsHelpDialog>("Loan Repayments Help", options);
+        // TODO: Implement receipt printing functionality
+        await DialogService.ShowMessageBox(
+            "Print Receipt",
+            "Receipt printing functionality will be implemented in a future update.",
+            yesText: "OK");
     }
 }

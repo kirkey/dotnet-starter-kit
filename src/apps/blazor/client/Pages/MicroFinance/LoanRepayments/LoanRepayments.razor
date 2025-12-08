@@ -1,44 +1,113 @@
 @page "/microfinance/loan-repayments"
-@using FSH.Starter.Blazor.Client.Components.EntityTable
-@using FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanRepayments.Dialogs
 
-<MudPaper Elevation="@_elevation" Style="@_borderRadius">
-    <EntityTable @ref="_table"
-                 TEntity="LoanRepaymentResponse"
-                 TId="DefaultIdType"
-                 TRequest="LoanRepaymentViewModel"
-                 Context="@_context"
-                 Dense="true"
-                 Striped="true"
-                 Hover="true"
-                 SearchFields="@(new[] { "LoanNumber", "MemberName", "PaymentMethod", "ReceiptNumber" })">
+<PageHeader Title="Loan Repayments" Header="Loan Repayments" SubHeader="Track and record loan repayment transactions." />
 
-        <ActionsContent>
-            <MudButtonGroup OverrideStyles="false">
-                <MudIconButton Icon="@Icons.Material.Filled.Visibility"
-                               Color="Color.Info"
-                               Title="View Details"
-                               OnClick="@(() => ViewDetails(context))" />
-                @if (_canReverse && !context.IsReversed)
-                {
-                    <MudIconButton Icon="@Icons.Material.Filled.Undo"
-                                   Color="Color.Warning"
-                                   Title="Reverse Repayment"
-                                   OnClick="@(() => ReverseRepayment(context))" />
-                }
-                @if (_canPrint)
-                {
-                    <MudIconButton Icon="@Icons.Material.Filled.Receipt"
-                                   Color="Color.Primary"
-                                   Title="Print Receipt"
-                                   OnClick="@(() => PrintReceipt(context))" />
-                }
-            </MudButtonGroup>
-        </ActionsContent>
-
-        <ExtraActions>
-            <MudMenuItem Icon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">Help</MudMenuItem>
-        </ExtraActions>
-
-    </EntityTable>
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowLoanRepaymentsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
 </MudPaper>
+
+<EntityTable @ref="_table" TEntity="LoanRepaymentResponse" TId="DefaultIdType" TRequest="LoanRepaymentViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@SearchReceiptNumber"
+                          Label="Receipt Number"
+                          Placeholder="Search by receipt number"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Receipt" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchPaymentMethod"
+                       Label="Payment Method"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"CASH")">Cash</MudSelectItem>
+                <MudSelectItem Value="@((string?)"BANK_TRANSFER")">Bank Transfer</MudSelectItem>
+                <MudSelectItem Value="@((string?)"MOBILE_MONEY")">Mobile Money</MudSelectItem>
+                <MudSelectItem Value="@((string?)"CHECK")">Check</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewRepaymentDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Print" OnClick="@(() => PrintReceipt(entity.Id))">
+            Print Receipt
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Repayment Details</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="context.LoanId"
+                          For="@(() => context.LoanId)"
+                          Label="Loan ID"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Enter the loan ID to apply this repayment" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudNumericField T="decimal"
+                             @bind-Value="context.Amount"
+                             For="@(() => context.Amount)"
+                             Label="Amount"
+                             Variant="Variant.Filled"
+                             Min="0.01m"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentText="$"
+                             Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudSelect @bind-Value="context.PaymentMethod"
+                       For="@(() => context.PaymentMethod)"
+                       Label="Payment Method"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("CASH")">Cash</MudSelectItem>
+                <MudSelectItem Value="@("BANK_TRANSFER")">Bank Transfer</MudSelectItem>
+                <MudSelectItem Value="@("MOBILE_MONEY")">Mobile Money</MudSelectItem>
+                <MudSelectItem Value="@("CHECK")">Check</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="context.TransactionReference"
+                          For="@(() => context.TransactionReference)"
+                          Label="Transaction Reference"
+                          Variant="Variant.Filled"
+                          HelperText="External reference number" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

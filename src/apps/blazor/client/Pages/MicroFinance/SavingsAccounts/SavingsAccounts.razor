@@ -1,6 +1,7 @@
 @page "/microfinance/savings-accounts"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.MicroFinance
 
-<PageHeader Title="Savings Accounts" Header="Savings Accounts" SubHeader="Manage member savings accounts, deposits, and withdrawals." />
+<PageHeader Title="Savings Accounts" Header="Savings Accounts" SubHeader="Manage member savings accounts - deposits, withdrawals, and balances." />
 
 <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
     <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
@@ -24,106 +25,139 @@
                           AdornmentIcon="@Icons.Material.Filled.AccountBalance" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudTextField @bind-Value="@SearchMemberName"
-                          Label="Member Name"
-                          Placeholder="Search by member name"
-                          Variant="Variant.Outlined"
-                          Adornment="Adornment.Start"
-                          AdornmentIcon="@Icons.Material.Filled.Person" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudSelect T="string"
+            <MudSelect T="string?"
                        @bind-Value="@SearchStatus"
                        Label="Status"
                        Variant="Variant.Outlined"
                        Clearable="true">
-                <MudSelectItem Value="@("Active")">Active</MudSelectItem>
-                <MudSelectItem Value="@("Dormant")">Dormant</MudSelectItem>
-                <MudSelectItem Value="@("Closed")">Closed</MudSelectItem>
-                <MudSelectItem Value="@("Frozen")">Frozen</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Active")">Active</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Frozen")">Frozen</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Closed")">Closed</MudSelectItem>
             </MudSelect>
         </MudItem>
     </AdvancedSearchContent>
 
     <ExtraActions Context="entity">
-        @if (entity.Status == "Active")
+        @if (entity.Status == "Active" && _canDeposit)
         {
-            @if (_canDeposit)
-            {
-                <MudMenuItem Icon="@Icons.Material.Filled.Add" IconColor="Color.Success" OnClick="@(() => RecordDeposit(entity.Id))">
-                    Deposit
-                </MudMenuItem>
-            }
-            @if (_canWithdraw)
-            {
-                <MudMenuItem Icon="@Icons.Material.Filled.Remove" IconColor="Color.Warning" OnClick="@(() => RecordWithdrawal(entity.Id))">
-                    Withdrawal
-                </MudMenuItem>
-            }
+            <MudMenuItem Icon="@Icons.Material.Filled.Add" OnClick="@(() => ShowDepositDialog(entity))">
+                Deposit
+            </MudMenuItem>
+        }
+        @if (entity.Status == "Active" && _canWithdraw)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Remove" OnClick="@(() => ShowWithdrawDialog(entity))">
+                Withdraw
+            </MudMenuItem>
         }
         <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewAccountDetails(entity.Id))">
             View Details
         </MudMenuItem>
-        <MudMenuItem Icon="@Icons.Material.Filled.History" OnClick="@(() => ViewTransactions(entity.Id))">
-            Transaction History
-        </MudMenuItem>
-        @if (entity.Status == "Active" && _canFreeze)
-        {
-            <MudMenuItem Icon="@Icons.Material.Filled.Lock" IconColor="Color.Error" OnClick="@(() => FreezeAccount(entity.Id))">
-                Freeze Account
-            </MudMenuItem>
-        }
-        @if (entity.Status == "Frozen" && _canUnfreeze)
-        {
-            <MudMenuItem Icon="@Icons.Material.Filled.LockOpen" IconColor="Color.Success" OnClick="@(() => UnfreezeAccount(entity.Id))">
-                Unfreeze Account
-            </MudMenuItem>
-        }
     </ExtraActions>
 
     <EditFormContent Context="context">
         @if (context.Id != DefaultIdType.Empty)
         {
-            <MudItem xs="12" md="6" lg="4">
+            <MudItem xs="12" md="6">
                 <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
             </MudItem>
         }
         
         <MudItem xs="12">
-            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Account Information</strong></MudText>
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Account Setup</strong></MudText>
             <MudDivider />
         </MudItem>
         
         <MudItem xs="12" sm="6">
-            <AutocompleteMember @bind-Value="context.MemberId"
-                               For="@(() => context.MemberId)"
-                               Label="Member"
-                               Required="true"
-                               HelperText="Select the account holder" />
-        </MudItem>
-        <MudItem xs="12" sm="6">
-            <AutocompleteSavingsProduct @bind-Value="context.SavingsProductId"
-                                       For="@(() => context.SavingsProductId)"
-                                       Label="Savings Product"
-                                       Required="true"
-                                       HelperText="Select the savings product type" />
-        </MudItem>
-
-        <MudItem xs="12">
-            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Initial Deposit</strong></MudText>
-            <MudDivider />
+            <AutocompleteMember @bind-Value="context.SelectedMember"
+                                Label="Member"
+                                Required="true"
+                                HelperText="Select the member for this account" />
         </MudItem>
         
-        <MudItem xs="12" sm="6" md="4">
-            <MudNumericField @bind-Value="context.InitialDeposit"
+        <MudItem xs="12" sm="6">
+            <AutocompleteSavingsProduct @bind-Value="context.SelectedSavingsProduct"
+                                        Label="Savings Product"
+                                        Required="true"
+                                        HelperText="Select the savings product type" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudNumericField T="decimal"
+                             @bind-Value="context.InitialDeposit"
                              For="@(() => context.InitialDeposit)"
-                             Label="Initial Deposit Amount"
+                             Label="Initial Deposit"
                              Variant="Variant.Filled"
+                             Min="0m"
                              Format="N2"
-                             Min="0"
                              Adornment="Adornment.Start"
                              AdornmentText="$"
-                             HelperText="Opening deposit for the account" />
+                             HelperText="Amount to deposit when opening the account" />
         </MudItem>
     </EditFormContent>
 </EntityTable>
+
+@* Deposit Dialog *@
+<MudDialog @bind-Visible="_depositDialogVisible" Options="@_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+            Deposit to Account
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Class="mb-4">Account: <strong>@_selectedAccount?.AccountNumber</strong></MudText>
+        <MudText Class="mb-4">Current Balance: <strong>@_selectedAccount?.Balance.ToString("C")</strong></MudText>
+        <MudNumericField T="decimal"
+                         @bind-Value="_depositAmount"
+                         Label="Deposit Amount"
+                         Variant="Variant.Filled"
+                         Min="0.01m"
+                         Format="N2"
+                         Adornment="Adornment.Start"
+                         AdornmentText="$"
+                         Required="true" />
+        <MudTextField @bind-Value="_transactionNotes"
+                      Label="Notes"
+                      Variant="Variant.Filled"
+                      Lines="2"
+                      Class="mt-4" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _depositDialogVisible = false)" Variant="Variant.Outlined">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@ExecuteDeposit">Deposit</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@* Withdraw Dialog *@
+<MudDialog @bind-Visible="_withdrawDialogVisible" Options="@_dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Remove" Class="mr-3 mb-n1" />
+            Withdraw from Account
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Class="mb-4">Account: <strong>@_selectedAccount?.AccountNumber</strong></MudText>
+        <MudText Class="mb-4">Available Balance: <strong>@_selectedAccount?.Balance.ToString("C")</strong></MudText>
+        <MudNumericField T="decimal"
+                         @bind-Value="_withdrawAmount"
+                         Label="Withdraw Amount"
+                         Variant="Variant.Filled"
+                         Min="0.01m"
+                         Max="@(_selectedAccount?.Balance ?? 0m)"
+                         Format="N2"
+                         Adornment="Adornment.Start"
+                         AdornmentText="$"
+                         Required="true" />
+        <MudTextField @bind-Value="_transactionNotes"
+                      Label="Notes"
+                      Variant="Variant.Filled"
+                      Lines="2"
+                      Class="mt-4" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _withdrawDialogVisible = false)" Variant="Variant.Outlined">Cancel</MudButton>
+        <MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="@ExecuteWithdraw">Withdraw</MudButton>
+    </DialogActions>
+</MudDialog>

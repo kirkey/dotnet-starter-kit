@@ -1,213 +1,67 @@
-@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.SavingsAccounts
+@using MudBlazor
 
 <MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-3 mb-n1" />
+            Savings Accounts Help
+        </MudText>
+    </TitleContent>
     <DialogContent>
-        <MudStack Spacing="3">
-            <MudText Typo="Typo.h6">Savings Accounts Help</MudText>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            The Savings Accounts module allows you to manage member savings accounts, process deposits and withdrawals, and track account balances.
+        </MudText>
 
-            <MudExpansionPanels Elevation="@_preference.Elevation">
-                <MudExpansionPanel Text="What are Savings Accounts?">
-                    <MudStack Spacing="2">
-                        <MudText Typo="Typo.subtitle2">Understanding Savings Accounts</MudText>
-                        <MudText Typo="Typo.body2">
-                            Savings accounts allow members to deposit and withdraw money while earning interest on their balance. 
-                            They are the foundation of the member-institution relationship and provide liquidity for lending operations.
-                        </MudText>
-                        
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>Key Features:</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                • <strong>Deposits:</strong> Add money to the account anytime<br/>
-                                • <strong>Withdrawals:</strong> Access funds when needed<br/>
-                                • <strong>Interest:</strong> Earn returns on balance<br/>
-                                • <strong>Statements:</strong> Track all transactions<br/>
-                                • <strong>Loan Eligibility:</strong> Savings often determines loan limits
-                            </MudText>
-                        </div>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Creating a Savings Account">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Member</strong>: Select the member who will own this account.</li>
+                        <li><strong>Savings Product</strong>: Choose the savings product type (e.g., Regular Savings, Fixed Deposit).</li>
+                        <li><strong>Initial Deposit</strong>: Enter the opening deposit amount.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
 
-                        <MudAlert Severity="Severity.Info" Dense="true">
-                            <strong>Tip:</strong> Encourage regular savings habits - even small deposits add up over time.
-                        </MudAlert>
-                    </MudStack>
-                </MudExpansionPanel>
+            <MudExpansionPanel Text="Making Deposits">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li>Click the <strong>Deposit</strong> action from the account's menu.</li>
+                        <li>Enter the deposit amount and optional notes.</li>
+                        <li>The balance will be updated immediately after confirmation.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Account Status">
-                    <MudStack Spacing="2">
-                        <MudText Typo="Typo.subtitle2">Understanding Account Status</MudText>
-                        
-                        <MudSimpleTable Dense="true">
-                            <tbody>
-                                <tr>
-                                    <td><MudChip T="string" Color="Color.Success" Size="Size.Small">Active</MudChip></td>
-                                    <td>Normal operation, deposits and withdrawals allowed</td>
-                                </tr>
-                                <tr>
-                                    <td><MudChip T="string" Color="Color.Warning" Size="Size.Small">Dormant</MudChip></td>
-                                    <td>No transactions for extended period (usually 6-12 months)</td>
-                                </tr>
-                                <tr>
-                                    <td><MudChip T="string" Color="Color.Error" Size="Size.Small">Frozen</MudChip></td>
-                                    <td>Blocked due to suspicious activity or legal hold</td>
-                                </tr>
-                                <tr>
-                                    <td><MudChip T="string" Color="Color.Default" Size="Size.Small">Closed</MudChip></td>
-                                    <td>Permanently closed, no further activity</td>
-                                </tr>
-                            </tbody>
-                        </MudSimpleTable>
+            <MudExpansionPanel Text="Making Withdrawals">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li>Click the <strong>Withdraw</strong> action from the account's menu.</li>
+                        <li>Enter the withdrawal amount (cannot exceed available balance).</li>
+                        <li>Add optional notes for the transaction.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
 
-                        <MudAlert Severity="Severity.Warning" Dense="true">
-                            <strong>Dormancy:</strong> Reactivate dormant accounts before processing transactions.
-                        </MudAlert>
-                    </MudStack>
-                </MudExpansionPanel>
-
-                <MudExpansionPanel Text="Deposits">
-                    <MudStack Spacing="2">
-                        <MudText Typo="Typo.subtitle2">Recording Deposits</MudText>
-                        
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>Deposit Process:</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                1. Verify member identity<br/>
-                                2. Count cash or verify check<br/>
-                                3. Enter deposit amount in system<br/>
-                                4. Issue receipt to member<br/>
-                                5. Balance updates immediately
-                            </MudText>
-                        </div>
-
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>Deposit Methods:</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                • <strong>Cash:</strong> Most common, immediate credit<br/>
-                                • <strong>Check:</strong> May have clearing period<br/>
-                                • <strong>Transfer:</strong> From other accounts or banks<br/>
-                                • <strong>Mobile Money:</strong> Via mobile wallet integration
-                            </MudText>
-                        </div>
-                    </MudStack>
-                </MudExpansionPanel>
-
-                <MudExpansionPanel Text="Withdrawals">
-                    <MudStack Spacing="2">
-                        <MudText Typo="Typo.subtitle2">Processing Withdrawals</MudText>
-                        
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>Withdrawal Process:</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                1. Verify member identity<br/>
-                                2. Check available balance<br/>
-                                3. Verify against daily limits<br/>
-                                4. Process withdrawal<br/>
-                                5. Member signs withdrawal slip<br/>
-                                6. Issue cash or check
-                            </MudText>
-                        </div>
-
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>Limits to Check:</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                • Minimum withdrawal amount<br/>
-                                • Maximum daily withdrawal<br/>
-                                • Minimum balance to maintain<br/>
-                                • Large cash availability
-                            </MudText>
-                        </div>
-
-                        <MudAlert Severity="Severity.Error" Dense="true">
-                            <strong>Security:</strong> Always verify identity before processing withdrawals.
-                        </MudAlert>
-                    </MudStack>
-                </MudExpansionPanel>
-
-                <MudExpansionPanel Text="Interest Posting">
-                    <MudStack Spacing="2">
-                        <MudText Typo="Typo.subtitle2">How Interest Works</MudText>
-                        
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>Interest Calculation:</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                • Based on product settings<br/>
-                                • Calculated daily, monthly, or quarterly<br/>
-                                • Posted per product frequency<br/>
-                                • Requires minimum balance (if set)
-                            </MudText>
-                        </div>
-
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>Interest Posting:</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                • System posts interest automatically<br/>
-                                • Appears as interest credit transaction<br/>
-                                • Member receives passbook update<br/>
-                                • Increases account balance
-                            </MudText>
-                        </div>
-                    </MudStack>
-                </MudExpansionPanel>
-
-                <MudExpansionPanel Text="Best Practices">
-                    <MudStack Spacing="2">
-                        <MudText Typo="Typo.subtitle2">Savings Account Best Practices</MudText>
-                        
-                        <MudList T="string" Dense="true">
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
-                                <MudText Typo="Typo.caption">Always verify member identity for transactions</MudText>
-                            </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
-                                <MudText Typo="Typo.caption">Issue receipts for all deposits and withdrawals</MudText>
-                            </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
-                                <MudText Typo="Typo.caption">Update passbooks regularly</MudText>
-                            </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
-                                <MudText Typo="Typo.caption">Balance cash daily with system records</MudText>
-                            </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
-                                <MudText Typo="Typo.caption">Follow up on dormant accounts</MudText>
-                            </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
-                                <MudText Typo="Typo.caption">Report unusual transaction patterns</MudText>
-                            </MudListItem>
-                        </MudList>
-                    </MudStack>
-                </MudExpansionPanel>
-            </MudExpansionPanels>
-        </MudStack>
+            <MudExpansionPanel Text="Account Status">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Active</strong>: Account is open and can process transactions.</li>
+                        <li><strong>Frozen</strong>: Account is temporarily suspended; no transactions allowed.</li>
+                        <li><strong>Closed</strong>: Account has been closed permanently.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
     </DialogActions>
 </MudDialog>
 
 @code {
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
-
-    private ClientPreference _preference = new();
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (await ClientPreferences.GetPreference() is ClientPreference preference)
-        {
-            _preference = preference;
-        }
-    }
 
     private void Close() => MudDialog.Close();
 }

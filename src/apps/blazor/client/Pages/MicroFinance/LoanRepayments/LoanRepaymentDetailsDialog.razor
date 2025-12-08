@@ -1,0 +1,119 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Payment" Class="mr-3 mb-n1" />
+            Loan Repayment Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" />
+        }
+        else if (_repayment != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Repayment Information</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Receipt Number</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_repayment.ReceiptNumber</strong></MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Loan Account</MudText>
+                    <MudText Typo="Typo.body1">@_repayment.LoanAccountNumber</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Member</MudText>
+                    <MudText Typo="Typo.body1">@_repayment.MemberName</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Repayment Date</MudText>
+                    <MudText Typo="Typo.body1">@_repayment.RepaymentDate.ToString("d")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Payment Method</MudText>
+                    <MudChip T="string" Color="Color.Primary" Size="Size.Small">@_repayment.PaymentMethod</MudChip>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Payment Breakdown</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Principal Paid</MudText>
+                    <MudText Typo="Typo.body1">@_repayment.PrincipalAmount.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Interest Paid</MudText>
+                    <MudText Typo="Typo.body1">@_repayment.InterestAmount.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Penalty Paid</MudText>
+                    <MudText Typo="Typo.body1">@_repayment.PenaltyAmount.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Total Amount</MudText>
+                    <MudText Typo="Typo.h6" Color="Color.Success">@_repayment.TotalAmount.ToString("C")</MudText>
+                </MudItem>
+                
+                @if (!string.IsNullOrWhiteSpace(_repayment.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Notes</strong></MudText>
+                        <MudDivider />
+                    </MudItem>
+                    
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.body1">@_repayment.Notes</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Error">Unable to load repayment details.</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType RepaymentId { get; set; }
+
+    private LoanRepaymentResponse? _repayment;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _repayment = await Client.GetLoanRepaymentAsync("1", RepaymentId);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

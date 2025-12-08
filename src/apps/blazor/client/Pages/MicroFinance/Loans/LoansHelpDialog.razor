@@ -1,231 +1,64 @@
-@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Loans
+@using MudBlazor
 
 <MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-3 mb-n1" />
+            Loans Help
+        </MudText>
+    </TitleContent>
     <DialogContent>
-        <MudStack Spacing="3">
-            <MudText Typo="Typo.h6">Loans Management Help</MudText>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            The Loans module allows you to manage member loan applications, approvals, disbursements, and track repayment status.
+        </MudText>
 
-            <MudExpansionPanels Elevation="@_preference.Elevation">
-                <MudExpansionPanel Text="Loan Lifecycle">
-                    <MudStack Spacing="2">
-                        <MudText Typo="Typo.subtitle2">Understanding the Loan Process</MudText>
-                        
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>1. Application (Pending):</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                • Member submits loan request<br/>
-                                • Loan officer reviews application<br/>
-                                • Credit assessment performed<br/>
-                                • Collateral and guarantors documented
-                            </MudText>
-                        </div>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Creating a Loan">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Member</strong>: Select the member applying for the loan.</li>
+                        <li><strong>Loan Product</strong>: Choose the loan product type (determines interest rate and terms).</li>
+                        <li><strong>Requested Amount</strong>: Enter the loan amount.</li>
+                        <li><strong>Term (Months)</strong>: Set the repayment period.</li>
+                        <li><strong>Repayment Frequency</strong>: How often payments are made.</li>
+                        <li><strong>Purpose</strong>: Describe why the loan is needed.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
 
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>2. Approval:</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                • Credit committee reviews and decides<br/>
-                                • Loan terms finalized<br/>
-                                • Documentation prepared<br/>
-                                • Member notified of approval
-                            </MudText>
-                        </div>
+            <MudExpansionPanel Text="Loan Workflow">
+                <MudText Typo="Typo.body2">
+                    <ol>
+                        <li><strong>Pending</strong>: Loan application submitted, awaiting review.</li>
+                        <li><strong>Approved</strong>: Loan has been approved, ready for disbursement.</li>
+                        <li><strong>Disbursed/Active</strong>: Funds released to the member, repayments expected.</li>
+                        <li><strong>Closed</strong>: Loan fully repaid and closed.</li>
+                        <li><strong>Rejected</strong>: Loan application was denied.</li>
+                        <li><strong>Written Off</strong>: Non-performing loan marked as a loss.</li>
+                    </ol>
+                </MudText>
+            </MudExpansionPanel>
 
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>3. Disbursement:</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                • Loan agreement signed<br/>
-                                • Funds released to member<br/>
-                                • Repayment schedule generated<br/>
-                                • First payment date set
-                            </MudText>
-                        </div>
-
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>4. Active/Repayment:</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                • Member makes regular payments<br/>
-                                • Interest and principal collected<br/>
-                                • Late payments tracked<br/>
-                                • Progress toward completion
-                            </MudText>
-                        </div>
-
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>5. Completion:</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                • Full repayment achieved<br/>
-                                • Collateral released<br/>
-                                • Member eligible for new loans<br/>
-                                • Credit history updated
-                            </MudText>
-                        </div>
-                    </MudStack>
-                </MudExpansionPanel>
-
-                <MudExpansionPanel Text="Loan Status Guide">
-                    <MudStack Spacing="2">
-                        <MudText Typo="Typo.subtitle2">Understanding Status Colors</MudText>
-                        
-                        <MudSimpleTable Dense="true">
-                            <tbody>
-                                <tr>
-                                    <td><MudChip T="string" Color="Color.Warning" Size="Size.Small">Pending</MudChip></td>
-                                    <td>Application submitted, awaiting review</td>
-                                </tr>
-                                <tr>
-                                    <td><MudChip T="string" Color="Color.Info" Size="Size.Small">Approved</MudChip></td>
-                                    <td>Approved, ready for disbursement</td>
-                                </tr>
-                                <tr>
-                                    <td><MudChip T="string" Color="Color.Primary" Size="Size.Small">Disbursed</MudChip></td>
-                                    <td>Funds released, awaiting first payment</td>
-                                </tr>
-                                <tr>
-                                    <td><MudChip T="string" Color="Color.Success" Size="Size.Small">Active</MudChip></td>
-                                    <td>Repayments in progress</td>
-                                </tr>
-                                <tr>
-                                    <td><MudChip T="string" Color="Color.Default" Size="Size.Small">Completed</MudChip></td>
-                                    <td>Fully repaid</td>
-                                </tr>
-                                <tr>
-                                    <td><MudChip T="string" Color="Color.Error" Size="Size.Small">Defaulted</MudChip></td>
-                                    <td>Non-performing, requires action</td>
-                                </tr>
-                                <tr>
-                                    <td><MudChip T="string" Color="Color.Error" Size="Size.Small">Rejected</MudChip></td>
-                                    <td>Application declined</td>
-                                </tr>
-                            </tbody>
-                        </MudSimpleTable>
-                    </MudStack>
-                </MudExpansionPanel>
-
-                <MudExpansionPanel Text="Credit Assessment">
-                    <MudStack Spacing="2">
-                        <MudText Typo="Typo.subtitle2">Evaluating Loan Applications</MudText>
-                        
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>Character (5 Cs of Credit):</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                • <strong>Character:</strong> Borrower's reputation and track record<br/>
-                                • <strong>Capacity:</strong> Ability to repay based on income<br/>
-                                • <strong>Capital:</strong> Personal investment in business<br/>
-                                • <strong>Collateral:</strong> Assets pledged as security<br/>
-                                • <strong>Conditions:</strong> Economic and market factors
-                            </MudText>
-                        </div>
-
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>Key Ratios:</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                • Debt-to-Income: Should be &lt; 40%<br/>
-                                • Repayment capacity: Monthly payment &lt; 30% of income<br/>
-                                • Collateral coverage: Value &gt; 100% of loan
-                            </MudText>
-                        </div>
-
-                        <MudAlert Severity="Severity.Warning" Dense="true">
-                            <strong>Risk:</strong> Always verify income and assess repayment ability before approval.
-                        </MudAlert>
-                    </MudStack>
-                </MudExpansionPanel>
-
-                <MudExpansionPanel Text="Repayment Management">
-                    <MudStack Spacing="2">
-                        <MudText Typo="Typo.subtitle2">Managing Loan Repayments</MudText>
-                        
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>Payment Allocation:</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                1. Penalties and fees (if any)<br/>
-                                2. Accrued interest<br/>
-                                3. Principal balance<br/>
-                                • Overpayments reduce principal faster
-                            </MudText>
-                        </div>
-
-                        <div>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                <strong>Delinquency Management:</strong>
-                            </MudText>
-                            <MudText Typo="Typo.caption">
-                                • 1-30 days: Reminder calls/SMS<br/>
-                                • 31-60 days: Warning letters<br/>
-                                • 61-90 days: Collection visits<br/>
-                                • 90+ days: Legal action consideration
-                            </MudText>
-                        </div>
-
-                        <MudAlert Severity="Severity.Info" Dense="true">
-                            <strong>Tip:</strong> Early intervention prevents defaults. Contact members at first sign of delay.
-                        </MudAlert>
-                    </MudStack>
-                </MudExpansionPanel>
-
-                <MudExpansionPanel Text="Best Practices">
-                    <MudStack Spacing="2">
-                        <MudText Typo="Typo.subtitle2">Loan Management Best Practices</MudText>
-                        
-                        <MudList T="string" Dense="true">
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
-                                <MudText Typo="Typo.caption">Complete thorough credit assessment before approval</MudText>
-                            </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
-                                <MudText Typo="Typo.caption">Document all terms clearly in loan agreement</MudText>
-                            </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
-                                <MudText Typo="Typo.caption">Disburse only after all documents are signed</MudText>
-                            </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
-                                <MudText Typo="Typo.caption">Send payment reminders before due dates</MudText>
-                            </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
-                                <MudText Typo="Typo.caption">Record all payments promptly and accurately</MudText>
-                            </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
-                                <MudText Typo="Typo.caption">Monitor portfolio at risk regularly</MudText>
-                            </MudListItem>
-                        </MudList>
-                    </MudStack>
-                </MudExpansionPanel>
-            </MudExpansionPanels>
-        </MudStack>
+            <MudExpansionPanel Text="Loan Actions">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Approve</strong>: Accept a pending loan application.</li>
+                        <li><strong>Reject</strong>: Decline a pending loan application.</li>
+                        <li><strong>Disburse</strong>: Release funds to the member.</li>
+                        <li><strong>Close</strong>: Mark a fully paid loan as closed.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Primary" OnClick="@Close" Variant="Variant.Filled">Close</MudButton>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
     </DialogActions>
 </MudDialog>
 
 @code {
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; } = null!;
-
-    private ClientPreference _preference = new();
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (await ClientPreferences.GetPreference() is ClientPreference preference)
-        {
-            _preference = preference;
-        }
-    }
 
     private void Close() => MudDialog.Close();
 }

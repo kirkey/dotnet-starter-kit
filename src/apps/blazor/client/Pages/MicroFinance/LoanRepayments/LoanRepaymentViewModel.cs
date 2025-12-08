@@ -1,31 +1,38 @@
-using FSH.Starter.Blazor.Infrastructure.Api;
-using Mapster;
-
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanRepayments;
 
+/// <summary>
+/// ViewModel used by the LoanRepayments page for add operations.
+/// Mirrors the shape of the API's CreateLoanRepaymentCommand so Mapster/Adapt can map between them.
+/// </summary>
 public class LoanRepaymentViewModel
 {
+    /// <summary>
+    /// Primary identifier of the loan repayment.
+    /// </summary>
     public DefaultIdType Id { get; set; }
-    public Guid LoanId { get; set; }
-    public string? LoanNumber { get; set; }
-    public string? MemberName { get; set; }
-    public decimal Amount { get; set; }
-    public decimal PrincipalAmount { get; set; }
-    public decimal InterestAmount { get; set; }
-    public decimal PenaltyAmount { get; set; }
-    public string PaymentMethod { get; set; } = string.Empty;
-    public string? TransactionReference { get; set; }
-    public DateOnly PaymentDate { get; set; }
-    public string? ReceiptNumber { get; set; }
-    public string? Notes { get; set; }
-    public bool IsReversed { get; set; }
 
-    public class Mapper : IRegister
-    {
-        public void Register(TypeAdapterConfig config)
-        {
-            config.NewConfig<LoanRepaymentResponse, LoanRepaymentViewModel>();
-            config.NewConfig<LoanRepaymentViewModel, CreateLoanRepaymentCommand>();
-        }
-    }
+    /// <summary>
+    /// The loan to apply this repayment to. Required.
+    /// </summary>
+    public DefaultIdType LoanId { get; set; }
+
+    /// <summary>
+    /// The repayment amount.
+    /// </summary>
+    public decimal Amount { get; set; } = 5000m;
+
+    /// <summary>
+    /// Payment method (e.g., CASH, BANK_TRANSFER, MOBILE_MONEY).
+    /// </summary>
+    public string? PaymentMethod { get; set; } = "CASH";
+
+    /// <summary>
+    /// Transaction reference number for tracking.
+    /// </summary>
+    public string? TransactionReference { get; set; }
+
+    /// <summary>
+    /// Notes about this repayment.
+    /// </summary>
+    public string? Notes { get; set; }
 }

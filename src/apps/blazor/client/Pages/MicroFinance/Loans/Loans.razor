@@ -1,6 +1,7 @@
 @page "/microfinance/loans"
+@using FSH.Starter.Blazor.Client.Components.Autocompletes.MicroFinance
 
-<PageHeader Title="Loans" Header="Loans" SubHeader="Manage loan applications, disbursements, and repayments." />
+<PageHeader Title="Loans" Header="Loans" SubHeader="Manage member loans - applications, approvals, disbursements, and repayments." />
 
 <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
     <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
@@ -13,7 +14,7 @@
     </MudStack>
 </MudPaper>
 
-<EntityTable @ref="_table" TEntity="LoanResponse" TId="DefaultIdType" TRequest="LoanViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="LoanSummaryResponse" TId="DefaultIdType" TRequest="LoanViewModel" Context="@Context">
     <AdvancedSearchContent>
         <MudItem xs="12" sm="6" md="4">
             <MudTextField @bind-Value="@SearchLoanNumber"
@@ -24,137 +25,120 @@
                           AdornmentIcon="@Icons.Material.Filled.Tag" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudTextField @bind-Value="@SearchMemberName"
-                          Label="Member Name"
-                          Placeholder="Search by member name"
-                          Variant="Variant.Outlined"
-                          Adornment="Adornment.Start"
-                          AdornmentIcon="@Icons.Material.Filled.Person" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudSelect T="string"
+            <MudSelect T="string?"
                        @bind-Value="@SearchStatus"
                        Label="Status"
                        Variant="Variant.Outlined"
                        Clearable="true">
-                <MudSelectItem Value="@("Pending")">Pending</MudSelectItem>
-                <MudSelectItem Value="@("Approved")">Approved</MudSelectItem>
-                <MudSelectItem Value="@("Disbursed")">Disbursed</MudSelectItem>
-                <MudSelectItem Value="@("Active")">Active</MudSelectItem>
-                <MudSelectItem Value="@("Completed")">Completed</MudSelectItem>
-                <MudSelectItem Value="@("Defaulted")">Defaulted</MudSelectItem>
-                <MudSelectItem Value="@("Rejected")">Rejected</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Pending")">Pending</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Approved")">Approved</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Disbursed")">Disbursed</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Active")">Active</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Closed")">Closed</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Rejected")">Rejected</MudSelectItem>
+                <MudSelectItem Value="@((string?)"WrittenOff")">Written Off</MudSelectItem>
             </MudSelect>
         </MudItem>
     </AdvancedSearchContent>
 
     <ExtraActions Context="entity">
-        @if (entity.Status == "Pending")
+        @if (entity.Status == "Pending" && _canApprove)
         {
-            @if (_canApprove)
-            {
-                <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success" OnClick="@(() => ApproveLoan(entity.Id))">
-                    Approve
-                </MudMenuItem>
-            }
-            @if (_canReject)
-            {
-                <MudMenuItem Icon="@Icons.Material.Filled.Cancel" IconColor="Color.Error" OnClick="@(() => RejectLoan(entity.Id))">
-                    Reject
-                </MudMenuItem>
-            }
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => ApproveLoan(entity.Id))">
+                Approve
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel" OnClick="@(() => RejectLoan(entity.Id))">
+                Reject
+            </MudMenuItem>
         }
         @if (entity.Status == "Approved" && _canDisburse)
         {
-            <MudMenuItem Icon="@Icons.Material.Filled.Payment" IconColor="Color.Primary" OnClick="@(() => DisburseLoan(entity.Id))">
+            <MudMenuItem Icon="@Icons.Material.Filled.Payments" OnClick="@(() => DisburseLoan(entity.Id))">
                 Disburse
             </MudMenuItem>
         }
-        @if ((entity.Status == "Active" || entity.Status == "Disbursed") && _canRecordRepayment)
+        @if (entity.Status == "Active" || entity.Status == "Disbursed")
         {
-            <MudMenuItem Icon="@Icons.Material.Filled.AttachMoney" OnClick="@(() => RecordRepayment(entity.Id))">
-                Record Repayment
-            </MudMenuItem>
+            @if (_canClose && entity.OutstandingPrincipal == 0 && entity.OutstandingInterest == 0)
+            {
+                <MudMenuItem Icon="@Icons.Material.Filled.Lock" OnClick="@(() => CloseLoan(entity.Id))">
+                    Close Loan
+                </MudMenuItem>
+            }
         }
         <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewLoanDetails(entity.Id))">
             View Details
-        </MudMenuItem>
-        <MudMenuItem Icon="@Icons.Material.Filled.Schedule" OnClick="@(() => ViewSchedule(entity.Id))">
-            View Schedule
         </MudMenuItem>
     </ExtraActions>
 
     <EditFormContent Context="context">
         @if (context.Id != DefaultIdType.Empty)
         {
-            <MudItem xs="12" md="6" lg="4">
+            <MudItem xs="12" md="6">
                 <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
             </MudItem>
         }
         
         <MudItem xs="12">
-            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Loan Application</strong></MudText>
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Loan Setup</strong></MudText>
             <MudDivider />
         </MudItem>
         
-        <MudItem xs="12" sm="6" md="6">
-            <AutocompleteMember @bind-Value="context.MemberId"
-                               For="@(() => context.MemberId)"
-                               Label="Member"
-                               Required="true"
-                               HelperText="Select the member applying for the loan" />
+        <MudItem xs="12" sm="6">
+            <AutocompleteMember @bind-Value="context.SelectedMember"
+                                Label="Member"
+                                Required="true"
+                                HelperText="Select the member applying for this loan" />
         </MudItem>
-        <MudItem xs="12" sm="6" md="6">
-            <AutocompleteLoanProduct @bind-Value="context.LoanProductId"
-                                    For="@(() => context.LoanProductId)"
-                                    Label="Loan Product"
-                                    Required="true"
-                                    HelperText="Select the loan product" />
-        </MudItem>
-
-        <MudItem xs="12">
-            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Loan Details</strong></MudText>
-            <MudDivider />
+        
+        <MudItem xs="12" sm="6">
+            <AutocompleteLoanProduct @bind-Value="context.SelectedLoanProduct"
+                                     Label="Loan Product"
+                                     Required="true"
+                                     HelperText="Select the loan product type" />
         </MudItem>
         
         <MudItem xs="12" sm="6" md="4">
-            <MudNumericField @bind-Value="context.RequestedAmount"
+            <MudNumericField T="decimal"
+                             @bind-Value="context.RequestedAmount"
                              For="@(() => context.RequestedAmount)"
                              Label="Requested Amount"
                              Variant="Variant.Filled"
+                             Min="0m"
                              Format="N2"
-                             Min="0"
                              Adornment="Adornment.Start"
-                             AdornmentText="$"
-                             Required="true" />
+                             AdornmentText="$" />
         </MudItem>
+        
         <MudItem xs="12" sm="6" md="4">
-            <MudNumericField @bind-Value="context.TermMonths"
+            <MudNumericField T="int"
+                             @bind-Value="context.TermMonths"
                              For="@(() => context.TermMonths)"
                              Label="Term (Months)"
                              Variant="Variant.Filled"
                              Min="1"
-                             Required="true" />
+                             Max="360" />
         </MudItem>
+        
         <MudItem xs="12" sm="6" md="4">
             <MudSelect @bind-Value="context.RepaymentFrequency"
                        For="@(() => context.RepaymentFrequency)"
                        Label="Repayment Frequency"
-                       Variant="Variant.Filled"
-                       Required="true">
-                <MudSelectItem Value="@("WEEKLY")">Weekly</MudSelectItem>
-                <MudSelectItem Value="@("BI-WEEKLY")">Bi-Weekly</MudSelectItem>
+                       Variant="Variant.Filled">
                 <MudSelectItem Value="@("MONTHLY")">Monthly</MudSelectItem>
+                <MudSelectItem Value="@("WEEKLY")">Weekly</MudSelectItem>
+                <MudSelectItem Value="@("BIWEEKLY")">Bi-Weekly</MudSelectItem>
                 <MudSelectItem Value="@("QUARTERLY")">Quarterly</MudSelectItem>
             </MudSelect>
         </MudItem>
+        
         <MudItem xs="12">
             <MudTextField @bind-Value="context.Purpose"
                           For="@(() => context.Purpose)"
-                          Label="Loan Purpose"
+                          Label="Purpose"
                           Variant="Variant.Filled"
-                          Lines="2"
-                          HelperText="Describe the intended use of the loan funds" />
+                          Lines="3"
+                          HelperText="Describe the purpose of the loan" />
         </MudItem>
     </EditFormContent>
 </EntityTable>

@@ -1,8 +1,9 @@
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.SavingsAccounts;
 
 /// <summary>
-/// SavingsAccounts page logic. Provides CRUD and search over SavingsAccount entities using the generated API client.
-/// Manages member savings accounts including deposits, withdrawals, and interest.
+/// Savings Accounts page logic. Provides Create and Search operations over SavingsAccount entities.
+/// Manages member savings accounts including deposits and withdrawals.
+/// Note: No Update/Delete operations available for savings accounts.
 /// </summary>
 public partial class SavingsAccounts
 {
@@ -28,13 +29,20 @@ public partial class SavingsAccounts
     // Permission flags
     private bool _canDeposit;
     private bool _canWithdraw;
-    private bool _canFreeze;
-    private bool _canUnfreeze;
 
     /// <summary>
     /// Client UI preferences for styling.
     /// </summary>
     private ClientPreference _preference = new();
+
+    // Dialog state
+    private bool _depositDialogVisible;
+    private bool _withdrawDialogVisible;
+    private SavingsAccountResponse? _selectedAccount;
+    private decimal _depositAmount;
+    private decimal _withdrawAmount;
+    private string? _transactionNotes;
+    private readonly DialogOptions _dialogOptions = new() { MaxWidth = MaxWidth.Small, FullWidth = true };
 
     // Advanced search filters
     private string? _searchAccountNumber;
@@ -44,17 +52,6 @@ public partial class SavingsAccounts
         set
         {
             _searchAccountNumber = value;
-            _ = _table.ReloadDataAsync();
-        }
-    }
-
-    private string? _searchMemberName;
-    private string? SearchMemberName
-    {
-        get => _searchMemberName;
-        set
-        {
-            _searchMemberName = value;
             _ = _table.ReloadDataAsync();
         }
     }
@@ -72,9 +69,11 @@ public partial class SavingsAccounts
 
     /// <summary>
     /// Initializes the table context with savings account-specific configuration.
+    /// Note: Only Create and Search operations - no Update or Delete.
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
+        // Load initial preference from localStorage
         if (await ClientPreferences.GetPreference() is ClientPreference preference)
         {
             _preference = preference;
@@ -97,8 +96,7 @@ public partial class SavingsAccounts
                 new EntityField<SavingsAccountResponse>(dto => dto.Balance, "Balance", "Balance", typeof(decimal)),
                 new EntityField<SavingsAccountResponse>(dto => dto.TotalDeposits, "Total Deposits", "TotalDeposits", typeof(decimal)),
                 new EntityField<SavingsAccountResponse>(dto => dto.TotalWithdrawals, "Total Withdrawals", "TotalWithdrawals", typeof(decimal)),
-                new EntityField<SavingsAccountResponse>(dto => dto.TotalInterestEarned, "Interest Earned", "TotalInterestEarned", typeof(decimal)),
-                new EntityField<SavingsAccountResponse>(dto => dto.OpenedDate, "Opened", "OpenedDate", typeof(DateOnly)),
+                new EntityField<SavingsAccountResponse>(dto => dto.OpenedDate, "Opened", "OpenedDate", typeof(DateTimeOffset)),
                 new EntityField<SavingsAccountResponse>(dto => dto.Status, "Status", "Status"),
             ],
             searchFunc: async filter =>
@@ -108,7 +106,8 @@ public partial class SavingsAccounts
                     PageNumber = filter.PageNumber,
                     PageSize = filter.PageSize,
                     Keyword = filter.Keyword,
-                    OrderBy = filter.OrderBy
+                    OrderBy = filter.OrderBy,
+                    Status = _searchStatus
                 };
                 var result = await Client.SearchSavingsAccountsAsync("1", request).ConfigureAwait(false);
                 return result.Adapt<PaginationResponse<SavingsAccountResponse>>();
@@ -117,31 +116,21 @@ public partial class SavingsAccounts
             idFunc: dto => dto.Id,
             createFunc: async viewModel =>
             {
+                // Sync IDs from autocomplete selections
+                viewModel.SyncIdsFromSelections();
                 await Client.CreateSavingsAccountAsync("1", viewModel.Adapt<CreateSavingsAccountCommand>()).ConfigureAwait(false);
             },
-            updateFunc: null, // Savings accounts are typically not updated directly
-            deleteFunc: null, // Savings accounts should not be deleted
+            // No update or delete for savings accounts
             entityName: "Savings Account",
             entityNamePlural: "Savings Accounts",
-            entityResource: FshResources.SavingsAccounts,
-            hasExtraActionsFunc: () => true); // Always show menu for View Details/Transactions
+            entityResource: FshResources.MicroFinance,
+            hasExtraActionsFunc: () => _canDeposit || _canWithdraw);
 
         // Check permissions for extra actions
         var state = await AuthState;
-        _canDeposit = await AuthService.HasPermissionAsync(state.User, FshActions.Deposit, FshResources.SavingsTransactions);
-        _canWithdraw = await AuthService.HasPermissionAsync(state.User, FshActions.Withdraw, FshResources.SavingsTransactions);
-        _canFreeze = await AuthService.HasPermissionAsync(state.User, FshActions.Freeze, FshResources.SavingsAccounts);
-        _canUnfreeze = await AuthService.HasPermissionAsync(state.User, FshActions.Unfreeze, FshResources.SavingsAccounts);
+        _canDeposit = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.MicroFinance);
+        _canWithdraw = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.MicroFinance);
     }
-
-    private Color GetStatusColor(string status) => status switch
-    {
-        "Active" => Color.Success,
-        "Dormant" => Color.Warning,
-        "Frozen" => Color.Error,
-        "Closed" => Color.Default,
-        _ => Color.Default
-    };
 
     /// <summary>
     /// Show savings accounts help dialog.
@@ -157,54 +146,6 @@ public partial class SavingsAccounts
     }
 
     /// <summary>
-    /// Record a deposit to the account.
-    /// </summary>
-    private async Task RecordDeposit(DefaultIdType id)
-    {
-        var parameters = new DialogParameters
-        {
-            { nameof(SavingsTransactionDialog.AccountId), id },
-            { nameof(SavingsTransactionDialog.TransactionType), "Deposit" }
-        };
-
-        var dialog = await DialogService.ShowAsync<SavingsTransactionDialog>("Record Deposit", parameters, new DialogOptions
-        {
-            MaxWidth = MaxWidth.Small,
-            FullWidth = true
-        });
-
-        var result = await dialog.Result;
-        if (result?.Canceled == false)
-        {
-            await _table.ReloadDataAsync();
-        }
-    }
-
-    /// <summary>
-    /// Record a withdrawal from the account.
-    /// </summary>
-    private async Task RecordWithdrawal(DefaultIdType id)
-    {
-        var parameters = new DialogParameters
-        {
-            { nameof(SavingsTransactionDialog.AccountId), id },
-            { nameof(SavingsTransactionDialog.TransactionType), "Withdrawal" }
-        };
-
-        var dialog = await DialogService.ShowAsync<SavingsTransactionDialog>("Record Withdrawal", parameters, new DialogOptions
-        {
-            MaxWidth = MaxWidth.Small,
-            FullWidth = true
-        });
-
-        var result = await dialog.Result;
-        if (result?.Canceled == false)
-        {
-            await _table.ReloadDataAsync();
-        }
-    }
-
-    /// <summary>
     /// View account details in a dialog.
     /// </summary>
     private async Task ViewAccountDetails(DefaultIdType id)
@@ -214,7 +155,7 @@ public partial class SavingsAccounts
             { nameof(SavingsAccountDetailsDialog.AccountId), id }
         };
 
-        await DialogService.ShowAsync<SavingsAccountDetailsDialog>("Account Details", parameters, new DialogOptions
+        await DialogService.ShowAsync<SavingsAccountDetailsDialog>("Savings Account Details", parameters, new DialogOptions
         {
             MaxWidth = MaxWidth.Medium,
             FullWidth = true,
@@ -223,62 +164,62 @@ public partial class SavingsAccounts
     }
 
     /// <summary>
-    /// View transaction history for the account.
+    /// Show deposit dialog.
     /// </summary>
-    private async Task ViewTransactions(DefaultIdType id)
+    private void ShowDepositDialog(SavingsAccountResponse account)
     {
-        var parameters = new DialogParameters
-        {
-            { nameof(SavingsTransactionHistoryDialog.AccountId), id }
-        };
-
-        await DialogService.ShowAsync<SavingsTransactionHistoryDialog>("Transaction History", parameters, new DialogOptions
-        {
-            MaxWidth = MaxWidth.Large,
-            FullWidth = true,
-            CloseOnEscapeKey = true
-        });
+        _selectedAccount = account;
+        _depositAmount = 0;
+        _transactionNotes = null;
+        _depositDialogVisible = true;
     }
 
     /// <summary>
-    /// Freeze an account.
+    /// Show withdraw dialog.
     /// </summary>
-    private async Task FreezeAccount(DefaultIdType id)
+    private void ShowWithdrawDialog(SavingsAccountResponse account)
     {
-        var confirmed = await DialogService.ShowMessageBox(
-            "Freeze Account",
-            "Are you sure you want to freeze this account? All transactions will be blocked.",
-            yesText: "Freeze",
-            cancelText: "Cancel");
-
-        if (confirmed == true)
-        {
-            await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.FreezeSavingsAccountAsync("1", id),
-                Snackbar,
-                successMessage: "Account frozen successfully.");
-            await _table.ReloadDataAsync();
-        }
+        _selectedAccount = account;
+        _withdrawAmount = 0;
+        _transactionNotes = null;
+        _withdrawDialogVisible = true;
     }
 
     /// <summary>
-    /// Unfreeze an account.
+    /// Execute deposit transaction.
     /// </summary>
-    private async Task UnfreezeAccount(DefaultIdType id)
+    private async Task ExecuteDeposit()
     {
-        var confirmed = await DialogService.ShowMessageBox(
-            "Unfreeze Account",
-            "Are you sure you want to unfreeze this account? Transactions will be allowed again.",
-            yesText: "Unfreeze",
-            cancelText: "Cancel");
+        if (_selectedAccount == null || _depositAmount <= 0) return;
 
-        if (confirmed == true)
-        {
-            await ApiHelper.ExecuteCallGuardedAsync(
-                () => Client.UnfreezeSavingsAccountAsync("1", id),
-                Snackbar,
-                successMessage: "Account unfrozen successfully.");
-            await _table.ReloadDataAsync();
-        }
+        await ApiHelper.ExecuteCallGuardedAsync(
+            () => Client.DepositToSavingsAccountAsync("1", _selectedAccount.Id, new DepositCommand
+            {
+                Amount = _depositAmount,
+                Notes = _transactionNotes
+            }),
+            successMessage: $"Successfully deposited {_depositAmount:C} to account {_selectedAccount.AccountNumber}.");
+        
+        _depositDialogVisible = false;
+        await _table.ReloadDataAsync();
+    }
+
+    /// <summary>
+    /// Execute withdraw transaction.
+    /// </summary>
+    private async Task ExecuteWithdraw()
+    {
+        if (_selectedAccount == null || _withdrawAmount <= 0) return;
+
+        await ApiHelper.ExecuteCallGuardedAsync(
+            () => Client.WithdrawFromSavingsAccountAsync("1", _selectedAccount.Id, new WithdrawCommand
+            {
+                Amount = _withdrawAmount,
+                Notes = _transactionNotes
+            }),
+            successMessage: $"Successfully withdrew {_withdrawAmount:C} from account {_selectedAccount.AccountNumber}.");
+        
+        _withdrawDialogVisible = false;
+        await _table.ReloadDataAsync();
     }
 }

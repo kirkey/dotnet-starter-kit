@@ -1,0 +1,60 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-3 mb-n1" />
+            Loan Repayments Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            The Loan Repayments module allows you to record and track payments made by members towards their loans.
+        </MudText>
+
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Recording a Repayment">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Loan ID</strong>: The identifier of the loan receiving the payment.</li>
+                        <li><strong>Amount</strong>: The total payment amount.</li>
+                        <li><strong>Payment Method</strong>: How the payment was made (Cash, Bank Transfer, etc.).</li>
+                        <li><strong>Transaction Reference</strong>: External reference for tracking.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Payment Allocation">
+                <MudText Typo="Typo.body2">
+                    <p>Payments are automatically allocated in the following order:</p>
+                    <ol>
+                        <li><strong>Penalties</strong>: Any late payment fees.</li>
+                        <li><strong>Interest</strong>: Accrued interest charges.</li>
+                        <li><strong>Principal</strong>: Outstanding loan balance.</li>
+                    </ol>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Payment Methods">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Cash</strong>: Direct cash payment at branch.</li>
+                        <li><strong>Bank Transfer</strong>: Electronic bank transfer.</li>
+                        <li><strong>Mobile Money</strong>: Mobile money services.</li>
+                        <li><strong>Check</strong>: Payment by check.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}
