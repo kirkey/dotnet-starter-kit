@@ -1,4 +1,5 @@
 using Carter;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanSchedules.ApplyPayment.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanSchedules.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanSchedules.Search.v1;
 
@@ -10,6 +11,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 public class LoanScheduleEndpoints : CarterModule
 {
 
+    private const string ApplyPaymentToSchedule = "ApplyPaymentToSchedule";
     private const string GetLoanSchedule = "GetLoanSchedule";
     private const string GetLoanSchedulesByLoan = "GetLoanSchedulesByLoan";
     private const string SearchLoanSchedules = "SearchLoanSchedules";
@@ -59,5 +61,18 @@ public class LoanScheduleEndpoints : CarterModule
         .Produces<PagedList<LoanScheduleResponse>>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
+
+        schedulesGroup.MapPost("/{id:guid}/apply-payment", async (DefaultIdType id, ApplyPaymentRequest request, ISender mediator) =>
+        {
+            var response = await mediator.Send(new ApplyPaymentCommand(id, request.Amount, request.PaymentDate));
+            return Results.Ok(response);
+        })
+        .WithName(ApplyPaymentToSchedule)
+        .WithSummary("Applies a payment to a loan schedule installment")
+        .Produces<ApplyPaymentResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+        .MapToApiVersion(1);
     }
 }
+
+public sealed record ApplyPaymentRequest(decimal Amount, DateOnly PaymentDate);

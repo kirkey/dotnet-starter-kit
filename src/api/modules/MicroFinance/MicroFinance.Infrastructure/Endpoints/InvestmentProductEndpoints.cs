@@ -1,7 +1,10 @@
 using Carter;
+using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.Create.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.Search.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.Update.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.UpdateNav.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
@@ -11,9 +14,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// </summary>
 public class InvestmentProductEndpoints : CarterModule
 {
+    private const string ActivateInvestmentProduct = "ActivateInvestmentProduct";
     private const string CreateInvestmentProduct = "CreateInvestmentProduct";
+    private const string DeactivateInvestmentProduct = "DeactivateInvestmentProduct";
     private const string GetInvestmentProduct = "GetInvestmentProduct";
     private const string SearchInvestmentProducts = "SearchInvestmentProducts";
+    private const string UpdateInvestmentProduct = "UpdateInvestmentProduct";
     private const string UpdateInvestmentProductNav = "UpdateInvestmentProductNav";
 
     /// <summary>
@@ -66,7 +72,71 @@ public class InvestmentProductEndpoints : CarterModule
         .Produces<UpdateInvestmentProductNavResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
+
+        group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateInvestmentProductRequest request, ISender sender) =>
+        {
+            var result = await sender.Send(new UpdateInvestmentProductCommand(
+                id,
+                request.Name,
+                request.Description,
+                request.MinimumInvestment,
+                request.MaximumInvestment,
+                request.ManagementFeePercent,
+                request.PerformanceFeePercent,
+                request.EntryLoadPercent,
+                request.ExitLoadPercent,
+                request.MinimumHoldingDays,
+                request.FundManager,
+                request.Benchmark,
+                request.AllowPartialRedemption,
+                request.AllowSip,
+                request.DisplayOrder)).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(UpdateInvestmentProduct)
+        .WithSummary("Update an investment product")
+        .Produces<UpdateInvestmentProductResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        {
+            var result = await sender.Send(new ActivateInvestmentProductCommand(id)).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(ActivateInvestmentProduct)
+        .WithSummary("Activate an investment product")
+        .Produces<ActivateInvestmentProductResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
+        {
+            var result = await sender.Send(new DeactivateInvestmentProductCommand(id)).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(DeactivateInvestmentProduct)
+        .WithSummary("Deactivate an investment product")
+        .Produces<DeactivateInvestmentProductResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+        .MapToApiVersion(1);
     }
 }
 
 public record UpdateNavRequest(decimal NewNav, DateOnly NavDate);
+
+public sealed record UpdateInvestmentProductRequest(
+    string? Name,
+    string? Description,
+    decimal? MinimumInvestment,
+    decimal? MaximumInvestment,
+    decimal? ManagementFeePercent,
+    decimal? PerformanceFeePercent,
+    decimal? EntryLoadPercent,
+    decimal? ExitLoadPercent,
+    int? MinimumHoldingDays,
+    string? FundManager,
+    string? Benchmark,
+    bool? AllowPartialRedemption,
+    bool? AllowSip,
+    int? DisplayOrder);

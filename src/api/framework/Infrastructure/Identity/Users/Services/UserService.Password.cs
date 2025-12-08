@@ -43,7 +43,7 @@ internal sealed partial class UserService
         if (!result.Succeeded)
         {
             var errors = result.Errors.Select(e => e.Description).ToList();
-            throw new FshException("error resetting password", errors);
+            throw new NotFoundException("error resetting password", errors);
         }
     }
 
@@ -58,7 +58,7 @@ internal sealed partial class UserService
         if (!result.Succeeded)
         {
             var errors = result.Errors.Select(e => e.Description).ToList();
-            throw new FshException("failed to change password", errors);
+            throw new NotFoundException("failed to change password", errors);
         }
     }
 }

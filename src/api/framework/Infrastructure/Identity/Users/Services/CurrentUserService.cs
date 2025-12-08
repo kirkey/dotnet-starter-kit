@@ -40,7 +40,7 @@ public class CurrentUser : ICurrentUser, ICurrentUserInitializer
     {
         if (_user != null)
         {
-            throw new FshException("Method reserved for in-scope initialization");
+            throw new NotFoundException("Method reserved for in-scope initialization");
         }
 
         _user = user;
@@ -50,7 +50,7 @@ public class CurrentUser : ICurrentUser, ICurrentUserInitializer
     {
         if (_userId != DefaultIdType.Empty)
         {
-            throw new FshException("Method reserved for in-scope initialization");
+            throw new NotFoundException("Method reserved for in-scope initialization");
         }
 
         if (!string.IsNullOrEmpty(userId))

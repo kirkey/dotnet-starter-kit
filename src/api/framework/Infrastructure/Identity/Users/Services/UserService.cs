@@ -40,14 +40,14 @@ internal sealed partial class UserService(
             .Where(u => u.Id == userId && !u.EmailConfirmed)
             .FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
 
-        _ = user ?? throw new FshException("An error occurred while confirming E-Mail.");
+        _ = user ?? throw new NotFoundException("An error occurred while confirming E-Mail.");
 
         code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
         var result = await userManager.ConfirmEmailAsync(user, code).ConfigureAwait(false);
 
         return result.Succeeded
             ? $"Account Confirmed for E-Mail {user.Email}. You can now use the /api/tokens endpoint to generate JWT."
-            : throw new FshException($"An error occurred while confirming {user.Email}");
+            : throw new NotFoundException($"An error occurred while confirming {user.Email}");
     }
 
     public Task<string> ConfirmPhoneNumberAsync(string userId, string code)
@@ -119,7 +119,7 @@ internal sealed partial class UserService(
         if (!result.Succeeded)
         {
             var errors = result.Errors.Select(error => error.Description).ToList();
-            throw new FshException("error while registering a new user", errors);
+            throw new NotFoundException("error while registering a new user", errors);
         }
 
         // add basic role
@@ -148,7 +148,7 @@ internal sealed partial class UserService(
         bool isAdmin = await userManager.IsInRoleAsync(user, FshRoles.Admin).ConfigureAwait(false);
         if (isAdmin)
         {
-            throw new FshException("Administrators Profile's Status cannot be toggled");
+            throw new NotFoundException("Administrators Profile's Status cannot be toggled");
         }
 
         user.IsActive = request.ActivateUser;
@@ -186,7 +186,7 @@ internal sealed partial class UserService(
 
         if (!result.Succeeded)
         {
-            throw new FshException("Update profile failed");
+            throw new NotFoundException("Update profile failed");
         }
     }
 
@@ -202,7 +202,7 @@ internal sealed partial class UserService(
         if (!result.Succeeded)
         {
             List<string> errors = result.Errors.Select(error => error.Description).ToList();
-            throw new FshException("Delete profile failed", errors);
+            throw new NotFoundException("Delete profile failed", errors);
         }
     }
 
@@ -243,12 +243,12 @@ internal sealed partial class UserService(
             {
                 if (multiTenantContextAccessor?.MultiTenantContext?.TenantInfo?.Id == TenantConstants.Root.Id)
                 {
-                    throw new FshException("action not permitted");
+                    throw new NotFoundException("action not permitted");
                 }
             }
             else if (adminCount <= 2)
             {
-                throw new FshException("tenant should have at least 2 admins.");
+                throw new NotFoundException("tenant should have at least 2 admins.");
             }
         }
 

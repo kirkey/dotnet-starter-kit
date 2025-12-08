@@ -71,7 +71,7 @@ public class RoleService(RoleManager<FshRole> roleManager,
         _ = role ?? throw new NotFoundException("role not found");
         if (role.Name == FshRoles.Admin)
         {
-            throw new FshException("operation not permitted");
+            throw new NotFoundException("operation not permitted");
         }
 
         if (multiTenantContextAccessor?.MultiTenantContext?.TenantInfo?.Id != TenantConstants.Root.Id)
@@ -89,7 +89,7 @@ public class RoleService(RoleManager<FshRole> roleManager,
             if (!result.Succeeded)
             {
                 var errors = result.Errors.Select(error => error.Description).ToList();
-                throw new FshException("operation failed", errors);
+                throw new NotFoundException("operation failed", errors);
             }
         }
 

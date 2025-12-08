@@ -15,7 +15,7 @@ public sealed class TenantService(IMultiTenantStore<FshTenantInfo> tenantStore, 
 
         if (tenant.IsActive)
         {
-            throw new FshException($"tenant {id} is already activated");
+            throw new NotFoundException($"tenant {id} is already activated");
         }
 
         tenant.Activate();
@@ -67,7 +67,7 @@ public sealed class TenantService(IMultiTenantStore<FshTenantInfo> tenantStore, 
         var tenant = await GetTenantInfoAsync(id).ConfigureAwait(false);
         if (!tenant.IsActive)
         {
-            throw new FshException($"tenant {id} is already deactivated");
+            throw new NotFoundException($"tenant {id} is already deactivated");
         }
 
         tenant.Deactivate();

@@ -1,8 +1,11 @@
 using Carter;
+using FSH.Framework.Core.Paging;
 using FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Create.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Search.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.PaymentGateways.Update.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -12,9 +15,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 public class PaymentGatewayEndpoints : CarterModule
 {
     private const string ActivatePaymentGateway = "ActivatePaymentGateway";
+    private const string DeactivatePaymentGateway = "DeactivatePaymentGateway";
     private const string CreatePaymentGateway = "CreatePaymentGateway";
     private const string GetPaymentGateway = "GetPaymentGateway";
     private const string SearchPaymentGateways = "SearchPaymentGateways";
+    private const string UpdatePaymentGateway = "UpdatePaymentGateway";
 
     /// <summary>
     /// Maps all Payment Gateway endpoints to the route builder.
@@ -65,6 +70,29 @@ public class PaymentGatewayEndpoints : CarterModule
             .WithSummary("Activates a payment gateway")
             .Produces<ActivatePaymentGatewayResponse>()
             .RequirePermission(FshPermission.NameFor(FshActions.Activate, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
+            {
+                var response = await sender.Send(new DeactivatePaymentGatewayCommand(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(DeactivatePaymentGateway)
+            .WithSummary("Deactivates a payment gateway")
+            .Produces<DeactivatePaymentGatewayResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Deactivate, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPut("/{id:guid}", async (DefaultIdType id, UpdatePaymentGatewayCommand command, ISender sender) =>
+            {
+                if (id != command.Id) return Results.BadRequest("ID mismatch");
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(UpdatePaymentGateway)
+            .WithSummary("Updates a payment gateway configuration")
+            .Produces<UpdatePaymentGatewayResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
     }
 }

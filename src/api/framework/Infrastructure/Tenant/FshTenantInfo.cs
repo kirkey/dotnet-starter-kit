@@ -37,7 +37,7 @@ public sealed class FshTenantInfo : IFshTenantInfo
     public void SetValidity(in DateTime validTill) =>
         ValidUpto = ValidUpto < validTill
             ? validTill
-            : throw new FshException("Subscription cannot be backdated.");
+            : throw new NotFoundException("Subscription cannot be backdated.");
 
     public void Activate()
     {

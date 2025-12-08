@@ -1,7 +1,11 @@
 using Carter;
+using FSH.Framework.Core.Paging;
+using FSH.Starter.WebApi.MicroFinance.Application.UssdSessions.Cancel.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.UssdSessions.Complete.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.UssdSessions.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.UssdSessions.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.UssdSessions.Search.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.UssdSessions.Timeout.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -13,6 +17,9 @@ public class UssdSessionEndpoints : CarterModule
     private const string CreateUssdSession = "CreateUssdSession";
     private const string GetUssdSession = "GetUssdSession";
     private const string SearchUssdSessions = "SearchUssdSessions";
+    private const string CompleteUssdSession = "CompleteUssdSession";
+    private const string TimeoutUssdSession = "TimeoutUssdSession";
+    private const string CancelUssdSession = "CancelUssdSession";
 
     /// <summary>
     /// Maps all USSD Session endpoints to the route builder.
@@ -53,5 +60,41 @@ public class UssdSessionEndpoints : CarterModule
             .Produces<PagedList<UssdSessionResponse>>()
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/complete", async (DefaultIdType id, CompleteUssdSessionRequest request, ISender sender) =>
+            {
+                var command = new CompleteUssdSessionCommand(id, request.FinalOutput);
+                var response = await sender.Send(command).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(CompleteUssdSession)
+            .WithSummary("Completes a USSD session")
+            .Produces<CompleteUssdSessionResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/timeout", async (DefaultIdType id, ISender sender) =>
+            {
+                var response = await sender.Send(new TimeoutUssdSessionCommand(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(TimeoutUssdSession)
+            .WithSummary("Marks a USSD session as timed out")
+            .Produces<TimeoutUssdSessionResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/cancel", async (DefaultIdType id, ISender sender) =>
+            {
+                var response = await sender.Send(new CancelUssdSessionCommand(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(CancelUssdSession)
+            .WithSummary("Cancels a USSD session")
+            .Produces<CancelUssdSessionResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
     }
 }
+
+public sealed record CompleteUssdSessionRequest(string? FinalOutput);
