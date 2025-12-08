@@ -73,4 +73,17 @@ public partial class CustomerCases
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show customer case help dialog.
+    /// </summary>
+    private async Task ShowCustomerCaseHelp()
+    {
+        await DialogService.ShowAsync<CustomerCaseHelpDialog>("Customer Case Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

@@ -94,4 +94,17 @@ public partial class PaymentGateways
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show payment gateway help dialog.
+    /// </summary>
+    private async Task ShowPaymentGatewayHelp()
+    {
+        await DialogService.ShowAsync<PaymentGatewayHelpDialog>("Payment Gateway Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

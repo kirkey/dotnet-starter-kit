@@ -73,4 +73,17 @@ public partial class ApprovalWorkflows
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show approval workflow help dialog.
+    /// </summary>
+    private async Task ShowApprovalWorkflowHelp()
+    {
+        await DialogService.ShowAsync<ApprovalWorkflowHelpDialog>("Approval Workflow Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

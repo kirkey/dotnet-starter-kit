@@ -99,4 +99,17 @@ public partial class ReportDefinitions
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show report definition help dialog.
+    /// </summary>
+    private async Task ShowReportDefinitionHelp()
+    {
+        await DialogService.ShowAsync<ReportDefinitionHelpDialog>("Report Definition Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

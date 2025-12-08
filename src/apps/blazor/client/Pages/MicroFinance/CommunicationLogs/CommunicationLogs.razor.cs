@@ -73,4 +73,17 @@ public partial class CommunicationLogs
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show communication log help dialog.
+    /// </summary>
+    private async Task ShowCommunicationLogHelp()
+    {
+        await DialogService.ShowAsync<CommunicationLogHelpDialog>("Communication Log Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

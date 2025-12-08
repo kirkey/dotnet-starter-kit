@@ -107,4 +107,17 @@ public partial class AgentBankings
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show agent banking help dialog.
+    /// </summary>
+    private async Task ShowAgentBankingHelp()
+    {
+        await DialogService.ShowAsync<AgentBankingHelpDialog>("Agent Banking Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

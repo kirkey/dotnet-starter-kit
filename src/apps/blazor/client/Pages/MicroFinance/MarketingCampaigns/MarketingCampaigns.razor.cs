@@ -73,4 +73,17 @@ public partial class MarketingCampaigns
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show marketing campaign help dialog.
+    /// </summary>
+    private async Task ShowMarketingCampaignHelp()
+    {
+        await DialogService.ShowAsync<MarketingCampaignHelpDialog>("Marketing Campaign Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

@@ -73,4 +73,17 @@ public partial class CommunicationTemplates
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show communication template help dialog.
+    /// </summary>
+    private async Task ShowCommunicationTemplateHelp()
+    {
+        await DialogService.ShowAsync<CommunicationTemplateHelpDialog>("Communication Template Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

@@ -82,4 +82,17 @@ public partial class UssdSessions
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show USSD session help dialog.
+    /// </summary>
+    private async Task ShowUssdSessionHelp()
+    {
+        await DialogService.ShowAsync<UssdSessionHelpDialog>("USSD Session Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }

@@ -69,4 +69,17 @@ public partial class QrPayments
             CloseOnEscapeKey = true
         }).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Show QR payment help dialog.
+    /// </summary>
+    private async Task ShowQrPaymentHelp()
+    {
+        await DialogService.ShowAsync<QrPaymentHelpDialog>("QR Payment Help", new DialogParameters(), new DialogOptions
+        {
+            MaxWidth = MaxWidth.Large,
+            FullWidth = true,
+            CloseOnEscapeKey = true
+        });
+    }
 }
