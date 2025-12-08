@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanRestructures.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LoanRestructureEndpoints() : CarterModule
+public class LoanRestructureEndpoints : CarterModule
 {
 
     private const string ApproveRestructure = "ApproveRestructure";
@@ -27,7 +27,7 @@ public class LoanRestructureEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetLoanRestructureRequest(id));
             return Results.Ok(result);
@@ -38,7 +38,7 @@ public class LoanRestructureEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (Guid id, ApproveRestructureRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveRestructureRequest request, ISender sender) =>
         {
             var command = new ApproveRestructureCommand(id, request.UserId, request.ApproverName, request.EffectiveDate);
             var result = await sender.Send(command);
@@ -53,4 +53,4 @@ public class LoanRestructureEndpoints() : CarterModule
     }
 }
 
-public sealed record ApproveRestructureRequest(Guid UserId, string ApproverName, DateOnly EffectiveDate);
+public sealed record ApproveRestructureRequest(DefaultIdType UserId, string ApproverName, DateOnly EffectiveDate);

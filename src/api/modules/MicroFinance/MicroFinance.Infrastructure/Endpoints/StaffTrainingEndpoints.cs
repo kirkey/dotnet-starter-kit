@@ -8,7 +8,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.StaffTrainings.Start.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class StaffTrainingEndpoints() : CarterModule
+public class StaffTrainingEndpoints : CarterModule
 {
 
     private const string CancelStaffTraining = "CancelStaffTraining";
@@ -33,7 +33,7 @@ public class StaffTrainingEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetStaffTrainingRequest(id));
             return Results.Ok(result);
@@ -44,7 +44,7 @@ public class StaffTrainingEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/start", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/start", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new StartStaffTrainingCommand(id));
             return Results.Ok(result);
@@ -55,7 +55,7 @@ public class StaffTrainingEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/complete", async (Guid id, CompleteTrainingRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/complete", async (DefaultIdType id, CompleteTrainingRequest request, ISender sender) =>
         {
             var command = new CompleteStaffTrainingCommand(id, request.Score, request.CompletionDate);
             var result = await sender.Send(command);
@@ -67,7 +67,7 @@ public class StaffTrainingEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/certificate", async (Guid id, IssueCertificateCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/certificate", async (DefaultIdType id, IssueCertificateCommand command, ISender sender) =>
         {
             var cmd = command with { Id = id };
             var result = await sender.Send(cmd);
@@ -79,7 +79,7 @@ public class StaffTrainingEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/cancel", async (Guid id, CancelTrainingRequest? request, ISender sender) =>
+        group.MapPost("/{id:guid}/cancel", async (DefaultIdType id, CancelTrainingRequest? request, ISender sender) =>
         {
             var command = new CancelStaffTrainingCommand(id, request?.Reason);
             var result = await sender.Send(command);

@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for USSD Sessions.
 /// </summary>
-public class UssdSessionEndpoints() : CarterModule
+public class UssdSessionEndpoints : CarterModule
 {
 
     private const string CreateUssdSession = "CreateUssdSession";
@@ -31,7 +31,7 @@ public class UssdSessionEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetUssdSessionRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);

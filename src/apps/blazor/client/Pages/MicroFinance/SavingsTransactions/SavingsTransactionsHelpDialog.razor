@@ -1,0 +1,74 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-3 mb-n1" />
+            Savings Transactions Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            Savings Transactions is a read-only view of all transactions on savings accounts. 
+            Transactions are automatically created when members make deposits, withdrawals, or when interest/fees are applied.
+        </MudText>
+        
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Transaction Types</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.Add" IconColor="Color.Success">
+                <strong>Deposit</strong> - Member adds funds to their account
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Remove" IconColor="Color.Error">
+                <strong>Withdrawal</strong> - Member takes funds from their account
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.TrendingUp" IconColor="Color.Info">
+                <strong>Interest</strong> - Interest earned on the account balance
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.MoneyOff" IconColor="Color.Warning">
+                <strong>Fee</strong> - Account maintenance or transaction fees
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.SwapHoriz" IconColor="Color.Primary">
+                <strong>Transfer</strong> - Funds transferred to/from another account
+            </MudListItem>
+        </MudList>
+        
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Payment Methods</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.Money" IconColor="Color.Success">
+                <strong>Cash</strong> - Physical cash at the branch
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Receipt" IconColor="Color.Info">
+                <strong>Check</strong> - Check deposits/withdrawals
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.AccountBalance" IconColor="Color.Primary">
+                <strong>Transfer</strong> - Electronic bank transfer
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.PhoneAndroid" IconColor="Color.Secondary">
+                <strong>Mobile</strong> - Mobile money transactions
+            </MudListItem>
+        </MudList>
+        
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Tips</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.Info" IconColor="Color.Info">
+                Use the transaction type filter to view specific types of transactions
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Info" IconColor="Color.Info">
+                Use date filters to view transactions within a specific period
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Info" IconColor="Color.Info">
+                The "Balance After" column shows the running balance after each transaction
+            </MudListItem>
+        </MudList>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

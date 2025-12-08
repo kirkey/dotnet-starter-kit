@@ -1,0 +1,114 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Class="mr-3 mb-n1" />
+            Fee Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" />
+        }
+        else if (_fee != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Code</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_fee.Code</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Name</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_fee.Name</strong></MudText>
+                </MudItem>
+                @if (!string.IsNullOrEmpty(_fee.Description))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.caption">Description</MudText>
+                        <MudText Typo="Typo.body1">@_fee.Description</MudText>
+                    </MudItem>
+                }
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Fee Type</MudText>
+                    <MudChip T="string" Color="Color.Primary" Size="Size.Small">@_fee.FeeType</MudChip>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Calculation Type</MudText>
+                    <MudChip T="string" Color="Color.Secondary" Size="Size.Small">@_fee.CalculationType</MudChip>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Applies To</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_fee.AppliesTo</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Charge Frequency</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_fee.ChargeFrequency</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Amount</MudText>
+                    <MudText Typo="Typo.h6" Color="Color.Primary">
+                        <strong>@(_fee.CalculationType == "Percentage" ? $"{_fee.Amount}%" : _fee.Amount.ToString("C"))</strong>
+                    </MudText>
+                </MudItem>
+                @if (_fee.MinAmount.HasValue || _fee.MaxAmount.HasValue)
+                {
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption">Amount Range</MudText>
+                        <MudText Typo="Typo.body1">
+                            <strong>@(_fee.MinAmount?.ToString("C") ?? "N/A") - @(_fee.MaxAmount?.ToString("C") ?? "N/A")</strong>
+                        </MudText>
+                    </MudItem>
+                }
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.caption">Taxable</MudText>
+                    <MudChip T="string" Color="@(_fee.IsTaxable ? Color.Success : Color.Default)" Size="Size.Small">
+                        @(_fee.IsTaxable ? "Yes" : "No")
+                    </MudChip>
+                </MudItem>
+                @if (_fee.IsTaxable && _fee.TaxRate.HasValue)
+                {
+                    <MudItem xs="12" sm="4">
+                        <MudText Typo="Typo.caption">Tax Rate</MudText>
+                        <MudText Typo="Typo.body1"><strong>@_fee.TaxRate.Value%</strong></MudText>
+                    </MudItem>
+                }
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.caption">Status</MudText>
+                    <MudChip T="string" Color="@(_fee.IsActive ? Color.Success : Color.Error)" Size="Size.Small">
+                        @(_fee.IsActive ? "Active" : "Inactive")
+                    </MudChip>
+                </MudItem>
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType FeeId { get; set; }
+
+    private FeeDefinitionResponse? _fee;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _fee = await Client.GetFeeDefinitionAsync("1", FeeId);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

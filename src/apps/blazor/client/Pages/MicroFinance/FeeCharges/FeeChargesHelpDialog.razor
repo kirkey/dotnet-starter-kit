@@ -1,0 +1,104 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.FeeCharges
+
+<MudDialog>
+    <TitleContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Color="Color.Primary" Size="Size.Large" />
+            <MudText Typo="Typo.h6">Fee Charges Help</MudText>
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Typo="Typo.h6" Color="Color.Primary">About Fee Charges</MudText>
+                <MudText Typo="Typo.body1" Class="mb-3">
+                    Fee charges represent individual fees applied to member accounts. They track the amount due,
+                    payments received, and outstanding balances. Fees can be for services, penalties, or other
+                    charges defined in fee definitions.
+                </MudText>
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <MudPaper Elevation="0" Class="pa-3" Style="background-color: var(--mud-palette-background-grey);">
+                    <MudText Typo="Typo.subtitle1" Color="Color.Secondary"><b>Key Fields</b></MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Numbers">
+                            <b>Reference</b> - Unique identifier for the charge
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Category">
+                            <b>Fee</b> - The type of fee being charged
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Person">
+                            <b>Member</b> - Member who owes the fee
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
+                            <b>Amount</b> - Total fee amount
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Paid">
+                            <b>Paid Amount</b> - Amount already paid
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                            <b>Outstanding</b> - Remaining balance due
+                        </MudListItem>
+                    </MudList>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <MudPaper Elevation="0" Class="pa-3" Style="background-color: var(--mud-palette-background-grey);">
+                    <MudText Typo="Typo.subtitle1" Color="Color.Secondary"><b>Charge Statuses</b></MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Pending">
+                            <b>Pending</b> - Fee is due, no payment made
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.HourglassTop">
+                            <b>Partial</b> - Some payment received
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                            <b>Paid</b> - Fee fully settled
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.RemoveCircle">
+                            <b>Waived</b> - Fee forgiven
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Warning">
+                            <b>Overdue</b> - Past due date
+                        </MudListItem>
+                    </MudList>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudPaper Elevation="0" Class="pa-3" Style="background-color: var(--mud-palette-background-grey);">
+                    <MudText Typo="Typo.subtitle1" Color="Color.Secondary"><b>Available Actions</b></MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Visibility">
+                            <b>View Details</b> - See complete charge information and payment history
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Payment">
+                            <b>Record Payment</b> - Apply a payment to reduce the outstanding balance
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.RemoveCircle">
+                            <b>Waive Fee</b> - Forgive all or part of the fee (requires approval)
+                        </MudListItem>
+                    </MudList>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Class="mt-2">
+                    <b>Tip:</b> Use the status filter to quickly find pending or overdue charges that need attention.
+                </MudAlert>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Close">Got it!</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

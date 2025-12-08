@@ -81,7 +81,7 @@ internal static class AgentBankingSeeder
             };
 
             var contractStart = DateOnly.FromDateTime(DateTime.UtcNow.AddMonths(-random.Next(1, 24)));
-            var branchId = branches.Any() ? branches[random.Next(branches.Count)].Id : (Guid?)null;
+            var branchId = branches.Any() ? branches[random.Next(branches.Count)].Id : (DefaultIdType?)null;
 
             var agentBanking = AgentBanking.Create(
                 agentCode: $"AGT-{agentCode++:D5}",

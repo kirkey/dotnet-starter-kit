@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.BranchTargets.RecordProgress.v
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class BranchTargetEndpoints() : CarterModule
+public class BranchTargetEndpoints : CarterModule
 {
 
     private const string CreateBranchTarget = "CreateBranchTarget";
@@ -27,7 +27,7 @@ public class BranchTargetEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetBranchTargetRequest(id));
             return Results.Ok(result);
@@ -38,7 +38,7 @@ public class BranchTargetEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/progress", async (Guid id, RecordBranchProgressRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/progress", async (DefaultIdType id, RecordBranchProgressRequest request, ISender sender) =>
         {
             var command = new RecordBranchProgressCommand(id, request.AchievedValue);
             var result = await sender.Send(command);

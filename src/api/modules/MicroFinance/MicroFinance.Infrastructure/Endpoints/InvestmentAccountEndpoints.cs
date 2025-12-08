@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.InvestmentAccounts.SetupSip.v1
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class InvestmentAccountEndpoints() : CarterModule
+public class InvestmentAccountEndpoints : CarterModule
 {
 
     private const string CreateInvestmentAccount = "CreateInvestmentAccount";
@@ -31,7 +31,7 @@ public class InvestmentAccountEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetInvestmentAccountRequest(id));
             return Results.Ok(result);
@@ -42,7 +42,7 @@ public class InvestmentAccountEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/invest", async (Guid id, InvestAccountRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/invest", async (DefaultIdType id, InvestAccountRequest request, ISender sender) =>
         {
             var result = await sender.Send(new InvestCommand(id, request.Amount));
             return Results.Ok(result);
@@ -53,7 +53,7 @@ public class InvestmentAccountEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/redeem", async (Guid id, RedeemAccountRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/redeem", async (DefaultIdType id, RedeemAccountRequest request, ISender sender) =>
         {
             var result = await sender.Send(new RedeemCommand(id, request.Amount, request.GainLoss));
             return Results.Ok(result);
@@ -64,7 +64,7 @@ public class InvestmentAccountEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/sip", async (Guid id, SetupSipRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/sip", async (DefaultIdType id, SetupSipRequest request, ISender sender) =>
         {
             var result = await sender.Send(new SetupSipCommand(id, request.Amount, request.Frequency, request.NextDate, request.LinkedSavingsAccountId));
             return Results.Ok(result);
@@ -80,4 +80,4 @@ public class InvestmentAccountEndpoints() : CarterModule
 
 public record InvestAccountRequest(decimal Amount);
 public record RedeemAccountRequest(decimal Amount, decimal GainLoss);
-public record SetupSipRequest(decimal Amount, string Frequency, DateOnly NextDate, Guid LinkedSavingsAccountId);
+public record SetupSipRequest(decimal Amount, string Frequency, DateOnly NextDate, DefaultIdType LinkedSavingsAccountId);

@@ -11,7 +11,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Fee Charges.
 /// </summary>
-public class FeeChargeEndpoints() : CarterModule
+public class FeeChargeEndpoints : CarterModule
 {
 
     private const string CreateFeeCharge = "CreateFeeCharge";
@@ -41,7 +41,7 @@ public class FeeChargeEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        chargesGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
+        chargesGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new GetFeeChargeRequest(id));
             return Results.Ok(response);
@@ -63,7 +63,7 @@ public class FeeChargeEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        chargesGroup.MapGet("/by-member/{memberId:guid}", async (Guid memberId, ISender mediator) =>
+        chargesGroup.MapGet("/by-member/{memberId:guid}", async (DefaultIdType memberId, ISender mediator) =>
         {
             var request = new SearchFeeChargesCommand
             {
@@ -80,7 +80,7 @@ public class FeeChargeEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        chargesGroup.MapGet("/by-definition/{feeDefinitionId:guid}", async (Guid feeDefinitionId, ISender mediator) =>
+        chargesGroup.MapGet("/by-definition/{feeDefinitionId:guid}", async (DefaultIdType feeDefinitionId, ISender mediator) =>
         {
             var request = new SearchFeeChargesCommand
             {
@@ -97,7 +97,7 @@ public class FeeChargeEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        chargesGroup.MapPost("/{id:guid}/payment", async (Guid id, RecordFeePaymentCommand command, ISender mediator) =>
+        chargesGroup.MapPost("/{id:guid}/payment", async (DefaultIdType id, RecordFeePaymentCommand command, ISender mediator) =>
         {
             if (id != command.FeeChargeId) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);
@@ -109,7 +109,7 @@ public class FeeChargeEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        chargesGroup.MapPost("/{id:guid}/waive", async (Guid id, WaiveFeeChargeCommand command, ISender mediator) =>
+        chargesGroup.MapPost("/{id:guid}/waive", async (DefaultIdType id, WaiveFeeChargeCommand command, ISender mediator) =>
         {
             if (id != command.FeeChargeId) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);
@@ -121,7 +121,7 @@ public class FeeChargeEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        chargesGroup.MapPost("/{id:guid}/reverse", async (Guid id, ReverseFeeChargeCommand command, ISender mediator) =>
+        chargesGroup.MapPost("/{id:guid}/reverse", async (DefaultIdType id, ReverseFeeChargeCommand command, ISender mediator) =>
         {
             if (id != command.FeeChargeId) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);

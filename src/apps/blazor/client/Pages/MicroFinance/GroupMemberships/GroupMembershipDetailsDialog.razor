@@ -1,0 +1,120 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.GroupMemberships
+
+<MudDialog>
+    <TitleContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+            <MudIcon Icon="@Icons.Material.Filled.Groups" Color="Color.Primary" Size="Size.Large" />
+            <MudText Typo="Typo.h6">Membership Details</MudText>
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+        }
+        else if (_membership is not null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudPaper Elevation="0" Class="pa-4" Style="background-color: var(--mud-palette-background-grey);">
+                        <MudGrid>
+                            <MudItem xs="12" md="6">
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">Group ID</MudText>
+                                <MudText Typo="Typo.body1"><b>@_membership.GroupId</b></MudText>
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">Status</MudText>
+                                <MudChip T="string" Color="@GetStatusColor(_membership.Status)" Size="Size.Small">
+                                    @_membership.Status
+                                </MudChip>
+                            </MudItem>
+                        </MudGrid>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider Class="my-2" />
+                    <MudText Typo="Typo.subtitle1" Color="Color.Primary"><b>Member Information</b></MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Member ID</MudText>
+                    <MudText Typo="Typo.body1">@_membership.MemberId</MudText>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider Class="my-2" />
+                    <MudText Typo="Typo.subtitle1" Color="Color.Primary"><b>Membership Details</b></MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Role</MudText>
+                        <MudText Typo="Typo.h6" Color="Color.Primary">@_membership.Role</MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Join Date</MudText>
+                        <MudText Typo="Typo.h6">@_membership.JoinDate.ToString("MMM dd, yyyy")</MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Leave Date</MudText>
+                        <MudText Typo="Typo.h6">@(_membership.LeaveDate?.ToString("MMM dd, yyyy") ?? "N/A")</MudText>
+                    </MudPaper>
+                </MudItem>
+
+                @if (!string.IsNullOrEmpty(_membership.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudDivider Class="my-2" />
+                        <MudText Typo="Typo.subtitle1" Color="Color.Primary"><b>Notes</b></MudText>
+                        <MudText Typo="Typo.body2">@_membership.Notes</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Warning">Membership details not found.</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" Variant="Variant.Outlined" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType MembershipId { get; set; }
+
+    private GroupMembershipResponse? _membership;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _membership = await Client.GetGroupMembershipAsync("1", MembershipId);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private Color GetStatusColor(string? status) => status?.ToLowerInvariant() switch
+    {
+        "active" => Color.Success,
+        "suspended" => Color.Warning,
+        "withdrawn" => Color.Default,
+        _ => Color.Default
+    };
+
+    private void Close() => MudDialog.Close();
+}

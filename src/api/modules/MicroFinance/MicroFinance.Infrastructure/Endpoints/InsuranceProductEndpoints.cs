@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.InsuranceProducts.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class InsuranceProductEndpoints() : CarterModule
+public class InsuranceProductEndpoints : CarterModule
 {
 
     private const string ActivateInsuranceProduct = "ActivateInsuranceProduct";
@@ -27,7 +27,7 @@ public class InsuranceProductEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetInsuranceProductRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -38,7 +38,7 @@ public class InsuranceProductEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivateInsuranceProductCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);

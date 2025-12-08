@@ -1,0 +1,36 @@
+@page "/microfinance/loan-schedules"
+
+<PageHeader Title="Loan Schedules" Header="Loan Schedules" SubHeader="View loan payment schedules and installments." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="LoanScheduleResponse" TId="DefaultIdType" TRequest="LoanScheduleViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchIsPaid"
+                       Label="Payment Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Paid")">Paid</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Unpaid")">Unpaid</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Overdue")">Overdue</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewScheduleDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+</EntityTable>

@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollateralValuations.Submit.v1
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollateralValuationEndpoints() : CarterModule
+public class CollateralValuationEndpoints : CarterModule
 {
 
     private const string ApproveValuation = "ApproveValuation";
@@ -31,7 +31,7 @@ public class CollateralValuationEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetCollateralValuationRequest(id));
             return Results.Ok(result);
@@ -42,7 +42,7 @@ public class CollateralValuationEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/submit", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/submit", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new SubmitValuationCommand(id));
             return Results.Ok(result);
@@ -53,7 +53,7 @@ public class CollateralValuationEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Submit, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (Guid id, ApproveRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveRequest request, ISender sender) =>
         {
             var result = await sender.Send(new ApproveValuationCommand(id, request.ApprovedById));
             return Results.Ok(result);
@@ -64,7 +64,7 @@ public class CollateralValuationEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reject", async (Guid id, RejectRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectRequest request, ISender sender) =>
         {
             var result = await sender.Send(new RejectValuationCommand(id, request.Reason));
             return Results.Ok(result);
@@ -78,5 +78,5 @@ public class CollateralValuationEndpoints() : CarterModule
     }
 }
 
-public record ApproveRequest(Guid ApprovedById);
+public record ApproveRequest(DefaultIdType ApprovedById);
 public record RejectRequest(string Reason);

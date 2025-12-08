@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.KycDocuments.Verify.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class KycDocumentEndpoints() : CarterModule
+public class KycDocumentEndpoints : CarterModule
 {
 
     private const string CreateKycDocument = "CreateKycDocument";
@@ -29,7 +29,7 @@ public class KycDocumentEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetKycDocumentRequest(id));
             return Results.Ok(result);
@@ -40,7 +40,7 @@ public class KycDocumentEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/verify", async (Guid id, VerifyKycDocumentRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/verify", async (DefaultIdType id, VerifyKycDocumentRequest request, ISender sender) =>
         {
             var command = new VerifyKycDocumentCommand(id, request.VerifiedById, request.Notes);
             var result = await sender.Send(command);
@@ -52,7 +52,7 @@ public class KycDocumentEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reject", async (Guid id, RejectKycDocumentRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectKycDocumentRequest request, ISender sender) =>
         {
             var command = new RejectKycDocumentCommand(id, request.RejectedById, request.Reason);
             var result = await sender.Send(command);
@@ -67,5 +67,5 @@ public class KycDocumentEndpoints() : CarterModule
     }
 }
 
-public sealed record VerifyKycDocumentRequest(Guid VerifiedById, string? Notes);
-public sealed record RejectKycDocumentRequest(Guid RejectedById, string Reason);
+public sealed record VerifyKycDocumentRequest(DefaultIdType VerifiedById, string? Notes);
+public sealed record RejectKycDocumentRequest(DefaultIdType RejectedById, string Reason);

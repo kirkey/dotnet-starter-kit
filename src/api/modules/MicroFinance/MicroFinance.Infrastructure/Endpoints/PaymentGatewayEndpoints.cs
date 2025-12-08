@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Payment Gateways.
 /// </summary>
-public class PaymentGatewayEndpoints() : CarterModule
+public class PaymentGatewayEndpoints : CarterModule
 {
 
     private const string ActivatePaymentGateway = "ActivatePaymentGateway";
@@ -33,7 +33,7 @@ public class PaymentGatewayEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetPaymentGatewayRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -44,7 +44,7 @@ public class PaymentGatewayEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivatePaymentGatewayCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);

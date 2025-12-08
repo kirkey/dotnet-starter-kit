@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.RiskIndicators.RecordMeasureme
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class RiskIndicatorEndpoints() : CarterModule
+public class RiskIndicatorEndpoints : CarterModule
 {
 
     private const string ActivateRiskIndicator = "ActivateRiskIndicator";
@@ -31,7 +31,7 @@ public class RiskIndicatorEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetRiskIndicatorRequest(id));
             return Results.Ok(result);
@@ -42,7 +42,7 @@ public class RiskIndicatorEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/measure", async (Guid id, RecordMeasurementRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/measure", async (DefaultIdType id, RecordMeasurementRequest request, ISender sender) =>
         {
             var command = new RecordMeasurementCommand(id, request.Value);
             var result = await sender.Send(command);
@@ -54,7 +54,7 @@ public class RiskIndicatorEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ActivateRiskIndicatorCommand(id));
             return Results.Ok(result);
@@ -65,7 +65,7 @@ public class RiskIndicatorEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/deactivate", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new DeactivateRiskIndicatorCommand(id));
             return Results.Ok(result);

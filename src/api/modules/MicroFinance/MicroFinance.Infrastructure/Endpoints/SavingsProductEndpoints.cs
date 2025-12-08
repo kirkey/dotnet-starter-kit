@@ -9,7 +9,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Savings Products.
 /// </summary>
-public class SavingsProductEndpoints() : CarterModule
+public class SavingsProductEndpoints : CarterModule
 {
 
     private const string CreateSavingsProduct = "CreateSavingsProduct";
@@ -35,7 +35,7 @@ public class SavingsProductEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsProductsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        savingsProductsGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetSavingsProductRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -57,7 +57,7 @@ public class SavingsProductEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsProductsGroup.MapPut("/{id:guid}", async (Guid id, UpdateSavingsProductCommand command, ISender sender) =>
+        savingsProductsGroup.MapPut("/{id:guid}", async (DefaultIdType id, UpdateSavingsProductCommand command, ISender sender) =>
             {
                 if (id != command.Id)
                 {

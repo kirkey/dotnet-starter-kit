@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Share Transactions.
 /// </summary>
-public class ShareTransactionEndpoints() : CarterModule
+public class ShareTransactionEndpoints : CarterModule
 {
 
     private const string GetShareTransaction = "GetShareTransaction";
@@ -21,7 +21,7 @@ public class ShareTransactionEndpoints() : CarterModule
     {
         var transactionsGroup = app.MapGroup("microfinance/share-transactions").WithTags("Share Transactions");
 
-        transactionsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
+        transactionsGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new GetShareTransactionRequest(id));
             return Results.Ok(response);
@@ -43,7 +43,7 @@ public class ShareTransactionEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        transactionsGroup.MapGet("/by-account/{accountId:guid}", async (Guid accountId, ISender mediator) =>
+        transactionsGroup.MapGet("/by-account/{accountId:guid}", async (DefaultIdType accountId, ISender mediator) =>
         {
             var request = new SearchShareTransactionsCommand
             {

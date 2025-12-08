@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanWriteOffs.RecordRecovery.v
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LoanWriteOffEndpoints() : CarterModule
+public class LoanWriteOffEndpoints : CarterModule
 {
 
     private const string ApproveWriteOff = "ApproveWriteOff";
@@ -31,7 +31,7 @@ public class LoanWriteOffEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetLoanWriteOffRequest(id));
             return Results.Ok(result);
@@ -42,7 +42,7 @@ public class LoanWriteOffEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (Guid id, ApproveWriteOffRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveWriteOffRequest request, ISender sender) =>
         {
             var command = new ApproveWriteOffCommand(id, request.UserId, request.ApproverName, request.WriteOffDate);
             var result = await sender.Send(command);
@@ -54,7 +54,7 @@ public class LoanWriteOffEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/process", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/process", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ProcessWriteOffCommand(id));
             return Results.Ok(result);
@@ -65,7 +65,7 @@ public class LoanWriteOffEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/record-recovery", async (Guid id, RecordRecoveryRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/record-recovery", async (DefaultIdType id, RecordRecoveryRequest request, ISender sender) =>
         {
             var command = new RecordWriteOffRecoveryCommand(id, request.Amount, request.Notes);
             var result = await sender.Send(command);
@@ -80,5 +80,5 @@ public class LoanWriteOffEndpoints() : CarterModule
     }
 }
 
-public sealed record ApproveWriteOffRequest(Guid UserId, string ApproverName, DateOnly WriteOffDate);
+public sealed record ApproveWriteOffRequest(DefaultIdType UserId, string ApproverName, DateOnly WriteOffDate);
 public sealed record RecordRecoveryRequest(decimal Amount, string? Notes);

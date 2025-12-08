@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for QR Payments.
 /// </summary>
-public class QrPaymentEndpoints() : CarterModule
+public class QrPaymentEndpoints : CarterModule
 {
 
     private const string CreateDynamicQr = "CreateDynamicQr";
@@ -44,7 +44,7 @@ public class QrPaymentEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetQrPaymentRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);

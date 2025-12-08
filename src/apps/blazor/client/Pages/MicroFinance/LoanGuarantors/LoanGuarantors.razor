@@ -1,0 +1,138 @@
+@page "/microfinance/loan-guarantors"
+
+<PageHeader Title="Loan Guarantors" Header="Loan Guarantors" SubHeader="Manage member guarantees for loans." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="LoanGuarantorResponse" TId="DefaultIdType" TRequest="LoanGuarantorViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchRelationship"
+                       Label="Relationship"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Spouse")">Spouse</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Parent")">Parent</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Sibling")">Sibling</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Child")">Child</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Friend")">Friend</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Colleague")">Colleague</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Pending")">Pending</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Approved")">Approved</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Active")">Active</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Rejected")">Rejected</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Released")">Released</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Expired")">Expired</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (entity.Status == "Active" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.PersonRemove" OnClick="@(() => ReleaseGuarantor(entity.Id))">
+                Release
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewGuarantorDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Guarantor Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.LoanId"
+                          For="@(() => context.LoanId)"
+                          Label="Loan ID"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.GuarantorMemberId"
+                          For="@(() => context.GuarantorMemberId)"
+                          Label="Guarantor Member ID"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.GuaranteedAmount"
+                             For="@(() => context.GuaranteedAmount)"
+                             Label="Guaranteed Amount"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Format="N2" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.Relationship"
+                       For="@(() => context.Relationship)"
+                       Label="Relationship"
+                       Variant="Variant.Filled">
+                <MudSelectItem Value="@("Spouse")">Spouse</MudSelectItem>
+                <MudSelectItem Value="@("Parent")">Parent</MudSelectItem>
+                <MudSelectItem Value="@("Sibling")">Sibling</MudSelectItem>
+                <MudSelectItem Value="@("Child")">Child</MudSelectItem>
+                <MudSelectItem Value="@("Friend")">Friend</MudSelectItem>
+                <MudSelectItem Value="@("Colleague")">Colleague</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.GuaranteeDate"
+                           For="@(() => context.GuaranteeDate)"
+                           Label="Guarantee Date"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.ExpiryDate"
+                           For="@(() => context.ExpiryDate)"
+                           Label="Expiry Date"
+                           Variant="Variant.Filled" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+

@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CreditBureauInquiries.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CreditBureauInquiryEndpoints() : CarterModule
+public class CreditBureauInquiryEndpoints : CarterModule
 {
 
     private const string CompleteInquiry = "CompleteInquiry";
@@ -27,7 +27,7 @@ public class CreditBureauInquiryEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetCreditBureauInquiryRequest(id));
             return Results.Ok(result);
@@ -38,7 +38,7 @@ public class CreditBureauInquiryEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/complete", async (Guid id, CompleteInquiryRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/complete", async (DefaultIdType id, CompleteInquiryRequest request, ISender sender) =>
         {
             var result = await sender.Send(new CompleteInquiryCommand(
                 id,
@@ -56,4 +56,4 @@ public class CreditBureauInquiryEndpoints() : CarterModule
     }
 }
 
-public record CompleteInquiryRequest(string ReferenceNumber, int? CreditScore, Guid? CreditReportId);
+public record CompleteInquiryRequest(string ReferenceNumber, int? CreditScore, DefaultIdType? CreditReportId);

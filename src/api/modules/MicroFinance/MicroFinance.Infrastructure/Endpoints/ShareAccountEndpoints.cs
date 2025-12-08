@@ -13,7 +13,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Share Accounts.
 /// </summary>
-public class ShareAccountEndpoints() : CarterModule
+public class ShareAccountEndpoints : CarterModule
 {
 
     private const string CloseShareAccount = "CloseShareAccount";
@@ -43,7 +43,7 @@ public class ShareAccountEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareAccountsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        shareAccountsGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetShareAccountRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -65,7 +65,7 @@ public class ShareAccountEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareAccountsGroup.MapPost("/{id:guid}/purchase", async (Guid id, PurchaseSharesCommand command, ISender sender) =>
+        shareAccountsGroup.MapPost("/{id:guid}/purchase", async (DefaultIdType id, PurchaseSharesCommand command, ISender sender) =>
             {
                 if (id != command.ShareAccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -77,7 +77,7 @@ public class ShareAccountEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareAccountsGroup.MapPost("/{id:guid}/redeem", async (Guid id, RedeemSharesCommand command, ISender sender) =>
+        shareAccountsGroup.MapPost("/{id:guid}/redeem", async (DefaultIdType id, RedeemSharesCommand command, ISender sender) =>
             {
                 if (id != command.ShareAccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -89,7 +89,7 @@ public class ShareAccountEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareAccountsGroup.MapPost("/{id:guid}/post-dividend", async (Guid id, PostDividendCommand command, ISender sender) =>
+        shareAccountsGroup.MapPost("/{id:guid}/post-dividend", async (DefaultIdType id, PostDividendCommand command, ISender sender) =>
             {
                 if (id != command.ShareAccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -101,7 +101,7 @@ public class ShareAccountEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareAccountsGroup.MapPost("/{id:guid}/pay-dividend", async (Guid id, PayDividendCommand command, ISender sender) =>
+        shareAccountsGroup.MapPost("/{id:guid}/pay-dividend", async (DefaultIdType id, PayDividendCommand command, ISender sender) =>
             {
                 if (id != command.ShareAccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -113,7 +113,7 @@ public class ShareAccountEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareAccountsGroup.MapPost("/{id:guid}/close", async (Guid id, CloseShareAccountCommand command, ISender sender) =>
+        shareAccountsGroup.MapPost("/{id:guid}/close", async (DefaultIdType id, CloseShareAccountCommand command, ISender sender) =>
             {
                 if (id != command.AccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

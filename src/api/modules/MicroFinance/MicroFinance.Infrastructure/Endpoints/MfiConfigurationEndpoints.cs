@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for MFI Configuration.
 /// </summary>
-public class MfiConfigurationEndpoints() : CarterModule
+public class MfiConfigurationEndpoints : CarterModule
 {
 
     private const string CreateMfiConfiguration = "CreateMfiConfiguration";
@@ -33,7 +33,7 @@ public class MfiConfigurationEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetMfiConfigurationRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -44,7 +44,7 @@ public class MfiConfigurationEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPut("/{id:guid}", async (Guid id, UpdateMfiConfigurationCommand command, ISender sender) =>
+        group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateMfiConfigurationCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

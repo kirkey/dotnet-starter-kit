@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.InvestmentTransactions.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class InvestmentTransactionEndpoints() : CarterModule
+public class InvestmentTransactionEndpoints : CarterModule
 {
 
     private const string CompleteInvestmentTransaction = "CompleteInvestmentTransaction";
@@ -40,7 +40,7 @@ public class InvestmentTransactionEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetInvestmentTransactionRequest(id));
             return Results.Ok(result);
@@ -51,7 +51,7 @@ public class InvestmentTransactionEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/complete", async (Guid id, CompleteTransactionRequest? request, ISender sender) =>
+        group.MapPost("/{id:guid}/complete", async (DefaultIdType id, CompleteTransactionRequest? request, ISender sender) =>
         {
             var result = await sender.Send(new CompleteTransactionCommand(id, request?.GainLoss));
             return Results.Ok(result);

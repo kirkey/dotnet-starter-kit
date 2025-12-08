@@ -1,0 +1,93 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Schedule" Class="mr-3 mb-n1" />
+            Schedule Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" />
+        }
+        else if (_schedule != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Installment Number</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_schedule.InstallmentNumber</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Due Date</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_schedule.DueDate.ToString("MMM dd, yyyy")</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Principal Amount</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_schedule.PrincipalAmount.ToString("C")</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Interest Amount</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_schedule.InterestAmount.ToString("C")</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Total Amount</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_schedule.TotalAmount.ToString("C")</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Paid Amount</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_schedule.PaidAmount.ToString("C")</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Payment Status</MudText>
+                    <MudChip T="string" Color="@(_schedule.IsPaid ? Color.Success : Color.Warning)" Size="Size.Small">
+                        @(_schedule.IsPaid ? "Paid" : "Unpaid")
+                    </MudChip>
+                </MudItem>
+                @if (_schedule.PaidDate.HasValue)
+                {
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption">Paid Date</MudText>
+                        <MudText Typo="Typo.body1"><strong>@_schedule.PaidDate.Value.ToString("MMM dd, yyyy")</strong></MudText>
+                    </MudItem>
+                }
+                <MudItem xs="12">
+                    <MudDivider Class="my-2" />
+                    <MudText Typo="Typo.caption">Outstanding Balance</MudText>
+                    <MudText Typo="Typo.h6" Color="@((_schedule.TotalAmount - _schedule.PaidAmount) > 0 ? Color.Error : Color.Success)">
+                        <strong>@((_schedule.TotalAmount - _schedule.PaidAmount).ToString("C"))</strong>
+                    </MudText>
+                </MudItem>
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType ScheduleId { get; set; }
+
+    private LoanScheduleResponse? _schedule;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _schedule = await Client.GetLoanScheduleAsync("1", ScheduleId);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private void Close() => MudDialog.Close();
+}

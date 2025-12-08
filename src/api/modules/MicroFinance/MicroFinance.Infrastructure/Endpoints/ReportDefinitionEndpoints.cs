@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Report Definitions.
 /// </summary>
-public class ReportDefinitionEndpoints() : CarterModule
+public class ReportDefinitionEndpoints : CarterModule
 {
 
     private const string ActivateReportDefinition = "ActivateReportDefinition";
@@ -33,7 +33,7 @@ public class ReportDefinitionEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetReportDefinitionRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -44,7 +44,7 @@ public class ReportDefinitionEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivateReportDefinitionCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);

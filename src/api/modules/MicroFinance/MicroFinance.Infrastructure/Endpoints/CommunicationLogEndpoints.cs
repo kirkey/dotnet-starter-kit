@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CommunicationLogs.MarkDelivere
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CommunicationLogEndpoints() : CarterModule
+public class CommunicationLogEndpoints : CarterModule
 {
 
     private const string CreateCommunicationLog = "CreateCommunicationLog";
@@ -27,7 +27,7 @@ public class CommunicationLogEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetCommunicationLogRequest(id));
             return Results.Ok(result);
@@ -38,7 +38,7 @@ public class CommunicationLogEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/delivered", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/delivered", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new MarkCommunicationDeliveredCommand(id));
             return Results.Ok(result);

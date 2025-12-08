@@ -1,0 +1,41 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-3 mb-n1" />
+            Loan Schedules Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            The Loan Schedules module displays payment schedules for all loans in the system.
+        </MudText>
+        
+        <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Key Features:</strong></MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.Schedule">View loan payment schedules</MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.CalendarMonth">Track due dates for each installment</MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Payments">Monitor principal and interest breakdown</MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.CheckCircle">Track payment status (paid/unpaid)</MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Warning">Identify overdue installments</MudListItem>
+        </MudList>
+
+        <MudText Typo="Typo.subtitle1" Class="mt-4 mb-2"><strong>Note:</strong></MudText>
+        <MudText Typo="Typo.body2">
+            Loan schedules are automatically generated when a loan is disbursed based on the loan product's 
+            repayment terms. The schedule cannot be manually edited - any changes to the loan will 
+            automatically recalculate the schedule.
+        </MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

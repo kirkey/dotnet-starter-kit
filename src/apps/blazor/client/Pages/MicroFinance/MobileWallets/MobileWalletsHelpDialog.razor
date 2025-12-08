@@ -1,0 +1,68 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-3 mb-n1" />
+            Mobile Wallets Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            Mobile Wallets allow members to link their mobile money accounts for convenient transactions. 
+            This enables deposits, withdrawals, and transfers via mobile money platforms.
+        </MudText>
+        
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Supported Providers</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.PhoneAndroid" IconColor="Color.Success">
+                <strong>M-Pesa</strong> - Kenya, Tanzania, and other regions
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.PhoneAndroid" IconColor="Color.Error">
+                <strong>Airtel Money</strong> - Multi-country coverage
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.PhoneAndroid" IconColor="Color.Warning">
+                <strong>MTN Mobile Money</strong> - Africa-wide
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.PhoneAndroid" IconColor="Color.Info">
+                <strong>GCash / PayMaya</strong> - Philippines
+            </MudListItem>
+        </MudList>
+        
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Wallet Tiers</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.Star" IconColor="Color.Default">
+                <strong>Basic</strong> - Lower limits, basic features
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.StarHalf" IconColor="Color.Info">
+                <strong>Standard</strong> - Medium limits, full features
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Star" IconColor="Color.Warning">
+                <strong>Premium</strong> - Higher limits, priority support
+            </MudListItem>
+        </MudList>
+        
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Wallet Status</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                <strong>Active</strong> - Wallet is operational
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.PauseCircle" IconColor="Color.Warning">
+                <strong>Suspended</strong> - Temporarily disabled
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Block" IconColor="Color.Error">
+                <strong>Blocked</strong> - Permanently disabled
+            </MudListItem>
+        </MudList>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

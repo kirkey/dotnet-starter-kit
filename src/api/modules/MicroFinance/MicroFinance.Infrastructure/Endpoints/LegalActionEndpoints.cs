@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LegalActions.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LegalActionEndpoints() : CarterModule
+public class LegalActionEndpoints : CarterModule
 {
 
     private const string CreateLegalAction = "CreateLegalAction";
@@ -27,7 +27,7 @@ public class LegalActionEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetLegalActionRequest(id));
             return Results.Ok(result);
@@ -38,7 +38,7 @@ public class LegalActionEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/file-case", async (Guid id, FileCaseRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/file-case", async (DefaultIdType id, FileCaseRequest request, ISender sender) =>
         {
             var command = new FileCaseCommand(id, request.FiledDate, request.CaseReference, request.CourtName, request.CourtFees);
             var result = await sender.Send(command);

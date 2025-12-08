@@ -4,7 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollectionActions.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollectionActionEndpoints() : CarterModule
+public class CollectionActionEndpoints : CarterModule
 {
 
     private const string CreateCollectionAction = "CreateCollectionAction";
@@ -25,7 +25,7 @@ public class CollectionActionEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetCollectionActionRequest(id));
             return Results.Ok(result);

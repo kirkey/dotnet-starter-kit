@@ -12,7 +12,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Group Memberships.
 /// </summary>
-public class GroupMembershipEndpoints() : CarterModule
+public class GroupMembershipEndpoints : CarterModule
 {
 
     private const string CreateGroupMembership = "CreateGroupMembership";
@@ -43,7 +43,7 @@ public class GroupMembershipEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        membershipsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
+        membershipsGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new GetGroupMembershipRequest(id));
             return Results.Ok(response);
@@ -65,7 +65,7 @@ public class GroupMembershipEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        membershipsGroup.MapGet("/by-group/{groupId:guid}", async (Guid groupId, ISender mediator) =>
+        membershipsGroup.MapGet("/by-group/{groupId:guid}", async (DefaultIdType groupId, ISender mediator) =>
         {
             var request = new SearchGroupMembershipsCommand
             {
@@ -82,7 +82,7 @@ public class GroupMembershipEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        membershipsGroup.MapGet("/by-member/{memberId:guid}", async (Guid memberId, ISender mediator) =>
+        membershipsGroup.MapGet("/by-member/{memberId:guid}", async (DefaultIdType memberId, ISender mediator) =>
         {
             var request = new SearchGroupMembershipsCommand
             {
@@ -99,7 +99,7 @@ public class GroupMembershipEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        membershipsGroup.MapPut("/{id:guid}/role", async (Guid id, UpdateMembershipRoleCommand command, ISender mediator) =>
+        membershipsGroup.MapPut("/{id:guid}/role", async (DefaultIdType id, UpdateMembershipRoleCommand command, ISender mediator) =>
         {
             if (id != command.Id) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);
@@ -111,7 +111,7 @@ public class GroupMembershipEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        membershipsGroup.MapPost("/{id:guid}/withdraw", async (Guid id, WithdrawMembershipCommand command, ISender mediator) =>
+        membershipsGroup.MapPost("/{id:guid}/withdraw", async (DefaultIdType id, WithdrawMembershipCommand command, ISender mediator) =>
         {
             if (id != command.Id) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);
@@ -123,7 +123,7 @@ public class GroupMembershipEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Withdraw, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        membershipsGroup.MapPost("/{id:guid}/suspend", async (Guid id, ISender mediator) =>
+        membershipsGroup.MapPost("/{id:guid}/suspend", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new SuspendMembershipCommand(id));
             return Results.Ok(response);
@@ -134,7 +134,7 @@ public class GroupMembershipEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        membershipsGroup.MapPost("/{id:guid}/reactivate", async (Guid id, ISender mediator) =>
+        membershipsGroup.MapPost("/{id:guid}/reactivate", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new ReactivateMembershipCommand(id));
             return Results.Ok(response);

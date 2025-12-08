@@ -222,12 +222,14 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Member Management", IsGroupHeader = true },
                         new MenuSectionSubItemModel { Title = "Members", Icon = Icons.Material.Filled.People, Href = "/microfinance/members", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Member Groups", Icon = Icons.Material.Filled.Groups, Href = "/microfinance/member-groups", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Group Memberships", Icon = Icons.Material.Filled.GroupAdd, Href = "/microfinance/groupmemberships", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                         
                         // ========== PRODUCT CATALOG ==========
                         new MenuSectionSubItemModel { Title = "Product Catalog", IsGroupHeader = true },
                         new MenuSectionSubItemModel { Title = "Savings Products", Icon = Icons.Material.Filled.Savings, Href = "/microfinance/savings-products", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Loan Products", Icon = Icons.Material.Filled.CreditScore, Href = "/microfinance/loan-products", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Share Products", Icon = Icons.Material.Filled.Share, Href = "/microfinance/share-products", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Fee Definitions", Icon = Icons.Material.Filled.AttachMoney, Href = "/microfinance/feedefinitions", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                         
                         // ========== ACCOUNTS ==========
                         new MenuSectionSubItemModel { Title = "Accounts", IsGroupHeader = true },
@@ -236,6 +238,17 @@ public class MenuService : IMenuService
                         new MenuSectionSubItemModel { Title = "Share Accounts", Icon = Icons.Material.Filled.Share, Href = "/microfinance/share-accounts", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Loans", Icon = Icons.Material.Filled.MonetizationOn, Href = "/microfinance/loans", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                         new MenuSectionSubItemModel { Title = "Loan Repayments", Icon = Icons.Material.Filled.Payment, Href = "/microfinance/loan-repayments", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Loan Collaterals", Icon = Icons.Material.Filled.Security, Href = "/microfinance/loan-collaterals", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Loan Guarantors", Icon = Icons.Material.Filled.Handshake, Href = "/microfinance/loan-guarantors", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Loan Schedules", Icon = Icons.Material.Filled.CalendarMonth, Href = "/microfinance/loanschedules", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
+                        
+                        // ========== TRANSACTIONS & OPERATIONS ==========
+                        new MenuSectionSubItemModel { Title = "Transactions & Operations", IsGroupHeader = true },
+                        new MenuSectionSubItemModel { Title = "Savings Transactions", Icon = Icons.Material.Filled.Receipt, Href = "/microfinance/savings-transactions", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Share Transactions", Icon = Icons.Material.Filled.SwapHoriz, Href = "/microfinance/sharetransactions", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Fee Charges", Icon = Icons.Material.Filled.ReceiptLong, Href = "/microfinance/feecharges", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Mobile Wallets", Icon = Icons.Material.Filled.PhoneAndroid, Href = "/microfinance/mobile-wallets", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
+                        new MenuSectionSubItemModel { Title = "Teller Sessions", Icon = Icons.Material.Filled.PointOfSale, Href = "/microfinance/teller-sessions", Action = FshActions.View, Resource = FshResources.MicroFinance, PageStatus = PageStatus.InProgress },
                     ]
                 },
                 

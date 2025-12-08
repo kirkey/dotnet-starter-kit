@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CreditScores.SetLossParameters
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CreditScoreEndpoints() : CarterModule
+public class CreditScoreEndpoints : CarterModule
 {
 
     private const string CreateCreditScore = "CreateCreditScore";
@@ -27,7 +27,7 @@ public class CreditScoreEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetCreditScoreRequest(id));
             return Results.Ok(result);
@@ -38,7 +38,7 @@ public class CreditScoreEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/loss-parameters", async (Guid id, SetLossParametersRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/loss-parameters", async (DefaultIdType id, SetLossParametersRequest request, ISender sender) =>
         {
             var result = await sender.Send(new SetLossParametersCommand(
                 id,

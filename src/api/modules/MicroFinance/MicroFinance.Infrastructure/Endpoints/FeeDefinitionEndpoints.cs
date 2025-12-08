@@ -9,7 +9,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Fee Definitions.
 /// </summary>
-public class FeeDefinitionEndpoints() : CarterModule
+public class FeeDefinitionEndpoints : CarterModule
 {
 
     private const string CreateFeeDefinition = "CreateFeeDefinition";
@@ -31,11 +31,11 @@ public class FeeDefinitionEndpoints() : CarterModule
         })
         .WithName(CreateFeeDefinition)
         .WithSummary("Creates a new fee definition")
-        .Produces<Guid>(StatusCodes.Status201Created)
+        .Produces<DefaultIdType>(StatusCodes.Status201Created)
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        feeDefinitionsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
+        feeDefinitionsGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new GetFeeDefinitionRequest(id));
             return Results.Ok(response);
@@ -57,7 +57,7 @@ public class FeeDefinitionEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        feeDefinitionsGroup.MapPut("/{id:guid}", async (Guid id, UpdateFeeDefinitionCommand request, ISender mediator) =>
+        feeDefinitionsGroup.MapPut("/{id:guid}", async (DefaultIdType id, UpdateFeeDefinitionCommand request, ISender mediator) =>
         {
             if (id != request.Id)
             {

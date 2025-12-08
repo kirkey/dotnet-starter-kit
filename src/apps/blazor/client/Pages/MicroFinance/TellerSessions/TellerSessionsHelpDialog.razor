@@ -1,0 +1,80 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-3 mb-n1" />
+            Teller Sessions Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            Teller Sessions track daily cash operations for each teller. This includes opening balances, 
+            cash in/out transactions, and end-of-day reconciliation.
+        </MudText>
+        
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Session Workflow</MudText>
+        <MudTimeline TimelineAlign="TimelineAlign.Start" TimelinePosition="TimelinePosition.Start">
+            <MudTimelineItem Color="Color.Success" Size="Size.Small">
+                <ItemContent>
+                    <MudText Typo="Typo.body1"><strong>Open Session</strong></MudText>
+                    <MudText Typo="Typo.body2">Teller starts their day with an opening balance</MudText>
+                </ItemContent>
+            </MudTimelineItem>
+            <MudTimelineItem Color="Color.Primary" Size="Size.Small">
+                <ItemContent>
+                    <MudText Typo="Typo.body1"><strong>Process Transactions</strong></MudText>
+                    <MudText Typo="Typo.body2">Handle deposits, withdrawals, and other cash transactions</MudText>
+                </ItemContent>
+            </MudTimelineItem>
+            <MudTimelineItem Color="Color.Warning" Size="Size.Small">
+                <ItemContent>
+                    <MudText Typo="Typo.body1"><strong>Close Session</strong></MudText>
+                    <MudText Typo="Typo.body2">End of day cash count and reconciliation</MudText>
+                </ItemContent>
+            </MudTimelineItem>
+            <MudTimelineItem Color="Color.Info" Size="Size.Small">
+                <ItemContent>
+                    <MudText Typo="Typo.body1"><strong>Supervisor Verification</strong></MudText>
+                    <MudText Typo="Typo.body2">Manager reviews and approves the session</MudText>
+                </ItemContent>
+            </MudTimelineItem>
+        </MudTimeline>
+        
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Session Status</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.LockOpen" IconColor="Color.Success">
+                <strong>Open</strong> - Session is active, transactions can be processed
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Lock" IconColor="Color.Warning">
+                <strong>Closed</strong> - Session ended, pending verification
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Verified" IconColor="Color.Info">
+                <strong>Verified</strong> - Session approved by supervisor
+            </MudListItem>
+        </MudList>
+        
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Important Notes</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.Info" IconColor="Color.Info">
+                Each teller can only have one open session at a time
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Info" IconColor="Color.Info">
+                Variance (difference between expected and actual closing) must be explained
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Info" IconColor="Color.Info">
+                Sessions should be closed and verified daily
+            </MudListItem>
+        </MudList>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

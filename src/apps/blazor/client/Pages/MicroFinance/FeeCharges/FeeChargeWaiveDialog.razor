@@ -1,0 +1,119 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.FeeCharges
+
+<MudDialog>
+    <TitleContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+            <MudIcon Icon="@Icons.Material.Filled.RemoveCircle" Color="Color.Warning" Size="Size.Large" />
+            <MudText Typo="Typo.h6">Waive Fee</MudText>
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+        }
+        else if (_charge is not null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudAlert Severity="Severity.Warning" Variant="Variant.Outlined" Class="mb-3">
+                        You are about to waive fee <b>@_charge.Reference</b>
+                    </MudAlert>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Total Amount</MudText>
+                        <MudText Typo="Typo.h6">@_charge.Amount.ToString("C2")</MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Outstanding</MudText>
+                        <MudText Typo="Typo.h6" Color="Color.Warning">@_charge.Outstanding.ToString("C2")</MudText>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="_waiveReason"
+                                  Label="Reason for Waiver"
+                                  Variant="Variant.Outlined"
+                                  Lines="3"
+                                  Required="true"
+                                  HelperText="Please provide a reason for waiving this fee" />
+                </MudItem>
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Warning">Charge not found.</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" Variant="Variant.Outlined" OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="SubmitWaiver"
+                   Disabled="@(_saving || string.IsNullOrWhiteSpace(_waiveReason))">
+            @if (_saving)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2" />
+            }
+            Waive Fee
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType ChargeId { get; set; }
+
+    private FeeChargeResponse? _charge;
+    private bool _loading = true;
+    private bool _saving;
+    private string? _waiveReason;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _charge = await Client.GetFeeChargeAsync("1", ChargeId);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private async Task SubmitWaiver()
+    {
+        if (_charge is null || string.IsNullOrWhiteSpace(_waiveReason)) return;
+
+        _saving = true;
+        try
+        {
+            await Client.WaiveFeeChargeAsync("1", ChargeId, new WaiveFeeChargeCommand
+            {
+                FeeChargeId = ChargeId,
+                Reason = _waiveReason
+            });
+
+            Snackbar.Add("Fee waived successfully.", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to waive fee: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}
+
+    private void Cancel() => MudDialog.Cancel();
+}

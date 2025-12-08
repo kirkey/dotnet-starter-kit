@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollateralReleases.Release.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollateralReleaseEndpoints() : CarterModule
+public class CollateralReleaseEndpoints : CarterModule
 {
 
     private const string ApproveRelease = "ApproveRelease";
@@ -29,7 +29,7 @@ public class CollateralReleaseEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetCollateralReleaseRequest(id));
             return Results.Ok(result);
@@ -40,7 +40,7 @@ public class CollateralReleaseEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (Guid id, ApproveReleaseRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveReleaseRequest request, ISender sender) =>
         {
             var result = await sender.Send(new ApproveReleaseCommand(id, request.ApprovedById));
             return Results.Ok(result);
@@ -51,7 +51,7 @@ public class CollateralReleaseEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/release", async (Guid id, ReleaseRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/release", async (DefaultIdType id, ReleaseRequest request, ISender sender) =>
         {
             var result = await sender.Send(new CompleteCollateralReleaseCommand(
                 id,
@@ -70,5 +70,5 @@ public class CollateralReleaseEndpoints() : CarterModule
     }
 }
 
-public record ApproveReleaseRequest(Guid ApprovedById);
-public record ReleaseRequest(Guid ReleasedById, string RecipientName, string? RecipientIdNumber, string? RecipientSignaturePath);
+public record ApproveReleaseRequest(DefaultIdType ApprovedById);
+public record ReleaseRequest(DefaultIdType ReleasedById, string RecipientName, string? RecipientIdNumber, string? RecipientSignaturePath);

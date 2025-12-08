@@ -9,7 +9,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Share Products.
 /// </summary>
-public class ShareProductEndpoints() : CarterModule
+public class ShareProductEndpoints : CarterModule
 {
 
     private const string CreateShareProduct = "CreateShareProduct";
@@ -35,7 +35,7 @@ public class ShareProductEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareProductsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        shareProductsGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetShareProductRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -57,7 +57,7 @@ public class ShareProductEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareProductsGroup.MapPut("/{id:guid}", async (Guid id, UpdateShareProductCommand command, ISender sender) =>
+        shareProductsGroup.MapPut("/{id:guid}", async (DefaultIdType id, UpdateShareProductCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

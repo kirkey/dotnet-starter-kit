@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Savings Transactions.
 /// </summary>
-public class SavingsTransactionEndpoints() : CarterModule
+public class SavingsTransactionEndpoints : CarterModule
 {
 
     private const string GetSavingsTransaction = "GetSavingsTransaction";
@@ -21,7 +21,7 @@ public class SavingsTransactionEndpoints() : CarterModule
     {
         var transactionsGroup = app.MapGroup("microfinance/savings-transactions").WithTags("Savings Transactions");
 
-        transactionsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
+        transactionsGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new GetSavingsTransactionRequest(id));
             return Results.Ok(response);
@@ -43,7 +43,7 @@ public class SavingsTransactionEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        transactionsGroup.MapGet("/by-account/{accountId:guid}", async (Guid accountId, ISender mediator) =>
+        transactionsGroup.MapGet("/by-account/{accountId:guid}", async (DefaultIdType accountId, ISender mediator) =>
         {
             var request = new SearchSavingsTransactionsCommand
             {

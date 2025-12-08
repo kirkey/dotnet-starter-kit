@@ -1,0 +1,50 @@
+@page "/microfinance/groupmemberships"
+@using FSH.Starter.Blazor.Client.Pages.MicroFinance.GroupMemberships
+@using FSH.Starter.Blazor.Client.Components.EntityTable
+@using Mapster
+
+<PageHeader Title="Group Memberships" />
+
+<EntityTable @ref="_table"
+             TEntity="GroupMembershipResponse"
+             TId="DefaultIdType"
+             TRequest="GroupMembershipViewModel"
+             Context="@Context"
+             IsReadOnly="false"
+             HasHelpButton="true"
+             OnHelpClicked="ShowHelp"
+             AdvancedSearchContent="@(AdvancedSearchContent)">
+    <ExtraActions Context="entity">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewMembershipDetails(entity.Id))">View Details</MudMenuItem>
+        @if (entity.Status == "Active")
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.RemoveCircle" OnClick="@(() => DeactivateMembership(entity.Id))">Suspend</MudMenuItem>
+        }
+        else
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => ReactivateMembership(entity.Id))">Reactivate</MudMenuItem>
+        }
+    </ExtraActions>
+</EntityTable>
+
+@code {
+    private RenderFragment AdvancedSearchContent => __builder =>
+    {
+        <MudGrid>
+            <MudItem xs="12" sm="6" md="4">
+                <MudSelect T="string" Label="Status" @bind-Value="SearchStatus" Variant="Variant.Outlined" Dense="true" Clearable="true">
+                    <MudSelectItem Value="@("Active")">Active</MudSelectItem>
+                    <MudSelectItem Value="@("Inactive")">Inactive</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4">
+                <MudSelect T="string" Label="Role" @bind-Value="SearchRole" Variant="Variant.Outlined" Dense="true" Clearable="true">
+                    <MudSelectItem Value="@("Member")">Member</MudSelectItem>
+                    <MudSelectItem Value="@("Secretary")">Secretary</MudSelectItem>
+                    <MudSelectItem Value="@("Treasurer")">Treasurer</MudSelectItem>
+                    <MudSelectItem Value="@("Chairman")">Chairman</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+        </MudGrid>
+    };
+}

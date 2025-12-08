@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.ApprovalRequests.Reject.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class ApprovalRequestEndpoints() : CarterModule
+public class ApprovalRequestEndpoints : CarterModule
 {
 
     private const string ApproveRequestLevel = "ApproveRequestLevel";
@@ -31,7 +31,7 @@ public class ApprovalRequestEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetApprovalRequestRequest(id));
             return Results.Ok(result);
@@ -42,7 +42,7 @@ public class ApprovalRequestEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (Guid id, ApproveRequestBody body, ISender sender) =>
+        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveRequestBody body, ISender sender) =>
         {
             var command = new ApproveRequestLevelCommand(id, body.ApproverId, body.Comments);
             var result = await sender.Send(command);
@@ -54,7 +54,7 @@ public class ApprovalRequestEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reject", async (Guid id, RejectRequestBody body, ISender sender) =>
+        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectRequestBody body, ISender sender) =>
         {
             var command = new RejectApprovalRequestCommand(id, body.ApproverId, body.Reason);
             var result = await sender.Send(command);
@@ -66,7 +66,7 @@ public class ApprovalRequestEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/cancel", async (Guid id, CancelRequestBody body, ISender sender) =>
+        group.MapPost("/{id:guid}/cancel", async (DefaultIdType id, CancelRequestBody body, ISender sender) =>
         {
             var command = new CancelApprovalRequestCommand(id, body.Reason);
             var result = await sender.Send(command);
@@ -81,6 +81,6 @@ public class ApprovalRequestEndpoints() : CarterModule
     }
 }
 
-public sealed record ApproveRequestBody(Guid ApproverId, string? Comments);
-public sealed record RejectRequestBody(Guid ApproverId, string Reason);
+public sealed record ApproveRequestBody(DefaultIdType ApproverId, string? Comments);
+public sealed record RejectRequestBody(DefaultIdType ApproverId, string Reason);
 public sealed record CancelRequestBody(string Reason);

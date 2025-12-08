@@ -1,0 +1,102 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Receipt" Class="mr-3 mb-n1" />
+            Transaction Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" />
+        }
+        else if (_transaction != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Reference</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_transaction.Reference</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Transaction Type</MudText>
+                    <MudChip T="string" Color="@GetTypeColor(_transaction.TransactionType)" Size="Size.Small">
+                        @_transaction.TransactionType
+                    </MudChip>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Number of Shares</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_transaction.NumberOfShares</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Price Per Share</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_transaction.PricePerShare.ToString("C")</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Total Amount</MudText>
+                    <MudText Typo="Typo.h6"><strong>@_transaction.TotalAmount.ToString("C")</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Shares Balance After</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_transaction.SharesBalanceAfter shares</strong></MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Transaction Date</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_transaction.TransactionDate.ToString("MMM dd, yyyy")</strong></MudText>
+                </MudItem>
+                @if (!string.IsNullOrEmpty(_transaction.PaymentMethod))
+                {
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption">Payment Method</MudText>
+                        <MudText Typo="Typo.body1"><strong>@_transaction.PaymentMethod</strong></MudText>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrEmpty(_transaction.Description))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.caption">Description</MudText>
+                        <MudText Typo="Typo.body1">@_transaction.Description</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType TransactionId { get; set; }
+
+    private ShareTransactionResponse? _transaction;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _transaction = await Client.GetShareTransactionAsync("1", TransactionId);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private Color GetTypeColor(string type) => type switch
+    {
+        "Buy" => Color.Success,
+        "Sell" => Color.Error,
+        "Dividend" => Color.Info,
+        "Transfer" => Color.Warning,
+        _ => Color.Default
+    };
+
+    private void Close() => MudDialog.Close();
+}

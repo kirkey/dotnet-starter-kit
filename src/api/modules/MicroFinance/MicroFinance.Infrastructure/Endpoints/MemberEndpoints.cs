@@ -12,7 +12,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Members.
 /// </summary>
-public class MemberEndpoints() : CarterModule
+public class MemberEndpoints : CarterModule
 {
 
     private const string ActivateMember = "ActivateMember";
@@ -41,7 +41,7 @@ public class MemberEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        membersGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        membersGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetMemberRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -52,7 +52,7 @@ public class MemberEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        membersGroup.MapPut("/{id:guid}", async (Guid id, UpdateMemberCommand command, ISender sender) =>
+        membersGroup.MapPut("/{id:guid}", async (DefaultIdType id, UpdateMemberCommand command, ISender sender) =>
             {
                 if (id != command.Id)
                 {
@@ -67,7 +67,7 @@ public class MemberEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        membersGroup.MapDelete("/{id:guid}", async (Guid id, ISender sender) =>
+        membersGroup.MapDelete("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 await sender.Send(new DeleteMemberCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();
@@ -89,7 +89,7 @@ public class MemberEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        membersGroup.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
+        membersGroup.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivateMemberCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -100,7 +100,7 @@ public class MemberEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        membersGroup.MapPost("/{id:guid}/deactivate", async (Guid id, ISender sender) =>
+        membersGroup.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new DeactivateMemberCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);

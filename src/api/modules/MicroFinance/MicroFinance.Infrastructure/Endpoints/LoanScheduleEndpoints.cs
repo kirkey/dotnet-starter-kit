@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Loan Schedules.
 /// </summary>
-public class LoanScheduleEndpoints() : CarterModule
+public class LoanScheduleEndpoints : CarterModule
 {
 
     private const string GetLoanSchedule = "GetLoanSchedule";
@@ -21,7 +21,7 @@ public class LoanScheduleEndpoints() : CarterModule
     {
         var schedulesGroup = app.MapGroup("microfinance/loan-schedules").WithTags("Loan Schedules");
 
-        schedulesGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
+        schedulesGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new GetLoanScheduleRequest(id));
             return Results.Ok(response);
@@ -43,7 +43,7 @@ public class LoanScheduleEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        schedulesGroup.MapGet("/by-loan/{loanId:guid}", async (Guid loanId, ISender mediator) =>
+        schedulesGroup.MapGet("/by-loan/{loanId:guid}", async (DefaultIdType loanId, ISender mediator) =>
         {
             var request = new SearchLoanSchedulesCommand
             {

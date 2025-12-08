@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.DebtSettlements.RecordPayment.
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class DebtSettlementEndpoints() : CarterModule
+public class DebtSettlementEndpoints : CarterModule
 {
 
     private const string ApproveSettlement = "ApproveSettlement";
@@ -29,7 +29,7 @@ public class DebtSettlementEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetDebtSettlementRequest(id));
             return Results.Ok(result);
@@ -40,7 +40,7 @@ public class DebtSettlementEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (Guid id, ApproveSettlementRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveSettlementRequest request, ISender sender) =>
         {
             var result = await sender.Send(new ApproveSettlementCommand(id, request.ApprovedById));
             return Results.Ok(result);
@@ -51,7 +51,7 @@ public class DebtSettlementEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/record-payment", async (Guid id, SettlementPaymentRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/record-payment", async (DefaultIdType id, SettlementPaymentRequest request, ISender sender) =>
         {
             var result = await sender.Send(new RecordSettlementPaymentCommand(id, request.Amount));
             return Results.Ok(result);
@@ -65,5 +65,5 @@ public class DebtSettlementEndpoints() : CarterModule
     }
 }
 
-public record ApproveSettlementRequest(Guid ApprovedById);
+public record ApproveSettlementRequest(DefaultIdType ApprovedById);
 public record SettlementPaymentRequest(decimal Amount);

@@ -1,0 +1,71 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-3 mb-n1" />
+            Loan Guarantors Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            Loan Guarantors are members who provide guarantees for other members' loans. This page allows you to manage 
+            guarantor relationships, track guaranteed amounts, and handle guarantee invocations.
+        </MudText>
+        
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Relationship Types</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.FamilyRestroom" IconColor="Color.Primary">
+                <strong>Relative</strong> - Family members providing guarantees
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.People" IconColor="Color.Info">
+                <strong>Friend</strong> - Close friends willing to guarantee
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Business" IconColor="Color.Success">
+                <strong>Business Partner</strong> - Business associates
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Work" IconColor="Color.Warning">
+                <strong>Colleague</strong> - Work colleagues
+            </MudListItem>
+        </MudList>
+        
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Guarantee Status</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
+                <strong>Active</strong> - Guarantee is currently in effect
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Schedule" IconColor="Color.Warning">
+                <strong>Expired</strong> - Guarantee period has ended
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Check" IconColor="Color.Info">
+                <strong>Released</strong> - Guarantee released after loan repayment
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Warning" IconColor="Color.Error">
+                <strong>Invoked</strong> - Guarantee was called upon for payment
+            </MudListItem>
+        </MudList>
+        
+        <MudText Typo="Typo.h6" Class="mt-4 mb-2">Important Notes</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.Info" IconColor="Color.Info">
+                Guarantors must be active members in good standing
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Info" IconColor="Color.Info">
+                A member's total guarantees cannot exceed their savings balance
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Info" IconColor="Color.Info">
+                Invoking a guarantee should be a last resort for defaulted loans
+            </MudListItem>
+        </MudList>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

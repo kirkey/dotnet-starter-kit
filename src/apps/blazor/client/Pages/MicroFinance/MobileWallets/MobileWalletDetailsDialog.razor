@@ -1,0 +1,141 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.PhoneAndroid" Class="mr-3 mb-n1" />
+            Wallet Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" />
+        }
+        else if (_wallet != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Wallet Information</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Phone Number</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_wallet.PhoneNumber</strong></MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Provider</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_wallet.Provider</strong></MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Status</MudText>
+                    <MudChip T="string" Color="@GetStatusColor(_wallet.Status)" Size="Size.Small">@_wallet.Status</MudChip>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Tier</MudText>
+                    <MudChip T="string" Color="@GetTierColor(_wallet.Tier)" Size="Size.Small">@(_wallet.Tier ?? "Basic")</MudChip>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">External Wallet ID</MudText>
+                    <MudText Typo="Typo.body1">@(_wallet.ExternalWalletId ?? "N/A")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Balance & Limits</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Current Balance</MudText>
+                    <MudText Typo="Typo.h6" Color="Color.Primary">@_wallet.Balance.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Daily Limit / Used</MudText>
+                    <MudText Typo="Typo.body1">@_wallet.DailyUsed.ToString("C") / @_wallet.DailyLimit.ToString("C")</MudText>
+                    <MudProgressLinear Color="Color.Primary" Value="@GetUsagePercentage(_wallet.DailyUsed, _wallet.DailyLimit)" Class="mt-1" />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Monthly Limit / Used</MudText>
+                    <MudText Typo="Typo.body1">@_wallet.MonthlyUsed.ToString("C") / @_wallet.MonthlyLimit.ToString("C")</MudText>
+                    <MudProgressLinear Color="Color.Secondary" Value="@GetUsagePercentage(_wallet.MonthlyUsed, _wallet.MonthlyLimit)" Class="mt-1" />
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Activity</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Last Activity Date</MudText>
+                    <MudText Typo="Typo.body1">@(_wallet.LastActivityDate?.ToString("g") ?? "No activity yet")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Linked to Bank Account</MudText>
+                    <MudChip T="string" Color="@(_wallet.IsLinkedToBankAccount ? Color.Success : Color.Default)" Size="Size.Small">
+                        @(_wallet.IsLinkedToBankAccount ? "Yes" : "No")
+                    </MudChip>
+                </MudItem>
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Error">Unable to load wallet details.</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType WalletId { get; set; }
+
+    private MobileWalletResponse? _wallet;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _wallet = await Client.GetMobileWalletAsync("1", WalletId);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private Color GetStatusColor(string? status) => status switch
+    {
+        "Active" => Color.Success,
+        "Inactive" => Color.Default,
+        "Suspended" => Color.Warning,
+        "Blocked" => Color.Error,
+        _ => Color.Default
+    };
+
+    private Color GetTierColor(string? tier) => tier switch
+    {
+        "Basic" => Color.Default,
+        "Standard" => Color.Info,
+        "Premium" => Color.Warning,
+        _ => Color.Default
+    };
+
+    private double GetUsagePercentage(decimal used, decimal limit) =>
+        limit > 0 ? (double)(used / limit * 100) : 0;
+
+    private void Close() => MudDialog.Close();
+}

@@ -1,0 +1,130 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Receipt" Class="mr-3 mb-n1" />
+            Transaction Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" />
+        }
+        else if (_transaction != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Transaction Information</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Reference</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_transaction.Reference</strong></MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Transaction Type</MudText>
+                    <MudChip T="string" Color="@GetTypeColor(_transaction.TransactionType)" Size="Size.Small">
+                        @_transaction.TransactionType
+                    </MudChip>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Payment Method</MudText>
+                    <MudText Typo="Typo.body1">@(_transaction.PaymentMethod ?? "N/A")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Amounts</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Transaction Amount</MudText>
+                    <MudText Typo="Typo.h5" Color="@GetAmountColor(_transaction.TransactionType)">
+                        @(IsDebit(_transaction.TransactionType) ? "-" : "+")@_transaction.Amount.ToString("C")
+                    </MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Balance After</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Primary">@_transaction.BalanceAfter.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Details</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Transaction Date</MudText>
+                    <MudText Typo="Typo.body1">@_transaction.TransactionDate.ToString("g")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Savings Account ID</MudText>
+                    <MudText Typo="Typo.body2">@_transaction.SavingsAccountId</MudText>
+                </MudItem>
+                
+                @if (!string.IsNullOrWhiteSpace(_transaction.Description))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.caption">Description</MudText>
+                        <MudText Typo="Typo.body1">@_transaction.Description</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Error">Unable to load transaction details.</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType TransactionId { get; set; }
+
+    private SavingsTransactionResponse? _transaction;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _transaction = await Client.GetSavingsTransactionAsync("1", TransactionId);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private bool IsDebit(string? type) => 
+        type is "Withdrawal" or "Fee" or "Transfer Out";
+
+    private Color GetTypeColor(string? type) => type switch
+    {
+        "Deposit" => Color.Success,
+        "Withdrawal" => Color.Error,
+        "Interest" => Color.Info,
+        "Fee" => Color.Warning,
+        "Transfer" => Color.Primary,
+        _ => Color.Default
+    };
+
+    private Color GetAmountColor(string? type) => 
+        IsDebit(type) ? Color.Error : Color.Success;
+
+    private void Close() => MudDialog.Close();
+}

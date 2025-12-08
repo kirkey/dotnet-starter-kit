@@ -10,7 +10,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Loan Products.
 /// </summary>
-public class LoanProductEndpoints() : CarterModule
+public class LoanProductEndpoints : CarterModule
 {
 
     private const string CreateLoanProduct = "CreateLoanProduct";
@@ -37,7 +37,7 @@ public class LoanProductEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        loanProductsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        loanProductsGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetLoanProductRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -48,7 +48,7 @@ public class LoanProductEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        loanProductsGroup.MapPut("/{id:guid}", async (Guid id, UpdateLoanProductCommand command, ISender sender) =>
+        loanProductsGroup.MapPut("/{id:guid}", async (DefaultIdType id, UpdateLoanProductCommand command, ISender sender) =>
             {
                 if (id != command.Id)
                 {
@@ -63,7 +63,7 @@ public class LoanProductEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        loanProductsGroup.MapDelete("/{id:guid}", async (Guid id, ISender sender) =>
+        loanProductsGroup.MapDelete("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 await sender.Send(new DeleteLoanProductCommand(id)).ConfigureAwait(false);
                 return Results.NoContent();

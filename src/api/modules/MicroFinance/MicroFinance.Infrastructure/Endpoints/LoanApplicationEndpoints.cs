@@ -10,7 +10,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanApplications.Withdraw.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LoanApplicationEndpoints() : CarterModule
+public class LoanApplicationEndpoints : CarterModule
 {
 
     private const string ApproveLoanApplication = "ApproveLoanApplication";
@@ -38,7 +38,7 @@ public class LoanApplicationEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetLoanApplicationRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -50,7 +50,7 @@ public class LoanApplicationEndpoints() : CarterModule
             .MapToApiVersion(1);
 
         // Application Workflow
-        group.MapPost("/{id:guid}/submit", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/submit", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new SubmitLoanApplicationCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -61,7 +61,7 @@ public class LoanApplicationEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Submit, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/assign", async (Guid id, AssignLoanApplicationCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/assign", async (DefaultIdType id, AssignLoanApplicationCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -73,7 +73,7 @@ public class LoanApplicationEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/review", async (Guid id, ReviewLoanApplicationCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/review", async (DefaultIdType id, ReviewLoanApplicationCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -85,7 +85,7 @@ public class LoanApplicationEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (Guid id, ApproveLoanApplicationCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveLoanApplicationCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -97,7 +97,7 @@ public class LoanApplicationEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reject", async (Guid id, RejectLoanApplicationCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectLoanApplicationCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -109,7 +109,7 @@ public class LoanApplicationEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/withdraw", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/withdraw", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new WithdrawLoanApplicationCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);

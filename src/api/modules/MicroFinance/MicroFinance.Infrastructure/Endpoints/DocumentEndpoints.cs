@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.Documents.Verify.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class DocumentEndpoints() : CarterModule
+public class DocumentEndpoints : CarterModule
 {
 
     private const string CreateDocument = "CreateDocument";
@@ -27,7 +27,7 @@ public class DocumentEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetDocumentRequest(id));
             return Results.Ok(result);
@@ -38,7 +38,7 @@ public class DocumentEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/verify", async (Guid id, VerifyDocumentRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/verify", async (DefaultIdType id, VerifyDocumentRequest request, ISender sender) =>
         {
             var result = await sender.Send(new VerifyDocumentCommand(id, request.VerifiedById));
             return Results.Ok(result);
@@ -52,4 +52,4 @@ public class DocumentEndpoints() : CarterModule
     }
 }
 
-public record VerifyDocumentRequest(Guid VerifiedById);
+public record VerifyDocumentRequest(DefaultIdType VerifiedById);

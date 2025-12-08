@@ -15,7 +15,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Savings Accounts.
 /// </summary>
-public class SavingsAccountEndpoints() : CarterModule
+public class SavingsAccountEndpoints : CarterModule
 {
 
     private const string CloseSavingsAccount = "CloseSavingsAccount";
@@ -48,7 +48,7 @@ public class SavingsAccountEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        savingsAccountsGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetSavingsAccountRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -70,7 +70,7 @@ public class SavingsAccountEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapPost("/{id:guid}/deposit", async (Guid id, DepositCommand command, ISender sender) =>
+        savingsAccountsGroup.MapPost("/{id:guid}/deposit", async (DefaultIdType id, DepositCommand command, ISender sender) =>
             {
                 if (id != command.AccountId)
                 {
@@ -85,7 +85,7 @@ public class SavingsAccountEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Deposit, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapPost("/{id:guid}/withdraw", async (Guid id, WithdrawCommand command, ISender sender) =>
+        savingsAccountsGroup.MapPost("/{id:guid}/withdraw", async (DefaultIdType id, WithdrawCommand command, ISender sender) =>
             {
                 if (id != command.AccountId)
                 {
@@ -111,7 +111,7 @@ public class SavingsAccountEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Transfer, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapGet("/by-member/{memberId:guid}", async (Guid memberId, ISender sender) =>
+        savingsAccountsGroup.MapGet("/by-member/{memberId:guid}", async (DefaultIdType memberId, ISender sender) =>
             {
                 var command = new SearchSavingsAccountsCommand
                 {
@@ -128,7 +128,7 @@ public class SavingsAccountEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapPost("/{id:guid}/post-interest", async (Guid id, PostInterestCommand command, ISender sender) =>
+        savingsAccountsGroup.MapPost("/{id:guid}/post-interest", async (DefaultIdType id, PostInterestCommand command, ISender sender) =>
             {
                 if (id != command.AccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -140,7 +140,7 @@ public class SavingsAccountEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapPost("/{id:guid}/freeze", async (Guid id, ISender sender) =>
+        savingsAccountsGroup.MapPost("/{id:guid}/freeze", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new FreezeAccountCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -151,7 +151,7 @@ public class SavingsAccountEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Freeze, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapPost("/{id:guid}/unfreeze", async (Guid id, ISender sender) =>
+        savingsAccountsGroup.MapPost("/{id:guid}/unfreeze", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new UnfreezeAccountCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -162,7 +162,7 @@ public class SavingsAccountEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Unfreeze, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapPost("/{id:guid}/close", async (Guid id, CloseAccountCommand command, ISender sender) =>
+        savingsAccountsGroup.MapPost("/{id:guid}/close", async (DefaultIdType id, CloseAccountCommand command, ISender sender) =>
             {
                 if (id != command.AccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

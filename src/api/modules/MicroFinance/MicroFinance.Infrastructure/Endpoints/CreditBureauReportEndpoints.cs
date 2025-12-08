@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Credit Bureau Reports.
 /// </summary>
-public class CreditBureauReportEndpoints() : CarterModule
+public class CreditBureauReportEndpoints : CarterModule
 {
 
     private const string CreateCreditBureauReport = "CreateCreditBureauReport";
@@ -31,7 +31,7 @@ public class CreditBureauReportEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetCreditBureauReportRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);

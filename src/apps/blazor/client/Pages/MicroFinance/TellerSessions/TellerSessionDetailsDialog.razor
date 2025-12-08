@@ -1,0 +1,168 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Receipt" Class="mr-3 mb-n1" />
+            Session Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" />
+        }
+        else if (_session != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Session Information</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Session Number</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_session.SessionNumber</strong></MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Teller</MudText>
+                    <MudText Typo="Typo.body1"><strong>@_session.TellerName</strong></MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Status</MudText>
+                    <MudChip T="string" Color="@GetStatusColor(_session.Status)" Size="Size.Small">@_session.Status</MudChip>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Session Date</MudText>
+                    <MudText Typo="Typo.body1">@_session.SessionDate.ToString("d")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Start Time</MudText>
+                    <MudText Typo="Typo.body1">@_session.StartTime.ToString("t")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">End Time</MudText>
+                    <MudText Typo="Typo.body1">@(_session.EndTime?.ToString("t") ?? "Active")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Cash Summary</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Opening Balance</MudText>
+                    <MudText Typo="Typo.body1" Color="Color.Primary">@_session.OpeningBalance.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Total Cash In</MudText>
+                    <MudText Typo="Typo.body1" Color="Color.Success">+@_session.TotalCashIn.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Total Cash Out</MudText>
+                    <MudText Typo="Typo.body1" Color="Color.Error">-@_session.TotalCashOut.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption">Transactions</MudText>
+                    <MudText Typo="Typo.body1">@_session.TransactionCount</MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Closing Summary</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Expected Closing Balance</MudText>
+                    <MudText Typo="Typo.h6">@_session.ExpectedClosingBalance.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Actual Closing Balance</MudText>
+                    <MudText Typo="Typo.h6">@(_session.ActualClosingBalance?.ToString("C") ?? "Not yet")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Variance</MudText>
+                    <MudText Typo="Typo.h6" Color="@GetVarianceColor(_session.Variance)">
+                        @(_session.Variance?.ToString("C") ?? "N/A")
+                    </MudText>
+                </MudItem>
+                
+                @if (!string.IsNullOrWhiteSpace(_session.SupervisorName))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Verification</strong></MudText>
+                        <MudDivider />
+                    </MudItem>
+                    
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption">Verified By</MudText>
+                        <MudText Typo="Typo.body1">@_session.SupervisorName</MudText>
+                    </MudItem>
+                    
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption">Verification Time</MudText>
+                        <MudText Typo="Typo.body1">@_session.SupervisorVerificationTime?.ToString("g")</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Error">Unable to load session details.</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType SessionId { get; set; }
+
+    private TellerSessionResponse? _session;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _session = await Client.GetTellerSessionAsync("1", SessionId);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private Color GetStatusColor(string? status) => status switch
+    {
+        "Open" => Color.Success,
+        "Closed" => Color.Warning,
+        "Verified" => Color.Info,
+        _ => Color.Default
+    };
+
+    private Color GetVarianceColor(decimal? variance) => variance switch
+    {
+        null => Color.Default,
+        0 => Color.Success,
+        < 0 => Color.Error,
+        > 0 => Color.Warning,
+    };
+
+    private void Close() => MudDialog.Close();
+}

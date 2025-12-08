@@ -8,7 +8,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.InsuranceClaims.Submit.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class InsuranceClaimEndpoints() : CarterModule
+public class InsuranceClaimEndpoints : CarterModule
 {
 
     private const string ApproveInsuranceClaim = "ApproveInsuranceClaim";
@@ -34,7 +34,7 @@ public class InsuranceClaimEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Submit, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetInsuranceClaimRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -46,7 +46,7 @@ public class InsuranceClaimEndpoints() : CarterModule
             .MapToApiVersion(1);
 
         // Claim Workflow
-        group.MapPost("/{id:guid}/review", async (Guid id, ReviewInsuranceClaimCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/review", async (DefaultIdType id, ReviewInsuranceClaimCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -58,7 +58,7 @@ public class InsuranceClaimEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (Guid id, ApproveInsuranceClaimCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveInsuranceClaimCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -70,7 +70,7 @@ public class InsuranceClaimEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reject", async (Guid id, RejectInsuranceClaimCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectInsuranceClaimCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -82,7 +82,7 @@ public class InsuranceClaimEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/settle", async (Guid id, SettleInsuranceClaimCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/settle", async (DefaultIdType id, SettleInsuranceClaimCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

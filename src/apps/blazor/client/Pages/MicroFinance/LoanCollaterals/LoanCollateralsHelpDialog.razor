@@ -1,0 +1,77 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-3 mb-n1" />
+            Loan Collaterals Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            The Loan Collaterals module allows you to manage assets pledged as security against loans.
+        </MudText>
+
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Adding Collateral">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Collateral Type</strong>: Category of asset (Real Estate, Vehicle, etc.).</li>
+                        <li><strong>Description</strong>: Detailed description of the asset.</li>
+                        <li><strong>Estimated Value</strong>: Current market value.</li>
+                        <li><strong>Forced Sale Value</strong>: Expected value if liquidated quickly.</li>
+                        <li><strong>Valuation Date</strong>: When the valuation was performed.</li>
+                        <li><strong>Location</strong>: Physical location of the asset.</li>
+                        <li><strong>Document Reference</strong>: Title number, VIN, or other reference.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Collateral Workflow">
+                <MudText Typo="Typo.body2">
+                    <ol>
+                        <li><strong>Pending</strong>: Collateral registered, awaiting verification.</li>
+                        <li><strong>Verified</strong>: Valuation confirmed, ready to be pledged.</li>
+                        <li><strong>Pledged</strong>: Asset is locked as security for the loan.</li>
+                        <li><strong>Released</strong>: Loan paid, collateral returned to owner.</li>
+                        <li><strong>Seized</strong>: Loan defaulted, asset taken for recovery.</li>
+                    </ol>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Collateral Types">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Real Estate</strong>: Land, buildings, houses.</li>
+                        <li><strong>Vehicle</strong>: Cars, motorcycles, trucks.</li>
+                        <li><strong>Equipment</strong>: Machinery, tools, industrial equipment.</li>
+                        <li><strong>Inventory</strong>: Stock, goods for sale.</li>
+                        <li><strong>Deposit</strong>: Cash deposits, savings accounts.</li>
+                        <li><strong>Other</strong>: Any other valuable assets.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Actions">
+                <MudText Typo="Typo.body2">
+                    <ul>
+                        <li><strong>Verify</strong>: Confirm the valuation and asset details.</li>
+                        <li><strong>Pledge</strong>: Lock the asset as loan security.</li>
+                        <li><strong>Release</strong>: Return the asset after loan repayment.</li>
+                        <li><strong>Seize</strong>: Take possession for loan default recovery.</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}

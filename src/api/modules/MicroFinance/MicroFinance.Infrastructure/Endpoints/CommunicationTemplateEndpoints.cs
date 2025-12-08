@@ -5,7 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CommunicationTemplates.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CommunicationTemplateEndpoints() : CarterModule
+public class CommunicationTemplateEndpoints : CarterModule
 {
 
     private const string ActivateCommunicationTemplate = "ActivateCommunicationTemplate";
@@ -27,7 +27,7 @@ public class CommunicationTemplateEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetCommunicationTemplateRequest(id));
             return Results.Ok(result);
@@ -38,7 +38,7 @@ public class CommunicationTemplateEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ActivateTemplateCommand(id));
             return Results.Ok(result);

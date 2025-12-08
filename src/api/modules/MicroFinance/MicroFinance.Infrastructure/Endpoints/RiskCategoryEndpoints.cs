@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class RiskCategoryEndpoints() : CarterModule
+public class RiskCategoryEndpoints : CarterModule
 {
 
     private const string ActivateRiskCategory = "ActivateRiskCategory";
@@ -29,7 +29,7 @@ public class RiskCategoryEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetRiskCategoryRequest(id));
             return Results.Ok(result);
@@ -40,7 +40,7 @@ public class RiskCategoryEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ActivateRiskCategoryCommand(id));
             return Results.Ok(result);
@@ -51,7 +51,7 @@ public class RiskCategoryEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/deactivate", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new DeactivateRiskCategoryCommand(id));
             return Results.Ok(result);

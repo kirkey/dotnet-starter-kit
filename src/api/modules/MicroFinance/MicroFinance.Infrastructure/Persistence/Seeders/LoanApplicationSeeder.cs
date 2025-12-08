@@ -110,7 +110,7 @@ internal static class LoanApplicationSeeder
                 requestedTermMonths: app.Term,
                 purpose: app.Purpose);
 
-            var userId = staffIds.Any() ? staffIds[random.Next(staffIds.Count)] : Guid.Empty;
+            var userId = staffIds.Any() ? staffIds[random.Next(staffIds.Count)] : DefaultIdType.Empty;
 
             // Apply status transitions
             switch (app.Status)

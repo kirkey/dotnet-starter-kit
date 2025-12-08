@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.MarketingCampaigns.Launch.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class MarketingCampaignEndpoints() : CarterModule
+public class MarketingCampaignEndpoints : CarterModule
 {
 
     private const string ApproveMarketingCampaign = "ApproveMarketingCampaign";
@@ -31,7 +31,7 @@ public class MarketingCampaignEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetMarketingCampaignRequest(id));
             return Results.Ok(result);
@@ -42,7 +42,7 @@ public class MarketingCampaignEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (Guid id, ApproveCampaignRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveCampaignRequest request, ISender sender) =>
         {
             var command = new ApproveMarketingCampaignCommand(id, request.ApprovedById);
             var result = await sender.Send(command);
@@ -54,7 +54,7 @@ public class MarketingCampaignEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/launch", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/launch", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new LaunchMarketingCampaignCommand(id));
             return Results.Ok(result);
@@ -65,7 +65,7 @@ public class MarketingCampaignEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/complete", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/complete", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new CompleteMarketingCampaignCommand(id));
             return Results.Ok(result);
@@ -79,4 +79,4 @@ public class MarketingCampaignEndpoints() : CarterModule
     }
 }
 
-public sealed record ApproveCampaignRequest(Guid ApprovedById);
+public sealed record ApproveCampaignRequest(DefaultIdType ApprovedById);

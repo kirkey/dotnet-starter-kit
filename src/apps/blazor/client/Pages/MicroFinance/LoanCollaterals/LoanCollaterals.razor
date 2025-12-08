@@ -1,0 +1,179 @@
+@page "/microfinance/loan-collaterals"
+
+<PageHeader Title="Loan Collaterals" Header="Loan Collaterals" SubHeader="Manage collateral assets pledged against loans." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowLoanCollateralsHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="LoanCollateralResponse" TId="DefaultIdType" TRequest="LoanCollateralViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchCollateralType"
+                       Label="Collateral Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"RealEstate")">Real Estate</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Vehicle")">Vehicle</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Equipment")">Equipment</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Inventory")">Inventory</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Deposit")">Deposit</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Pending")">Pending</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Verified")">Verified</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Pledged")">Pledged</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Released")">Released</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Seized")">Seized</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (entity.Status == "Pending" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.VerifiedUser" OnClick="@(() => VerifyCollateral(entity.Id))">
+                Verify
+            </MudMenuItem>
+        }
+        @if (entity.Status == "Verified" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Lock" OnClick="@(() => PledgeCollateral(entity.Id))">
+                Pledge
+            </MudMenuItem>
+        }
+        @if (entity.Status == "Pledged" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.LockOpen" OnClick="@(() => ReleaseCollateral(entity.Id))">
+                Release
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Gavel" OnClick="@(() => SeizeCollateral(entity.Id))">
+                Seize
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewCollateralDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Collateral Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.CollateralType"
+                       For="@(() => context.CollateralType)"
+                       Label="Collateral Type"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("RealEstate")">Real Estate</MudSelectItem>
+                <MudSelectItem Value="@("Vehicle")">Vehicle</MudSelectItem>
+                <MudSelectItem Value="@("Equipment")">Equipment</MudSelectItem>
+                <MudSelectItem Value="@("Inventory")">Inventory</MudSelectItem>
+                <MudSelectItem Value="@("Deposit")">Deposit</MudSelectItem>
+                <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="8">
+            <MudTextField @bind-Value="context.Description"
+                          For="@(() => context.Description)"
+                          Label="Description"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="Detailed description of the collateral" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Valuation</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal"
+                             @bind-Value="context.EstimatedValue"
+                             For="@(() => context.EstimatedValue)"
+                             Label="Estimated Value"
+                             Variant="Variant.Filled"
+                             Min="0m"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentText="$"
+                             HelperText="Market value" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField T="decimal?"
+                             @bind-Value="context.ForcedSaleValue"
+                             For="@(() => context.ForcedSaleValue)"
+                             Label="Forced Sale Value"
+                             Variant="Variant.Filled"
+                             Min="0m"
+                             Format="N2"
+                             Adornment="Adornment.Start"
+                             AdornmentText="$"
+                             HelperText="Liquidation value" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="_valuationDate"
+                           Label="Valuation Date"
+                           Variant="Variant.Filled"
+                           HelperText="Date of valuation" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Additional Details</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="context.Location"
+                          For="@(() => context.Location)"
+                          Label="Location"
+                          Variant="Variant.Filled"
+                          HelperText="Physical location of the collateral" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6">
+            <MudTextField @bind-Value="context.DocumentReference"
+                          For="@(() => context.DocumentReference)"
+                          Label="Document Reference"
+                          Variant="Variant.Filled"
+                          HelperText="Title number, VIN, or other reference" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="3"
+                          HelperText="Additional notes about the collateral" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

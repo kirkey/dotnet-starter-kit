@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CustomerSurveys.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CustomerSurveyEndpoints() : CarterModule
+public class CustomerSurveyEndpoints : CarterModule
 {
 
     private const string ActivateCustomerSurvey = "ActivateCustomerSurvey";
@@ -29,7 +29,7 @@ public class CustomerSurveyEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetCustomerSurveyRequest(id));
             return Results.Ok(result);
@@ -40,7 +40,7 @@ public class CustomerSurveyEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ActivateCustomerSurveyCommand(id));
             return Results.Ok(result);
@@ -51,7 +51,7 @@ public class CustomerSurveyEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/complete", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/complete", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new CompleteCustomerSurveyCommand(id));
             return Results.Ok(result);

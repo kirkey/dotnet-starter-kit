@@ -1,0 +1,143 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.FeeCharges
+
+<MudDialog>
+    <TitleContent>
+        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+            <MudIcon Icon="@Icons.Material.Filled.Receipt" Color="Color.Primary" Size="Size.Large" />
+            <MudText Typo="Typo.h6">Charge Details</MudText>
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+        }
+        else if (_charge is not null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudPaper Elevation="0" Class="pa-4" Style="background-color: var(--mud-palette-background-grey);">
+                        <MudGrid>
+                            <MudItem xs="12" md="6">
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">Reference</MudText>
+                                <MudText Typo="Typo.body1"><b>@_charge.Reference</b></MudText>
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">Status</MudText>
+                                <MudChip T="string" Color="@GetStatusColor(_charge.Status)" Size="Size.Small">@_charge.Status</MudChip>
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">Fee Definition ID</MudText>
+                                <MudText Typo="Typo.body1">@_charge.FeeDefinitionId</MudText>
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">Member ID</MudText>
+                                <MudText Typo="Typo.body1">@_charge.MemberId</MudText>
+                            </MudItem>
+                        </MudGrid>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider Class="my-2" />
+                    <MudText Typo="Typo.subtitle1" Color="Color.Primary"><b>Amount Details</b></MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Total Amount</MudText>
+                        <MudText Typo="Typo.h5" Color="Color.Primary">@_charge.Amount.ToString("C2")</MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Amount Paid</MudText>
+                        <MudText Typo="Typo.h5" Color="Color.Success">@_charge.AmountPaid.ToString("C2")</MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">Outstanding</MudText>
+                        <MudText Typo="Typo.h5" Color="Color.Warning">@_charge.Outstanding.ToString("C2")</MudText>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDivider Class="my-2" />
+                    <MudText Typo="Typo.subtitle1" Color="Color.Primary"><b>Dates</b></MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Charge Date</MudText>
+                    <MudText Typo="Typo.body1">@_charge.ChargeDate.ToString("MMM dd, yyyy")</MudText>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Due Date</MudText>
+                    <MudText Typo="Typo.body1" Color="@(IsPastDue(_charge.DueDate) ? Color.Error : Color.Default)">
+                        @_charge.DueDate?.ToString("MMM dd, yyyy")
+                    </MudText>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Paid Date</MudText>
+                    <MudText Typo="Typo.body1">@(_charge.PaidDate?.ToString("MMM dd, yyyy") ?? "Not paid")</MudText>
+                </MudItem>
+
+                @if (!string.IsNullOrEmpty(_charge.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudDivider Class="my-2" />
+                        <MudText Typo="Typo.subtitle1" Color="Color.Primary"><b>Notes</b></MudText>
+                        <MudText Typo="Typo.body2">@_charge.Notes</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Warning">Charge details not found.</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" Variant="Variant.Outlined" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType ChargeId { get; set; }
+
+    private FeeChargeResponse? _charge;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _charge = await Client.GetFeeChargeAsync("1", ChargeId);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private Color GetStatusColor(string? status) => status?.ToLowerInvariant() switch
+    {
+        "paid" => Color.Success,
+        "partial" => Color.Info,
+        "pending" => Color.Warning,
+        "waived" => Color.Default,
+        "overdue" => Color.Error,
+        _ => Color.Default
+    };
+
+    private bool IsPastDue(DateTimeOffset? dueDate)
+    {
+        return dueDate.HasValue && dueDate.Value < DateTimeOffset.UtcNow;
+    }
+
+    private void Close() => MudDialog.Close();
+}

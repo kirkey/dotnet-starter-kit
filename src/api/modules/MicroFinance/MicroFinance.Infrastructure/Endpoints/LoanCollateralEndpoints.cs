@@ -13,7 +13,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Loan Collaterals.
 /// </summary>
-public class LoanCollateralEndpoints() : CarterModule
+public class LoanCollateralEndpoints : CarterModule
 {
 
     private const string CreateLoanCollateral = "CreateLoanCollateral";
@@ -44,7 +44,7 @@ public class LoanCollateralEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        collateralsGroup.MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
+        collateralsGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new GetLoanCollateralRequest(id));
             return Results.Ok(response);
@@ -66,7 +66,7 @@ public class LoanCollateralEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        collateralsGroup.MapGet("/by-loan/{loanId:guid}", async (Guid loanId, ISender mediator) =>
+        collateralsGroup.MapGet("/by-loan/{loanId:guid}", async (DefaultIdType loanId, ISender mediator) =>
         {
             var request = new SearchLoanCollateralsCommand
             {
@@ -83,7 +83,7 @@ public class LoanCollateralEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        collateralsGroup.MapPut("/{id:guid}/valuation", async (Guid id, UpdateCollateralValuationCommand command, ISender mediator) =>
+        collateralsGroup.MapPut("/{id:guid}/valuation", async (DefaultIdType id, UpdateCollateralValuationCommand command, ISender mediator) =>
         {
             if (id != command.Id) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);
@@ -95,7 +95,7 @@ public class LoanCollateralEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        collateralsGroup.MapPost("/{id:guid}/verify", async (Guid id, ISender mediator) =>
+        collateralsGroup.MapPost("/{id:guid}/verify", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new VerifyCollateralCommand(id));
             return Results.Ok(response);
@@ -106,7 +106,7 @@ public class LoanCollateralEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        collateralsGroup.MapPost("/{id:guid}/pledge", async (Guid id, ISender mediator) =>
+        collateralsGroup.MapPost("/{id:guid}/pledge", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new PledgeCollateralCommand(id));
             return Results.Ok(response);
@@ -117,7 +117,7 @@ public class LoanCollateralEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        collateralsGroup.MapPost("/{id:guid}/release", async (Guid id, ISender mediator) =>
+        collateralsGroup.MapPost("/{id:guid}/release", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new ReleaseLoanCollateralCommand(id));
             return Results.Ok(response);
@@ -128,7 +128,7 @@ public class LoanCollateralEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        collateralsGroup.MapPost("/{id:guid}/seize", async (Guid id, ISender mediator) =>
+        collateralsGroup.MapPost("/{id:guid}/seize", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new SeizeCollateralCommand(id));
             return Results.Ok(response);

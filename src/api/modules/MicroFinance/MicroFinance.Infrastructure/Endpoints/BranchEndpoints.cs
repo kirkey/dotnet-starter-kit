@@ -10,7 +10,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.Branches.Update.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class BranchEndpoints() : CarterModule
+public class BranchEndpoints : CarterModule
 {
 
     private const string ActivateBranch = "ActivateBranch";
@@ -38,7 +38,7 @@ public class BranchEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetBranchRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -49,7 +49,7 @@ public class BranchEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPut("/{id:guid}", async (Guid id, UpdateBranchCommand command, ISender sender) =>
+        group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateBranchCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -73,7 +73,7 @@ public class BranchEndpoints() : CarterModule
             .MapToApiVersion(1);
 
         // Workflow Operations
-        group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivateBranchCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -84,7 +84,7 @@ public class BranchEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/deactivate", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new DeactivateBranchCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -95,7 +95,7 @@ public class BranchEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/close", async (Guid id, CloseBranchCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/close", async (DefaultIdType id, CloseBranchCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -107,7 +107,7 @@ public class BranchEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/assign-manager", async (Guid id, AssignBranchManagerCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/assign-manager", async (DefaultIdType id, AssignBranchManagerCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

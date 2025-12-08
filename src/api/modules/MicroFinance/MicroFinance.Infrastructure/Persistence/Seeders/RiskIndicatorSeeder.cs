@@ -26,7 +26,7 @@ internal static class RiskIndicatorSeeder
         var complianceCategory = riskCategories.FirstOrDefault(c => c.Name.Contains("Compliance"));
         var liquidityCategory = riskCategories.FirstOrDefault(c => c.Name.Contains("Liquidity"));
 
-        var indicators = new (string Code, string Name, string Unit, string Frequency, string Direction, decimal Threshold, decimal Target, decimal Current, Guid? Category)[]
+        var indicators = new (string Code, string Name, string Unit, string Frequency, string Direction, decimal Threshold, decimal Target, decimal Current, DefaultIdType? Category)[]
         {
             // Credit Risk Indicators
             ("KRI-PAR30", "Portfolio at Risk >30 Days", "Percentage", RiskIndicator.FrequencyWeekly, RiskIndicator.DirectionLowerIsBetter, 5.0m, 3.0m, 4.2m, creditCategory?.Id),

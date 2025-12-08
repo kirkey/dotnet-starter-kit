@@ -57,7 +57,7 @@ internal static class RiskAlertSeeder
 
         foreach (var a in alerts)
         {
-            var categoryId = riskCategories.Any() ? riskCategories[random.Next(riskCategories.Count)].Id : (Guid?)null;
+            var categoryId = riskCategories.Any() ? riskCategories[random.Next(riskCategories.Count)].Id : (DefaultIdType?)null;
 
             var alert = RiskAlert.Create(
                 alertNumber: $"RISK-{alertNumber++:D6}",

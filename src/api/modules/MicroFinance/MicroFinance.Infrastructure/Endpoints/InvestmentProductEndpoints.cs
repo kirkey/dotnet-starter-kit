@@ -1,17 +1,24 @@
 using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.InvestmentProducts.UpdateNav.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class InvestmentProductEndpoints() : CarterModule
+/// <summary>
+/// Endpoint configuration for Investment Products.
+/// </summary>
+public class InvestmentProductEndpoints : CarterModule
 {
-
     private const string CreateInvestmentProduct = "CreateInvestmentProduct";
     private const string GetInvestmentProduct = "GetInvestmentProduct";
+    private const string SearchInvestmentProducts = "SearchInvestmentProducts";
     private const string UpdateInvestmentProductNav = "UpdateInvestmentProductNav";
 
+    /// <summary>
+    /// Maps all Investment Product endpoints to the route builder.
+    /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/investment-products").WithTags("Investment Products");
@@ -27,7 +34,7 @@ public class InvestmentProductEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetInvestmentProductRequest(id));
             return Results.Ok(result);
@@ -38,7 +45,18 @@ public class InvestmentProductEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPut("/{id:guid}/nav", async (Guid id, UpdateNavRequest request, ISender sender) =>
+        group.MapPost("/search", async ([FromBody] SearchInvestmentProductsCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command);
+            return Results.Ok(result);
+        })
+        .WithName(SearchInvestmentProducts)
+        .WithSummary("Search investment products with filters and pagination")
+        .Produces<PagedList<InvestmentProductResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPut("/{id:guid}/nav", async (DefaultIdType id, UpdateNavRequest request, ISender sender) =>
         {
             var result = await sender.Send(new UpdateInvestmentProductNavCommand(id, request.NewNav, request.NavDate));
             return Results.Ok(result);
@@ -48,7 +66,6 @@ public class InvestmentProductEndpoints() : CarterModule
         .Produces<UpdateInvestmentProductNavResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
-
     }
 }
 

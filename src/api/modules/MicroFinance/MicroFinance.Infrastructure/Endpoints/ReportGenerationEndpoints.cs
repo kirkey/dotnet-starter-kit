@@ -7,7 +7,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Report Generations.
 /// </summary>
-public class ReportGenerationEndpoints() : CarterModule
+public class ReportGenerationEndpoints : CarterModule
 {
 
     private const string GetReportGeneration = "GetReportGeneration";
@@ -31,7 +31,7 @@ public class ReportGenerationEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetReportGenerationRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);

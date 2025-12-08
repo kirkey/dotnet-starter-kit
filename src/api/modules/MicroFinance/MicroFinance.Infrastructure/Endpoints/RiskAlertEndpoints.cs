@@ -8,7 +8,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.RiskAlerts.Resolve.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class RiskAlertEndpoints() : CarterModule
+public class RiskAlertEndpoints : CarterModule
 {
 
     private const string AcknowledgeRiskAlert = "AcknowledgeRiskAlert";
@@ -33,7 +33,7 @@ public class RiskAlertEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetRiskAlertRequest(id));
             return Results.Ok(result);
@@ -44,7 +44,7 @@ public class RiskAlertEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/acknowledge", async (Guid id, AcknowledgeRiskAlertRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/acknowledge", async (DefaultIdType id, AcknowledgeRiskAlertRequest request, ISender sender) =>
         {
             var result = await sender.Send(new AcknowledgeRiskAlertCommand(id, request.UserId));
             return Results.Ok(result);
@@ -55,7 +55,7 @@ public class RiskAlertEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/assign", async (Guid id, AssignRiskAlertRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/assign", async (DefaultIdType id, AssignRiskAlertRequest request, ISender sender) =>
         {
             var result = await sender.Send(new AssignRiskAlertCommand(id, request.UserId));
             return Results.Ok(result);
@@ -66,7 +66,7 @@ public class RiskAlertEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/escalate", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/escalate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new EscalateRiskAlertCommand(id));
             return Results.Ok(result);
@@ -77,7 +77,7 @@ public class RiskAlertEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/resolve", async (Guid id, ResolveRiskAlertRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/resolve", async (DefaultIdType id, ResolveRiskAlertRequest request, ISender sender) =>
         {
             var result = await sender.Send(new ResolveRiskAlertCommand(id, request.UserId, request.Resolution));
             return Results.Ok(result);
@@ -91,6 +91,6 @@ public class RiskAlertEndpoints() : CarterModule
     }
 }
 
-public record AcknowledgeRiskAlertRequest(Guid UserId);
-public record AssignRiskAlertRequest(Guid UserId);
-public record ResolveRiskAlertRequest(Guid UserId, string Resolution);
+public record AcknowledgeRiskAlertRequest(DefaultIdType UserId);
+public record AssignRiskAlertRequest(DefaultIdType UserId);
+public record ResolveRiskAlertRequest(DefaultIdType UserId, string Resolution);

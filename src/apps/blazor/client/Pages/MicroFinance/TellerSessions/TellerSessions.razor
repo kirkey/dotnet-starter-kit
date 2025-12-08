@@ -1,0 +1,114 @@
+@page "/microfinance/teller-sessions"
+
+<PageHeader Title="Teller Sessions" Header="Teller Sessions" SubHeader="Manage teller cash sessions for daily operations." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="TellerSessionResponse" TId="DefaultIdType" TRequest="TellerSessionViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Open")">Open</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Closed")">Closed</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Verified")">Verified</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (entity.Status == "Open" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Lock" OnClick="@(() => CloseSession(entity.Id))">
+                Close Session
+            </MudMenuItem>
+        }
+        @if (entity.Status == "Closed" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" OnClick="@(() => VerifySession(entity.Id))">
+                Verify Session
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewSessionDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Session Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.BranchId"
+                          For="@(() => context.BranchId)"
+                          Label="Branch ID"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.CashVaultId"
+                          For="@(() => context.CashVaultId)"
+                          Label="Cash Vault ID"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.SessionNumber"
+                          For="@(() => context.SessionNumber)"
+                          Label="Session Number"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          HelperText="e.g., TS-20241204-001" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.TellerUserId"
+                          For="@(() => context.TellerUserId)"
+                          Label="Teller User ID"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.TellerName"
+                          For="@(() => context.TellerName)"
+                          Label="Teller Name"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.OpeningBalance"
+                             For="@(() => context.OpeningBalance)"
+                             Label="Opening Balance"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Format="N2"
+                             HelperText="Starting cash amount in drawer" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
+

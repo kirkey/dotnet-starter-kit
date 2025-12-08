@@ -1,0 +1,142 @@
+@page "/microfinance/mobile-wallets"
+
+<PageHeader Title="Mobile Wallets" Header="Mobile Wallets" SubHeader="Manage member mobile wallets for mobile money transactions." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="MobileWalletResponse" TId="DefaultIdType" TRequest="MobileWalletViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchProvider"
+                       Label="Provider"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"M-Pesa")">M-Pesa</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Airtel Money")">Airtel Money</MudSelectItem>
+                <MudSelectItem Value="@((string?)"MTN Mobile Money")">MTN Mobile Money</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Orange Money")">Orange Money</MudSelectItem>
+                <MudSelectItem Value="@((string?)"GCash")">GCash</MudSelectItem>
+                <MudSelectItem Value="@((string?)"PayMaya")">PayMaya</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Active")">Active</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Inactive")">Inactive</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Suspended")">Suspended</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Blocked")">Blocked</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchTier"
+                       Label="Tier"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Basic")">Basic</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Standard")">Standard</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Premium")">Premium</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (entity.Status == "Suspended" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.PlayArrow" OnClick="@(() => ActivateWallet(entity.Id))">
+                Activate
+            </MudMenuItem>
+        }
+        @if (entity.Status == "Active" && _canManage)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.Pause" OnClick="@(() => SuspendWallet(entity.Id))">
+                Suspend
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewWalletDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Wallet Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.MemberId"
+                          For="@(() => context.MemberId)"
+                          Label="Member ID"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.PhoneNumber"
+                          For="@(() => context.PhoneNumber)"
+                          Label="Phone Number"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.Provider"
+                       For="@(() => context.Provider)"
+                       Label="Provider"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@("M-Pesa")">M-Pesa</MudSelectItem>
+                <MudSelectItem Value="@("Airtel Money")">Airtel Money</MudSelectItem>
+                <MudSelectItem Value="@("MTN Mobile Money")">MTN Mobile Money</MudSelectItem>
+                <MudSelectItem Value="@("Orange Money")">Orange Money</MudSelectItem>
+                <MudSelectItem Value="@("GCash")">GCash</MudSelectItem>
+                <MudSelectItem Value="@("PayMaya")">PayMaya</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Limits</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.DailyLimit"
+                             For="@(() => context.DailyLimit)"
+                             Label="Daily Limit"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Format="N2" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.MonthlyLimit"
+                             For="@(() => context.MonthlyLimit)"
+                             Label="Monthly Limit"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Format="N2" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

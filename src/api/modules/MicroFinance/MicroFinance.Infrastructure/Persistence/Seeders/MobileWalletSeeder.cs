@@ -58,7 +58,7 @@ internal static class MobileWalletSeeder
                 
                 // Add some balance
                 var balance = Math.Round((decimal)(random.NextDouble() * 5000), 2);
-                wallet.Credit(balance, $"INITIAL-{Guid.NewGuid():N}");
+                wallet.Credit(balance, $"INITIAL-{DefaultIdType.NewGuid():N}");
             }
 
             await context.MobileWallets.AddAsync(wallet, cancellationToken).ConfigureAwait(false);

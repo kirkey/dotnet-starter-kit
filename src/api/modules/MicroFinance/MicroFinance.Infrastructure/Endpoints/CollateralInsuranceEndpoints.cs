@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollateralInsurances.Renew.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollateralInsuranceEndpoints() : CarterModule
+public class CollateralInsuranceEndpoints : CarterModule
 {
 
     private const string CreateCollateralInsurance = "CreateCollateralInsurance";
@@ -29,7 +29,7 @@ public class CollateralInsuranceEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetCollateralInsuranceRequest(id));
             return Results.Ok(result);
@@ -40,7 +40,7 @@ public class CollateralInsuranceEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/record-premium", async (Guid id, RecordPremiumRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/record-premium", async (DefaultIdType id, RecordPremiumRequest request, ISender sender) =>
         {
             var result = await sender.Send(new RecordCollateralInsurancePremiumCommand(id, request.PaymentDate, request.NextDueDate));
             return Results.Ok(result);
@@ -51,7 +51,7 @@ public class CollateralInsuranceEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/renew", async (Guid id, RenewRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/renew", async (DefaultIdType id, RenewRequest request, ISender sender) =>
         {
             var result = await sender.Send(new RenewInsuranceCommand(id, request.NewExpiryDate, request.NewPremium));
             return Results.Ok(result);

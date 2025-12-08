@@ -4,7 +4,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CollateralTypes.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CollateralTypeEndpoints() : CarterModule
+public class CollateralTypeEndpoints : CarterModule
 {
 
     private const string CreateCollateralType = "CreateCollateralType";
@@ -25,7 +25,7 @@ public class CollateralTypeEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetCollateralTypeRequest(id));
             return Results.Ok(result);

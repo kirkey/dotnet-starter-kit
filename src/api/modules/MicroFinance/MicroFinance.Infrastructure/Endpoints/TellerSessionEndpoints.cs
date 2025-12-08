@@ -11,7 +11,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.TellerSessions.Verify.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class TellerSessionEndpoints() : CarterModule
+public class TellerSessionEndpoints : CarterModule
 {
 
     private const string CloseTellerSession = "CloseTellerSession";
@@ -40,7 +40,7 @@ public class TellerSessionEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetTellerSessionRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -52,7 +52,7 @@ public class TellerSessionEndpoints() : CarterModule
             .MapToApiVersion(1);
 
         // Transaction Recording
-        group.MapPost("/{id:guid}/cash-in", async (Guid id, RecordCashInCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/cash-in", async (DefaultIdType id, RecordCashInCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -64,7 +64,7 @@ public class TellerSessionEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Deposit, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/cash-out", async (Guid id, RecordCashOutCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/cash-out", async (DefaultIdType id, RecordCashOutCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -77,7 +77,7 @@ public class TellerSessionEndpoints() : CarterModule
             .MapToApiVersion(1);
 
         // Session Pause & Resume
-        group.MapPost("/{id:guid}/pause", async (Guid id, PauseTellerSessionCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/pause", async (DefaultIdType id, PauseTellerSessionCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -89,7 +89,7 @@ public class TellerSessionEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/resume", async (Guid id, ResumeTellerSessionCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/resume", async (DefaultIdType id, ResumeTellerSessionCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -102,7 +102,7 @@ public class TellerSessionEndpoints() : CarterModule
             .MapToApiVersion(1);
 
         // Session Close & Verification
-        group.MapPost("/{id:guid}/close", async (Guid id, CloseTellerSessionCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/close", async (DefaultIdType id, CloseTellerSessionCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -114,7 +114,7 @@ public class TellerSessionEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/verify", async (Guid id, VerifyTellerSessionCommand command, ISender sender) =>
+        group.MapPost("/{id:guid}/verify", async (DefaultIdType id, VerifyTellerSessionCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

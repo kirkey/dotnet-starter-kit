@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanDisbursementTranches.Verif
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LoanDisbursementTrancheEndpoints() : CarterModule
+public class LoanDisbursementTrancheEndpoints : CarterModule
 {
 
     private const string ApproveTranche = "ApproveTranche";
@@ -31,7 +31,7 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetLoanDisbursementTrancheRequest(id));
             return Results.Ok(result);
@@ -42,7 +42,7 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/verify-milestone", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/verify-milestone", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new VerifyMilestoneCommand(id));
             return Results.Ok(result);
@@ -53,7 +53,7 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (Guid id, ApproveTrancheRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveTrancheRequest request, ISender sender) =>
         {
             var command = new ApproveTrancheCommand(id, request.UserId);
             var result = await sender.Send(command);
@@ -65,7 +65,7 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/disburse", async (Guid id, DisburseTrancheRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/disburse", async (DefaultIdType id, DisburseTrancheRequest request, ISender sender) =>
         {
             var command = new DisburseTrancheCommand(id, request.UserId, request.ReferenceNumber, request.DisbursedDate);
             var result = await sender.Send(command);
@@ -80,5 +80,5 @@ public class LoanDisbursementTrancheEndpoints() : CarterModule
     }
 }
 
-public sealed record ApproveTrancheRequest(Guid UserId);
-public sealed record DisburseTrancheRequest(Guid UserId, string ReferenceNumber, DateOnly? DisbursedDate);
+public sealed record ApproveTrancheRequest(DefaultIdType UserId);
+public sealed record DisburseTrancheRequest(DefaultIdType UserId, string ReferenceNumber, DateOnly? DisbursedDate);

@@ -71,7 +71,7 @@ internal static class CollectionActionSeeder
             {
                 dayOffset -= random.Next(5, 15);
                 var actionDate = DateTimeOffset.UtcNow.AddDays(-Math.Max(1, dayOffset));
-                var performedBy = staff.Any() ? staff[random.Next(staff.Count)].Id : Guid.NewGuid();
+                var performedBy = staff.Any() ? staff[random.Next(staff.Count)].Id : DefaultIdType.NewGuid();
 
                 var action = CollectionAction.Create(
                     collectionCaseId: collectionCase.Id,

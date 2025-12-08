@@ -8,7 +8,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Loan Repayments.
 /// </summary>
-public class LoanRepaymentEndpoints() : CarterModule
+public class LoanRepaymentEndpoints : CarterModule
 {
 
     private const string CreateLoanRepayment = "CreateLoanRepayment";
@@ -34,7 +34,7 @@ public class LoanRepaymentEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        loanRepaymentsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        loanRepaymentsGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetLoanRepaymentRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -56,7 +56,7 @@ public class LoanRepaymentEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        loanRepaymentsGroup.MapGet("/by-loan/{loanId:guid}", async (Guid loanId, ISender sender) =>
+        loanRepaymentsGroup.MapGet("/by-loan/{loanId:guid}", async (DefaultIdType loanId, ISender sender) =>
             {
                 var command = new SearchLoanRepaymentsCommand
                 {

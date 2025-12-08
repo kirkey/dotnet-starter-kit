@@ -7,7 +7,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.LoanOfficerAssignments.Transfe
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class LoanOfficerAssignmentEndpoints() : CarterModule
+public class LoanOfficerAssignmentEndpoints : CarterModule
 {
 
     private const string AssignToGroup = "AssignToGroup";
@@ -42,7 +42,7 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetLoanOfficerAssignmentRequest(id));
             return Results.Ok(result);
@@ -53,7 +53,7 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/transfer", async (Guid id, TransferAssignmentRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/transfer", async (DefaultIdType id, TransferAssignmentRequest request, ISender sender) =>
         {
             var command = new TransferAssignmentCommand(id, request.NewStaffId, request.Reason);
             var result = await sender.Send(command);
@@ -65,7 +65,7 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Transfer, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/end", async (Guid id, EndAssignmentRequest request, ISender sender) =>
+        group.MapPost("/{id:guid}/end", async (DefaultIdType id, EndAssignmentRequest request, ISender sender) =>
         {
             var command = new EndAssignmentCommand(id, request.EndDate, request.Reason);
             var result = await sender.Send(command);
@@ -80,5 +80,5 @@ public class LoanOfficerAssignmentEndpoints() : CarterModule
     }
 }
 
-public sealed record TransferAssignmentRequest(Guid NewStaffId, string? Reason);
+public sealed record TransferAssignmentRequest(DefaultIdType NewStaffId, string? Reason);
 public sealed record EndAssignmentRequest(DateOnly? EndDate, string? Reason);

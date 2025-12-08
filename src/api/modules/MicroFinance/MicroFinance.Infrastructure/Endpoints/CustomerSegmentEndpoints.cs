@@ -6,7 +6,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.CustomerSegments.Get.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class CustomerSegmentEndpoints() : CarterModule
+public class CustomerSegmentEndpoints : CarterModule
 {
 
     private const string ActivateCustomerSegment = "ActivateCustomerSegment";
@@ -29,7 +29,7 @@ public class CustomerSegmentEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetCustomerSegmentRequest(id));
             return Results.Ok(result);
@@ -40,7 +40,7 @@ public class CustomerSegmentEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ActivateCustomerSegmentCommand(id));
             return Results.Ok(result);
@@ -51,7 +51,7 @@ public class CustomerSegmentEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/deactivate", async (Guid id, ISender sender) =>
+        group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new DeactivateCustomerSegmentCommand(id));
             return Results.Ok(result);

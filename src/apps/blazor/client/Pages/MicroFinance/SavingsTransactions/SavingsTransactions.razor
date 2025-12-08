@@ -1,0 +1,50 @@
+@page "/microfinance/savings-transactions"
+
+<PageHeader Title="Savings Transactions" Header="Savings Transactions" SubHeader="View savings account transaction history." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="SavingsTransactionResponse" TId="DefaultIdType" TRequest="SavingsTransactionViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchTransactionType"
+                       Label="Transaction Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Deposit")">Deposit</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Withdrawal")">Withdrawal</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Interest")">Interest</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Fee")">Fee</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Transfer")">Transfer</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchPaymentMethod"
+                       Label="Payment Method"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Cash")">Cash</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Check")">Check</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Transfer")">Transfer</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Mobile")">Mobile</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewTransactionDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+</EntityTable>

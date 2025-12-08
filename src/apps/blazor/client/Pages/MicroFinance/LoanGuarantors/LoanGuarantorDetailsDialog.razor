@@ -1,0 +1,108 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Security" Class="mr-3 mb-n1" />
+            Guarantor Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_loading)
+        {
+            <MudProgressCircular Indeterminate="true" />
+        }
+        else if (_guarantor != null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Guarantee Information</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Guaranteed Amount</MudText>
+                    <MudText Typo="Typo.h6" Color="Color.Primary">@_guarantor.GuaranteedAmount.ToString("C")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Status</MudText>
+                    <MudChip T="string" Color="@GetStatusColor(_guarantor.Status)" Size="Size.Small">@_guarantor.Status</MudChip>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.caption">Relationship</MudText>
+                    <MudText Typo="Typo.body1"><strong>@(_guarantor.Relationship ?? "N/A")</strong></MudText>
+                </MudItem>
+                
+                <MudItem xs="12">
+                    <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Dates</strong></MudText>
+                    <MudDivider />
+                </MudItem>
+                
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Guarantee Date</MudText>
+                    <MudText Typo="Typo.body1">@_guarantor.GuaranteeDate.ToString("d")</MudText>
+                </MudItem>
+                
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption">Expiry Date</MudText>
+                    <MudText Typo="Typo.body1">@(_guarantor.ExpiryDate?.ToString("d") ?? "No Expiry")</MudText>
+                </MudItem>
+                
+                @if (!string.IsNullOrWhiteSpace(_guarantor.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.subtitle1" Class="mb-2 mt-4"><strong>Notes</strong></MudText>
+                        <MudDivider />
+                    </MudItem>
+                    
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.body1">@_guarantor.Notes</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Error">Unable to load guarantor details.</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType GuarantorId { get; set; }
+
+    private LoanGuarantorResponse? _guarantor;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _guarantor = await Client.GetLoanGuarantorAsync("1", GuarantorId);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private Color GetStatusColor(string? status) => status switch
+    {
+        "Active" => Color.Success,
+        "Expired" => Color.Warning,
+        "Released" => Color.Info,
+        "Invoked" => Color.Error,
+        _ => Color.Default
+    };
+
+    private void Close() => MudDialog.Close();
+}

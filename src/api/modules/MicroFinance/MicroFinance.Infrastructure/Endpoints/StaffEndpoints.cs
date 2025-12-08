@@ -1,15 +1,28 @@
 using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.Staff.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Staff.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Staff.Reinstate.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Staff.Search.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Staff.Suspend.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Staff.Update.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
-public class StaffEndpoints() : CarterModule
+/// <summary>
+/// Endpoint configuration for Staff.
+/// </summary>
+public class StaffEndpoints : CarterModule
 {
-
     private const string CreateStaff = "CreateStaff";
     private const string GetStaff = "GetStaff";
+    private const string SearchStaff = "SearchStaff";
+    private const string UpdateStaff = "UpdateStaff";
+    private const string SuspendStaff = "SuspendStaff";
+    private const string ReinstateStaff = "ReinstateStaff";
 
+    /// <summary>
+    /// Maps all Staff endpoints to the route builder.
+    /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("microfinance/staff").WithTags("Staff");
@@ -25,7 +38,7 @@ public class StaffEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        group.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetStaffRequest(id));
             return Results.Ok(result);
@@ -36,5 +49,56 @@ public class StaffEndpoints() : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
+        group.MapPost("/search", async ([FromBody] SearchStaffCommand command, ISender sender) =>
+        {
+            var result = await sender.Send(command);
+            return Results.Ok(result);
+        })
+        .WithName(SearchStaff)
+        .WithSummary("Search staff members with filters and pagination")
+        .Produces<PagedList<StaffResponse>>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateStaffCommand command, ISender sender) =>
+        {
+            if (id != command.Id)
+            {
+                return Results.BadRequest("ID mismatch");
+            }
+            var result = await sender.Send(command);
+            return Results.Ok(result);
+        })
+        .WithName(UpdateStaff)
+        .WithSummary("Update a staff member")
+        .Produces<UpdateStaffResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/suspend", async (DefaultIdType id, SuspendStaffCommand command, ISender sender) =>
+        {
+            if (id != command.Id)
+            {
+                return Results.BadRequest("ID mismatch");
+            }
+            var result = await sender.Send(command);
+            return Results.Ok(result);
+        })
+        .WithName(SuspendStaff)
+        .WithSummary("Suspend a staff member")
+        .Produces<SuspendStaffResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Suspend, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPost("/{id:guid}/reinstate", async (DefaultIdType id, ISender sender) =>
+        {
+            var result = await sender.Send(new ReinstateStaffCommand(id));
+            return Results.Ok(result);
+        })
+        .WithName(ReinstateStaff)
+        .WithSummary("Reinstate a suspended staff member")
+        .Produces<ReinstateStaffResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Activate, FshResources.MicroFinance))
+        .MapToApiVersion(1);
     }
 }

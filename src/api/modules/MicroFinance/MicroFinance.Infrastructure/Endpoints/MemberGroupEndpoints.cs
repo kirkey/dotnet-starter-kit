@@ -13,7 +13,7 @@ namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 /// <summary>
 /// Endpoint configuration for Member Groups.
 /// </summary>
-public class MemberGroupEndpoints() : CarterModule
+public class MemberGroupEndpoints : CarterModule
 {
 
     private const string ActivateMemberGroup = "ActivateMemberGroup";
@@ -43,7 +43,7 @@ public class MemberGroupEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        memberGroupsGroup.MapGet("/{id:guid}", async (Guid id, ISender sender) =>
+        memberGroupsGroup.MapGet("/{id:guid}", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetMemberGroupRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -65,7 +65,7 @@ public class MemberGroupEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        memberGroupsGroup.MapPost("/{id:guid}/members", async (Guid id, AddMemberToGroupCommand command, ISender sender) =>
+        memberGroupsGroup.MapPost("/{id:guid}/members", async (DefaultIdType id, AddMemberToGroupCommand command, ISender sender) =>
             {
                 if (id != command.GroupId)
                 {
@@ -80,7 +80,7 @@ public class MemberGroupEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        memberGroupsGroup.MapPut("/{id:guid}", async (Guid id, UpdateMemberGroupCommand command, ISender sender) =>
+        memberGroupsGroup.MapPut("/{id:guid}", async (DefaultIdType id, UpdateMemberGroupCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -92,7 +92,7 @@ public class MemberGroupEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        memberGroupsGroup.MapPost("/{id:guid}/activate", async (Guid id, ISender sender) =>
+        memberGroupsGroup.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivateMemberGroupCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -103,7 +103,7 @@ public class MemberGroupEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        memberGroupsGroup.MapPost("/{id:guid}/deactivate", async (Guid id, ISender sender) =>
+        memberGroupsGroup.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new DeactivateMemberGroupCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -114,7 +114,7 @@ public class MemberGroupEndpoints() : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        memberGroupsGroup.MapPost("/{id:guid}/dissolve", async (Guid id, DissolveMemberGroupCommand command, ISender sender) =>
+        memberGroupsGroup.MapPost("/{id:guid}/dissolve", async (DefaultIdType id, DissolveMemberGroupCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

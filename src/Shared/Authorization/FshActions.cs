@@ -39,5 +39,7 @@ public static class FshActions
     public const string Unfreeze = nameof(Unfreeze);
     public const string WriteOff = nameof(WriteOff);
     public const string Mature = nameof(Mature);
+    public const string Activate = nameof(Activate);
+    public const string Suspend = nameof(Suspend);
     public const string Renew = nameof(Renew);
 }

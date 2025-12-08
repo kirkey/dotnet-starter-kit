@@ -1,0 +1,41 @@
+@using MudBlazor
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-3 mb-n1" />
+            Fee Definitions Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            The Fee Definitions module allows you to configure various fee types used in the microfinance system.
+        </MudText>
+        
+        <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Fee Types:</strong></MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.AttachMoney">Service Fee - General service charges</MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Receipt">Processing Fee - Application processing charges</MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Warning">Penalty Fee - Penalty for violations</MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Schedule">Late Payment Fee - Charges for late payments</MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Build">Maintenance Fee - Account maintenance charges</MudListItem>
+        </MudList>
+
+        <MudText Typo="Typo.subtitle1" Class="mt-4 mb-2"><strong>Calculation Types:</strong></MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem Icon="@Icons.Material.Filled.Calculate">Flat - Fixed amount</MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Percent">Percentage - Calculated as percentage of base amount</MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Stairs">Tiered - Different rates for different amounts</MudListItem>
+        </MudList>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Variant="Variant.Filled" Color="Color.Primary">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    private void Close() => MudDialog.Close();
+}
