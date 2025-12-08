@@ -1,0 +1,57 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanOfficerTargets
+
+<MudDialog>
+    <DialogContent>
+        @if (Target is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>ID</strong></td><td>@Target.Id</td></tr>
+                    <tr><td><strong>Staff ID</strong></td><td>@Target.StaffId</td></tr>
+                    <tr><td><strong>Target Type</strong></td><td>@Target.TargetType</td></tr>
+                    <tr><td><strong>Description</strong></td><td>@(Target.Description ?? "N/A")</td></tr>
+                    <tr><td><strong>Period</strong></td><td>@Target.Period</td></tr>
+                    <tr><td><strong>Period Start</strong></td><td>@Target.PeriodStart.ToString("yyyy-MM-dd")</td></tr>
+                    <tr><td><strong>Period End</strong></td><td>@Target.PeriodEnd.ToString("yyyy-MM-dd")</td></tr>
+                    <tr><td><strong>Target Value</strong></td><td>@Target.TargetValue.ToString("N2") @Target.MetricUnit</td></tr>
+                    <tr><td><strong>Achieved Value</strong></td><td>@Target.AchievedValue.ToString("N2") @Target.MetricUnit</td></tr>
+                    <tr><td><strong>Achievement</strong></td><td class="@GetAchievementClass(Target.AchievementPercentage)">@Target.AchievementPercentage.ToString("N1")%</td></tr>
+                    <tr><td><strong>Weight</strong></td><td>@Target.Weight.ToString("N2")</td></tr>
+                    <tr><td><strong>Incentive Amount</strong></td><td>@(Target.IncentiveAmount?.ToString("N2") ?? "N/A")</td></tr>
+                    <tr><td><strong>Earned Incentive</strong></td><td>@Target.EarnedIncentive.ToString("N2")</td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Target.Status)" Size="Size.Small">@Target.Status</MudChip></td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No target data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public LoanOfficerTargetResponse? Target { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Active" => Color.Primary,
+        "Achieved" => Color.Success,
+        "NotAchieved" => Color.Error,
+        "Exceeded" => Color.Success,
+        "Pending" => Color.Warning,
+        _ => Color.Default
+    };
+
+    private static string GetAchievementClass(decimal percentage) =>
+        percentage >= 100 ? "mud-success-text" : percentage >= 80 ? "mud-warning-text" : "mud-error-text";
+}

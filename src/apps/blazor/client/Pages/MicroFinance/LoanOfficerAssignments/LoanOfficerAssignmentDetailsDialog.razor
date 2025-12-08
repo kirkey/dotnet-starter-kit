@@ -1,0 +1,51 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanOfficerAssignments
+
+<MudDialog>
+    <DialogContent>
+        @if (Assignment is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>ID</strong></td><td>@Assignment.Id</td></tr>
+                    <tr><td><strong>Staff ID</strong></td><td>@Assignment.StaffId</td></tr>
+                    <tr><td><strong>Assignment Type</strong></td><td>@Assignment.AssignmentType</td></tr>
+                    <tr><td><strong>Member ID</strong></td><td>@(Assignment.MemberId?.ToString() ?? "N/A")</td></tr>
+                    <tr><td><strong>Member Group ID</strong></td><td>@(Assignment.MemberGroupId?.ToString() ?? "N/A")</td></tr>
+                    <tr><td><strong>Loan ID</strong></td><td>@(Assignment.LoanId?.ToString() ?? "N/A")</td></tr>
+                    <tr><td><strong>Branch ID</strong></td><td>@(Assignment.BranchId?.ToString() ?? "N/A")</td></tr>
+                    <tr><td><strong>Assignment Date</strong></td><td>@Assignment.AssignmentDate.ToString("yyyy-MM-dd")</td></tr>
+                    <tr><td><strong>End Date</strong></td><td>@(Assignment.EndDate?.ToString("yyyy-MM-dd") ?? "Active")</td></tr>
+                    <tr><td><strong>Previous Staff ID</strong></td><td>@(Assignment.PreviousStaffId?.ToString() ?? "N/A")</td></tr>
+                    <tr><td><strong>Reason</strong></td><td>@(Assignment.Reason ?? "N/A")</td></tr>
+                    <tr><td><strong>Primary</strong></td><td><MudChip T="string" Color="@(Assignment.IsPrimary ? Color.Success : Color.Default)" Size="Size.Small">@(Assignment.IsPrimary ? "Yes" : "No")</MudChip></td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Assignment.Status)" Size="Size.Small">@Assignment.Status</MudChip></td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No assignment data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public LoanOfficerAssignmentResponse? Assignment { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Active" => Color.Success,
+        "Ended" => Color.Default,
+        "Transferred" => Color.Info,
+        _ => Color.Default
+    };
+}

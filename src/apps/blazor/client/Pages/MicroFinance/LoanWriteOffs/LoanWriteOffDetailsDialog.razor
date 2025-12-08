@@ -1,0 +1,70 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanWriteOffs
+
+<MudDialog>
+    <DialogContent>
+        @if (WriteOff is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>ID</strong></td><td>@WriteOff.Id</td></tr>
+                    <tr><td><strong>Write-Off Number</strong></td><td>@WriteOff.WriteOffNumber</td></tr>
+                    <tr><td><strong>Loan ID</strong></td><td>@WriteOff.LoanId</td></tr>
+                    <tr><td><strong>Type</strong></td><td>@WriteOff.WriteOffType</td></tr>
+                    <tr><td><strong>Reason</strong></td><td>@(WriteOff.Reason ?? "N/A")</td></tr>
+                    <tr><td><strong>Request Date</strong></td><td>@WriteOff.RequestDate.ToString("yyyy-MM-dd")</td></tr>
+                    <tr><td><strong>Write-Off Date</strong></td><td>@(WriteOff.WriteOffDate?.ToString("yyyy-MM-dd") ?? "Pending")</td></tr>
+                </tbody>
+            </MudSimpleTable>
+            
+            <MudText Typo="Typo.h6" Class="mt-4 mb-2">Write-Off Breakdown</MudText>
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                <tbody>
+                    <tr><td><strong>Principal</strong></td><td>@WriteOff.PrincipalWriteOff.ToString("N2")</td></tr>
+                    <tr><td><strong>Interest</strong></td><td>@WriteOff.InterestWriteOff.ToString("N2")</td></tr>
+                    <tr><td><strong>Penalties</strong></td><td>@WriteOff.PenaltiesWriteOff.ToString("N2")</td></tr>
+                    <tr><td><strong>Fees</strong></td><td>@WriteOff.FeesWriteOff.ToString("N2")</td></tr>
+                    <tr><td><strong>Total Write-Off</strong></td><td><strong>@WriteOff.TotalWriteOff.ToString("N2")</strong></td></tr>
+                    <tr><td><strong>Recovered Amount</strong></td><td class="mud-success-text">@WriteOff.RecoveredAmount.ToString("N2")</td></tr>
+                </tbody>
+            </MudSimpleTable>
+            
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>Days Past Due</strong></td><td class="mud-error-text">@WriteOff.DaysPastDue days</td></tr>
+                    <tr><td><strong>Collection Attempts</strong></td><td>@WriteOff.CollectionAttempts</td></tr>
+                    <tr><td><strong>Approved By</strong></td><td>@(WriteOff.ApprovedBy ?? "Pending")</td></tr>
+                    <tr><td><strong>Approved At</strong></td><td>@(WriteOff.ApprovedAt?.ToString("yyyy-MM-dd HH:mm") ?? "N/A")</td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(WriteOff.Status)" Size="Size.Small">@WriteOff.Status</MudChip></td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No write-off data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public LoanWriteOffResponse? WriteOff { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Pending" => Color.Warning,
+        "Approved" => Color.Info,
+        "WrittenOff" => Color.Error,
+        "PartiallyRecovered" => Color.Success,
+        "FullyRecovered" => Color.Success,
+        "Rejected" => Color.Default,
+        _ => Color.Default
+    };
+}

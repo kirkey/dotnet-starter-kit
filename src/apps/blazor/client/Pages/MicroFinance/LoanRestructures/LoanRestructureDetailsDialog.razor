@@ -1,0 +1,76 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanRestructures
+
+<MudDialog>
+    <DialogContent>
+        @if (Restructure is not null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.h6" Class="mb-2">General Information</MudText>
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <tbody>
+                            <tr><td><strong>ID</strong></td><td>@Restructure.Id</td></tr>
+                            <tr><td><strong>Restructure Number</strong></td><td>@Restructure.RestructureNumber</td></tr>
+                            <tr><td><strong>Loan ID</strong></td><td>@Restructure.LoanId</td></tr>
+                            <tr><td><strong>Type</strong></td><td>@Restructure.RestructureType</td></tr>
+                            <tr><td><strong>Reason</strong></td><td>@(Restructure.Reason ?? "N/A")</td></tr>
+                            <tr><td><strong>Request Date</strong></td><td>@Restructure.RequestDate.ToString("yyyy-MM-dd")</td></tr>
+                            <tr><td><strong>Effective Date</strong></td><td>@(Restructure.EffectiveDate?.ToString("yyyy-MM-dd") ?? "Pending")</td></tr>
+                            <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Restructure.Status)" Size="Size.Small">@Restructure.Status</MudChip></td></tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.h6" Class="mb-2">Loan Terms Comparison</MudText>
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <thead>
+                            <tr><th>Term</th><th>Original</th><th>New</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Principal</td><td>@Restructure.OriginalPrincipal.ToString("N2")</td><td>@Restructure.NewPrincipal.ToString("N2")</td></tr>
+                            <tr><td>Interest Rate</td><td>@Restructure.OriginalInterestRate.ToString("N2")%</td><td>@Restructure.NewInterestRate.ToString("N2")%</td></tr>
+                            <tr><td>Remaining Term</td><td>@Restructure.OriginalRemainingTerm months</td><td>@Restructure.NewTerm months</td></tr>
+                            <tr><td>Installment</td><td>@Restructure.OriginalInstallmentAmount.ToString("N2")</td><td>@Restructure.NewInstallmentAmount.ToString("N2")</td></tr>
+                        </tbody>
+                    </MudSimpleTable>
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                        <tbody>
+                            <tr><td><strong>Grace Period</strong></td><td>@Restructure.GracePeriodMonths months</td></tr>
+                            <tr><td><strong>Waived Amount</strong></td><td>@Restructure.WaivedAmount.ToString("N2")</td></tr>
+                            <tr><td><strong>Restructure Fee</strong></td><td>@Restructure.RestructureFee.ToString("N2")</td></tr>
+                            <tr><td><strong>Approved By</strong></td><td>@(Restructure.ApprovedBy ?? "Pending")</td></tr>
+                            <tr><td><strong>Approved At</strong></td><td>@(Restructure.ApprovedAt?.ToString("yyyy-MM-dd HH:mm") ?? "N/A")</td></tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+            </MudGrid>
+        }
+        else
+        {
+            <MudText>No restructure data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public LoanRestructureResponse? Restructure { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Pending" => Color.Warning,
+        "Approved" => Color.Success,
+        "Rejected" => Color.Error,
+        "Effective" => Color.Info,
+        "Cancelled" => Color.Default,
+        _ => Color.Default
+    };
+}
