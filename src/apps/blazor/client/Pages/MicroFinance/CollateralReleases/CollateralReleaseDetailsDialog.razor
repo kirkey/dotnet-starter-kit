@@ -1,0 +1,45 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollateralReleases
+
+<MudDialog>
+    <DialogContent>
+        @if (Release is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>Reference</strong></td><td>@Release.ReleaseReference</td></tr>
+                    <tr><td><strong>Collateral ID</strong></td><td>@Release.CollateralId</td></tr>
+                    <tr><td><strong>Loan ID</strong></td><td>@Release.LoanId</td></tr>
+                    <tr><td><strong>Release Method</strong></td><td>@Release.ReleaseMethod</td></tr>
+                    <tr><td><strong>Recipient</strong></td><td>@Release.RecipientName</td></tr>
+                    <tr><td><strong>Recipient ID</strong></td><td>@Release.RecipientIdNumber</td></tr>
+                    <tr><td><strong>Request Date</strong></td><td>@Release.RequestDate.ToString("yyyy-MM-dd")</td></tr>
+                    <tr><td><strong>Released Date</strong></td><td>@(Release.ReleasedDate?.ToString("yyyy-MM-dd") ?? "Not Released")</td></tr>
+                    <tr><td><strong>Documents Returned</strong></td><td>@(Release.DocumentsReturned ? "Yes" : "No")</td></tr>
+                    <tr><td><strong>Registration Cleared</strong></td><td>@(Release.RegistrationCleared ? "Yes" : "No")</td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Release.Status)" Size="Size.Small">@Release.Status</MudChip></td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No release data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public CollateralReleaseResponse? Release { get; set; }
+    private void Close() => MudDialog.Close();
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Pending" => Color.Warning,
+        "Approved" => Color.Info,
+        "Released" => Color.Success,
+        "Rejected" => Color.Error,
+        _ => Color.Default
+    };
+}

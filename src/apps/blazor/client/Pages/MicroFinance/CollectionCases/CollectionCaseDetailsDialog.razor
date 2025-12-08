@@ -1,0 +1,67 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollectionCases
+
+<MudDialog>
+    <DialogContent>
+        @if (Case is not null)
+        {
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <tbody>
+                            <tr><td><strong>Case Number</strong></td><td>@Case.CaseNumber</td></tr>
+                            <tr><td><strong>Loan ID</strong></td><td>@Case.LoanId</td></tr>
+                            <tr><td><strong>Member ID</strong></td><td>@Case.MemberId</td></tr>
+                            <tr><td><strong>Assigned Collector</strong></td><td>@(Case.AssignedCollectorId?.ToString() ?? "Unassigned")</td></tr>
+                            <tr><td><strong>Priority</strong></td><td><MudChip T="string" Color="@GetPriorityColor(Case.Priority)" Size="Size.Small">@Case.Priority</MudChip></td></tr>
+                            <tr><td><strong>Classification</strong></td><td>@(Case.Classification ?? "N/A")</td></tr>
+                            <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Case.Status)" Size="Size.Small">@Case.Status</MudChip></td></tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true">
+                        <tbody>
+                            <tr><td><strong>DPD at Open</strong></td><td>@Case.DaysPastDueAtOpen days</td></tr>
+                            <tr><td><strong>Current DPD</strong></td><td class="mud-error-text">@Case.CurrentDaysPastDue days</td></tr>
+                            <tr><td><strong>Amount Overdue</strong></td><td class="mud-error-text">@Case.AmountOverdue.ToString("N2")</td></tr>
+                            <tr><td><strong>Total Outstanding</strong></td><td>@Case.TotalOutstanding.ToString("N2")</td></tr>
+                            <tr><td><strong>Recovered</strong></td><td class="mud-success-text">@Case.AmountRecovered.ToString("N2")</td></tr>
+                            <tr><td><strong>Contact Attempts</strong></td><td>@Case.ContactAttempts</td></tr>
+                            <tr><td><strong>Next Follow-up</strong></td><td>@(Case.NextFollowUpDate?.ToString("yyyy-MM-dd") ?? "N/A")</td></tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudItem>
+            </MudGrid>
+        }
+        else
+        {
+            <MudText>No case data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public CollectionCaseResponse? Case { get; set; }
+    private void Close() => MudDialog.Close();
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Open" => Color.Warning,
+        "InProgress" => Color.Info,
+        "Resolved" => Color.Success,
+        "Closed" => Color.Default,
+        "Escalated" => Color.Error,
+        _ => Color.Default
+    };
+    private static Color GetPriorityColor(string? priority) => priority switch
+    {
+        "High" => Color.Error,
+        "Medium" => Color.Warning,
+        "Low" => Color.Default,
+        "Critical" => Color.Error,
+        _ => Color.Default
+    };
+}

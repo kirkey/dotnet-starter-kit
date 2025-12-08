@@ -1,0 +1,39 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollectionStrategies
+
+<MudDialog>
+    <DialogContent>
+        @if (Strategy is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>Code</strong></td><td>@Strategy.Code</td></tr>
+                    <tr><td><strong>Name</strong></td><td>@Strategy.Name</td></tr>
+                    <tr><td><strong>Description</strong></td><td>@(Strategy.Description ?? "N/A")</td></tr>
+                    <tr><td><strong>Action Type</strong></td><td>@Strategy.ActionType</td></tr>
+                    <tr><td><strong>Trigger DPD</strong></td><td>@Strategy.TriggerDaysPastDue days</td></tr>
+                    <tr><td><strong>Max DPD</strong></td><td>@(Strategy.MaxDaysPastDue?.ToString() ?? "No limit") days</td></tr>
+                    <tr><td><strong>Min Amount</strong></td><td>@(Strategy.MinOutstandingAmount?.ToString("N2") ?? "N/A")</td></tr>
+                    <tr><td><strong>Max Amount</strong></td><td>@(Strategy.MaxOutstandingAmount?.ToString("N2") ?? "N/A")</td></tr>
+                    <tr><td><strong>Priority</strong></td><td>@Strategy.Priority</td></tr>
+                    <tr><td><strong>Repeat Interval</strong></td><td>@(Strategy.RepeatIntervalDays?.ToString() ?? "N/A") days</td></tr>
+                    <tr><td><strong>Escalate on Failure</strong></td><td>@(Strategy.EscalateOnFailure ? "Yes" : "No")</td></tr>
+                    <tr><td><strong>Requires Approval</strong></td><td>@(Strategy.RequiresApproval ? "Yes" : "No")</td></tr>
+                    <tr><td><strong>Active</strong></td><td><MudChip T="string" Color="@(Strategy.IsActive ? Color.Success : Color.Default)" Size="Size.Small">@(Strategy.IsActive ? "Active" : "Inactive")</MudChip></td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No strategy data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public CollectionStrategyResponse? Strategy { get; set; }
+    private void Close() => MudDialog.Close();
+}

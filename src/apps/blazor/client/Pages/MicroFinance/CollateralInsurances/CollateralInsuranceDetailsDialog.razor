@@ -1,0 +1,46 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollateralInsurances
+
+<MudDialog>
+    <DialogContent>
+        @if (Insurance is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>Policy Number</strong></td><td>@Insurance.PolicyNumber</td></tr>
+                    <tr><td><strong>Collateral ID</strong></td><td>@Insurance.CollateralId</td></tr>
+                    <tr><td><strong>Insurer</strong></td><td>@Insurance.InsurerName</td></tr>
+                    <tr><td><strong>Type</strong></td><td>@Insurance.InsuranceType</td></tr>
+                    <tr><td><strong>Coverage Amount</strong></td><td>@Insurance.CoverageAmount.ToString("N2")</td></tr>
+                    <tr><td><strong>Premium Amount</strong></td><td>@Insurance.PremiumAmount.ToString("N2")</td></tr>
+                    <tr><td><strong>Deductible</strong></td><td>@Insurance.Deductible.ToString("N2")</td></tr>
+                    <tr><td><strong>Effective Date</strong></td><td>@Insurance.EffectiveDate.ToString("yyyy-MM-dd")</td></tr>
+                    <tr><td><strong>Expiry Date</strong></td><td>@Insurance.ExpiryDate.ToString("yyyy-MM-dd")</td></tr>
+                    <tr><td><strong>MFI as Beneficiary</strong></td><td>@(Insurance.IsMfiAsBeneficiary ? "Yes" : "No")</td></tr>
+                    <tr><td><strong>Auto Renewal</strong></td><td>@(Insurance.AutoRenewal ? "Yes" : "No")</td></tr>
+                    <tr><td><strong>Status</strong></td><td><MudChip T="string" Color="@GetStatusColor(Insurance.Status)" Size="Size.Small">@Insurance.Status</MudChip></td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No insurance data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public CollateralInsuranceResponse? Insurance { get; set; }
+    private void Close() => MudDialog.Close();
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Active" => Color.Success,
+        "Expired" => Color.Error,
+        "Pending" => Color.Warning,
+        "Cancelled" => Color.Default,
+        _ => Color.Default
+    };
+}

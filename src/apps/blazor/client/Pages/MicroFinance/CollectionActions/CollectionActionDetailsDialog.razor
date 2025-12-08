@@ -1,0 +1,47 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollectionActions
+
+<MudDialog>
+    <DialogContent>
+        @if (Action is not null)
+        {
+            <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Class="mt-4">
+                <tbody>
+                    <tr><td><strong>Action Type</strong></td><td>@Action.ActionType</td></tr>
+                    <tr><td><strong>Case ID</strong></td><td>@Action.CollectionCaseId</td></tr>
+                    <tr><td><strong>Loan ID</strong></td><td>@Action.LoanId</td></tr>
+                    <tr><td><strong>Date/Time</strong></td><td>@Action.ActionDateTime.ToString("yyyy-MM-dd HH:mm")</td></tr>
+                    <tr><td><strong>Contact Method</strong></td><td>@(Action.ContactMethod ?? "N/A")</td></tr>
+                    <tr><td><strong>Phone Called</strong></td><td>@(Action.PhoneNumberCalled ?? "N/A")</td></tr>
+                    <tr><td><strong>Contact Person</strong></td><td>@(Action.ContactPerson ?? "N/A")</td></tr>
+                    <tr><td><strong>Outcome</strong></td><td><MudChip T="string" Color="@GetOutcomeColor(Action.Outcome)" Size="Size.Small">@Action.Outcome</MudChip></td></tr>
+                    <tr><td><strong>Description</strong></td><td>@(Action.Description ?? "N/A")</td></tr>
+                    <tr><td><strong>Promised Amount</strong></td><td>@(Action.PromisedAmount?.ToString("N2") ?? "N/A")</td></tr>
+                    <tr><td><strong>Promised Date</strong></td><td>@(Action.PromisedDate?.ToString("yyyy-MM-dd") ?? "N/A")</td></tr>
+                    <tr><td><strong>Next Follow-up</strong></td><td>@(Action.NextFollowUpDate?.ToString("yyyy-MM-dd") ?? "N/A")</td></tr>
+                </tbody>
+            </MudSimpleTable>
+        }
+        else
+        {
+            <MudText>No action data available.</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public CollectionActionResponse? Action { get; set; }
+    private void Close() => MudDialog.Close();
+    private static Color GetOutcomeColor(string? outcome) => outcome switch
+    {
+        "PromiseToPay" => Color.Success,
+        "NoAnswer" => Color.Warning,
+        "WrongNumber" => Color.Error,
+        "Contacted" => Color.Info,
+        "Refused" => Color.Error,
+        _ => Color.Default
+    };
+}
