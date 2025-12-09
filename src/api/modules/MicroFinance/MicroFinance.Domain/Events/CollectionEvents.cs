@@ -43,6 +43,12 @@ public sealed record CollectionActionRecorded : DomainEvent
     public CollectionAction? CollectionAction { get; init; }
 }
 
+/// <summary>Domain event raised when a collection action is updated.</summary>
+public sealed record CollectionActionUpdated : DomainEvent
+{
+    public CollectionAction? CollectionAction { get; init; }
+}
+
 // ============================================================================
 // Promise to Pay Events
 // ============================================================================

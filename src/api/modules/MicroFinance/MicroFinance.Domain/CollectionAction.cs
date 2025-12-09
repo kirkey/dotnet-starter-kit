@@ -235,4 +235,36 @@ public class CollectionAction : AuditableEntity, IAggregateRoot
         Notes = notes?.Trim();
         return this;
     }
+
+    /// <summary>Updates the collection action.</summary>
+    public CollectionAction Update(
+        string? outcome = null,
+        string? description = null,
+        string? contactMethod = null,
+        string? phoneNumberCalled = null,
+        string? contactPerson = null,
+        decimal? promisedAmount = null,
+        DateOnly? promisedDate = null,
+        DateOnly? nextFollowUpDate = null,
+        int? durationMinutes = null,
+        decimal? latitude = null,
+        decimal? longitude = null,
+        string? notes = null)
+    {
+        if (!string.IsNullOrWhiteSpace(outcome)) Outcome = outcome;
+        if (description is not null) Description = description.Trim();
+        if (!string.IsNullOrWhiteSpace(contactMethod)) ContactMethod = contactMethod;
+        if (phoneNumberCalled is not null) PhoneNumberCalled = phoneNumberCalled.Trim();
+        if (contactPerson is not null) ContactPerson = contactPerson.Trim();
+        if (promisedAmount.HasValue) PromisedAmount = promisedAmount.Value;
+        if (promisedDate.HasValue) PromisedDate = promisedDate.Value;
+        if (nextFollowUpDate.HasValue) NextFollowUpDate = nextFollowUpDate.Value;
+        if (durationMinutes.HasValue) DurationMinutes = durationMinutes.Value;
+        if (latitude.HasValue) Latitude = latitude.Value;
+        if (longitude.HasValue) Longitude = longitude.Value;
+        if (notes is not null) Notes = notes.Trim();
+
+        QueueDomainEvent(new CollectionActionUpdated { CollectionAction = this });
+        return this;
+    }
 }

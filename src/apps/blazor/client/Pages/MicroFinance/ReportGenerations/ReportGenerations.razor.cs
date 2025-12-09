@@ -65,8 +65,7 @@ public partial class ReportGenerations
                     EndDate = model.EndDate,
                     BranchId = model.BranchId
                 };
-                var result = await Client.QueueReportGenerationAsync("1", request).ConfigureAwait(false);
-                return result.Id;
+                await Client.QueueReportGenerationAsync("1", request).ConfigureAwait(false);
             },
             enableAdvancedSearch: true,
             idFunc: dto => dto.Id,

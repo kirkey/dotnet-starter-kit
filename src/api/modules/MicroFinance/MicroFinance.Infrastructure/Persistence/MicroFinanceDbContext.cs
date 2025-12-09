@@ -68,6 +68,9 @@ public sealed class MicroFinanceDbContext(
     /// <summary>Gets or sets the LoanWriteOffs DbSet.</summary>
     public DbSet<LoanWriteOff> LoanWriteOffs { get; set; } = null!;
 
+    /// <summary>Gets or sets the InterestRateChanges DbSet.</summary>
+    public DbSet<InterestRateChange> InterestRateChanges { get; set; } = null!;
+
     // ============================================
     // Savings Management
     // ============================================
@@ -106,6 +109,12 @@ public sealed class MicroFinanceDbContext(
 
     /// <summary>Gets or sets the FeeCharges DbSet.</summary>
     public DbSet<FeeCharge> FeeCharges { get; set; } = null!;
+
+    /// <summary>Gets or sets the FeePayments DbSet.</summary>
+    public DbSet<FeePayment> FeePayments { get; set; } = null!;
+
+    /// <summary>Gets or sets the FeeWaivers DbSet.</summary>
+    public DbSet<FeeWaiver> FeeWaivers { get; set; } = null!;
 
     // ============================================
     // Collateral Management

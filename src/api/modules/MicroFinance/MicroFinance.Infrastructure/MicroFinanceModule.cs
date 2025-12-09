@@ -248,6 +248,8 @@ public static class MicroFinanceModule
         builder.Services.AddKeyedScoped<IReadRepository<LoanSchedule>, MicroFinanceRepository<LoanSchedule>>("microfinance:loanschedules");
         builder.Services.AddKeyedScoped<IRepository<LoanWriteOff>, MicroFinanceRepository<LoanWriteOff>>("microfinance:loanwriteoffs");
         builder.Services.AddKeyedScoped<IReadRepository<LoanWriteOff>, MicroFinanceRepository<LoanWriteOff>>("microfinance:loanwriteoffs");
+        builder.Services.AddKeyedScoped<IRepository<InterestRateChange>, MicroFinanceRepository<InterestRateChange>>("microfinance:interestratechanges");
+        builder.Services.AddKeyedScoped<IReadRepository<InterestRateChange>, MicroFinanceRepository<InterestRateChange>>("microfinance:interestratechanges");
         
         // --- Savings Management ---
         builder.Services.AddKeyedScoped<IRepository<FixedDeposit>, MicroFinanceRepository<FixedDeposit>>("microfinance:fixeddeposits");
@@ -272,6 +274,10 @@ public static class MicroFinanceModule
         builder.Services.AddKeyedScoped<IReadRepository<FeeCharge>, MicroFinanceRepository<FeeCharge>>("microfinance:feecharges");
         builder.Services.AddKeyedScoped<IRepository<FeeDefinition>, MicroFinanceRepository<FeeDefinition>>("microfinance:feedefinitions");
         builder.Services.AddKeyedScoped<IReadRepository<FeeDefinition>, MicroFinanceRepository<FeeDefinition>>("microfinance:feedefinitions");
+        builder.Services.AddKeyedScoped<IRepository<FeePayment>, MicroFinanceRepository<FeePayment>>("microfinance:feepayments");
+        builder.Services.AddKeyedScoped<IReadRepository<FeePayment>, MicroFinanceRepository<FeePayment>>("microfinance:feepayments");
+        builder.Services.AddKeyedScoped<IRepository<FeeWaiver>, MicroFinanceRepository<FeeWaiver>>("microfinance:feewaivers");
+        builder.Services.AddKeyedScoped<IReadRepository<FeeWaiver>, MicroFinanceRepository<FeeWaiver>>("microfinance:feewaivers");
         
         // --- Collateral Management ---
         builder.Services.AddKeyedScoped<IRepository<CollateralInsurance>, MicroFinanceRepository<CollateralInsurance>>("microfinance:collateralinsurances");

@@ -5,6 +5,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Create.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Search.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.RiskCategories.Update.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 
@@ -16,6 +17,7 @@ public class RiskCategoryEndpoints : CarterModule
     private const string DeactivateRiskCategory = "DeactivateRiskCategory";
     private const string GetRiskCategory = "GetRiskCategory";
     private const string SearchRiskCategories = "SearchRiskCategories";
+    private const string UpdateRiskCategory = "UpdateRiskCategory";
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -41,6 +43,21 @@ public class RiskCategoryEndpoints : CarterModule
         .WithSummary("Get risk category by ID")
         .Produces<RiskCategoryResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapPut("/{id:guid}", async (DefaultIdType id, UpdateRiskCategoryCommand command, ISender sender) =>
+        {
+            if (id != command.Id)
+            {
+                return Results.BadRequest("ID mismatch");
+            }
+            var result = await sender.Send(command).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(UpdateRiskCategory)
+        .WithSummary("Update a risk category")
+        .Produces<UpdateRiskCategoryResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
         group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>

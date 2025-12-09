@@ -65,3 +65,25 @@ public sealed record LoanRepaymentReversed : DomainEvent
     public string? Reason { get; init; }
 }
 
+// ============================================
+// Interest Rate Change Events
+// ============================================
+
+/// <summary>Domain event raised when an interest rate change is created.</summary>
+public sealed record InterestRateChangeCreated(InterestRateChange RateChange) : DomainEvent;
+
+/// <summary>Domain event raised when an interest rate change is updated.</summary>
+public sealed record InterestRateChangeUpdated(InterestRateChange RateChange) : DomainEvent;
+
+/// <summary>Domain event raised when an interest rate change is approved.</summary>
+public sealed record InterestRateChangeApproved(Guid RateChangeId, Guid ApprovedByUserId, decimal NewRate) : DomainEvent;
+
+/// <summary>Domain event raised when an interest rate change is rejected.</summary>
+public sealed record InterestRateChangeRejected(Guid RateChangeId, Guid RejectedByUserId, string Reason) : DomainEvent;
+
+/// <summary>Domain event raised when an interest rate change is applied to a loan.</summary>
+public sealed record InterestRateChangeApplied(Guid RateChangeId, Guid LoanId, decimal NewRate) : DomainEvent;
+
+/// <summary>Domain event raised when an interest rate change is cancelled.</summary>
+public sealed record InterestRateChangeCancelled(Guid RateChangeId) : DomainEvent;
+
