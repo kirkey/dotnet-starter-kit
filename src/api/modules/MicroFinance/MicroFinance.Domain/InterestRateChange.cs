@@ -78,6 +78,9 @@ public class InterestRateChange : AuditableEntity, IAggregateRoot
     /// <summary>FK to Loan being modified.</summary>
     public DefaultIdType LoanId { get; private set; }
 
+    /// <summary>Navigation property to Loan.</summary>
+    public virtual Loan? Loan { get; private set; }
+
     /// <summary>Unique change reference number.</summary>
     public string Reference { get; private set; } = default!;
 

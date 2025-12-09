@@ -142,10 +142,7 @@ public sealed class CreditBureauInquiry : AuditableEntity, IAggregateRoot
     /// Error message if inquiry failed.
     /// </summary>
     public string? ErrorMessage { get; private set; }
-
-    /// <summary>
-    /// Additional notes.
-
+    
     // Navigation properties
     public Member Member { get; private set; } = null!;
     public Loan? Loan { get; private set; }

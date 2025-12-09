@@ -77,6 +77,9 @@ public class FeeWaiver : AuditableEntity, IAggregateRoot
     /// <summary>Full or Partial waiver.</summary>
     public string WaiverType { get; private set; } = default!;
 
+    /// <summary>Navigation property to FeeCharge.</summary>
+    public virtual FeeCharge? FeeCharge { get; private set; }
+
     /// <summary>Date waiver was requested.</summary>
     public DateOnly RequestDate { get; private set; }
 

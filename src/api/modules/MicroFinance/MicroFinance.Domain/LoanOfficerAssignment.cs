@@ -138,10 +138,7 @@ public sealed class LoanOfficerAssignment : AuditableEntity, IAggregateRoot
     /// Current status of the assignment.
     /// </summary>
     public string Status { get; private set; } = StatusActive;
-
-    /// <summary>
-    /// Additional notes.
-
+    
     // Navigation properties
     public Staff Staff { get; private set; } = null!;
     public Member? Member { get; private set; }

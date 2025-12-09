@@ -40,7 +40,8 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// <seealso cref="Member"/>
 /// <seealso cref="CashVault"/>
 /// <seealso cref="BranchTarget"/>
-/// <seealso cref="TellerSession"/>\npublic sealed class Branch : AuditableEntity, IAggregateRoot
+/// <seealso cref="TellerSession"/>
+public sealed class Branch : AuditableEntity, IAggregateRoot
 {
     /// <summary>
     /// Maximum length constants for string properties.

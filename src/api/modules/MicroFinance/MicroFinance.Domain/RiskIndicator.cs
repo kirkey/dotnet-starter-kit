@@ -170,9 +170,7 @@ public sealed class RiskIndicator : AuditableEntity, IAggregateRoot
     /// Current status.
     /// </summary>
     public string Status { get; private set; } = StatusActive;
-
-    /// <summary>
-
+    
     // Navigation properties
     public RiskCategory RiskCategory { get; private set; } = null!;
     public ICollection<RiskAlert> Alerts { get; private set; } = new List<RiskAlert>();

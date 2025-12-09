@@ -22,7 +22,6 @@
     <Folder Include="Catalog\" />
     <Folder Include="Hr\" />
     <Folder Include="Identity\" />
-    <Folder Include="MicroFinance\" />
     <Folder Include="Store\" />
     <Folder Include="Tenant\" />
     <Folder Include="Todo\" />

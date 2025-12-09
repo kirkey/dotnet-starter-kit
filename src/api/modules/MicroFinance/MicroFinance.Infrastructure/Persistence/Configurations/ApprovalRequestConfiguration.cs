@@ -30,6 +30,11 @@ internal sealed class ApprovalRequestConfiguration : IEntityTypeConfiguration<Ap
             .HasForeignKey(x => x.WorkflowId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder.HasMany(x => x.Decisions)
+            .WithOne(x => x.Request)
+            .HasForeignKey(x => x.RequestId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         // Indexes
         builder.HasIndex(x => x.RequestNumber)
             .IsUnique()

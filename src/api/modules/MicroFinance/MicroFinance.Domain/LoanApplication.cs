@@ -212,9 +212,7 @@ public sealed class LoanApplication : AuditableEntity, IAggregateRoot
     /// Reference to created loan (if disbursed).
     /// </summary>
     public Guid? LoanId { get; private set; }
-
-    /// <summary>
-
+    
     // Navigation properties
     public Member Member { get; private set; } = null!;
     public LoanProduct LoanProduct { get; private set; } = null!;

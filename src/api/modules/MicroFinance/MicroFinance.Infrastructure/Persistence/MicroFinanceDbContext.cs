@@ -259,6 +259,12 @@ public sealed class MicroFinanceDbContext(
     /// <summary>Gets or sets the ApprovalRequests DbSet.</summary>
     public DbSet<ApprovalRequest> ApprovalRequests { get; set; } = null!;
 
+    /// <summary>Gets or sets the ApprovalLevels DbSet.</summary>
+    public DbSet<ApprovalLevel> ApprovalLevels { get; set; } = null!;
+
+    /// <summary>Gets or sets the ApprovalDecisions DbSet.</summary>
+    public DbSet<ApprovalDecision> ApprovalDecisions { get; set; } = null!;
+
     // ============================================
     // Communication & Documents
     // ============================================

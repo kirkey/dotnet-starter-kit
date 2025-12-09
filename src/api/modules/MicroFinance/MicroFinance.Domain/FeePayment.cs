@@ -110,6 +110,9 @@ public class FeePayment : AuditableEntity, IAggregateRoot
     /// <summary>Date if reversed.</summary>
     public DateOnly? ReversedDate { get; private set; }
 
+    // Navigation properties
+    public FeeCharge FeeCharge { get; private set; } = null!;
+
     private FeePayment() { }
 
     private FeePayment(

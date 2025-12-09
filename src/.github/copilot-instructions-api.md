@@ -53,6 +53,145 @@
 
 ---
 
+## 📖 DOMAIN ENTITY DOCUMENTATION PATTERN
+
+All domain entities MUST follow this consistent documentation format. This ensures developers and support staff can easily understand each entity's purpose, constraints, and relationships.
+
+### **Standard Entity Documentation Structure**
+
+```csharp
+/// <summary>
+/// Brief description of the entity in one or two sentences.
+/// What this entity represents in the business domain.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - First use case description with period at end.
+/// - Second use case description with period at end.
+/// - Third use case description with period at end.
+/// - Additional use cases as needed (4-8 recommended).
+/// 
+/// Default values and constraints:
+/// - FieldName: description of the field (example: "example_value")
+/// - FieldName2: description with constraints, max N characters
+/// - StatusField: DefaultValue by default (Value1, Value2, Value3)
+/// - NumericField: description, must be greater than 0
+/// 
+/// Business rules:
+/// - First business rule that governs this entity.
+/// - Second business rule or constraint.
+/// - Validation rules or cross-entity dependencies.
+/// - Workflow or lifecycle rules.
+/// </remarks>
+/// <seealso cref="RelatedEntity1"/>
+/// <seealso cref="RelatedEntity2"/>
+/// <seealso cref="RelatedEntity3"/>
+public sealed class EntityName : AuditableEntity, IAggregateRoot
+{
+    // Entity implementation...
+}
+```
+
+### **Complete Entity Example**
+
+```csharp
+using FSH.Framework.Core.Domain;
+using FSH.Framework.Core.Domain.Contracts;
+
+namespace FSH.Starter.WebApi.MicroFinance.Domain;
+
+/// <summary>
+/// Represents a loan product template in the microfinance system.
+/// </summary>
+/// <remarks>
+/// Use cases:
+/// - Define standard loan offerings (e.g., Agricultural Loan, Emergency Loan, Business Loan).
+/// - Configure interest rates, terms, and repayment structures for loan types.
+/// - Set borrowing limits (min/max amounts) and eligibility criteria.
+/// - Standardize late payment penalties and grace periods.
+/// - Enable/disable loan products without affecting existing loans.
+/// 
+/// Default values and constraints:
+/// - Code: required unique identifier, max 64 characters (example: "AGRI-001")
+/// - Name: required, 2-256 characters (example: "Agricultural Input Loan")
+/// - MinLoanAmount: required, must be greater than 0 (example: 5000.00)
+/// - MaxLoanAmount: required, must be greater than MinLoanAmount (example: 100000.00)
+/// - InterestRate: required, must be between 0% and 100% (example: 15.0)
+/// - InterestMethod: required, one of "Flat", "Declining", "Compound"
+/// - IsActive: true by default
+/// 
+/// Business rules:
+/// - Code must be unique within the system.
+/// - Cannot delete products with active loans.
+/// - Deactivating a product prevents new loan creation but existing loans continue.
+/// - Interest method determines how interest is calculated (flat rate vs reducing balance).
+/// - Product changes do not affect existing loans (only new loans).
+/// </remarks>
+/// <seealso cref="Loan"/>
+/// <seealso cref="Member"/>
+/// <seealso cref="FeeDefinition"/>
+public sealed class LoanProduct : AuditableEntity, IAggregateRoot
+{
+    // Domain Constants
+    public const int CodeMaxLength = 64;
+    public const int NameMaxLength = 256;
+    
+    // Entity implementation...
+}
+```
+
+### **Documentation Section Guidelines**
+
+| Section | Purpose | Format |
+|---------|---------|--------|
+| **Summary** | Brief 1-2 sentence description of what the entity represents | Plain text |
+| **Use cases** | 4-8 business operations this entity supports | `- ` prefix, period at end |
+| **Default values and constraints** | Field descriptions, types, max lengths, allowed values | `- FieldName: description (example: "value")` |
+| **Business rules** | Validation rules, workflow constraints, cross-entity dependencies | `- ` prefix, period at end |
+| **seealso** | References to related entities | `<seealso cref="EntityName"/>` |
+
+### **Property-Level Documentation for Enumerable Fields**
+
+```csharp
+/// <summary>
+/// Gets the interest calculation method.
+/// </summary>
+/// <remarks>
+/// <list type="bullet">
+///   <item><description><strong>Flat</strong>: Interest calculated on original principal throughout the term</description></item>
+///   <item><description><strong>Declining</strong>: Interest calculated on outstanding balance (reduces over time)</description></item>
+///   <item><description><strong>Compound</strong>: Interest calculated on principal plus accumulated interest</description></item>
+/// </list>
+/// Declining balance is more borrower-friendly; Flat is simpler to administer.
+/// </remarks>
+public string InterestMethod { get; private set; } = default!;
+```
+
+### **Constants Documentation**
+
+```csharp
+// Domain Constants
+/// <summary>Maximum length for product code. (2^6 = 64)</summary>
+public const int CodeMaxLength = 64;
+
+/// <summary>Maximum length for product name. (2^8 = 256)</summary>
+public const int NameMaxLength = 256;
+
+// Status Constants
+/// <summary>Product is available for new applications.</summary>
+public const string StatusActive = "Active";
+
+/// <summary>Product is temporarily unavailable.</summary>
+public const string StatusInactive = "Inactive";
+```
+
+### **Modules Using This Pattern**
+- ✅ **MicroFinance**: All 75 domain entities (fully implemented)
+- ✅ **Store**: Reference implementation
+- 🔄 **Accounting**: Apply pattern to existing entities
+- 🔄 **Catalog**: Apply pattern to existing entities
+- 🔄 **Todo**: Apply pattern to existing entities
+
 ## 📋 BEST PRACTICES RULES (CQRS/DDD/SOLID)
 
 ### **Commands for Writes**

@@ -23,6 +23,12 @@ internal sealed class ApprovalWorkflowConfiguration : IEntityTypeConfiguration<A
         builder.Property(x => x.MaxAmount)
             .HasPrecision(18, 2);
 
+        // Relationships
+        builder.HasMany(x => x.ApprovalLevels)
+            .WithOne(x => x.Workflow)
+            .HasForeignKey(x => x.WorkflowId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         // Indexes
         builder.HasIndex(x => x.Code).IsUnique();
         builder.HasIndex(x => x.EntityType);
