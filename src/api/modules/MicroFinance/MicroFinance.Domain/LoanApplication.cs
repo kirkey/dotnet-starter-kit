@@ -9,45 +9,35 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Tracks the application process from submission through underwriting to approval or rejection.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Submit new loan requests from members</description></item>
-///   <item><description>Conduct credit appraisal and risk assessment</description></item>
-///   <item><description>Route applications through approval workflows</description></item>
-///   <item><description>Track pending documents and conditions</description></item>
-///   <item><description>Record approval/rejection decisions with reasons</description></item>
-///   <item><description>Convert approved applications to active loans</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// The loan application process is the front door of microfinance lending:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Member Eligibility</strong>: Verify membership status, savings requirements</description></item>
-///   <item><description><strong>Credit History</strong>: Review past loan performance with the MFI</description></item>
-///   <item><description><strong>Capacity Assessment</strong>: Analyze income and debt-to-income ratio</description></item>
-///   <item><description><strong>Collateral Review</strong>: Evaluate pledged assets and guarantors</description></item>
-///   <item><description><strong>Character Check</strong>: Community references, group input for solidarity loans</description></item>
-/// </list>
-/// <para><strong>Application Status Flow:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Draft</strong> → <strong>Submitted</strong>: Member completes and submits</description></item>
-///   <item><description><strong>Submitted</strong> → <strong>UnderReview</strong>: Loan officer begins assessment</description></item>
-///   <item><description><strong>UnderReview</strong> → <strong>PendingDocuments</strong>: Awaiting member documents</description></item>
-///   <item><description><strong>UnderReview</strong> → <strong>PendingApproval</strong>: Sent for approval decision</description></item>
-///   <item><description><strong>PendingApproval</strong> → <strong>Approved</strong>: Approved for disbursement</description></item>
-///   <item><description><strong>PendingApproval</strong> → <strong>Rejected</strong>: Application declined</description></item>
-///   <item><description><strong>Approved</strong> → <strong>Disbursed</strong>: Loan created and disbursed</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Member"/> - Applicant</description></item>
-///   <item><description><see cref="LoanProduct"/> - Product being applied for</description></item>
-///   <item><description><see cref="Loan"/> - Created when application is approved and disbursed</description></item>
-///   <item><description><see cref="ApprovalRequest"/> - Approval workflow request</description></item>
-///   <item><description><see cref="Document"/> - Application supporting documents</description></item>
-/// </list>
+/// Use cases:
+/// - Submit new loan requests from members.
+/// - Conduct credit appraisal and risk assessment.
+/// - Route applications through approval workflows.
+/// - Track pending documents and conditions.
+/// - Record approval/rejection decisions with reasons.
+/// - Convert approved applications to active loans.
+/// 
+/// Default values and constraints:
+/// - ApplicationNumber: Unique application identifier.
+/// - Status: Draft, Submitted, UnderReview, PendingDocuments, PendingApproval, Approved, Rejected, Disbursed.
+/// - RequestedAmount: Amount the member is requesting.
+/// - ApprovedAmount: Amount approved (may differ from requested).
+/// - Purpose: Stated loan purpose.
+/// - RequestedTerm: Requested loan term in months.
+/// 
+/// Business rules:
+/// - Front door of microfinance lending process.
+/// - Member Eligibility: Verify membership status, savings requirements.
+/// - Credit History: Review past loan performance with MFI.
+/// - Capacity Assessment: Analyze income and debt-to-income ratio.
+/// - Collateral Review: Evaluate pledged assets and guarantors.
+/// - Status flow: Draft → Submitted → UnderReview → PendingApproval → Approved/Rejected → Disbursed.
 /// </remarks>
+/// <seealso cref="Member"/>
+/// <seealso cref="LoanProduct"/>
+/// <seealso cref="Loan"/>
+/// <seealso cref="ApprovalRequest"/>
+/// <seealso cref="Document"/>
 /// <example>
 /// <para><strong>Example: Submitting a new loan application</strong></para>
 /// <code>

@@ -32,21 +32,30 @@ public static class DebtSettlementConstants
 /// Represents a negotiated debt settlement for a delinquent loan.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Record negotiated settlements with discounts on outstanding balances</description></item>
-///   <item><description>Track approval workflow for settlement offers</description></item>
-///   <item><description>Monitor settlement payment compliance</description></item>
-///   <item><description>Analyze settlement patterns and recovery rates</description></item>
-///   <item><description>Support write-off calculations for settled amounts</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Debt settlements are used when full recovery is unlikely and a negotiated
-/// resolution is more cost-effective than continued collection or legal action.
-/// Settlements typically involve accepting less than the full amount owed.
-/// </para>
+/// Use cases:
+/// - Record negotiated settlements with discounts on outstanding balances.
+/// - Track approval workflow for settlement offers.
+/// - Monitor settlement payment compliance.
+/// - Analyze settlement patterns and recovery rates.
+/// - Support write-off calculations for settled amounts.
+/// 
+/// Default values and constraints:
+/// - ReferenceNumber: required unique identifier, max 64 characters (example: "DS-2025-001234")
+/// - Status: Pending by default (Pending, Approved, Rejected, Paid, Defaulted, Cancelled)
+/// - SettlementType: LumpSum, Installment
+/// - Terms: required settlement terms, max 2048 characters
+/// - Justification: required business rationale, max 2048 characters
+/// 
+/// Business rules:
+/// - Settlements require multi-level approval based on discount percentage.
+/// - Settlement amount must be less than outstanding balance.
+/// - Waiver amounts written off against provisions.
+/// - Payment defaults void the settlement agreement.
+/// - Full audit trail maintained for regulatory compliance.
 /// </remarks>
+/// <seealso cref="Loan"/>
+/// <seealso cref="CollectionCase"/>
+/// <seealso cref="LoanWriteOff"/>
 public class DebtSettlement : AuditableEntity, IAggregateRoot
 {
     // Settlement Types

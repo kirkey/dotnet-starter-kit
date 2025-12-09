@@ -9,42 +9,35 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Enables portfolio management and performance tracking by officer.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Assign loan officers to manage specific members</description></item>
-///   <item><description>Assign officers to entire groups for group lending</description></item>
-///   <item><description>Track assignment history when officers change</description></item>
-///   <item><description>Support workload balancing across officers</description></item>
-///   <item><description>Enable portfolio quality reporting by officer</description></item>
-///   <item><description>Route loan applications to assigned officers</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Loan officer assignments are critical for microfinance operations:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Relationship Management</strong>: Officers build trust with assigned members</description></item>
-///   <item><description><strong>Accountability</strong>: Clear ownership for portfolio performance</description></item>
-///   <item><description><strong>Collections</strong>: Officers responsible for repayment follow-up</description></item>
-///   <item><description><strong>Field Visits</strong>: Officers visit assigned members/groups regularly</description></item>
-/// </list>
-/// <para><strong>Assignment Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Member</strong>: Individual member assignment</description></item>
-///   <item><description><strong>Group</strong>: Entire solidarity group</description></item>
-///   <item><description><strong>Loan</strong>: Specific loan (may differ from member assignment)</description></item>
-///   <item><description><strong>Area</strong>: Geographic coverage area</description></item>
-///   <item><description><strong>Branch</strong>: Entire branch oversight</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Staff"/> - Assigned loan officer</description></item>
-///   <item><description><see cref="Member"/> - Assigned member (when type=Member)</description></item>
-///   <item><description><see cref="MemberGroup"/> - Assigned group (when type=Group)</description></item>
-///   <item><description><see cref="Loan"/> - Assigned loan (when type=Loan)</description></item>
-///   <item><description><see cref="LoanOfficerTarget"/> - Performance targets for officer</description></item>
-/// </list>
+/// Use cases:
+/// - Assign loan officers to manage specific members.
+/// - Assign officers to entire groups for group lending.
+/// - Track assignment history when officers change.
+/// - Support workload balancing across officers.
+/// - Enable portfolio quality reporting by officer.
+/// - Route loan applications to assigned officers.
+/// 
+/// Default values and constraints:
+/// - AssignmentType: Member, Group, Loan, Area, Branch.
+/// - Status: Active, Inactive, Transferred.
+/// - AssignmentDate: Date assignment started (required).
+/// - EndDate: Date assignment ended (null if active).
+/// - Notes: Assignment notes.
+/// - IsPrimary: Whether this is the primary assignment.
+/// 
+/// Business rules:
+/// - Critical for microfinance operations.
+/// - Relationship Management: Officers build trust with assigned members.
+/// - Accountability: Clear ownership for portfolio performance.
+/// - Collections: Officers responsible for repayment follow-up.
+/// - Field Visits: Officers visit assigned members/groups regularly.
+/// - Assignment history maintained for audit and analysis.
 /// </remarks>
+/// <seealso cref="Staff"/>
+/// <seealso cref="Member"/>
+/// <seealso cref="MemberGroup"/>
+/// <seealso cref="Loan"/>
+/// <seealso cref="LoanOfficerTarget"/>
 /// <example>
 /// <para><strong>Example: Assigning a loan officer to a group</strong></para>
 /// <code>

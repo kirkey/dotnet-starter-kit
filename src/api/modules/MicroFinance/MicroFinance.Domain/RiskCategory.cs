@@ -9,38 +9,29 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Provides hierarchical structure for risk management framework.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Organize risks into categories for reporting and analysis</description></item>
-///   <item><description>Define risk appetite and tolerance per category</description></item>
-///   <item><description>Assign risk owners to each category</description></item>
-///   <item><description>Support regulatory risk classification requirements</description></item>
-///   <item><description>Enable drill-down risk reporting by category</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Risk categories form the foundation of the MFI's risk management framework:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Basel Framework</strong>: Aligns with regulatory risk categories</description></item>
-///   <item><description><strong>Risk Register</strong>: All identified risks mapped to categories</description></item>
-///   <item><description><strong>Board Reporting</strong>: Risk dashboards organized by category</description></item>
-/// </list>
-/// <para><strong>Risk Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Credit</strong>: Borrower default risk</description></item>
-///   <item><description><strong>Operational</strong>: Process, people, system failures</description></item>
-///   <item><description><strong>Market</strong>: Interest rate, currency risk</description></item>
-///   <item><description><strong>Liquidity</strong>: Cash flow and funding risk</description></item>
-///   <item><description><strong>Compliance</strong>: Regulatory and legal risk</description></item>
-///   <item><description><strong>Reputational</strong>: Brand and public perception</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="RiskIndicator"/> - KRIs within this category</description></item>
-///   <item><description><see cref="RiskAlert"/> - Alerts classified to this category</description></item>
-/// </list>
+/// Use cases:
+/// - Organize risks into categories for reporting and analysis.
+/// - Define risk appetite and tolerance per category.
+/// - Assign risk owners to each category.
+/// - Support regulatory risk classification requirements.
+/// - Enable drill-down risk reporting by category.
+/// 
+/// Default values and constraints:
+/// - Code: required unique identifier, max 32 characters (example: "RC-CREDIT")
+/// - Name: required, max 128 characters (example: "Credit Risk")
+/// - RiskType: Credit, Operational, Market, Liquidity, Compliance, Reputational
+/// - Description: category details, max 4096 characters
+/// - RiskAppetite: tolerance level (Low, Medium, High)
+/// 
+/// Business rules:
+/// - Category codes must be unique.
+/// - Each category has a designated risk owner.
+/// - Risk appetite defines acceptable risk level.
+/// - Categories may form hierarchy (parent-child).
+/// - All risks and KRIs must be mapped to a category.
 /// </remarks>
+/// <seealso cref="RiskIndicator"/>
+/// <seealso cref="RiskAlert"/>
 public sealed class RiskCategory : AuditableEntity, IAggregateRoot
 {
     /// <summary>

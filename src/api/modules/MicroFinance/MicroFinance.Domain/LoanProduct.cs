@@ -8,139 +8,41 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a loan product template in the microfinance system.
 /// </summary>
 /// <remarks>
-/// <para><strong>What is this?</strong></para>
-/// <para>
-/// A LoanProduct is a template that defines the terms and conditions for a category of loans.
-/// When members apply for loans, they select a product, and the loan inherits the product's
-/// base terms (interest rate, term limits, repayment frequency, etc.). This allows MFIs to
-/// standardize their lending policies while offering diverse products for different needs.
-/// </para>
+/// Use cases:
+/// - Define standard loan offerings (e.g., Agricultural Loan, Emergency Loan, Business Loan).
+/// - Configure interest rates, terms, and repayment structures for loan types.
+/// - Set borrowing limits (min/max amounts) and eligibility criteria.
+/// - Standardize late payment penalties and grace periods.
+/// - Enable/disable loan products without affecting existing loans.
+/// - Support seasonal or promotional loan products.
+/// - Generate product performance reports and analytics.
 /// 
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Define standard loan offerings (e.g., Agricultural Loan, Emergency Loan, Business Loan)</description></item>
-///   <item><description>Configure interest rates, terms, and repayment structures for loan types</description></item>
-///   <item><description>Set borrowing limits (min/max amounts) and eligibility criteria</description></item>
-///   <item><description>Standardize late payment penalties and grace periods</description></item>
-///   <item><description>Enable/disable loan products without affecting existing loans</description></item>
-///   <item><description>Support seasonal or promotional loan products</description></item>
-///   <item><description>Generate product performance reports and analytics</description></item>
-/// </list>
+/// Default values and constraints:
+/// - Code: required unique identifier, max 64 characters (example: "AGRI-001", "EMERG-001")
+/// - Name: required, 2-256 characters (example: "Agricultural Input Loan")
+/// - MinLoanAmount: required, must be greater than 0 (example: 5000.00)
+/// - MaxLoanAmount: required, must be greater than MinLoanAmount (example: 100000.00)
+/// - InterestRate: required, must be between 0% and 100% (example: 15.0)
+/// - InterestMethod: required, one of "Flat", "Declining", "Compound"
+/// - MinTermMonths: required, must be greater than 0 (example: 3)
+/// - MaxTermMonths: required, must be >= MinTermMonths (example: 12)
+/// - RepaymentFrequency: required, one of "Daily", "Weekly", "Biweekly", "Monthly"
+/// - GracePeriodDays: 0 by default, must be non-negative
+/// - LatePenaltyRate: 0 by default, must be non-negative
+/// - IsActive: true by default
 /// 
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Loan products serve as templates from which individual loans are created. When a member applies for a loan,
-/// they select a product, and the loan inherits the product's terms. This allows MFIs to maintain consistent
-/// lending policies while offering multiple loan types tailored to different needs (agriculture, education, 
-/// micro-enterprise, emergency, etc.).
-/// </para>
-/// 
-/// <para><strong>Common Loan Product Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Agricultural Loan</strong>: Seasonal loans for farming inputs with grace periods aligned to harvest cycles</description></item>
-///   <item><description><strong>Business Loan</strong>: Working capital for micro-enterprises with weekly/monthly repayments</description></item>
-///   <item><description><strong>Emergency Loan</strong>: Small, short-term loans for urgent needs with quick disbursement</description></item>
-///   <item><description><strong>Education Loan</strong>: Loans for school fees with term aligned to academic calendar</description></item>
-///   <item><description><strong>Housing Loan</strong>: Larger loans for home improvement with longer terms</description></item>
-///   <item><description><strong>Group Loan</strong>: Solidarity group loans with peer guarantee</description></item>
-/// </list>
-/// 
-/// <para><strong>Validation Rules:</strong></para>
-/// <list type="bullet">
-///   <item><description>Code: Required, unique, max 64 characters</description></item>
-///   <item><description>Name: Required, 2-256 characters</description></item>
-///   <item><description>InterestRate: Must be between 0% and 100%</description></item>
-///   <item><description>MinLoanAmount: Must be greater than 0</description></item>
-///   <item><description>MaxLoanAmount: Must be greater than MinLoanAmount</description></item>
-///   <item><description>MinTermMonths: Must be greater than 0</description></item>
-///   <item><description>MaxTermMonths: Must be greater than or equal to MinTermMonths</description></item>
-///   <item><description>InterestMethod: Must be one of "Flat", "Declining", or "Compound"</description></item>
-///   <item><description>RepaymentFrequency: Must be one of "Daily", "Weekly", "Biweekly", "Monthly"</description></item>
-///   <item><description>GracePeriodDays: Must be non-negative</description></item>
-///   <item><description>LatePenaltyRate: Must be non-negative</description></item>
-/// </list>
-/// 
-/// <para><strong>Required Permissions:</strong></para>
-/// <list type="bullet">
-///   <item><description><c>MicroFinance.Create</c> - Create new loan products</description></item>
-///   <item><description><c>MicroFinance.View</c> - View loan product details</description></item>
-///   <item><description><c>MicroFinance.Update</c> - Update loan product configuration</description></item>
-///   <item><description><c>MicroFinance.Delete</c> - Deactivate loan products</description></item>
-/// </list>
-/// 
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Loan"/> - Individual loans created from this product template</description></item>
-///   <item><description><see cref="Member"/> - Members who borrow using this product</description></item>
-///   <item><description><see cref="FeeDefinition"/> - Fees that may apply to this product type</description></item>
-/// </list>
-/// 
-/// <para><strong>Default Values:</strong></para>
-/// <list type="bullet">
-///   <item><description>IsActive: true (on creation)</description></item>
-///   <item><description>GracePeriodDays: 0 (if not specified)</description></item>
-///   <item><description>LatePenaltyRate: 0 (if not specified)</description></item>
-///   <item><description>Loans: Empty collection</description></item>
-/// </list>
-/// 
-/// <para><strong>JSON Example (Create Request - Agricultural Loan):</strong></para>
-/// <code>
-/// {
-///   "code": "AGRI-001",
-///   "name": "Agricultural Input Loan",
-///   "description": "Seasonal loan for seeds, fertilizers, and farming equipment",
-///   "minLoanAmount": 5000.00,
-///   "maxLoanAmount": 100000.00,
-///   "interestRate": 15.0,
-///   "interestMethod": "Declining",
-///   "minTermMonths": 3,
-///   "maxTermMonths": 12,
-///   "repaymentFrequency": "Monthly",
-///   "gracePeriodDays": 90,
-///   "latePenaltyRate": 2.0
-/// }
-/// </code>
-/// 
-/// <para><strong>JSON Example (Create Request - Emergency Loan):</strong></para>
-/// <code>
-/// {
-///   "code": "EMERG-001",
-///   "name": "Emergency Loan",
-///   "description": "Quick disbursement loan for urgent financial needs",
-///   "minLoanAmount": 1000.00,
-///   "maxLoanAmount": 25000.00,
-///   "interestRate": 24.0,
-///   "interestMethod": "Flat",
-///   "minTermMonths": 1,
-///   "maxTermMonths": 6,
-///   "repaymentFrequency": "Weekly",
-///   "gracePeriodDays": 0,
-///   "latePenaltyRate": 3.0
-/// }
-/// </code>
-/// 
-/// <para><strong>JSON Example (Response):</strong></para>
-/// <code>
-/// {
-///   "id": "7fa85f64-5717-4562-b3fc-2c963f66afa9",
-///   "code": "AGRI-001",
-///   "name": "Agricultural Input Loan",
-///   "description": "Seasonal loan for seeds, fertilizers, and farming equipment",
-///   "minLoanAmount": 5000.00,
-///   "maxLoanAmount": 100000.00,
-///   "interestRate": 15.0,
-///   "interestMethod": "Declining",
-///   "minTermMonths": 3,
-///   "maxTermMonths": 12,
-///   "repaymentFrequency": "Monthly",
-///   "gracePeriodDays": 90,
-///   "latePenaltyRate": 2.0,
-///   "isActive": true,
-///   "activeLoansCount": 0,
-///   "totalDisbursedAmount": 0.00
-/// }
-/// </code>
+/// Business rules:
+/// - Code must be unique within the system.
+/// - Cannot delete products with active loans.
+/// - Deactivating a product prevents new loan creation but existing loans continue.
+/// - Interest method determines how interest is calculated (flat rate vs reducing balance).
+/// - Grace period defines days after due date before penalty applies.
+/// - Product changes do not affect existing loans (only new loans).
+/// - Collateral requirements may be defined per product type.
 /// </remarks>
+/// <seealso cref="Loan"/>
+/// <seealso cref="Member"/>
+/// <seealso cref="FeeDefinition"/>
 public class LoanProduct : AuditableEntity, IAggregateRoot
 {
     // Domain Constants

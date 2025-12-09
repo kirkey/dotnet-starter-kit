@@ -9,39 +9,33 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Tracks professional assessments of collateral market and forced-sale values.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Record professional appraisals for loan collateral</description></item>
-///   <item><description>Track multiple valuations over the loan lifecycle</description></item>
-///   <item><description>Calculate and update Loan-to-Value ratios</description></item>
-///   <item><description>Identify collateral requiring revaluation</description></item>
-///   <item><description>Support collateral adequacy reporting</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Accurate collateral valuation is critical for credit risk management:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Initial Valuation</strong>: Required before loan approval for secured loans</description></item>
-///   <item><description><strong>Periodic Revaluation</strong>: Required by policy (e.g., annually)</description></item>
-///   <item><description><strong>Impairment Testing</strong>: For NPL provisioning calculations</description></item>
-///   <item><description><strong>Foreclosure</strong>: Current value needed before liquidation</description></item>
-/// </list>
-/// <para><strong>Valuation Methods:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>MarketComparison</strong>: Based on similar recent sales</description></item>
-///   <item><description><strong>CostApproach</strong>: Replacement cost less depreciation</description></item>
-///   <item><description><strong>IncomeApproach</strong>: Based on income-generating potential</description></item>
-///   <item><description><strong>ForcedSale</strong>: Quick liquidation value (typically 50-70% of market)</description></item>
-///   <item><description><strong>BookValue</strong>: Depreciated book value for equipment</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="LoanCollateral"/> - Collateral being valued</description></item>
-///   <item><description><see cref="CollateralType"/> - Type rules for valuation</description></item>
-///   <item><description><see cref="Document"/> - Supporting appraisal documents</description></item>
-/// </list>
+/// Use cases:
+/// - Record professional appraisals for loan collateral.
+/// - Track multiple valuations over the loan lifecycle.
+/// - Calculate and update Loan-to-Value ratios.
+/// - Identify collateral requiring revaluation.
+/// - Support collateral adequacy reporting.
+/// 
+/// Default values and constraints:
+/// - ValuationMethod: MarketComparison, CostApproach, IncomeApproach, ForcedSale, BookValue.
+/// - MarketValue: Estimated fair market value.
+/// - ForcedSaleValue: Quick liquidation value (typically 50-70% of market).
+/// - ValuationDate: Date of appraisal (required).
+/// - ExpiryDate: When valuation expires and reappraisal needed.
+/// - AppraiserName: Name of valuator or company.
+/// 
+/// Business rules:
+/// - Critical for credit risk management.
+/// - Initial Valuation: Required before loan approval for secured loans.
+/// - Periodic Revaluation: Required by policy (e.g., annually).
+/// - Impairment Testing: For NPL provisioning calculations.
+/// - Foreclosure: Current value needed before liquidation.
+/// - MarketComparison: Based on similar recent sales.
+/// - ForcedSale: Quick liquidation value for worst-case scenarios.
 /// </remarks>
+/// <seealso cref="LoanCollateral"/>
+/// <seealso cref="CollateralType"/>
+/// <seealso cref="Document"/>
 /// <example>
 /// <para><strong>Example: Recording a property valuation</strong></para>
 /// <code>

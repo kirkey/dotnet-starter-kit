@@ -8,31 +8,34 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a QR code for payments.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-/// <item>Merchant payment acceptance via static or dynamic QR codes</item>
-/// <item>Peer-to-peer (P2P) money transfers using QR scan</item>
-/// <item>Agent banking deposit/withdrawal QR identification</item>
-/// <item>Bill payment at partner establishments</item>
-/// <item>Loan repayment collection points with embedded payment info</item>
-/// <item>Event-based promotional payments with dynamic amounts</item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// QR payments enable contactless, mobile-first payment experiences for MFI customers.
-/// Static QR codes are printed and reused (merchant terminals), while dynamic QR codes
-/// are generated per transaction with embedded amount and reference data. QR standards
-/// (EMVCo, local payment schemes) ensure interoperability. Security includes expiration,
-/// one-time use options, and transaction limits.
-/// </para>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-/// <item><see cref="MobileWallet"/> - Wallet associated with QR code</item>
-/// <item><see cref="MobileTransaction"/> - Transaction executed via QR</item>
-/// <item><see cref="AgentBanking"/> - Agent QR terminals</item>
-/// <item><see cref="Member"/> - Customer who scans/owns QR</item>
-/// </list>
+/// Use cases:
+/// - Merchant payment acceptance via static or dynamic QR codes.
+/// - Peer-to-peer (P2P) money transfers using QR scan.
+/// - Agent banking deposit/withdrawal QR identification.
+/// - Bill payment at partner establishments.
+/// - Loan repayment collection points with embedded payment info.
+/// - Event-based promotional payments with dynamic amounts.
+/// 
+/// Default values and constraints:
+/// - QrCode: Encoded QR data string (max 512 chars).
+/// - Type: Static, Dynamic, Merchant, or P2P (max 32 chars).
+/// - Status: Active, Used, Expired, or Cancelled (max 32 chars).
+/// - Reference: Transaction reference (max 64 chars).
+/// - Notes: Additional notes (max 256 chars).
+/// - Amount: Embedded amount for dynamic QR codes.
+/// - ExpiryDate: Expiration timestamp for dynamic codes.
+/// 
+/// Business rules:
+/// - QR enables contactless, mobile-first payments.
+/// - Static QR: Printed and reused (merchant terminals).
+/// - Dynamic QR: Generated per transaction with amount/reference.
+/// - QR standards (EMVCo) ensure interoperability.
+/// - Security includes expiration, one-time use, and limits.
 /// </remarks>
+/// <seealso cref="MobileWallet"/>
+/// <seealso cref="MobileTransaction"/>
+/// <seealso cref="AgentBanking"/>
+/// <seealso cref="Member"/>
 public sealed class QrPayment : AuditableEntity, IAggregateRoot
 {
     // Constants

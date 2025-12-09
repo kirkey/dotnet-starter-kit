@@ -9,41 +9,33 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Tracks deposits, withdrawals, transfers, and payments via mobile money providers.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Record loan disbursements sent to mobile wallets</description></item>
-///   <item><description>Track loan repayments received via mobile money</description></item>
-///   <item><description>Log savings deposits from mobile money</description></item>
-///   <item><description>Record savings withdrawals to mobile wallets</description></item>
-///   <item><description>Maintain audit trail for all mobile money movements</description></item>
-///   <item><description>Handle transaction failures and reversals</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Mobile transactions integrate with external providers and require careful tracking:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Reference Tracking</strong>: MFI and provider references for reconciliation</description></item>
-///   <item><description><strong>Status Management</strong>: Async transactions may be pending, then complete or fail</description></item>
-///   <item><description><strong>Fee Handling</strong>: Provider fees may be charged to MFI or member</description></item>
-///   <item><description><strong>Reversal Processing</strong>: Failed transactions may need rollback</description></item>
-/// </list>
-/// <para><strong>Transaction Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Deposit</strong>: Cash-in to mobile wallet (usually at agent)</description></item>
-///   <item><description><strong>Withdrawal</strong>: Cash-out from mobile wallet</description></item>
-///   <item><description><strong>Transfer</strong>: Wallet-to-wallet transfer</description></item>
-///   <item><description><strong>LoanRepayment</strong>: Loan payment via mobile money</description></item>
-///   <item><description><strong>SavingsDeposit</strong>: Savings deposit via mobile money</description></item>
-///   <item><description><strong>BillPayment</strong>: Bill payments through the platform</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="MobileWallet"/> - Source/destination wallet</description></item>
-///   <item><description><see cref="LoanRepayment"/> - Linked loan repayment (if applicable)</description></item>
-///   <item><description><see cref="SavingsTransaction"/> - Linked savings transaction (if applicable)</description></item>
-/// </list>
+/// Use cases:
+/// - Record loan disbursements sent to mobile wallets.
+/// - Track loan repayments received via mobile money.
+/// - Log savings deposits from mobile money.
+/// - Record savings withdrawals to mobile wallets.
+/// - Maintain audit trail for all mobile money movements.
+/// - Handle transaction failures and reversals.
+/// 
+/// Default values and constraints:
+/// - TransactionType: Deposit, Withdrawal, Transfer, LoanRepayment, SavingsDeposit, BillPayment.
+/// - Amount: Transaction amount (positive decimal, required).
+/// - MfiReference: Internal reference for reconciliation.
+/// - ProviderReference: External provider reference.
+/// - Status: Pending, Completed, Failed, Reversed.
+/// - Fee: Provider fee charged.
+/// 
+/// Business rules:
+/// - Integrates with external providers requiring careful tracking.
+/// - MFI and provider references for reconciliation.
+/// - Async transactions may be pending, then complete or fail.
+/// - Provider fees may be charged to MFI or member.
+/// - Failed transactions may need rollback processing.
+/// - Deposit: Cash-in at agent; Withdrawal: Cash-out from wallet.
 /// </remarks>
+/// <seealso cref="MobileWallet"/>
+/// <seealso cref="LoanRepayment"/>
+/// <seealso cref="SavingsTransaction"/>
 /// <example>
 /// <para><strong>Example: Mobile money loan repayment</strong></para>
 /// <code>

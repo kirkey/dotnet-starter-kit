@@ -9,42 +9,33 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Tracks the claim process from filing through investigation to settlement or rejection.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>File claims for insured events (death, disability, crop loss)</description></item>
-///   <item><description>Track claim investigation and documentation</description></item>
-///   <item><description>Process claim approvals and settlements</description></item>
-///   <item><description>Record claim payments and payment references</description></item>
-///   <item><description>Handle claim rejections with documented reasons</description></item>
-///   <item><description>Apply claim proceeds to outstanding loan balances</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Insurance claims are the fulfillment of the insurance contract:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Documentation</strong>: Death certificate, medical reports, police reports</description></item>
-///   <item><description><strong>Verification</strong>: Confirm policy was active, event occurred, not excluded</description></item>
-///   <item><description><strong>Settlement</strong>: Pay beneficiary or apply to loan balance</description></item>
-///   <item><description><strong>Third-Party Claims</strong>: May require submission to external insurer</description></item>
-/// </list>
-/// <para><strong>Claim Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Death</strong>: Policy holder passed away</description></item>
-///   <item><description><strong>Disability</strong>: Permanent or temporary disability</description></item>
-///   <item><description><strong>Hospitalization</strong>: Medical expenses claim</description></item>
-///   <item><description><strong>CropLoss</strong>: Agricultural insurance claim</description></item>
-///   <item><description><strong>LivestockLoss</strong>: Animal mortality claim</description></item>
-///   <item><description><strong>PropertyDamage</strong>: Asset/property claim</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="InsurancePolicy"/> - Policy being claimed against</description></item>
-///   <item><description><see cref="Member"/> - Claimant/beneficiary</description></item>
-///   <item><description><see cref="Loan"/> - Loan to receive proceeds (credit life)</description></item>
-///   <item><description><see cref="Document"/> - Supporting documentation</description></item>
-/// </list>
+/// Use cases:
+/// - File claims for insured events (death, disability, crop loss).
+/// - Track claim investigation and documentation.
+/// - Process claim approvals and settlements.
+/// - Record claim payments and payment references.
+/// - Handle claim rejections with documented reasons.
+/// - Apply claim proceeds to outstanding loan balances.
+/// 
+/// Default values and constraints:
+/// - ClaimNumber: Unique claim identifier.
+/// - ClaimType: Death, Disability, Hospitalization, CropLoss, LivestockLoss, PropertyDamage.
+/// - Status: Filed, UnderInvestigation, Approved, Rejected, Paid, Withdrawn.
+/// - ClaimAmount: Requested claim amount.
+/// - ApprovedAmount: Amount approved for payment (may differ from claimed).
+/// - IncidentDate: Date the insured event occurred.
+/// 
+/// Business rules:
+/// - Documentation required: death certificate, medical reports, police reports.
+/// - Verification: Confirm policy active, event occurred, not excluded.
+/// - Settlement: Pay beneficiary or apply to loan balance.
+/// - Third-party claims may require submission to external insurer.
+/// - Credit life claims reduce or clear loan balance.
 /// </remarks>
+/// <seealso cref="InsurancePolicy"/>
+/// <seealso cref="Member"/>
+/// <seealso cref="Loan"/>
+/// <seealso cref="Document"/>
 /// <example>
 /// <para><strong>Example: Filing an insurance claim</strong></para>
 /// <code>

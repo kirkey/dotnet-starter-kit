@@ -9,37 +9,29 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Tracks training attended, certifications earned, and ongoing professional development.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Record staff training attendance and completion</description></item>
-///   <item><description>Track mandatory compliance training requirements</description></item>
-///   <item><description>Manage certifications and renewal dates</description></item>
-///   <item><description>Identify training gaps for staff development</description></item>
-///   <item><description>Support HR reporting and compliance audits</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Staff training is essential for MFI operational excellence:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Compliance</strong>: AML, KYC, data protection mandatory training</description></item>
-///   <item><description><strong>Product Knowledge</strong>: Training on loan and savings products</description></item>
-///   <item><description><strong>Soft Skills</strong>: Customer service, collections techniques</description></item>
-///   <item><description><strong>Technical</strong>: System usage, mobile banking, digital tools</description></item>
-/// </list>
-/// <para><strong>Training Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Onboarding</strong>: New hire orientation and training</description></item>
-///   <item><description><strong>Compliance</strong>: Regulatory required training (annual refresh)</description></item>
-///   <item><description><strong>Product</strong>: New product or feature training</description></item>
-///   <item><description><strong>SoftSkills</strong>: Communication, leadership development</description></item>
-///   <item><description><strong>Technical</strong>: System and technology training</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Staff"/> - Staff member receiving training</description></item>
-/// </list>
+/// Use cases:
+/// - Record staff training attendance and completion.
+/// - Track mandatory compliance training requirements.
+/// - Manage certifications and renewal dates.
+/// - Identify training gaps for staff development.
+/// - Support HR reporting and compliance audits.
+/// 
+/// Default values and constraints:
+/// - TrainingCode: required unique identifier, max 32 characters (example: "TRN-AML-001")
+/// - TrainingName: required, max 256 characters (example: "AML/CFT Compliance Training")
+/// - TrainingType: Onboarding, Compliance, Product, SoftSkills, Technical
+/// - Status: Enrolled by default (Enrolled, InProgress, Completed, Failed, Cancelled)
+/// - Provider: training provider name, max 128 characters
+/// - CertificationNumber: certification ID if applicable, max 64 characters
+/// 
+/// Business rules:
+/// - Compliance training has mandatory completion deadlines.
+/// - Certifications have expiry dates requiring renewal.
+/// - Training completion tracked for performance reviews.
+/// - Minimum training hours required per staff role.
+/// - Failed training requires re-enrollment.
 /// </remarks>
+/// <seealso cref="Staff"/>
 public sealed class StaffTraining : AuditableEntity, IAggregateRoot
 {
     /// <summary>

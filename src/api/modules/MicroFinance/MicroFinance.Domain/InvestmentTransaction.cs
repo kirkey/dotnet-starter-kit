@@ -8,31 +8,33 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents an investment transaction (buy/sell/dividend/etc).
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-/// <item>Process investment purchases (Buy) and redemptions (Sell)</item>
-/// <item>Record dividend distributions and reinvestments</item>
-/// <item>Execute Systematic Investment Plans (SIP) periodic contributions</item>
-/// <item>Handle product switches and portfolio rebalancing</item>
-/// <item>Transfer investments between accounts</item>
-/// <item>Track transaction fees, NAV prices, and unit quantities</item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Investment transactions record all activity within member investment accounts.
-/// Each transaction captures the product, quantity (units), price (NAV), total amount,
-/// and applicable fees. Transaction statuses flow from Pending through Processing
-/// to Completed or Failed. SIP transactions are automatically generated on schedules.
-/// Transactions affect portfolio values, gain/loss calculations, and statement generation.
-/// </para>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-/// <item><see cref="InvestmentAccount"/> - Account holding the investment</item>
-/// <item><see cref="InvestmentProduct"/> - Product being traded</item>
-/// <item><see cref="SavingsAccount"/> - Source/destination for funds</item>
-/// <item><see cref="FeeCharge"/> - Transaction fees applied</item>
-/// </list>
+/// Use cases:
+/// - Process investment purchases (Buy) and redemptions (Sell).
+/// - Record dividend distributions and reinvestments.
+/// - Execute Systematic Investment Plans (SIP) periodic contributions.
+/// - Handle product switches and portfolio rebalancing.
+/// - Transfer investments between accounts.
+/// - Track transaction fees, NAV prices, and unit quantities.
+/// 
+/// Default values and constraints:
+/// - Reference: required unique identifier, max 64 characters (example: "TXN-INV-2025-001234")
+/// - Type: Buy, Sell, Dividend, SIP, Switch, Transfer
+/// - Status: Pending by default (Pending, Processing, Completed, Failed, Cancelled)
+/// - Units: quantity of investment units
+/// - NAV: Net Asset Value price per unit
+/// - Amount: total transaction value (Units × NAV)
+/// 
+/// Business rules:
+/// - Buy transactions debit linked savings account.
+/// - Sell transactions credit linked savings account.
+/// - SIP transactions auto-generated based on schedule.
+/// - Failed transactions reversed and member notified.
+/// - Lock-in period violations trigger early redemption fees.
 /// </remarks>
+/// <seealso cref="InvestmentAccount"/>
+/// <seealso cref="InvestmentProduct"/>
+/// <seealso cref="SavingsAccount"/>
+/// <seealso cref="FeeCharge"/>
 public sealed class InvestmentTransaction : AuditableEntity, IAggregateRoot
 {
     // Constants

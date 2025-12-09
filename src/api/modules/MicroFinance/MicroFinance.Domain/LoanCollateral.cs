@@ -8,45 +8,34 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents collateral pledged against a loan for security.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Record assets pledged as security for loans</description></item>
-///   <item><description>Track collateral valuation and revaluation</description></item>
-///   <item><description>Manage collateral lifecycle (verification, pledging, release, seizure)</description></item>
-///   <item><description>Calculate loan-to-value (LTV) ratios for risk assessment</description></item>
-///   <item><description>Document ownership and location for potential seizure</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Collateral provides secondary repayment source if the borrower defaults. In microfinance,
-/// collateral types differ from traditional banking:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Savings/Deposits</strong>: Most common; member's own savings frozen</description></item>
-///   <item><description><strong>Livestock</strong>: Common in agricultural loans (cattle, goats)</description></item>
-///   <item><description><strong>Equipment</strong>: Machinery, tools, vehicles financed by the loan</description></item>
-///   <item><description><strong>Inventory</strong>: Business stock for trading loans</description></item>
-///   <item><description><strong>Real Estate</strong>: Land titles for larger loans (less common)</description></item>
-///   <item><description><strong>Jewelry</strong>: Gold, silver items with established resale value</description></item>
-/// </list>
-/// <para><strong>Valuation:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>EstimatedValue</strong>: Fair market value under normal sale conditions</description></item>
-///   <item><description><strong>ForcedSaleValue</strong>: Lower value if quick liquidation required (typically 50-70% of estimated)</description></item>
-/// </list>
-/// <para><strong>Status Progression:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Pending</strong>: Collateral submitted, awaiting verification</description></item>
-///   <item><description><strong>Verified</strong>: Ownership and value confirmed</description></item>
-///   <item><description><strong>Pledged</strong>: Legally secured against the loan</description></item>
-///   <item><description><strong>Released</strong>: Loan repaid, collateral returned to owner</description></item>
-///   <item><description><strong>Seized</strong>: Borrower defaulted, collateral taken for liquidation</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Loan"/> - The loan secured by this collateral</description></item>
-/// </list>
+/// Use cases:
+/// - Record assets pledged as security for loans.
+/// - Track collateral valuation and revaluation.
+/// - Manage collateral lifecycle (verification, pledging, release, seizure).
+/// - Calculate loan-to-value (LTV) ratios for risk assessment.
+/// - Document ownership and location for potential seizure.
+/// 
+/// Default values and constraints:
+/// - LoanId: required, must reference an active loan
+/// - CollateralType: required, max 64 characters (Savings, Livestock, Equipment, Inventory, RealEstate, Jewelry)
+/// - Description: required, max 512 characters
+/// - EstimatedValue: required, fair market value
+/// - ForcedSaleValue: typically 50-70% of EstimatedValue
+/// - Status: "Pending" by default (Pending, Verified, Pledged, Released, Seized)
+/// - OwnerName: name of collateral owner
+/// - Location: physical location of collateral
+/// 
+/// Business rules:
+/// - Total collateral value should cover required LTV ratio.
+/// - Verification required before loan disbursement.
+/// - Periodic revaluation for depreciating assets.
+/// - Release requires loan full repayment confirmation.
+/// - Seizure requires legal process and management approval.
+/// - Insurance may be required for high-value collateral.
 /// </remarks>
+/// <seealso cref="Loan"/>
+/// <seealso cref="CollateralType"/>
+/// <seealso cref="CollateralValuation"/>
 public class LoanCollateral : AuditableEntity, IAggregateRoot
 {
     // Domain Constants

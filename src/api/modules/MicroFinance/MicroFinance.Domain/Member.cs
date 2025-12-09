@@ -8,136 +8,44 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a member (client) in the microfinance system.
 /// </summary>
 /// <remarks>
-/// <para><strong>What is this?</strong></para>
-/// <para>
-/// A Member is the core client entity in the microfinance institution. Members are individuals
-/// who have registered with the MFI to access financial services including savings accounts,
-/// loans, fixed deposits, and share capital. Each member undergoes KYC (Know Your Customer)
-/// verification before activation.
-/// </para>
+/// Use cases:
+/// - Register new members with KYC (Know Your Customer) information.
+/// - Maintain member profiles with contact and demographic data.
+/// - Track member's financial relationship (loans, savings, shares).
+/// - Assess creditworthiness based on income and history.
+/// - Manage member lifecycle (activation, deactivation).
+/// - Support group lending through solidarity group membership.
+/// - Enable loan guarantorship between members.
+/// - Generate member statements and account summaries.
 /// 
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Register new members with KYC (Know Your Customer) information</description></item>
-///   <item><description>Maintain member profiles with contact and demographic data</description></item>
-///   <item><description>Track member's financial relationship (loans, savings, shares)</description></item>
-///   <item><description>Assess creditworthiness based on income and history</description></item>
-///   <item><description>Manage member lifecycle (activation, deactivation)</description></item>
-///   <item><description>Support group lending through solidarity group membership</description></item>
-///   <item><description>Enable loan guarantorship between members</description></item>
-///   <item><description>Generate member statements and account summaries</description></item>
-/// </list>
+/// Default values and constraints:
+/// - MemberNumber: required unique identifier, max 64 characters (example: "MBR-2024-001234")
+/// - FirstName: required, 2-128 characters
+/// - LastName: required, 2-128 characters
+/// - Email: optional, max 256 characters, must be valid email format
+/// - PhoneNumber: optional, max 32 characters
+/// - NationalId: recommended for KYC compliance, max 64 characters
+/// - MonthlyIncome: optional, must be non-negative if provided
+/// - DateOfBirth: optional, must be in the past if provided
+/// - IsActive: true by default
+/// - JoinDate: current UTC date if not specified
 /// 
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Members are the core clients of the microfinance institution. A member can:
-/// </para>
-/// <list type="bullet">
-///   <item><description>Hold multiple savings accounts (compulsory, voluntary, special purpose)</description></item>
-///   <item><description>Have one or more active loans (subject to policy limits)</description></item>
-///   <item><description>Own share capital in cooperative MFIs</description></item>
-///   <item><description>Belong to solidarity groups for group lending</description></item>
-///   <item><description>Act as guarantor for other members' loans</description></item>
-/// </list>
-/// <para>
-/// Member data supports:
-/// - Credit decisions (income, occupation, existing obligations)
-/// - Communication (phone, email, address)
-/// - Regulatory compliance (national ID, KYC requirements)
-/// - Risk management (group membership, guarantor relationships)
-/// </para>
-/// 
-/// <para><strong>Validation Rules:</strong></para>
-/// <list type="bullet">
-///   <item><description>FirstName: Required, 2-128 characters</description></item>
-///   <item><description>LastName: Required, 2-128 characters</description></item>
-///   <item><description>MemberNumber: Required, unique, max 64 characters</description></item>
-///   <item><description>Email: Optional, max 256 characters, must be valid email format</description></item>
-///   <item><description>PhoneNumber: Optional, max 32 characters</description></item>
-///   <item><description>NationalId: Recommended for KYC compliance, max 64 characters</description></item>
-///   <item><description>MonthlyIncome: Optional, must be non-negative if provided</description></item>
-///   <item><description>DateOfBirth: Optional, must be in the past if provided</description></item>
-/// </list>
-/// 
-/// <para><strong>Required Permissions:</strong></para>
-/// <list type="bullet">
-///   <item><description><c>MicroFinance.Create</c> - Register new members</description></item>
-///   <item><description><c>MicroFinance.View</c> - View member details and accounts</description></item>
-///   <item><description><c>MicroFinance.Update</c> - Update member information</description></item>
-///   <item><description><c>MicroFinance.Delete</c> - Delete/deactivate members</description></item>
-///   <item><description><c>MicroFinance.Activate</c> - Activate pending members</description></item>
-/// </list>
-/// 
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Loan"/> - Loans where member is the borrower</description></item>
-///   <item><description><see cref="SavingsAccount"/> - Member's savings accounts</description></item>
-///   <item><description><see cref="ShareAccount"/> - Member's share ownership</description></item>
-///   <item><description><see cref="FixedDeposit"/> - Member's term deposits</description></item>
-///   <item><description><see cref="GroupMembership"/> - Group affiliations</description></item>
-///   <item><description><see cref="LoanGuarantor"/> - Loans guaranteed by this member</description></item>
-///   <item><description><see cref="KycDocument"/> - Identity verification documents</description></item>
-/// </list>
-/// 
-/// <para><strong>Default Values:</strong></para>
-/// <list type="bullet">
-///   <item><description>IsActive: true (on creation)</description></item>
-///   <item><description>JoinDate: Current UTC date (if not specified)</description></item>
-///   <item><description>Loans: Empty collection</description></item>
-///   <item><description>SavingsAccounts: Empty collection</description></item>
-/// </list>
-/// 
-/// <para><strong>JSON Example (Create Request):</strong></para>
-/// <code>
-/// {
-///   "memberNumber": "MBR-2024-001234",
-///   "firstName": "John",
-///   "lastName": "Doe",
-///   "middleName": "Michael",
-///   "email": "john.doe@example.com",
-///   "phoneNumber": "+1-555-123-4567",
-///   "dateOfBirth": "1985-06-15",
-///   "gender": "Male",
-///   "address": "123 Main Street, Apt 4B",
-///   "city": "New York",
-///   "state": "NY",
-///   "postalCode": "10001",
-///   "country": "USA",
-///   "nationalId": "SSN-123-45-6789",
-///   "occupation": "Small Business Owner",
-///   "monthlyIncome": 5000.00,
-///   "notes": "Referred by existing member MBR-2023-000456"
-/// }
-/// </code>
-/// 
-/// <para><strong>JSON Example (Response):</strong></para>
-/// <code>
-/// {
-///   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-///   "memberNumber": "MBR-2024-001234",
-///   "firstName": "John",
-///   "lastName": "Doe",
-///   "middleName": "Michael",
-///   "fullName": "John Michael Doe",
-///   "email": "john.doe@example.com",
-///   "phoneNumber": "+1-555-123-4567",
-///   "dateOfBirth": "1985-06-15",
-///   "gender": "Male",
-///   "address": "123 Main Street, Apt 4B",
-///   "city": "New York",
-///   "state": "NY",
-///   "postalCode": "10001",
-///   "country": "USA",
-///   "nationalId": "SSN-123-45-6789",
-///   "occupation": "Small Business Owner",
-///   "monthlyIncome": 5000.00,
-///   "joinDate": "2024-01-15",
-///   "isActive": true,
-///   "loansCount": 0,
-///   "savingsAccountsCount": 0
-/// }
-/// </code>
+/// Business rules:
+/// - MemberNumber must be unique within the system.
+/// - Member must pass KYC verification before activation.
+/// - Cannot delete members with active loans or positive account balances.
+/// - Members can have multiple savings accounts but limited active loans per policy.
+/// - Income verification required for loan amounts above threshold.
+/// - National ID or equivalent document required for regulatory compliance.
+/// - Group membership required for group lending products.
 /// </remarks>
+/// <seealso cref="Loan"/>
+/// <seealso cref="SavingsAccount"/>
+/// <seealso cref="ShareAccount"/>
+/// <seealso cref="FixedDeposit"/>
+/// <seealso cref="GroupMembership"/>
+/// <seealso cref="LoanGuarantor"/>
+/// <seealso cref="KycDocument"/>
 public class Member : AuditableEntity, IAggregateRoot
 {
     // Domain Constants - Binary Limits (Powers of 2)

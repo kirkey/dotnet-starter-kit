@@ -29,20 +29,26 @@ public static class ApprovalRequestConstants
 /// Represents a pending approval request.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Track pending approvals for loans, write-offs, etc.</description></item>
-///   <item><description>Record approver decisions with comments</description></item>
-///   <item><description>Monitor approval SLAs and escalate overdue requests</description></item>
-///   <item><description>Maintain audit trail of all approval decisions</description></item>
-///   <item><description>Support multi-level approval chains</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Approval requests are created when an entity requires authorization.
-/// Each request tracks the approval chain, decisions made at each level,
-/// and provides a complete audit trail for compliance purposes.
-/// </para>
+/// Use cases:
+/// - Track pending approvals for loans, write-offs, etc.
+/// - Record approver decisions with comments.
+/// - Monitor approval SLAs and escalate overdue requests.
+/// - Maintain audit trail of all approval decisions.
+/// - Support multi-level approval chains.
+/// 
+/// Default values and constraints:
+/// - RequestNumber: Unique request identifier (max 64 chars).
+/// - EntityType: Type of entity being approved (max 64 chars).
+/// - Status: PENDING, IN_PROGRESS, APPROVED, REJECTED, CANCELLED (max 32 chars).
+/// - Comments: Requestor comments (max 2048 chars).
+/// - RejectionReason: Reason for rejection if denied (max 1024 chars).
+/// 
+/// Business rules:
+/// - Requests created when entity requires authorization.
+/// - Each request tracks the approval chain.
+/// - Decisions recorded at each level with comments.
+/// - Complete audit trail for compliance purposes.
+/// - Overdue requests may escalate to higher authority.
 /// </remarks>
 public class ApprovalRequest : AuditableEntity, IAggregateRoot
 {

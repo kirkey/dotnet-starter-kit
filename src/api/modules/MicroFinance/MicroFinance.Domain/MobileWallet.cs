@@ -9,38 +9,33 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Enables digital financial services through mobile network operators or fintech providers.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Link member accounts to mobile money providers (MTN, Airtel, M-Pesa)</description></item>
-///   <item><description>Enable digital loan disbursements directly to mobile wallets</description></item>
-///   <item><description>Accept loan repayments via mobile money</description></item>
-///   <item><description>Support savings deposits and withdrawals through mobile channels</description></item>
-///   <item><description>Track wallet balances and transaction limits</description></item>
-///   <item><description>Manage KYC tier levels for regulatory compliance</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Mobile money integration is essential for reaching unbanked populations in emerging markets:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Reach</strong>: Serve members without access to physical branches</description></item>
-///   <item><description><strong>Convenience</strong>: 24/7 transactions from anywhere</description></item>
-///   <item><description><strong>Cost Reduction</strong>: Lower operational costs vs. branch transactions</description></item>
-///   <item><description><strong>Speed</strong>: Instant disbursements and repayments</description></item>
-/// </list>
-/// <para><strong>Wallet Tiers:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Basic</strong>: Low limits, minimal KYC (phone number only)</description></item>
-///   <item><description><strong>Standard</strong>: Medium limits, ID verification required</description></item>
-///   <item><description><strong>Premium</strong>: High limits, full KYC including address verification</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Member"/> - Wallet owner</description></item>
-///   <item><description><see cref="MobileTransaction"/> - Transactions on this wallet</description></item>
-///   <item><description><see cref="PaymentGateway"/> - Provider integration configuration</description></item>
-/// </list>
+/// Use cases:
+/// - Link member accounts to mobile money providers (MTN, Airtel, M-Pesa).
+/// - Enable digital loan disbursements directly to mobile wallets.
+/// - Accept loan repayments via mobile money.
+/// - Support savings deposits and withdrawals through mobile channels.
+/// - Track wallet balances and transaction limits.
+/// - Manage KYC tier levels for regulatory compliance.
+/// 
+/// Default values and constraints:
+/// - PhoneNumber: Mobile number linked to wallet (required).
+/// - Provider: Mobile money provider name (MTN, Airtel, M-Pesa).
+/// - Tier: Basic, Standard, or Premium (determines limits).
+/// - DailyLimit: Maximum daily transaction amount.
+/// - MonthlyLimit: Maximum monthly transaction amount.
+/// - Status: Active, Suspended, or Closed.
+/// 
+/// Business rules:
+/// - Mobile money essential for reaching unbanked populations.
+/// - Basic tier: Low limits, minimal KYC (phone only).
+/// - Standard tier: Medium limits, ID verification required.
+/// - Premium tier: High limits, full KYC with address verification.
+/// - Enables 24/7 transactions from anywhere.
+/// - Lower operational costs than branch transactions.
 /// </remarks>
+/// <seealso cref="Member"/>
+/// <seealso cref="MobileTransaction"/>
+/// <seealso cref="PaymentGateway"/>
 /// <example>
 /// <para><strong>Example: Linking a mobile wallet to a member</strong></para>
 /// <code>

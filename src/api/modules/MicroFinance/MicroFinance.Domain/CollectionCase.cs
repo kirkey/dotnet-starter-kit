@@ -32,20 +32,27 @@ public static class CollectionCaseConstants
 /// Represents a collection case for managing delinquent loans.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Track delinquent loans requiring collection activities</description></item>
-///   <item><description>Assign cases to collection officers for follow-up</description></item>
-///   <item><description>Monitor aging and escalation of overdue accounts</description></item>
-///   <item><description>Record collection outcomes and recovery efforts</description></item>
-///   <item><description>Support portfolio-at-risk (PAR) management</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// A CollectionCase is automatically or manually created when a loan becomes delinquent.
-/// It tracks the collection lifecycle from initial contact through resolution.
-/// Cases can be escalated based on days past due and amount at risk.
-/// </para>
+/// Use cases:
+/// - Track delinquent loans requiring collection activities.
+/// - Assign cases to collection officers for follow-up.
+/// - Monitor aging and escalation of overdue accounts.
+/// - Record collection outcomes and recovery efforts.
+/// - Support portfolio-at-risk (PAR) management.
+/// 
+/// Default values and constraints:
+/// - CaseNumber: Unique case identifier (max 64 chars).
+/// - Status: OPEN, IN_PROGRESS, RESOLVED, CLOSED, WRITTEN_OFF (max 32 chars).
+/// - Priority: LOW, MEDIUM, HIGH, CRITICAL (max 32 chars).
+/// - Classification: Risk classification (max 32 chars).
+/// - Notes: Case notes and history (max 4096 chars).
+/// - ClosureReason: Reason for case closure (max 512 chars).
+/// 
+/// Business rules:
+/// - Case created when loan becomes delinquent.
+/// - Tracks collection lifecycle from contact through resolution.
+/// - Cases escalate based on days past due and amount at risk.
+/// - Assigned collector responsible for follow-up actions.
+/// - Closure requires documented resolution.
 /// </remarks>
 public class CollectionCase : AuditableEntity, IAggregateRoot
 {

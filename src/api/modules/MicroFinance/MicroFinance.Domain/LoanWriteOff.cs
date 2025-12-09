@@ -9,37 +9,33 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Tracks the write-off process, approvals, and any subsequent recovery.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Write off bad debts after all collection efforts exhausted</description></item>
-///   <item><description>Route write-off requests through multi-level approval workflow</description></item>
-///   <item><description>Track post-write-off recoveries for loss recoupment</description></item>
-///   <item><description>Maintain audit trail for regulatory and tax purposes</description></item>
-///   <item><description>Report on write-off trends by product, branch, or officer</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Loan write-offs are a critical portfolio management and accounting function:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Provisioning</strong>: Write-offs often follow full provisioning of the loan</description></item>
-///   <item><description><strong>Regulatory Compliance</strong>: Must follow central bank guidelines for NPL write-off</description></item>
-///   <item><description><strong>Tax Implications</strong>: Write-offs may be tax deductible with proper documentation</description></item>
-///   <item><description><strong>Continued Collection</strong>: Write-off doesn't extinguish the debt legally</description></item>
-/// </list>
-/// <para><strong>Write-Off Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Full</strong>: Entire outstanding balance written off</description></item>
-///   <item><description><strong>Partial</strong>: Portion of balance written off (after settlement)</description></item>
-///   <item><description><strong>Technical</strong>: Small balances below collection threshold</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Loan"/> - Loan being written off</description></item>
-///   <item><description><see cref="CollectionCase"/> - Collection efforts that preceded write-off</description></item>
-///   <item><description><see cref="ApprovalRequest"/> - Write-off approval workflow</description></item>
-/// </list>
+/// Use cases:
+/// - Write off bad debts after all collection efforts exhausted.
+/// - Route write-off requests through multi-level approval workflow.
+/// - Track post-write-off recoveries for loss recoupment.
+/// - Maintain audit trail for regulatory and tax purposes.
+/// - Report on write-off trends by product, branch, or officer.
+/// 
+/// Default values and constraints:
+/// - WriteOffNumber: Unique write-off identifier.
+/// - WriteOffType: Full, Partial, or Technical.
+/// - Status: Pending, Approved, Rejected, Applied.
+/// - PrincipalAmount: Principal balance written off.
+/// - InterestAmount: Interest balance written off.
+/// - FeesAmount: Fees balance written off.
+/// - Reason: Documented justification for write-off.
+/// 
+/// Business rules:
+/// - Critical portfolio management and accounting function.
+/// - Provisioning: Write-offs often follow full loan provisioning.
+/// - Regulatory Compliance: Must follow central bank NPL guidelines.
+/// - Tax Implications: May be tax deductible with proper documentation.
+/// - Write-off doesn't legally extinguish the debt.
+/// - Full: Entire balance; Partial: After settlement; Technical: Small balances.
 /// </remarks>
+/// <seealso cref="Loan"/>
+/// <seealso cref="CollectionCase"/>
+/// <seealso cref="ApprovalRequest"/>
 /// <example>
 /// <para><strong>Example: Requesting a loan write-off</strong></para>
 /// <code>

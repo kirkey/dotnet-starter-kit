@@ -9,38 +9,29 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Enables targeted product offers and differentiated service levels.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Classify members into marketing segments for targeted campaigns</description></item>
-///   <item><description>Define risk-based segments for credit decisioning</description></item>
-///   <item><description>Identify high-value members for relationship management</description></item>
-///   <item><description>Track segment membership for analytics and reporting</description></item>
-///   <item><description>Enable segment-based product eligibility rules</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Member segmentation drives personalized member experience:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Marketing</strong>: Target relevant products to appropriate segments</description></item>
-///   <item><description><strong>Risk</strong>: Apply segment-specific credit policies</description></item>
-///   <item><description><strong>Service</strong>: Differentiated service levels (e.g., VIP, standard)</description></item>
-///   <item><description><strong>Pricing</strong>: Segment-based pricing strategies</description></item>
-/// </list>
-/// <para><strong>Segment Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Demographic</strong>: Age, gender, location, occupation</description></item>
-///   <item><description><strong>Behavioral</strong>: Transaction patterns, product usage</description></item>
-///   <item><description><strong>Risk</strong>: Credit risk classification</description></item>
-///   <item><description><strong>Value</strong>: Profitability, lifetime value</description></item>
-///   <item><description><strong>Lifecycle</strong>: New, active, dormant, churned</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Member"/> - Members classified into segments</description></item>
-///   <item><description><see cref="MarketingCampaign"/> - Campaigns targeting segments</description></item>
-/// </list>
+/// Use cases:
+/// - Classify members into marketing segments for targeted campaigns.
+/// - Define risk-based segments for credit decisioning.
+/// - Identify high-value members for relationship management.
+/// - Track segment membership for analytics and reporting.
+/// - Enable segment-based product eligibility rules.
+/// 
+/// Default values and constraints:
+/// - Code: required unique identifier, max 32 characters (example: "SEG-VIP-001")
+/// - Name: required, max 128 characters (example: "VIP Customers")
+/// - Status: Active by default (Active, Inactive)
+/// - Criteria: JSON definition of segment rules, max 2048 characters
+/// - Type: Demographic, Behavioral, Risk, Value, Lifecycle
+/// 
+/// Business rules:
+/// - Segment criteria evaluated against member attributes.
+/// - Members can belong to multiple segments.
+/// - Segment assignment can be manual or rule-based.
+/// - VIP segments may have priority service levels.
+/// - Segment membership changes logged for auditing.
 /// </remarks>
+/// <seealso cref="Member"/>
+/// <seealso cref="MarketingCampaign"/>
 public sealed class CustomerSegment : AuditableEntity, IAggregateRoot
 {
     // Constants

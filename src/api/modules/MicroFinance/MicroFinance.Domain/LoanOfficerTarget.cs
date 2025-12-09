@@ -9,40 +9,33 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Used for individual performance tracking, incentive calculations, and management oversight.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Set monthly/quarterly disbursement and collection targets</description></item>
-///   <item><description>Track actual vs. target performance metrics</description></item>
-///   <item><description>Calculate performance-based incentives and bonuses</description></item>
-///   <item><description>Identify underperforming officers for coaching</description></item>
-///   <item><description>Support capacity planning and workload balancing</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Loan officer targets drive field productivity and portfolio quality:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Growth Targets</strong>: New members, new loans, disbursement volume</description></item>
-///   <item><description><strong>Quality Targets</strong>: On-time repayment, PAR (Portfolio at Risk)</description></item>
-///   <item><description><strong>Activity Targets</strong>: Field visits, group meetings attended</description></item>
-///   <item><description><strong>Recovery Targets</strong>: Collection rates, delinquency management</description></item>
-/// </list>
-/// <para><strong>Target Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>LoanDisbursement</strong>: Amount to disburse in period</description></item>
-///   <item><description><strong>LoanCollection</strong>: Amount to collect in period</description></item>
-///   <item><description><strong>NewMembers</strong>: Number of new members recruited</description></item>
-///   <item><description><strong>NewLoans</strong>: Number of loans originated</description></item>
-///   <item><description><strong>PortfolioAtRisk</strong>: Maximum PAR% allowed</description></item>
-///   <item><description><strong>OnTimeRepayment</strong>: % of payments on time</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Staff"/> - Loan officer with the target</description></item>
-///   <item><description><see cref="LoanOfficerAssignment"/> - Officer's assigned portfolio</description></item>
-///   <item><description><see cref="Branch"/> - Branch context for target</description></item>
-/// </list>
+/// Use cases:
+/// - Set monthly/quarterly disbursement and collection targets.
+/// - Track actual vs. target performance metrics.
+/// - Calculate performance-based incentives and bonuses.
+/// - Identify underperforming officers for coaching.
+/// - Support capacity planning and workload balancing.
+/// 
+/// Default values and constraints:
+/// - TargetType: LoanDisbursement, LoanCollection, NewMembers, NewLoans, PortfolioAtRisk, OnTimeRepayment.
+/// - Period: Daily, Weekly, Monthly, Quarterly, Yearly.
+/// - TargetAmount: Target value (amount or count).
+/// - ActualAmount: Achieved value (updated as performance occurs).
+/// - StartDate: Period start date (required).
+/// - EndDate: Period end date (required).
+/// - AchievementPercentage: Calculated as (Actual/Target) × 100.
+/// 
+/// Business rules:
+/// - Drives field productivity and portfolio quality.
+/// - Growth Targets: New members, new loans, disbursement volume.
+/// - Quality Targets: On-time repayment, PAR percentage.
+/// - Activity Targets: Field visits, group meetings attended.
+/// - Recovery Targets: Collection rates, delinquency management.
+/// - Incentive calculations based on achievement percentage.
 /// </remarks>
+/// <seealso cref="Staff"/>
+/// <seealso cref="LoanOfficerAssignment"/>
+/// <seealso cref="Branch"/>
 /// <example>
 /// <para><strong>Example: Setting monthly targets</strong></para>
 /// <code>

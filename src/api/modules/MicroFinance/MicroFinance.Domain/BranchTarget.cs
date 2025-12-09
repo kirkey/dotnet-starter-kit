@@ -9,39 +9,32 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Used to track and measure branch performance against organizational goals.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Set annual, quarterly, and monthly branch performance targets</description></item>
-///   <item><description>Track actual vs. budgeted performance across key metrics</description></item>
-///   <item><description>Cascade organizational targets down to branch level</description></item>
-///   <item><description>Compare branch performance for ranking and resource allocation</description></item>
-///   <item><description>Support strategic planning and branch expansion decisions</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Branch targets drive operational excellence across the MFI network:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Growth</strong>: New members, loans, and savings mobilization</description></item>
-///   <item><description><strong>Quality</strong>: Portfolio at risk, on-time repayment rates</description></item>
-///   <item><description><strong>Efficiency</strong>: Operating costs, revenue targets</description></item>
-///   <item><description><strong>Products</strong>: Insurance sales, share capital growth</description></item>
-/// </list>
-/// <para><strong>Target Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>LoanDisbursement</strong>: Total amount to disburse</description></item>
-///   <item><description><strong>LoanCollection</strong>: Amount to collect</description></item>
-///   <item><description><strong>NewMembers</strong>: Membership growth</description></item>
-///   <item><description><strong>SavingsDeposits</strong>: Savings mobilization</description></item>
-///   <item><description><strong>PortfolioAtRisk</strong>: Maximum PAR30 allowed</description></item>
-///   <item><description><strong>Revenue</strong>: Income generation target</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Branch"/> - Branch with the target</description></item>
-///   <item><description><see cref="LoanOfficerTarget"/> - Individual officer targets within branch</description></item>
-/// </list>
+/// Use cases:
+/// - Set annual, quarterly, and monthly branch performance targets.
+/// - Track actual vs. budgeted performance across key metrics.
+/// - Cascade organizational targets down to branch level.
+/// - Compare branch performance for ranking and resource allocation.
+/// - Support strategic planning and branch expansion decisions.
+/// 
+/// Default values and constraints:
+/// - TargetType: LoanDisbursement, LoanCollection, NewMembers, SavingsDeposits, PortfolioAtRisk, Revenue.
+/// - Period: Monthly, Quarterly, Yearly.
+/// - TargetValue: Target amount or percentage.
+/// - ActualValue: Achieved amount (updated as performance occurs).
+/// - StartDate: Period start date (required).
+/// - EndDate: Period end date (required).
+/// - AchievementPercentage: Calculated as (Actual/Target) × 100.
+/// 
+/// Business rules:
+/// - Drives operational excellence across MFI network.
+/// - Growth: New members, loans, and savings mobilization.
+/// - Quality: Portfolio at risk, on-time repayment rates.
+/// - Efficiency: Operating costs, revenue targets.
+/// - Products: Insurance sales, share capital growth.
+/// - Used for branch ranking and resource allocation.
 /// </remarks>
+/// <seealso cref="Branch"/>
+/// <seealso cref="LoanOfficerTarget"/>
 /// <example>
 /// <para><strong>Example: Setting branch quarterly targets</strong></para>
 /// <code>

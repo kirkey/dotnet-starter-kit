@@ -32,114 +32,43 @@ public static class LoanConstants
 /// Represents an individual loan issued to a member in the microfinance system.
 /// </summary>
 /// <remarks>
-/// <para><strong>What is this?</strong></para>
-/// <para>
-/// A Loan is the core lending entity in microfinance operations. It represents a credit facility
-/// extended to a member (borrower) under specific terms defined by a loan product template.
-/// Each loan tracks principal, interest, repayments, and status throughout its lifecycle.
-/// </para>
+/// Use cases:
+/// - Track loan applications through the approval workflow (Pending → Approved → Disbursed).
+/// - Record loan disbursements and track repayment progress.
+/// - Calculate outstanding balances (principal + interest).
+/// - Manage loan lifecycle including closure and write-offs.
+/// - Link to collateral, guarantors, and repayment schedules.
+/// - Generate loan statements and repayment schedules for members.
+/// - Support regulatory reporting (portfolio at risk, non-performing loans).
 /// 
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Track loan applications through the approval workflow (Pending → Approved → Disbursed)</description></item>
-///   <item><description>Record loan disbursements and track repayment progress</description></item>
-///   <item><description>Calculate outstanding balances (principal + interest)</description></item>
-///   <item><description>Manage loan lifecycle including closure and write-offs</description></item>
-///   <item><description>Link to collateral, guarantors, and repayment schedules</description></item>
-///   <item><description>Generate loan statements and repayment schedules for members</description></item>
-///   <item><description>Support regulatory reporting (portfolio at risk, non-performing loans)</description></item>
-/// </list>
+/// Default values and constraints:
+/// - LoanNumber: auto-generated unique identifier, max 64 characters (example: "LN-2024-001234")
+/// - PrincipalAmount: required, must be within LoanProduct's min/max limits
+/// - InterestRate: required, must be between 0% and 100%
+/// - TermMonths: required, must be within LoanProduct's min/max term range
+/// - Status: "PENDING" by default (PENDING, APPROVED, REJECTED, DISBURSED, CLOSED, WRITTEN_OFF)
+/// - OutstandingPrincipal: equals PrincipalAmount on creation
+/// - OutstandingInterest: 0 on creation
+/// - TotalPaid: 0 on creation
+/// - ApplicationDate: current UTC date on creation
 /// 
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// A Loan is the core lending entity. Each loan is created from a <see cref="LoanProduct"/> template
-/// and assigned to a <see cref="Member"/>. The loan progresses through states:
-/// </para>
-/// <list type="number">
-///   <item><description><strong>PENDING</strong>: Application submitted, awaiting review</description></item>
-///   <item><description><strong>APPROVED</strong>: Credit committee has approved the loan</description></item>
-///   <item><description><strong>REJECTED</strong>: Application denied (terminal state)</description></item>
-///   <item><description><strong>DISBURSED</strong>: Funds released to borrower, repayment begins</description></item>
-///   <item><description><strong>CLOSED</strong>: Fully repaid (terminal state)</description></item>
-///   <item><description><strong>WRITTEN_OFF</strong>: Declared uncollectible (terminal state)</description></item>
-/// </list>
-/// 
-/// <para><strong>Validation Rules:</strong></para>
-/// <list type="bullet">
-///   <item><description>PrincipalAmount must be within LoanProduct's min/max limits</description></item>
-///   <item><description>TermMonths must be within LoanProduct's min/max term range</description></item>
-///   <item><description>InterestRate must be between 0% and 100%</description></item>
-///   <item><description>MemberId must reference an active member</description></item>
-///   <item><description>LoanProductId must reference an active loan product</description></item>
-///   <item><description>Status transitions must follow the defined workflow (e.g., cannot disburse a pending loan)</description></item>
-/// </list>
-/// 
-/// <para><strong>Required Permissions:</strong></para>
-/// <list type="bullet">
-///   <item><description><c>MicroFinance.Create</c> - Create new loan applications</description></item>
-///   <item><description><c>MicroFinance.View</c> - View loan details</description></item>
-///   <item><description><c>MicroFinance.Update</c> - Update pending loan applications</description></item>
-///   <item><description><c>MicroFinance.Approve</c> - Approve loan applications</description></item>
-///   <item><description><c>MicroFinance.Reject</c> - Reject loan applications</description></item>
-///   <item><description><c>MicroFinance.Disburse</c> - Disburse approved loans</description></item>
-///   <item><description><c>MicroFinance.Close</c> - Close fully paid loans</description></item>
-///   <item><description><c>MicroFinance.WriteOff</c> - Write off non-performing loans</description></item>
-/// </list>
-/// 
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="LoanProduct"/> - Template defining terms</description></item>
-///   <item><description><see cref="Member"/> - The borrower</description></item>
-///   <item><description><see cref="LoanSchedule"/> - Expected repayment installments</description></item>
-///   <item><description><see cref="LoanRepayment"/> - Actual payments received</description></item>
-///   <item><description><see cref="LoanGuarantor"/> - Members guaranteeing repayment</description></item>
-///   <item><description><see cref="LoanCollateral"/> - Assets pledged as security</description></item>
-///   <item><description><see cref="FeeCharge"/> - Fees assessed on the loan</description></item>
-/// </list>
-/// 
-/// <para><strong>Default Values:</strong></para>
-/// <list type="bullet">
-///   <item><description>Status: "PENDING" (on creation)</description></item>
-///   <item><description>OutstandingPrincipal: Equal to PrincipalAmount (on creation)</description></item>
-///   <item><description>OutstandingInterest: 0 (on creation)</description></item>
-///   <item><description>TotalPaid: 0 (on creation)</description></item>
-///   <item><description>ApplicationDate: Current UTC date (on creation)</description></item>
-/// </list>
-/// 
-/// <para><strong>JSON Example (Create Request):</strong></para>
-/// <code>
-/// {
-///   "memberId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-///   "loanProductId": "7fa85f64-5717-4562-b3fc-2c963f66afa9",
-///   "requestedAmount": 50000.00,
-///   "termMonths": 12,
-///   "purpose": "Business expansion - purchase of inventory",
-///   "repaymentFrequency": "MONTHLY"
-/// }
-/// </code>
-/// 
-/// <para><strong>JSON Example (Response):</strong></para>
-/// <code>
-/// {
-///   "id": "9fa85f64-5717-4562-b3fc-2c963f66afb1",
-///   "loanNumber": "LN-2024-001234",
-///   "memberId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-///   "memberName": "John Doe",
-///   "loanProductId": "7fa85f64-5717-4562-b3fc-2c963f66afa9",
-///   "loanProductName": "Business Loan",
-///   "principalAmount": 50000.00,
-///   "interestRate": 18.5,
-///   "termMonths": 12,
-///   "repaymentFrequency": "MONTHLY",
-///   "purpose": "Business expansion - purchase of inventory",
-///   "applicationDate": "2024-01-15",
-///   "status": "PENDING",
-///   "outstandingPrincipal": 50000.00,
-///   "outstandingInterest": 0.00,
-///   "totalPaid": 0.00
-/// }
-/// </code>
+/// Business rules:
+/// - LoanNumber must be unique within the system.
+/// - MemberId must reference an active member.
+/// - LoanProductId must reference an active loan product.
+/// - Status transitions must follow workflow: Pending → Approved → Disbursed → Closed.
+/// - Cannot disburse a pending loan (must be approved first).
+/// - Cannot close loan with outstanding balance.
+/// - Write-off requires management approval and proper documentation.
+/// - Collateral coverage may be required based on loan product settings.
 /// </remarks>
+/// <seealso cref="LoanProduct"/>
+/// <seealso cref="Member"/>
+/// <seealso cref="LoanSchedule"/>
+/// <seealso cref="LoanRepayment"/>
+/// <seealso cref="LoanGuarantor"/>
+/// <seealso cref="LoanCollateral"/>
+/// <seealso cref="FeeCharge"/>
 public class Loan : AuditableEntity, IAggregateRoot
 {
     // Loan Statuses

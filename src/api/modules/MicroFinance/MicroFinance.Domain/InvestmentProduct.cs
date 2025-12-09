@@ -8,31 +8,32 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a wealth/investment product offered to members.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-/// <item>Define investment products (mutual funds, bonds, T-bills, money market)</item>
-/// <item>Configure minimum investment amounts and lock-in periods</item>
-/// <item>Set risk levels for suitability matching with member profiles</item>
-/// <item>Track historical performance and benchmark comparisons</item>
-/// <item>Manage product activation, discontinuation, and limits</item>
-/// <item>Calculate management fees and expense ratios</item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Investment products extend MFI offerings beyond traditional loans and savings. Products
-/// are categorized by type (Mutual Fund, Unit Trust, Bond, Treasury Bill, Money Market,
-/// Equity, Balanced) and risk level (Low, Medium, High). Each product defines minimum
-/// investment thresholds, lock-in periods, expected returns, and applicable fees. MFIs
-/// must ensure product suitability matches member risk profiles and comply with
-/// investment regulations.
-/// </para>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-/// <item><see cref="InvestmentAccount"/> - Member accounts holding the product</item>
-/// <item><see cref="InvestmentTransaction"/> - Buy/sell transactions for the product</item>
-/// <item><see cref="Member"/> - Eligible investors</item>
-/// </list>
+/// Use cases:
+/// - Define investment products (mutual funds, bonds, T-bills, money market).
+/// - Configure minimum investment amounts and lock-in periods.
+/// - Set risk levels for suitability matching with member profiles.
+/// - Track historical performance and benchmark comparisons.
+/// - Manage product activation, discontinuation, and limits.
+/// - Calculate management fees and expense ratios.
+/// 
+/// Default values and constraints:
+/// - Code: required unique identifier, max 32 characters (example: "INV-BOND-001")
+/// - Type: MutualFund, UnitTrust, Bond, TreasuryBill, MoneyMarket, Equity, Balanced
+/// - Status: Active by default (Active, Inactive, Discontinued)
+/// - RiskLevel: Low, Medium, High
+/// - MinimumInvestment: minimum initial investment amount
+/// - LockInPeriod: minimum holding period in months
+/// 
+/// Business rules:
+/// - Product code must be unique.
+/// - Risk level must match investor risk profile for suitability.
+/// - Lock-in period enforced for early redemption penalties.
+/// - Discontinued products cannot accept new investments.
+/// - NAV calculated daily for market-linked products.
 /// </remarks>
+/// <seealso cref="InvestmentAccount"/>
+/// <seealso cref="InvestmentTransaction"/>
+/// <seealso cref="Member"/>
 public sealed class InvestmentProduct : AuditableEntity, IAggregateRoot
 {
     // Constants

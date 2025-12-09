@@ -35,20 +35,28 @@ public static class KycDocumentConstants
 /// Represents a KYC (Know Your Customer) document for a member.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Store member identification documents (ID, passport, etc.)</description></item>
-///   <item><description>Track document verification status</description></item>
-///   <item><description>Manage document expiry and renewal reminders</description></item>
-///   <item><description>Support regulatory compliance for AML/KYC requirements</description></item>
-///   <item><description>Maintain document version history</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// KYC documents are required by financial regulations to verify member identity.
-/// Each document goes through a verification process before being accepted.
-/// Document expiry is monitored to ensure ongoing compliance.
-/// </para>
+/// Use cases:
+/// - Store member identification documents (ID, passport, etc.).
+/// - Track document verification status.
+/// - Manage document expiry and renewal reminders.
+/// - Support regulatory compliance for AML/KYC requirements.
+/// - Maintain document version history.
+/// 
+/// Default values and constraints:
+/// - DocumentType: Type of ID document (max 32 chars).
+/// - DocumentNumber: ID number on document (max 64 chars).
+/// - FileName: Uploaded file name (max 256 chars).
+/// - FilePath: Storage path for document (max 1024 chars).
+/// - MimeType: File MIME type (max 128 chars).
+/// - Status: PENDING, VERIFIED, REJECTED, EXPIRED (max 32 chars).
+/// - Notes: Verification notes (max 2048 chars).
+/// 
+/// Business rules:
+/// - KYC documents required by financial regulations.
+/// - Each document goes through verification process.
+/// - Document expiry monitored for ongoing compliance.
+/// - Multiple documents may be required per member.
+/// - Version history maintained for audit.
 /// </remarks>
 public class KycDocument : AuditableEntity, IAggregateRoot
 {

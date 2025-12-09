@@ -9,41 +9,34 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Stores detailed credit information retrieved from credit bureaus for underwriting.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Store credit reports received from credit bureaus</description></item>
-///   <item><description>Provide credit history data for loan underwriting</description></item>
-///   <item><description>Track credit score trends over time</description></item>
-///   <item><description>Identify members with adverse credit events</description></item>
-///   <item><description>Support automated loan decisioning based on bureau data</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Credit bureau reports are essential for credit risk assessment:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Credit Score</strong>: Numeric risk indicator from bureau</description></item>
-///   <item><description><strong>Trade Lines</strong>: Active and closed credit accounts</description></item>
-///   <item><description><strong>Inquiries</strong>: Recent credit applications</description></item>
-///   <item><description><strong>Adverse Events</strong>: Defaults, write-offs, legal actions</description></item>
-///   <item><description><strong>Public Records</strong>: Bankruptcies, judgments</description></item>
-/// </list>
-/// <para><strong>Risk Grades:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Excellent</strong>: Low risk, best terms</description></item>
-///   <item><description><strong>Good</strong>: Low-moderate risk</description></item>
-///   <item><description><strong>Fair</strong>: Moderate risk, standard terms</description></item>
-///   <item><description><strong>Poor</strong>: High risk, stricter terms required</description></item>
-///   <item><description><strong>VeryPoor</strong>: Very high risk, may decline</description></item>
-///   <item><description><strong>NoScore</strong>: Thin file, insufficient history</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Member"/> - Member the report is for</description></item>
-///   <item><description><see cref="CreditBureauInquiry"/> - Inquiry that retrieved this report</description></item>
-///   <item><description><see cref="CreditScore"/> - Derived credit scores</description></item>
-/// </list>
+/// Use cases:
+/// - Store credit reports received from credit bureaus.
+/// - Provide credit history data for loan underwriting.
+/// - Track credit score trends over time.
+/// - Identify members with adverse credit events.
+/// - Support automated loan decisioning based on bureau data.
+/// 
+/// Default values and constraints:
+/// - ReportNumber: Unique report identifier (max 64 chars).
+/// - BureauName: Name of credit bureau (max 128 chars).
+/// - CreditScore: Numeric risk indicator from bureau.
+/// - RiskGrade: Excellent, Good, Fair, Poor, VeryPoor, NoScore.
+/// - ReportDate: Date report was generated.
+/// - ExpiryDate: Date report is no longer valid.
+/// - TotalActiveAccounts: Count of active credit accounts.
+/// - TotalAdverseEvents: Count of defaults, write-offs, judgments.
+/// 
+/// Business rules:
+/// - Essential for credit risk assessment.
+/// - Credit Score: Numeric risk indicator from bureau.
+/// - Trade Lines: Active and closed credit accounts.
+/// - Inquiries: Recent credit applications.
+/// - Adverse Events: Defaults, write-offs, legal actions.
+/// - Reports have validity period for decisioning.
 /// </remarks>
+/// <seealso cref="Member"/>
+/// <seealso cref="CreditBureauInquiry"/>
+/// <seealso cref="CreditScore"/>
 public sealed class CreditBureauReport : AuditableEntity, IAggregateRoot
 {
     /// <summary>

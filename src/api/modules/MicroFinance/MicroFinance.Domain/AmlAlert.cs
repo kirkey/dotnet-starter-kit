@@ -35,20 +35,28 @@ public static class AmlAlertConstants
 /// Represents an Anti-Money Laundering (AML) alert.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Flag suspicious transaction patterns</description></item>
-///   <item><description>Track unusual activity for regulatory reporting</description></item>
-///   <item><description>Manage investigation workflow for AML cases</description></item>
-///   <item><description>Support Suspicious Activity Report (SAR) filing</description></item>
-///   <item><description>Monitor high-risk members and transactions</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// AML alerts are triggered when transaction patterns or member behavior
-/// match predefined rules indicating potential money laundering or fraud.
-/// Each alert must be investigated and resolved with appropriate documentation.
-/// </para>
+/// Use cases:
+/// - Flag suspicious transaction patterns.
+/// - Track unusual activity for regulatory reporting.
+/// - Manage investigation workflow for AML cases.
+/// - Support Suspicious Activity Report (SAR) filing.
+/// - Monitor high-risk members and transactions.
+/// 
+/// Default values and constraints:
+/// - AlertCode: Unique alert identifier (max 64 chars).
+/// - AlertType: Type of suspicious activity (max 32 chars).
+/// - Severity: LOW, MEDIUM, HIGH, CRITICAL (max 32 chars).
+/// - Status: NEW, INVESTIGATING, RESOLVED, REPORTED (max 32 chars).
+/// - TriggerRule: Rule that triggered the alert (max 256 chars).
+/// - Description: Alert details (max 2048 chars).
+/// - ResolutionNotes: Investigation and resolution notes (max 4096 chars).
+/// 
+/// Business rules:
+/// - Alerts triggered when patterns match predefined rules.
+/// - Each alert must be investigated and resolved.
+/// - Documentation required for compliance.
+/// - SAR filing for confirmed suspicious activity.
+/// - High-risk members subject to enhanced monitoring.
 /// </remarks>
 public class AmlAlert : AuditableEntity, IAggregateRoot
 {

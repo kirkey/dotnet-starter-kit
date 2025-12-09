@@ -29,20 +29,27 @@ public static class CollectionStrategyConstants
 /// Represents a collection strategy rule for automated escalation.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Define automated collection workflows based on days past due</description></item>
-///   <item><description>Configure escalation triggers and actions</description></item>
-///   <item><description>Set up SMS, email, and call reminders at specific intervals</description></item>
-///   <item><description>Differentiate collection approaches by loan product or amount</description></item>
-///   <item><description>Enable consistent collection treatment across the portfolio</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Collection strategies define the rules engine for automated collection activities.
-/// For example: Day 1 past due → SMS reminder, Day 7 → Call, Day 30 → Field visit.
-/// Strategies can vary by loan product, amount, or borrower segment.
-/// </para>
+/// Use cases:
+/// - Define automated collection workflows based on days past due.
+/// - Configure escalation triggers and actions.
+/// - Set up SMS, email, and call reminders at specific intervals.
+/// - Differentiate collection approaches by loan product or amount.
+/// - Enable consistent collection treatment across the portfolio.
+/// 
+/// Default values and constraints:
+/// - Code: Unique strategy identifier (max 32 chars).
+/// - Name: Display name for the strategy (max 128 chars).
+/// - ActionType: Type of collection action triggered (max 32 chars).
+/// - Description: Strategy description (max 1024 chars).
+/// - MessageTemplate: Template for automated messages (max 2048 chars).
+/// - DaysPastDue: Trigger point for this strategy step.
+/// 
+/// Business rules:
+/// - Defines rules engine for automated collection.
+/// - Example: Day 1 → SMS, Day 7 → Call, Day 30 → Field visit.
+/// - Strategies vary by loan product, amount, or borrower segment.
+/// - LoanProductId null means applies to all products.
+/// - Enables consistent treatment across portfolio.
 /// </remarks>
 public class CollectionStrategy : AuditableEntity, IAggregateRoot
 {

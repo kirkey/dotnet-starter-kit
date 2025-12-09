@@ -9,58 +9,36 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Tracks cash balances, denominations, custody, and supports vault reconciliation.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Define branch cash storage locations (main vault, teller drawers, ATMs)</description></item>
-///   <item><description>Track current cash balance and denomination breakdown</description></item>
-///   <item><description>Set cash holding limits for security and insurance compliance</description></item>
-///   <item><description>Record cash transfers between vaults (vault to drawer, branch to branch)</description></item>
-///   <item><description>Support daily vault reconciliation and audit processes</description></item>
-///   <item><description>Manage vault custodians and access controls</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Cash management is critical for MFIs that handle significant physical currency daily.
-/// Proper vault management ensures:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Security</strong>: Cash limits reduce robbery risk and insurance costs</description></item>
-///   <item><description><strong>Liquidity</strong>: Sufficient cash for expected disbursements and withdrawals</description></item>
-///   <item><description><strong>Accountability</strong>: Clear custody chain for all cash movements</description></item>
-///   <item><description><strong>Compliance</strong>: Audit trails for regulatory and insurance requirements</description></item>
-/// </list>
-/// <para><strong>Vault Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>MainVault</strong>: Primary branch safe with highest limits</description></item>
-///   <item><description><strong>TellerDrawer</strong>: Individual teller cash drawer</description></item>
-///   <item><description><strong>ATM</strong>: ATM cash cassettes</description></item>
-///   <item><description><strong>MobileAgent</strong>: Field agent mobile money float</description></item>
-///   <item><description><strong>Reserve</strong>: Emergency reserve cash</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Branch"/> - Branch this vault belongs to</description></item>
-///   <item><description><see cref="TellerSession"/> - Sessions using this vault</description></item>
-///   <item><description><see cref="Staff"/> - Vault custodian</description></item>
-/// </list>
+/// Use cases:
+/// - Define branch cash storage locations (main vault, teller drawers, ATMs).
+/// - Track current cash balance and denomination breakdown.
+/// - Set cash holding limits for security and insurance compliance.
+/// - Record cash transfers between vaults (vault to drawer, branch to branch).
+/// - Support daily vault reconciliation and audit processes.
+/// - Manage vault custodians and access controls.
+/// 
+/// Default values and constraints:
+/// - Code: required unique identifier, max 32 characters (example: "VAULT-KGL-TD01")
+/// - VaultType: required, one of MainVault, TellerDrawer, ATM, MobileAgent, Reserve
+/// - BranchId: required, must reference the branch this vault belongs to
+/// - Location: optional description of physical location, max 256 characters
+/// - CustodianStaffId: optional, references staff member responsible for vault
+/// - MinimumBalance: minimum cash holding threshold for alerts
+/// - MaximumBalance: maximum cash holding limit for security
+/// - CurrentBalance: 0 by default, updated by transactions
+/// 
+/// Business rules:
+/// - Code must be unique within the system.
+/// - CurrentBalance cannot exceed MaximumBalance.
+/// - Cash transfers require dual authorization for amounts above threshold.
+/// - Daily reconciliation required before shift end.
+/// - Vault access logged for audit trail.
+/// - Cannot close vault with non-zero balance.
+/// - Insurance limits determine maximum cash holding allowed.
 /// </remarks>
-/// <example>
-/// <para><strong>Example: Creating a teller drawer vault</strong></para>
-/// <code>
-/// POST /api/microfinance/cash-vaults
-/// {
-///   "branchId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-///   "code": "VAULT-KGL-TD01",
-///   "name": "Teller Drawer 01",
-///   "vaultType": "TellerDrawer",
-///   "location": "Counter 1, Main Hall",
-///   "custodianStaffId": "a1b2c3d4-5e6f-7890-abcd-ef1234567890",
-///   "minimumBalance": 100000,
-///   "maximumBalance": 2000000,
-///   "currentBalance": 500000
-/// }
-/// </code>
-/// </example>
+/// <seealso cref="Branch"/>
+/// <seealso cref="TellerSession"/>
+/// <seealso cref="Staff"/>
 public sealed class CashVault : AuditableEntity, IAggregateRoot
 {
     /// <summary>

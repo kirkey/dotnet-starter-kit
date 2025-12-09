@@ -26,21 +26,30 @@ public static class PromiseToPayConstants
 /// Represents a promise to pay made by a delinquent borrower.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Record borrower commitments to repay on specific dates</description></item>
-///   <item><description>Track promise fulfillment rates for collection effectiveness</description></item>
-///   <item><description>Schedule follow-up actions based on promise dates</description></item>
-///   <item><description>Analyze patterns in broken promises for risk assessment</description></item>
-///   <item><description>Support escalation decisions when promises are not kept</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Promises to pay are formal commitments made by borrowers during collection activities.
-/// Tracking promise fulfillment helps measure collection effectiveness and identify
-/// borrowers who repeatedly break commitments (indicating higher risk).
-/// </para>
+/// Use cases:
+/// - Record borrower commitments to repay on specific dates.
+/// - Track promise fulfillment rates for collection effectiveness.
+/// - Schedule follow-up actions based on promise dates.
+/// - Analyze patterns in broken promises for risk assessment.
+/// - Support escalation decisions when promises are not kept.
+/// 
+/// Default values and constraints:
+/// - Status: Pending by default (Pending, Kept, Partial, Broken, Rescheduled, Cancelled)
+/// - PaymentMethod: Cash, BankTransfer, MobileMoney, max 32 characters
+/// - PromiseDate: required future date
+/// - PromiseAmount: required amount borrower commits to pay
+/// - Notes: optional context, max 2048 characters
+/// 
+/// Business rules:
+/// - Promise date must be in the future.
+/// - One active promise per collection case at a time.
+/// - Broken promises escalate collection priority.
+/// - Multiple broken promises trigger legal action review.
+/// - Promise fulfillment updates loan repayment records.
 /// </remarks>
+/// <seealso cref="CollectionCase"/>
+/// <seealso cref="Loan"/>
+/// <seealso cref="LoanRepayment"/>
 public class PromiseToPay : AuditableEntity, IAggregateRoot
 {
     // Promise Statuses

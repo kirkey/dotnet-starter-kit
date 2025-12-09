@@ -9,38 +9,32 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Tracks when and why credit checks were performed for regulatory compliance.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Request credit reports during loan application processing</description></item>
-///   <item><description>Perform periodic reviews of existing borrowers</description></item>
-///   <item><description>Support collections with updated credit information</description></item>
-///   <item><description>Track inquiry history for fair credit reporting compliance</description></item>
-///   <item><description>Maintain audit trail of all credit checks</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Credit bureau inquiries are regulated and must be properly documented:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Consent</strong>: Member consent required before inquiry</description></item>
-///   <item><description><strong>Purpose</strong>: Must document legitimate business purpose</description></item>
-///   <item><description><strong>Frequency</strong>: Too many inquiries can affect credit score</description></item>
-///   <item><description><strong>Cost</strong>: Each inquiry may incur bureau fees</description></item>
-/// </list>
-/// <para><strong>Inquiry Purposes:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>LoanApplication</strong>: New loan evaluation</description></item>
-///   <item><description><strong>LoanRenewal</strong>: Renewal/top-up assessment</description></item>
-///   <item><description><strong>Collections</strong>: Locate/assess delinquent borrower</description></item>
-///   <item><description><strong>RiskAssessment</strong>: Periodic portfolio review</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Member"/> - Member being checked</description></item>
-///   <item><description><see cref="CreditBureauReport"/> - Report returned from inquiry</description></item>
-///   <item><description><see cref="LoanApplication"/> - Application triggering inquiry</description></item>
-/// </list>
+/// Use cases:
+/// - Request credit reports during loan application processing.
+/// - Perform periodic reviews of existing borrowers.
+/// - Support collections with updated credit information.
+/// - Track inquiry history for fair credit reporting compliance.
+/// - Maintain audit trail of all credit checks.
+/// 
+/// Default values and constraints:
+/// - InquiryNumber: Unique inquiry identifier (max 64 chars).
+/// - BureauName: Name of credit bureau (max 128 chars).
+/// - Purpose: LoanApplication, LoanRenewal, Collections, RiskAssessment (max 128 chars).
+/// - RequestedBy: Staff who requested the inquiry (max 128 chars).
+/// - ReferenceNumber: Bureau's reference number (max 64 chars).
+/// - Status: Pending, Completed, Failed.
+/// 
+/// Business rules:
+/// - Credit bureau inquiries are regulated.
+/// - Consent: Member consent required before inquiry.
+/// - Purpose: Must document legitimate business purpose.
+/// - Frequency: Too many inquiries can affect credit score.
+/// - Cost: Each inquiry may incur bureau fees.
+/// - Results stored in CreditBureauReport.
 /// </remarks>
+/// <seealso cref="Member"/>
+/// <seealso cref="CreditBureauReport"/>
+/// <seealso cref="LoanApplication"/>
 public sealed class CreditBureauInquiry : AuditableEntity, IAggregateRoot
 {
     /// <summary>

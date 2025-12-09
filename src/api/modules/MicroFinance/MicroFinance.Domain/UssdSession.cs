@@ -8,32 +8,35 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a USSD session for mobile banking.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-/// <item>Feature phone banking for members without smartphones</item>
-/// <item>Balance inquiry and mini-statement access via USSD menu</item>
-/// <item>Mobile money transfers and bill payments</item>
-/// <item>Loan repayment and account management</item>
-/// <item>PIN change and security operations</item>
-/// <item>Rural area banking where internet is unavailable</item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// USSD (Unstructured Supplementary Service Data) enables real-time mobile banking
-/// via text-based menus on any mobile phone. Sessions are initiated by dialing a
-/// service code (e.g., *123#) and navigating menu options. Sessions have timeouts
-/// (typically 3 minutes) and track navigation state, authenticated member, selected
-/// language, and pending operations. USSD is crucial for financial inclusion in
-/// areas with limited smartphone/internet penetration.
-/// </para>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-/// <item><see cref="MobileWallet"/> - Wallet accessed via USSD</item>
-/// <item><see cref="MobileTransaction"/> - Transactions initiated via USSD</item>
-/// <item><see cref="Member"/> - Authenticated member in session</item>
-/// <item><see cref="SavingsAccount"/> - Accounts managed via USSD</item>
-/// </list>
+/// Use cases:
+/// - Feature phone banking for members without smartphones.
+/// - Balance inquiry and mini-statement access via USSD menu.
+/// - Mobile money transfers and bill payments.
+/// - Loan repayment and account management.
+/// - PIN change and security operations.
+/// - Rural area banking where internet is unavailable.
+/// 
+/// Default values and constraints:
+/// - SessionId: Unique session identifier (max 64 chars).
+/// - PhoneNumber: Member's phone number (max 32 chars).
+/// - ServiceCode: USSD dial code e.g., *123# (max 16 chars).
+/// - Status: Active, Completed, TimedOut, Cancelled, Error (max 32 chars).
+/// - CurrentMenu: Current menu position in flow (max 64 chars).
+/// - Language: Selected language code (max 8 chars).
+/// - Operation: Pending operation type (max 64 chars).
+/// - Data: Session state data (max 4096 chars).
+/// 
+/// Business rules:
+/// - USSD enables real-time mobile banking via text menus.
+/// - Sessions initiated by dialing service code (e.g., *123#).
+/// - Sessions have timeout (typically 3 minutes).
+/// - Tracks navigation state, member, language, and pending operations.
+/// - Crucial for financial inclusion in low-connectivity areas.
 /// </remarks>
+/// <seealso cref="MobileWallet"/>
+/// <seealso cref="MobileTransaction"/>
+/// <seealso cref="Member"/>
+/// <seealso cref="SavingsAccount"/>
 public sealed class UssdSession : AuditableEntity, IAggregateRoot
 {
     // Constants

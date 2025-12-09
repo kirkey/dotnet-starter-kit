@@ -9,42 +9,31 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Used when management forgives all or part of a fee charge.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Request fee forgiveness for hardship cases</description></item>
-///   <item><description>Route waiver requests through approval workflow</description></item>
-///   <item><description>Track full vs. partial fee waivers</description></item>
-///   <item><description>Maintain audit trail for regulatory compliance</description></item>
-///   <item><description>Report on waiver trends and loss tracking</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Fee waivers are a tool for managing member relationships while maintaining controls:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Member Retention</strong>: Waiving fees for loyal members facing hardship</description></item>
-///   <item><description><strong>Dispute Resolution</strong>: Resolving fee disputes with partial waivers</description></item>
-///   <item><description><strong>Promotion</strong>: Waiving fees as part of promotional campaigns</description></item>
-///   <item><description><strong>Error Correction</strong>: Waiving incorrectly charged fees</description></item>
-/// </list>
-/// <para><strong>Waiver Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Full</strong>: Entire fee amount is waived</description></item>
-///   <item><description><strong>Partial</strong>: Only a portion of the fee is waived</description></item>
-/// </list>
-/// <para><strong>Status Flow:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Pending</strong> → <strong>Approved</strong>: Waiver granted</description></item>
-///   <item><description><strong>Pending</strong> → <strong>Rejected</strong>: Waiver denied</description></item>
-///   <item><description><strong>Pending</strong> → <strong>Cancelled</strong>: Request withdrawn</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="FeeCharge"/> - Fee being waived</description></item>
-///   <item><description><see cref="ApprovalRequest"/> - Approval workflow</description></item>
-///   <item><description><see cref="Staff"/> - Requestor and approver</description></item>
-/// </list>
+/// Use cases:
+/// - Request fee forgiveness for hardship cases.
+/// - Route waiver requests through approval workflow.
+/// - Track full vs. partial fee waivers.
+/// - Maintain audit trail for regulatory compliance.
+/// - Report on waiver trends and loss tracking.
+/// 
+/// Default values and constraints:
+/// - WaiverType: Full or Partial.
+/// - OriginalAmount: Original fee amount before waiver.
+/// - WaivedAmount: Amount being waived (positive decimal).
+/// - Status: Pending, Approved, Rejected, or Cancelled.
+/// - Reason: Justification for the waiver (required).
+/// 
+/// Business rules:
+/// - Waivers manage member relationships while maintaining controls.
+/// - Member Retention: Waive fees for loyal members facing hardship.
+/// - Dispute Resolution: Partial waivers to resolve fee disputes.
+/// - Error Correction: Waive incorrectly charged fees.
+/// - Status flow: Pending → Approved/Rejected/Cancelled.
+/// - All waivers require proper authorization.
 /// </remarks>
+/// <seealso cref="FeeCharge"/>
+/// <seealso cref="ApprovalRequest"/>
+/// <seealso cref="Staff"/>
 /// <example>
 /// <para><strong>Example: Requesting a fee waiver</strong></para>
 /// <code>

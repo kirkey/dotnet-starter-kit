@@ -9,37 +9,31 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Tracks the full lifecycle from opening through resolution.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Log member complaints and service requests</description></item>
-///   <item><description>Track case resolution and SLA compliance</description></item>
-///   <item><description>Escalate unresolved cases to management</description></item>
-///   <item><description>Analyze complaint trends for service improvement</description></item>
-///   <item><description>Document dispute resolution for regulatory compliance</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Effective complaint handling improves member satisfaction and retention:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Regulatory</strong>: Many regulators require complaint tracking and reporting</description></item>
-///   <item><description><strong>Service Quality</strong>: Complaints identify process improvements</description></item>
-///   <item><description><strong>Member Retention</strong>: Quick resolution prevents member attrition</description></item>
-///   <item><description><strong>Risk Management</strong>: Patterns may indicate systemic issues</description></item>
-/// </list>
-/// <para><strong>Case Categories:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Transaction Dispute</strong>: Payment errors, failed transactions</description></item>
-///   <item><description><strong>Service Complaint</strong>: Staff behavior, branch issues</description></item>
-///   <item><description><strong>Product Issue</strong>: Loan terms, fee disputes</description></item>
-///   <item><description><strong>General Inquiry</strong>: Information requests</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Member"/> - Member who raised the case</description></item>
-///   <item><description><see cref="Staff"/> - Staff assigned to resolve</description></item>
-/// </list>
+/// Use cases:
+/// - Log member complaints and service requests.
+/// - Track case resolution and SLA compliance.
+/// - Escalate unresolved cases to management.
+/// - Analyze complaint trends for service improvement.
+/// - Document dispute resolution for regulatory compliance.
+/// 
+/// Default values and constraints:
+/// - CaseNumber: required unique identifier, max 32 characters (example: "CS-2025-001234")
+/// - Subject: required, max 256 characters
+/// - Category: TransactionDispute, ServiceComplaint, ProductIssue, GeneralInquiry
+/// - Priority: Low, Medium, High, Critical
+/// - Status: Open by default (Open, InProgress, Escalated, Resolved, Closed)
+/// - Channel: Branch, Phone, Email, Mobile, Web
+/// 
+/// Business rules:
+/// - Each case must be linked to a member.
+/// - SLA timers start from case creation.
+/// - Escalation triggers management notification.
+/// - Regulatory cases have mandatory reporting requirements.
+/// - Case history and all interactions must be preserved.
 /// </remarks>
+/// <seealso cref="Member"/>
+/// <seealso cref="Staff"/>
+/// <seealso cref="Branch"/>
 public sealed class CustomerCase : AuditableEntity, IAggregateRoot
 {
     // Constants

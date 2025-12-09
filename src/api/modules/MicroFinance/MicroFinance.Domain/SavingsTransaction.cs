@@ -8,36 +8,31 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a transaction on a savings account.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Record all deposits and withdrawals with audit trail</description></item>
-///   <item><description>Track interest postings and fee deductions</description></item>
-///   <item><description>Maintain running balance after each transaction</description></item>
-///   <item><description>Support account reconciliation and statement generation</description></item>
-///   <item><description>Enable transaction reversal and adjustments</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Every movement of funds in a savings account is recorded as a transaction, providing:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Complete History</strong>: All deposits, withdrawals, transfers, fees, interest</description></item>
-///   <item><description><strong>Balance Tracking</strong>: Each transaction captures the resulting balance</description></item>
-///   <item><description><strong>Audit Trail</strong>: Who, what, when for regulatory compliance</description></item>
-/// </list>
-/// <para><strong>Transaction Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Deposit</strong>: Cash or check deposited by member</description></item>
-///   <item><description><strong>Withdrawal</strong>: Cash taken out by member</description></item>
-///   <item><description><strong>Interest</strong>: Interest credited to account</description></item>
-///   <item><description><strong>Fee</strong>: Service charges or penalties debited</description></item>
-///   <item><description><strong>TransferIn/Out</strong>: Funds moved between accounts</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="SavingsAccount"/> - The account this transaction belongs to</description></item>
-/// </list>
+/// Use cases:
+/// - Record all deposits and withdrawals with audit trail.
+/// - Track interest postings and fee deductions.
+/// - Maintain running balance after each transaction.
+/// - Support account reconciliation and statement generation.
+/// - Enable transaction reversal and adjustments.
+/// 
+/// Default values and constraints:
+/// - SavingsAccountId: required, must reference an active savings account
+/// - Reference: auto-generated unique identifier, max 64 characters
+/// - TransactionType: required, one of Deposit, Withdrawal, Interest, Fee, TransferIn, TransferOut
+/// - Amount: required, must be positive
+/// - TransactionDate: required, date transaction occurred
+/// - RunningBalance: calculated, balance after this transaction
+/// - Description: optional, max 256 characters
+/// 
+/// Business rules:
+/// - Withdrawals cannot exceed available balance.
+/// - Interest transactions are system-generated during posting.
+/// - Fee transactions require fee definition reference.
+/// - Reversals create offsetting transactions (not deletions).
+/// - Running balance must be recalculated on reversal.
+/// - Frozen accounts cannot have new transactions.
 /// </remarks>
+/// <seealso cref="SavingsAccount"/>
 public class SavingsTransaction : AuditableEntity, IAggregateRoot
 {
     // Domain Constants

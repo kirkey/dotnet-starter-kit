@@ -8,33 +8,31 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a share product template for member equity in the microfinance institution.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Define share capital requirements for cooperative membership</description></item>
-///   <item><description>Configure share purchase limits and pricing</description></item>
-///   <item><description>Manage share transfer and redemption policies</description></item>
-///   <item><description>Set dividend payment eligibility rules</description></item>
-///   <item><description>Track share ownership for voting rights and profit distribution</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// In cooperative microfinance institutions, members are owners who hold shares. Share capital:
-/// - Demonstrates commitment to the institution
-/// - Provides a capital base for lending operations
-/// - Determines dividend distributions and voting power
-/// - May be a prerequisite for accessing certain loan products
-/// </para>
-/// <para>
-/// Different share products may exist for different purposes (e.g., common shares, preferred shares,
-/// institutional shares). Some MFIs require minimum shareholding for membership eligibility.
-/// </para>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="ShareAccount"/> - Member share accounts holding this product</description></item>
-///   <item><description><see cref="ShareTransaction"/> - Purchase, redemption, and dividend transactions</description></item>
-///   <item><description><see cref="Member"/> - Members who own shares</description></item>
-/// </list>
+/// Use cases:
+/// - Define share capital requirements for cooperative membership.
+/// - Configure share purchase limits and pricing.
+/// - Manage share transfer and redemption policies.
+/// - Set dividend payment eligibility rules.
+/// - Track share ownership for voting rights and profit distribution.
+/// 
+/// Default values and constraints:
+/// - Code: Unique product identifier (max 64 chars).
+/// - Name: Display name for the product (max 256 chars, min length required).
+/// - Description: Detailed product description (max 2048 chars).
+/// - NominalValue: Price per share unit (positive decimal).
+/// - MinimumShares: Minimum shares required for membership.
+/// - MaximumShares: Maximum shares a member can hold.
+/// 
+/// Business rules:
+/// - Share capital demonstrates member commitment to the institution.
+/// - Provides capital base for lending operations.
+/// - Determines dividend distributions and voting power.
+/// - May be prerequisite for accessing certain loan products.
+/// - Different products for common, preferred, or institutional shares.
 /// </remarks>
+/// <seealso cref="ShareAccount"/>
+/// <seealso cref="ShareTransaction"/>
+/// <seealso cref="Member"/>
 public class ShareProduct : AuditableEntity, IAggregateRoot
 {
     // Domain Constants

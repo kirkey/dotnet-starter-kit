@@ -9,36 +9,29 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Defines thresholds and measurement parameters for organizational risk management.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Define portfolio risk metrics (PAR30, PAR90, etc.)</description></item>
-///   <item><description>Set threshold triggers for risk alerts</description></item>
-///   <item><description>Configure operational risk indicators</description></item>
-///   <item><description>Track liquidity and solvency metrics</description></item>
-///   <item><description>Support regulatory risk reporting</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Risk indicators are essential for MFI risk management framework:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Credit Risk</strong>: PAR, write-off rate, concentration</description></item>
-///   <item><description><strong>Liquidity Risk</strong>: Cash coverage, funding ratio</description></item>
-///   <item><description><strong>Operational Risk</strong>: Staff turnover, system downtime</description></item>
-///   <item><description><strong>Regulatory</strong>: Capital adequacy, provision coverage</description></item>
-/// </list>
-/// <para><strong>Threshold Levels:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Green</strong>: Normal operating range</description></item>
-///   <item><description><strong>Yellow</strong>: Warning - requires monitoring</description></item>
-///   <item><description><strong>Red</strong>: Critical - requires immediate action</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="RiskAlert"/> - Alerts triggered when thresholds breached</description></item>
-///   <item><description><see cref="RiskCategory"/> - Category grouping for indicators</description></item>
-/// </list>
+/// Use cases:
+/// - Define portfolio risk metrics (PAR30, PAR90, etc.).
+/// - Set threshold triggers for risk alerts.
+/// - Configure operational risk indicators.
+/// - Track liquidity and solvency metrics.
+/// - Support regulatory risk reporting.
+/// 
+/// Default values and constraints:
+/// - Code: required unique identifier, max 32 characters (example: "KRI-PAR30")
+/// - Name: required, max 128 characters (example: "Portfolio at Risk 30 Days")
+/// - Formula: calculation logic, max 512 characters
+/// - Unit: measurement unit (%, count, amount), max 32 characters
+/// - Thresholds: Green (normal), Yellow (warning), Red (critical)
+/// 
+/// Business rules:
+/// - KRI code must be unique.
+/// - Thresholds define alert trigger levels.
+/// - Direction indicates if higher/lower is better.
+/// - Measurement frequency defined (daily, weekly, monthly).
+/// - Breach of red threshold triggers immediate alert.
 /// </remarks>
+/// <seealso cref="RiskAlert"/>
+/// <seealso cref="RiskCategory"/>
 public sealed class RiskIndicator : AuditableEntity, IAggregateRoot
 {
     /// <summary>

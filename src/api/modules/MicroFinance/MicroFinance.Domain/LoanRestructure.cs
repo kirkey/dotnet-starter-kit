@@ -9,42 +9,36 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Used when a borrower faces financial difficulty and needs loan terms adjusted to prevent default.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Extend loan term to reduce monthly payment burden</description></item>
-///   <item><description>Grant payment holidays during temporary hardship</description></item>
-///   <item><description>Reduce interest rate for struggling borrowers</description></item>
-///   <item><description>Consolidate multiple loans into single restructured loan</description></item>
-///   <item><description>Document restructure approval and conditions</description></item>
-///   <item><description>Track original vs. modified loan terms for reporting</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Loan restructuring is a portfolio risk management tool that helps avoid defaults:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Early Intervention</strong>: Restructure before loan becomes non-performing</description></item>
-///   <item><description><strong>Recovery vs. Write-Off</strong>: Restructuring may recover more than foreclosure</description></item>
-///   <item><description><strong>Member Relationship</strong>: Demonstrates MFI flexibility and support</description></item>
-///   <item><description><strong>Regulatory Compliance</strong>: Restructured loans have specific reporting requirements</description></item>
-/// </list>
-/// <para><strong>Restructure Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>TermExtension</strong>: Extend repayment period (most common)</description></item>
-///   <item><description><strong>RateReduction</strong>: Lower interest rate</description></item>
-///   <item><description><strong>PrincipalReduction</strong>: Partial debt forgiveness (rare, requires approval)</description></item>
-///   <item><description><strong>PaymentHoliday</strong>: Temporary suspension of payments</description></item>
-///   <item><description><strong>Consolidation</strong>: Combine multiple loans into one</description></item>
-///   <item><description><strong>Refinance</strong>: Replace with new loan at better terms</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Loan"/> - Original loan being restructured</description></item>
-///   <item><description><see cref="LoanSchedule"/> - New payment schedule after restructure</description></item>
-///   <item><description><see cref="ApprovalRequest"/> - Approval workflow for restructure</description></item>
-///   <item><description><see cref="Staff"/> - Officer who processed restructure</description></item>
-/// </list>
+/// Use cases:
+/// - Extend loan term to reduce monthly payment burden.
+/// - Grant payment holidays during temporary hardship.
+/// - Reduce interest rate for struggling borrowers.
+/// - Consolidate multiple loans into single restructured loan.
+/// - Document restructure approval and conditions.
+/// - Track original vs. modified loan terms for reporting.
+/// 
+/// Default values and constraints:
+/// - RestructureNumber: Unique restructure identifier.
+/// - RestructureType: TermExtension, RateReduction, PrincipalReduction, PaymentHoliday, Consolidation, Refinance.
+/// - Status: Pending, Approved, Rejected, Applied, Cancelled.
+/// - Reason: Documented justification for restructure.
+/// - OriginalTerm: Original loan term in months.
+/// - NewTerm: Modified loan term in months.
+/// - OriginalRate: Original interest rate.
+/// - NewRate: Modified interest rate.
+/// 
+/// Business rules:
+/// - Portfolio risk management tool to avoid defaults.
+/// - Early Intervention: Restructure before loan becomes NPL.
+/// - Recovery vs. Write-Off: May recover more than foreclosure.
+/// - TermExtension: Most common, extends repayment period.
+/// - PaymentHoliday: Temporary suspension of payments.
+/// - Regulatory compliance: Restructured loans have specific reporting requirements.
 /// </remarks>
+/// <seealso cref="Loan"/>
+/// <seealso cref="LoanSchedule"/>
+/// <seealso cref="ApprovalRequest"/>
+/// <seealso cref="Staff"/>
 /// <example>
 /// <para><strong>Example: Creating a term extension restructure</strong></para>
 /// <code>

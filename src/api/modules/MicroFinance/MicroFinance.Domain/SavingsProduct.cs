@@ -8,29 +8,36 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a savings product template in the microfinance system.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Define different savings account types (e.g., Regular Savings, Minor's Account, Emergency Fund)</description></item>
-///   <item><description>Configure interest rates and posting frequencies for each product type</description></item>
-///   <item><description>Set minimum balance requirements and withdrawal limits</description></item>
-///   <item><description>Enable overdraft facilities for qualifying products</description></item>
-///   <item><description>Manage product lifecycle (activate/deactivate) without affecting existing accounts</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Savings products define the terms for member savings accounts. MFIs typically offer multiple savings products
-/// to serve different needs: compulsory savings (required for loan eligibility), voluntary savings (flexible deposits),
-/// target savings (goal-based), and children's accounts. Interest rates incentivize saving behavior while
-/// withdrawal rules balance liquidity needs with operational costs.
-/// </para>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="SavingsAccount"/> - Individual accounts created from this product template</description></item>
-///   <item><description><see cref="SavingsTransaction"/> - Transactions on accounts using this product</description></item>
-///   <item><description><see cref="FixedDeposit"/> - May link to savings products for interest rate reference</description></item>
-///   <item><description><see cref="FeeDefinition"/> - Account maintenance and transaction fees</description></item>
-/// </list>
+/// Use cases:
+/// - Define different savings account types (e.g., Regular Savings, Minor's Account, Emergency Fund).
+/// - Configure interest rates and posting frequencies for each product type.
+/// - Set minimum balance requirements and withdrawal limits.
+/// - Enable overdraft facilities for qualifying products.
+/// - Manage product lifecycle (activate/deactivate) without affecting existing accounts.
+/// 
+/// Default values and constraints:
+/// - Code: required unique identifier, max 64 characters (example: "SAV-REG-001")
+/// - Name: required, 2-256 characters (example: "Regular Savings Account")
+/// - InterestRate: annual interest rate percentage (example: 4.5)
+/// - InterestCalculation: one of DailyBalance, MinimumBalance, AverageBalance
+/// - InterestPostingFrequency: one of Monthly, Quarterly, Annually
+/// - MinimumBalance: minimum balance required to earn interest
+/// - MinimumOpeningBalance: required initial deposit amount
+/// - WithdrawalLimit: maximum withdrawals per period if applicable
+/// - IsActive: true by default
+/// 
+/// Business rules:
+/// - Code must be unique within the system.
+/// - Cannot delete products with existing accounts.
+/// - Deactivating prevents new account opening but existing accounts continue.
+/// - Interest rate changes do not affect accrued interest.
+/// - Compulsory savings products may have withdrawal restrictions.
+/// - Overdraft requires separate approval and limits.
 /// </remarks>
+/// <seealso cref="SavingsAccount"/>
+/// <seealso cref="SavingsTransaction"/>
+/// <seealso cref="FixedDeposit"/>
+/// <seealso cref="FeeDefinition"/>
 public class SavingsProduct : AuditableEntity, IAggregateRoot
 {
     // Domain Constants

@@ -35,20 +35,28 @@ public static class CollectionActionConstants
 /// Represents a collection action taken on a delinquent loan.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Record phone calls made to delinquent borrowers</description></item>
-///   <item><description>Log SMS and email reminders sent</description></item>
-///   <item><description>Track field visits for in-person collection</description></item>
-///   <item><description>Document letters and notices sent</description></item>
-///   <item><description>Record outcomes of each collection attempt</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Collection actions form the audit trail of recovery efforts on delinquent loans.
-/// Each action records what was done, when, by whom, and the outcome.
-/// This supports regulatory compliance and collection performance analysis.
-/// </para>
+/// Use cases:
+/// - Record phone calls made to delinquent borrowers.
+/// - Log SMS and email reminders sent.
+/// - Track field visits for in-person collection.
+/// - Document letters and notices sent.
+/// - Record outcomes of each collection attempt.
+/// 
+/// Default values and constraints:
+/// - ActionType: CALL, SMS, EMAIL, VISIT, LETTER (max 32 chars).
+/// - Outcome: Action result/response (max 64 chars).
+/// - ContactMethod: Method used for contact (max 32 chars).
+/// - ContactPerson: Person contacted (max 256 chars).
+/// - PhoneNumber: Phone number contacted (max 32 chars).
+/// - Description: Action details (max 2048 chars).
+/// - Notes: Additional notes (max 4096 chars).
+/// 
+/// Business rules:
+/// - Collection actions form audit trail of recovery efforts.
+/// - Each action records what, when, by whom, and outcome.
+/// - Supports regulatory compliance requirements.
+/// - Enables collection performance analysis.
+/// - Linked to collection case for consolidated view.
 /// </remarks>
 public class CollectionAction : AuditableEntity, IAggregateRoot
 {

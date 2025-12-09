@@ -26,20 +26,26 @@ public static class ApprovalWorkflowConstants
 /// Represents a configurable multi-level approval workflow.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Define approval hierarchies for loans, write-offs, fee waivers</description></item>
-///   <item><description>Configure approval thresholds based on amount or risk level</description></item>
-///   <item><description>Set up multi-level approval chains</description></item>
-///   <item><description>Enable parallel or sequential approval paths</description></item>
-///   <item><description>Support regulatory compliance for credit decisions</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Approval workflows ensure proper authorization for significant decisions.
-/// Different workflows can be defined for different entity types (loans, write-offs, etc.)
-/// with varying approval levels based on amount thresholds.
-/// </para>
+/// Use cases:
+/// - Define approval hierarchies for loans, write-offs, fee waivers.
+/// - Configure approval thresholds based on amount or risk level.
+/// - Set up multi-level approval chains.
+/// - Enable parallel or sequential approval paths.
+/// - Support regulatory compliance for credit decisions.
+/// 
+/// Default values and constraints:
+/// - Code: Unique workflow identifier (max 32 chars).
+/// - Name: Display name for the workflow (max 128 chars).
+/// - EntityType: LOAN, WRITE_OFF, FEE_WAIVER, SETTLEMENT, RESTRUCTURE.
+/// - Description: Workflow description (max 1024 chars).
+/// - IsActive: Whether workflow is currently in use.
+/// 
+/// Business rules:
+/// - Approval workflows ensure proper authorization for significant decisions.
+/// - Different workflows for different entity types.
+/// - Varying approval levels based on amount thresholds.
+/// - Multi-level chains escalate larger or riskier decisions.
+/// - Parallel paths allow concurrent approvals.
 /// </remarks>
 public class ApprovalWorkflow : AuditableEntity, IAggregateRoot
 {

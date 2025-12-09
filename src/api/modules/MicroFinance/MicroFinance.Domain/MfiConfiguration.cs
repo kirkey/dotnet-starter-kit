@@ -9,35 +9,30 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Provides runtime-configurable system parameters without code deployment.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Store system-wide configuration parameters</description></item>
-///   <item><description>Enable runtime configuration changes without deployment</description></item>
-///   <item><description>Maintain environment-specific settings</description></item>
-///   <item><description>Support feature flags and toggles</description></item>
-///   <item><description>Store integration credentials and endpoints</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Configuration settings control system behavior across modules:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Loan Settings</strong>: Max loan amount, interest caps, grace periods</description></item>
-///   <item><description><strong>Savings Settings</strong>: Minimum balances, withdrawal limits</description></item>
-///   <item><description><strong>Notifications</strong>: SMS gateway config, email settings</description></item>
-///   <item><description><strong>Integrations</strong>: API keys, webhook URLs</description></item>
-///   <item><description><strong>Security</strong>: Password policies, session timeouts</description></item>
-/// </list>
-/// <para><strong>Configuration Categories:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>General</strong>: Organization name, currency, locale</description></item>
-///   <item><description><strong>Loan</strong>: Lending parameters and limits</description></item>
-///   <item><description><strong>Savings</strong>: Savings product defaults</description></item>
-///   <item><description><strong>Accounting</strong>: GL codes, fiscal year settings</description></item>
-///   <item><description><strong>Notification</strong>: Communication settings</description></item>
-///   <item><description><strong>Security</strong>: Authentication and authorization</description></item>
-/// </list>
+/// Use cases:
+/// - Store system-wide configuration parameters.
+/// - Enable runtime configuration changes without deployment.
+/// - Maintain environment-specific settings.
+/// - Support feature flags and toggles.
+/// - Store integration credentials and endpoints.
+/// 
+/// Default values and constraints:
+/// - Key: required unique identifier, max 128 characters (example: "loan.max.amount")
+/// - Value: configuration value, max 2048 characters
+/// - Category: General, Loan, Savings, Accounting, Notification, Security, Integration, Reporting
+/// - DataType: String, Integer, Decimal, Boolean, Json
+/// - Description: optional explanation, max 512 characters
+/// 
+/// Business rules:
+/// - Keys must be unique within a category.
+/// - Sensitive values encrypted at rest.
+/// - Configuration changes logged for audit.
+/// - Some settings require system restart to take effect.
+/// - Category-based access control for security settings.
 /// </remarks>
+/// <seealso cref="Branch"/>
+/// <seealso cref="LoanProduct"/>
+/// <seealso cref="SavingsProduct"/>
 public sealed class MfiConfiguration : AuditableEntity, IAggregateRoot
 {
     // Constants

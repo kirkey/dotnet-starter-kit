@@ -8,42 +8,30 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a member group (solidarity group/center) in the microfinance system.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Organize members into solidarity groups for group lending methodology</description></item>
-///   <item><description>Schedule and track group meetings for loan disbursement and collection</description></item>
-///   <item><description>Assign loan officers to manage groups of members</description></item>
-///   <item><description>Facilitate peer pressure and mutual support among group members</description></item>
-///   <item><description>Track group performance metrics and repayment rates</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Group lending (also known as solidarity lending) is a cornerstone of microfinance methodology,
-/// pioneered by Grameen Bank. Key principles:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Joint Liability</strong>: Group members guarantee each other's loans</description></item>
-///   <item><description><strong>Social Collateral</strong>: Peer pressure replaces physical collateral</description></item>
-///   <item><description><strong>Regular Meetings</strong>: Weekly/monthly meetings for collections and support</description></item>
-///   <item><description><strong>Self-Selection</strong>: Members choose their own group partners</description></item>
-///   <item><description><strong>Progressive Lending</strong>: Successful groups access larger loans</description></item>
-/// </list>
-/// <para>
-/// Groups typically have 5-30 members, meet regularly (often weekly), and have elected leaders
-/// (chairperson, secretary, treasurer). Meeting attendance and savings contributions are tracked.
-/// </para>
-/// <para><strong>Group Hierarchy:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Center</strong>: Collection of groups meeting at the same location/time</description></item>
-///   <item><description><strong>Group</strong>: Small team of 5-10 members with joint liability</description></item>
-///   <item><description><strong>Member</strong>: Individual borrower/saver</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="GroupMembership"/> - Links members to groups</description></item>
-///   <item><description><see cref="Member"/> - Individual members in the group</description></item>
-/// </list>
+/// Use cases:
+/// - Organize members into solidarity groups for group lending methodology.
+/// - Schedule and track group meetings for loan disbursement and collection.
+/// - Assign loan officers to manage groups of members.
+/// - Facilitate peer pressure and mutual support among group members.
+/// - Track group performance metrics and repayment rates.
+/// 
+/// Default values and constraints:
+/// - Code: Unique group identifier (max 64 chars).
+/// - Name: Display name for the group (max 256 chars).
+/// - GroupSize: Typically 5-30 members depending on methodology.
+/// - MeetingFrequency: Weekly, Biweekly, or Monthly.
+/// - Status: Active, Inactive, or Closed.
+/// 
+/// Business rules:
+/// - Group lending (solidarity lending) uses joint liability for loans.
+/// - Members guarantee each other's loans through social collateral.
+/// - Regular meetings held for collections and mutual support.
+/// - Members self-select their group partners.
+/// - Successful groups access progressively larger loans.
+/// - Group hierarchy: Center → Group → Member.
 /// </remarks>
+/// <seealso cref="GroupMembership"/>
+/// <seealso cref="Member"/>
 public class MemberGroup : AuditableEntity, IAggregateRoot
 {
     // Domain Constants - Binary Limits (Powers of 2)

@@ -8,45 +8,33 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents an actual fee charged to a member's account.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Record fees assessed against loans, savings, or share accounts</description></item>
-///   <item><description>Track fee payment status (pending, partial, paid)</description></item>
-///   <item><description>Process fee waivers and reversals with audit trail</description></item>
-///   <item><description>Calculate outstanding fee balances for collections</description></item>
-///   <item><description>Report on fee income by type and product</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// FeeCharge represents a specific instance of a fee applied to a member's account. While
-/// <see cref="FeeDefinition"/> defines <em>how</em> fees are calculated, FeeCharge records
-/// <em>actual</em> charges with specific amounts and payment tracking.
-/// </para>
-/// <para>
-/// Fee charges can be:
-/// </para>
-/// <list type="bullet">
-///   <item><description>System-generated (automatic late fees, monthly maintenance)</description></item>
-///   <item><description>Manually added (processing fees, special service charges)</description></item>
-///   <item><description>Event-triggered (loan disbursement, account closure)</description></item>
-/// </list>
-/// <para><strong>Status Progression:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Pending</strong>: Fee assessed, awaiting payment</description></item>
-///   <item><description><strong>PartiallyPaid</strong>: Some payment received</description></item>
-///   <item><description><strong>Paid</strong>: Fully settled</description></item>
-///   <item><description><strong>Waived</strong>: Forgiven by authorized personnel</description></item>
-///   <item><description><strong>Reversed</strong>: Cancelled/voided</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="FeeDefinition"/> - Template defining the fee type and calculation</description></item>
-///   <item><description><see cref="Member"/> - Member who owes the fee</description></item>
-///   <item><description><see cref="Loan"/> - Loan account if applicable</description></item>
-///   <item><description><see cref="SavingsAccount"/> - Savings account if applicable</description></item>
-///   <item><description><see cref="ShareAccount"/> - Share account if applicable</description></item>
-/// </list>
+/// Use cases:
+/// - Record fees assessed against loans, savings, or share accounts.
+/// - Track fee payment status (pending, partial, paid).
+/// - Process fee waivers and reversals with audit trail.
+/// - Calculate outstanding fee balances for collections.
+/// - Report on fee income by type and product.
+/// 
+/// Default values and constraints:
+/// - Reference: Unique charge identifier (max 64 chars).
+/// - ChargeAmount: Original fee amount charged.
+/// - PaidAmount: Amount already paid (defaults to 0).
+/// - WaivedAmount: Amount waived/forgiven (defaults to 0).
+/// - Status: Pending, PartiallyPaid, Paid, Waived, or Reversed.
+/// 
+/// Business rules:
+/// - FeeCharge records actual charges while FeeDefinition defines calculation.
+/// - System-generated: Automatic late fees, monthly maintenance.
+/// - Manually added: Processing fees, special service charges.
+/// - Event-triggered: Loan disbursement, account closure.
+/// - Status Pending → PartiallyPaid → Paid (or Waived/Reversed).
+/// - Waivers require authorized personnel approval.
 /// </remarks>
+/// <seealso cref="FeeDefinition"/>
+/// <seealso cref="Member"/>
+/// <seealso cref="Loan"/>
+/// <seealso cref="SavingsAccount"/>
+/// <seealso cref="ShareAccount"/>
 public class FeeCharge : AuditableEntity, IAggregateRoot
 {
     // Domain Constants

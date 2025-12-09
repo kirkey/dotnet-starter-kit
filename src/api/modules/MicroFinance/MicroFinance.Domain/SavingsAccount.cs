@@ -8,140 +8,42 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a savings account owned by a member.
 /// </summary>
 /// <remarks>
-/// <para><strong>What is this?</strong></para>
-/// <para>
-/// A SavingsAccount is a deposit account that allows members to save money, earn interest,
-/// and access their funds. Savings accounts are fundamental to microfinance operations as they
-/// help mobilize local deposits to fund lending activities while providing members a safe
-/// place to store their money.
-/// </para>
+/// Use cases:
+/// - Record deposits and withdrawals for member savings.
+/// - Calculate and post interest earnings periodically.
+/// - Track account status and lifecycle (Pending → Active → Dormant → Closed).
+/// - Freeze accounts for suspicious activity or legal holds.
+/// - Link to fixed deposits for automatic transfers at maturity.
+/// - Support compulsory savings linked to loan disbursements.
+/// - Generate account statements for members.
+/// - Track dormant accounts for regulatory compliance.
 /// 
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Record deposits and withdrawals for member savings</description></item>
-///   <item><description>Calculate and post interest earnings periodically</description></item>
-///   <item><description>Track account status and lifecycle (Pending → Active → Dormant → Closed)</description></item>
-///   <item><description>Freeze accounts for suspicious activity or legal holds</description></item>
-///   <item><description>Link to fixed deposits for automatic transfers at maturity</description></item>
-///   <item><description>Support compulsory savings linked to loan disbursements</description></item>
-///   <item><description>Generate account statements for members</description></item>
-///   <item><description>Track dormant accounts for regulatory compliance</description></item>
-/// </list>
+/// Default values and constraints:
+/// - AccountNumber: required unique identifier, max 64 characters (example: "SAV-2024-001234")
+/// - MemberId: required, must reference an active member
+/// - SavingsProductId: required, must reference an active savings product
+/// - Balance: 0 by default, cannot be negative
+/// - Status: "Pending" if opening balance is 0, "Active" if opening balance > 0
+/// - TotalDeposits: equals opening balance if any
+/// - TotalWithdrawals: 0 on creation
+/// - TotalInterestEarned: 0 on creation
+/// - OpenedDate: current UTC date if not specified
 /// 
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Savings accounts are fundamental to microfinance operations. They:
-/// - Mobilize local deposits to fund lending operations
-/// - Provide members with a safe place to save
-/// - Build financial discipline (especially compulsory savings linked to loans)
-/// - Generate liquidity data for institutional planning
-/// </para>
-/// <para>
-/// Account status progression: Pending → Active → (Dormant after inactivity) → Closed.
-/// Frozen status is a temporary hold that can be applied at any time for investigations.
-/// </para>
-/// 
-/// <para><strong>Account Types (via SavingsProduct):</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Regular Savings</strong>: Standard savings with flexible deposits/withdrawals</description></item>
-///   <item><description><strong>Compulsory Savings</strong>: Required savings linked to loan products</description></item>
-///   <item><description><strong>Children's Savings</strong>: Special accounts for minors with guardian oversight</description></item>
-///   <item><description><strong>Group Savings</strong>: Collective savings for solidarity groups</description></item>
-///   <item><description><strong>Target Savings</strong>: Goal-based savings with withdrawal restrictions</description></item>
-/// </list>
-/// 
-/// <para><strong>Validation Rules:</strong></para>
-/// <list type="bullet">
-///   <item><description>AccountNumber: Required, unique, max 64 characters</description></item>
-///   <item><description>MemberId: Required, must reference an active member</description></item>
-///   <item><description>SavingsProductId: Required, must reference an active savings product</description></item>
-///   <item><description>Balance: Cannot be negative (enforced by business rules)</description></item>
-///   <item><description>Withdrawals: Cannot exceed available balance</description></item>
-///   <item><description>Deposits/Withdrawals: Must be positive amounts</description></item>
-///   <item><description>Account closure: Balance must be zero</description></item>
-/// </list>
-/// 
-/// <para><strong>Required Permissions:</strong></para>
-/// <list type="bullet">
-///   <item><description><c>MicroFinance.Create</c> - Open new savings accounts</description></item>
-///   <item><description><c>MicroFinance.View</c> - View account details and transactions</description></item>
-///   <item><description><c>MicroFinance.Deposit</c> - Make deposits to accounts</description></item>
-///   <item><description><c>MicroFinance.Withdraw</c> - Make withdrawals from accounts</description></item>
-///   <item><description><c>MicroFinance.Transfer</c> - Transfer between accounts</description></item>
-///   <item><description><c>MicroFinance.Freeze</c> - Freeze/unfreeze accounts</description></item>
-///   <item><description><c>MicroFinance.Close</c> - Close savings accounts</description></item>
-///   <item><description><c>MicroFinance.PostInterest</c> - Post interest to accounts</description></item>
-/// </list>
-/// 
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="SavingsProduct"/> - Product template defining account terms</description></item>
-///   <item><description><see cref="Member"/> - Account owner</description></item>
-///   <item><description><see cref="SavingsTransaction"/> - Individual transactions (deposits, withdrawals, interest)</description></item>
-///   <item><description><see cref="FixedDeposit"/> - May link for maturity transfers</description></item>
-///   <item><description><see cref="FeeCharge"/> - Account maintenance fees</description></item>
-/// </list>
-/// 
-/// <para><strong>Default Values:</strong></para>
-/// <list type="bullet">
-///   <item><description>Status: "Pending" (if opening balance is 0), "Active" (if opening balance > 0)</description></item>
-///   <item><description>Balance: 0 or opening balance amount</description></item>
-///   <item><description>TotalDeposits: Equal to opening balance (if any)</description></item>
-///   <item><description>TotalWithdrawals: 0</description></item>
-///   <item><description>TotalInterestEarned: 0</description></item>
-///   <item><description>OpenedDate: Current UTC date (if not specified)</description></item>
-/// </list>
-/// 
-/// <para><strong>JSON Example (Create Request):</strong></para>
-/// <code>
-/// {
-///   "memberId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-///   "savingsProductId": "7fa85f64-5717-4562-b3fc-2c963f66afa9",
-///   "accountNumber": "SAV-2024-001234",
-///   "openingBalance": 1000.00,
-///   "notes": "Regular savings account for emergency fund"
-/// }
-/// </code>
-/// 
-/// <para><strong>JSON Example (Response):</strong></para>
-/// <code>
-/// {
-///   "id": "9fa85f64-5717-4562-b3fc-2c963f66afb1",
-///   "accountNumber": "SAV-2024-001234",
-///   "memberId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-///   "memberName": "John Doe",
-///   "savingsProductId": "7fa85f64-5717-4562-b3fc-2c963f66afa9",
-///   "savingsProductName": "Regular Savings",
-///   "balance": 1000.00,
-///   "totalDeposits": 1000.00,
-///   "totalWithdrawals": 0.00,
-///   "totalInterestEarned": 0.00,
-///   "openedDate": "2024-01-15",
-///   "status": "Active",
-///   "interestRate": 4.5
-/// }
-/// </code>
-/// 
-/// <para><strong>JSON Example (Deposit Request):</strong></para>
-/// <code>
-/// {
-///   "accountId": "9fa85f64-5717-4562-b3fc-2c963f66afb1",
-///   "amount": 500.00,
-///   "reference": "Cash deposit - January savings",
-///   "transactionDate": "2024-01-20"
-/// }
-/// </code>
-/// 
-/// <para><strong>JSON Example (Withdrawal Request):</strong></para>
-/// <code>
-/// {
-///   "accountId": "9fa85f64-5717-4562-b3fc-2c963f66afb1",
-///   "amount": 200.00,
-///   "reference": "ATM withdrawal",
-///   "transactionDate": "2024-01-25"
-/// }
-/// </code>
+/// Business rules:
+/// - AccountNumber must be unique within the system.
+/// - Withdrawals cannot exceed available balance.
+/// - Deposits and withdrawals must be positive amounts.
+/// - Account closure requires zero balance.
+/// - Frozen accounts cannot process transactions.
+/// - Dormancy rules apply based on inactivity period per product settings.
+/// - Compulsory savings may have withdrawal restrictions until loan payoff.
+/// - Interest posting follows product-defined schedule (monthly, quarterly, annually).
 /// </remarks>
+/// <seealso cref="SavingsProduct"/>
+/// <seealso cref="Member"/>
+/// <seealso cref="SavingsTransaction"/>
+/// <seealso cref="FixedDeposit"/>
+/// <seealso cref="FeeCharge"/>
 public class SavingsAccount : AuditableEntity, IAggregateRoot
 {
     // Domain Constants

@@ -9,40 +9,32 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Tracks rate modifications with approval workflow and effective dates.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Apply promotional rate reductions for loyal customers</description></item>
-///   <item><description>Increase rates as penalty for chronic late payment</description></item>
-///   <item><description>Adjust rates for regulatory or market changes</description></item>
-///   <item><description>Reduce rates as part of loan restructuring</description></item>
-///   <item><description>Maintain audit trail of all rate modifications</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Interest rate changes must be carefully controlled and documented:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Regulatory</strong>: Must comply with usury laws and rate caps</description></item>
-///   <item><description><strong>Contractual</strong>: Changes may require borrower consent</description></item>
-///   <item><description><strong>Recalculation</strong>: Triggers repayment schedule regeneration</description></item>
-///   <item><description><strong>Approval</strong>: Typically requires management approval</description></item>
-/// </list>
-/// <para><strong>Change Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Promotion</strong>: Rate reduction as reward/incentive</description></item>
-///   <item><description><strong>Penalty</strong>: Rate increase for default/late payment</description></item>
-///   <item><description><strong>MarketAdjustment</strong>: Response to base rate changes</description></item>
-///   <item><description><strong>Restructure</strong>: Rate change as part of loan restructuring</description></item>
-///   <item><description><strong>RegulatoryChange</strong>: Compliance with new regulations</description></item>
-///   <item><description><strong>Goodwill</strong>: Exception approved by management</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Loan"/> - Loan being modified</description></item>
-///   <item><description><see cref="LoanSchedule"/> - Regenerated after rate change</description></item>
-///   <item><description><see cref="ApprovalRequest"/> - Rate change approval workflow</description></item>
-/// </list>
+/// Use cases:
+/// - Apply promotional rate reductions for loyal customers.
+/// - Increase rates as penalty for chronic late payment.
+/// - Adjust rates for regulatory or market changes.
+/// - Reduce rates as part of loan restructuring.
+/// - Maintain audit trail of all rate modifications.
+/// 
+/// Default values and constraints:
+/// - ChangeType: Promotion, Penalty, MarketAdjustment, Restructure, RegulatoryChange, Goodwill.
+/// - PreviousRate: Rate before change (percentage).
+/// - NewRate: Rate after change (percentage).
+/// - EffectiveDate: Date when new rate takes effect.
+/// - Status: Pending, Approved, Rejected, Applied.
+/// - Reason: Documented justification for rate change.
+/// 
+/// Business rules:
+/// - Must carefully control and document rate changes.
+/// - Regulatory: Must comply with usury laws and rate caps.
+/// - Contractual: Changes may require borrower consent.
+/// - Recalculation: Triggers repayment schedule regeneration.
+/// - Approval: Typically requires management authorization.
+/// - Promotion: Rate reduction as incentive for good behavior.
 /// </remarks>
+/// <seealso cref="Loan"/>
+/// <seealso cref="LoanSchedule"/>
+/// <seealso cref="ApprovalRequest"/>
 /// <example>
 /// <para><strong>Example: Requesting a promotional rate reduction</strong></para>
 /// <code>

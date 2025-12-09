@@ -9,41 +9,34 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Tracks internal and external credit scoring over time for credit risk assessment.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Calculate internal credit scores based on MFI loan history</description></item>
-///   <item><description>Store external credit bureau scores for underwriting</description></item>
-///   <item><description>Track score changes over time for monitoring</description></item>
-///   <item><description>Automate loan approval decisions based on score thresholds</description></item>
-///   <item><description>Support risk-based pricing of loans</description></item>
-///   <item><description>Identify members for collection focus based on declining scores</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Credit scoring enables data-driven lending decisions in microfinance:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Internal Scoring</strong>: Based on member's history with the MFI</description></item>
-///   <item><description><strong>External Scoring</strong>: From credit bureaus where available</description></item>
-///   <item><description><strong>Behavioral Scoring</strong>: Based on payment patterns and account behavior</description></item>
-///   <item><description><strong>Application Scoring</strong>: Initial score for new applicants</description></item>
-/// </list>
-/// <para><strong>Score Types:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Internal</strong>: MFI's own scoring model using internal data</description></item>
-///   <item><description><strong>External</strong>: Third-party credit bureau score</description></item>
-///   <item><description><strong>Behavioral</strong>: Ongoing monitoring score based on behavior</description></item>
-///   <item><description><strong>Application</strong>: Score at time of loan application</description></item>
-///   <item><description><strong>Collection</strong>: Score indicating collection risk/priority</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="Member"/> - Member being scored</description></item>
-///   <item><description><see cref="CreditBureauReport"/> - External credit reports</description></item>
-///   <item><description><see cref="LoanApplication"/> - Applications using this score</description></item>
-///   <item><description><see cref="RiskCategory"/> - Risk categorization based on score</description></item>
-/// </list>
+/// Use cases:
+/// - Calculate internal credit scores based on MFI loan history.
+/// - Store external credit bureau scores for underwriting.
+/// - Track score changes over time for monitoring.
+/// - Automate loan approval decisions based on score thresholds.
+/// - Support risk-based pricing of loans.
+/// - Identify members for collection focus based on declining scores.
+/// 
+/// Default values and constraints:
+/// - ScoreType: Internal, External, Behavioral, Application, Collection.
+/// - ScoreModel: Name of scoring model used.
+/// - Score: Numeric score value (typically 300-850 range).
+/// - ScoreDate: Date score was calculated (required).
+/// - ExpiryDate: Date score is no longer valid.
+/// - RiskGrade: Derived risk category (A, B, C, D, E).
+/// 
+/// Business rules:
+/// - Enables data-driven lending decisions.
+/// - Internal Scoring: Based on member's history with MFI.
+/// - External Scoring: From credit bureaus where available.
+/// - Behavioral Scoring: Based on payment patterns.
+/// - Application Scoring: Initial score for new applicants.
+/// - Score thresholds determine approval/pricing decisions.
 /// </remarks>
+/// <seealso cref="Member"/>
+/// <seealso cref="CreditBureauReport"/>
+/// <seealso cref="LoanApplication"/>
+/// <seealso cref="RiskCategory"/>
 /// <example>
 /// <para><strong>Example: Recording an internal credit score</strong></para>
 /// <code>

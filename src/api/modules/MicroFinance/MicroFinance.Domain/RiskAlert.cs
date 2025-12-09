@@ -9,38 +9,31 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Supports risk monitoring, escalation workflows, and resolution tracking.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Auto-generate alerts when KRI thresholds are breached</description></item>
-///   <item><description>Escalate unresolved alerts to senior management</description></item>
-///   <item><description>Track alert resolution and corrective actions</description></item>
-///   <item><description>Provide dashboard for active risk monitoring</description></item>
-///   <item><description>Support regulatory risk reporting</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Risk alerts enable proactive risk management:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Early Warning</strong>: Detect problems before they escalate</description></item>
-///   <item><description><strong>Accountability</strong>: Assign ownership for resolution</description></item>
-///   <item><description><strong>Escalation</strong>: Auto-escalate unresolved alerts</description></item>
-///   <item><description><strong>Audit Trail</strong>: Document all risk events and responses</description></item>
-/// </list>
-/// <para><strong>Severity Levels:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Low</strong>: Informational, monitor situation</description></item>
-///   <item><description><strong>Medium</strong>: Requires attention within defined SLA</description></item>
-///   <item><description><strong>High</strong>: Urgent, requires prompt action</description></item>
-///   <item><description><strong>Critical</strong>: Emergency, requires immediate response</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="RiskIndicator"/> - KRI that triggered the alert</description></item>
-///   <item><description><see cref="RiskCategory"/> - Risk category for classification</description></item>
-///   <item><description><see cref="Staff"/> - Staff assigned to resolve</description></item>
-/// </list>
+/// Use cases:
+/// - Auto-generate alerts when KRI thresholds are breached.
+/// - Escalate unresolved alerts to senior management.
+/// - Track alert resolution and corrective actions.
+/// - Provide dashboard for active risk monitoring.
+/// - Support regulatory risk reporting.
+/// 
+/// Default values and constraints:
+/// - AlertNumber: required unique identifier, max 32 characters (example: "RA-2025-001234")
+/// - Title: required, max 256 characters
+/// - Severity: Low, Medium, High, Critical
+/// - Status: Open by default (Open, InProgress, Escalated, Resolved, Closed)
+/// - Description: alert details, max 4096 characters
+/// - Resolution: resolution notes, max 4096 characters
+/// 
+/// Business rules:
+/// - Alerts auto-generated when KRI breaches threshold.
+/// - Unresolved alerts escalate based on SLA timers.
+/// - Critical alerts require immediate management attention.
+/// - Resolution must document corrective actions taken.
+/// - Alert history retained for audit purposes.
 /// </remarks>
+/// <seealso cref="RiskIndicator"/>
+/// <seealso cref="RiskCategory"/>
+/// <seealso cref="Staff"/>
 public sealed class RiskAlert : AuditableEntity, IAggregateRoot
 {
     /// <summary>

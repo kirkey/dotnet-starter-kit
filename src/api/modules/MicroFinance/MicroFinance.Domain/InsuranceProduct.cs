@@ -9,45 +9,34 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Includes loan protection, life insurance, crop insurance, and other microinsurance products.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Define insurance products to protect members and loan portfolios</description></item>
-///   <item><description>Configure premium calculation methods (flat, percentage-based, age-based)</description></item>
-///   <item><description>Set coverage amounts, terms, and exclusions</description></item>
-///   <item><description>Link mandatory insurance to loan products for credit life coverage</description></item>
-///   <item><description>Manage third-party insurance provider relationships</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Microinsurance is essential for protecting vulnerable populations and MFI loan portfolios:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Credit Life Insurance</strong>: Clears outstanding loan balance if borrower dies</description></item>
-///   <item><description><strong>Crop Insurance</strong>: Protects agricultural borrowers against crop failure</description></item>
-///   <item><description><strong>Health Insurance</strong>: Reduces risk of medical emergencies causing default</description></item>
-///   <item><description><strong>Livestock Insurance</strong>: Covers animal mortality for livestock loans</description></item>
-///   <item><description><strong>Property Insurance</strong>: Protects business assets and collateral</description></item>
-/// </list>
-/// <para>
-/// MFIs often act as intermediaries between members and insurance companies, collecting premiums
-/// as part of loan disbursement or savings transactions. Some MFIs develop in-house insurance
-/// programs with reserve funds for simpler products.
-/// </para>
-/// <para><strong>Premium Calculation Methods:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Flat</strong>: Fixed amount per period regardless of coverage</description></item>
-///   <item><description><strong>PercentOfLoan</strong>: Premium as % of loan principal (common for credit life)</description></item>
-///   <item><description><strong>PercentOfCoverage</strong>: Premium as % of coverage amount</description></item>
-///   <item><description><strong>AgeBasedTable</strong>: Varying rates based on member's age (life insurance)</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="InsurancePolicy"/> - Individual policies issued to members</description></item>
-///   <item><description><see cref="InsuranceClaim"/> - Claims filed against policies</description></item>
-///   <item><description><see cref="Loan"/> - Loans protected by credit life insurance</description></item>
-///   <item><description><see cref="Member"/> - Insured members</description></item>
-/// </list>
+/// Use cases:
+/// - Define insurance products to protect members and loan portfolios.
+/// - Configure premium calculation methods (flat, percentage-based, age-based).
+/// - Set coverage amounts, terms, and exclusions.
+/// - Link mandatory insurance to loan products for credit life coverage.
+/// - Manage third-party insurance provider relationships.
+/// 
+/// Default values and constraints:
+/// - Code: Unique product identifier.
+/// - Name: Display name for the insurance product.
+/// - ProductType: CreditLife, Crop, Health, Livestock, Property.
+/// - PremiumMethod: Flat, PercentOfLoan, PercentOfCoverage, AgeBasedTable.
+/// - CoverageAmount: Maximum coverage provided.
+/// - PremiumRate: Rate for percentage-based calculations.
+/// - IsActive: Whether product is currently offered.
+/// 
+/// Business rules:
+/// - Essential for protecting vulnerable populations and MFI portfolios.
+/// - Credit Life: Clears loan balance if borrower dies.
+/// - Crop Insurance: Protects against crop failure for agricultural loans.
+/// - Health Insurance: Reduces medical emergency default risk.
+/// - MFIs often act as intermediaries collecting premiums.
+/// - Some MFIs develop in-house programs with reserve funds.
 /// </remarks>
+/// <seealso cref="InsurancePolicy"/>
+/// <seealso cref="InsuranceClaim"/>
+/// <seealso cref="Loan"/>
+/// <seealso cref="Member"/>
 /// <example>
 /// <para><strong>Example: Creating a credit life insurance product</strong></para>
 /// <code>

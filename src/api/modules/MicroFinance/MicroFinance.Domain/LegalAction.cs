@@ -35,21 +35,31 @@ public static class LegalActionConstants
 /// Represents legal action taken against a defaulting borrower.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Track legal proceedings for loan recovery</description></item>
-///   <item><description>Record court filings, hearings, and judgments</description></item>
-///   <item><description>Monitor legal costs and recovery outcomes</description></item>
-///   <item><description>Manage collateral seizure and sale processes</description></item>
-///   <item><description>Support compliance reporting on legal recoveries</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Legal actions are initiated when collection efforts fail and the loan reaches
-/// a certain threshold of delinquency. This entity tracks the entire legal
-/// process from filing through judgment and enforcement.
-/// </para>
+/// Use cases:
+/// - Track legal proceedings for loan recovery.
+/// - Record court filings, hearings, and judgments.
+/// - Monitor legal costs and recovery outcomes.
+/// - Manage collateral seizure and sale processes.
+/// - Support compliance reporting on legal recoveries.
+/// 
+/// Default values and constraints:
+/// - CaseReference: required unique identifier, max 64 characters (example: "LEG-2025-001234")
+/// - ActionType: DemandLetter, CivilSuit, Arbitration, Garnishment, CollateralSeizure
+/// - Status: Filed by default (Filed, Hearing, Judgment, Execution, Closed)
+/// - CourtName: max 256 characters
+/// - LawyerName: max 256 characters
+/// - JudgmentSummary: max 2048 characters
+/// 
+/// Business rules:
+/// - Legal action requires management approval.
+/// - All legal costs tracked for recovery calculations.
+/// - Judgment amounts may include principal, interest, and legal fees.
+/// - Collateral sale proceeds applied to outstanding balance.
+/// - Full audit trail maintained for regulatory compliance.
 /// </remarks>
+/// <seealso cref="Loan"/>
+/// <seealso cref="CollectionCase"/>
+/// <seealso cref="LoanCollateral"/>
 public class LegalAction : AuditableEntity, IAggregateRoot
 {
     // Action Types

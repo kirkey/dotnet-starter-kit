@@ -8,29 +8,30 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a customer satisfaction survey.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-/// <item>NPS (Net Promoter Score) measurement for customer loyalty tracking</item>
-/// <item>Product feedback collection for loan and savings products</item>
-/// <item>Service quality assessment after branch visits or transactions</item>
-/// <item>Post-loan disbursement satisfaction surveys</item>
-/// <item>Annual customer experience research and benchmarking</item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Customer surveys are critical for microfinance institutions to understand client needs,
-/// measure satisfaction levels, and identify areas for service improvement. Regular NPS
-/// tracking helps predict customer retention and lifetime value. Survey data drives
-/// product development and staff training priorities.
-/// </para>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-/// <item><see cref="Member"/> - Survey respondent</item>
-/// <item><see cref="CustomerSegment"/> - Target audience for surveys</item>
-/// <item><see cref="MarketingCampaign"/> - Campaigns triggered by survey insights</item>
-/// <item><see cref="Branch"/> - Branch-level satisfaction analysis</item>
-/// </list>
+/// Use cases:
+/// - Measure NPS (Net Promoter Score) for customer loyalty tracking.
+/// - Collect product feedback for loan and savings products.
+/// - Assess service quality after branch visits or transactions.
+/// - Conduct post-loan disbursement satisfaction surveys.
+/// - Perform annual customer experience research and benchmarking.
+/// 
+/// Default values and constraints:
+/// - Title: required, max 256 characters (example: "Q1 2025 Customer Satisfaction Survey")
+/// - Type: Satisfaction, NetPromoterScore, ProductFeedback, ServiceQuality, BranchFeedback
+/// - Status: Draft by default (Draft, Active, Paused, Completed, Archived)
+/// - Questions: JSON array of survey questions, max 4096 characters
+/// 
+/// Business rules:
+/// - Surveys can target specific member segments.
+/// - NPS score ranges from -100 to +100.
+/// - Survey results analyzed at branch and overall levels.
+/// - Low scores trigger follow-up actions.
+/// - Anonymous surveys allowed for sensitive topics.
 /// </remarks>
+/// <seealso cref="Member"/>
+/// <seealso cref="CustomerSegment"/>
+/// <seealso cref="MarketingCampaign"/>
+/// <seealso cref="Branch"/>
 public sealed class CustomerSurvey : AuditableEntity, IAggregateRoot
 {
     // Constants

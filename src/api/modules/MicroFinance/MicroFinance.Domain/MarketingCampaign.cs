@@ -8,31 +8,32 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a marketing campaign for customer outreach.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-/// <item>Product promotion campaigns for new loan or savings products</item>
-/// <item>Customer retention programs targeting at-risk members</item>
-/// <item>Cross-selling initiatives (e.g., offering insurance to loan customers)</item>
-/// <item>Dormant account reactivation through targeted messaging</item>
-/// <item>Financial literacy education campaigns</item>
-/// <item>Seasonal promotions during harvest or festival periods</item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Marketing campaigns are essential for MFI growth and customer engagement. Campaigns
-/// can target specific customer segments via SMS, email, mobile app notifications, or
-/// branch staff outreach. Campaign analytics track response rates, conversion, and ROI
-/// to optimize future marketing investments. Regulatory compliance requires opt-in/opt-out
-/// management and message content review.
-/// </para>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-/// <item><see cref="CustomerSegment"/> - Target audience definition</item>
-/// <item><see cref="CommunicationTemplate"/> - Message templates for campaigns</item>
-/// <item><see cref="CommunicationLog"/> - Individual message delivery tracking</item>
-/// <item><see cref="Member"/> - Campaign recipients</item>
-/// </list>
+/// Use cases:
+/// - Product promotion campaigns for new loan or savings products.
+/// - Customer retention programs targeting at-risk members.
+/// - Cross-selling initiatives (e.g., offering insurance to loan customers).
+/// - Dormant account reactivation through targeted messaging.
+/// - Financial literacy education campaigns.
+/// - Seasonal promotions during harvest or festival periods.
+/// 
+/// Default values and constraints:
+/// - Code: required unique identifier, max 32 characters (example: "CAMP-2025-001")
+/// - Name: required, max 128 characters (example: "Q1 Loan Promotion")
+/// - Status: Draft by default (Draft, Scheduled, Active, Paused, Completed, Cancelled)
+/// - Type: Promotion, Education, Retention, Acquisition, CrossSell
+/// - Channels: SMS, Email, MobileApp, Branch (comma-separated, max 256)
+/// 
+/// Business rules:
+/// - Campaigns must target at least one segment or all members.
+/// - Start date must be in the future for scheduling.
+/// - Opt-out preferences must be respected.
+/// - Budget tracking for campaign ROI analysis.
+/// - Message content reviewed for regulatory compliance.
 /// </remarks>
+/// <seealso cref="CustomerSegment"/>
+/// <seealso cref="CommunicationTemplate"/>
+/// <seealso cref="CommunicationLog"/>
+/// <seealso cref="Member"/>
 public sealed class MarketingCampaign : AuditableEntity, IAggregateRoot
 {
     // Constants

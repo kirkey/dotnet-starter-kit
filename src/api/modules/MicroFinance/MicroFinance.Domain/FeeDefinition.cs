@@ -8,40 +8,33 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a fee or charge definition (template) in the microfinance system.
 /// </summary>
 /// <remarks>
-/// <para><strong>Use Cases:</strong></para>
-/// <list type="bullet">
-///   <item><description>Define standard fees for loans (disbursement, processing, late payment)</description></item>
-///   <item><description>Configure account maintenance fees for savings/shares</description></item>
-///   <item><description>Set up transaction-based fees (withdrawal, transfer, ATM)</description></item>
-///   <item><description>Configure percentage-based or flat-rate fee structures</description></item>
-///   <item><description>Manage tax applicability on fees</description></item>
-/// </list>
-/// <para><strong>Business Context:</strong></para>
-/// <para>
-/// Fee definitions are templates that determine how fees are calculated when charged to accounts.
-/// Non-interest income from fees is crucial for MFI sustainability, covering operational costs
-/// that interest margins alone may not cover. Common fee types include:
-/// </para>
-/// <list type="bullet">
-///   <item><description><strong>Disbursement Fee</strong>: One-time charge when loan is released</description></item>
-///   <item><description><strong>Processing Fee</strong>: Application/documentation charges</description></item>
-///   <item><description><strong>Late Fee</strong>: Penalty for overdue payments</description></item>
-///   <item><description><strong>Account Maintenance</strong>: Monthly/annual account keeping fee</description></item>
-///   <item><description><strong>Withdrawal Fee</strong>: Per-transaction or per-withdrawal charge</description></item>
-/// </list>
-/// <para><strong>Calculation Methods:</strong></para>
-/// <list type="bullet">
-///   <item><description><strong>Flat</strong>: Fixed amount regardless of transaction size</description></item>
-///   <item><description><strong>Percentage</strong>: Calculated as % of principal/transaction (with min/max caps)</description></item>
-///   <item><description><strong>PerTransaction</strong>: Fixed amount per occurrence</description></item>
-/// </list>
-/// <para><strong>Related Entities:</strong></para>
-/// <list type="bullet">
-///   <item><description><see cref="FeeCharge"/> - Actual fees charged to accounts using this definition</description></item>
-///   <item><description><see cref="Loan"/> - Loans where fees may apply</description></item>
-///   <item><description><see cref="SavingsAccount"/> - Savings accounts with maintenance fees</description></item>
-/// </list>
+/// Use cases:
+/// - Define standard fees for loans (disbursement, processing, late payment).
+/// - Configure account maintenance fees for savings/shares.
+/// - Set up transaction-based fees (withdrawal, transfer, ATM).
+/// - Configure percentage-based or flat-rate fee structures.
+/// - Manage tax applicability on fees.
+/// 
+/// Default values and constraints:
+/// - Code: Unique fee identifier (max 64 chars).
+/// - Name: Display name for the fee (max 256 chars).
+/// - Description: Detailed fee description (max 2048 chars).
+/// - CalculationMethod: Flat, Percentage, or PerTransaction.
+/// - Amount: Fixed amount or percentage rate.
+/// - MinAmount/MaxAmount: Caps for percentage-based fees.
+/// 
+/// Business rules:
+/// - Fee income is crucial for MFI sustainability.
+/// - Disbursement Fee: One-time charge when loan is released.
+/// - Processing Fee: Application/documentation charges.
+/// - Late Fee: Penalty for overdue payments.
+/// - Account Maintenance: Monthly/annual account keeping fee.
+/// - Flat: Fixed amount regardless of transaction size.
+/// - Percentage: Calculated as % of principal with min/max caps.
 /// </remarks>
+/// <seealso cref="FeeCharge"/>
+/// <seealso cref="Loan"/>
+/// <seealso cref="SavingsAccount"/>
 public class FeeDefinition : AuditableEntity, IAggregateRoot
 {
     // Domain Constants
