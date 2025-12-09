@@ -1,0 +1,75 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InterestRateChanges
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Cancel" Class="mr-3" Color="Color.Error" />Reject Rate Change
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            Are you sure you want to reject this interest rate change? The loan will keep its current interest rate.
+        </MudText>
+        <MudTextField @bind-Value="_reason"
+                      Label="Rejection Reason"
+                      Variant="Variant.Filled"
+                      Lines="3"
+                      Required="true"
+                      Placeholder="Enter the reason for rejecting this rate change..." />
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="Cancel" Disabled="_processing">Cancel</MudButton>
+        <MudButton Color="Color.Error" Variant="Variant.Filled" OnClick="Confirm" Disabled="_processing || string.IsNullOrWhiteSpace(_reason)">
+            @if (_processing)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2" />
+            }
+            Reject
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType RateChangeId { get; set; }
+
+    private string? _reason;
+    private bool _processing;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Confirm()
+    {
+        if (string.IsNullOrWhiteSpace(_reason))
+        {
+            Snackbar.Add("Please provide a rejection reason.", Severity.Warning);
+            return;
+        }
+
+        _processing = true;
+        try
+        {
+            var command = new RejectInterestRateChangeCommand
+            {
+                RejectionReason = _reason
+            };
+            await Client.RejectInterestRateChangeAsync("1", RateChangeId, command).ConfigureAwait(false);
+            Snackbar.Add("Interest rate change rejected.", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error rejecting rate change: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _processing = false;
+        }
+    }
+}

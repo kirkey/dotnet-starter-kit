@@ -1,0 +1,68 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InterestRateChanges
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-3" Color="Color.Success" />Approve Rate Change
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            Are you sure you want to approve this interest rate change? After approval, the rate change can be applied to the loan.
+        </MudText>
+        <MudTextField @bind-Value="_notes"
+                      Label="Approval Notes (Optional)"
+                      Variant="Variant.Filled"
+                      Lines="2"
+                      Placeholder="Enter any notes for this approval..." />
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="Cancel" Disabled="_processing">Cancel</MudButton>
+        <MudButton Color="Color.Success" Variant="Variant.Filled" OnClick="Confirm" Disabled="_processing">
+            @if (_processing)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2" />
+            }
+            Approve
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType RateChangeId { get; set; }
+
+    private string? _notes;
+    private bool _processing;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Confirm()
+    {
+        _processing = true;
+        try
+        {
+            var command = new ApproveInterestRateChangeCommand
+            {
+                Notes = _notes
+            };
+            await Client.ApproveInterestRateChangeAsync("1", RateChangeId, command).ConfigureAwait(false);
+            Snackbar.Add("Interest rate change approved successfully.", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error approving rate change: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _processing = false;
+        }
+    }
+}

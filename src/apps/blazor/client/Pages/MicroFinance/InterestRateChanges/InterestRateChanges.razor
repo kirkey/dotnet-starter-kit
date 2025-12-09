@@ -1,0 +1,169 @@
+@page "/microfinance/interest-rate-changes"
+
+<PageHeader Title="Interest Rate Changes" Header="Interest Rate Changes" SubHeader="View and manage loan interest rate modifications with approval workflow." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="InterestRateChangeSummaryResponse" TId="DefaultIdType" TRequest="InterestRateChangeViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Pending")">Pending</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Approved")">Approved</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Applied")">Applied</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Rejected")">Rejected</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Cancelled")">Cancelled</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchChangeType"
+                       Label="Change Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Promotion")">Promotion</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Penalty")">Penalty</MudSelectItem>
+                <MudSelectItem Value="@((string?)"MarketAdjustment")">Market Adjustment</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Restructure")">Restructure</MudSelectItem>
+                <MudSelectItem Value="@((string?)"RegulatoryChange")">Regulatory Change</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Goodwill")">Goodwill</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (entity.Status == "Pending" && _canApprove)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success" OnClick="@(() => ApproveChange(entity.Id))">
+                Approve
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel" IconColor="Color.Error" OnClick="@(() => RejectChange(entity.Id))">
+                Reject
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Close" OnClick="@(() => CancelChange(entity.Id))">
+                Cancel
+            </MudMenuItem>
+        }
+        @if (entity.Status == "Approved" && _canApply)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.PlayArrow" IconColor="Color.Primary" OnClick="@(() => ApplyChange(entity.Id))">
+                Apply to Loan
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Rate Change Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.LoanId"
+                          For="@(() => context.LoanId)"
+                          Label="Loan ID"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Reference"
+                          For="@(() => context.Reference)"
+                          Label="Reference"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.ChangeType"
+                       For="@(() => context.ChangeType)"
+                       Label="Change Type"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@((string?)"Promotion")">Promotion</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Penalty")">Penalty</MudSelectItem>
+                <MudSelectItem Value="@((string?)"MarketAdjustment")">Market Adjustment</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Restructure")">Restructure</MudSelectItem>
+                <MudSelectItem Value="@((string?)"RegulatoryChange")">Regulatory Change</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Goodwill")">Goodwill</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.RequestDate"
+                           For="@(() => context.RequestDate)"
+                           Label="Request Date"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.EffectiveDate"
+                           For="@(() => context.EffectiveDate)"
+                           Label="Effective Date"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.PreviousRate"
+                             For="@(() => context.PreviousRate)"
+                             Label="Previous Rate (%)"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Format="N2"
+                             Adornment="Adornment.End"
+                             AdornmentText="%" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.NewRate"
+                             For="@(() => context.NewRate)"
+                             Label="New Rate (%)"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Format="N2"
+                             Adornment="Adornment.End"
+                             AdornmentText="%" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.ChangeReason"
+                          For="@(() => context.ChangeReason)"
+                          Label="Change Reason"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          Lines="2" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>

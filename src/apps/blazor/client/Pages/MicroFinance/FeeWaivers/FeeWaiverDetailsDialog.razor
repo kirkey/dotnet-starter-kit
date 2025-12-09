@@ -1,0 +1,108 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.FeeWaivers
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.MoneyOff" Class="mr-3" />Fee Waiver Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (Waiver != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Reference</MudText>
+                    <MudText Typo="Typo.body1">@(Waiver.Reference ?? "N/A")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Status</MudText>
+                    <MudChip T="string" Color="@GetStatusColor(Waiver.Status)" Size="Size.Small">@Waiver.Status</MudChip>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Fee Charge ID</MudText>
+                    <MudText Typo="Typo.body1">@Waiver.FeeChargeId</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Waiver Type</MudText>
+                    <MudText Typo="Typo.body1">@(Waiver.WaiverType ?? "N/A")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Request Date</MudText>
+                    <MudText Typo="Typo.body1">@Waiver.RequestDate.ToString("d")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Original Amount</MudText>
+                    <MudText Typo="Typo.body1">@Waiver.OriginalAmount.ToString("C")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Waived Amount</MudText>
+                    <MudText Typo="Typo.body1" Color="Color.Success">@Waiver.WaivedAmount.ToString("C")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Remaining Amount</MudText>
+                    <MudText Typo="Typo.body1">@((Waiver.OriginalAmount - Waiver.WaivedAmount).ToString("C"))</MudText>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Waiver Reason</MudText>
+                    <MudText Typo="Typo.body1">@(Waiver.WaiverReason ?? "N/A")</MudText>
+                </MudItem>
+                @if (!string.IsNullOrEmpty(Waiver.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.caption" Color="Color.Default">Notes</MudText>
+                        <MudText Typo="Typo.body1">@Waiver.Notes</MudText>
+                    </MudItem>
+                }
+                @if (Waiver.Status == "Approved")
+                {
+                    <MudItem xs="12">
+                        <MudDivider Class="my-2" />
+                        <MudText Typo="Typo.subtitle2" Color="Color.Success">Approval Information</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption" Color="Color.Default">Approved By</MudText>
+                        <MudText Typo="Typo.body1">@(Waiver.ApprovedBy ?? "N/A")</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption" Color="Color.Default">Approved Date</MudText>
+                        <MudText Typo="Typo.body1">@(Waiver.ApprovedDate?.ToString("g") ?? "N/A")</MudText>
+                    </MudItem>
+                }
+                @if (Waiver.Status == "Rejected")
+                {
+                    <MudItem xs="12">
+                        <MudDivider Class="my-2" />
+                        <MudText Typo="Typo.subtitle2" Color="Color.Error">Rejection Information</MudText>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.caption" Color="Color.Default">Rejection Reason</MudText>
+                        <MudText Typo="Typo.body1">@(Waiver.RejectionReason ?? "N/A")</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public FeeWaiverResponse? Waiver { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Pending" => Color.Warning,
+        "Approved" => Color.Success,
+        "Rejected" => Color.Error,
+        "Cancelled" => Color.Default,
+        _ => Color.Default
+    };
+}

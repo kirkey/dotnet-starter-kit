@@ -1,0 +1,71 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InterestRateChanges
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.PlayArrow" Class="mr-3" Color="Color.Primary" />Apply Rate Change to Loan
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            This will apply the approved interest rate change to the loan. The loan's interest rate will be updated and the repayment schedule may be recalculated.
+        </MudText>
+        <MudAlert Severity="Severity.Warning" Class="mb-4">
+            <strong>Important:</strong> This action will update the loan's interest rate. Make sure the effective date is appropriate before proceeding.
+        </MudAlert>
+        <MudTextField @bind-Value="_notes"
+                      Label="Application Notes (Optional)"
+                      Variant="Variant.Filled"
+                      Lines="2"
+                      Placeholder="Enter any notes for applying this rate change..." />
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="Cancel" Disabled="_processing">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Confirm" Disabled="_processing">
+            @if (_processing)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2" />
+            }
+            Apply to Loan
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public DefaultIdType RateChangeId { get; set; }
+
+    private string? _notes;
+    private bool _processing;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task Confirm()
+    {
+        _processing = true;
+        try
+        {
+            var command = new ApplyInterestRateChangeCommand
+            {
+                Notes = _notes
+            };
+            await Client.ApplyInterestRateChangeAsync("1", RateChangeId, command).ConfigureAwait(false);
+            Snackbar.Add("Interest rate change applied to loan successfully.", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error applying rate change: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _processing = false;
+        }
+    }
+}

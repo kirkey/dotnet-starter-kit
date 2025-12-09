@@ -1,0 +1,101 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.FeePayments
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Payment" Class="mr-3" />Fee Payment Details
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (Payment != null)
+        {
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Reference</MudText>
+                    <MudText Typo="Typo.body1">@(Payment.Reference ?? "N/A")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Status</MudText>
+                    <MudChip T="string" Color="@GetStatusColor(Payment.Status)" Size="Size.Small">@Payment.Status</MudChip>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Fee Charge ID</MudText>
+                    <MudText Typo="Typo.body1">@Payment.FeeChargeId</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Amount</MudText>
+                    <MudText Typo="Typo.body1" Color="Color.Success">@Payment.Amount.ToString("C")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Payment Date</MudText>
+                    <MudText Typo="Typo.body1">@Payment.PaymentDate.ToString("d")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Payment Method</MudText>
+                    <MudText Typo="Typo.body1">@(Payment.PaymentMethod ?? "N/A")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.caption" Color="Color.Default">Payment Source</MudText>
+                    <MudText Typo="Typo.body1">@(Payment.PaymentSource ?? "N/A")</MudText>
+                </MudItem>
+                @if (Payment.LoanRepaymentId.HasValue)
+                {
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption" Color="Color.Default">Loan Repayment ID</MudText>
+                        <MudText Typo="Typo.body1">@Payment.LoanRepaymentId</MudText>
+                    </MudItem>
+                }
+                @if (Payment.SavingsTransactionId.HasValue)
+                {
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption" Color="Color.Default">Savings Transaction ID</MudText>
+                        <MudText Typo="Typo.body1">@Payment.SavingsTransactionId</MudText>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrEmpty(Payment.Notes))
+                {
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.caption" Color="Color.Default">Notes</MudText>
+                        <MudText Typo="Typo.body1">@Payment.Notes</MudText>
+                    </MudItem>
+                }
+                @if (Payment.Status == "Reversed")
+                {
+                    <MudItem xs="12">
+                        <MudDivider Class="my-2" />
+                        <MudText Typo="Typo.subtitle2" Color="Color.Error">Reversal Information</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.caption" Color="Color.Default">Reversed Date</MudText>
+                        <MudText Typo="Typo.body1">@(Payment.ReversedDate?.ToString("g") ?? "N/A")</MudText>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.caption" Color="Color.Default">Reversal Reason</MudText>
+                        <MudText Typo="Typo.body1">@(Payment.ReversalReason ?? "N/A")</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Default" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public FeePaymentResponse? Payment { get; set; }
+
+    private void Close() => MudDialog.Close();
+
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "Active" => Color.Success,
+        "Reversed" => Color.Error,
+        _ => Color.Default
+    };
+}

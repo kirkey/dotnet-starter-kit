@@ -1,0 +1,142 @@
+@page "/microfinance/fee-waivers"
+
+<PageHeader Title="Fee Waivers" Header="Fee Waivers" SubHeader="View and manage fee waiver requests with approval workflow." />
+
+<MudPaper Elevation="@_preference.Elevation" Class="pa-4 mb-4">
+    <MudStack Row="true" Spacing="2" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+        <MudSpacer />
+        <MudButtonGroup Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">
+            <MudButton StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelp">
+                Help
+            </MudButton>
+        </MudButtonGroup>
+    </MudStack>
+</MudPaper>
+
+<EntityTable @ref="_table" TEntity="FeeWaiverSummaryResponse" TId="DefaultIdType" TRequest="FeeWaiverViewModel" Context="@Context">
+    <AdvancedSearchContent>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchStatus"
+                       Label="Status"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Pending")">Pending</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Approved")">Approved</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Rejected")">Rejected</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Cancelled")">Cancelled</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="string?"
+                       @bind-Value="@SearchWaiverType"
+                       Label="Waiver Type"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@((string?)"Full")">Full</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Partial")">Partial</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </AdvancedSearchContent>
+
+    <ExtraActions Context="entity">
+        @if (entity.Status == "Pending" && _canApprove)
+        {
+            <MudMenuItem Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success" OnClick="@(() => ApproveWaiver(entity.Id))">
+                Approve
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Cancel" IconColor="Color.Error" OnClick="@(() => RejectWaiver(entity.Id))">
+                Reject
+            </MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Close" OnClick="@(() => CancelWaiver(entity.Id))">
+                Cancel
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewDetails(entity.Id))">
+            View Details
+        </MudMenuItem>
+    </ExtraActions>
+
+    <EditFormContent Context="context">
+        @if (context.Id != DefaultIdType.Empty)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline="false" ReadOnly Label="Id" />
+            </MudItem>
+        }
+        
+        <MudItem xs="12">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><strong>Waiver Information</strong></MudText>
+            <MudDivider />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.FeeChargeId"
+                          For="@(() => context.FeeChargeId)"
+                          Label="Fee Charge ID"
+                          Variant="Variant.Filled"
+                          Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="context.Reference"
+                          For="@(() => context.Reference)"
+                          Label="Reference"
+                          Variant="Variant.Filled" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect @bind-Value="context.WaiverType"
+                       For="@(() => context.WaiverType)"
+                       Label="Waiver Type"
+                       Variant="Variant.Filled"
+                       Required="true">
+                <MudSelectItem Value="@((string?)"Full")">Full Waiver</MudSelectItem>
+                <MudSelectItem Value="@((string?)"Partial")">Partial Waiver</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker @bind-Date="context.RequestDate"
+                           For="@(() => context.RequestDate)"
+                           Label="Request Date"
+                           Variant="Variant.Filled"
+                           Required="true" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.OriginalAmount"
+                             For="@(() => context.OriginalAmount)"
+                             Label="Original Amount"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Format="N2" />
+        </MudItem>
+        
+        <MudItem xs="12" sm="6" md="4">
+            <MudNumericField @bind-Value="context.WaivedAmount"
+                             For="@(() => context.WaivedAmount)"
+                             Label="Waived Amount"
+                             Variant="Variant.Filled"
+                             Required="true"
+                             Format="N2" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.WaiverReason"
+                          For="@(() => context.WaiverReason)"
+                          Label="Waiver Reason"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          Lines="2" />
+        </MudItem>
+        
+        <MudItem xs="12">
+            <MudTextField @bind-Value="context.Notes"
+                          For="@(() => context.Notes)"
+                          Label="Notes"
+                          Variant="Variant.Filled"
+                          Lines="2" />
+        </MudItem>
+    </EditFormContent>
+</EntityTable>
