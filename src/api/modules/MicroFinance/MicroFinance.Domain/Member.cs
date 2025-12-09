@@ -8,6 +8,14 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a member (client) in the microfinance system.
 /// </summary>
 /// <remarks>
+/// <para><strong>What is this?</strong></para>
+/// <para>
+/// A Member is the core client entity in the microfinance institution. Members are individuals
+/// who have registered with the MFI to access financial services including savings accounts,
+/// loans, fixed deposits, and share capital. Each member undergoes KYC (Know Your Customer)
+/// verification before activation.
+/// </para>
+/// 
 /// <para><strong>Use Cases:</strong></para>
 /// <list type="bullet">
 ///   <item><description>Register new members with KYC (Know Your Customer) information</description></item>
@@ -15,7 +23,11 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 ///   <item><description>Track member's financial relationship (loans, savings, shares)</description></item>
 ///   <item><description>Assess creditworthiness based on income and history</description></item>
 ///   <item><description>Manage member lifecycle (activation, deactivation)</description></item>
+///   <item><description>Support group lending through solidarity group membership</description></item>
+///   <item><description>Enable loan guarantorship between members</description></item>
+///   <item><description>Generate member statements and account summaries</description></item>
 /// </list>
+/// 
 /// <para><strong>Business Context:</strong></para>
 /// <para>
 /// Members are the core clients of the microfinance institution. A member can:
@@ -34,6 +46,28 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// - Regulatory compliance (national ID, KYC requirements)
 /// - Risk management (group membership, guarantor relationships)
 /// </para>
+/// 
+/// <para><strong>Validation Rules:</strong></para>
+/// <list type="bullet">
+///   <item><description>FirstName: Required, 2-128 characters</description></item>
+///   <item><description>LastName: Required, 2-128 characters</description></item>
+///   <item><description>MemberNumber: Required, unique, max 64 characters</description></item>
+///   <item><description>Email: Optional, max 256 characters, must be valid email format</description></item>
+///   <item><description>PhoneNumber: Optional, max 32 characters</description></item>
+///   <item><description>NationalId: Recommended for KYC compliance, max 64 characters</description></item>
+///   <item><description>MonthlyIncome: Optional, must be non-negative if provided</description></item>
+///   <item><description>DateOfBirth: Optional, must be in the past if provided</description></item>
+/// </list>
+/// 
+/// <para><strong>Required Permissions:</strong></para>
+/// <list type="bullet">
+///   <item><description><c>MicroFinance.Create</c> - Register new members</description></item>
+///   <item><description><c>MicroFinance.View</c> - View member details and accounts</description></item>
+///   <item><description><c>MicroFinance.Update</c> - Update member information</description></item>
+///   <item><description><c>MicroFinance.Delete</c> - Delete/deactivate members</description></item>
+///   <item><description><c>MicroFinance.Activate</c> - Activate pending members</description></item>
+/// </list>
+/// 
 /// <para><strong>Related Entities:</strong></para>
 /// <list type="bullet">
 ///   <item><description><see cref="Loan"/> - Loans where member is the borrower</description></item>
@@ -42,7 +76,67 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 ///   <item><description><see cref="FixedDeposit"/> - Member's term deposits</description></item>
 ///   <item><description><see cref="GroupMembership"/> - Group affiliations</description></item>
 ///   <item><description><see cref="LoanGuarantor"/> - Loans guaranteed by this member</description></item>
+///   <item><description><see cref="KycDocument"/> - Identity verification documents</description></item>
 /// </list>
+/// 
+/// <para><strong>Default Values:</strong></para>
+/// <list type="bullet">
+///   <item><description>IsActive: true (on creation)</description></item>
+///   <item><description>JoinDate: Current UTC date (if not specified)</description></item>
+///   <item><description>Loans: Empty collection</description></item>
+///   <item><description>SavingsAccounts: Empty collection</description></item>
+/// </list>
+/// 
+/// <para><strong>JSON Example (Create Request):</strong></para>
+/// <code>
+/// {
+///   "memberNumber": "MBR-2024-001234",
+///   "firstName": "John",
+///   "lastName": "Doe",
+///   "middleName": "Michael",
+///   "email": "john.doe@example.com",
+///   "phoneNumber": "+1-555-123-4567",
+///   "dateOfBirth": "1985-06-15",
+///   "gender": "Male",
+///   "address": "123 Main Street, Apt 4B",
+///   "city": "New York",
+///   "state": "NY",
+///   "postalCode": "10001",
+///   "country": "USA",
+///   "nationalId": "SSN-123-45-6789",
+///   "occupation": "Small Business Owner",
+///   "monthlyIncome": 5000.00,
+///   "notes": "Referred by existing member MBR-2023-000456"
+/// }
+/// </code>
+/// 
+/// <para><strong>JSON Example (Response):</strong></para>
+/// <code>
+/// {
+///   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "memberNumber": "MBR-2024-001234",
+///   "firstName": "John",
+///   "lastName": "Doe",
+///   "middleName": "Michael",
+///   "fullName": "John Michael Doe",
+///   "email": "john.doe@example.com",
+///   "phoneNumber": "+1-555-123-4567",
+///   "dateOfBirth": "1985-06-15",
+///   "gender": "Male",
+///   "address": "123 Main Street, Apt 4B",
+///   "city": "New York",
+///   "state": "NY",
+///   "postalCode": "10001",
+///   "country": "USA",
+///   "nationalId": "SSN-123-45-6789",
+///   "occupation": "Small Business Owner",
+///   "monthlyIncome": 5000.00,
+///   "joinDate": "2024-01-15",
+///   "isActive": true,
+///   "loansCount": 0,
+///   "savingsAccountsCount": 0
+/// }
+/// </code>
 /// </remarks>
 public class Member : AuditableEntity, IAggregateRoot
 {

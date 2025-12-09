@@ -8,6 +8,52 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a loan write-off record when a loan is deemed uncollectible.
 /// Tracks the write-off process, approvals, and any subsequent recovery.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Write off bad debts after all collection efforts exhausted</description></item>
+///   <item><description>Route write-off requests through multi-level approval workflow</description></item>
+///   <item><description>Track post-write-off recoveries for loss recoupment</description></item>
+///   <item><description>Maintain audit trail for regulatory and tax purposes</description></item>
+///   <item><description>Report on write-off trends by product, branch, or officer</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Loan write-offs are a critical portfolio management and accounting function:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Provisioning</strong>: Write-offs often follow full provisioning of the loan</description></item>
+///   <item><description><strong>Regulatory Compliance</strong>: Must follow central bank guidelines for NPL write-off</description></item>
+///   <item><description><strong>Tax Implications</strong>: Write-offs may be tax deductible with proper documentation</description></item>
+///   <item><description><strong>Continued Collection</strong>: Write-off doesn't extinguish the debt legally</description></item>
+/// </list>
+/// <para><strong>Write-Off Types:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Full</strong>: Entire outstanding balance written off</description></item>
+///   <item><description><strong>Partial</strong>: Portion of balance written off (after settlement)</description></item>
+///   <item><description><strong>Technical</strong>: Small balances below collection threshold</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Loan"/> - Loan being written off</description></item>
+///   <item><description><see cref="CollectionCase"/> - Collection efforts that preceded write-off</description></item>
+///   <item><description><see cref="ApprovalRequest"/> - Write-off approval workflow</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Requesting a loan write-off</strong></para>
+/// <code>
+/// POST /api/microfinance/loan-write-offs
+/// {
+///   "loanId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "writeOffType": "Full",
+///   "principalAmount": 450000,
+///   "interestAmount": 67500,
+///   "feesAmount": 15000,
+///   "reason": "Borrower deceased, no estate, guarantors unable to pay after 12 months of collection"
+/// }
+/// </code>
+/// </example>
 public sealed class LoanWriteOff : AuditableEntity, IAggregateRoot
 {
     /// <summary>

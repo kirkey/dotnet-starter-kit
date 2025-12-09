@@ -6,8 +6,63 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
 /// Represents an insurance policy issued to a member.
-/// Tracks coverage, premiums, and policy lifecycle.
+/// Tracks coverage amounts, premiums, beneficiaries, and policy lifecycle.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Issue insurance policies linked to loans or as standalone products</description></item>
+///   <item><description>Track premium payments and payment schedules</description></item>
+///   <item><description>Manage policy renewals and expirations</description></item>
+///   <item><description>Record beneficiary details for claims</description></item>
+///   <item><description>Process policy cancellations and lapses</description></item>
+///   <item><description>Link policies to loans for credit life coverage</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Insurance policies protect members and the MFI's loan portfolio:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Credit Life</strong>: Clears loan balance on borrower death/disability</description></item>
+///   <item><description><strong>Member Protection</strong>: Provides safety net for vulnerable populations</description></item>
+///   <item><description><strong>Premium Collection</strong>: Often deducted from loan disbursement or savings</description></item>
+///   <item><description><strong>Third-Party Integration</strong>: Policies may be with external insurers</description></item>
+/// </list>
+/// <para><strong>Policy Status:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Active</strong>: Policy in force, premiums current</description></item>
+///   <item><description><strong>Lapsed</strong>: Premium not paid, coverage suspended</description></item>
+///   <item><description><strong>Cancelled</strong>: Policy terminated before term end</description></item>
+///   <item><description><strong>Expired</strong>: Policy term completed naturally</description></item>
+///   <item><description><strong>Claimed</strong>: Claim filed and processed</description></item>
+///   <item><description><strong>Matured</strong>: Endowment policy reached maturity</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Member"/> - Policy holder</description></item>
+///   <item><description><see cref="InsuranceProduct"/> - Product template</description></item>
+///   <item><description><see cref="InsuranceClaim"/> - Claims against this policy</description></item>
+///   <item><description><see cref="Loan"/> - Associated loan for credit life</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Issuing a credit life policy</strong></para>
+/// <code>
+/// POST /api/microfinance/insurance-policies
+/// {
+///   "memberId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "insuranceProductId": "a1b2c3d4-5e6f-7890-abcd-ef1234567890",
+///   "loanId": "b2c3d4e5-6f78-9012-bcde-f12345678901",
+///   "coverageAmount": 500000,
+///   "premiumAmount": 2500,
+///   "effectiveDate": "2024-01-15",
+///   "expiryDate": "2025-01-14",
+///   "beneficiaryName": "Marie Mukiza",
+///   "beneficiaryRelation": "Spouse",
+///   "beneficiaryContact": "+250788111222"
+/// }
+/// </code>
+/// </example>
 public sealed class InsurancePolicy : AuditableEntity, IAggregateRoot
 {
     /// <summary>

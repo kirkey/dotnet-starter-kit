@@ -5,9 +5,83 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a staff member of the MFI.
-/// Manages employee information, role assignments, and work history.
+/// Represents a staff member (employee) of the MFI (Microfinance Institution).
+/// Manages employee information, role assignments, branch assignments, and work history.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Register and manage MFI employees across all roles</description></item>
+///   <item><description>Assign staff to branches and define reporting hierarchies</description></item>
+///   <item><description>Track loan officer portfolios and performance metrics</description></item>
+///   <item><description>Manage teller sessions and daily cash handling</description></item>
+///   <item><description>Link staff to system user accounts for authentication</description></item>
+///   <item><description>Maintain HR records including employment dates, salary, and benefits</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Staff management is critical for MFI operations, particularly for roles that handle
+/// money or interact directly with members:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Loan Officers</strong>: Manage member relationships, appraise loans, collect repayments</description></item>
+///   <item><description><strong>Tellers</strong>: Handle cash transactions, savings deposits/withdrawals</description></item>
+///   <item><description><strong>Branch Managers</strong>: Oversee branch operations, approve certain transactions</description></item>
+///   <item><description><strong>Collection Officers</strong>: Follow up on delinquent loans</description></item>
+///   <item><description><strong>Accountants</strong>: Manage financial records and reporting</description></item>
+/// </list>
+/// <para><strong>Staff Roles:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>LoanOfficer</strong>: Field staff managing loan portfolios (key performance role)</description></item>
+///   <item><description><strong>Teller</strong>: Front-desk staff for cash transactions</description></item>
+///   <item><description><strong>BranchManager</strong>: Oversees branch operations and approvals</description></item>
+///   <item><description><strong>CollectionOfficer</strong>: Specialized in delinquent account recovery</description></item>
+///   <item><description><strong>Accountant</strong>: Financial record-keeping and reporting</description></item>
+///   <item><description><strong>Compliance</strong>: Regulatory and AML compliance</description></item>
+///   <item><description><strong>Auditor</strong>: Internal audit and controls</description></item>
+/// </list>
+/// <para><strong>Employment Status:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Active</strong>: Currently employed and working</description></item>
+///   <item><description><strong>OnLeave</strong>: Approved leave (maternity, sick, vacation)</description></item>
+///   <item><description><strong>Suspended</strong>: Temporarily barred pending investigation</description></item>
+///   <item><description><strong>Terminated</strong>: Employment ended by employer</description></item>
+///   <item><description><strong>Resigned</strong>: Voluntary departure</description></item>
+///   <item><description><strong>Retired</strong>: Reached retirement age</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Branch"/> - Branch where staff is assigned</description></item>
+///   <item><description><see cref="LoanOfficerAssignment"/> - Loan officer assignment to members/groups</description></item>
+///   <item><description><see cref="LoanOfficerTarget"/> - Performance targets for loan officers</description></item>
+///   <item><description><see cref="TellerSession"/> - Daily teller sessions for tellers</description></item>
+///   <item><description><see cref="StaffTraining"/> - Training records</description></item>
+///   <item><description><see cref="ApprovalRequest"/> - Approval requests assigned to staff</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Creating a new staff member</strong></para>
+/// <code>
+/// POST /api/microfinance/staff
+/// {
+///   "employeeNumber": "EMP-2024-001",
+///   "firstName": "Alice",
+///   "lastName": "Mukamana",
+///   "email": "a.mukamana@mfi.org",
+///   "phone": "+250788654321",
+///   "dateOfBirth": "1990-03-15",
+///   "gender": "Female",
+///   "nationalId": "1199080012345678",
+///   "branchId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "department": "Operations",
+///   "jobTitle": "Senior Loan Officer",
+///   "designation": "LoanOfficer",
+///   "staffType": "FullTime",
+///   "hireDate": "2024-01-15",
+///   "baseSalary": 450000
+/// }
+/// </code>
+/// </example>
 public sealed class Staff : AuditableEntity, IAggregateRoot
 {
     /// <summary>

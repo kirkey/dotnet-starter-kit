@@ -7,6 +7,32 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// <summary>
 /// Represents an investment transaction (buy/sell/dividend/etc).
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+/// <item>Process investment purchases (Buy) and redemptions (Sell)</item>
+/// <item>Record dividend distributions and reinvestments</item>
+/// <item>Execute Systematic Investment Plans (SIP) periodic contributions</item>
+/// <item>Handle product switches and portfolio rebalancing</item>
+/// <item>Transfer investments between accounts</item>
+/// <item>Track transaction fees, NAV prices, and unit quantities</item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Investment transactions record all activity within member investment accounts.
+/// Each transaction captures the product, quantity (units), price (NAV), total amount,
+/// and applicable fees. Transaction statuses flow from Pending through Processing
+/// to Completed or Failed. SIP transactions are automatically generated on schedules.
+/// Transactions affect portfolio values, gain/loss calculations, and statement generation.
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+/// <item><see cref="InvestmentAccount"/> - Account holding the investment</item>
+/// <item><see cref="InvestmentProduct"/> - Product being traded</item>
+/// <item><see cref="SavingsAccount"/> - Source/destination for funds</item>
+/// <item><see cref="FeeCharge"/> - Transaction fees applied</item>
+/// </list>
+/// </remarks>
 public sealed class InvestmentTransaction : AuditableEntity, IAggregateRoot
 {
     // Constants

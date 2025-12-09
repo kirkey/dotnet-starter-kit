@@ -5,9 +5,65 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a loan application before it becomes an approved loan.
-/// Tracks the application process from submission to approval/rejection.
+/// Represents a loan application before it becomes an approved and disbursed loan.
+/// Tracks the application process from submission through underwriting to approval or rejection.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Submit new loan requests from members</description></item>
+///   <item><description>Conduct credit appraisal and risk assessment</description></item>
+///   <item><description>Route applications through approval workflows</description></item>
+///   <item><description>Track pending documents and conditions</description></item>
+///   <item><description>Record approval/rejection decisions with reasons</description></item>
+///   <item><description>Convert approved applications to active loans</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// The loan application process is the front door of microfinance lending:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Member Eligibility</strong>: Verify membership status, savings requirements</description></item>
+///   <item><description><strong>Credit History</strong>: Review past loan performance with the MFI</description></item>
+///   <item><description><strong>Capacity Assessment</strong>: Analyze income and debt-to-income ratio</description></item>
+///   <item><description><strong>Collateral Review</strong>: Evaluate pledged assets and guarantors</description></item>
+///   <item><description><strong>Character Check</strong>: Community references, group input for solidarity loans</description></item>
+/// </list>
+/// <para><strong>Application Status Flow:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Draft</strong> → <strong>Submitted</strong>: Member completes and submits</description></item>
+///   <item><description><strong>Submitted</strong> → <strong>UnderReview</strong>: Loan officer begins assessment</description></item>
+///   <item><description><strong>UnderReview</strong> → <strong>PendingDocuments</strong>: Awaiting member documents</description></item>
+///   <item><description><strong>UnderReview</strong> → <strong>PendingApproval</strong>: Sent for approval decision</description></item>
+///   <item><description><strong>PendingApproval</strong> → <strong>Approved</strong>: Approved for disbursement</description></item>
+///   <item><description><strong>PendingApproval</strong> → <strong>Rejected</strong>: Application declined</description></item>
+///   <item><description><strong>Approved</strong> → <strong>Disbursed</strong>: Loan created and disbursed</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Member"/> - Applicant</description></item>
+///   <item><description><see cref="LoanProduct"/> - Product being applied for</description></item>
+///   <item><description><see cref="Loan"/> - Created when application is approved and disbursed</description></item>
+///   <item><description><see cref="ApprovalRequest"/> - Approval workflow request</description></item>
+///   <item><description><see cref="Document"/> - Application supporting documents</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Submitting a new loan application</strong></para>
+/// <code>
+/// POST /api/microfinance/loan-applications
+/// {
+///   "memberId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "loanProductId": "a1b2c3d4-5e6f-7890-abcd-ef1234567890",
+///   "requestedAmount": 500000,
+///   "requestedTerm": 12,
+///   "purpose": "Business expansion - inventory purchase",
+///   "businessType": "Retail Trade",
+///   "monthlyIncome": 150000,
+///   "monthlyExpenses": 80000
+/// }
+/// </code>
+/// </example>
 public sealed class LoanApplication : AuditableEntity, IAggregateRoot
 {
     /// <summary>

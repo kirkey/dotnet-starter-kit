@@ -7,6 +7,32 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// <summary>
 /// Represents a member's investment account/portfolio.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+/// <item>Track member investment portfolios across multiple products</item>
+/// <item>Monitor total invested amount, current value, and gain/loss</item>
+/// <item>Risk profiling for suitable investment product recommendations</item>
+/// <item>Portfolio performance reporting and statements</item>
+/// <item>Dividend/interest reinvestment tracking</item>
+/// <item>Investment maturity alerts and rollover management</item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Investment accounts enable MFI members to grow wealth beyond basic savings. Each
+/// account is linked to a risk profile (Conservative, Moderate, Aggressive, Balanced)
+/// that guides product recommendations. The account aggregates holdings across various
+/// investment products and tracks overall portfolio performance. MFIs offering investment
+/// services must comply with securities regulations and suitability requirements.
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+/// <item><see cref="Member"/> - Account owner</item>
+/// <item><see cref="InvestmentProduct"/> - Available investment options</item>
+/// <item><see cref="InvestmentTransaction"/> - Buy/sell/dividend transactions</item>
+/// <item><see cref="SavingsAccount"/> - Source of investment funds</item>
+/// </list>
+/// </remarks>
 public sealed class InvestmentAccount : AuditableEntity, IAggregateRoot
 {
     // Constants

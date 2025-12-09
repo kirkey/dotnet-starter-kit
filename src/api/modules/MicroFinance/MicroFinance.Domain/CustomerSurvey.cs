@@ -7,6 +7,30 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// <summary>
 /// Represents a customer satisfaction survey.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+/// <item>NPS (Net Promoter Score) measurement for customer loyalty tracking</item>
+/// <item>Product feedback collection for loan and savings products</item>
+/// <item>Service quality assessment after branch visits or transactions</item>
+/// <item>Post-loan disbursement satisfaction surveys</item>
+/// <item>Annual customer experience research and benchmarking</item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Customer surveys are critical for microfinance institutions to understand client needs,
+/// measure satisfaction levels, and identify areas for service improvement. Regular NPS
+/// tracking helps predict customer retention and lifetime value. Survey data drives
+/// product development and staff training priorities.
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+/// <item><see cref="Member"/> - Survey respondent</item>
+/// <item><see cref="CustomerSegment"/> - Target audience for surveys</item>
+/// <item><see cref="MarketingCampaign"/> - Campaigns triggered by survey insights</item>
+/// <item><see cref="Branch"/> - Branch-level satisfaction analysis</item>
+/// </list>
+/// </remarks>
 public sealed class CustomerSurvey : AuditableEntity, IAggregateRoot
 {
     // Constants

@@ -5,9 +5,56 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a loan disbursement tranche for staged loan disbursement.
-/// Used for construction loans, project financing, or phased disbursements.
+/// Represents a loan disbursement tranche for staged/phased loan disbursement.
+/// Used for construction loans, project financing, asset financing, or milestone-based releases.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Disburse loans in phases tied to project milestones</description></item>
+///   <item><description>Release funds directly to vendors for asset purchases</description></item>
+///   <item><description>Track disbursement schedules and conditions</description></item>
+///   <item><description>Support multiple disbursement methods per tranche</description></item>
+///   <item><description>Manage approval requirements for each disbursement</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Tranched disbursement protects the MFI by releasing funds incrementally:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Risk Reduction</strong>: Funds released only when conditions met</description></item>
+///   <item><description><strong>Purpose Verification</strong>: Ensures funds used for intended purpose</description></item>
+///   <item><description><strong>Project Monitoring</strong>: Tracks progress before next release</description></item>
+///   <item><description><strong>Vendor Payments</strong>: Pay suppliers directly to prevent diversion</description></item>
+/// </list>
+/// <para><strong>Disbursement Methods:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Cash</strong>: Physical cash to borrower</description></item>
+///   <item><description><strong>BankTransfer</strong>: Wire to borrower's bank account</description></item>
+///   <item><description><strong>MobileMoney</strong>: To borrower's mobile wallet</description></item>
+///   <item><description><strong>DirectToVendor</strong>: Payment to supplier/contractor</description></item>
+///   <item><description><strong>Cheque</strong>: Bank cheque issued</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Loan"/> - Parent loan being disbursed</description></item>
+///   <item><description><see cref="ApprovalRequest"/> - Tranche approval workflow</description></item>
+///   <item><description><see cref="TellerSession"/> - Cash disbursement session</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Disbursing a tranche</strong></para>
+/// <code>
+/// POST /api/microfinance/loan-disbursement-tranches/{id}/disburse
+/// {
+///   "disbursementMethod": "DirectToVendor",
+///   "bankName": "Bank of Kigali",
+///   "bankAccountNumber": "4000123456789",
+///   "amount": 500000,
+///   "notes": "Tranche 2: 50% for building materials delivery"
+/// }
+/// </code>
+/// </example>
 public sealed class LoanDisbursementTranche : AuditableEntity, IAggregateRoot
 {
     /// <summary>

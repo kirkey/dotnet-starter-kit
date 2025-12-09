@@ -7,6 +7,33 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// <summary>
 /// Represents insurance coverage for collateral.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+/// <item>Track insurance policies protecting pledged collateral assets</item>
+/// <item>Monitor policy expiration and trigger renewal alerts</item>
+/// <item>File insurance claims when collateral is damaged or lost</item>
+/// <item>Ensure adequate coverage relative to loan outstanding balance</item>
+/// <item>Verify third-party insurance provider credentials and ratings</item>
+/// <item>Calculate premium allocation to borrower's loan costs</item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Collateral insurance protects the MFI's secured loan portfolio against asset loss.
+/// Policies may cover fire, theft, flood, comprehensive damage, or all-risk scenarios.
+/// Insurance requirements are often mandatory for vehicle, property, and equipment loans.
+/// The MFI may require assignment of policy benefits to ensure claim proceeds cover
+/// outstanding loan amounts. Regular coverage reviews ensure policy values match
+/// current collateral valuations.
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+/// <item><see cref="LoanCollateral"/> - The insured collateral asset</item>
+/// <item><see cref="Loan"/> - Associated loan requiring insurance</item>
+/// <item><see cref="CollateralValuation"/> - Current asset value for coverage adequacy</item>
+/// <item><see cref="InsuranceClaim"/> - Claims filed against the policy</item>
+/// </list>
+/// </remarks>
 public sealed class CollateralInsurance : AuditableEntity, IAggregateRoot
 {
     // Constants

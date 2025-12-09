@@ -6,8 +6,60 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
 /// Represents a teller working session with assigned cash drawer.
-/// Tracks teller transactions and supports session reconciliation.
+/// Tracks teller transactions and supports session reconciliation for cash management.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Open and close daily teller working sessions</description></item>
+///   <item><description>Track cash in/out transactions during the session</description></item>
+///   <item><description>Reconcile physical cash with system records at session end</description></item>
+///   <item><description>Record cash shortages and overages for accountability</description></item>
+///   <item><description>Support supervisor approval for session opening/closing</description></item>
+///   <item><description>Provide audit trail for all cash handling activities</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Teller sessions are critical for MFI cash management and internal controls:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Opening Balance</strong>: Cash counted and verified at session start</description></item>
+///   <item><description><strong>Cash Receipts</strong>: Loan repayments, savings deposits, fee collections</description></item>
+///   <item><description><strong>Cash Disbursements</strong>: Loan disbursements, savings withdrawals</description></item>
+///   <item><description><strong>Closing Balance</strong>: Physical count must match calculated balance</description></item>
+///   <item><description><strong>Reconciliation</strong>: Any variance is recorded as shortage/overage</description></item>
+/// </list>
+/// <para><strong>Session Status:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Open</strong>: Teller actively processing transactions</description></item>
+///   <item><description><strong>Paused</strong>: Temporary break (lunch, bathroom)</description></item>
+///   <item><description><strong>Closed</strong>: Session ended, awaiting reconciliation</description></item>
+///   <item><description><strong>Reconciled</strong>: Cash balanced, session complete</description></item>
+///   <item><description><strong>Shortage</strong>: Physical cash less than expected</description></item>
+///   <item><description><strong>Overage</strong>: Physical cash more than expected</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Staff"/> - Teller staff member</description></item>
+///   <item><description><see cref="CashVault"/> - Cash drawer assigned to teller</description></item>
+///   <item><description><see cref="Branch"/> - Branch where session occurs</description></item>
+///   <item><description><see cref="SavingsTransaction"/> - Savings transactions in session</description></item>
+///   <item><description><see cref="LoanRepayment"/> - Loan payments received</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Opening a teller session</strong></para>
+/// <code>
+/// POST /api/microfinance/teller-sessions/open
+/// {
+///   "branchId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "cashVaultId": "8cb96421-7c8e-4fd6-b9e2-1a2b3c4d5e6f",
+///   "tellerId": "a1b2c3d4-5e6f-7890-abcd-ef1234567890",
+///   "openingBalance": 500000,
+///   "supervisorId": "b2c3d4e5-6f78-9012-bcde-f12345678901"
+/// }
+/// </code>
+/// </example>
 public sealed class TellerSession : AuditableEntity, IAggregateRoot
 {
     /// <summary>

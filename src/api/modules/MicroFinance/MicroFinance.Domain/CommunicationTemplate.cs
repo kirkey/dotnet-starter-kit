@@ -5,9 +5,40 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a communication template (SMS, Email, etc.).
-/// Used for standardized messaging to members.
+/// Represents a communication template (SMS, Email, Push, etc.).
+/// Provides standardized, parameterized messaging with support for multi-language content.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Define reusable message templates for common communications</description></item>
+///   <item><description>Support placeholders for dynamic content (member name, amount, date)</description></item>
+///   <item><description>Enable consistent branding and messaging across channels</description></item>
+///   <item><description>Manage templates for different event triggers</description></item>
+///   <item><description>Support regulatory-compliant messaging formats</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Communication templates ensure consistent, professional messaging:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Efficiency</strong>: Pre-defined templates reduce manual effort</description></item>
+///   <item><description><strong>Compliance</strong>: Approved templates meet regulatory requirements</description></item>
+///   <item><description><strong>Personalization</strong>: Placeholders like {{MemberName}}, {{LoanAmount}}</description></item>
+///   <item><description><strong>Triggers</strong>: Auto-send based on events (loan approval, payment due)</description></item>
+/// </list>
+/// <para><strong>Template Categories:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>LoanReminder</strong>: Payment due, overdue notifications</description></item>
+///   <item><description><strong>TransactionAlert</strong>: Deposit, withdrawal confirmations</description></item>
+///   <item><description><strong>AccountUpdate</strong>: Status changes, balance updates</description></item>
+///   <item><description><strong>Marketing</strong>: Product promotions, announcements</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="CommunicationLog"/> - Sent messages using this template</description></item>
+/// </list>
+/// </remarks>
 public sealed class CommunicationTemplate : AuditableEntity, IAggregateRoot
 {
     /// <summary>

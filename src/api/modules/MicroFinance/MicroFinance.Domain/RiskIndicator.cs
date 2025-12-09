@@ -6,8 +6,39 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
 /// Represents a risk indicator or Key Risk Indicator (KRI) for monitoring risk metrics.
-/// Used to track and measure specific risk factors across the organization.
+/// Defines thresholds and measurement parameters for organizational risk management.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Define portfolio risk metrics (PAR30, PAR90, etc.)</description></item>
+///   <item><description>Set threshold triggers for risk alerts</description></item>
+///   <item><description>Configure operational risk indicators</description></item>
+///   <item><description>Track liquidity and solvency metrics</description></item>
+///   <item><description>Support regulatory risk reporting</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Risk indicators are essential for MFI risk management framework:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Credit Risk</strong>: PAR, write-off rate, concentration</description></item>
+///   <item><description><strong>Liquidity Risk</strong>: Cash coverage, funding ratio</description></item>
+///   <item><description><strong>Operational Risk</strong>: Staff turnover, system downtime</description></item>
+///   <item><description><strong>Regulatory</strong>: Capital adequacy, provision coverage</description></item>
+/// </list>
+/// <para><strong>Threshold Levels:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Green</strong>: Normal operating range</description></item>
+///   <item><description><strong>Yellow</strong>: Warning - requires monitoring</description></item>
+///   <item><description><strong>Red</strong>: Critical - requires immediate action</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="RiskAlert"/> - Alerts triggered when thresholds breached</description></item>
+///   <item><description><see cref="RiskCategory"/> - Category grouping for indicators</description></item>
+/// </list>
+/// </remarks>
 public sealed class RiskIndicator : AuditableEntity, IAggregateRoot
 {
     /// <summary>

@@ -7,6 +7,33 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// <summary>
 /// Represents a USSD session for mobile banking.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+/// <item>Feature phone banking for members without smartphones</item>
+/// <item>Balance inquiry and mini-statement access via USSD menu</item>
+/// <item>Mobile money transfers and bill payments</item>
+/// <item>Loan repayment and account management</item>
+/// <item>PIN change and security operations</item>
+/// <item>Rural area banking where internet is unavailable</item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// USSD (Unstructured Supplementary Service Data) enables real-time mobile banking
+/// via text-based menus on any mobile phone. Sessions are initiated by dialing a
+/// service code (e.g., *123#) and navigating menu options. Sessions have timeouts
+/// (typically 3 minutes) and track navigation state, authenticated member, selected
+/// language, and pending operations. USSD is crucial for financial inclusion in
+/// areas with limited smartphone/internet penetration.
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+/// <item><see cref="MobileWallet"/> - Wallet accessed via USSD</item>
+/// <item><see cref="MobileTransaction"/> - Transactions initiated via USSD</item>
+/// <item><see cref="Member"/> - Authenticated member in session</item>
+/// <item><see cref="SavingsAccount"/> - Accounts managed via USSD</item>
+/// </list>
+/// </remarks>
 public sealed class UssdSession : AuditableEntity, IAggregateRoot
 {
     // Constants

@@ -5,8 +5,42 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a payment gateway integration configuration.
+/// Represents a payment gateway integration configuration for digital payments.
+/// Stores API credentials, endpoints, and configuration for third-party payment providers.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Configure mobile money provider integrations (MTN, Airtel)</description></item>
+///   <item><description>Set up card payment gateways (Stripe, Paystack)</description></item>
+///   <item><description>Manage API credentials and webhook configurations</description></item>
+///   <item><description>Track gateway status and availability</description></item>
+///   <item><description>Support multiple gateways for failover</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Payment gateway integration is essential for digital financial services:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Mobile Money</strong>: MTN, Airtel, M-Pesa for disbursement and collection</description></item>
+///   <item><description><strong>Card Payments</strong>: Accept debit/credit card payments</description></item>
+///   <item><description><strong>Bank Transfers</strong>: Direct bank integration for bulk payments</description></item>
+///   <item><description><strong>Security</strong>: Encrypted credential storage, webhook validation</description></item>
+/// </list>
+/// <para><strong>Supported Providers:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>MTN Mobile Money</strong>: East/West Africa mobile money</description></item>
+///   <item><description><strong>Airtel Money</strong>: Airtel mobile money network</description></item>
+///   <item><description><strong>M-Pesa</strong>: Kenya/Tanzania mobile money</description></item>
+///   <item><description><strong>Paystack</strong>: African payment gateway</description></item>
+///   <item><description><strong>Flutterwave</strong>: Pan-African payments</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="MobileTransaction"/> - Transactions through this gateway</description></item>
+///   <item><description><see cref="MobileWallet"/> - Wallets using this provider</description></item>
+/// </list>
+/// </remarks>
 public sealed class PaymentGateway : AuditableEntity, IAggregateRoot
 {
     // Constants

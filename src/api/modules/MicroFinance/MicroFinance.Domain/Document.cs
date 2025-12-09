@@ -5,8 +5,65 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a document stored for a member, loan, or other entity.
+/// Represents a document or file stored for a member, loan, collateral, or other entity.
+/// Supports document management for KYC, loan documentation, and compliance requirements.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Store member KYC documents (ID, proof of address, photos)</description></item>
+///   <item><description>Archive loan agreements and signed contracts</description></item>
+///   <item><description>Maintain collateral documentation (titles, valuations, photos)</description></item>
+///   <item><description>Track document expiry for IDs and certifications</description></item>
+///   <item><description>Support digital signatures and e-signatures</description></item>
+///   <item><description>Enable document retrieval for audits and compliance reviews</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Document management is essential for MFI operations:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>KYC Compliance</strong>: Regulatory requirements for customer identification</description></item>
+///   <item><description><strong>Loan Documentation</strong>: Signed agreements, promissory notes, guarantor letters</description></item>
+///   <item><description><strong>Collateral Records</strong>: Ownership documents, appraisal reports, insurance certificates</description></item>
+///   <item><description><strong>Audit Trail</strong>: Original documents for dispute resolution and legal proceedings</description></item>
+/// </list>
+/// <para><strong>Document Types:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Identification</strong>: National ID, passport, driver's license</description></item>
+///   <item><description><strong>ProofOfAddress</strong>: Utility bills, bank statements, lease agreements</description></item>
+///   <item><description><strong>IncomeProof</strong>: Pay slips, tax returns, business records</description></item>
+///   <item><description><strong>Collateral</strong>: Land titles, vehicle logbooks, ownership certificates</description></item>
+///   <item><description><strong>Contract</strong>: Loan agreements, guarantor forms, terms acceptance</description></item>
+///   <item><description><strong>Photo</strong>: Member photos, collateral photos, site visit images</description></item>
+///   <item><description><strong>Signature</strong>: Captured signature images</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Member"/> - Member documents (when EntityType=Member)</description></item>
+///   <item><description><see cref="Loan"/> - Loan documents (when EntityType=Loan)</description></item>
+///   <item><description><see cref="LoanCollateral"/> - Collateral documents (when EntityType=Collateral)</description></item>
+///   <item><description><see cref="LoanGuarantor"/> - Guarantor documents (when EntityType=Guarantor)</description></item>
+///   <item><description><see cref="MemberGroup"/> - Group documents (when EntityType=Group)</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Uploading a member ID document</strong></para>
+/// <code>
+/// POST /api/microfinance/documents
+/// {
+///   "name": "National ID - Front",
+///   "documentType": "Identification",
+///   "category": "KYC",
+///   "entityType": "Member",
+///   "entityId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "filePath": "/documents/members/3fa85f64/id-front.jpg",
+///   "mimeType": "image/jpeg",
+///   "fileSize": 245760,
+///   "expiryDate": "2029-12-31"
+/// }
+/// </code>
+/// </example>
 public sealed class Document : AuditableEntity, IAggregateRoot
 {
     // Constants

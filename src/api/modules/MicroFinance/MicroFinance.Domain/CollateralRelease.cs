@@ -7,6 +7,33 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// <summary>
 /// Represents a collateral release request when loan is paid off.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+/// <item>Process collateral return upon full loan repayment</item>
+/// <item>Manage approval workflow for collateral release authorization</item>
+/// <item>Track physical or electronic handover of assets/documents</item>
+/// <item>Generate collateral release certificates and acknowledgment letters</item>
+/// <item>Partial release for loans with multiple collateral items</item>
+/// <item>Substitution releases when collateral is swapped mid-loan</item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Collateral release is the final step in a secured loan lifecycle. Upon full payment
+/// (or approved partial release), the MFI must return pledged assets or documents to
+/// the borrower. The process includes verification of loan closure, management approval,
+/// scheduling of release (in-person, courier, or electronic for title documents), and
+/// borrower acknowledgment. Proper documentation prevents disputes and supports audit
+/// compliance.
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+/// <item><see cref="LoanCollateral"/> - The collateral being released</item>
+/// <item><see cref="Loan"/> - The fully repaid loan</item>
+/// <item><see cref="Member"/> - Borrower receiving the collateral</item>
+/// <item><see cref="Document"/> - Release certificates and acknowledgments</item>
+/// </list>
+/// </remarks>
 public sealed class CollateralRelease : AuditableEntity, IAggregateRoot
 {
     // Constants

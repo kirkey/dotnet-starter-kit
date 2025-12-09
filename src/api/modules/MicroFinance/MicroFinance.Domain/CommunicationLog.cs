@@ -5,9 +5,41 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a communication sent to a member.
-/// Tracks delivery status and history.
+/// Represents a communication (SMS, email, push notification) sent to a member.
+/// Tracks delivery status, history, and provides audit trail for all member communications.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Send loan repayment reminders via SMS</description></item>
+///   <item><description>Notify members of loan approval/disbursement</description></item>
+///   <item><description>Send account statements and transaction alerts</description></item>
+///   <item><description>Track delivery status and failures for retry</description></item>
+///   <item><description>Maintain communication history for dispute resolution</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Effective member communication improves repayment rates and member satisfaction:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Payment Reminders</strong>: Reduce delinquency with timely notifications</description></item>
+///   <item><description><strong>Transaction Alerts</strong>: Real-time notifications for security</description></item>
+///   <item><description><strong>Marketing</strong>: Promote new products and services</description></item>
+///   <item><description><strong>Compliance</strong>: Audit trail for regulatory requirements</description></item>
+/// </list>
+/// <para><strong>Communication Channels:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>SMS</strong>: Most common, highest reach in rural areas</description></item>
+///   <item><description><strong>Email</strong>: For detailed communications and statements</description></item>
+///   <item><description><strong>Push</strong>: Mobile app notifications</description></item>
+///   <item><description><strong>WhatsApp</strong>: Popular messaging platform</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Member"/> - Communication recipient</description></item>
+///   <item><description><see cref="CommunicationTemplate"/> - Template used</description></item>
+/// </list>
+/// </remarks>
 public sealed class CommunicationLog : AuditableEntity, IAggregateRoot
 {
     /// <summary>

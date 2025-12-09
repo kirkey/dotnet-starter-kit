@@ -6,8 +6,41 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
 /// Represents a risk alert triggered when risk thresholds are breached.
-/// Used for risk monitoring, escalation, and resolution tracking.
+/// Supports risk monitoring, escalation workflows, and resolution tracking.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Auto-generate alerts when KRI thresholds are breached</description></item>
+///   <item><description>Escalate unresolved alerts to senior management</description></item>
+///   <item><description>Track alert resolution and corrective actions</description></item>
+///   <item><description>Provide dashboard for active risk monitoring</description></item>
+///   <item><description>Support regulatory risk reporting</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Risk alerts enable proactive risk management:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Early Warning</strong>: Detect problems before they escalate</description></item>
+///   <item><description><strong>Accountability</strong>: Assign ownership for resolution</description></item>
+///   <item><description><strong>Escalation</strong>: Auto-escalate unresolved alerts</description></item>
+///   <item><description><strong>Audit Trail</strong>: Document all risk events and responses</description></item>
+/// </list>
+/// <para><strong>Severity Levels:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Low</strong>: Informational, monitor situation</description></item>
+///   <item><description><strong>Medium</strong>: Requires attention within defined SLA</description></item>
+///   <item><description><strong>High</strong>: Urgent, requires prompt action</description></item>
+///   <item><description><strong>Critical</strong>: Emergency, requires immediate response</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="RiskIndicator"/> - KRI that triggered the alert</description></item>
+///   <item><description><see cref="RiskCategory"/> - Risk category for classification</description></item>
+///   <item><description><see cref="Staff"/> - Staff assigned to resolve</description></item>
+/// </list>
+/// </remarks>
 public sealed class RiskAlert : AuditableEntity, IAggregateRoot
 {
     /// <summary>

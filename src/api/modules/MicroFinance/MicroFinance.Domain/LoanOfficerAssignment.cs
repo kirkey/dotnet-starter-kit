@@ -5,9 +5,59 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents the assignment of a loan officer to members or member groups.
-/// Tracks which loans and members are handled by which officer.
+/// Represents the assignment of a loan officer to members, groups, loans, or geographic areas.
+/// Enables portfolio management and performance tracking by officer.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Assign loan officers to manage specific members</description></item>
+///   <item><description>Assign officers to entire groups for group lending</description></item>
+///   <item><description>Track assignment history when officers change</description></item>
+///   <item><description>Support workload balancing across officers</description></item>
+///   <item><description>Enable portfolio quality reporting by officer</description></item>
+///   <item><description>Route loan applications to assigned officers</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Loan officer assignments are critical for microfinance operations:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Relationship Management</strong>: Officers build trust with assigned members</description></item>
+///   <item><description><strong>Accountability</strong>: Clear ownership for portfolio performance</description></item>
+///   <item><description><strong>Collections</strong>: Officers responsible for repayment follow-up</description></item>
+///   <item><description><strong>Field Visits</strong>: Officers visit assigned members/groups regularly</description></item>
+/// </list>
+/// <para><strong>Assignment Types:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Member</strong>: Individual member assignment</description></item>
+///   <item><description><strong>Group</strong>: Entire solidarity group</description></item>
+///   <item><description><strong>Loan</strong>: Specific loan (may differ from member assignment)</description></item>
+///   <item><description><strong>Area</strong>: Geographic coverage area</description></item>
+///   <item><description><strong>Branch</strong>: Entire branch oversight</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Staff"/> - Assigned loan officer</description></item>
+///   <item><description><see cref="Member"/> - Assigned member (when type=Member)</description></item>
+///   <item><description><see cref="MemberGroup"/> - Assigned group (when type=Group)</description></item>
+///   <item><description><see cref="Loan"/> - Assigned loan (when type=Loan)</description></item>
+///   <item><description><see cref="LoanOfficerTarget"/> - Performance targets for officer</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Assigning a loan officer to a group</strong></para>
+/// <code>
+/// POST /api/microfinance/loan-officer-assignments
+/// {
+///   "loanOfficerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "assignmentType": "Group",
+///   "memberGroupId": "a1b2c3d4-5e6f-7890-abcd-ef1234567890",
+///   "effectiveDate": "2024-01-15",
+///   "reason": "New group formation, assigned to senior officer"
+/// }
+/// </code>
+/// </example>
 public sealed class LoanOfficerAssignment : AuditableEntity, IAggregateRoot
 {
     /// <summary>

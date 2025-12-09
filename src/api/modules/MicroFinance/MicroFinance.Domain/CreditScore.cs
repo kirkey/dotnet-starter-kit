@@ -6,8 +6,61 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
 /// Represents a credit score record for a member.
-/// Tracks internal and external credit scoring over time.
+/// Tracks internal and external credit scoring over time for credit risk assessment.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Calculate internal credit scores based on MFI loan history</description></item>
+///   <item><description>Store external credit bureau scores for underwriting</description></item>
+///   <item><description>Track score changes over time for monitoring</description></item>
+///   <item><description>Automate loan approval decisions based on score thresholds</description></item>
+///   <item><description>Support risk-based pricing of loans</description></item>
+///   <item><description>Identify members for collection focus based on declining scores</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Credit scoring enables data-driven lending decisions in microfinance:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Internal Scoring</strong>: Based on member's history with the MFI</description></item>
+///   <item><description><strong>External Scoring</strong>: From credit bureaus where available</description></item>
+///   <item><description><strong>Behavioral Scoring</strong>: Based on payment patterns and account behavior</description></item>
+///   <item><description><strong>Application Scoring</strong>: Initial score for new applicants</description></item>
+/// </list>
+/// <para><strong>Score Types:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Internal</strong>: MFI's own scoring model using internal data</description></item>
+///   <item><description><strong>External</strong>: Third-party credit bureau score</description></item>
+///   <item><description><strong>Behavioral</strong>: Ongoing monitoring score based on behavior</description></item>
+///   <item><description><strong>Application</strong>: Score at time of loan application</description></item>
+///   <item><description><strong>Collection</strong>: Score indicating collection risk/priority</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Member"/> - Member being scored</description></item>
+///   <item><description><see cref="CreditBureauReport"/> - External credit reports</description></item>
+///   <item><description><see cref="LoanApplication"/> - Applications using this score</description></item>
+///   <item><description><see cref="RiskCategory"/> - Risk categorization based on score</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Recording an internal credit score</strong></para>
+/// <code>
+/// POST /api/microfinance/credit-scores
+/// {
+///   "memberId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "scoreType": "Internal",
+///   "scoreModel": "MFI-Risk-Model-v2",
+///   "score": 725,
+///   "grade": "A",
+///   "source": "Automated Daily Scoring",
+///   "scoreDate": "2024-01-15",
+///   "expiryDate": "2024-04-15",
+///   "factors": "{\"paymentHistory\": 98, \"utilizationRate\": 45, \"accountAge\": 24}"
+/// }
+/// </code>
+/// </example>
 public sealed class CreditScore : AuditableEntity, IAggregateRoot
 {
     /// <summary>

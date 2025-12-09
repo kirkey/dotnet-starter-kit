@@ -8,6 +8,56 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents performance targets assigned to a branch for a specific period.
 /// Used to track and measure branch performance against organizational goals.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Set annual, quarterly, and monthly branch performance targets</description></item>
+///   <item><description>Track actual vs. budgeted performance across key metrics</description></item>
+///   <item><description>Cascade organizational targets down to branch level</description></item>
+///   <item><description>Compare branch performance for ranking and resource allocation</description></item>
+///   <item><description>Support strategic planning and branch expansion decisions</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Branch targets drive operational excellence across the MFI network:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Growth</strong>: New members, loans, and savings mobilization</description></item>
+///   <item><description><strong>Quality</strong>: Portfolio at risk, on-time repayment rates</description></item>
+///   <item><description><strong>Efficiency</strong>: Operating costs, revenue targets</description></item>
+///   <item><description><strong>Products</strong>: Insurance sales, share capital growth</description></item>
+/// </list>
+/// <para><strong>Target Types:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>LoanDisbursement</strong>: Total amount to disburse</description></item>
+///   <item><description><strong>LoanCollection</strong>: Amount to collect</description></item>
+///   <item><description><strong>NewMembers</strong>: Membership growth</description></item>
+///   <item><description><strong>SavingsDeposits</strong>: Savings mobilization</description></item>
+///   <item><description><strong>PortfolioAtRisk</strong>: Maximum PAR30 allowed</description></item>
+///   <item><description><strong>Revenue</strong>: Income generation target</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Branch"/> - Branch with the target</description></item>
+///   <item><description><see cref="LoanOfficerTarget"/> - Individual officer targets within branch</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Setting branch quarterly targets</strong></para>
+/// <code>
+/// POST /api/microfinance/branch-targets
+/// {
+///   "branchId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "targetType": "LoanDisbursement",
+///   "period": "Quarterly",
+///   "startDate": "2024-01-01",
+///   "endDate": "2024-03-31",
+///   "targetValue": 150000000,
+///   "metricUnit": "RWF",
+///   "description": "Q1 2024 Kigali Main Branch disbursement target"
+/// }
+/// </code>
+/// </example>
 public sealed class BranchTarget : AuditableEntity, IAggregateRoot
 {
     /// <summary>

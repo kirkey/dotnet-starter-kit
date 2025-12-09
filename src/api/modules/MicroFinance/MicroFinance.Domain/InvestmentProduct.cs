@@ -7,6 +7,32 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// <summary>
 /// Represents a wealth/investment product offered to members.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+/// <item>Define investment products (mutual funds, bonds, T-bills, money market)</item>
+/// <item>Configure minimum investment amounts and lock-in periods</item>
+/// <item>Set risk levels for suitability matching with member profiles</item>
+/// <item>Track historical performance and benchmark comparisons</item>
+/// <item>Manage product activation, discontinuation, and limits</item>
+/// <item>Calculate management fees and expense ratios</item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Investment products extend MFI offerings beyond traditional loans and savings. Products
+/// are categorized by type (Mutual Fund, Unit Trust, Bond, Treasury Bill, Money Market,
+/// Equity, Balanced) and risk level (Low, Medium, High). Each product defines minimum
+/// investment thresholds, lock-in periods, expected returns, and applicable fees. MFIs
+/// must ensure product suitability matches member risk profiles and comply with
+/// investment regulations.
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+/// <item><see cref="InvestmentAccount"/> - Member accounts holding the product</item>
+/// <item><see cref="InvestmentTransaction"/> - Buy/sell transactions for the product</item>
+/// <item><see cref="Member"/> - Eligible investors</item>
+/// </list>
+/// </remarks>
 public sealed class InvestmentProduct : AuditableEntity, IAggregateRoot
 {
     // Constants

@@ -5,8 +5,66 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a type/category of collateral.
+/// Represents a type/category of collateral that can be accepted as loan security.
+/// Defines valuation rules, documentation requirements, and risk parameters for each collateral category.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Define acceptable collateral categories for the MFI</description></item>
+///   <item><description>Set Loan-to-Value (LTV) limits by collateral type for risk management</description></item>
+///   <item><description>Configure depreciation and revaluation schedules for each type</description></item>
+///   <item><description>Specify documentation and registration requirements</description></item>
+///   <item><description>Determine insurance requirements for high-value collateral</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Collateral types define the rules for accepting and valuing different assets as loan security.
+/// Proper collateral management protects the MFI against loan defaults. Key parameters include:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>LTV Ratio</strong>: Maximum loan amount as % of collateral value (e.g., 70% for vehicles)</description></item>
+///   <item><description><strong>Depreciation</strong>: Annual value reduction for depreciating assets</description></item>
+///   <item><description><strong>Revaluation</strong>: Frequency of required re-appraisals</description></item>
+///   <item><description><strong>Insurance</strong>: Whether coverage is mandatory (vehicles, buildings)</description></item>
+///   <item><description><strong>Registration</strong>: Legal registration requirements (land titles, vehicle logbooks)</description></item>
+/// </list>
+/// <para><strong>Collateral Categories:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>RealEstate</strong>: Land, buildings - highest LTV, requires title registration</description></item>
+///   <item><description><strong>Vehicle</strong>: Cars, motorcycles, trucks - requires logbook, depreciates</description></item>
+///   <item><description><strong>Equipment</strong>: Machinery, tools - varies by useful life</description></item>
+///   <item><description><strong>Inventory</strong>: Business stock - lower LTV due to liquidity risk</description></item>
+///   <item><description><strong>Cash</strong>: Savings deposits - highest LTV (100%), most liquid</description></item>
+///   <item><description><strong>Securities</strong>: Shares, bonds - marked to market</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="LoanCollateral"/> - Actual collateral pledged using this type</description></item>
+///   <item><description><see cref="CollateralValuation"/> - Appraisals for this collateral type</description></item>
+///   <item><description><see cref="CollateralInsurance"/> - Insurance policies for collateral</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Creating a vehicle collateral type</strong></para>
+/// <code>
+/// POST /api/microfinance/collateral-types
+/// {
+///   "code": "VEHICLE-001",
+///   "name": "Motor Vehicle",
+///   "category": "Vehicle",
+///   "defaultLtvPercent": 60,
+///   "maxLtvPercent": 70,
+///   "defaultUsefulLifeYears": 10,
+///   "annualDepreciationRate": 15,
+///   "requiresInsurance": true,
+///   "requiresAppraisal": true,
+///   "revaluationFrequencyMonths": 12,
+///   "requiresRegistration": true,
+///   "requiredDocuments": "[\"Logbook\", \"Insurance Certificate\", \"Valuation Report\"]"
+/// }
+/// </code>
+/// </example>
 public sealed class CollateralType : AuditableEntity, IAggregateRoot
 {
     // Constants

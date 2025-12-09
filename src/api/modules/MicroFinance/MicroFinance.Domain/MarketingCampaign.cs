@@ -7,6 +7,32 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// <summary>
 /// Represents a marketing campaign for customer outreach.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+/// <item>Product promotion campaigns for new loan or savings products</item>
+/// <item>Customer retention programs targeting at-risk members</item>
+/// <item>Cross-selling initiatives (e.g., offering insurance to loan customers)</item>
+/// <item>Dormant account reactivation through targeted messaging</item>
+/// <item>Financial literacy education campaigns</item>
+/// <item>Seasonal promotions during harvest or festival periods</item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Marketing campaigns are essential for MFI growth and customer engagement. Campaigns
+/// can target specific customer segments via SMS, email, mobile app notifications, or
+/// branch staff outreach. Campaign analytics track response rates, conversion, and ROI
+/// to optimize future marketing investments. Regulatory compliance requires opt-in/opt-out
+/// management and message content review.
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+/// <item><see cref="CustomerSegment"/> - Target audience definition</item>
+/// <item><see cref="CommunicationTemplate"/> - Message templates for campaigns</item>
+/// <item><see cref="CommunicationLog"/> - Individual message delivery tracking</item>
+/// <item><see cref="Member"/> - Campaign recipients</item>
+/// </list>
+/// </remarks>
 public sealed class MarketingCampaign : AuditableEntity, IAggregateRoot
 {
     // Constants

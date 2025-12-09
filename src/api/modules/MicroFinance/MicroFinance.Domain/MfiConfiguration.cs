@@ -5,8 +5,39 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents MFI configuration settings.
+/// Represents MFI configuration settings stored as key-value pairs.
+/// Provides runtime-configurable system parameters without code deployment.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Store system-wide configuration parameters</description></item>
+///   <item><description>Enable runtime configuration changes without deployment</description></item>
+///   <item><description>Maintain environment-specific settings</description></item>
+///   <item><description>Support feature flags and toggles</description></item>
+///   <item><description>Store integration credentials and endpoints</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Configuration settings control system behavior across modules:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Loan Settings</strong>: Max loan amount, interest caps, grace periods</description></item>
+///   <item><description><strong>Savings Settings</strong>: Minimum balances, withdrawal limits</description></item>
+///   <item><description><strong>Notifications</strong>: SMS gateway config, email settings</description></item>
+///   <item><description><strong>Integrations</strong>: API keys, webhook URLs</description></item>
+///   <item><description><strong>Security</strong>: Password policies, session timeouts</description></item>
+/// </list>
+/// <para><strong>Configuration Categories:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>General</strong>: Organization name, currency, locale</description></item>
+///   <item><description><strong>Loan</strong>: Lending parameters and limits</description></item>
+///   <item><description><strong>Savings</strong>: Savings product defaults</description></item>
+///   <item><description><strong>Accounting</strong>: GL codes, fiscal year settings</description></item>
+///   <item><description><strong>Notification</strong>: Communication settings</description></item>
+///   <item><description><strong>Security</strong>: Authentication and authorization</description></item>
+/// </list>
+/// </remarks>
 public sealed class MfiConfiguration : AuditableEntity, IAggregateRoot
 {
     // Constants

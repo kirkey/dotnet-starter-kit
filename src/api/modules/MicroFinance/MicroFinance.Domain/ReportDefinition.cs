@@ -8,6 +8,32 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a report definition/template for generating MFI reports.
 /// Defines report structure, parameters, and scheduling.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+/// <item>Regulatory compliance reports (Central Bank, PCFC, etc.)</item>
+/// <item>Portfolio at Risk (PAR) and delinquency analysis reports</item>
+/// <item>Financial statements (Balance Sheet, Income Statement, Cash Flow)</item>
+/// <item>Operational efficiency metrics and branch performance dashboards</item>
+/// <item>Loan aging analysis and collection priority reports</item>
+/// <item>Scheduled automated report generation for management</item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Report definitions serve as reusable templates for generating MFI reports. Each
+/// definition includes the query/logic, parameters (date ranges, branches, products),
+/// output format (PDF, Excel, CSV), and optional scheduling for automated generation.
+/// Reports are categorized by function (Financial, Operational, Compliance) and can
+/// be shared across branches or restricted to specific roles.
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+/// <item><see cref="ReportGeneration"/> - Actual report generation instances</item>
+/// <item><see cref="Branch"/> - Branch-level reporting filters</item>
+/// <item><see cref="LoanProduct"/> - Product-specific portfolio reports</item>
+/// <item><see cref="Staff"/> - Report access permissions</item>
+/// </list>
+/// </remarks>
 public sealed class ReportDefinition : AuditableEntity, IAggregateRoot
 {
     /// <summary>

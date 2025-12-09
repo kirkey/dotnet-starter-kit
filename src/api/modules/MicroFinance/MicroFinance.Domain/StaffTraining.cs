@@ -6,8 +6,40 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
 /// Represents training records for staff members.
-/// Tracks training attended, certifications, and skill development.
+/// Tracks training attended, certifications earned, and ongoing professional development.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Record staff training attendance and completion</description></item>
+///   <item><description>Track mandatory compliance training requirements</description></item>
+///   <item><description>Manage certifications and renewal dates</description></item>
+///   <item><description>Identify training gaps for staff development</description></item>
+///   <item><description>Support HR reporting and compliance audits</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Staff training is essential for MFI operational excellence:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Compliance</strong>: AML, KYC, data protection mandatory training</description></item>
+///   <item><description><strong>Product Knowledge</strong>: Training on loan and savings products</description></item>
+///   <item><description><strong>Soft Skills</strong>: Customer service, collections techniques</description></item>
+///   <item><description><strong>Technical</strong>: System usage, mobile banking, digital tools</description></item>
+/// </list>
+/// <para><strong>Training Types:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Onboarding</strong>: New hire orientation and training</description></item>
+///   <item><description><strong>Compliance</strong>: Regulatory required training (annual refresh)</description></item>
+///   <item><description><strong>Product</strong>: New product or feature training</description></item>
+///   <item><description><strong>SoftSkills</strong>: Communication, leadership development</description></item>
+///   <item><description><strong>Technical</strong>: System and technology training</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Staff"/> - Staff member receiving training</description></item>
+/// </list>
+/// </remarks>
 public sealed class StaffTraining : AuditableEntity, IAggregateRoot
 {
     /// <summary>

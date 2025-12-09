@@ -6,7 +6,60 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
 /// Represents an agent banking location for cash-in/cash-out services.
+/// Enables the MFI to extend services through third-party retail agents in remote areas.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Register and manage agent banking locations</description></item>
+///   <item><description>Track agent cash float and transaction volumes</description></item>
+///   <item><description>Calculate and pay agent commissions</description></item>
+///   <item><description>Monitor agent performance and compliance</description></item>
+///   <item><description>Enable members to transact at retail locations (shops, pharmacies)</description></item>
+///   <item><description>Manage agent tier levels based on volume and compliance</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Agent banking (also known as branchless banking) is critical for financial inclusion:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Reach</strong>: Serve remote areas without branch infrastructure</description></item>
+///   <item><description><strong>Cost</strong>: Lower setup and operating costs than branches</description></item>
+///   <item><description><strong>Convenience</strong>: Extended hours, familiar locations for members</description></item>
+///   <item><description><strong>Liquidity</strong>: Agents provide cash-in/cash-out capability</description></item>
+/// </list>
+/// <para><strong>Agent Tiers:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Bronze</strong>: New agents, lower limits, basic services</description></item>
+///   <item><description><strong>Silver</strong>: Established agents, medium limits</description></item>
+///   <item><description><strong>Gold</strong>: High-volume agents, higher limits</description></item>
+///   <item><description><strong>Platinum</strong>: Super agents, may manage other agents</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Branch"/> - Supervising branch</description></item>
+///   <item><description><see cref="CashVault"/> - Agent float account</description></item>
+///   <item><description><see cref="MobileTransaction"/> - Transactions processed by agent</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Registering a new agent</strong></para>
+/// <code>
+/// POST /api/microfinance/agent-banking
+/// {
+///   "agentCode": "AGT-KGL-001",
+///   "businessName": "Mama Josephine Shop",
+///   "contactName": "Josephine Uwimana",
+///   "phoneNumber": "+250788654321",
+///   "email": "josephine@email.com",
+///   "address": "Main Road, Nyamirambo, Kigali",
+///   "branchId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "tier": "Bronze",
+///   "floatLimit": 2000000,
+///   "commissionRate": 0.5
+/// }
+/// </code>
+/// </example>
 public sealed class AgentBanking : AuditableEntity, IAggregateRoot
 {
     // Constants

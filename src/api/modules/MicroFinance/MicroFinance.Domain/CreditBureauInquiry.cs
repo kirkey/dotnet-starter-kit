@@ -6,8 +6,41 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
 /// Represents a credit bureau inquiry made for a member.
-/// Tracks when and why credit checks were performed.
+/// Tracks when and why credit checks were performed for regulatory compliance.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Request credit reports during loan application processing</description></item>
+///   <item><description>Perform periodic reviews of existing borrowers</description></item>
+///   <item><description>Support collections with updated credit information</description></item>
+///   <item><description>Track inquiry history for fair credit reporting compliance</description></item>
+///   <item><description>Maintain audit trail of all credit checks</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Credit bureau inquiries are regulated and must be properly documented:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Consent</strong>: Member consent required before inquiry</description></item>
+///   <item><description><strong>Purpose</strong>: Must document legitimate business purpose</description></item>
+///   <item><description><strong>Frequency</strong>: Too many inquiries can affect credit score</description></item>
+///   <item><description><strong>Cost</strong>: Each inquiry may incur bureau fees</description></item>
+/// </list>
+/// <para><strong>Inquiry Purposes:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>LoanApplication</strong>: New loan evaluation</description></item>
+///   <item><description><strong>LoanRenewal</strong>: Renewal/top-up assessment</description></item>
+///   <item><description><strong>Collections</strong>: Locate/assess delinquent borrower</description></item>
+///   <item><description><strong>RiskAssessment</strong>: Periodic portfolio review</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Member"/> - Member being checked</description></item>
+///   <item><description><see cref="CreditBureauReport"/> - Report returned from inquiry</description></item>
+///   <item><description><see cref="LoanApplication"/> - Application triggering inquiry</description></item>
+/// </list>
+/// </remarks>
 public sealed class CreditBureauInquiry : AuditableEntity, IAggregateRoot
 {
     /// <summary>

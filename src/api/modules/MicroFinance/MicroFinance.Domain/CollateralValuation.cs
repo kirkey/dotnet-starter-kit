@@ -5,8 +5,61 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a valuation/appraisal of collateral.
+/// Represents a valuation/appraisal of collateral pledged against a loan.
+/// Tracks professional assessments of collateral market and forced-sale values.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Record professional appraisals for loan collateral</description></item>
+///   <item><description>Track multiple valuations over the loan lifecycle</description></item>
+///   <item><description>Calculate and update Loan-to-Value ratios</description></item>
+///   <item><description>Identify collateral requiring revaluation</description></item>
+///   <item><description>Support collateral adequacy reporting</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Accurate collateral valuation is critical for credit risk management:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Initial Valuation</strong>: Required before loan approval for secured loans</description></item>
+///   <item><description><strong>Periodic Revaluation</strong>: Required by policy (e.g., annually)</description></item>
+///   <item><description><strong>Impairment Testing</strong>: For NPL provisioning calculations</description></item>
+///   <item><description><strong>Foreclosure</strong>: Current value needed before liquidation</description></item>
+/// </list>
+/// <para><strong>Valuation Methods:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>MarketComparison</strong>: Based on similar recent sales</description></item>
+///   <item><description><strong>CostApproach</strong>: Replacement cost less depreciation</description></item>
+///   <item><description><strong>IncomeApproach</strong>: Based on income-generating potential</description></item>
+///   <item><description><strong>ForcedSale</strong>: Quick liquidation value (typically 50-70% of market)</description></item>
+///   <item><description><strong>BookValue</strong>: Depreciated book value for equipment</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="LoanCollateral"/> - Collateral being valued</description></item>
+///   <item><description><see cref="CollateralType"/> - Type rules for valuation</description></item>
+///   <item><description><see cref="Document"/> - Supporting appraisal documents</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Recording a property valuation</strong></para>
+/// <code>
+/// POST /api/microfinance/collateral-valuations
+/// {
+///   "collateralId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "valuationMethod": "MarketComparison",
+///   "valuationDate": "2024-01-15",
+///   "expiryDate": "2025-01-14",
+///   "appraiserName": "Jean Habimana",
+///   "appraiserCompany": "Rwanda Valuers Ltd",
+///   "appraiserLicense": "RVB-2024-1234",
+///   "marketValue": 25000000,
+///   "forcedSaleValue": 17500000,
+///   "insurableValue": 20000000
+/// }
+/// </code>
+/// </example>
 public sealed class CollateralValuation : AuditableEntity, IAggregateRoot
 {
     // Constants

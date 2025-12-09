@@ -6,8 +6,62 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
 /// Represents a loan restructuring or modification agreement.
-/// Used when a borrower faces difficulty and needs loan terms adjusted.
+/// Used when a borrower faces financial difficulty and needs loan terms adjusted to prevent default.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Extend loan term to reduce monthly payment burden</description></item>
+///   <item><description>Grant payment holidays during temporary hardship</description></item>
+///   <item><description>Reduce interest rate for struggling borrowers</description></item>
+///   <item><description>Consolidate multiple loans into single restructured loan</description></item>
+///   <item><description>Document restructure approval and conditions</description></item>
+///   <item><description>Track original vs. modified loan terms for reporting</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Loan restructuring is a portfolio risk management tool that helps avoid defaults:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Early Intervention</strong>: Restructure before loan becomes non-performing</description></item>
+///   <item><description><strong>Recovery vs. Write-Off</strong>: Restructuring may recover more than foreclosure</description></item>
+///   <item><description><strong>Member Relationship</strong>: Demonstrates MFI flexibility and support</description></item>
+///   <item><description><strong>Regulatory Compliance</strong>: Restructured loans have specific reporting requirements</description></item>
+/// </list>
+/// <para><strong>Restructure Types:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>TermExtension</strong>: Extend repayment period (most common)</description></item>
+///   <item><description><strong>RateReduction</strong>: Lower interest rate</description></item>
+///   <item><description><strong>PrincipalReduction</strong>: Partial debt forgiveness (rare, requires approval)</description></item>
+///   <item><description><strong>PaymentHoliday</strong>: Temporary suspension of payments</description></item>
+///   <item><description><strong>Consolidation</strong>: Combine multiple loans into one</description></item>
+///   <item><description><strong>Refinance</strong>: Replace with new loan at better terms</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Loan"/> - Original loan being restructured</description></item>
+///   <item><description><see cref="LoanSchedule"/> - New payment schedule after restructure</description></item>
+///   <item><description><see cref="ApprovalRequest"/> - Approval workflow for restructure</description></item>
+///   <item><description><see cref="Staff"/> - Officer who processed restructure</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Creating a term extension restructure</strong></para>
+/// <code>
+/// POST /api/microfinance/loan-restructures
+/// {
+///   "loanId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "restructureType": "TermExtension",
+///   "reason": "Business slowdown due to market conditions",
+///   "originalTermMonths": 12,
+///   "newTermMonths": 18,
+///   "originalInterestRate": 24.0,
+///   "newInterestRate": 24.0,
+///   "effectiveDate": "2024-02-01",
+///   "notes": "Member has good history, experiencing temporary difficulty"
+/// }
+/// </code>
+/// </example>
 public sealed class LoanRestructure : AuditableEntity, IAggregateRoot
 {
     /// <summary>

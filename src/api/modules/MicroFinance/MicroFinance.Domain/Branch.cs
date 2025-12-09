@@ -5,9 +5,79 @@ using FSH.Starter.WebApi.MicroFinance.Domain.Events;
 namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
-/// Represents a branch or office location of the MFI.
+/// Represents a branch or office location of the MFI (Microfinance Institution).
 /// Branches serve as operational units for member services, loan disbursement, and collections.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Define the MFI's physical presence and service coverage areas</description></item>
+///   <item><description>Organize members, loans, and accounts by geographic location</description></item>
+///   <item><description>Track branch-level performance metrics and targets</description></item>
+///   <item><description>Manage cash vault limits and daily operations</description></item>
+///   <item><description>Establish hierarchical reporting structure (Head Office → Regional → Branch → Sub-Branch)</description></item>
+///   <item><description>Enable geographic-based access controls and reporting</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Branches form the backbone of MFI operations, providing the physical infrastructure where
+/// field officers operate and members interact with the institution. Key considerations:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Hierarchy</strong>: Head Office → Regional branches → Local branches → Sub-branches/Service Centers</description></item>
+///   <item><description><strong>Cash Management</strong>: Each branch has vault limits based on security and transaction volume</description></item>
+///   <item><description><strong>Geographic Coverage</strong>: Branches define service areas for member acquisition</description></item>
+///   <item><description><strong>Performance Tracking</strong>: PAR (Portfolio at Risk), disbursements, collections tracked per branch</description></item>
+///   <item><description><strong>Staff Assignment</strong>: Loan officers and tellers are assigned to specific branches</description></item>
+/// </list>
+/// <para><strong>Branch Types:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>HeadOffice</strong>: Central administration, policy-making, treasury</description></item>
+///   <item><description><strong>Regional</strong>: Supervises multiple branches in a region</description></item>
+///   <item><description><strong>Branch</strong>: Full-service location with all products</description></item>
+///   <item><description><strong>SubBranch</strong>: Smaller outlet with limited services</description></item>
+///   <item><description><strong>ServiceCenter</strong>: Collection/disbursement point only</description></item>
+///   <item><description><strong>MobileUnit</strong>: Van-based services for remote areas</description></item>
+///   <item><description><strong>Agency</strong>: Third-party agent locations</description></item>
+///   <item><description><strong>Kiosk</strong>: Self-service points with basic transactions</description></item>
+/// </list>
+/// <para><strong>Status Progression:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>UnderConstruction</strong> → <strong>Active</strong>: Branch opens for business</description></item>
+///   <item><description><strong>Active</strong> → <strong>TemporarilyClosed</strong>: Maintenance, holidays, or temporary suspension</description></item>
+///   <item><description><strong>Active</strong> → <strong>PermanentlyClosed</strong>: Branch decommissioned, accounts transferred</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Staff"/> - Staff members assigned to this branch</description></item>
+///   <item><description><see cref="Member"/> - Members registered under this branch</description></item>
+///   <item><description><see cref="CashVault"/> - Cash management for the branch</description></item>
+///   <item><description><see cref="TellerSession"/> - Daily teller operations at the branch</description></item>
+///   <item><description><see cref="BranchTarget"/> - Performance targets for the branch</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Creating a new branch</strong></para>
+/// <code>
+/// POST /api/microfinance/branches
+/// {
+///   "code": "BR-KGL-001",
+///   "name": "Kigali Main Branch",
+///   "branchType": "Branch",
+///   "address": "123 Main Street",
+///   "city": "Kigali",
+///   "state": "Kigali Province",
+///   "country": "Rwanda",
+///   "phone": "+250788123456",
+///   "email": "kigali.main@mfi.org",
+///   "managerName": "Jean Mutabazi",
+///   "managerEmail": "j.mutabazi@mfi.org",
+///   "openingDate": "2024-01-15",
+///   "cashHoldingLimit": 50000000,
+///   "timezone": "Africa/Kigali"
+/// }
+/// </code>
+/// </example>
 public sealed class Branch : AuditableEntity, IAggregateRoot
 {
     /// <summary>

@@ -8,6 +8,31 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents an instance of a generated report.
 /// Tracks report generation history and output files.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+/// <item>Track execution history of automated scheduled reports</item>
+/// <item>Store generated report files (PDF, Excel, CSV) with download links</item>
+/// <item>Audit trail for regulatory report submissions</item>
+/// <item>Monitor report generation performance and failures</item>
+/// <item>Queue management for large batch reports</item>
+/// <item>User-triggered ad-hoc report generation tracking</item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Each ReportGeneration record represents a single execution of a ReportDefinition.
+/// It captures the trigger type (Manual, Scheduled, API), processing status, parameters
+/// used, generation time, output file location, and any errors encountered. This enables
+/// report re-generation, debugging, and compliance audit trails. Large reports may be
+/// queued for background processing to avoid system overload.
+/// </para>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+/// <item><see cref="ReportDefinition"/> - The template used for generation</item>
+/// <item><see cref="Staff"/> - User who triggered manual generation</item>
+/// <item><see cref="Document"/> - Stored report output files</item>
+/// </list>
+/// </remarks>
 public sealed class ReportGeneration : AuditableEntity, IAggregateRoot
 {
     /// <summary>

@@ -8,6 +8,55 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a payment transaction against a fee charge.
 /// Tracks how fees are settled through various payment sources.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Record cash payments toward outstanding fees</description></item>
+///   <item><description>Apply fee deductions from loan repayments</description></item>
+///   <item><description>Track mobile money fee payments</description></item>
+///   <item><description>Handle partial fee payments with balance tracking</description></item>
+///   <item><description>Reverse erroneous fee payments</description></item>
+///   <item><description>Audit trail for fee payment receipts</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Fee payments reduce outstanding fee balances and contribute to MFI non-interest income:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Separate from Loan Payment</strong>: Fees tracked distinctly from principal/interest</description></item>
+///   <item><description><strong>Multiple Sources</strong>: Can come from cash, savings, or included in loan payments</description></item>
+///   <item><description><strong>Allocation Order</strong>: Fee payment order may follow regulatory guidelines</description></item>
+///   <item><description><strong>Receipt Generation</strong>: Each payment generates a unique reference/receipt</description></item>
+/// </list>
+/// <para><strong>Payment Sources:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Cash</strong>: Direct cash payment at teller</description></item>
+///   <item><description><strong>LoanRepayment</strong>: Fee included in loan payment allocation</description></item>
+///   <item><description><strong>SavingsDeduction</strong>: Deducted from member's savings</description></item>
+///   <item><description><strong>MobileMoney</strong>: Paid via mobile money</description></item>
+///   <item><description><strong>BankTransfer</strong>: Wire/EFT payment</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="FeeCharge"/> - Fee being paid</description></item>
+///   <item><description><see cref="LoanRepayment"/> - If fee was paid as part of loan payment</description></item>
+///   <item><description><see cref="SavingsTransaction"/> - If deducted from savings</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Recording a fee payment</strong></para>
+/// <code>
+/// POST /api/microfinance/fee-payments
+/// {
+///   "feeChargeId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "amount": 5000,
+///   "paymentMethod": "Cash",
+///   "paymentSource": "Cash",
+///   "paymentDate": "2024-01-15",
+///   "notes": "Late fee payment for loan L-2024-001"
+/// }
+/// </code>
+/// </example>
 public class FeePayment : AuditableEntity, IAggregateRoot
 {
     // Domain Constants - Max Lengths

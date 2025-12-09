@@ -6,8 +6,61 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 
 /// <summary>
 /// Represents an insurance claim filed against a policy.
-/// Tracks the claim process from filing to settlement.
+/// Tracks the claim process from filing through investigation to settlement or rejection.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>File claims for insured events (death, disability, crop loss)</description></item>
+///   <item><description>Track claim investigation and documentation</description></item>
+///   <item><description>Process claim approvals and settlements</description></item>
+///   <item><description>Record claim payments and payment references</description></item>
+///   <item><description>Handle claim rejections with documented reasons</description></item>
+///   <item><description>Apply claim proceeds to outstanding loan balances</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Insurance claims are the fulfillment of the insurance contract:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Documentation</strong>: Death certificate, medical reports, police reports</description></item>
+///   <item><description><strong>Verification</strong>: Confirm policy was active, event occurred, not excluded</description></item>
+///   <item><description><strong>Settlement</strong>: Pay beneficiary or apply to loan balance</description></item>
+///   <item><description><strong>Third-Party Claims</strong>: May require submission to external insurer</description></item>
+/// </list>
+/// <para><strong>Claim Types:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Death</strong>: Policy holder passed away</description></item>
+///   <item><description><strong>Disability</strong>: Permanent or temporary disability</description></item>
+///   <item><description><strong>Hospitalization</strong>: Medical expenses claim</description></item>
+///   <item><description><strong>CropLoss</strong>: Agricultural insurance claim</description></item>
+///   <item><description><strong>LivestockLoss</strong>: Animal mortality claim</description></item>
+///   <item><description><strong>PropertyDamage</strong>: Asset/property claim</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="InsurancePolicy"/> - Policy being claimed against</description></item>
+///   <item><description><see cref="Member"/> - Claimant/beneficiary</description></item>
+///   <item><description><see cref="Loan"/> - Loan to receive proceeds (credit life)</description></item>
+///   <item><description><see cref="Document"/> - Supporting documentation</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Filing an insurance claim</strong></para>
+/// <code>
+/// POST /api/microfinance/insurance-claims
+/// {
+///   "insurancePolicyId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "claimType": "Death",
+///   "claimAmount": 500000,
+///   "incidentDate": "2024-01-10",
+///   "description": "Policy holder passed away due to illness. Death certificate attached.",
+///   "claimantName": "Marie Mukiza",
+///   "claimantRelation": "Spouse",
+///   "claimantContact": "+250788111222"
+/// }
+/// </code>
+/// </example>
 public sealed class InsuranceClaim : AuditableEntity, IAggregateRoot
 {
     /// <summary>

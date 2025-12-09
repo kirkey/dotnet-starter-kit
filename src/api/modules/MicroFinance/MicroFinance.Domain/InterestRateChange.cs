@@ -8,6 +8,55 @@ namespace FSH.Starter.WebApi.MicroFinance.Domain;
 /// Represents a change to a loan's interest rate after disbursement.
 /// Tracks rate modifications with approval workflow and effective dates.
 /// </summary>
+/// <remarks>
+/// <para><strong>Use Cases:</strong></para>
+/// <list type="bullet">
+///   <item><description>Apply promotional rate reductions for loyal customers</description></item>
+///   <item><description>Increase rates as penalty for chronic late payment</description></item>
+///   <item><description>Adjust rates for regulatory or market changes</description></item>
+///   <item><description>Reduce rates as part of loan restructuring</description></item>
+///   <item><description>Maintain audit trail of all rate modifications</description></item>
+/// </list>
+/// <para><strong>Business Context:</strong></para>
+/// <para>
+/// Interest rate changes must be carefully controlled and documented:
+/// </para>
+/// <list type="bullet">
+///   <item><description><strong>Regulatory</strong>: Must comply with usury laws and rate caps</description></item>
+///   <item><description><strong>Contractual</strong>: Changes may require borrower consent</description></item>
+///   <item><description><strong>Recalculation</strong>: Triggers repayment schedule regeneration</description></item>
+///   <item><description><strong>Approval</strong>: Typically requires management approval</description></item>
+/// </list>
+/// <para><strong>Change Types:</strong></para>
+/// <list type="bullet">
+///   <item><description><strong>Promotion</strong>: Rate reduction as reward/incentive</description></item>
+///   <item><description><strong>Penalty</strong>: Rate increase for default/late payment</description></item>
+///   <item><description><strong>MarketAdjustment</strong>: Response to base rate changes</description></item>
+///   <item><description><strong>Restructure</strong>: Rate change as part of loan restructuring</description></item>
+///   <item><description><strong>RegulatoryChange</strong>: Compliance with new regulations</description></item>
+///   <item><description><strong>Goodwill</strong>: Exception approved by management</description></item>
+/// </list>
+/// <para><strong>Related Entities:</strong></para>
+/// <list type="bullet">
+///   <item><description><see cref="Loan"/> - Loan being modified</description></item>
+///   <item><description><see cref="LoanSchedule"/> - Regenerated after rate change</description></item>
+///   <item><description><see cref="ApprovalRequest"/> - Rate change approval workflow</description></item>
+/// </list>
+/// </remarks>
+/// <example>
+/// <para><strong>Example: Requesting a promotional rate reduction</strong></para>
+/// <code>
+/// POST /api/microfinance/interest-rate-changes
+/// {
+///   "loanId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+///   "changeType": "Promotion",
+///   "previousRate": 24.0,
+///   "newRate": 20.0,
+///   "effectiveDate": "2024-02-01",
+///   "changeReason": "Loyalty discount for perfect 2-year payment history"
+/// }
+/// </code>
+/// </example>
 public class InterestRateChange : AuditableEntity, IAggregateRoot
 {
     // Domain Constants - Max Lengths
