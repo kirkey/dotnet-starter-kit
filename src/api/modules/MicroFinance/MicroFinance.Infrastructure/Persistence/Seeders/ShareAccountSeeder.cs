@@ -35,20 +35,28 @@ internal static class ShareAccountSeeder
             var product = products[i % products.Count];
             var openDate = DateOnly.FromDateTime(DateTime.UtcNow.AddMonths(-random.Next(1, 18)));
             
+            // Create account in Pending status
             var account = ShareAccount.Create(
                 accountNumber: accNum,
                 memberId: members[i].Id,
                 shareProductId: product.Id,
                 openedDate: openDate);
 
+            // Add to context first
+            await context.ShareAccounts.AddAsync(account, cancellationToken).ConfigureAwait(false);
+            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            
+            // Now approve and activate the account (workflow: Pending -> Approved -> Active)
+            account.Approve("Auto-approved during seeding");
+            account.Activate();
+            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
             // Purchase varying amounts of shares (5-100)
             int shareCount = 5 + (random.Next(1, 20) * 5);
             account.PurchaseShares(shareCount, product.CurrentPrice);
-
-            await context.ShareAccounts.AddAsync(account, cancellationToken).ConfigureAwait(false);
+            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         logger.LogInformation("[{Tenant}] seeded {Count} share accounts", tenant, targetCount);
     }
 }
