@@ -50,6 +50,11 @@ public sealed class InvestmentAccount : AuditableEntity, IAggregateRoot
     public DateOnly? TargetDate { get; private set; }
     public decimal? TargetAmount { get; private set; }
 
+    /// <summary>
+    /// Gets the collection of transactions for this investment account.
+    /// </summary>
+    public ICollection<InvestmentTransaction> Transactions { get; private set; } = new List<InvestmentTransaction>();
+
     private InvestmentAccount() { }
 
     public static InvestmentAccount Create(

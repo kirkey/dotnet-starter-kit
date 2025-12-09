@@ -115,6 +115,14 @@ public class LoanCollateral : AuditableEntity, IAggregateRoot
     /// <summary>Gets the current status.</summary>
     public string Status { get; private set; } = default!;
 
+    /// <summary>
+    /// Gets the collection of valuation records for this collateral.
+    /// </summary>
+    /// <remarks>
+    /// Collateral may be revalued periodically. Each valuation is recorded for audit trail.
+    /// </remarks>
+    public virtual ICollection<CollateralValuation> Valuations { get; private set; } = new List<CollateralValuation>();
+
     private LoanCollateral() { }
 
     private LoanCollateral(

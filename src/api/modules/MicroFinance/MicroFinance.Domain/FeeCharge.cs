@@ -120,6 +120,16 @@ public class FeeCharge : AuditableEntity, IAggregateRoot
     /// <summary>Gets the payment completion date.</summary>
     public DateOnly? PaidDate { get; private set; }
 
+    /// <summary>
+    /// Gets the collection of payments applied to this fee charge.
+    /// </summary>
+    public virtual ICollection<FeePayment> Payments { get; private set; } = new List<FeePayment>();
+
+    /// <summary>
+    /// Gets the collection of waiver requests for this fee charge.
+    /// </summary>
+    public virtual ICollection<FeeWaiver> Waivers { get; private set; } = new List<FeeWaiver>();
+
     private FeeCharge() { }
 
     private FeeCharge(

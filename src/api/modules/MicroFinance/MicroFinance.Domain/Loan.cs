@@ -254,6 +254,22 @@ public class Loan : AuditableEntity, IAggregateRoot
     /// </summary>
     public virtual ICollection<LoanCollateral> LoanCollaterals { get; private set; } = new List<LoanCollateral>();
 
+    /// <summary>
+    /// Gets the collection of disbursement tranches for this loan.
+    /// </summary>
+    /// <remarks>
+    /// Loans may be disbursed in multiple tranches. Each tranche has its own status and conditions.
+    /// </remarks>
+    public virtual ICollection<LoanDisbursementTranche> DisbursementTranches { get; private set; } = new List<LoanDisbursementTranche>();
+
+    /// <summary>
+    /// Gets the collection of interest rate changes for this loan.
+    /// </summary>
+    /// <remarks>
+    /// Tracks historical and pending changes to the loan's interest rate.
+    /// </remarks>
+    public virtual ICollection<InterestRateChange> InterestRateChanges { get; private set; } = new List<InterestRateChange>();
+
     private Loan() { }
 
     private Loan(
