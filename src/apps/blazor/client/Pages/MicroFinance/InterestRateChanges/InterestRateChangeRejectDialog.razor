@@ -57,7 +57,10 @@
         {
             var command = new RejectInterestRateChangeCommand
             {
-                RejectionReason = _reason
+                Id = RateChangeId,
+                RejectedByUserId = Guid.NewGuid(), // TODO: Get from current user
+                RejectorName = "Current User", // TODO: Get from current user
+                Reason = _reason!
             };
             await Client.RejectInterestRateChangeAsync("1", RateChangeId, command).ConfigureAwait(false);
             Snackbar.Add("Interest rate change rejected.", Severity.Success);

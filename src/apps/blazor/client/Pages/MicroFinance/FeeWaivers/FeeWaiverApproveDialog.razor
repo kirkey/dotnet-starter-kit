@@ -50,7 +50,9 @@
         {
             var command = new ApproveFeeWaiverCommand
             {
-                Notes = _notes
+                Id = WaiverId,
+                ApprovedByUserId = Guid.NewGuid(), // TODO: Get from current user
+                ApproverName = "Current User" // TODO: Get from current user
             };
             await Client.ApproveFeeWaiverAsync("1", WaiverId, command).ConfigureAwait(false);
             Snackbar.Add("Fee waiver approved successfully.", Severity.Success);

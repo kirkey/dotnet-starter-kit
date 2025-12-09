@@ -50,7 +50,7 @@
         {
             var command = new CancelFeeWaiverCommand
             {
-                Notes = _notes
+                Id = WaiverId
             };
             await Client.CancelFeeWaiverAsync("1", WaiverId, command).ConfigureAwait(false);
             Snackbar.Add("Fee waiver cancelled.", Severity.Success);

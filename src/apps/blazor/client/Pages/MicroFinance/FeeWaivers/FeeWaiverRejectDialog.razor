@@ -57,7 +57,10 @@
         {
             var command = new RejectFeeWaiverCommand
             {
-                RejectionReason = _reason
+                Id = WaiverId,
+                RejectedByUserId = Guid.NewGuid(), // TODO: Get from current user
+                RejectorName = "Current User", // TODO: Get from current user
+                Reason = _reason!
             };
             await Client.RejectFeeWaiverAsync("1", WaiverId, command).ConfigureAwait(false);
             Snackbar.Add("Fee waiver rejected.", Severity.Success);

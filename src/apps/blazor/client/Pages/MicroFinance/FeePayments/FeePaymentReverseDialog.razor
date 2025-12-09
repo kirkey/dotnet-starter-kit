@@ -57,7 +57,8 @@
         {
             var command = new ReverseFeePaymentCommand
             {
-                ReversalReason = _reason
+                Id = PaymentId,
+                Reason = _reason!
             };
             await Client.ReverseFeePaymentAsync("1", PaymentId, command).ConfigureAwait(false);
             Snackbar.Add("Payment reversed successfully.", Severity.Success);

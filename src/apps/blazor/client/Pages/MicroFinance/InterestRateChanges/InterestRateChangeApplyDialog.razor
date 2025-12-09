@@ -53,7 +53,7 @@
         {
             var command = new ApplyInterestRateChangeCommand
             {
-                Notes = _notes
+                Id = RateChangeId
             };
             await Client.ApplyInterestRateChangeAsync("1", RateChangeId, command).ConfigureAwait(false);
             Snackbar.Add("Interest rate change applied to loan successfully.", Severity.Success);

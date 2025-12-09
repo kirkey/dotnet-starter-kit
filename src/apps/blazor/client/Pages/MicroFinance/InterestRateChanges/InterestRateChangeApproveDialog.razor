@@ -50,7 +50,9 @@
         {
             var command = new ApproveInterestRateChangeCommand
             {
-                Notes = _notes
+                Id = RateChangeId,
+                ApprovedByUserId = Guid.NewGuid(), // TODO: Get from current user
+                ApproverName = "Current User" // TODO: Get from current user
             };
             await Client.ApproveInterestRateChangeAsync("1", RateChangeId, command).ConfigureAwait(false);
             Snackbar.Add("Interest rate change approved successfully.", Severity.Success);

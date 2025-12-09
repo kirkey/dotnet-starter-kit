@@ -50,7 +50,7 @@
         {
             var command = new CancelInterestRateChangeCommand
             {
-                Notes = _notes
+                Id = RateChangeId
             };
             await Client.CancelInterestRateChangeAsync("1", RateChangeId, command).ConfigureAwait(false);
             Snackbar.Add("Interest rate change cancelled.", Severity.Success);
