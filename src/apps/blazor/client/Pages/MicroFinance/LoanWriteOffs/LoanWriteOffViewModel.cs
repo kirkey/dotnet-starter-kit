@@ -15,4 +15,5 @@ public class LoanWriteOffViewModel
     public decimal FeesWriteOff { get; set; }
     public int DaysPastDue { get; set; }
     public int CollectionAttempts { get; set; }
+    public DateTime? WriteOffDate { get; set; }
 }

@@ -8,9 +8,10 @@ public partial class FeeWaivers
 {
     static FeeWaivers()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for FeeWaiverSummaryResponse -> FeeWaiverViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for FeeWaiverSummaryResponse -> FeeWaiverViewModel mapping
         TypeAdapterConfig<FeeWaiverSummaryResponse, FeeWaiverViewModel>.NewConfig()
-            .Map(dest => dest.RequestDate, src => src.RequestDate.HasValue ? src.RequestDate.Value.DateTime : (DateTime?)null);
+            .Map(dest => dest.RequestDate, src => src.RequestDate.DateTime)
+            .Map(dest => dest.ApprovalDate, src => src.ApprovalDate.HasValue ? src.ApprovalDate.Value.DateTime : (DateTime?)null);
     }
 
     /// <summary>

@@ -8,9 +8,9 @@ public partial class LoanSchedules
 {
     static LoanSchedules()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for LoanScheduleResponse -> LoanScheduleViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for LoanScheduleResponse -> LoanScheduleViewModel mapping
         TypeAdapterConfig<LoanScheduleResponse, LoanScheduleViewModel>.NewConfig()
-            .Map(dest => dest.DueDate, src => src.DueDate.HasValue ? src.DueDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.DueDate, src => src.DueDate.DateTime)
             .Map(dest => dest.PaidDate, src => src.PaidDate.HasValue ? src.PaidDate.Value.DateTime : (DateTime?)null);
     }
 

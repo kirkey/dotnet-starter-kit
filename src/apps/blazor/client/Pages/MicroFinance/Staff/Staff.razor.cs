@@ -8,9 +8,9 @@ public partial class Staff
 {
     static Staff()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for StaffResponse -> StaffViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for StaffResponse -> StaffViewModel mapping
         TypeAdapterConfig<StaffResponse, StaffViewModel>.NewConfig()
-            .Map(dest => dest.DateJoined, src => src.DateJoined.HasValue ? src.DateJoined.Value.DateTime : (DateTime?)null);
+            .Map(dest => dest.JoiningDate, src => src.JoiningDate.DateTime);
     }
 
     /// <summary>

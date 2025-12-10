@@ -54,6 +54,11 @@ public class StaffViewModel
     public DateTime? DateJoined { get; set; }
 
     /// <summary>
+    /// Date the staff member joined the organization (API property name).
+    /// </summary>
+    public DateTime? JoiningDate { get; set; }
+
+    /// <summary>
     /// Current status of the staff member.
     /// Values: "Active", "OnLeave", "Suspended", "Terminated".
     /// </summary>

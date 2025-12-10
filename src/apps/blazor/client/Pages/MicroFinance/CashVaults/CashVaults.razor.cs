@@ -8,9 +8,7 @@ public partial class CashVaults
 {
     static CashVaults()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for CashVaultResponse -> CashVaultViewModel mapping
-        TypeAdapterConfig<CashVaultResponse, CashVaultViewModel>.NewConfig()
-            .Map(dest => dest.LastReconciliationDate, src => src.LastReconciliationDate.HasValue ? src.LastReconciliationDate.Value.DateTime : (DateTime?)null);
+        // No TypeAdapterConfig needed - CashVaultResponse.LastReconciliationDate is already DateTime?
     }
 
     /// <summary>

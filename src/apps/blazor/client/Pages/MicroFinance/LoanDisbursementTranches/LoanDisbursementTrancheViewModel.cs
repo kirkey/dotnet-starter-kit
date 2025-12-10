@@ -24,6 +24,8 @@ public class LoanDisbursementTrancheViewModel
 
     public DateTime? DisbursementDate { get; set; }
 
+    public DateTime? DisbursedDate { get; set; }
+
     public string? DisbursementMethod { get; set; }
 
     public string? AccountNumber { get; set; }

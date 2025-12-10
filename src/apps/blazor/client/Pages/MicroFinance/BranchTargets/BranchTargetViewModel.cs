@@ -12,6 +12,8 @@ public class BranchTargetViewModel
     public string? Period { get; set; }
     public DateTime? PeriodStartDate { get; set; }
     public DateTime? PeriodEndDate { get; set; }
+    public DateTime? PeriodStart { get; set; }
+    public DateTime? PeriodEnd { get; set; }
     public decimal TargetValue { get; set; }
     public string? MetricUnit { get; set; }
     public decimal? MinimumThreshold { get; set; }

@@ -50,4 +50,9 @@ public class FeeWaiverViewModel
     /// Additional notes.
     /// </summary>
     public string? Notes { get; set; }
+
+    /// <summary>
+    /// Date when the waiver was approved.
+    /// </summary>
+    public DateTime? ApprovalDate { get; set; }
 }

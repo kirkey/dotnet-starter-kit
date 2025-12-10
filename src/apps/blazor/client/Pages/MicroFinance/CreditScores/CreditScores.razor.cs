@@ -4,9 +4,7 @@ public partial class CreditScores
 {
     static CreditScores()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for CreditScoreSummaryResponse -> CreditScoreViewModel mapping
-        TypeAdapterConfig<CreditScoreSummaryResponse, CreditScoreViewModel>.NewConfig()
-            .Map(dest => dest.ScoreDate, src => src.ScoreDate.HasValue ? src.ScoreDate.Value.DateTime : (DateTime?)null);
+        // No TypeAdapterConfig needed - CreditScoreSummaryResponse uses DateTime which matches CreditScoreViewModel
     }
 
     protected EntityServerTableContext<CreditScoreSummaryResponse, DefaultIdType, CreditScoreViewModel> Context { get; set; } = null!;

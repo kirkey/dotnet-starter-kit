@@ -4,10 +4,7 @@ public partial class CreditBureauReports
 {
     static CreditBureauReports()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for CreditBureauReportSummaryResponse -> CreditBureauReportViewModel mapping
-        TypeAdapterConfig<CreditBureauReportSummaryResponse, CreditBureauReportViewModel>.NewConfig()
-            .Map(dest => dest.RequestDate, src => src.RequestDate.HasValue ? src.RequestDate.Value.DateTime : (DateTime?)null)
-            .Map(dest => dest.ReportDate, src => src.ReportDate.HasValue ? src.ReportDate.Value.DateTime : (DateTime?)null);
+        // No TypeAdapterConfig needed - CreditBureauReportSummaryResponse uses DateTime which matches CreditBureauReportViewModel
     }
 
     protected EntityServerTableContext<CreditBureauReportSummaryResponse, DefaultIdType, CreditBureauReportViewModel> Context { get; set; } = null!;

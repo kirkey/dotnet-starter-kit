@@ -8,10 +8,10 @@ public partial class Members
 {
     static Members()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for MemberResponse -> MemberViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for MemberResponse -> MemberViewModel mapping
         TypeAdapterConfig<MemberResponse, MemberViewModel>.NewConfig()
             .Map(dest => dest.DateOfBirth, src => src.DateOfBirth.HasValue ? src.DateOfBirth.Value.DateTime : (DateTime?)null)
-            .Map(dest => dest.JoinDate, src => src.JoinDate.HasValue ? src.JoinDate.Value.DateTime : (DateTime?)null);
+            .Map(dest => dest.JoinDate, src => src.JoinDate.DateTime);
     }
 
     /// <summary>

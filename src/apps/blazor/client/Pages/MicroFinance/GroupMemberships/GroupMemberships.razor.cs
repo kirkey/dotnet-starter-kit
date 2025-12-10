@@ -8,9 +8,9 @@ public partial class GroupMemberships
 {
     static GroupMemberships()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for GroupMembershipResponse -> GroupMembershipViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for GroupMembershipResponse -> GroupMembershipViewModel mapping
         TypeAdapterConfig<GroupMembershipResponse, GroupMembershipViewModel>.NewConfig()
-            .Map(dest => dest.JoinDate, src => src.JoinDate.HasValue ? src.JoinDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.JoinDate, src => src.JoinDate.DateTime)
             .Map(dest => dest.LeaveDate, src => src.LeaveDate.HasValue ? src.LeaveDate.Value.DateTime : (DateTime?)null);
     }
 

@@ -47,6 +47,11 @@ public class GroupMembershipViewModel
     public DateTime? JoinedDate { get; set; }
 
     /// <summary>
+    /// Date when the member joined the group (API property name).
+    /// </summary>
+    public DateTime? JoinDate { get; set; }
+
+    /// <summary>
     /// Date when the member left the group (if applicable).
     /// </summary>
     public DateTime? LeftDate { get; set; }

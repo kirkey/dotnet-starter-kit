@@ -9,8 +9,10 @@ public partial class InvestmentAccounts
     {
         // Configure Mapster to convert DateTimeOffset? to DateTime? for InvestmentAccountResponse -> InvestmentAccountViewModel mapping
         TypeAdapterConfig<InvestmentAccountResponse, InvestmentAccountViewModel>.NewConfig()
-            .Map(dest => dest.OpeningDate, src => src.OpeningDate.HasValue ? src.OpeningDate.Value.DateTime : (DateTime?)null)
-            .Map(dest => dest.MaturityDate, src => src.MaturityDate.HasValue ? src.MaturityDate.Value.DateTime : (DateTime?)null);
+            .Map(dest => dest.FirstInvestmentDate, src => src.FirstInvestmentDate.HasValue ? src.FirstInvestmentDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.LastTransactionDate, src => src.LastTransactionDate.HasValue ? src.LastTransactionDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.NextSipDate, src => src.NextSipDate.HasValue ? src.NextSipDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.TargetDate, src => src.TargetDate.HasValue ? src.TargetDate.Value.DateTime : (DateTime?)null);
     }
 
     protected EntityServerTableContext<InvestmentAccountResponse, DefaultIdType, InvestmentAccountViewModel> Context { get; set; } = null!;

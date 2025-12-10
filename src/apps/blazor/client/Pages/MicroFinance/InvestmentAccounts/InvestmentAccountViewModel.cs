@@ -34,4 +34,6 @@ public class InvestmentAccountViewModel
     public string? Status { get; set; }
 
     public string? Notes { get; set; }
+
+    public DateTime? FirstInvestmentDate { get; set; }
 }

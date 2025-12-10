@@ -55,4 +55,9 @@ public class InterestRateChangeViewModel
     /// Additional notes.
     /// </summary>
     public string? Notes { get; set; }
+
+    /// <summary>
+    /// Date when the rate change was approved.
+    /// </summary>
+    public DateTime? ApprovalDate { get; set; }
 }

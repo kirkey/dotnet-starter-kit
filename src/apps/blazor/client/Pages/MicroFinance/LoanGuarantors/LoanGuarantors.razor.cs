@@ -8,9 +8,9 @@ public partial class LoanGuarantors
 {
     static LoanGuarantors()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for LoanGuarantorResponse -> LoanGuarantorViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime for LoanGuarantorResponse -> LoanGuarantorViewModel mapping
         TypeAdapterConfig<LoanGuarantorResponse, LoanGuarantorViewModel>.NewConfig()
-            .Map(dest => dest.GuaranteeDate, src => src.GuaranteeDate.HasValue ? src.GuaranteeDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.GuaranteeDate, src => src.GuaranteeDate.DateTime)
             .Map(dest => dest.ExpiryDate, src => src.ExpiryDate.HasValue ? src.ExpiryDate.Value.DateTime : (DateTime?)null);
     }
 

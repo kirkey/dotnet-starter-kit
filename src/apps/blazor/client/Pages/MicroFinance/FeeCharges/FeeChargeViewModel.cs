@@ -57,6 +57,11 @@ public class FeeChargeViewModel
     public decimal Amount { get; set; }
     
     /// <summary>
+    /// Date when the fee was paid.
+    /// </summary>
+    public DateTime? PaidDate { get; set; }
+    
+    /// <summary>
     /// Additional notes.
     /// </summary>
     public string? Notes { get; set; }

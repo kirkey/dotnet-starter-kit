@@ -4,9 +4,7 @@ public partial class MobileTransactions
 {
     static MobileTransactions()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for MobileTransactionResponse -> MobileTransactionViewModel mapping
-        TypeAdapterConfig<MobileTransactionResponse, MobileTransactionViewModel>.NewConfig()
-            .Map(dest => dest.TransactionDate, src => src.TransactionDate.HasValue ? src.TransactionDate.Value.DateTime : (DateTime?)null);
+        // No TypeAdapterConfig needed - MobileTransactionResponse uses DateTime which matches MobileTransactionViewModel
     }
 
     protected EntityServerTableContext<MobileTransactionResponse, DefaultIdType, MobileTransactionViewModel> Context { get; set; } = null!;

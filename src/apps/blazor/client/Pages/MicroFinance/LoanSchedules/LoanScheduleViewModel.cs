@@ -40,4 +40,9 @@ public class LoanScheduleViewModel
     /// Total amount due for this installment.
     /// </summary>
     public decimal TotalAmount { get; set; }
+
+    /// <summary>
+    /// Date when the installment was paid.
+    /// </summary>
+    public DateTime? PaidDate { get; set; }
 }

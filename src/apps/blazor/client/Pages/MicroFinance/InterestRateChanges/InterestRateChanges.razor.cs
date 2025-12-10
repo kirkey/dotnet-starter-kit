@@ -8,11 +8,11 @@ public partial class InterestRateChanges
 {
     static InterestRateChanges()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for InterestRateChangeSummaryResponse -> InterestRateChangeViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for InterestRateChangeSummaryResponse -> InterestRateChangeViewModel mapping
         TypeAdapterConfig<InterestRateChangeSummaryResponse, InterestRateChangeViewModel>.NewConfig()
-            .Map(dest => dest.RequestDate, src => src.RequestDate.HasValue ? src.RequestDate.Value.DateTime : (DateTime?)null)
-            .Map(dest => dest.ApprovalDate, src => src.ApprovalDate.HasValue ? src.ApprovalDate.Value.DateTime : (DateTime?)null)
-            .Map(dest => dest.EffectiveDate, src => src.EffectiveDate.HasValue ? src.EffectiveDate.Value.DateTime : (DateTime?)null);
+            .Map(dest => dest.RequestDate, src => src.RequestDate.DateTime)
+            .Map(dest => dest.EffectiveDate, src => src.EffectiveDate.DateTime)
+            .Map(dest => dest.ApprovalDate, src => src.ApprovalDate.HasValue ? src.ApprovalDate.Value.DateTime : (DateTime?)null);
     }
 
     /// <summary>

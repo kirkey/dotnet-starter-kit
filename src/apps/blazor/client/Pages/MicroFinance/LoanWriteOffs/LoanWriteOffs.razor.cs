@@ -7,10 +7,10 @@ public partial class LoanWriteOffs
 {
     static LoanWriteOffs()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for LoanWriteOffSummaryResponse -> LoanWriteOffViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for LoanWriteOffSummaryResponse -> LoanWriteOffViewModel mapping
         TypeAdapterConfig<LoanWriteOffSummaryResponse, LoanWriteOffViewModel>.NewConfig()
-            .Map(dest => dest.WriteOffDate, src => src.WriteOffDate.HasValue ? src.WriteOffDate.Value.DateTime : (DateTime?)null)
-            .Map(dest => dest.ApprovalDate, src => src.ApprovalDate.HasValue ? src.ApprovalDate.Value.DateTime : (DateTime?)null);
+            .Map(dest => dest.RequestDate, src => src.RequestDate.DateTime)
+            .Map(dest => dest.WriteOffDate, src => src.WriteOffDate.HasValue ? src.WriteOffDate.Value.DateTime : (DateTime?)null);
     }
 
     protected EntityServerTableContext<LoanWriteOffSummaryResponse, DefaultIdType, LoanWriteOffViewModel> Context { get; set; } = null!;

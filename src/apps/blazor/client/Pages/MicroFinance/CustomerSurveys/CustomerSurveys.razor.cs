@@ -7,9 +7,10 @@ public partial class CustomerSurveys
 {
     static CustomerSurveys()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for CustomerSurveySummaryResponse -> CustomerSurveyViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for CustomerSurveySummaryResponse -> CustomerSurveyViewModel mapping
         TypeAdapterConfig<CustomerSurveySummaryResponse, CustomerSurveyViewModel>.NewConfig()
-            .Map(dest => dest.SurveyDate, src => src.SurveyDate.HasValue ? src.SurveyDate.Value.DateTime : (DateTime?)null);
+            .Map(dest => dest.StartDate, src => src.StartDate.DateTime)
+            .Map(dest => dest.EndDate, src => src.EndDate.HasValue ? src.EndDate.Value.DateTime : (DateTime?)null);
     }
 
     protected EntityServerTableContext<CustomerSurveySummaryResponse, DefaultIdType, CustomerSurveyViewModel> Context { get; set; } = null!;

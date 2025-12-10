@@ -8,9 +8,9 @@ public partial class MemberGroups
 {
     static MemberGroups()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for MemberGroupResponse -> MemberGroupViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for MemberGroupResponse -> MemberGroupViewModel mapping
         TypeAdapterConfig<MemberGroupResponse, MemberGroupViewModel>.NewConfig()
-            .Map(dest => dest.FormationDate, src => src.FormationDate.HasValue ? src.FormationDate.Value.DateTime : (DateTime?)null);
+            .Map(dest => dest.FormationDate, src => src.FormationDate.DateTime);
     }
 
     protected EntityServerTableContext<MemberGroupResponse, DefaultIdType, MemberGroupViewModel> Context { get; set; } = null!;

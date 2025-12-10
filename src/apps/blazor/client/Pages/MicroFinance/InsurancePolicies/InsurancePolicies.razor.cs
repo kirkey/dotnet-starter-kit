@@ -7,10 +7,10 @@ public partial class InsurancePolicies
 {
     static InsurancePolicies()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for InsurancePolicyResponse -> InsurancePolicyViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for InsurancePolicyResponse -> InsurancePolicyViewModel mapping
         TypeAdapterConfig<InsurancePolicyResponse, InsurancePolicyViewModel>.NewConfig()
-            .Map(dest => dest.StartDate, src => src.StartDate.HasValue ? src.StartDate.Value.DateTime : (DateTime?)null)
-            .Map(dest => dest.EndDate, src => src.EndDate.HasValue ? src.EndDate.Value.DateTime : (DateTime?)null);
+            .Map(dest => dest.StartDate, src => src.StartDate.DateTime)
+            .Map(dest => dest.EndDate, src => src.EndDate.DateTime);
     }
 
     protected EntityServerTableContext<InsurancePolicyResponse, DefaultIdType, InsurancePolicyViewModel> Context { get; set; } = null!;

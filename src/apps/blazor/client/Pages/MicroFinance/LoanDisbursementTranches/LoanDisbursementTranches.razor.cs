@@ -7,10 +7,10 @@ public partial class LoanDisbursementTranches
 {
     static LoanDisbursementTranches()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for LoanDisbursementTrancheSummaryResponse -> LoanDisbursementTrancheViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for LoanDisbursementTrancheSummaryResponse -> LoanDisbursementTrancheViewModel mapping
         TypeAdapterConfig<LoanDisbursementTrancheSummaryResponse, LoanDisbursementTrancheViewModel>.NewConfig()
-            .Map(dest => dest.ScheduledDate, src => src.ScheduledDate.HasValue ? src.ScheduledDate.Value.DateTime : (DateTime?)null)
-            .Map(dest => dest.DisbursementDate, src => src.DisbursementDate.HasValue ? src.DisbursementDate.Value.DateTime : (DateTime?)null);
+            .Map(dest => dest.ScheduledDate, src => src.ScheduledDate.DateTime)
+            .Map(dest => dest.DisbursedDate, src => src.DisbursedDate.HasValue ? src.DisbursedDate.Value.DateTime : (DateTime?)null);
     }
 
     protected EntityServerTableContext<LoanDisbursementTrancheSummaryResponse, DefaultIdType, LoanDisbursementTrancheViewModel> Context { get; set; } = null!;

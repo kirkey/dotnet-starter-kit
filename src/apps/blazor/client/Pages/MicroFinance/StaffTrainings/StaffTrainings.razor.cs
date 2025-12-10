@@ -7,9 +7,9 @@ public partial class StaffTrainings
 {
     static StaffTrainings()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for StaffTrainingSummaryResponse -> StaffTrainingViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for StaffTrainingSummaryResponse -> StaffTrainingViewModel mapping
         TypeAdapterConfig<StaffTrainingSummaryResponse, StaffTrainingViewModel>.NewConfig()
-            .Map(dest => dest.StartDate, src => src.StartDate.HasValue ? src.StartDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.StartDate, src => src.StartDate.DateTime)
             .Map(dest => dest.CompletionDate, src => src.CompletionDate.HasValue ? src.CompletionDate.Value.DateTime : (DateTime?)null);
     }
 

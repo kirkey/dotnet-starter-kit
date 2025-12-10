@@ -4,10 +4,10 @@ public partial class PromiseToPays
 {
     static PromiseToPays()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for PromiseToPaySummaryResponse -> PromiseToPayViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for PromiseToPaySummaryResponse -> PromiseToPayViewModel mapping
         TypeAdapterConfig<PromiseToPaySummaryResponse, PromiseToPayViewModel>.NewConfig()
-            .Map(dest => dest.PromiseDate, src => src.PromiseDate.HasValue ? src.PromiseDate.Value.DateTime : (DateTime?)null)
-            .Map(dest => dest.ScheduledPaymentDate, src => src.ScheduledPaymentDate.HasValue ? src.ScheduledPaymentDate.Value.DateTime : (DateTime?)null);
+            .Map(dest => dest.PromiseDate, src => src.PromiseDate.DateTime)
+            .Map(dest => dest.PromisedPaymentDate, src => src.PromisedPaymentDate.DateTime);
     }
 
     protected EntityServerTableContext<PromiseToPaySummaryResponse, DefaultIdType, PromiseToPayViewModel> Context { get; set; } = null!;

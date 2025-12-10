@@ -8,9 +8,9 @@ public partial class FeePayments
 {
     static FeePayments()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for FeePaymentSummaryResponse -> FeePaymentViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime for FeePaymentSummaryResponse -> FeePaymentViewModel mapping
         TypeAdapterConfig<FeePaymentSummaryResponse, FeePaymentViewModel>.NewConfig()
-            .Map(dest => dest.PaymentDate, src => src.PaymentDate.HasValue ? src.PaymentDate.Value.DateTime : (DateTime?)null);
+            .Map(dest => dest.PaymentDate, src => src.PaymentDate.DateTime);
     }
 
     /// <summary>

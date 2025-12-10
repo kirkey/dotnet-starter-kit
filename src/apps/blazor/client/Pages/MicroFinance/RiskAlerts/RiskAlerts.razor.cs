@@ -4,10 +4,7 @@ public partial class RiskAlerts
 {
     static RiskAlerts()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for RiskAlertSummaryResponse -> RiskAlertViewModel mapping
-        TypeAdapterConfig<RiskAlertSummaryResponse, RiskAlertViewModel>.NewConfig()
-            .Map(dest => dest.AlertDate, src => src.AlertDate.HasValue ? src.AlertDate.Value.DateTime : (DateTime?)null)
-            .Map(dest => dest.ResolvedDate, src => src.ResolvedDate.HasValue ? src.ResolvedDate.Value.DateTime : (DateTime?)null);
+        // No TypeAdapterConfig needed - RiskAlertSummaryResponse uses DateTime which matches RiskAlertViewModel
     }
 
     protected EntityServerTableContext<RiskAlertSummaryResponse, DefaultIdType, RiskAlertViewModel> Context { get; set; } = null!;

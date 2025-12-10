@@ -8,10 +8,11 @@ public partial class FeeCharges
 {
     static FeeCharges()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for FeeChargeResponse -> FeeChargeViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for FeeChargeResponse -> FeeChargeViewModel mapping
         TypeAdapterConfig<FeeChargeResponse, FeeChargeViewModel>.NewConfig()
-            .Map(dest => dest.ChargeDate, src => src.ChargeDate.HasValue ? src.ChargeDate.Value.DateTime : (DateTime?)null)
-            .Map(dest => dest.DueDate, src => src.DueDate.HasValue ? src.DueDate.Value.DateTime : (DateTime?)null);
+            .Map(dest => dest.ChargeDate, src => src.ChargeDate.DateTime)
+            .Map(dest => dest.DueDate, src => src.DueDate.HasValue ? src.DueDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.PaidDate, src => src.PaidDate.HasValue ? src.PaidDate.Value.DateTime : (DateTime?)null);
     }
 
     /// <summary>

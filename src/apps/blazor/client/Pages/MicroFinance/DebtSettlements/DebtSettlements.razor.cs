@@ -4,10 +4,11 @@ public partial class DebtSettlements
 {
     static DebtSettlements()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for DebtSettlementSummaryResponse -> DebtSettlementViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for DebtSettlementSummaryResponse -> DebtSettlementViewModel mapping
         TypeAdapterConfig<DebtSettlementSummaryResponse, DebtSettlementViewModel>.NewConfig()
-            .Map(dest => dest.SettlementDate, src => src.SettlementDate.HasValue ? src.SettlementDate.Value.DateTime : (DateTime?)null)
-            .Map(dest => dest.AgreementDate, src => src.AgreementDate.HasValue ? src.AgreementDate.Value.DateTime : (DateTime?)null);
+            .Map(dest => dest.ProposedDate, src => src.ProposedDate.DateTime)
+            .Map(dest => dest.DueDate, src => src.DueDate.DateTime)
+            .Map(dest => dest.CompletedDate, src => src.CompletedDate.HasValue ? src.CompletedDate.Value.DateTime : (DateTime?)null);
     }
 
     protected EntityServerTableContext<DebtSettlementSummaryResponse, DefaultIdType, DebtSettlementViewModel> Context { get; set; } = null!;

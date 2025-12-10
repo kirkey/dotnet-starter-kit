@@ -4,8 +4,9 @@ public partial class LegalActions
 {
     static LegalActions()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for LegalActionResponse -> LegalActionViewModel mapping
+        // Configure Mapster to convert DateTimeOffset to DateTime? for LegalActionResponse -> LegalActionViewModel mapping
         TypeAdapterConfig<LegalActionResponse, LegalActionViewModel>.NewConfig()
+            .Map(dest => dest.InitiatedDate, src => src.InitiatedDate.DateTime)
             .Map(dest => dest.FiledDate, src => src.FiledDate.HasValue ? src.FiledDate.Value.DateTime : (DateTime?)null)
             .Map(dest => dest.NextHearingDate, src => src.NextHearingDate.HasValue ? src.NextHearingDate.Value.DateTime : (DateTime?)null)
             .Map(dest => dest.JudgmentDate, src => src.JudgmentDate.HasValue ? src.JudgmentDate.Value.DateTime : (DateTime?)null)

@@ -4,9 +4,7 @@ public partial class InvestmentTransactions
 {
     static InvestmentTransactions()
     {
-        // Configure Mapster to convert DateTimeOffset? to DateTime? for InvestmentTransactionResponse -> InvestmentTransactionViewModel mapping
-        TypeAdapterConfig<InvestmentTransactionResponse, InvestmentTransactionViewModel>.NewConfig()
-            .Map(dest => dest.TransactionDate, src => src.TransactionDate.HasValue ? src.TransactionDate.Value.DateTime : (DateTime?)null);
+        // No TypeAdapterConfig needed - InvestmentTransactionResponse uses DateTime which matches InvestmentTransactionViewModel
     }
 
     protected EntityServerTableContext<InvestmentTransactionResponse, DefaultIdType, InvestmentTransactionViewModel> Context { get; set; } = null!;
