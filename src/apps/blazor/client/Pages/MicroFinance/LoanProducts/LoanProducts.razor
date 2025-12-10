@@ -43,6 +43,12 @@
         </MudItem>
     </AdvancedSearchContent>
 
+    <ExtraActions Context="entity">
+        <MudMenuItem Icon="@Icons.Material.Filled.Dashboard" OnClick="@(() => OnViewDashboard(entity.Id))">
+            View Dashboard
+        </MudMenuItem>
+    </ExtraActions>
+
     <EditFormContent Context="context">
         @if (context.Id != DefaultIdType.Empty)
         {

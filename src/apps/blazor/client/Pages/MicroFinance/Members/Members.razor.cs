@@ -211,4 +211,12 @@ public partial class Members
             CloseOnEscapeKey = true
         });
     }
+
+    /// <summary>
+    /// Navigate to member dashboard.
+    /// </summary>
+    private void OnViewDashboard(DefaultIdType id)
+    {
+        Navigation.NavigateTo($"/microfinance/members/{id}/dashboard");
+    }
 }

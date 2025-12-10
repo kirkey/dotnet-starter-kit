@@ -158,4 +158,12 @@ public partial class Branches
             await _table.ReloadDataAsync();
         }
     }
+
+    /// <summary>
+    /// Navigate to branch dashboard.
+    /// </summary>
+    private void OnViewDashboard(DefaultIdType id)
+    {
+        Navigation.NavigateTo($"/microfinance/branches/{id}/dashboard");
+    }
 }

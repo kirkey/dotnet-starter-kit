@@ -39,7 +39,7 @@ public partial class BranchDashboard
         try
         {
             var response = await Client.GetBranchDashboardAsync("1", Id);
-            _dashboard = response;
+            _dashboard = response.Adapt<BranchDashboardData>();
             _branchName = _dashboard.BranchName;
         }
         catch (Exception ex)

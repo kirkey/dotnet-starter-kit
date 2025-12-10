@@ -284,4 +284,12 @@ public partial class Staff
             <tr><td><strong>Status:</strong></td><td>{staff.Status}</td></tr>
         </table>
         """;
+
+    /// <summary>
+    /// Navigate to staff dashboard.
+    /// </summary>
+    private void OnViewDashboard(DefaultIdType id)
+    {
+        Navigation.NavigateTo($"/microfinance/staff/{id}/dashboard");
+    }
 }

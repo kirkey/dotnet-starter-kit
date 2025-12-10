@@ -75,6 +75,9 @@
         <MudMenuItem Icon="@Icons.Material.Filled.GroupAdd" OnClick="@(() => ManageMembers(entity.Id))">
             Manage Members
         </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Dashboard" OnClick="@(() => OnViewDashboard(entity.Id))">
+            View Dashboard
+        </MudMenuItem>
     </ExtraActions>
 
     <EditFormContent Context="context">

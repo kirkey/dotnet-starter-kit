@@ -21,7 +21,7 @@ public partial class MemberGroupDashboard
         try
         {
             var response = await Client.GetMemberGroupDashboardAsync("1", Id);
-            _dashboardData = response;
+            _dashboardData = response.Adapt<MemberGroupDashboardData>();
         }
         catch (Exception ex)
         {

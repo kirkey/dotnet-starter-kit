@@ -35,7 +35,7 @@ public partial class SavingsProductDashboard
         try
         {
             var response = await Client.GetSavingsProductDashboardAsync("1", Id);
-            _dashboard = response;
+            _dashboard = response.Adapt<SavingsProductDashboardData>();
             _productName = _dashboard.Overview.Name;
         }
         catch (Exception ex)

@@ -135,4 +135,12 @@ public partial class SavingsProducts
             CloseOnEscapeKey = true
         });
     }
+
+    /// <summary>
+    /// Navigate to savings product dashboard.
+    /// </summary>
+    private void OnViewDashboard(DefaultIdType id)
+    {
+        Navigation.NavigateTo($"/microfinance/savings-products/{id}/dashboard");
+    }
 }

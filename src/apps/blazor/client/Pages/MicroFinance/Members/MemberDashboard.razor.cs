@@ -41,7 +41,7 @@ public partial class MemberDashboard
         try
         {
             var response = await Client.GetMemberDashboardAsync("1", Id);
-            _dashboard = response;
+            _dashboard = response.Adapt<MemberDashboardData>();
             _memberName = _dashboard.MemberName;
         }
         catch (Exception ex)

@@ -21,7 +21,7 @@ public partial class StaffDashboard
         try
         {
             var response = await Client.GetStaffDashboardAsync("1", Id);
-            _dashboardData = response;
+            _dashboardData = response.Adapt<StaffDashboardData>();
         }
         catch (Exception ex)
         {

@@ -68,6 +68,9 @@
         <MudMenuItem Icon="@Icons.Material.Filled.Visibility" OnClick="@(() => ViewMemberDetails(entity.Id))">
             View Details
         </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.Dashboard" OnClick="@(() => OnViewDashboard(entity.Id))">
+            View Dashboard
+        </MudMenuItem>
     </ExtraActions>
 
     <EditFormContent Context="context">

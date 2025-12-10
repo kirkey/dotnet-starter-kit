@@ -178,4 +178,12 @@ public partial class MemberGroups
             await _table.ReloadDataAsync();
         }
     }
+
+    /// <summary>
+    /// Navigate to member group dashboard.
+    /// </summary>
+    private void OnViewDashboard(DefaultIdType id)
+    {
+        Navigation.NavigateTo($"/microfinance/member-groups/{id}/dashboard");
+    }
 }

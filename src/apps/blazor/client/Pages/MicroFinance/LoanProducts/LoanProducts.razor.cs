@@ -136,4 +136,12 @@ public partial class LoanProducts
             CloseOnEscapeKey = true
         });
     }
+
+    /// <summary>
+    /// Navigate to loan product dashboard.
+    /// </summary>
+    private void OnViewDashboard(DefaultIdType id)
+    {
+        Navigation.NavigateTo($"/microfinance/loan-products/{id}/dashboard");
+    }
 }

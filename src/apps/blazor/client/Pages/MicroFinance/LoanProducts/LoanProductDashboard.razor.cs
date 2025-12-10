@@ -36,7 +36,7 @@ public partial class LoanProductDashboard
         try
         {
             var response = await Client.GetLoanProductDashboardAsync("1", Id);
-            _dashboard = response;
+            _dashboard = response.Adapt<LoanProductDashboardData>();
             _productName = _dashboard.ProductName;
         }
         catch (Exception ex)
