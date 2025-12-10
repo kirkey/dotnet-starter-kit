@@ -24,9 +24,6 @@ public sealed class CreateBranchHandler(
             branchType: request.BranchType,
             parentBranchId: request.ParentBranchId,
             address: request.Address,
-            city: request.City,
-            state: request.State,
-            country: request.Country,
             phone: request.Phone,
             email: request.Email,
             openingDate: request.OpeningDate);

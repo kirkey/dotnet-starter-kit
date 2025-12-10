@@ -37,26 +37,6 @@ public class BranchViewModel
     public string? Address { get; set; }
 
     /// <summary>
-    /// City where the branch is located.
-    /// </summary>
-    public string? City { get; set; }
-
-    /// <summary>
-    /// State or province.
-    /// </summary>
-    public string? State { get; set; }
-
-    /// <summary>
-    /// Country.
-    /// </summary>
-    public string? Country { get; set; }
-
-    /// <summary>
-    /// Postal/zip code.
-    /// </summary>
-    public string? PostalCode { get; set; }
-
-    /// <summary>
     /// Branch phone number.
     /// </summary>
     public string? Phone { get; set; }

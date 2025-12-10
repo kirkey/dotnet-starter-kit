@@ -51,10 +51,6 @@ public sealed class Branch : AuditableEntity, IAggregateRoot
         public const int Code = 32;
         public const int Name = 128;
         public const int Address = 512;
-        public const int City = 64;
-        public const int State = 64;
-        public const int Country = 64;
-        public const int PostalCode = 16;
         public const int Phone = 32;
         public const int Email = 128;
         public const int ManagerName = 128;
@@ -94,26 +90,6 @@ public sealed class Branch : AuditableEntity, IAggregateRoot
     /// Physical address of the branch.
     /// </summary>
     public string? Address { get; private set; }
-
-    /// <summary>
-    /// City where the branch is located.
-    /// </summary>
-    public string? City { get; private set; }
-
-    /// <summary>
-    /// State or province of the branch.
-    /// </summary>
-    public string? State { get; private set; }
-
-    /// <summary>
-    /// Country of the branch location.
-    /// </summary>
-    public string? Country { get; private set; }
-
-    /// <summary>
-    /// Postal or ZIP code.
-    /// </summary>
-    public string? PostalCode { get; private set; }
 
     /// <summary>
     /// Contact phone number.
@@ -208,9 +184,6 @@ public sealed class Branch : AuditableEntity, IAggregateRoot
         string branchType,
         Guid? parentBranchId = null,
         string? address = null,
-        string? city = null,
-        string? state = null,
-        string? country = null,
         string? phone = null,
         string? email = null,
         DateOnly? openingDate = null)
@@ -221,9 +194,6 @@ public sealed class Branch : AuditableEntity, IAggregateRoot
             BranchType = branchType,
             ParentBranchId = parentBranchId,
             Address = address,
-            City = city,
-            State = state,
-            Country = country,
             Phone = phone,
             Email = email,
             OpeningDate = openingDate ?? DateOnly.FromDateTime(DateTime.UtcNow),
@@ -241,10 +211,6 @@ public sealed class Branch : AuditableEntity, IAggregateRoot
     public Branch Update(
         string? name,
         string? address,
-        string? city,
-        string? state,
-        string? country,
-        string? postalCode,
         string? phone,
         string? email,
         string? managerName,
@@ -261,10 +227,6 @@ public sealed class Branch : AuditableEntity, IAggregateRoot
 
         if (name is not null && Name != name) { Name = name; hasChanges = true; }
         if (address is not null && Address != address) { Address = address; hasChanges = true; }
-        if (city is not null && City != city) { City = city; hasChanges = true; }
-        if (state is not null && State != state) { State = state; hasChanges = true; }
-        if (country is not null && Country != country) { Country = country; hasChanges = true; }
-        if (postalCode is not null && PostalCode != postalCode) { PostalCode = postalCode; hasChanges = true; }
         if (phone is not null && Phone != phone) { Phone = phone; hasChanges = true; }
         if (email is not null && Email != email) { Email = email; hasChanges = true; }
         if (managerName is not null && ManagerName != managerName) { ManagerName = managerName; hasChanges = true; }

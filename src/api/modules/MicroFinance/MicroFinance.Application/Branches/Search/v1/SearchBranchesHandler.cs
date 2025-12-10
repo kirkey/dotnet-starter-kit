@@ -25,8 +25,6 @@ public sealed class SearchBranchesHandler(
             b.Name,
             b.BranchType,
             b.Status,
-            b.City,
-            b.State,
             b.ManagerName,
             b.OpeningDate)).ToList();
 

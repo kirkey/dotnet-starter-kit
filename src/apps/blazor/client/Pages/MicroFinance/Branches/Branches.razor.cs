@@ -35,17 +35,6 @@ public partial class Branches
         }
     }
 
-    private string? _searchCity;
-    private string? SearchCity
-    {
-        get => _searchCity;
-        set
-        {
-            _searchCity = value;
-            _ = _table.ReloadDataAsync();
-        }
-    }
-
     private string? _searchBranchType;
     private string? SearchBranchType
     {
@@ -78,7 +67,6 @@ public partial class Branches
                 new EntityField<BranchResponse>(dto => dto.Code, "Code", "Code"),
                 new EntityField<BranchResponse>(dto => dto.Name, "Name", "Name"),
                 new EntityField<BranchResponse>(dto => dto.BranchType, "Type", "BranchType"),
-                new EntityField<BranchResponse>(dto => dto.City, "City", "City"),
                 new EntityField<BranchResponse>(dto => dto.Status, "Status", "Status"),
                 new EntityField<BranchResponse>(dto => dto.Phone, "Phone", "Phone"),
                 new EntityField<BranchResponse>(dto => dto.ManagerName, "Manager", "ManagerName"),

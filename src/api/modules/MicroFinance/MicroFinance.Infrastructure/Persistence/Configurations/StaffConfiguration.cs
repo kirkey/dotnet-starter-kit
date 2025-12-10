@@ -37,18 +37,6 @@ internal sealed class StaffConfiguration : IEntityTypeConfiguration<Staff>
         builder.Property(x => x.Address)
             .HasMaxLength(Staff.MaxLengths.Address);
 
-        builder.Property(x => x.City)
-            .HasMaxLength(Staff.MaxLengths.City);
-
-        builder.Property(x => x.State)
-            .HasMaxLength(Staff.MaxLengths.State);
-
-        builder.Property(x => x.Country)
-            .HasMaxLength(Staff.MaxLengths.Country);
-
-        builder.Property(x => x.PostalCode)
-            .HasMaxLength(Staff.MaxLengths.PostalCode);
-
         builder.Property(x => x.Department)
             .HasMaxLength(Staff.MaxLengths.Department);
 

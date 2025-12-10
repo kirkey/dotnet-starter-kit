@@ -45,22 +45,6 @@ public class UpdateMemberCommandValidator : AbstractValidator<UpdateMemberComman
             .MaximumLength(Member.AddressMaxLength)
             .When(m => !string.IsNullOrWhiteSpace(m.Address));
 
-        RuleFor(m => m.City)
-            .MaximumLength(Member.CityMaxLength)
-            .When(m => !string.IsNullOrWhiteSpace(m.City));
-
-        RuleFor(m => m.State)
-            .MaximumLength(Member.StateMaxLength)
-            .When(m => !string.IsNullOrWhiteSpace(m.State));
-
-        RuleFor(m => m.PostalCode)
-            .MaximumLength(Member.PostalCodeMaxLength)
-            .When(m => !string.IsNullOrWhiteSpace(m.PostalCode));
-
-        RuleFor(m => m.Country)
-            .MaximumLength(Member.CountryMaxLength)
-            .When(m => !string.IsNullOrWhiteSpace(m.Country));
-
         RuleFor(m => m.NationalId)
             .MaximumLength(Member.NationalIdMaxLength)
             .When(m => !string.IsNullOrWhiteSpace(m.NationalId));

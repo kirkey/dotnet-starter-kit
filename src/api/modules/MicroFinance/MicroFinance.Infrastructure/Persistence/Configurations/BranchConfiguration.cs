@@ -16,18 +16,6 @@ internal sealed class BranchConfiguration : IEntityTypeConfiguration<Branch>
         builder.Property(x => x.Address)
             .HasMaxLength(Branch.MaxLengths.Address);
 
-        builder.Property(x => x.City)
-            .HasMaxLength(Branch.MaxLengths.City);
-
-        builder.Property(x => x.State)
-            .HasMaxLength(Branch.MaxLengths.State);
-
-        builder.Property(x => x.Country)
-            .HasMaxLength(Branch.MaxLengths.Country);
-
-        builder.Property(x => x.PostalCode)
-            .HasMaxLength(Branch.MaxLengths.PostalCode);
-
         builder.Property(x => x.Phone)
             .HasMaxLength(Branch.MaxLengths.Phone);
 

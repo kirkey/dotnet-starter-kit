@@ -67,26 +67,6 @@ public class MemberViewModel
     public string? Address { get; set; }
 
     /// <summary>
-    /// Member's city.
-    /// </summary>
-    public string? City { get; set; }
-
-    /// <summary>
-    /// Member's state or province.
-    /// </summary>
-    public string? State { get; set; }
-
-    /// <summary>
-    /// Member's postal/zip code.
-    /// </summary>
-    public string? PostalCode { get; set; }
-
-    /// <summary>
-    /// Member's country.
-    /// </summary>
-    public string? Country { get; set; }
-
-    /// <summary>
     /// Government-issued national ID number.
     /// </summary>
     public string? NationalId { get; set; }

@@ -26,10 +26,6 @@ public sealed class UpdateBranchHandler(
         branch.Update(
             request.Name,
             request.Address,
-            request.City,
-            request.State,
-            request.Country,
-            request.PostalCode,
             request.Phone,
             request.Email,
             request.ManagerName,

@@ -94,7 +94,6 @@ public partial class Members
                 new EntityField<MemberResponse>(dto => dto.FullName, "Name", "FullName"),
                 new EntityField<MemberResponse>(dto => dto.Email, "Email", "Email"),
                 new EntityField<MemberResponse>(dto => dto.PhoneNumber, "Phone", "PhoneNumber"),
-                new EntityField<MemberResponse>(dto => dto.City, "City", "City"),
                 new EntityField<MemberResponse>(dto => dto.Occupation, "Occupation", "Occupation"),
                 new EntityField<MemberResponse>(dto => dto.MonthlyIncome, "Monthly Income", "MonthlyIncome", typeof(decimal)),
                 new EntityField<MemberResponse>(dto => dto.JoinDate, "Join Date", "JoinDate", typeof(DateOnly)),

@@ -58,10 +58,6 @@ public sealed class Staff : AuditableEntity, IAggregateRoot
         public const int Phone = 32;
         public const int AlternatePhone = 32;
         public const int Address = 512;
-        public const int City = 64;
-        public const int State = 64;
-        public const int Country = 64;
-        public const int PostalCode = 16;
         public const int NationalId = 64;
         public const int Department = 64;
         public const int JobTitle = 128;
@@ -174,26 +170,6 @@ public sealed class Staff : AuditableEntity, IAggregateRoot
     /// Residential address.
     /// </summary>
     public string? Address { get; private set; }
-
-    /// <summary>
-    /// City of residence.
-    /// </summary>
-    public string? City { get; private set; }
-
-    /// <summary>
-    /// State or province.
-    /// </summary>
-    public string? State { get; private set; }
-
-    /// <summary>
-    /// Country of residence.
-    /// </summary>
-    public string? Country { get; private set; }
-
-    /// <summary>
-    /// Postal code.
-    /// </summary>
-    public string? PostalCode { get; private set; }
 
     /// <summary>
     /// Primary branch assignment.
@@ -364,10 +340,6 @@ public sealed class Staff : AuditableEntity, IAggregateRoot
         string? gender,
         string? nationalId,
         string? address,
-        string? city,
-        string? state,
-        string? country,
-        string? postalCode,
         string? emergencyContactName,
         string? emergencyContactPhone,
         string? photoUrl,
@@ -382,10 +354,6 @@ public sealed class Staff : AuditableEntity, IAggregateRoot
         if (gender is not null) Gender = gender;
         if (nationalId is not null) NationalId = nationalId;
         if (address is not null) Address = address;
-        if (city is not null) City = city;
-        if (state is not null) State = state;
-        if (country is not null) Country = country;
-        if (postalCode is not null) PostalCode = postalCode;
         if (emergencyContactName is not null) EmergencyContactName = emergencyContactName;
         if (emergencyContactPhone is not null) EmergencyContactPhone = emergencyContactPhone;
         if (photoUrl is not null) PhotoUrl = photoUrl;

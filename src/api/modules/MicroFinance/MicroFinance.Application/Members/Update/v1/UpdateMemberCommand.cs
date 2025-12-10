@@ -39,8 +39,6 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.Members.Update.v1;
 ///   "email": "john.doe.updated@example.com",
 ///   "phoneNumber": "+1-555-987-6543",
 ///   "address": "456 Oak Avenue, Suite 100",
-///   "city": "Los Angeles",
-///   "state": "CA",
 ///   "occupation": "Restaurant Owner",
 ///   "monthlyIncome": 7500.00
 /// }
@@ -58,10 +56,6 @@ public sealed record UpdateMemberCommand(
     DateOnly? DateOfBirth = null,
     string? Gender = null,
     string? Address = null,
-    string? City = null,
-    string? State = null,
-    string? PostalCode = null,
-    string? Country = null,
     string? NationalId = null,
     string? Occupation = null,
     decimal? MonthlyIncome = null,

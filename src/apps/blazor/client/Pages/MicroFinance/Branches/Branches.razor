@@ -24,14 +24,6 @@
                           AdornmentIcon="@Icons.Material.Filled.Tag" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudTextField @bind-Value="@SearchCity"
-                          Label="City"
-                          Placeholder="Search by city"
-                          Variant="Variant.Outlined"
-                          Adornment="Adornment.Start"
-                          AdornmentIcon="@Icons.Material.Filled.LocationCity" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
             <MudSelect T="string"
                        @bind-Value="@SearchBranchType"
                        Label="Branch Type"
@@ -127,30 +119,6 @@
                           Label="Address"
                           Variant="Variant.Filled"
                           Lines="2" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="3">
-            <MudTextField @bind-Value="context.City"
-                          For="@(() => context.City)"
-                          Label="City"
-                          Variant="Variant.Filled" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="3">
-            <MudTextField @bind-Value="context.State"
-                          For="@(() => context.State)"
-                          Label="State/Province"
-                          Variant="Variant.Filled" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="3">
-            <MudTextField @bind-Value="context.PostalCode"
-                          For="@(() => context.PostalCode)"
-                          Label="Postal Code"
-                          Variant="Variant.Filled" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="3">
-            <MudTextField @bind-Value="context.Country"
-                          For="@(() => context.Country)"
-                          Label="Country"
-                          Variant="Variant.Filled" />
         </MudItem>
 
         <MudItem xs="12">

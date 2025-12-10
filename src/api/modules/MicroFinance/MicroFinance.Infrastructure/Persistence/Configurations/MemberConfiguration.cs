@@ -37,18 +37,6 @@ internal sealed class MemberConfiguration : IEntityTypeConfiguration<Member>
         builder.Property(x => x.Address)
             .HasMaxLength(Member.AddressMaxLength);
 
-        builder.Property(x => x.City)
-            .HasMaxLength(Member.CityMaxLength);
-
-        builder.Property(x => x.State)
-            .HasMaxLength(Member.StateMaxLength);
-
-        builder.Property(x => x.PostalCode)
-            .HasMaxLength(Member.PostalCodeMaxLength);
-
-        builder.Property(x => x.Country)
-            .HasMaxLength(Member.CountryMaxLength);
-
         builder.Property(x => x.NationalId)
             .HasMaxLength(Member.NationalIdMaxLength);
 

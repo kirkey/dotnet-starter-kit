@@ -22,12 +22,6 @@ public sealed class SearchBranchesSpec : Specification<Branch>
         if (!string.IsNullOrWhiteSpace(command.Status))
             Query.Where(b => b.Status == command.Status);
 
-        if (!string.IsNullOrWhiteSpace(command.City))
-            Query.Where(b => b.City != null && b.City.Contains(command.City));
-
-        if (!string.IsNullOrWhiteSpace(command.State))
-            Query.Where(b => b.State != null && b.State.Contains(command.State));
-
         if (command.ParentBranchId.HasValue)
             Query.Where(b => b.ParentBranchId == command.ParentBranchId.Value);
 

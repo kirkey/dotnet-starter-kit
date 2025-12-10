@@ -8,7 +8,5 @@ public sealed record SearchBranchesCommand(
     string? Name = null,
     string? BranchType = null,
     string? Status = null,
-    string? City = null,
-    string? State = null,
     DefaultIdType? ParentBranchId = null,
     PaginationFilter? Filter = null) : IRequest<PagedList<BranchSummaryResponse>>;

@@ -6,7 +6,5 @@ public sealed record BranchSummaryResponse(
     string Name,
     string BranchType,
     string Status,
-    string? City,
-    string? State,
     string? ManagerName,
     DateOnly? OpeningDate);

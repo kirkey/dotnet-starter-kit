@@ -18,21 +18,21 @@ internal static class MemberSeeder
         var existingCount = await context.Members.CountAsync(cancellationToken).ConfigureAwait(false);
         if (existingCount >= targetCount) return;
 
-        var members = new (string Num, string First, string Last, string? Middle, string Email, string Phone, string Gender, string Occupation, decimal Income, int BirthYear, string City, bool IsActive)[]
+        var members = new (string Num, string First, string Last, string? Middle, string Email, string Phone, string Gender, string Occupation, decimal Income, int BirthYear, bool IsActive)[]
         {
             // Active farmers - Agricultural loan candidates
-            ("MBR-001", "Juan", "Dela Cruz", "Miguel", "juan.delacruz@email.com", "+639171234567", "Male", "Magsasaka", 15000, 1985, "Nueva Ecija", true),
-            ("MBR-002", "Maria", "Santos", null, "maria.santos@email.com", "+639172234567", "Female", "Magsasaka", 12000, 1980, "Isabela", true),
-            ("MBR-003", "Pedro", "Reyes", "Jose", "pedro.reyes@email.com", "+639173234567", "Male", "Magsasaka", 18000, 1975, "Pangasinan", true),
-            ("MBR-004", "Rosa", "Garcia", null, "rosa.garcia@email.com", "+639174234567", "Female", "Magsasaka", 10000, 1988, "Tarlac", true),
-            ("MBR-005", "Antonio", "Ramos", "Carlos", "antonio.ramos@email.com", "+639175234567", "Male", "Magsasaka", 16000, 1982, "Bulacan", true),
+            ("MBR-001", "Juan", "Dela Cruz", "Miguel", "juan.delacruz@email.com", "+639171234567", "Male", "Magsasaka", 15000, 1985, true),
+            ("MBR-002", "Maria", "Santos", null, "maria.santos@email.com", "+639172234567", "Female", "Magsasaka", 12000, 1980, true),
+            ("MBR-003", "Pedro", "Reyes", "Jose", "pedro.reyes@email.com", "+639173234567", "Male", "Magsasaka", 18000, 1975, true),
+            ("MBR-004", "Rosa", "Garcia", null, "rosa.garcia@email.com", "+639174234567", "Female", "Magsasaka", 10000, 1988, true),
+            ("MBR-005", "Antonio", "Ramos", "Carlos", "antonio.ramos@email.com", "+639175234567", "Male", "Magsasaka", 16000, 1982, true),
             
             // Teachers & Education sector
-            ("MBR-006", "Ana", "Mendoza", null, "ana.mendoza@email.com", "+639176234567", "Female", "Guro", 25000, 1990, "Quezon City", true),
-            ("MBR-007", "Jose", "Torres", "Ramon", "jose.torres@email.com", "+639177234567", "Male", "Guro", 28000, 1987, "Makati", true),
-            ("MBR-008", "Lorna", "Aquino", null, "lorna.aquino@email.com", "+639178234567", "Female", "Head Teacher", 45000, 1978, "Pasig", true),
-            ("MBR-009", "Ricardo", "Villanueva", "Eduardo", "ricardo.villanueva@email.com", "+639179234567", "Male", "Propesor", 65000, 1970, "Manila", true),
-            ("MBR-010", "Cristina", "Bautista", null, "cristina.bautista@email.com", "+639180234567", "Female", "Guro", 22000, 1992, "Caloocan", true),
+            ("MBR-006", "Ana", "Mendoza", null, "ana.mendoza@email.com", "+639176234567", "Female", "Guro", 25000, 1990, true),
+            ("MBR-007", "Jose", "Torres", "Ramon", "jose.torres@email.com", "+639177234567", "Male", "Guro", 28000, 1987, true),
+            ("MBR-008", "Lorna", "Aquino", null, "lorna.aquino@email.com", "+639178234567", "Female", "Head Teacher", 45000, 1978, true),
+            ("MBR-009", "Ricardo", "Villanueva", "Eduardo", "ricardo.villanueva@email.com", "+639179234567", "Male", "Propesor", 65000, 1970, true),
+            ("MBR-010", "Cristina", "Bautista", null, "cristina.bautista@email.com", "+639180234567", "Female", "Guro", 22000, 1992, true),
             
             // Healthcare workers
             ("MBR-011", "Roberto", "Fernandez", "Luis", "roberto.fernandez@email.com", "+639181234567", "Male", "Nars", 32000, 1985, "Mandaluyong", true),
@@ -70,34 +70,34 @@ internal static class MemberSeeder
             ("MBR-035", "Samantha", "Lacson", null, "samantha.lacson@email.com", "+639205234567", "Female", "Social Media Manager", 40000, 1996, "Quezon City", true),
             
             // Artisans
-            ("MBR-036", "Andres", "Bonifacio", "Roberto", "andres.bonifacio@email.com", "+639206234567", "Male", "Magpapalayok", 14000, 1979, "Vigan", true),
-            ("MBR-037", "Angeline", "Magsaysay", null, "angeline.magsaysay@email.com", "+639207234567", "Female", "Manghahabi", 12000, 1984, "Ilocos Sur", true),
-            ("MBR-038", "Jaime", "Laurel", "Daniel", "jaime.laurel@email.com", "+639208234567", "Male", "Panday", 16000, 1976, "Batangas", true),
-            ("MBR-039", "Katrina", "Roxas", null, "katrina.roxas@email.com", "+639209234567", "Female", "Alaheriya", 28000, 1983, "Meycauayan", true),
-            ("MBR-040", "Kevin", "Osmeña", "Antonio", "kevin.osmena@email.com", "+639210234567", "Male", "Sculptor", 20000, 1980, "Paete", true),
+            ("MBR-036", "Andres", "Bonifacio", "Roberto", "andres.bonifacio@email.com", "+639206234567", "Male", "Magpapalayok", 14000, 1979, true),
+            ("MBR-037", "Angeline", "Magsaysay", null, "angeline.magsaysay@email.com", "+639207234567", "Female", "Manghahabi", 12000, 1984, true),
+            ("MBR-038", "Jaime", "Laurel", "Daniel", "jaime.laurel@email.com", "+639208234567", "Male", "Panday", 16000, 1976, true),
+            ("MBR-039", "Katrina", "Roxas", null, "katrina.roxas@email.com", "+639209234567", "Female", "Alaheriya", 28000, 1983, true),
+            ("MBR-040", "Kevin", "Osmeña", "Antonio", "kevin.osmena@email.com", "+639210234567", "Male", "Sculptor", 20000, 1980, true),
             
             // Inactive members for testing status filters
-            ("MBR-041", "Mariano", "Quezon", "Almario", "mariano.quezon@email.com", "+639211234567", "Male", "Retirado", 8000, 1955, "Baler", false),
-            ("MBR-042", "Sharon", "Estrada", null, "sharon.estrada@email.com", "+639212234567", "Female", "Maybahay", 0, 1965, "Cavite", false),
-            ("MBR-043", "Bryan", "Macapagal", "Leo", "bryan.macapagal@email.com", "+639213234567", "Male", "Walang Trabaho", 0, 1990, "Pampanga", false),
-            ("MBR-044", "Michelle", "Arroyo", null, "michelle.arroyo@email.com", "+639214234567", "Female", "Estudyante", 0, 1998, "Diliman", false),
-            ("MBR-045", "Edwin", "Marcos", "Juan", "edwin.marcos@email.com", "+639215234567", "Male", "OFW", 0, 1985, "Ilocos Norte", false),
+            ("MBR-041", "Mariano", "Quezon", "Almario", "mariano.quezon@email.com", "+639211234567", "Male", "Retirado", 8000, 1955, false),
+            ("MBR-042", "Sharon", "Estrada", null, "sharon.estrada@email.com", "+639212234567", "Female", "Maybahay", 0, 1965, false),
+            ("MBR-043", "Bryan", "Macapagal", "Leo", "bryan.macapagal@email.com", "+639213234567", "Male", "Walang Trabaho", 0, 1990, false),
+            ("MBR-044", "Michelle", "Arroyo", null, "michelle.arroyo@email.com", "+639214234567", "Female", "Estudyante", 0, 1998, false),
+            ("MBR-045", "Edwin", "Marcos", "Juan", "edwin.marcos@email.com", "+639215234567", "Male", "OFW", 0, 1985, false),
             
             // More active diverse members
-            ("MBR-046", "Lourdes", "Enrile", null, "lourdes.enrile@email.com", "+639216234567", "Female", "Hotel Manager", 60000, 1981, "Boracay", true),
-            ("MBR-047", "Ronald", "Recto", "Pedro", "ronald.recto@email.com", "+639217234567", "Male", "Chef", 40000, 1978, "Tagaytay", true),
-            ("MBR-048", "Dina", "Sotto", null, "dina.sotto@email.com", "+639218234567", "Female", "Florist", 18000, 1986, "Baguio", true),
-            ("MBR-049", "Tomas", "Binay", "Jose", "tomas.binay@email.com", "+639219234567", "Male", "Guwardiya", 15000, 1977, "Makati", true),
-            ("MBR-050", "Cynthia", "Cayetano", null, "cynthia.cayetano@email.com", "+639220234567", "Female", "Real Estate Agent", 75000, 1980, "Taguig", true),
+            ("MBR-046", "Lourdes", "Enrile", null, "lourdes.enrile@email.com", "+639216234567", "Female", "Hotel Manager", 60000, 1981, true),
+            ("MBR-047", "Ronald", "Recto", "Pedro", "ronald.recto@email.com", "+639217234567", "Male", "Chef", 40000, 1978, true),
+            ("MBR-048", "Dina", "Sotto", null, "dina.sotto@email.com", "+639218234567", "Female", "Florist", 18000, 1986, true),
+            ("MBR-049", "Tomas", "Binay", "Jose", "tomas.binay@email.com", "+639219234567", "Male", "Guwardiya", 15000, 1977, true),
+            ("MBR-050", "Cynthia", "Cayetano", null, "cynthia.cayetano@email.com", "+639220234567", "Female", "Real Estate Agent", 75000, 1980, true),
             
             // Additional 50 members for comprehensive testing
-            ("MBR-051", "Benjamin", "Legaspi", "Ramon", "benjamin.legaspi@email.com", "+639221234567", "Male", "Magsasaka", 14000, 1976, "Pampanga", true),
-            ("MBR-052", "Teresita", "Maceda", null, "teresita.maceda@email.com", "+639222234567", "Female", "Magsasaka", 11000, 1982, "Tarlac", true),
-            ("MBR-053", "Artemio", "Ventura", "Carlos", "artemio.ventura@email.com", "+639223234567", "Male", "Mangingisda", 13000, 1979, "Bataan", true),
-            ("MBR-054", "Florinda", "Pascua", null, "florinda.pascua@email.com", "+639224234567", "Female", "Mangingisda", 12000, 1985, "Zambales", true),
-            ("MBR-055", "Gregorio", "Abad", "Manuel", "gregorio.abad@email.com", "+639225234567", "Male", "Magsasaka", 15000, 1973, "Cagayan", true),
+            ("MBR-051", "Benjamin", "Legaspi", "Ramon", "benjamin.legaspi@email.com", "+639221234567", "Male", "Magsasaka", 14000, 1976, true),
+            ("MBR-052", "Teresita", "Maceda", null, "teresita.maceda@email.com", "+639222234567", "Female", "Magsasaka", 11000, 1982, true),
+            ("MBR-053", "Artemio", "Ventura", "Carlos", "artemio.ventura@email.com", "+639223234567", "Male", "Mangingisda", 13000, 1979, true),
+            ("MBR-054", "Florinda", "Pascua", null, "florinda.pascua@email.com", "+639224234567", "Female", "Mangingisda", 12000, 1985, true),
+            ("MBR-055", "Gregorio", "Abad", "Manuel", "gregorio.abad@email.com", "+639225234567", "Male", "Magsasaka", 15000, 1973, true),
             
-            ("MBR-056", "Corazon", "Diokno", null, "corazon.diokno@email.com", "+639226234567", "Female", "Guro", 26000, 1988, "Laguna", true),
+            ("MBR-056", "Corazon", "Diokno", null, "corazon.diokno@email.com", "+639226234567", "Female", "Guro", 26000, 1988, true),
             ("MBR-057", "Feliciano", "Sison", "Andres", "feliciano.sison@email.com", "+639227234567", "Male", "Guro", 27000, 1986, "Batangas", true),
             ("MBR-058", "Dolores", "Palma", null, "dolores.palma@email.com", "+639228234567", "Female", "Librarian", 24000, 1981, "Cavite", true),
             ("MBR-059", "Herminio", "Cojuangco", "Luis", "herminio.cojuangco@email.com", "+639229234567", "Male", "School Administrator", 55000, 1974, "Manila", true),
@@ -368,11 +368,7 @@ internal static class MemberSeeder
                 phoneNumber: m.Phone,
                 dateOfBirth: new DateOnly(m.BirthYear, 1, 15 + (i % 15)),
                 gender: m.Gender,
-                address: $"{100 + i} Main Street",
-                city: m.City,
-                state: "Central State",
-                postalCode: $"{10000 + i}",
-                country: "Philippines",
+                address: $"{100 + i} Main Street, Philippines",
                 nationalId: $"NAT-{m.Num}",
                 occupation: m.Occupation,
                 monthlyIncome: m.Income,

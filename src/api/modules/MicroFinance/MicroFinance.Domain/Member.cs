@@ -70,18 +70,6 @@ public class Member : AuditableEntity, IAggregateRoot
     /// <summary>Maximum length for address field. (2^9 = 512)</summary>
     public const int AddressMaxLength = 512;
 
-    /// <summary>Maximum length for city field. (2^7 = 128)</summary>
-    public const int CityMaxLength = 128;
-
-    /// <summary>Maximum length for state/province field. (2^7 = 128)</summary>
-    public const int StateMaxLength = 128;
-
-    /// <summary>Maximum length for postal code field. (2^5 = 32)</summary>
-    public const int PostalCodeMaxLength = 32;
-
-    /// <summary>Maximum length for country field. (2^7 = 128)</summary>
-    public const int CountryMaxLength = 128;
-
     /// <summary>Maximum length for national ID field. (2^6 = 64)</summary>
     public const int NationalIdMaxLength = 64;
 
@@ -132,18 +120,6 @@ public class Member : AuditableEntity, IAggregateRoot
     /// <summary>Gets the member's address.</summary>
     public string? Address { get; private set; }
 
-    /// <summary>Gets the member's city.</summary>
-    public string? City { get; private set; }
-
-    /// <summary>Gets the member's state or province.</summary>
-    public string? State { get; private set; }
-
-    /// <summary>Gets the member's postal code.</summary>
-    public string? PostalCode { get; private set; }
-
-    /// <summary>Gets the member's country.</summary>
-    public string? Country { get; private set; }
-
     /// <summary>Gets the member's national ID number.</summary>
     public string? NationalId { get; private set; }
 
@@ -178,10 +154,6 @@ public class Member : AuditableEntity, IAggregateRoot
         DateOnly? dateOfBirth,
         string? gender,
         string? address,
-        string? city,
-        string? state,
-        string? postalCode,
-        string? country,
         string? nationalId,
         string? occupation,
         decimal? monthlyIncome,
@@ -198,10 +170,6 @@ public class Member : AuditableEntity, IAggregateRoot
         DateOfBirth = dateOfBirth;
         Gender = gender?.Trim();
         Address = address?.Trim();
-        City = city?.Trim();
-        State = state?.Trim();
-        PostalCode = postalCode?.Trim();
-        Country = country?.Trim();
         NationalId = nationalId?.Trim();
         Occupation = occupation?.Trim();
         MonthlyIncome = monthlyIncome;
@@ -225,10 +193,6 @@ public class Member : AuditableEntity, IAggregateRoot
         DateOnly? dateOfBirth = null,
         string? gender = null,
         string? address = null,
-        string? city = null,
-        string? state = null,
-        string? postalCode = null,
-        string? country = null,
         string? nationalId = null,
         string? occupation = null,
         decimal? monthlyIncome = null,
@@ -246,10 +210,6 @@ public class Member : AuditableEntity, IAggregateRoot
             dateOfBirth,
             gender,
             address,
-            city,
-            state,
-            postalCode,
-            country,
             nationalId,
             occupation,
             monthlyIncome,
@@ -269,10 +229,6 @@ public class Member : AuditableEntity, IAggregateRoot
         DateOnly? dateOfBirth,
         string? gender,
         string? address,
-        string? city,
-        string? state,
-        string? postalCode,
-        string? country,
         string? nationalId,
         string? occupation,
         decimal? monthlyIncome,
