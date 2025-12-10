@@ -1,0 +1,126 @@
+@using MudBlazor
+
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            The Member Dashboard provides a comprehensive view of a member's complete financial relationship with the institution.
+        </MudText>
+
+        <MudExpansionPanels>
+            <MudExpansionPanel Text="Overview Section">
+                <MudText Typo="Typo.body2">
+                    <strong>Net Worth:</strong> Total assets minus total liabilities - indicates overall financial position.
+                    <br /><br />
+                    <strong>Total Assets:</strong> Sum of savings balances, share value, and fixed deposits.
+                    <br /><br />
+                    <strong>Total Liabilities:</strong> Outstanding loan principal and interest.
+                    <br /><br />
+                    <strong>Credit Score:</strong> Based on repayment history - higher is better (0-100%).
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Loan Portfolio">
+                <MudText Typo="Typo.body2">
+                    <strong>Active Loans:</strong> Number of loans currently being repaid.
+                    <br /><br />
+                    <strong>Outstanding Amount:</strong> Total principal and interest remaining to be paid.
+                    <br /><br />
+                    <strong>Total Repaid:</strong> Lifetime repayments made by this member.
+                    <br /><br />
+                    <strong>Days Overdue:</strong> If greater than 0, indicates late payment on current installment.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Savings Portfolio">
+                <MudText Typo="Typo.body2">
+                    <strong>Total Balance:</strong> Combined balance across all savings accounts.
+                    <br /><br />
+                    <strong>Interest Earned:</strong> Total interest credited to savings accounts.
+                    <br /><br />
+                    <strong>Account Types:</strong> Regular savings, emergency funds, compulsory savings, etc.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Share Holdings">
+                <MudText Typo="Typo.body2">
+                    <strong>Total Shares:</strong> Number of shares owned by the member.
+                    <br /><br />
+                    <strong>Share Value:</strong> Current market value of share holdings.
+                    <br /><br />
+                    <strong>Dividends:</strong> Total dividends earned from share ownership.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Fixed Deposits">
+                <MudText Typo="Typo.body2">
+                    <strong>Active Deposits:</strong> Fixed deposits currently earning interest.
+                    <br /><br />
+                    <strong>Total Principal:</strong> Amount deposited in fixed-term instruments.
+                    <br /><br />
+                    <strong>Days to Maturity:</strong> Remaining days until deposit matures.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Repayment Performance">
+                <MudText Typo="Typo.body2">
+                    <strong>On-Time Rate:</strong> Percentage of payments made before or on due date.
+                    <br /><br />
+                    <strong>Late Payments:</strong> Number of payments made after due date.
+                    <br /><br />
+                    <strong>Performance Trend:</strong> Monthly breakdown of repayment behavior.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Credit Indicators">
+                <MudText Typo="Typo.body2">
+                    <strong>Risk Category:</strong>
+                    <ul style="margin-left: 20px;">
+                        <li>Low Risk: Score ≥ 90%</li>
+                        <li>Medium Risk: Score 70-89%</li>
+                        <li>High Risk: Score 50-69%</li>
+                        <li>Very High Risk: Score &lt; 50%</li>
+                    </ul>
+                    <br />
+                    <strong>Debt to Income:</strong> Ratio of active debt to annual income - lower is better.
+                    <br /><br />
+                    <strong>Loan Eligibility:</strong> Whether member qualifies for new loan based on:
+                    <ul style="margin-left: 20px;">
+                        <li>Active membership status</li>
+                        <li>Credit score ≥ 70%</li>
+                        <li>No defaulted loans</li>
+                        <li>DTI ratio &lt; 50%</li>
+                    </ul>
+                    <br />
+                    <strong>Max Eligible Amount:</strong> Maximum loan amount member can borrow based on income.
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Upcoming Payments">
+                <MudText Typo="Typo.body2">
+                    <strong>Due Date:</strong> Date when payment is expected.
+                    <br /><br />
+                    <strong>Days Until Due:</strong> Countdown to payment date.
+                    <ul style="margin-left: 20px;">
+                        <li><MudChip T="string" Color="MudBlazor.Color.Error" Size="MudBlazor.Size.Small">≤ 7 days</MudChip> - Urgent</li>
+                        <li><MudChip T="string" Color="MudBlazor.Color.Warning" Size="MudBlazor.Size.Small">8-14 days</MudChip> - Soon</li>
+                        <li><MudChip T="string" Color="MudBlazor.Color.Info" Size="MudBlazor.Size.Small">&gt; 14 days</MudChip> - Upcoming</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+
+        <MudAlert Severity="Severity.Info" Class="mt-4">
+            <strong>Tip:</strong> Click "Refresh" to get the latest data. Dashboard data is cached for 5 minutes for performance.
+        </MudAlert>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="MudBlazor.Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private void Close() => MudDialog.Close();
+}

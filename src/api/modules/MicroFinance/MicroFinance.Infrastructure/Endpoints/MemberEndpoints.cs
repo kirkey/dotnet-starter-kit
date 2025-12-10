@@ -1,6 +1,7 @@
 using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Create.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Members.Dashboard;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Delete.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Members.Get.v1;
@@ -20,6 +21,7 @@ public class MemberEndpoints : CarterModule
     private const string DeactivateMember = "DeactivateMember";
     private const string DeleteMember = "DeleteMember";
     private const string GetMember = "GetMember";
+    private const string GetMemberDashboard = "GetMemberDashboard";
     private const string SearchMembers = "SearchMembers";
     private const string UpdateMember = "UpdateMember";
 
@@ -109,6 +111,17 @@ public class MemberEndpoints : CarterModule
             .WithSummary("Deactivates an active member")
             .Produces<DeactivateMemberResponse>()
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        membersGroup.MapGet("/{id:guid}/dashboard", async (DefaultIdType id, ISender sender) =>
+            {
+                var response = await sender.Send(new GetMemberDashboardQuery(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(GetMemberDashboard)
+            .WithSummary("Gets comprehensive member dashboard analytics")
+            .Produces<MemberDashboardResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
     }
 }
