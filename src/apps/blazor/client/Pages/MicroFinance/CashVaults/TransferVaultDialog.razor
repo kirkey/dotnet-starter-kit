@@ -61,7 +61,7 @@
     public DefaultIdType SourceVaultId { get; set; }
 
     [Parameter]
-    public Func<Guid, decimal, string?, Task>? OnConfirm { get; set; }
+    public Func<DefaultIdType, decimal, string?, Task>? OnConfirm { get; set; }
 
     private DefaultIdType _targetVaultId;
     private decimal _amount;

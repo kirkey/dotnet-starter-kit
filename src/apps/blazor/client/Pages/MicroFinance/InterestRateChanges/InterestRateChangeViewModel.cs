@@ -14,7 +14,7 @@ public class InterestRateChangeViewModel
     /// <summary>
     /// The loan whose rate is being changed.
     /// </summary>
-    public Guid LoanId { get; set; }
+    public DefaultIdType LoanId { get; set; }
     
     /// <summary>
     /// Reference number for the rate change.

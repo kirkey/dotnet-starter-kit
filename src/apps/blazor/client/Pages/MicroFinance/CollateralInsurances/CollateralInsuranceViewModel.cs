@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollateralInsurances;
 
 public class CollateralInsuranceViewModel
 {
-    public Guid CollateralId { get; set; }
+    public DefaultIdType CollateralId { get; set; }
     public string PolicyNumber { get; set; } = string.Empty;
     public string InsurerName { get; set; } = string.Empty;
     public string InsuranceType { get; set; } = string.Empty;

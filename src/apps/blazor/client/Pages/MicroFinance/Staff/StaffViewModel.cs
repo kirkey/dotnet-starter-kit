@@ -51,16 +51,7 @@ public class StaffViewModel
     /// <summary>
     /// Date the staff member joined the organization.
     /// </summary>
-    public DateOnly? DateJoined { get; set; }
-
-    /// <summary>
-    /// DateTime wrapper for DateJoined to work with MudDatePicker.
-    /// </summary>
-    public DateTime? DateJoinedDate
-    {
-        get => DateJoined?.ToDateTime(TimeOnly.MinValue);
-        set => DateJoined = value.HasValue ? DateOnly.FromDateTime(value.Value) : null;
-    }
+    public DateTime? DateJoined { get; set; }
 
     /// <summary>
     /// Current status of the staff member.

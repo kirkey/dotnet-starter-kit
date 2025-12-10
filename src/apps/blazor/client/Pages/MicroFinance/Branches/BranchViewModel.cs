@@ -2,7 +2,7 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Branches;
 
 /// <summary>
 /// ViewModel used by the Branches page for add/edit operations.
-/// Mirrors the shape of the API's CreateBranchCommand and UpdateBranchCommand.
+/// Extends UpdateBranchCommand to follow the pattern used in Product and Catalog pages.
 /// </summary>
 public class BranchViewModel
 {
@@ -27,9 +27,14 @@ public class BranchViewModel
     public string? BranchType { get; set; }
 
     /// <summary>
+    /// Branch status: "Pending", "Active", "Inactive", "Closed".
+    /// </summary>
+    public string? Status { get; set; }
+
+    /// <summary>
     /// Parent branch ID for hierarchical structure.
     /// </summary>
-    public Guid? ParentBranchId { get; set; }
+    public DefaultIdType? ParentBranchId { get; set; }
 
     /// <summary>
     /// Physical address of the branch.
@@ -47,18 +52,49 @@ public class BranchViewModel
     public string? Email { get; set; }
 
     /// <summary>
+    /// Manager name.
+    /// </summary>
+    public string? ManagerName { get; set; }
+
+    /// <summary>
+    /// Manager phone number.
+    /// </summary>
+    public string? ManagerPhone { get; set; }
+
+    /// <summary>
+    /// Manager email address.
+    /// </summary>
+    public string? ManagerEmail { get; set; }
+
+    /// <summary>
     /// Branch opening date.
     /// </summary>
     public DateOnly? OpeningDate { get; set; }
 
     /// <summary>
-    /// DateTime wrapper for OpeningDate to work with MudDatePicker.
+    /// Branch closing date.
     /// </summary>
-    public DateTime? OpeningDateDate
-    {
-        get => OpeningDate?.ToDateTime(TimeOnly.MinValue);
-        set => OpeningDate = value.HasValue ? DateOnly.FromDateTime(value.Value) : null;
-    }
+    public DateOnly? ClosingDate { get; set; }
+
+    /// <summary>
+    /// Latitude coordinate.
+    /// </summary>
+    public decimal? Latitude { get; set; }
+
+    /// <summary>
+    /// Longitude coordinate.
+    /// </summary>
+    public decimal? Longitude { get; set; }
+
+    /// <summary>
+    /// Operating hours description.
+    /// </summary>
+    public string? OperatingHours { get; set; }
+
+    /// <summary>
+    /// Branch timezone.
+    /// </summary>
+    public string? Timezone { get; set; }
 
     /// <summary>
     /// Cash holding limit for the branch.

@@ -9,7 +9,7 @@ public class ApprovalWorkflowViewModel
     public string? Description { get; set; }
     public decimal? MinAmount { get; set; }
     public decimal? MaxAmount { get; set; }
-    public Guid? BranchId { get; set; }
+    public DefaultIdType? BranchId { get; set; }
     public bool IsSequential { get; set; } = true;
     public int Priority { get; set; } = 1;
 }

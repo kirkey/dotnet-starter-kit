@@ -5,7 +5,7 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanOfficerTargets;
 /// </summary>
 public class LoanOfficerTargetViewModel
 {
-    public Guid StaffId { get; set; }
+    public DefaultIdType StaffId { get; set; }
     public string TargetType { get; set; } = string.Empty;
     public string? Description { get; set; }
     public string Period { get; set; } = string.Empty;

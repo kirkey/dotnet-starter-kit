@@ -6,7 +6,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Hr.Payrolls;
 /// </summary>
 public class PayrollViewModel
 {
-    public Guid Id { get; set; }
+    public DefaultIdType Id { get; set; }
     public DateTime? StartDate { get; set; } = DateTime.Today.AddDays(-(DateTime.Today.Day - 1)); // First of current month
     public DateTime? EndDate { get; set; } = DateTime.Today.AddMonths(1).AddDays(-DateTime.Today.Day); // Last of current month
     public string PayFrequency { get; set; } = "Monthly";

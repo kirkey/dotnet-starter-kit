@@ -2,8 +2,8 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollectionActions;
 
 public class CollectionActionViewModel
 {
-    public Guid CollectionCaseId { get; set; }
-    public Guid LoanId { get; set; }
+    public DefaultIdType CollectionCaseId { get; set; }
+    public DefaultIdType LoanId { get; set; }
     public string ActionType { get; set; } = string.Empty;
     public DateTime ActionDateTime { get; set; } = DateTime.Now;
     public string? ContactMethod { get; set; }

@@ -14,12 +14,12 @@ public class TellerSessionViewModel
     /// <summary>
     /// Branch where the session is opened.
     /// </summary>
-    public Guid BranchId { get; set; }
+    public DefaultIdType BranchId { get; set; }
     
     /// <summary>
     /// Cash vault being used for the session.
     /// </summary>
-    public Guid CashVaultId { get; set; }
+    public DefaultIdType CashVaultId { get; set; }
     
     /// <summary>
     /// Session number for identification.
@@ -29,7 +29,7 @@ public class TellerSessionViewModel
     /// <summary>
     /// User ID of the teller.
     /// </summary>
-    public Guid TellerUserId { get; set; }
+    public DefaultIdType TellerUserId { get; set; }
     
     /// <summary>
     /// Name of the teller.

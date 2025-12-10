@@ -11,7 +11,7 @@ public class AgentBankingViewModel
     public decimal DailyTransactionLimit { get; set; }
     public decimal MonthlyTransactionLimit { get; set; }
     public DateTimeOffset ContractStartDate { get; set; }
-    public Guid? BranchId { get; set; }
+    public DefaultIdType? BranchId { get; set; }
     public string? Email { get; set; }
     public string? GpsCoordinates { get; set; }
     public string? OperatingHours { get; set; }

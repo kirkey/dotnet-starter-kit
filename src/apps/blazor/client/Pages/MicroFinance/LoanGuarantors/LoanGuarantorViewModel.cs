@@ -14,12 +14,12 @@ public class LoanGuarantorViewModel
     /// <summary>
     /// The loan being guaranteed.
     /// </summary>
-    public Guid LoanId { get; set; }
+    public DefaultIdType LoanId { get; set; }
     
     /// <summary>
     /// The member providing the guarantee.
     /// </summary>
-    public Guid GuarantorMemberId { get; set; }
+    public DefaultIdType GuarantorMemberId { get; set; }
     
     /// <summary>
     /// Amount guaranteed by this guarantor.

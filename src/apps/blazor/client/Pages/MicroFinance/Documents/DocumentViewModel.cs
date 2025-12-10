@@ -5,7 +5,7 @@ public class DocumentViewModel
     public string? Name { get; set; }
     public string? DocumentType { get; set; }
     public string? EntityType { get; set; }
-    public Guid EntityId { get; set; }
+    public DefaultIdType EntityId { get; set; }
     public string? FilePath { get; set; }
     public long FileSizeBytes { get; set; }
     public string? MimeType { get; set; }

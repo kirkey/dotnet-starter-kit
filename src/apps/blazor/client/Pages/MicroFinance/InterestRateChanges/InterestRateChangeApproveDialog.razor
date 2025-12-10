@@ -51,7 +51,7 @@
             var command = new ApproveInterestRateChangeCommand
             {
                 Id = RateChangeId,
-                ApprovedByUserId = Guid.NewGuid(), // TODO: Get from current user
+                ApprovedByUserId = DefaultIdType.NewGuid(), // TODO: Get from current user
                 ApproverName = "Current User" // TODO: Get from current user
             };
             await Client.ApproveInterestRateChangeAsync("1", RateChangeId, command).ConfigureAwait(false);

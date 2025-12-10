@@ -2,10 +2,10 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LegalActions;
 
 public class LegalActionViewModel
 {
-    public Guid Id { get; set; }
-    public Guid CollectionCaseId { get; set; }
-    public Guid LoanId { get; set; }
-    public Guid MemberId { get; set; }
+    public DefaultIdType Id { get; set; }
+    public DefaultIdType CollectionCaseId { get; set; }
+    public DefaultIdType LoanId { get; set; }
+    public DefaultIdType MemberId { get; set; }
     public string? CaseReference { get; set; }
     public string? ActionType { get; set; }
     public string? Status { get; set; }

@@ -2,11 +2,11 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.DebtSettlements;
 
 public class DebtSettlementViewModel
 {
-    public Guid Id { get; set; }
+    public DefaultIdType Id { get; set; }
     public string? ReferenceNumber { get; set; }
-    public Guid CollectionCaseId { get; set; }
-    public Guid LoanId { get; set; }
-    public Guid MemberId { get; set; }
+    public DefaultIdType CollectionCaseId { get; set; }
+    public DefaultIdType LoanId { get; set; }
+    public DefaultIdType MemberId { get; set; }
     public string? SettlementType { get; set; }
     public string? Status { get; set; }
     public decimal OriginalOutstanding { get; set; }

@@ -302,7 +302,7 @@ public partial class CashVaults
         var parameters = new DialogParameters
         {
             { "SourceVaultId", sourceVaultId },
-            { "OnConfirm", new Func<Guid, decimal, string?, Task>(async (targetVaultId, amount, denominationBreakdown) =>
+            { "OnConfirm", new Func<DefaultIdType, decimal, string?, Task>(async (targetVaultId, amount, denominationBreakdown) =>
                 {
                     var command = new TransferToVaultCommand
                     {

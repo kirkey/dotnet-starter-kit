@@ -14,7 +14,7 @@ public class MobileWalletViewModel
     /// <summary>
     /// The member who owns the wallet.
     /// </summary>
-    public Guid MemberId { get; set; }
+    public DefaultIdType MemberId { get; set; }
     
     /// <summary>
     /// Phone number linked to the wallet.

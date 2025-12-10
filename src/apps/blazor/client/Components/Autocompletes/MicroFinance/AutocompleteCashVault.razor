@@ -28,19 +28,19 @@
     /// Gets or sets the selected vault ID (Guid).
     /// </summary>
     [Parameter]
-    public Guid Value { get; set; }
+    public DefaultIdType Value { get; set; }
 
     /// <summary>
     /// Gets or sets the callback when value changes.
     /// </summary>
     [Parameter]
-    public EventCallback<Guid> ValueChanged { get; set; }
+    public EventCallback<DefaultIdType> ValueChanged { get; set; }
 
     /// <summary>
     /// Expression for validation.
     /// </summary>
     [Parameter]
-    public Expression<Func<Guid>>? For { get; set; }
+    public Expression<Func<DefaultIdType>>? For { get; set; }
 
     /// <summary>
     /// Gets or sets the label text.
@@ -112,7 +112,7 @@
     /// Vault ID to exclude from the list (useful when selecting transfer target).
     /// </summary>
     [Parameter]
-    public Guid? ExcludeVaultId { get; set; }
+    public DefaultIdType? ExcludeVaultId { get; set; }
 
     /// <summary>
     /// List of available vaults to select from.
@@ -130,7 +130,7 @@
         }
         
         // Load the vault if we have a value but no selected vault
-        if (Value != Guid.Empty && (_selectedVault == null || _selectedVault.Id != Value))
+        if (Value != DefaultIdType.Empty && (_selectedVault == null || _selectedVault.Id != Value))
         {
             // First check if it's in our available vaults
             _selectedVault = _availableVaults.FirstOrDefault(v => v.Id == Value);
@@ -148,7 +148,7 @@
                 }
             }
         }
-        else if (Value == Guid.Empty)
+        else if (Value == DefaultIdType.Empty)
         {
             _selectedVault = null;
         }
@@ -157,7 +157,7 @@
     private async Task OnVaultSelected(CashVaultResponse? vault)
     {
         _selectedVault = vault;
-        var newValue = vault?.Id ?? Guid.Empty;
+        var newValue = vault?.Id ?? DefaultIdType.Empty;
         if (Value != newValue)
         {
             Value = newValue;

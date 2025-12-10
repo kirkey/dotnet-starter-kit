@@ -2,9 +2,9 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InvestmentTransactions;
 
 public class InvestmentTransactionViewModel
 {
-    public Guid Id { get; set; }
-    public Guid InvestmentAccountId { get; set; }
-    public Guid ProductId { get; set; }
+    public DefaultIdType Id { get; set; }
+    public DefaultIdType InvestmentAccountId { get; set; }
+    public DefaultIdType ProductId { get; set; }
     public string? TransactionReference { get; set; }
     public string? TransactionType { get; set; }
     public string? Status { get; set; }

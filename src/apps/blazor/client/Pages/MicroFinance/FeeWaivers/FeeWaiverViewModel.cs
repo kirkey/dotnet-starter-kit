@@ -14,7 +14,7 @@ public class FeeWaiverViewModel
     /// <summary>
     /// The fee charge being waived.
     /// </summary>
-    public Guid FeeChargeId { get; set; }
+    public DefaultIdType FeeChargeId { get; set; }
     
     /// <summary>
     /// Reference number for the waiver.

@@ -55,7 +55,7 @@ public partial class BankAccounts
                 {
                     PageNumber = filter.PageNumber,
                     PageSize = filter.PageSize,
-                    EmployeeId = !string.IsNullOrEmpty(FilterEmployeeId) ? Guid.Parse(FilterEmployeeId) : null
+                    EmployeeId = !string.IsNullOrEmpty(FilterEmployeeId) ? DefaultIdType.Parse(FilterEmployeeId) : null
                 };
                 var result = await Client.SearchBankAccountsEndpointAsync("1", request);
                 return result.Adapt<PaginationResponse<BankAccountResponse>>();

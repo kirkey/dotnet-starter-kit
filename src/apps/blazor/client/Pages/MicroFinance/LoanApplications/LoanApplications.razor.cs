@@ -280,7 +280,7 @@ public partial class LoanApplications
     /// </summary>
     private async Task ConfirmAssign()
     {
-        if (string.IsNullOrWhiteSpace(_assignOfficerId) || !Guid.TryParse(_assignOfficerId, out var officerId))
+        if (string.IsNullOrWhiteSpace(_assignOfficerId) || !DefaultIdType.TryParse(_assignOfficerId, out var officerId))
         {
             Snackbar.Add("Please enter a valid Officer ID.", Severity.Warning);
             return;

@@ -14,7 +14,7 @@ public class FeePaymentViewModel
     /// <summary>
     /// The fee charge being paid.
     /// </summary>
-    public Guid FeeChargeId { get; set; }
+    public DefaultIdType FeeChargeId { get; set; }
     
     /// <summary>
     /// Reference number for the payment.
@@ -44,12 +44,12 @@ public class FeePaymentViewModel
     /// <summary>
     /// Optional - linked loan repayment.
     /// </summary>
-    public Guid? LoanRepaymentId { get; set; }
+    public DefaultIdType? LoanRepaymentId { get; set; }
     
     /// <summary>
     /// Optional - linked savings transaction.
     /// </summary>
-    public Guid? SavingsTransactionId { get; set; }
+    public DefaultIdType? SavingsTransactionId { get; set; }
     
     /// <summary>
     /// Additional notes.

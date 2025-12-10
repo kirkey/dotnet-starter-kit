@@ -5,7 +5,7 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanWriteOffs;
 /// </summary>
 public class LoanWriteOffViewModel
 {
-    public Guid LoanId { get; set; }
+    public DefaultIdType LoanId { get; set; }
     public string WriteOffType { get; set; } = string.Empty;
     public string? Reason { get; set; }
     public DateTimeOffset RequestDate { get; set; } = DateTimeOffset.Now;

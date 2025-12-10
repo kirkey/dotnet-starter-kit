@@ -5,15 +5,15 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanOfficerAssignments;
 /// </summary>
 public class LoanOfficerAssignmentViewModel
 {
-    public Guid StaffId { get; set; }
+    public DefaultIdType StaffId { get; set; }
     public string AssignmentType { get; set; } = string.Empty;
-    public Guid? MemberId { get; set; }
-    public Guid? MemberGroupId { get; set; }
-    public Guid? LoanId { get; set; }
-    public Guid? BranchId { get; set; }
+    public DefaultIdType? MemberId { get; set; }
+    public DefaultIdType? MemberGroupId { get; set; }
+    public DefaultIdType? LoanId { get; set; }
+    public DefaultIdType? BranchId { get; set; }
     public DateTimeOffset AssignmentDate { get; set; } = DateTimeOffset.Now;
     public DateTimeOffset? EndDate { get; set; }
-    public Guid? PreviousStaffId { get; set; }
+    public DefaultIdType? PreviousStaffId { get; set; }
     public string? Reason { get; set; }
     public bool IsPrimary { get; set; }
 }

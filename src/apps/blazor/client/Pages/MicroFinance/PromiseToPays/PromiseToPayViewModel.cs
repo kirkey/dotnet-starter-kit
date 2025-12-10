@@ -2,10 +2,10 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.PromiseToPays;
 
 public class PromiseToPayViewModel
 {
-    public Guid Id { get; set; }
-    public Guid CollectionCaseId { get; set; }
-    public Guid LoanId { get; set; }
-    public Guid MemberId { get; set; }
+    public DefaultIdType Id { get; set; }
+    public DefaultIdType CollectionCaseId { get; set; }
+    public DefaultIdType LoanId { get; set; }
+    public DefaultIdType MemberId { get; set; }
     public DateTime PromiseDate { get; set; } = DateTime.Today;
     public DateTime PromisedPaymentDate { get; set; } = DateTime.Today.AddDays(7);
     public decimal PromisedAmount { get; set; }

@@ -133,7 +133,7 @@ public partial class Staff
             },
             getDefaultsFunc: async () => await Task.FromResult(new StaffViewModel
             {
-                DateJoined = DateOnly.FromDateTime(DateTime.Today),
+                DateJoined = DateTime.Today,
                 Status = "Active"
             }),
             entityName: "Staff",

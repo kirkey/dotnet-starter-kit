@@ -40,7 +40,7 @@ public partial class EmployeeEducations
                 var result = await Client.SearchEmployeeEducationsEndpointAsync("1", request);
                 
                 // Filter by EmployeeId if provided
-                if (!string.IsNullOrEmpty(FilterEmployeeId) && Guid.TryParse(FilterEmployeeId, out var employeeGuid))
+                if (!string.IsNullOrEmpty(FilterEmployeeId) && DefaultIdType.TryParse(FilterEmployeeId, out var employeeGuid))
                 {
                     result.Items = result.Items?.Where(e => e.EmployeeId == employeeGuid).ToList() ?? [];
                     result.TotalCount = result.Items.Count;

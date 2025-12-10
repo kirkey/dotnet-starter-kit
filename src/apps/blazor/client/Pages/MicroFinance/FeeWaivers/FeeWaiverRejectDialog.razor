@@ -58,7 +58,7 @@
             var command = new RejectFeeWaiverCommand
             {
                 Id = WaiverId,
-                RejectedByUserId = Guid.NewGuid(), // TODO: Get from current user
+                RejectedByUserId = DefaultIdType.NewGuid(), // TODO: Get from current user
                 RejectorName = "Current User", // TODO: Get from current user
                 Reason = _reason!
             };

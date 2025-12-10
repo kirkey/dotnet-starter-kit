@@ -2,8 +2,8 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.RiskIndicators;
 
 public class RiskIndicatorViewModel
 {
-    public Guid Id { get; set; }
-    public Guid RiskCategoryId { get; set; }
+    public DefaultIdType Id { get; set; }
+    public DefaultIdType RiskCategoryId { get; set; }
     public string? Code { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }

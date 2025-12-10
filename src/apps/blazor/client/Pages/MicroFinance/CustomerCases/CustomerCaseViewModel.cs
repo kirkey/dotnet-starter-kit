@@ -3,7 +3,7 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CustomerCases;
 public class CustomerCaseViewModel
 {
     public string? CaseNumber { get; set; }
-    public Guid MemberId { get; set; }
+    public DefaultIdType MemberId { get; set; }
     public string? Subject { get; set; }
     public string? Category { get; set; }
     public string? Description { get; set; }

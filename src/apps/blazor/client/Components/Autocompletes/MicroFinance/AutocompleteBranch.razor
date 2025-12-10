@@ -27,19 +27,19 @@
     /// Gets or sets the selected branch ID (Guid).
     /// </summary>
     [Parameter]
-    public Guid Value { get; set; }
+    public DefaultIdType Value { get; set; }
 
     /// <summary>
     /// Gets or sets the callback when value changes.
     /// </summary>
     [Parameter]
-    public EventCallback<Guid> ValueChanged { get; set; }
+    public EventCallback<DefaultIdType> ValueChanged { get; set; }
 
     /// <summary>
     /// Expression for validation.
     /// </summary>
     [Parameter]
-    public Expression<Func<Guid>>? For { get; set; }
+    public Expression<Func<DefaultIdType>>? For { get; set; }
 
     /// <summary>
     /// Gets or sets the label text.
@@ -110,7 +110,7 @@
     protected override async Task OnParametersSetAsync()
     {
         // Load the branch if we have a value but no selected branch
-        if (Value != Guid.Empty && (_selectedBranch == null || _selectedBranch.Id != Value))
+        if (Value != DefaultIdType.Empty && (_selectedBranch == null || _selectedBranch.Id != Value))
         {
             try
             {
@@ -133,7 +133,7 @@
                 _selectedBranch = null;
             }
         }
-        else if (Value == Guid.Empty)
+        else if (Value == DefaultIdType.Empty)
         {
             _selectedBranch = null;
         }
@@ -142,7 +142,7 @@
     private async Task OnBranchSelected(BranchSummaryResponse? branch)
     {
         _selectedBranch = branch;
-        var newValue = branch?.Id ?? Guid.Empty;
+        var newValue = branch?.Id ?? DefaultIdType.Empty;
         if (Value != newValue)
         {
             Value = newValue;

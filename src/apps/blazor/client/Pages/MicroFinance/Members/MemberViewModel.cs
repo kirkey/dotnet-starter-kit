@@ -45,16 +45,7 @@ public class MemberViewModel
     /// <summary>
     /// Member's date of birth.
     /// </summary>
-    public DateOnly? DateOfBirth { get; set; }
-
-    /// <summary>
-    /// DateTime wrapper for DateOfBirth to work with MudDatePicker.
-    /// </summary>
-    public DateTime? DateOfBirthDate
-    {
-        get => DateOfBirth?.ToDateTime(TimeOnly.MinValue);
-        set => DateOfBirth = value.HasValue ? DateOnly.FromDateTime(value.Value) : null;
-    }
+    public DateTime? DateOfBirth { get; set; }
 
     /// <summary>
     /// Member's gender. Values: "Male", "Female", "Other".
@@ -84,16 +75,7 @@ public class MemberViewModel
     /// <summary>
     /// Date the member joined the microfinance institution.
     /// </summary>
-    public DateOnly? JoinDate { get; set; }
-
-    /// <summary>
-    /// DateTime wrapper for JoinDate to work with MudDatePicker.
-    /// </summary>
-    public DateTime? JoinDateDate
-    {
-        get => JoinDate?.ToDateTime(TimeOnly.MinValue);
-        set => JoinDate = value.HasValue ? DateOnly.FromDateTime(value.Value) : null;
-    }
+    public DateTime? JoinDate { get; set; }
 
     /// <summary>
     /// Additional notes or comments about the member.

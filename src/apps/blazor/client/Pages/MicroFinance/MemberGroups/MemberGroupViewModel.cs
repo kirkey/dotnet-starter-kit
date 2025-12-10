@@ -29,26 +29,17 @@ public class MemberGroupViewModel
     /// <summary>
     /// Date when the group was formed.
     /// </summary>
-    public DateOnly? FormationDate { get; set; }
-
-    /// <summary>
-    /// DateTime wrapper for FormationDate to work with MudDatePicker.
-    /// </summary>
-    public DateTime? FormationDateDate
-    {
-        get => FormationDate?.ToDateTime(TimeOnly.MinValue);
-        set => FormationDate = value.HasValue ? DateOnly.FromDateTime(value.Value) : null;
-    }
+    public DateTime? FormationDate { get; set; }
 
     /// <summary>
     /// Member ID of the group leader.
     /// </summary>
-    public Guid? LeaderMemberId { get; set; }
+    public DefaultIdType? LeaderMemberId { get; set; }
 
     /// <summary>
     /// Staff ID of the assigned loan officer.
     /// </summary>
-    public Guid? LoanOfficerId { get; set; }
+    public DefaultIdType? LoanOfficerId { get; set; }
 
     /// <summary>
     /// Physical location where the group meets.

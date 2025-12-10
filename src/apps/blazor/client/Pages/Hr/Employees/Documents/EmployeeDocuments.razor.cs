@@ -41,7 +41,7 @@ public partial class EmployeeDocuments
                 };
 
                 // Filter by EmployeeId if provided
-                if (!string.IsNullOrEmpty(FilterEmployeeId) && Guid.TryParse(FilterEmployeeId, out var employeeGuid))
+                if (!string.IsNullOrEmpty(FilterEmployeeId) && DefaultIdType.TryParse(FilterEmployeeId, out var employeeGuid))
                 {
                     request.EmployeeId = employeeGuid;
                 }
@@ -53,9 +53,9 @@ public partial class EmployeeDocuments
             {
                 var command = new CreateEmployeeDocumentCommand
                 {
-                    EmployeeId = !string.IsNullOrEmpty(FilterEmployeeId) && Guid.TryParse(FilterEmployeeId, out var empId) 
+                    EmployeeId = !string.IsNullOrEmpty(FilterEmployeeId) && DefaultIdType.TryParse(FilterEmployeeId, out var empId) 
                         ? empId 
-                        : Guid.Empty,
+                        : DefaultIdType.Empty,
                     DocumentType = document.DocumentType ?? "Other",
                     Title = document.Title ?? string.Empty,
                     IssueNumber = document.IssueNumber,

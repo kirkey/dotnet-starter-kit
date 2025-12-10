@@ -5,7 +5,7 @@ public class CollectionStrategyViewModel
     public string Code { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
-    public Guid? LoanProductId { get; set; }
+    public DefaultIdType? LoanProductId { get; set; }
     public int TriggerDaysPastDue { get; set; }
     public int? MaxDaysPastDue { get; set; }
     public decimal? MinOutstandingAmount { get; set; }

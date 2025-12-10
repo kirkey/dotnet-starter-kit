@@ -14,27 +14,27 @@ public class FeeChargeViewModel
     /// <summary>
     /// The fee definition being applied.
     /// </summary>
-    public Guid FeeDefinitionId { get; set; }
+    public DefaultIdType FeeDefinitionId { get; set; }
     
     /// <summary>
     /// The member being charged.
     /// </summary>
-    public Guid MemberId { get; set; }
+    public DefaultIdType MemberId { get; set; }
     
     /// <summary>
     /// Optional - the loan associated with this charge.
     /// </summary>
-    public Guid? LoanId { get; set; }
+    public DefaultIdType? LoanId { get; set; }
     
     /// <summary>
     /// Optional - the savings account associated with this charge.
     /// </summary>
-    public Guid? SavingsAccountId { get; set; }
+    public DefaultIdType? SavingsAccountId { get; set; }
     
     /// <summary>
     /// Optional - the share account associated with this charge.
     /// </summary>
-    public Guid? ShareAccountId { get; set; }
+    public DefaultIdType? ShareAccountId { get; set; }
     
     /// <summary>
     /// Reference number for the charge.

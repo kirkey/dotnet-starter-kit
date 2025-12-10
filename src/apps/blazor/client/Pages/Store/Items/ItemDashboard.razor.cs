@@ -7,7 +7,7 @@ namespace FSH.Starter.Blazor.Client.Pages.Store.Items;
 public partial class ItemDashboard
 {
     [Parameter]
-    public Guid Id { get; set; }
+    public DefaultIdType Id { get; set; }
 
     private List<BreadcrumbItem> _breadcrumbs = new();
     private bool _loading = true;

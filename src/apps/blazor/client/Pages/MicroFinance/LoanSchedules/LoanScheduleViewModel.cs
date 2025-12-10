@@ -14,7 +14,7 @@ public class LoanScheduleViewModel
     /// <summary>
     /// The loan this schedule belongs to.
     /// </summary>
-    public Guid LoanId { get; set; }
+    public DefaultIdType LoanId { get; set; }
     
     /// <summary>
     /// Installment number in the schedule.

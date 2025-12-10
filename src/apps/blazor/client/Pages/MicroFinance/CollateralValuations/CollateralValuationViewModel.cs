@@ -5,7 +5,7 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CollateralValuations;
 /// </summary>
 public class CollateralValuationViewModel
 {
-    public Guid CollateralId { get; set; }
+    public DefaultIdType CollateralId { get; set; }
     public DateTimeOffset ValuationDate { get; set; } = DateTimeOffset.Now;
     public DateTimeOffset? ExpiryDate { get; set; }
     public string ValuationMethod { get; set; } = string.Empty;

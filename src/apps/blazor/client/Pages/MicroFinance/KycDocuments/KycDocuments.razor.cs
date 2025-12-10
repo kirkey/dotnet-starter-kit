@@ -196,7 +196,7 @@ public partial class KycDocuments
             await ApiHelper.ExecuteCallGuardedAsync(
                 () => Client.VerifyKycDocumentAsync("1", id, new VerifyKycDocumentRequest
                 {
-                    VerifiedById = Guid.Empty, // Current user ID would be set by the API
+                    VerifiedById = DefaultIdType.Empty, // Current user ID would be set by the API
                     Notes = "Document verified through UI"
                 }),
                 successMessage: "Document verified successfully.");
@@ -239,7 +239,7 @@ public partial class KycDocuments
         await ApiHelper.ExecuteCallGuardedAsync(
             () => Client.RejectKycDocumentAsync("1", _currentDocumentId, new RejectKycDocumentRequest
             {
-                RejectedById = Guid.Empty, // Current user ID would be set by the API
+                RejectedById = DefaultIdType.Empty, // Current user ID would be set by the API
                 Reason = _rejectionReason
             }),
             successMessage: "Document rejected.");

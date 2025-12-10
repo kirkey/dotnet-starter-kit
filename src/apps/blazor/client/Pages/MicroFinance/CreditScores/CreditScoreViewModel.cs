@@ -2,9 +2,9 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CreditScores;
 
 public class CreditScoreViewModel
 {
-    public Guid Id { get; set; }
-    public Guid MemberId { get; set; }
-    public Guid? LoanId { get; set; }
+    public DefaultIdType Id { get; set; }
+    public DefaultIdType MemberId { get; set; }
+    public DefaultIdType? LoanId { get; set; }
     public string? ScoreType { get; set; }
     public string? ScoreModel { get; set; }
     public decimal Score { get; set; }
