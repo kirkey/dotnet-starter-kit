@@ -35,12 +35,13 @@ public partial class LoanProductDashboard
 
         try
         {
-            // TODO: Call API when NSwag is regenerated
-            // var response = await ApiClient.GetLoanProductDashboardAsync(Id);
-
-            await Task.Delay(500); // Simulate API call
-            _dashboard = GenerateMockData();
+            var response = await Client.GetLoanProductDashboardAsync("1", Id);
+            _dashboard = response;
             _productName = _dashboard.ProductName;
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to load dashboard: {ex.Message}", Severity.Error);
         }
         finally
         {

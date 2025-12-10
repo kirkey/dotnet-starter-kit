@@ -34,12 +34,13 @@ public partial class SavingsProductDashboard
 
         try
         {
-            // TODO: Call API when NSwag is regenerated
-            // var response = await ApiClient.GetSavingsProductDashboardAsync(Id);
-
-            await Task.Delay(500); // Simulate API call
-            _dashboard = GenerateMockData();
+            var response = await Client.GetSavingsProductDashboardAsync("1", Id);
+            _dashboard = response;
             _productName = _dashboard.Overview.Name;
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to load dashboard: {ex.Message}", Severity.Error);
         }
         finally
         {

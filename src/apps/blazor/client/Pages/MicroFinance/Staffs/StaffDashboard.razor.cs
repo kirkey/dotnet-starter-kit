@@ -20,13 +20,8 @@ public partial class StaffDashboard
 
         try
         {
-            // TODO: Replace with actual API call
-            // var response = await ApiClient.GetStaffDashboardAsync(Id);
-            // _dashboardData = MapToViewModel(response);
-
-            // Mock data for now
-            await Task.Delay(500);
-            _dashboardData = GetMockData();
+            var response = await Client.GetStaffDashboardAsync("1", Id);
+            _dashboardData = response;
         }
         catch (Exception ex)
         {

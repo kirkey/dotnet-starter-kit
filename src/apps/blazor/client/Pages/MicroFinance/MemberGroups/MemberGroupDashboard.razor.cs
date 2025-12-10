@@ -20,13 +20,8 @@ public partial class MemberGroupDashboard
 
         try
         {
-            // TODO: Replace with actual API call
-            // var response = await ApiClient.GetMemberGroupDashboardAsync(Id);
-            // _dashboardData = MapToViewModel(response);
-
-            // Mock data for now
-            await Task.Delay(500);
-            _dashboardData = GetMockData();
+            var response = await Client.GetMemberGroupDashboardAsync("1", Id);
+            _dashboardData = response;
         }
         catch (Exception ex)
         {

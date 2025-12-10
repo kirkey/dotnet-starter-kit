@@ -40,14 +40,13 @@ public partial class MemberDashboard
 
         try
         {
-            // TODO: Call API when NSwag is fixed
-            // var response = await ApiClient.GetMemberDashboardAsync(Id);
-            // Map response to _dashboard
-
-            // For now, load mock data
-            await Task.Delay(500); // Simulate API call
-            _dashboard = GenerateMockData();
+            var response = await Client.GetMemberDashboardAsync("1", Id);
+            _dashboard = response;
             _memberName = _dashboard.MemberName;
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to load dashboard: {ex.Message}", Severity.Error);
         }
         finally
         {

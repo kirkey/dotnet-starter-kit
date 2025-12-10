@@ -38,11 +38,13 @@ public partial class BranchDashboard
         _loading = true;
         try
         {
-            // TODO: Replace with actual API call when ready
-            // var response = await ApiClient.GetBranchDashboardAsync(Id);
-            await Task.Delay(500);
-            _dashboard = GenerateMockDashboardData();
+            var response = await Client.GetBranchDashboardAsync("1", Id);
+            _dashboard = response;
             _branchName = _dashboard.BranchName;
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Failed to load dashboard: {ex.Message}", Severity.Error);
         }
         finally
         {
