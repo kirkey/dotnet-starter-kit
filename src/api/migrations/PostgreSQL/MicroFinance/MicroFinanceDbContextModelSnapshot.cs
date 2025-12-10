@@ -775,10 +775,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.MicroFinance
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
 
-                    b.Property<string>("City")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
-
                     b.Property<DateOnly?>("ClosingDate")
                         .HasColumnType("date");
 
@@ -786,10 +782,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.MicroFinance
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)");
-
-                    b.Property<string>("Country")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
 
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uuid");
@@ -867,14 +859,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.MicroFinance
                     b.Property<string>("Phone")
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)");
-
-                    b.Property<string>("PostalCode")
-                        .HasMaxLength(16)
-                        .HasColumnType("character varying(16)");
-
-                    b.Property<string>("State")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -6850,14 +6834,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.MicroFinance
                         .HasMaxLength(512)
                         .HasColumnType("character varying(512)");
 
-                    b.Property<string>("City")
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
-
-                    b.Property<string>("Country")
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
-
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uuid");
 
@@ -6950,14 +6926,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.MicroFinance
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)");
-
-                    b.Property<string>("PostalCode")
-                        .HasMaxLength(32)
-                        .HasColumnType("character varying(32)");
-
-                    b.Property<string>("State")
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("TenantId")
                         .IsRequired()
@@ -9172,16 +9140,8 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.MicroFinance
                     b.Property<bool>("CanApproveLoan")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("City")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
-
                     b.Property<DateOnly?>("ConfirmationDate")
                         .HasColumnType("date");
-
-                    b.Property<string>("Country")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
 
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uuid");
@@ -9297,10 +9257,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.MicroFinance
                     b.Property<string>("PhotoUrl")
                         .HasColumnType("text");
 
-                    b.Property<string>("PostalCode")
-                        .HasMaxLength(16)
-                        .HasColumnType("character varying(16)");
-
                     b.Property<DateOnly?>("ProbationEndDate")
                         .HasColumnType("date");
 
@@ -9314,10 +9270,6 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.MicroFinance
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<string>("State")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
 
                     b.Property<string>("Status")
                         .IsRequired()
