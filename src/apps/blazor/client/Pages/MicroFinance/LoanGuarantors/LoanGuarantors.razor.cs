@@ -6,6 +6,14 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanGuarantors;
 /// </summary>
 public partial class LoanGuarantors
 {
+    static LoanGuarantors()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for LoanGuarantorResponse -> LoanGuarantorViewModel mapping
+        TypeAdapterConfig<LoanGuarantorResponse, LoanGuarantorViewModel>.NewConfig()
+            .Map(dest => dest.GuaranteeDate, src => src.GuaranteeDate.HasValue ? src.GuaranteeDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.ExpiryDate, src => src.ExpiryDate.HasValue ? src.ExpiryDate.Value.DateTime : (DateTime?)null);
+    }
+
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
     /// </summary>

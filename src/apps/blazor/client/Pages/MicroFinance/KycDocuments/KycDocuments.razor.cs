@@ -6,6 +6,14 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.KycDocuments;
 /// </summary>
 public partial class KycDocuments
 {
+    static KycDocuments()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for KycDocumentResponse -> KycDocumentViewModel mapping
+        TypeAdapterConfig<KycDocumentResponse, KycDocumentViewModel>.NewConfig()
+            .Map(dest => dest.IssueDate, src => src.IssueDate.HasValue ? src.IssueDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.ExpiryDate, src => src.ExpiryDate.HasValue ? src.ExpiryDate.Value.DateTime : (DateTime?)null);
+    }
+
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
     /// </summary>

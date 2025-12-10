@@ -5,6 +5,14 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InsurancePolicies;
 /// </summary>
 public partial class InsurancePolicies
 {
+    static InsurancePolicies()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for InsurancePolicyResponse -> InsurancePolicyViewModel mapping
+        TypeAdapterConfig<InsurancePolicyResponse, InsurancePolicyViewModel>.NewConfig()
+            .Map(dest => dest.StartDate, src => src.StartDate.HasValue ? src.StartDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.EndDate, src => src.EndDate.HasValue ? src.EndDate.Value.DateTime : (DateTime?)null);
+    }
+
     protected EntityServerTableContext<InsurancePolicyResponse, DefaultIdType, InsurancePolicyViewModel> Context { get; set; } = null!;
     private EntityTable<InsurancePolicyResponse, DefaultIdType, InsurancePolicyViewModel> _table = null!;
 

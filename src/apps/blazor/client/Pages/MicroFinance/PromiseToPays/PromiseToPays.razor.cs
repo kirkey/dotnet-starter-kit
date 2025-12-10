@@ -2,6 +2,14 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.PromiseToPays;
 
 public partial class PromiseToPays
 {
+    static PromiseToPays()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for PromiseToPaySummaryResponse -> PromiseToPayViewModel mapping
+        TypeAdapterConfig<PromiseToPaySummaryResponse, PromiseToPayViewModel>.NewConfig()
+            .Map(dest => dest.PromiseDate, src => src.PromiseDate.HasValue ? src.PromiseDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.ScheduledPaymentDate, src => src.ScheduledPaymentDate.HasValue ? src.ScheduledPaymentDate.Value.DateTime : (DateTime?)null);
+    }
+
     protected EntityServerTableContext<PromiseToPaySummaryResponse, DefaultIdType, PromiseToPayViewModel> Context { get; set; } = null!;
     private EntityTable<PromiseToPaySummaryResponse, DefaultIdType, PromiseToPayViewModel> _table = null!;
 

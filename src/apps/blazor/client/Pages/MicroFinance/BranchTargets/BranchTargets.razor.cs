@@ -5,6 +5,14 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.BranchTargets;
 /// </summary>
 public partial class BranchTargets
 {
+    static BranchTargets()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for BranchTargetSummaryResponse -> BranchTargetViewModel mapping
+        TypeAdapterConfig<BranchTargetSummaryResponse, BranchTargetViewModel>.NewConfig()
+            .Map(dest => dest.StartDate, src => src.StartDate.HasValue ? src.StartDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.EndDate, src => src.EndDate.HasValue ? src.EndDate.Value.DateTime : (DateTime?)null);
+    }
+
     protected EntityServerTableContext<BranchTargetSummaryResponse, DefaultIdType, BranchTargetViewModel> Context { get; set; } = null!;
     private EntityTable<BranchTargetSummaryResponse, DefaultIdType, BranchTargetViewModel> _table = null!;
 

@@ -2,6 +2,13 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.MobileTransactions;
 
 public partial class MobileTransactions
 {
+    static MobileTransactions()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for MobileTransactionResponse -> MobileTransactionViewModel mapping
+        TypeAdapterConfig<MobileTransactionResponse, MobileTransactionViewModel>.NewConfig()
+            .Map(dest => dest.TransactionDate, src => src.TransactionDate.HasValue ? src.TransactionDate.Value.DateTime : (DateTime?)null);
+    }
+
     protected EntityServerTableContext<MobileTransactionResponse, DefaultIdType, MobileTransactionViewModel> Context { get; set; } = null!;
     private EntityTable<MobileTransactionResponse, DefaultIdType, MobileTransactionViewModel> _table = null!;
 

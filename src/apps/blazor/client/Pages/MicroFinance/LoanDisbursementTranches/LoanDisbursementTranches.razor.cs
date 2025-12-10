@@ -5,6 +5,14 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanDisbursementTranches;
 /// </summary>
 public partial class LoanDisbursementTranches
 {
+    static LoanDisbursementTranches()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for LoanDisbursementTrancheSummaryResponse -> LoanDisbursementTrancheViewModel mapping
+        TypeAdapterConfig<LoanDisbursementTrancheSummaryResponse, LoanDisbursementTrancheViewModel>.NewConfig()
+            .Map(dest => dest.ScheduledDate, src => src.ScheduledDate.HasValue ? src.ScheduledDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.DisbursementDate, src => src.DisbursementDate.HasValue ? src.DisbursementDate.Value.DateTime : (DateTime?)null);
+    }
+
     protected EntityServerTableContext<LoanDisbursementTrancheSummaryResponse, DefaultIdType, LoanDisbursementTrancheViewModel> Context { get; set; } = null!;
     private EntityTable<LoanDisbursementTrancheSummaryResponse, DefaultIdType, LoanDisbursementTrancheViewModel> _table = null!;
 

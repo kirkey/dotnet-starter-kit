@@ -6,6 +6,14 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Branches;
 /// </summary>
 public partial class Branches
 {
+    static Branches()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for BranchResponse -> BranchViewModel mapping
+        TypeAdapterConfig<BranchResponse, BranchViewModel>.NewConfig()
+            .Map(dest => dest.OpeningDate, src => src.OpeningDate.HasValue ? src.OpeningDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.ClosingDate, src => src.ClosingDate.HasValue ? src.ClosingDate.Value.DateTime : (DateTime?)null);
+    }
+
     /// <summary>
     /// Table context that drives the generic EntityTable used in the Razor view.
     /// </summary>

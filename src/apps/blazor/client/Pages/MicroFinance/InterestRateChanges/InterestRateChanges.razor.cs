@@ -6,6 +6,15 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InterestRateChanges;
 /// </summary>
 public partial class InterestRateChanges
 {
+    static InterestRateChanges()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for InterestRateChangeSummaryResponse -> InterestRateChangeViewModel mapping
+        TypeAdapterConfig<InterestRateChangeSummaryResponse, InterestRateChangeViewModel>.NewConfig()
+            .Map(dest => dest.RequestDate, src => src.RequestDate.HasValue ? src.RequestDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.ApprovalDate, src => src.ApprovalDate.HasValue ? src.ApprovalDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.EffectiveDate, src => src.EffectiveDate.HasValue ? src.EffectiveDate.Value.DateTime : (DateTime?)null);
+    }
+
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
     /// </summary>

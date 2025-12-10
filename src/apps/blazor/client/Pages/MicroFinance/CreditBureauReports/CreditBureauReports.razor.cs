@@ -2,6 +2,14 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.CreditBureauReports;
 
 public partial class CreditBureauReports
 {
+    static CreditBureauReports()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for CreditBureauReportSummaryResponse -> CreditBureauReportViewModel mapping
+        TypeAdapterConfig<CreditBureauReportSummaryResponse, CreditBureauReportViewModel>.NewConfig()
+            .Map(dest => dest.RequestDate, src => src.RequestDate.HasValue ? src.RequestDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.ReportDate, src => src.ReportDate.HasValue ? src.ReportDate.Value.DateTime : (DateTime?)null);
+    }
+
     protected EntityServerTableContext<CreditBureauReportSummaryResponse, DefaultIdType, CreditBureauReportViewModel> Context { get; set; } = null!;
     private EntityTable<CreditBureauReportSummaryResponse, DefaultIdType, CreditBureauReportViewModel> _table = null!;
 

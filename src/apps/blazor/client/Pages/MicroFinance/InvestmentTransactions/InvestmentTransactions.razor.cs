@@ -2,6 +2,13 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InvestmentTransactions;
 
 public partial class InvestmentTransactions
 {
+    static InvestmentTransactions()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for InvestmentTransactionResponse -> InvestmentTransactionViewModel mapping
+        TypeAdapterConfig<InvestmentTransactionResponse, InvestmentTransactionViewModel>.NewConfig()
+            .Map(dest => dest.TransactionDate, src => src.TransactionDate.HasValue ? src.TransactionDate.Value.DateTime : (DateTime?)null);
+    }
+
     protected EntityServerTableContext<InvestmentTransactionResponse, DefaultIdType, InvestmentTransactionViewModel> Context { get; set; } = null!;
     private EntityTable<InvestmentTransactionResponse, DefaultIdType, InvestmentTransactionViewModel> _table = null!;
 

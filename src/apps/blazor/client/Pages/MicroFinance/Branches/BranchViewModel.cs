@@ -69,12 +69,12 @@ public class BranchViewModel
     /// <summary>
     /// Branch opening date.
     /// </summary>
-    public DateOnly? OpeningDate { get; set; }
+    public DateTime? OpeningDate { get; set; }
 
     /// <summary>
     /// Branch closing date.
     /// </summary>
-    public DateOnly? ClosingDate { get; set; }
+    public DateTime? ClosingDate { get; set; }
 
     /// <summary>
     /// Latitude coordinate.

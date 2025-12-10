@@ -6,6 +6,14 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.GroupMemberships;
 /// </summary>
 public partial class GroupMemberships
 {
+    static GroupMemberships()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for GroupMembershipResponse -> GroupMembershipViewModel mapping
+        TypeAdapterConfig<GroupMembershipResponse, GroupMembershipViewModel>.NewConfig()
+            .Map(dest => dest.JoinDate, src => src.JoinDate.HasValue ? src.JoinDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.LeaveDate, src => src.LeaveDate.HasValue ? src.LeaveDate.Value.DateTime : (DateTime?)null);
+    }
+
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
     /// </summary>

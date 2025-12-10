@@ -5,6 +5,14 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.InvestmentAccounts;
 /// </summary>
 public partial class InvestmentAccounts
 {
+    static InvestmentAccounts()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for InvestmentAccountResponse -> InvestmentAccountViewModel mapping
+        TypeAdapterConfig<InvestmentAccountResponse, InvestmentAccountViewModel>.NewConfig()
+            .Map(dest => dest.OpeningDate, src => src.OpeningDate.HasValue ? src.OpeningDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.MaturityDate, src => src.MaturityDate.HasValue ? src.MaturityDate.Value.DateTime : (DateTime?)null);
+    }
+
     protected EntityServerTableContext<InvestmentAccountResponse, DefaultIdType, InvestmentAccountViewModel> Context { get; set; } = null!;
     private EntityTable<InvestmentAccountResponse, DefaultIdType, InvestmentAccountViewModel> _table = null!;
 

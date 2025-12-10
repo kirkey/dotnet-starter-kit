@@ -6,6 +6,13 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Staff;
 /// </summary>
 public partial class Staff
 {
+    static Staff()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for StaffResponse -> StaffViewModel mapping
+        TypeAdapterConfig<StaffResponse, StaffViewModel>.NewConfig()
+            .Map(dest => dest.DateJoined, src => src.DateJoined.HasValue ? src.DateJoined.Value.DateTime : (DateTime?)null);
+    }
+
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
     /// </summary>

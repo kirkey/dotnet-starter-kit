@@ -6,6 +6,13 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.FeePayments;
 /// </summary>
 public partial class FeePayments
 {
+    static FeePayments()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for FeePaymentSummaryResponse -> FeePaymentViewModel mapping
+        TypeAdapterConfig<FeePaymentSummaryResponse, FeePaymentViewModel>.NewConfig()
+            .Map(dest => dest.PaymentDate, src => src.PaymentDate.HasValue ? src.PaymentDate.Value.DateTime : (DateTime?)null);
+    }
+
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
     /// </summary>

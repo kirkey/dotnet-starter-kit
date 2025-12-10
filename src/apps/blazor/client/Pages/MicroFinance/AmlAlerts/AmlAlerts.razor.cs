@@ -2,6 +2,14 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.AmlAlerts;
 
 public partial class AmlAlerts
 {
+    static AmlAlerts()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for AmlAlertResponse -> AmlAlertViewModel mapping
+        TypeAdapterConfig<AmlAlertResponse, AmlAlertViewModel>.NewConfig()
+            .Map(dest => dest.DetectedDate, src => src.DetectedDate.HasValue ? src.DetectedDate.Value.DateTime : (DateTime?)null)
+            .Map(dest => dest.ResolvedDate, src => src.ResolvedDate.HasValue ? src.ResolvedDate.Value.DateTime : (DateTime?)null);
+    }
+
     protected EntityServerTableContext<AmlAlertResponse, DefaultIdType, AmlAlertViewModel> Context { get; set; } = null!;
     private EntityTable<AmlAlertResponse, DefaultIdType, AmlAlertViewModel> _table = null!;
 

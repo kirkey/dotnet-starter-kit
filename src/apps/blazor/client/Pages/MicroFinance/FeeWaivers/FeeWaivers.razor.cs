@@ -6,6 +6,13 @@ namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.FeeWaivers;
 /// </summary>
 public partial class FeeWaivers
 {
+    static FeeWaivers()
+    {
+        // Configure Mapster to convert DateTimeOffset? to DateTime? for FeeWaiverSummaryResponse -> FeeWaiverViewModel mapping
+        TypeAdapterConfig<FeeWaiverSummaryResponse, FeeWaiverViewModel>.NewConfig()
+            .Map(dest => dest.RequestDate, src => src.RequestDate.HasValue ? src.RequestDate.Value.DateTime : (DateTime?)null);
+    }
+
     /// <summary>
     /// Table context that drives the generic <see cref="EntityTable{TEntity, TId, TRequest}"/> used in the Razor view.
     /// </summary>
