@@ -126,7 +126,7 @@ public sealed class GetBranchDashboardHandler(
                 LoanOfficerName = "N/A" // Requires LoanOfficerAssignment query
             }).ToList();
 
-        var recentTransactions = new List<RecentTransaction>(); // Would need SavingsTransaction data
+        var recentTransactions = new List<MicroFinanceRecentTransaction>(); // Would need SavingsTransaction data
 
         // Monthly comparison
         var monthlyPerformance = GenerateMonthlyComparison(allLoans, allSavingsAccounts, allMembers, 6);
@@ -179,7 +179,7 @@ public sealed class GetBranchDashboardHandler(
         return response;
     }
 
-    private static FinancialMetrics CalculateFinancialMetrics(
+    private static BranchFinancialMetrics CalculateFinancialMetrics(
         List<Loan> allLoans,
         List<SavingsAccount> savingsAccounts,
         List<ShareAccount> shareAccounts,
@@ -218,7 +218,7 @@ public sealed class GetBranchDashboardHandler(
         var cashVaultLimit = branch.CashHoldingLimit ?? 0;
         var cashUtilization = cashVaultLimit > 0 ? (cashOnHand / cashVaultLimit * 100) : 0;
 
-        return new FinancialMetrics
+        return new BranchFinancialMetrics
         {
             TotalLoanPortfolio = totalLoanPortfolio,
             TotalSavingsBalance = totalSavingsBalance,
@@ -471,9 +471,9 @@ public sealed class GetBranchDashboardHandler(
         };
     }
 
-    private static List<TimeSeriesDataPoint> GenerateLoanDisbursementTrend(List<Loan> loans, int months)
+    private static List<BranchTimeSeriesDataPoint> GenerateLoanDisbursementTrend(List<Loan> loans, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<BranchTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -487,7 +487,7 @@ public sealed class GetBranchDashboardHandler(
                 l.DisbursementDate.Value.ToDateTime(TimeOnly.MinValue) >= monthStart &&
                 l.DisbursementDate.Value.ToDateTime(TimeOnly.MinValue) < monthEnd).ToList();
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new BranchTimeSeriesDataPoint
             {
                 Label = monthStart.ToString("MMM yyyy"),
                 Date = monthStart,
@@ -498,10 +498,10 @@ public sealed class GetBranchDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateSavingsBalanceTrend(
+    private static List<BranchTimeSeriesDataPoint> GenerateSavingsBalanceTrend(
         List<SavingsAccount> accounts, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<BranchTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -510,7 +510,7 @@ public sealed class GetBranchDashboardHandler(
             var monthStart = new DateTime(monthDate.Year, monthDate.Month, 1);
 
             // Simplified - just showing current balance for all months
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new BranchTimeSeriesDataPoint
             {
                 Label = monthStart.ToString("MMM yyyy"),
                 Date = monthStart,
@@ -521,10 +521,10 @@ public sealed class GetBranchDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateMemberGrowthTrend(
+    private static List<BranchTimeSeriesDataPoint> GenerateMemberGrowthTrend(
         List<Member> members, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<BranchTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -536,7 +536,7 @@ public sealed class GetBranchDashboardHandler(
             var monthMembers = members.Where(m => 
                 m.CreatedOn >= monthStart && m.CreatedOn < monthEnd).Count();
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new BranchTimeSeriesDataPoint
             {
                 Label = monthStart.ToString("MMM yyyy"),
                 Date = monthStart,
@@ -547,10 +547,10 @@ public sealed class GetBranchDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GeneratePortfolioAtRiskTrend(
+    private static List<BranchTimeSeriesDataPoint> GeneratePortfolioAtRiskTrend(
         List<Loan> loans, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<BranchTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -565,7 +565,7 @@ public sealed class GetBranchDashboardHandler(
 
             var parRate = totalOutstanding > 0 ? (par30 / totalOutstanding * 100) : 0;
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new BranchTimeSeriesDataPoint
             {
                 Label = monthStart.ToString("MMM yyyy"),
                 Date = monthStart,
@@ -662,13 +662,13 @@ public sealed class GetBranchDashboardHandler(
         .ToList();
     }
 
-    private static List<MonthlyComparison> GenerateMonthlyComparison(
+    private static List<BranchMonthlyComparison> GenerateMonthlyComparison(
         List<Loan> loans,
         List<SavingsAccount> savingsAccounts,
         List<Member> members,
         int months)
     {
-        var result = new List<MonthlyComparison>();
+        var result = new List<BranchMonthlyComparison>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -690,7 +690,7 @@ public sealed class GetBranchDashboardHandler(
             var par30 = activeLoans.Where(l => CalculateDaysOverdue(l) >= 30)
                 .Sum(l => l.OutstandingPrincipal);
 
-            result.Add(new MonthlyComparison
+            result.Add(new BranchMonthlyComparison
             {
                 Month = monthStart.ToString("MMM"),
                 Year = monthStart.Year,

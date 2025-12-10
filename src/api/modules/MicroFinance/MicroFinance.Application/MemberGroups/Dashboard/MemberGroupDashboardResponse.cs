@@ -49,8 +49,8 @@ public sealed record MembershipStatistics(
 /// Financial metrics aggregated from group members.
 /// </summary>
 public sealed record GroupFinancialMetrics(
-    LoanPortfolioSummary LoanPortfolio,
-    SavingsPortfolioSummary SavingsPortfolio,
+    MemberGroupLoanPortfolioSummary LoanPortfolio,
+    MemberGroupSavingsPortfolioSummary SavingsPortfolio,
     decimal TotalDisbursedToGroup,
     decimal TotalRepaidByGroup,
     decimal GroupRepaymentRate);
@@ -58,7 +58,7 @@ public sealed record GroupFinancialMetrics(
 /// <summary>
 /// Summary of loans held by group members.
 /// </summary>
-public sealed record LoanPortfolioSummary(
+public sealed record MemberGroupLoanPortfolioSummary(
     int TotalLoans,
     int ActiveLoans,
     int OverdueLoans,
@@ -71,7 +71,7 @@ public sealed record LoanPortfolioSummary(
 /// <summary>
 /// Summary of savings held by group members.
 /// </summary>
-public sealed record SavingsPortfolioSummary(
+public sealed record MemberGroupSavingsPortfolioSummary(
     int TotalSavingsAccounts,
     int ActiveSavingsAccounts,
     decimal TotalSavingsBalance,

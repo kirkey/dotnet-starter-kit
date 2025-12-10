@@ -17,7 +17,7 @@ public sealed record BranchDashboardResponse
     public string Status { get; init; } = default!;
 
     // Financial Overview
-    public FinancialMetrics Financials { get; init; } = new();
+    public BranchFinancialMetrics Financials { get; init; } = new();
 
     // Member Metrics
     public MemberMetrics Members { get; init; } = new();
@@ -35,10 +35,10 @@ public sealed record BranchDashboardResponse
     public TargetAchievement Targets { get; init; } = new();
 
     // Trend Data for Charts
-    public List<TimeSeriesDataPoint> LoanDisbursementTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> SavingsBalanceTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> MemberGrowthTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> PortfolioAtRiskTrend { get; init; } = [];
+    public List<BranchTimeSeriesDataPoint> LoanDisbursementTrend { get; init; } = [];
+    public List<BranchTimeSeriesDataPoint> SavingsBalanceTrend { get; init; } = [];
+    public List<BranchTimeSeriesDataPoint> MemberGrowthTrend { get; init; } = [];
+    public List<BranchTimeSeriesDataPoint> PortfolioAtRiskTrend { get; init; } = [];
 
     // Product Mix
     public List<ProductMixData> LoanProductMix { get; init; } = [];
@@ -50,16 +50,16 @@ public sealed record BranchDashboardResponse
 
     // Recent Activities
     public List<RecentLoan> RecentLoans { get; init; } = [];
-    public List<RecentTransaction> RecentTransactions { get; init; } = [];
+    public List<MicroFinanceRecentTransaction> RecentTransactions { get; init; } = [];
 
     // Monthly Comparison
-    public List<MonthlyComparison> MonthlyPerformance { get; init; } = [];
+    public List<BranchMonthlyComparison> MonthlyPerformance { get; init; } = [];
 
     // Branch Ranking
     public BranchRanking Ranking { get; init; } = new();
 }
 
-public sealed record FinancialMetrics
+public sealed record BranchFinancialMetrics
 {
     public decimal TotalLoanPortfolio { get; init; }
     public decimal TotalSavingsBalance { get; init; }
@@ -149,7 +149,7 @@ public sealed record TargetAchievement
     public decimal OverallTargetAchievement { get; init; }
 }
 
-public sealed record TimeSeriesDataPoint
+public sealed record BranchTimeSeriesDataPoint
 {
     public string Label { get; init; } = default!;
     public DateTime Date { get; init; }
@@ -200,7 +200,7 @@ public sealed record RecentLoan
     public string? LoanOfficerName { get; init; }
 }
 
-public sealed record RecentTransaction
+public sealed record MicroFinanceRecentTransaction
 {
     public DefaultIdType TransactionId { get; init; }
     public string? TransactionNumber { get; init; }
@@ -211,7 +211,7 @@ public sealed record RecentTransaction
     public string? ProcessedBy { get; init; }
 }
 
-public sealed record MonthlyComparison
+public sealed record BranchMonthlyComparison
 {
     public string Month { get; init; } = default!;
     public int Year { get; init; }

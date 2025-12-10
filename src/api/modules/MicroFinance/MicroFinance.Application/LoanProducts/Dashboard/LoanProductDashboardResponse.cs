@@ -10,7 +10,7 @@ public sealed record LoanProductDashboardResponse(
     string ProductName,
     bool IsActive,
     LoanProductOverview Overview,
-    LoanPortfolioMetrics Portfolio,
+    LoanProductPortfolioMetrics Portfolio,
     RepaymentMetrics Repayments,
     DelinquencyMetrics Delinquency,
     List<LoanDistribution> LoansByStatus,
@@ -44,7 +44,7 @@ public sealed record LoanProductOverview(
 /// <summary>
 /// Portfolio-level metrics for the loan product.
 /// </summary>
-public sealed record LoanPortfolioMetrics(
+public sealed record LoanProductPortfolioMetrics(
     decimal TotalPrincipalDisbursed,
     decimal TotalPrincipalOutstanding,
     decimal TotalPrincipalCollected,

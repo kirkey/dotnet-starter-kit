@@ -105,7 +105,7 @@ public sealed class GetItemDashboardHandler(
         var recentTransactions = transactions
             .OrderByDescending(t => t.TransactionDate)
             .Take(10)
-            .Select(t => new RecentTransaction
+            .Select(t => new StoreRecentTransaction
             {
                 TransactionId = t.Id,
                 TransactionDate = t.TransactionDate,

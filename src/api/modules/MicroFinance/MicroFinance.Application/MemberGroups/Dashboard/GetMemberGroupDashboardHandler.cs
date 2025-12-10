@@ -271,7 +271,7 @@ public sealed class GetMemberGroupDashboardHandler : IRequestHandler<GetMemberGr
 
         var avgLoanSize = activeLoans.Count > 0 ? activeLoans.Average(l => l.PrincipalAmount) : 0;
 
-        var loanPortfolio = new LoanPortfolioSummary(
+        var loanPortfolio = new MemberGroupLoanPortfolioSummary(
             TotalLoans: loans.Count,
             ActiveLoans: activeLoans.Count,
             OverdueLoans: overdueLoans.Count,
@@ -293,7 +293,7 @@ public sealed class GetMemberGroupDashboardHandler : IRequestHandler<GetMemberGr
             .Where(t => t.TransactionType == SavingsTransaction.TypeWithdrawal && t.TransactionDate >= monthStart)
             .Sum(t => t.Amount);
 
-        var savingsPortfolio = new SavingsPortfolioSummary(
+        var savingsPortfolio = new MemberGroupSavingsPortfolioSummary(
             TotalSavingsAccounts: savingsAccounts.Count,
             ActiveSavingsAccounts: activeSavings.Count,
             TotalSavingsBalance: totalSavingsBalance,

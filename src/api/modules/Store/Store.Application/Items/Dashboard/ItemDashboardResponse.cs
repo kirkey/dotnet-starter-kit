@@ -49,7 +49,7 @@ public sealed record ItemDashboardResponse
     public List<WarehouseStockInfo> TopWarehouses { get; init; } = [];
 
     // Recent Transactions
-    public List<RecentTransaction> RecentTransactions { get; init; } = [];
+    public List<StoreRecentTransaction> RecentTransactions { get; init; } = [];
 
     // Supplier Performance for this Item
     public List<SupplierPerformanceInfo> SupplierPerformance { get; init; } = [];
@@ -87,7 +87,7 @@ public sealed record WarehouseStockInfo
     public decimal PercentageOfTotal { get; init; }
 }
 
-public sealed record RecentTransaction
+public sealed record StoreRecentTransaction
 {
     public Guid TransactionId { get; init; }
     public DateTime TransactionDate { get; init; }

@@ -114,7 +114,7 @@ public sealed class GetLoanProductDashboardHandler(
         );
     }
 
-    private static LoanPortfolioMetrics CalculatePortfolioMetrics(
+    private static LoanProductPortfolioMetrics CalculatePortfolioMetrics(
         List<Loan> loans,
         List<LoanRepayment> repayments,
         int borrowerCount)
@@ -127,7 +127,7 @@ public sealed class GetLoanProductDashboardHandler(
         var totalInterestExpected = activeLoans.Sum(l =>
             l.PrincipalAmount * (l.InterestRate / 100) * (l.TermMonths / 12m));
 
-        return new LoanPortfolioMetrics(
+        return new LoanProductPortfolioMetrics(
             TotalPrincipalDisbursed: disbursedLoans.Sum(l => l.PrincipalAmount),
             TotalPrincipalOutstanding: activeLoans.Sum(l => l.OutstandingPrincipal),
             TotalPrincipalCollected: activeRepayments.Sum(r => r.PrincipalAmount),
