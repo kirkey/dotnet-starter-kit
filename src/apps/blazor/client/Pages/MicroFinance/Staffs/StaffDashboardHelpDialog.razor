@@ -1,0 +1,238 @@
+@using MudBlazor
+
+<MudDialog>
+    <DialogContent>
+        <MudContainer Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Understanding the Staff Dashboard</MudText>
+
+            <MudExpansionPanels MultiExpansion="true">
+                <MudExpansionPanel Text="Overview">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        The Staff Dashboard provides a comprehensive view of a loan officer's or staff member's performance, 
+                        portfolio, and daily activities. It helps staff track their targets, monitor assigned members and groups, 
+                        and identify accounts requiring attention.
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Staff Information">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        <strong>Employee Number:</strong> Unique identifier for the staff member.<br />
+                        <strong>Role:</strong> Staff role (Loan Officer, Teller, Branch Manager, etc.).<br />
+                        <strong>Job Title:</strong> Specific position title.<br />
+                        <strong>Department:</strong> Department the staff belongs to.<br />
+                        <strong>Branch:</strong> Branch where the staff is assigned.<br />
+                        <strong>Tenure:</strong> Number of days since joining the organization.
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Portfolio Summary">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        <strong>Assigned Members:</strong> Total members assigned to this staff member for management.<br />
+                        <strong>Active Members:</strong> Members currently active (not inactive or dormant).<br />
+                        <strong>Assigned Groups:</strong> Number of solidarity/lending groups managed.<br />
+                        <strong>Active Loans:</strong> Total loans currently in disbursed status.<br />
+                        <strong>Overdue Loans:</strong> Loans with payments past their expected dates.<br />
+                        <strong>Outstanding Principal:</strong> Total principal amount yet to be collected.<br />
+                        <strong>Outstanding Interest:</strong> Total interest amount yet to be collected.<br />
+                        <strong>PAR > 30 Days:</strong> Portfolio at Risk - percentage of portfolio overdue by more than 30 days.<br />
+                        <strong>Savings Managed:</strong> Number of savings accounts under management.
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Performance Metrics">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        <strong>Loans Disbursed:</strong> Number of loans disbursed this month.<br />
+                        <strong>Amount Disbursed:</strong> Total monetary value of disbursements this month.<br />
+                        <strong>Collections Made:</strong> Number of repayment transactions processed.<br />
+                        <strong>Amount Collected:</strong> Total amount collected this month.<br />
+                        <strong>Collection Rate:</strong> Percentage of expected collections actually received.<br />
+                        <strong>New Members:</strong> Members registered by this staff this month.
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Target Achievement">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Progress bars showing achievement against monthly or periodic targets:
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.TrendingUp">
+                            <strong>Disbursement Target:</strong> Amount to be disbursed vs actual disbursements
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Payments">
+                            <strong>Collection Target:</strong> Amount to be collected vs actual collections
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.PersonAdd">
+                            <strong>New Member Target:</strong> Members to be registered vs actual registrations
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Restore">
+                            <strong>Overdue Recovery:</strong> Number of overdue accounts to recover vs actual recoveries
+                        </MudListItem>
+                    </MudList>
+                    <MudText Typo="Typo.body2" Class="mt-2">
+                        <strong>Color Indicators:</strong><br />
+                        <span style="color: green;">●</span> Green: 100% or above (target achieved)<br />
+                        <span style="color: #1976D2;">●</span> Blue: 75-99% (on track)<br />
+                        <span style="color: orange;">●</span> Orange: 50-74% (needs attention)<br />
+                        <span style="color: red;">●</span> Red: Below 50% (critical)
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Today's Activity">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Real-time snapshot of daily activities:
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Check">Loans approved today</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.MonetizationOn">Loans disbursed today</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Receipt">Repayments received today</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.AttachMoney">Total amount collected today</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.DirectionsWalk">Member field visits conducted</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Groups">Group meetings scheduled this week</MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Alerts & Action Items">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Important notifications requiring attention:
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Warning" IconColor="MudBlazor.Color.Error">
+                            <strong>Overdue Members:</strong> Members with payments past due date
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.PhoneCallback" IconColor="MudBlazor.Color.Warning">
+                            <strong>Follow-up Required:</strong> Accounts needing contact or visit
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Approval" IconColor="MudBlazor.Color.Info">
+                            <strong>Pending Approvals:</strong> Items awaiting staff approval
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Event" IconColor="MudBlazor.Color.Success">
+                            <strong>Upcoming Meetings:</strong> Scheduled group meetings
+                        </MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Assigned Members">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Lists members assigned to this staff member for relationship management:
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Badge">Member number and name</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Circle">Active/Inactive status</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.CreditScore">Number of active loans</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.AccountBalance">Total outstanding amount</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Warning">Overdue flag indicator</MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Assigned Groups">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Lists solidarity/lending groups assigned to this staff member:
+                    </MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Tag">Group code and name</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Circle">Group status</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.People">Member count</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.CreditScore">Active loans in the group</MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.AccountBalance">Total outstanding for the group</MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Key Performance Indicators (KPIs)">
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        <strong>PAR (Portfolio at Risk) Guidelines:</strong>
+                    </MudText>
+                    <MudSimpleTable Dense="true" Class="mb-3">
+                        <thead>
+                            <tr>
+                                <th>PAR Level</th>
+                                <th>Status</th>
+                                <th>Action Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>&lt; 1%</td>
+                                <td><MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Success">Excellent</MudChip></td>
+                                <td>Maintain current practices</td>
+                            </tr>
+                            <tr>
+                                <td>1% - 3%</td>
+                                <td><MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Warning">Acceptable</MudChip></td>
+                                <td>Monitor closely</td>
+                            </tr>
+                            <tr>
+                                <td>3% - 5%</td>
+                                <td><MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Error">Concerning</MudChip></td>
+                                <td>Intensify follow-up</td>
+                            </tr>
+                            <tr>
+                                <td>&gt; 5%</td>
+                                <td><MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Dark">Critical</MudChip></td>
+                                <td>Immediate action required</td>
+                            </tr>
+                        </tbody>
+                    </MudSimpleTable>
+
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        <strong>Collection Rate Guidelines:</strong>
+                    </MudText>
+                    <MudSimpleTable Dense="true">
+                        <thead>
+                            <tr>
+                                <th>Collection Rate</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>&gt;= 95%</td>
+                                <td><MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Success">Excellent</MudChip></td>
+                            </tr>
+                            <tr>
+                                <td>85% - 94%</td>
+                                <td><MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Warning">Needs Improvement</MudChip></td>
+                            </tr>
+                            <tr>
+                                <td>&lt; 85%</td>
+                                <td><MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Error">Critical</MudChip></td>
+                            </tr>
+                        </tbody>
+                    </MudSimpleTable>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Best Practices">
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Schedule">
+                            Review dashboard daily at the start of your shift
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.PriorityHigh">
+                            Address high-priority alerts immediately
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.TrackChanges">
+                            Track target progress weekly and adjust strategies
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.ContactPhone">
+                            Follow up with overdue members within 3 days
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Groups">
+                            Prepare for group meetings using member data
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Analytics">
+                            Analyze PAR trends to identify at-risk accounts early
+                        </MudListItem>
+                    </MudList>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="MudBlazor.Color.Primary" OnClick="@Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private void Close() => MudDialog.Close();
+}

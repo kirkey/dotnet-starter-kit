@@ -1,0 +1,128 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.LoanProducts
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" /> Loan Product Dashboard Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <div>
+                <MudText Typo="Typo.h6" Class="mb-2">Overview</MudText>
+                <MudText Typo="Typo.body2">
+                    The Loan Product Dashboard provides comprehensive analytics for a specific loan product,
+                    showing aggregated metrics across all loans issued under this product. Use this dashboard
+                    to monitor product performance, portfolio quality, and identify areas needing attention.
+                </MudText>
+            </div>
+
+            <MudDivider />
+
+            <div>
+                <MudText Typo="Typo.h6" Class="mb-2">Key Metrics</MudText>
+                <MudStack Spacing="2">
+                    <MudText Typo="Typo.subtitle2">Portfolio at Risk (PAR)</MudText>
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        • <strong>PAR 1/30/60/90:</strong> Percentage of outstanding portfolio with payments overdue<br />
+                        • Lower PAR indicates better portfolio quality<br />
+                        • Industry benchmark: PAR 30 below 5% is considered healthy
+                    </MudText>
+
+                    <MudText Typo="Typo.subtitle2">Collection Rate</MudText>
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        • Percentage of expected payments that have been collected<br />
+                        • Above 95% indicates excellent collection performance<br />
+                        • Track trends to identify deterioration early
+                    </MudText>
+
+                    <MudText Typo="Typo.subtitle2">On-Time Repayment Rate</MudText>
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        • Percentage of repayments made on or before due date<br />
+                        • Higher rates indicate good borrower behavior<br />
+                        • Important for cash flow forecasting
+                    </MudText>
+
+                    <MudText Typo="Typo.subtitle2">Write-off Rate</MudText>
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        • Percentage of disbursed amount written off as bad debt<br />
+                        • Below 3% is typically acceptable<br />
+                        • High rates may indicate poor credit assessment
+                    </MudText>
+                </MudStack>
+            </div>
+
+            <MudDivider />
+
+            <div>
+                <MudText Typo="Typo.h6" Class="mb-2">Color Indicators</MudText>
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        <MudChip T="string" Color="MudBlazor.Color.Success" Size="MudBlazor.Size.Small">Green</MudChip> - Excellent performance
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        <MudChip T="string" Color="MudBlazor.Color.Info" Size="MudBlazor.Size.Small">Blue</MudChip> - Good performance
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        <MudChip T="string" Color="MudBlazor.Color.Warning" Size="MudBlazor.Size.Small">Orange</MudChip> - Needs attention
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        <MudChip T="string" Color="MudBlazor.Color.Error" Size="MudBlazor.Size.Small">Red</MudChip> - Critical issue
+                    </MudText>
+                </MudStack>
+            </div>
+
+            <MudDivider />
+
+            <div>
+                <MudText Typo="Typo.h6" Class="mb-2">Loan Status Definitions</MudText>
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.body2">
+                        • <strong>Pending:</strong> Application submitted, awaiting credit review
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        • <strong>Approved:</strong> Credit approved, awaiting disbursement
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        • <strong>Disbursed:</strong> Active loan with outstanding balance
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        • <strong>Closed:</strong> Fully repaid and completed
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        • <strong>Rejected:</strong> Application declined
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        • <strong>Written Off:</strong> Declared as bad debt
+                    </MudText>
+                </MudStack>
+            </div>
+
+            <MudDivider />
+
+            <div>
+                <MudText Typo="Typo.h6" Class="mb-2">Actions</MudText>
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.body2">
+                        • <strong>Refresh:</strong> Update dashboard with latest data
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        • <strong>Help:</strong> Display this help dialog
+                    </MudText>
+                </MudStack>
+            </div>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Color="MudBlazor.Color.Primary" Variant="Variant.Filled">
+            Got It
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private void Close() => MudDialog.Close();
+}

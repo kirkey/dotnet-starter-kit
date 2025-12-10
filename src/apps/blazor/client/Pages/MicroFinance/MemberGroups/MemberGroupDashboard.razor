@@ -1,0 +1,284 @@
+@page "/microfinance/member-groups/{Id:guid}/dashboard"
+@using FSH.Starter.Blazor.Client.Components.Common
+
+<PageTitle>Member Group Dashboard</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-4">
+    @if (_isLoading)
+    {
+        <MudProgressLinear Color="MudBlazor.Color.Primary" Indeterminate="true" />
+    }
+    else if (_dashboardData != null)
+    {
+        <!-- Header -->
+        <MudPaper Class="pa-4 mb-4" Elevation="2">
+            <div class="d-flex justify-space-between align-center flex-wrap gap-2">
+                <div>
+                    <MudText Typo="Typo.h4">@_dashboardData.GroupOverview.Name Dashboard</MudText>
+                    <MudText Typo="Typo.body2" Class="mt-1">
+                        <MudChip T="string" Size="MudBlazor.Size.Small" Color="@GetStatusColor(_dashboardData.GroupOverview.Status)">
+                            @_dashboardData.GroupOverview.Status
+                        </MudChip>
+                        Code: @_dashboardData.GroupOverview.Code |
+                        Formed: @_dashboardData.GroupOverview.FormationDate.ToShortDateString() |
+                        Age: @_dashboardData.GroupOverview.GroupAgeInDays days
+                    </MudText>
+                </div>
+                <div class="d-flex gap-2">
+                    <MudButton Variant="Variant.Outlined" Color="MudBlazor.Color.Info" StartIcon="@Icons.Material.Filled.Help" OnClick="@ShowHelpDialog">
+                        Help
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled" Color="MudBlazor.Color.Primary" StartIcon="@Icons.Material.Filled.Refresh" OnClick="@LoadDashboardData">
+                        Refresh
+                    </MudButton>
+                </div>
+            </div>
+        </MudPaper>
+
+        <!-- Group Info Summary -->
+        <MudPaper Class="pa-4 mb-4" Elevation="2">
+            <MudText Typo="Typo.h6" Class="mb-3">Group Information</MudText>
+            <MudGrid>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Leader</MudText>
+                    <MudText Typo="Typo.body1">@(_dashboardData.GroupOverview.LeaderName ?? "Not Assigned")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Loan Officer</MudText>
+                    <MudText Typo="Typo.body1">@(_dashboardData.GroupOverview.LoanOfficerName ?? "Not Assigned")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Meeting Schedule</MudText>
+                    <MudText Typo="Typo.body1">
+                        @(_dashboardData.MeetingInfo.MeetingDay ?? "N/A") @(_dashboardData.MeetingInfo.MeetingFrequency ?? "")
+                        @if (_dashboardData.MeetingInfo.MeetingTime.HasValue)
+                        {
+                            <span> at @_dashboardData.MeetingInfo.MeetingTime.Value.ToString("hh:mm tt")</span>
+                        }
+                    </MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Meeting Location</MudText>
+                    <MudText Typo="Typo.body1">@(_dashboardData.MeetingInfo.MeetingLocation ?? "Not Set")</MudText>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+        <!-- KPI Cards -->
+        <MudGrid>
+            <MudItem xs="12" sm="6" md="4" lg="2">
+                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                    <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Active Members</MudText>
+                    <MudText Typo="Typo.h4" Color="MudBlazor.Color.Primary">@_dashboardData.MembershipStats.ActiveMembers</MudText>
+                    <MudText Typo="Typo.body2">of @_dashboardData.MembershipStats.TotalMembers total</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4" lg="2">
+                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                    <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Active Loans</MudText>
+                    <MudText Typo="Typo.h4" Color="MudBlazor.Color.Info">@_dashboardData.FinancialMetrics.LoanPortfolio.ActiveLoans</MudText>
+                    <MudText Typo="Typo.body2">@_dashboardData.FinancialMetrics.LoanPortfolio.OverdueLoans overdue</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4" lg="2">
+                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                    <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Outstanding Principal</MudText>
+                    <MudText Typo="Typo.h4" Color="MudBlazor.Color.Warning">@FormatCurrency(_dashboardData.FinancialMetrics.LoanPortfolio.TotalOutstandingPrincipal)</MudText>
+                    <MudText Typo="Typo.body2">+ @FormatCurrency(_dashboardData.FinancialMetrics.LoanPortfolio.TotalOutstandingInterest) interest</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4" lg="2">
+                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                    <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">PAR > 30 Days</MudText>
+                    <MudText Typo="Typo.h4" Color="@GetPARColor(_dashboardData.FinancialMetrics.LoanPortfolio.PortfolioAtRisk30Days)">
+                        @_dashboardData.FinancialMetrics.LoanPortfolio.PortfolioAtRisk30Days.ToString("F1")%
+                    </MudText>
+                    <MudText Typo="Typo.body2">Portfolio at risk</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4" lg="2">
+                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                    <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Savings Balance</MudText>
+                    <MudText Typo="Typo.h4" Color="MudBlazor.Color.Success">@FormatCurrency(_dashboardData.FinancialMetrics.SavingsPortfolio.TotalSavingsBalance)</MudText>
+                    <MudText Typo="Typo.body2">@_dashboardData.FinancialMetrics.SavingsPortfolio.ActiveSavingsAccounts accounts</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4" lg="2">
+                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                    <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Repayment Rate</MudText>
+                    <MudText Typo="Typo.h4" Color="@GetRepaymentRateColor(_dashboardData.FinancialMetrics.GroupRepaymentRate)">
+                        @_dashboardData.FinancialMetrics.GroupRepaymentRate.ToString("F1")%
+                    </MudText>
+                    <MudText Typo="Typo.body2">Collected this month</MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+
+        <!-- Membership & Activity Summary -->
+        <MudGrid Class="mt-4">
+            <!-- Membership Distribution -->
+            <MudItem xs="12" md="6">
+                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                    <MudText Typo="Typo.h6" Class="mb-3">Membership Distribution</MudText>
+                    <MudGrid>
+                        <MudItem xs="6">
+                            <MudText Typo="Typo.caption">By Status</MudText>
+                            <div class="d-flex align-center gap-2 mt-2">
+                                <MudChip T="string" Color="MudBlazor.Color.Success" Size="MudBlazor.Size.Small">Active: @_dashboardData.MembershipStats.ActiveMembers</MudChip>
+                            </div>
+                            <div class="d-flex align-center gap-2 mt-1">
+                                <MudChip T="string" Color="MudBlazor.Color.Warning" Size="MudBlazor.Size.Small">Inactive: @_dashboardData.MembershipStats.InactiveMembers</MudChip>
+                            </div>
+                            <div class="d-flex align-center gap-2 mt-1">
+                                <MudChip T="string" Color="MudBlazor.Color.Error" Size="MudBlazor.Size.Small">Suspended: @_dashboardData.MembershipStats.SuspendedMembers</MudChip>
+                            </div>
+                            <div class="d-flex align-center gap-2 mt-1">
+                                <MudChip T="string" Color="MudBlazor.Color.Default" Size="MudBlazor.Size.Small">Withdrawn: @_dashboardData.MembershipStats.WithdrawnMembers</MudChip>
+                            </div>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudText Typo="Typo.caption">By Role</MudText>
+                            <div class="d-flex align-center gap-2 mt-2">
+                                <MudChip T="string" Color="MudBlazor.Color.Primary" Size="MudBlazor.Size.Small">Leaders: @_dashboardData.MembershipStats.Leaders</MudChip>
+                            </div>
+                            <div class="d-flex align-center gap-2 mt-1">
+                                <MudChip T="string" Color="MudBlazor.Color.Info" Size="MudBlazor.Size.Small">Secretaries: @_dashboardData.MembershipStats.Secretaries</MudChip>
+                            </div>
+                            <div class="d-flex align-center gap-2 mt-1">
+                                <MudChip T="string" Color="MudBlazor.Color.Tertiary" Size="MudBlazor.Size.Small">Treasurers: @_dashboardData.MembershipStats.Treasurers</MudChip>
+                            </div>
+                            <div class="d-flex align-center gap-2 mt-1">
+                                <MudChip T="string" Color="MudBlazor.Color.Secondary" Size="MudBlazor.Size.Small">Regular: @_dashboardData.MembershipStats.RegularMembers</MudChip>
+                            </div>
+                        </MudItem>
+                    </MudGrid>
+                    <MudDivider Class="my-3" />
+                    <MudGrid>
+                        <MudItem xs="6">
+                            <MudText Typo="Typo.caption">New This Month</MudText>
+                            <MudText Typo="Typo.h5" Color="MudBlazor.Color.Success">+@_dashboardData.MembershipStats.NewMembersThisMonth</MudText>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudText Typo="Typo.caption">Left This Month</MudText>
+                            <MudText Typo="Typo.h5" Color="MudBlazor.Color.Error">-@_dashboardData.MembershipStats.MembersLeftThisMonth</MudText>
+                        </MudItem>
+                    </MudGrid>
+                </MudPaper>
+            </MudItem>
+
+            <!-- Activity Summary -->
+            <MudItem xs="12" md="6">
+                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                    <MudText Typo="Typo.h6" Class="mb-3">This Month's Activity</MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Icon="@Icons.Material.Filled.Assignment">
+                            <div class="d-flex justify-space-between w-100">
+                                <span>Loan Applications</span>
+                                <MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Info">@_dashboardData.ActivitySummary.LoanApplicationsThisMonth</MudChip>
+                            </div>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.MonetizationOn">
+                            <div class="d-flex justify-space-between w-100">
+                                <span>Loan Disbursements</span>
+                                <MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Success">@_dashboardData.ActivitySummary.LoanDisbursementsThisMonth</MudChip>
+                            </div>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Payment">
+                            <div class="d-flex justify-space-between w-100">
+                                <span>Loan Repayments</span>
+                                <MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Primary">@_dashboardData.ActivitySummary.LoanRepaymentsThisMonth</MudChip>
+                            </div>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
+                            <div class="d-flex justify-space-between w-100">
+                                <span>Total Collected</span>
+                                <MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Success">@FormatCurrency(_dashboardData.ActivitySummary.TotalCollectedThisMonth)</MudChip>
+                            </div>
+                        </MudListItem>
+                    </MudList>
+                    <MudDivider Class="my-3" />
+                    <MudText Typo="Typo.caption">Savings This Month</MudText>
+                    <MudGrid>
+                        <MudItem xs="6">
+                            <MudText Typo="Typo.body2">Deposits</MudText>
+                            <MudText Typo="Typo.h6" Color="MudBlazor.Color.Success">@FormatCurrency(_dashboardData.FinancialMetrics.SavingsPortfolio.TotalDepositsThisMonth)</MudText>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudText Typo="Typo.body2">Withdrawals</MudText>
+                            <MudText Typo="Typo.h6" Color="MudBlazor.Color.Warning">@FormatCurrency(_dashboardData.FinancialMetrics.SavingsPortfolio.TotalWithdrawalsThisMonth)</MudText>
+                        </MudItem>
+                    </MudGrid>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+
+        <!-- Recent Activity & Alerts -->
+        <MudGrid Class="mt-4">
+            <!-- Recent Member Activities -->
+            <MudItem xs="12" md="7">
+                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                    <MudText Typo="Typo.h6" Class="mb-3">Recent Member Activities</MudText>
+                    @if (_dashboardData.RecentMemberActivities.Count > 0)
+                    {
+                        <MudTable Items="@_dashboardData.RecentMemberActivities" Dense="true" Hover="true" Striped="true">
+                            <HeaderContent>
+                                <MudTh>Member</MudTh>
+                                <MudTh>Activity</MudTh>
+                                <MudTh>Amount</MudTh>
+                                <MudTh>Date</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd>@context.MemberName</MudTd>
+                                <MudTd>
+                                    <MudChip T="string" Size="MudBlazor.Size.Small" Color="@GetActivityColor(context.ActivityType)">
+                                        @context.ActivityType
+                                    </MudChip>
+                                </MudTd>
+                                <MudTd>@(context.Amount.HasValue ? FormatCurrency(context.Amount.Value) : "-")</MudTd>
+                                <MudTd>@context.ActivityDate.ToShortDateString()</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    }
+                    else
+                    {
+                        <MudAlert Severity="Severity.Info">No recent activities to display.</MudAlert>
+                    }
+                </MudPaper>
+            </MudItem>
+
+            <!-- Alerts -->
+            <MudItem xs="12" md="5">
+                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                    <MudText Typo="Typo.h6" Class="mb-3">Alerts & Notifications</MudText>
+                    @if (_dashboardData.Alerts.AlertsList.Count > 0)
+                    {
+                        @foreach (var alert in _dashboardData.Alerts.AlertsList)
+                        {
+                            <MudAlert Severity="@GetAlertSeverity(alert.Severity)" Class="mb-2" Dense="true">
+                                <strong>@alert.Title</strong>
+                                <MudText Typo="Typo.body2">@alert.Description</MudText>
+                            </MudAlert>
+                        }
+                    }
+                    else
+                    {
+                        <MudAlert Severity="Severity.Success">No alerts or issues to report!</MudAlert>
+                    }
+                    
+                    @if (_dashboardData.MeetingInfo.NextMeetingDate.HasValue)
+                    {
+                        <MudDivider Class="my-3" />
+                        <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Next Meeting</MudText>
+                        <MudText Typo="Typo.h6" Color="MudBlazor.Color.Primary">
+                            @_dashboardData.MeetingInfo.NextMeetingDate.Value.ToString("dddd, MMM dd, yyyy")
+                        </MudText>
+                    }
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    }
+    else
+    {
+        <MudAlert Severity="Severity.Error">Failed to load dashboard data. Please try again.</MudAlert>
+    }
+</MudContainer>

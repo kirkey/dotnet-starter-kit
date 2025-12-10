@@ -1,5 +1,6 @@
 using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Create.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Dashboard;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Search.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Update.v1;
@@ -14,6 +15,7 @@ public class SavingsProductEndpoints : CarterModule
 
     private const string CreateSavingsProduct = "CreateSavingsProduct";
     private const string GetSavingsProduct = "GetSavingsProduct";
+    private const string GetSavingsProductDashboard = "GetSavingsProductDashboard";
     private const string SearchSavingsProducts = "SearchSavingsProducts";
     private const string UpdateSavingsProduct = "UpdateSavingsProduct";
 
@@ -70,6 +72,17 @@ public class SavingsProductEndpoints : CarterModule
             .WithSummary("Updates a savings product")
             .Produces<UpdateSavingsProductResponse>()
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        savingsProductsGroup.MapGet("/{id:guid}/dashboard", async (DefaultIdType id, ISender sender) =>
+            {
+                var response = await sender.Send(new GetSavingsProductDashboardQuery(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(GetSavingsProductDashboard)
+            .WithSummary("Gets comprehensive dashboard analytics for a savings product")
+            .Produces<SavingsProductDashboardResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
     }
 }

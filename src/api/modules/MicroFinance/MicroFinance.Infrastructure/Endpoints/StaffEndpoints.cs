@@ -1,5 +1,6 @@
 using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Create.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Dashboard;
 using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Reinstate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Search.v1;
@@ -15,6 +16,7 @@ public class StaffEndpoints : CarterModule
 {
     private const string CreateStaff = "CreateStaff";
     private const string GetStaff = "GetStaff";
+    private const string GetStaffDashboard = "GetStaffDashboard";
     private const string SearchStaff = "SearchStaff";
     private const string UpdateStaff = "UpdateStaff";
     private const string SuspendStaff = "SuspendStaff";
@@ -99,6 +101,17 @@ public class StaffEndpoints : CarterModule
         .WithSummary("Reinstate a suspended staff member")
         .Produces<ReinstateStaffResponse>()
         .RequirePermission(FshPermission.NameFor(FshActions.Activate, FshResources.MicroFinance))
+        .MapToApiVersion(1);
+
+        group.MapGet("/{id:guid}/dashboard", async (DefaultIdType id, ISender sender) =>
+        {
+            var result = await sender.Send(new GetStaffDashboardQuery(id)).ConfigureAwait(false);
+            return Results.Ok(result);
+        })
+        .WithName(GetStaffDashboard)
+        .WithSummary("Get comprehensive staff dashboard with portfolio and performance metrics")
+        .Produces<StaffDashboardResponse>()
+        .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
     }
 }

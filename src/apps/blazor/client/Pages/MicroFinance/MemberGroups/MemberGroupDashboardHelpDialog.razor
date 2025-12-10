@@ -1,0 +1,105 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.MemberGroups
+
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            The Member Group Dashboard provides comprehensive analytics for solidarity groups, 
+            helping you track membership, monitor collective financial performance, and manage group activities.
+        </MudText>
+
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Group Overview" IsInitiallyExpanded="true">
+                <MudText Typo="Typo.body2">
+                    <ul class="ml-4">
+                        <li><strong>Group Code:</strong> Unique identifier for the solidarity group</li>
+                        <li><strong>Formation Date:</strong> When the group was officially formed</li>
+                        <li><strong>Status:</strong> Current state (Active, Pending, Inactive, Dissolved)</li>
+                        <li><strong>Leader:</strong> Elected member who facilitates meetings and resolves disputes</li>
+                        <li><strong>Loan Officer:</strong> Staff member assigned to manage this group</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Membership Statistics">
+                <MudText Typo="Typo.body2">
+                    <ul class="ml-4">
+                        <li><strong>Active:</strong> Members in good standing participating in group activities</li>
+                        <li><strong>Inactive:</strong> Members who have temporarily stopped participating</li>
+                        <li><strong>Suspended:</strong> Members suspended for policy violations</li>
+                        <li><strong>Withdrawn:</strong> Members who have officially left the group</li>
+                        <li><strong>Roles:</strong>
+                            <ul class="ml-4">
+                                <li>Leader - Facilitates meetings and resolves conflicts</li>
+                                <li>Secretary - Maintains attendance and meeting records</li>
+                                <li>Treasurer - Handles group savings and collections</li>
+                                <li>Regular Member - Standard participation rights</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Financial Metrics">
+                <MudText Typo="Typo.body2">
+                    <ul class="ml-4">
+                        <li><strong>Loan Portfolio:</strong> Aggregate loans of all group members</li>
+                        <li><strong>Outstanding Principal:</strong> Total unpaid principal across members</li>
+                        <li><strong>PAR > 30 Days:</strong> Portfolio at Risk - loans overdue by 30+ days</li>
+                        <li><strong>Savings Balance:</strong> Total savings held by group members</li>
+                        <li><strong>Repayment Rate:</strong> Percentage of expected payments collected</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Meeting Schedule">
+                <MudText Typo="Typo.body2">
+                    <ul class="ml-4">
+                        <li><strong>Meeting Frequency:</strong> Weekly, Biweekly, or Monthly</li>
+                        <li><strong>Meeting Day/Time:</strong> Regular schedule for group gatherings</li>
+                        <li><strong>Location:</strong> Where meetings are held</li>
+                        <li><strong>Next Meeting:</strong> Upcoming scheduled meeting date</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Group Lending Model">
+                <MudText Typo="Typo.body2">
+                    <ul class="ml-4">
+                        <li><strong>Solidarity Lending:</strong> Group members guarantee each other's loans</li>
+                        <li><strong>Social Collateral:</strong> Peer pressure ensures repayment</li>
+                        <li><strong>Progressive Loans:</strong> Successful groups access larger loans over time</li>
+                        <li><strong>Joint Liability:</strong> If one defaults, group covers the shortfall</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Alerts">
+                <MudText Typo="Typo.body2">
+                    <ul class="ml-4">
+                        <li><strong>Overdue Loans:</strong> Members with past-due payments</li>
+                        <li><strong>Inactive Members:</strong> Members requiring follow-up</li>
+                        <li><strong>Dormant Savings:</strong> Accounts with no recent activity</li>
+                        <li><strong>Pending Applications:</strong> Loan applications awaiting review</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+
+        <MudAlert Severity="Severity.Info" Class="mt-4">
+            <MudText Typo="Typo.body2">
+                <strong>Tip:</strong> Regular group meetings are essential for maintaining high repayment rates 
+                and building social capital among members.
+            </MudText>
+        </MudAlert>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="MudBlazor.Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private void Close() => MudDialog.Close();
+}

@@ -1,5 +1,6 @@
 using Carter;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Create.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Dashboard;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Delete.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.LoanProducts.Search.v1;
@@ -16,6 +17,7 @@ public class LoanProductEndpoints : CarterModule
     private const string CreateLoanProduct = "CreateLoanProduct";
     private const string DeleteLoanProduct = "DeleteLoanProduct";
     private const string GetLoanProduct = "GetLoanProduct";
+    private const string GetLoanProductDashboard = "GetLoanProductDashboard";
     private const string SearchLoanProducts = "SearchLoanProducts";
     private const string UpdateLoanProduct = "UpdateLoanProduct";
 
@@ -83,6 +85,17 @@ public class LoanProductEndpoints : CarterModule
             .WithSummary("Searches loan products with filters and pagination")
             .Produces<PagedList<LoanProductResponse>>()
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        loanProductsGroup.MapGet("/{id:guid}/dashboard", async (DefaultIdType id, ISender sender) =>
+            {
+                var response = await sender.Send(new GetLoanProductDashboardQuery(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(GetLoanProductDashboard)
+            .WithSummary("Gets comprehensive dashboard analytics for a loan product")
+            .Produces<LoanProductDashboardResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
     }
 }

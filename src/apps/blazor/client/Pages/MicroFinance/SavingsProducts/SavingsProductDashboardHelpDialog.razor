@@ -1,0 +1,98 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.SavingsProducts
+
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            The Savings Product Dashboard provides comprehensive analytics for a specific savings product, 
+            helping you monitor account performance, track deposits and withdrawals, and manage interest calculations.
+        </MudText>
+
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Product Overview" IsInitiallyExpanded="true">
+                <MudText Typo="Typo.body2">
+                    <ul class="ml-4">
+                        <li><strong>Interest Rate:</strong> The annual interest rate offered to depositors</li>
+                        <li><strong>Interest Calculation:</strong> How interest is calculated (Daily, Monthly, or Minimum Balance)</li>
+                        <li><strong>Interest Posting Frequency:</strong> How often interest is credited to accounts</li>
+                        <li><strong>Minimum Opening Balance:</strong> Required deposit to open an account</li>
+                        <li><strong>Minimum Balance for Interest:</strong> Balance needed to earn interest</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Account Statistics">
+                <MudText Typo="Typo.body2">
+                    <ul class="ml-4">
+                        <li><strong>Active:</strong> Accounts in good standing with recent activity</li>
+                        <li><strong>Pending:</strong> New accounts awaiting activation or minimum deposit</li>
+                        <li><strong>Dormant:</strong> Accounts with no activity for extended period (typically 6+ months)</li>
+                        <li><strong>Frozen:</strong> Accounts suspended due to suspicious activity or legal holds</li>
+                        <li><strong>Closed:</strong> Accounts that have been formally closed</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Balance Metrics">
+                <MudText Typo="Typo.body2">
+                    <ul class="ml-4">
+                        <li><strong>Total Balance:</strong> Sum of all account balances under this product</li>
+                        <li><strong>Average Balance:</strong> Mean balance across all accounts</li>
+                        <li><strong>Median Balance:</strong> Middle value, useful for understanding typical account size</li>
+                        <li><strong>Below Minimum:</strong> Accounts below the interest-earning threshold</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Transaction Metrics">
+                <MudText Typo="Typo.body2">
+                    <ul class="ml-4">
+                        <li><strong>Deposits:</strong> Cash or transfer credits to accounts</li>
+                        <li><strong>Withdrawals:</strong> Cash or transfer debits from accounts</li>
+                        <li><strong>Interest Postings:</strong> Automatic interest credit transactions</li>
+                        <li><strong>Fees:</strong> Service charges, dormancy fees, etc.</li>
+                        <li><strong>Transfers:</strong> Inter-account transfers within the system</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Interest Management">
+                <MudText Typo="Typo.body2">
+                    <ul class="ml-4">
+                        <li><strong>Interest This Month/Year:</strong> Total interest paid to depositors</li>
+                        <li><strong>Projected Monthly Interest:</strong> Estimated interest based on current balances</li>
+                        <li><strong>Accounts Due for Posting:</strong> Accounts where interest hasn't been posted recently</li>
+                        <li><strong>Last Posting Date:</strong> When interest was last credited system-wide</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel Text="Alerts">
+                <MudText Typo="Typo.body2">
+                    <ul class="ml-4">
+                        <li><strong>Dormant Accounts:</strong> Accounts requiring reactivation outreach</li>
+                        <li><strong>Below Minimum Balance:</strong> Accounts not earning interest</li>
+                        <li><strong>Frozen Accounts:</strong> Accounts requiring compliance review</li>
+                        <li><strong>Pending Activation:</strong> New accounts needing follow-up</li>
+                    </ul>
+                </MudText>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+
+        <MudAlert Severity="Severity.Info" Class="mt-4">
+            <MudText Typo="Typo.body2">
+                <strong>Tip:</strong> Click the Refresh button to get the latest data. 
+                Dashboard data is cached for 5 minutes for performance optimization.
+            </MudText>
+        </MudAlert>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="MudBlazor.Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private void Close() => MudDialog.Close();
+}
