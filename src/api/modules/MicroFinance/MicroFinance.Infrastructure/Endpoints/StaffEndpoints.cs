@@ -1,10 +1,10 @@
 using Carter;
-using FSH.Starter.WebApi.MicroFinance.Application.Staff.Create.v1;
-using FSH.Starter.WebApi.MicroFinance.Application.Staff.Get.v1;
-using FSH.Starter.WebApi.MicroFinance.Application.Staff.Reinstate.v1;
-using FSH.Starter.WebApi.MicroFinance.Application.Staff.Search.v1;
-using FSH.Starter.WebApi.MicroFinance.Application.Staff.Suspend.v1;
-using FSH.Starter.WebApi.MicroFinance.Application.Staff.Update.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Create.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Get.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Reinstate.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Search.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Suspend.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Update.v1;
 
 namespace FSH.Starter.WebApi.MicroFinance.Infrastructure.Endpoints;
 

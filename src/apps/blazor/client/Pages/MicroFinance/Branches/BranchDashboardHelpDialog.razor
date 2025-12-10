@@ -1,0 +1,119 @@
+@namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Branches
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Help" Class="mr-2" /> Branch Dashboard Help
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <div>
+                <MudText Typo="Typo.h6" Class="mb-2">Overview</MudText>
+                <MudText Typo="Typo.body2">
+                    The Branch Dashboard provides a comprehensive view of branch performance including loan portfolio,
+                    savings mobilization, member growth, and staff productivity. Use this dashboard to monitor branch
+                    operations and track progress towards targets.
+                </MudText>
+            </div>
+
+            <MudDivider />
+
+            <div>
+                <MudText Typo="Typo.h6" Class="mb-2">Key Metrics</MudText>
+                <MudStack Spacing="2">
+                    <MudText Typo="Typo.subtitle2">Loan Portfolio</MudText>
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        • Total outstanding principal from all active loans<br />
+                        • Number of active loans and average loan size<br />
+                        • Portfolio at Risk (PAR) 30 and PAR 90 indicators
+                    </MudText>
+
+                    <MudText Typo="Typo.subtitle2">Savings Portfolio</MudText>
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        • Total savings balance across all accounts<br />
+                        • Active accounts and average balance per member<br />
+                        • Share capital and dormant accounts tracking
+                    </MudText>
+
+                    <MudText Typo="Typo.subtitle2">Members</MudText>
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        • Total member count and growth rate<br />
+                        • Active vs inactive members<br />
+                        • Member distribution across products
+                    </MudText>
+
+                    <MudText Typo="Typo.subtitle2">PAR (Portfolio at Risk)</MudText>
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        • PAR 30: Percentage of loans with payments overdue by 30+ days<br />
+                        • PAR 90: Percentage of loans with payments overdue by 90+ days<br />
+                        • Lower PAR indicates better portfolio quality
+                    </MudText>
+                </MudStack>
+            </div>
+
+            <MudDivider />
+
+            <div>
+                <MudText Typo="Typo.h6" Class="mb-2">Target Achievement</MudText>
+                <MudText Typo="Typo.body2">
+                    Track progress towards quarterly targets for loan disbursement, savings mobilization, and member acquisition.
+                    Progress bars show percentage achievement with color-coded indicators:
+                </MudText>
+                <MudStack Spacing="1" Class="mt-2">
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        <MudChip T="string" Color="MudBlazor.Color.Success" Size="MudBlazor.Size.Small">Green</MudChip> - 100%+ achievement (Excellent)
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        <MudChip T="string" Color="MudBlazor.Color.Info" Size="MudBlazor.Size.Small">Blue</MudChip> - 80-99% achievement (Good)
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        <MudChip T="string" Color="MudBlazor.Color.Warning" Size="MudBlazor.Size.Small">Orange</MudChip> - 60-79% achievement (Fair)
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="ml-4">
+                        <MudChip T="string" Color="MudBlazor.Color.Error" Size="MudBlazor.Size.Small">Red</MudChip> - Below 60% achievement (Needs Improvement)
+                    </MudText>
+                </MudStack>
+            </div>
+
+            <MudDivider />
+
+            <div>
+                <MudText Typo="Typo.h6" Class="mb-2">Staff Metrics</MudText>
+                <MudText Typo="Typo.body2">
+                    View branch staffing levels including total staff, loan officers, tellers, and the branch manager.
+                    Monitor staff productivity through average loans and members per loan officer.
+                </MudText>
+            </div>
+
+            <MudDivider />
+
+            <div>
+                <MudText Typo="Typo.h6" Class="mb-2">Recent Activity</MudText>
+                <MudText Typo="Typo.body2">
+                    Track recent loan disbursements including member names, loan amounts, products, and dates.
+                    Use this to monitor daily branch operations and loan processing activity.
+                </MudText>
+            </div>
+
+            <MudDivider />
+
+            <div>
+                <MudText Typo="Typo.h6" Class="mb-2">Actions</MudText>
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.body2">
+                        • <strong>Refresh:</strong> Update dashboard data with latest information
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        • <strong>Help:</strong> Display this help dialog
+                    </MudText>
+                </MudStack>
+            </div>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@context.Close" Color="MudBlazor.Color.Primary" Variant="Variant.Filled">
+            Got It
+        </MudButton>
+    </DialogActions>
+</MudDialog>

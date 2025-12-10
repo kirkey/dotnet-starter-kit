@@ -1,9 +1,8 @@
 // filepath: /Users/kirkeypsalms/Projects/dotnet-starter-kit/src/api/modules/MicroFinance/MicroFinance.Application/Staff/Search/v1/SearchStaffCommand.cs
-using FSH.Framework.Core.Paging;
-using FSH.Starter.WebApi.MicroFinance.Application.Staff.Get.v1;
-using MediatR;
 
-namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Search.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Get.v1;
+
+namespace FSH.Starter.WebApi.MicroFinance.Application.Staffs.Search.v1;
 
 /// <summary>
 /// Command for searching staff members with pagination and filters.

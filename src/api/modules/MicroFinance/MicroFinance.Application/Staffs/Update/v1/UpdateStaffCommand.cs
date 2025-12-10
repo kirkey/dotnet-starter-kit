@@ -1,7 +1,6 @@
 // filepath: /Users/kirkeypsalms/Projects/dotnet-starter-kit/src/api/modules/MicroFinance/MicroFinance.Application/Staff/Update/v1/UpdateStaffCommand.cs
-using MediatR;
 
-namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Update.v1;
+namespace FSH.Starter.WebApi.MicroFinance.Application.Staffs.Update.v1;
 
 /// <summary>
 /// Command for updating a staff member.

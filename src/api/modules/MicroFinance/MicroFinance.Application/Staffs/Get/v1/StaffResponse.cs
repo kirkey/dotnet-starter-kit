@@ -1,4 +1,4 @@
-namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Get.v1;
+namespace FSH.Starter.WebApi.MicroFinance.Application.Staffs.Get.v1;
 
 public sealed record StaffResponse(
     DefaultIdType Id,

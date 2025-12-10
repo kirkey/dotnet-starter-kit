@@ -1,7 +1,6 @@
 // filepath: /Users/kirkeypsalms/Projects/dotnet-starter-kit/src/api/modules/MicroFinance/MicroFinance.Application/Staff/Suspend/v1/SuspendStaffCommand.cs
-using MediatR;
 
-namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Suspend.v1;
+namespace FSH.Starter.WebApi.MicroFinance.Application.Staffs.Suspend.v1;
 
 /// <summary>
 /// Command for suspending a staff member.

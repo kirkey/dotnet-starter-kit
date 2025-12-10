@@ -3,6 +3,7 @@ using FSH.Starter.WebApi.MicroFinance.Application.Branches.Activate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Branches.AssignManager.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Branches.Close.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Branches.Create.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Branches.Dashboard;
 using FSH.Starter.WebApi.MicroFinance.Application.Branches.Deactivate.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Branches.Get.v1;
 using FSH.Starter.WebApi.MicroFinance.Application.Branches.Search.v1;
@@ -19,6 +20,7 @@ public class BranchEndpoints : CarterModule
     private const string CreateBranch = "CreateBranch";
     private const string DeactivateBranch = "DeactivateBranch";
     private const string GetBranch = "GetBranch";
+    private const string GetBranchDashboard = "GetBranchDashboard";
     private const string SearchBranches = "SearchBranches";
     private const string UpdateBranch = "UpdateBranch";
 
@@ -116,6 +118,18 @@ public class BranchEndpoints : CarterModule
             .WithName(AssignBranchManager)
             .WithSummary("Assigns a manager to the branch")
             .Produces<AssignBranchManagerResponse>()
+            .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
+            .MapToApiVersion(1);
+
+        // Dashboard
+        group.MapGet("/{id:guid}/dashboard", async (DefaultIdType id, ISender sender) =>
+            {
+                var response = await sender.Send(new GetBranchDashboardQuery(id)).ConfigureAwait(false);
+                return Results.Ok(response);
+            })
+            .WithName(GetBranchDashboard)
+            .WithSummary("Gets comprehensive branch dashboard analytics")
+            .Produces<BranchDashboardResponse>()
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 

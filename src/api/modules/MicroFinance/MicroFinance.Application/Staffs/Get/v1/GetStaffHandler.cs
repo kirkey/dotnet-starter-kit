@@ -1,15 +1,10 @@
-using FSH.Framework.Core.Persistence;
-using FSH.Starter.WebApi.MicroFinance.Application.Staff.Specifications;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using StaffEntity = FSH.Starter.WebApi.MicroFinance.Domain.Staff;
 using FSH.Framework.Core.Exceptions;
+using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Specifications;
 
-namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Get.v1;
+namespace FSH.Starter.WebApi.MicroFinance.Application.Staffs.Get.v1;
 
 public sealed class GetStaffHandler(
-    [FromKeyedServices("microfinance:staff")] IReadRepository<StaffEntity> repository,
+    [FromKeyedServices("microfinance:staff")] IReadRepository<Staff> repository,
     ILogger<GetStaffHandler> logger)
     : IRequestHandler<GetStaffRequest, StaffResponse>
 {

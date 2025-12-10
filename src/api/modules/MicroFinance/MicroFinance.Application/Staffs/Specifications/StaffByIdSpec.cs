@@ -1,9 +1,6 @@
-using Ardalis.Specification;
-using StaffEntity = FSH.Starter.WebApi.MicroFinance.Domain.Staff;
+namespace FSH.Starter.WebApi.MicroFinance.Application.Staffs.Specifications;
 
-namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Specifications;
-
-public sealed class StaffByIdSpec : Specification<StaffEntity>, ISingleResultSpecification<StaffEntity>
+public sealed class StaffByIdSpec : Specification<Staff>, ISingleResultSpecification<Staff>
 {
     public StaffByIdSpec(DefaultIdType id) => Query.Where(x => x.Id == id);
 }

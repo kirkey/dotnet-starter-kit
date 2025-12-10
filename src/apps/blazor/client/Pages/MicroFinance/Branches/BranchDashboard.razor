@@ -1,0 +1,296 @@
+@page "/microfinance/branches/{Id:guid}/dashboard"
+
+<FshPage Title="@($"Branch Dashboard: {_branchName}")"
+         Description="View comprehensive branch performance analytics, loan portfolio, savings metrics, and staff productivity"
+         Breadcrumbs="@_breadcrumbs">
+
+    <MudPaper Class="pa-4 mb-4" Elevation="@_preference.Elevation">
+        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+            <MudStack Spacing="1">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                    <MudText Typo="Typo.h5">@_branchName</MudText>
+                    <MudChip T="string" Color="@GetBranchTypeColor(_dashboard.BranchType)" Size="MudBlazor.Size.Small">
+                        @_dashboard.BranchType
+                    </MudChip>
+                </MudStack>
+                <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">
+                    @_dashboard.Code | Since @_dashboard.OpeningDate?.ToString("MMM yyyy") | @_dashboard.Status
+                </MudText>
+            </MudStack>
+            <MudStack Row="true" Spacing="2">
+                <MudButton Variant="Variant.Outlined"
+                           StartIcon="@Icons.Material.Filled.Refresh"
+                           OnClick="RefreshData"
+                           Color="MudBlazor.Color.Primary">
+                    Refresh
+                </MudButton>
+                <MudButton Variant="Variant.Outlined"
+                           StartIcon="@Icons.Material.Filled.Help"
+                           OnClick="OpenHelpDialog"
+                           Color="MudBlazor.Color.Info">
+                    Help
+                </MudButton>
+            </MudStack>
+        </MudStack>
+    </MudPaper>
+
+    @if (_loading)
+    {
+        <MudProgressLinear Color="MudBlazor.Color.Primary" Indeterminate="true" Class="mb-4" />
+    }
+
+    <!-- Key Performance Indicators -->
+    <MudGrid Class="mb-4">
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Elevation="@_preference.Elevation">
+                <MudCardContent>
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.AccountBalanceWallet" Color="MudBlazor.Color.Primary" Size="MudBlazor.Size.Large" />
+                        <MudText Typo="Typo.h4" Color="MudBlazor.Color.Primary">@_dashboard.LoanPortfolio.TotalOutstandingPrincipal.ToString("C0")</MudText>
+                        <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Loan Portfolio</MudText>
+                        <MudText Typo="Typo.caption">@_dashboard.LoanPortfolio.TotalActiveLoans loans active</MudText>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Elevation="@_preference.Elevation">
+                <MudCardContent>
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.Savings" Color="MudBlazor.Color.Success" Size="MudBlazor.Size.Large" />
+                        <MudText Typo="Typo.h4" Color="MudBlazor.Color.Success">@_dashboard.SavingsPortfolio.TotalSavingsBalance.ToString("C0")</MudText>
+                        <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Total Savings</MudText>
+                        <MudText Typo="Typo.caption">@_dashboard.SavingsPortfolio.ActiveSavingsAccounts accounts</MudText>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Elevation="@_preference.Elevation">
+                <MudCardContent>
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.People" Color="MudBlazor.Color.Info" Size="MudBlazor.Size.Large" />
+                        <MudText Typo="Typo.h4" Color="MudBlazor.Color.Info">@_dashboard.Members.TotalMembers.ToString("N0")</MudText>
+                        <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Total Members</MudText>
+                        <MudChip T="string" Color="@GetTrendColor(_dashboard.Members.MemberGrowthPercent)" Size="MudBlazor.Size.Small">
+                            @(_dashboard.Members.MemberGrowthPercent >= 0 ? "+" : "")@_dashboard.Members.MemberGrowthPercent%
+                        </MudChip>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Elevation="@_preference.Elevation">
+                <MudCardContent>
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.Warning" Color="MudBlazor.Color.Warning" Size="MudBlazor.Size.Large" />
+                        <MudText Typo="Typo.h4" Color="@GetPARColor(_dashboard.LoanPortfolio.PortfolioAtRisk30)">@_dashboard.LoanPortfolio.PortfolioAtRisk30.ToString("N1")%</MudText>
+                        <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">PAR 30</MudText>
+                        <MudChip T="string" Color="@GetPARColor(_dashboard.LoanPortfolio.PortfolioAtRisk30)" Size="MudBlazor.Size.Small">
+                            @GetPARLabel(_dashboard.LoanPortfolio.PortfolioAtRisk30)
+                        </MudChip>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+    <!-- Target Achievement -->
+    <MudPaper Class="pa-4 mb-4" Elevation="@_preference.Elevation">
+        <MudText Typo="Typo.h6" Class="mb-3">Target Achievement</MudText>
+        <MudGrid>
+            <MudItem xs="12" md="4">
+                <MudStack>
+                    <MudText>Loan Disbursement</MudText>
+                    <MudProgressLinear Color="@GetTargetAchievementColor(_dashboard.Targets.LoanDisbursementAchievement)"
+                                       Value="@((double)_dashboard.Targets.LoanDisbursementAchievement)"
+                                       Max="100"
+                                       Rounded="true"
+                                       Size="MudBlazor.Size.Large" />
+                    <MudText Typo="Typo.body2">@_dashboard.Targets.LoanDisbursementActual.ToString("C0") of @_dashboard.Targets.LoanDisbursementTarget.ToString("C0") (@_dashboard.Targets.LoanDisbursementAchievement.ToString("N0")%)</MudText>
+                </MudStack>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudStack>
+                    <MudText>Savings Mobilization</MudText>
+                    <MudProgressLinear Color="@GetTargetAchievementColor(_dashboard.Targets.SavingsAchievement)"
+                                       Value="@((double)_dashboard.Targets.SavingsAchievement)"
+                                       Max="100"
+                                       Rounded="true"
+                                       Size="MudBlazor.Size.Large" />
+                    <MudText Typo="Typo.body2">@_dashboard.Targets.SavingsActual.ToString("C0") of @_dashboard.Targets.SavingsTarget.ToString("C0") (@_dashboard.Targets.SavingsAchievement.ToString("N0")%)</MudText>
+                </MudStack>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudStack>
+                    <MudText>Member Acquisition</MudText>
+                    <MudProgressLinear Color="@GetTargetAchievementColor(_dashboard.Targets.MemberAchievement)"
+                                       Value="@((double)_dashboard.Targets.MemberAchievement)"
+                                       Max="100"
+                                       Rounded="true"
+                                       Size="MudBlazor.Size.Large" />
+                    <MudText Typo="Typo.body2">@_dashboard.Targets.MemberActualCount of @_dashboard.Targets.MemberTargetCount (@_dashboard.Targets.MemberAchievement.ToString("N0")%)</MudText>
+                </MudStack>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
+    <!-- Loan and Savings Metrics -->
+    <MudGrid Class="mb-4">
+        <MudItem xs="12" md="6">
+            <MudCard Elevation="@_preference.Elevation" Style="height:100%">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Loan Portfolio Metrics</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudStack Spacing="3">
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText>Active Loans</MudText>
+                            <MudText Typo="Typo.h6">@_dashboard.LoanPortfolio.TotalActiveLoans.ToString("N0")</MudText>
+                        </MudStack>
+                        <MudDivider />
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText>Loans Disbursed YTD</MudText>
+                            <MudText Typo="Typo.h6">@_dashboard.LoanPortfolio.LoansDisbursedYTD.ToString("N0")</MudText>
+                        </MudStack>
+                        <MudDivider />
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText>Average Loan Size</MudText>
+                            <MudText Typo="Typo.h6">@_dashboard.LoanPortfolio.AverageLoanSize.ToString("C0")</MudText>
+                        </MudStack>
+                        <MudDivider />
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText>Collection Efficiency</MudText>
+                            <MudText Typo="Typo.h6" Color="@GetPerformanceColor(_dashboard.LoanPortfolio.CollectionEfficiency)">
+                                @_dashboard.LoanPortfolio.CollectionEfficiency.ToString("N1")%
+                            </MudText>
+                        </MudStack>
+                        <MudDivider />
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText>Overdue Loans</MudText>
+                            <MudChip T="string" Color="@GetOverdueLoanColor(_dashboard.LoanPortfolio.LoansOverdue)" Size="MudBlazor.Size.Small">
+                                @_dashboard.LoanPortfolio.LoansOverdue (@_dashboard.LoanPortfolio.OverdueAmount.ToString("C0"))
+                            </MudChip>
+                        </MudStack>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudCard Elevation="@_preference.Elevation" Style="height:100%">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Savings Portfolio Metrics</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudStack Spacing="3">
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText>Total Accounts</MudText>
+                            <MudText Typo="Typo.h6">@_dashboard.SavingsPortfolio.TotalSavingsAccounts.ToString("N0")</MudText>
+                        </MudStack>
+                        <MudDivider />
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText>Active Accounts</MudText>
+                            <MudText Typo="Typo.h6">@_dashboard.SavingsPortfolio.ActiveSavingsAccounts.ToString("N0")</MudText>
+                        </MudStack>
+                        <MudDivider />
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText>Average Balance</MudText>
+                            <MudText Typo="Typo.h6">@_dashboard.SavingsPortfolio.AverageSavingsBalance.ToString("C0")</MudText>
+                        </MudStack>
+                        <MudDivider />
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText>Share Capital</MudText>
+                            <MudText Typo="Typo.h6">@_dashboard.SavingsPortfolio.TotalShareCapital.ToString("C0")</MudText>
+                        </MudStack>
+                        <MudDivider />
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText>Dormant Accounts</MudText>
+                            <MudChip T="string" Color="@GetDormantAccountColor(_dashboard.SavingsPortfolio.DormantAccounts)" Size="MudBlazor.Size.Small">
+                                @_dashboard.SavingsPortfolio.DormantAccounts
+                            </MudChip>
+                        </MudStack>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+    <!-- Staff and Recent Activity -->
+    <MudGrid>
+        <MudItem xs="12" md="4">
+            <MudCard Elevation="@_preference.Elevation">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Staff Overview</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudStack Spacing="2">
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText>Total Staff</MudText>
+                            <MudText Typo="Typo.h6">@_dashboard.Staff.TotalStaff</MudText>
+                        </MudStack>
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText>Loan Officers</MudText>
+                            <MudText>@_dashboard.Staff.LoanOfficers</MudText>
+                        </MudStack>
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText>Tellers</MudText>
+                            <MudText>@_dashboard.Staff.Tellers</MudText>
+                        </MudStack>
+                        <MudDivider />
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText>Branch Manager</MudText>
+                            <MudText>@_dashboard.Staff.BranchManager</MudText>
+                        </MudStack>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" md="8">
+            <MudCard Elevation="@_preference.Elevation">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Recent Loan Disbursements</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudSimpleTable Dense="true" Hover="true" Striped="true">
+                        <thead>
+                            <tr>
+                                <th>Loan #</th>
+                                <th>Member</th>
+                                <th>Product</th>
+                                <th style="text-align:right">Amount</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var loan in _dashboard.RecentLoans.Take(8))
+                            {
+                                <tr>
+                                    <td>@loan.LoanNumber</td>
+                                    <td>@loan.MemberName</td>
+                                    <td>@loan.ProductName</td>
+                                    <td style="text-align:right">@loan.PrincipalAmount.ToString("C0")</td>
+                                    <td>@loan.DisbursementDate.ToString("MMM dd")</td>
+                                    <td>
+                                        <MudChip T="string" Color="@GetLoanStatusColor(loan.Status)" Size="MudBlazor.Size.Small">
+                                            @loan.Status
+                                        </MudChip>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </MudSimpleTable>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+</FshPage>

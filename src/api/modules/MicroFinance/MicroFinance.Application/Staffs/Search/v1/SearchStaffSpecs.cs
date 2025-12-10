@@ -1,9 +1,8 @@
 // filepath: /Users/kirkeypsalms/Projects/dotnet-starter-kit/src/api/modules/MicroFinance/MicroFinance.Application/Staff/Search/v1/SearchStaffSpecs.cs
-using Ardalis.Specification;
-using FSH.Starter.WebApi.MicroFinance.Application.Staff.Get.v1;
-using FSH.Starter.WebApi.MicroFinance.Domain;
 
-namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Search.v1;
+using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Get.v1;
+
+namespace FSH.Starter.WebApi.MicroFinance.Application.Staffs.Search.v1;
 
 /// <summary>
 /// Specification for searching staff members.

@@ -1,6 +1,4 @@
-using MediatR;
-
-namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Create.v1;
+namespace FSH.Starter.WebApi.MicroFinance.Application.Staffs.Create.v1;
 
 public sealed record CreateStaffCommand(
     string EmployeeNumber,

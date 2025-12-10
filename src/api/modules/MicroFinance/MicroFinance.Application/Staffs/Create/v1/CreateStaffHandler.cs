@@ -1,19 +1,13 @@
-using FSH.Framework.Core.Persistence;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using StaffEntity = FSH.Starter.WebApi.MicroFinance.Domain.Staff;
-
-namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Create.v1;
+namespace FSH.Starter.WebApi.MicroFinance.Application.Staffs.Create.v1;
 
 public sealed class CreateStaffHandler(
-    [FromKeyedServices("microfinance:staff")] IRepository<StaffEntity> repository,
+    [FromKeyedServices("microfinance:staff")] IRepository<Staff> repository,
     ILogger<CreateStaffHandler> logger)
     : IRequestHandler<CreateStaffCommand, CreateStaffResponse>
 {
     public async Task<CreateStaffResponse> Handle(CreateStaffCommand request, CancellationToken cancellationToken)
     {
-        var staff = StaffEntity.Create(
+        var staff = Staff.Create(
             request.EmployeeNumber,
             request.FirstName,
             request.LastName,

@@ -1,12 +1,9 @@
 // filepath: /Users/kirkeypsalms/Projects/dotnet-starter-kit/src/api/modules/MicroFinance/MicroFinance.Application/Staff/Suspend/v1/SuspendStaffHandler.cs
-using FSH.Framework.Core.Exceptions;
-using FSH.Framework.Core.Persistence;
-using FSH.Starter.WebApi.MicroFinance.Application.Staff.Specifications;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
-namespace FSH.Starter.WebApi.MicroFinance.Application.Staff.Suspend.v1;
+using FSH.Framework.Core.Exceptions;
+using FSH.Starter.WebApi.MicroFinance.Application.Staffs.Specifications;
+
+namespace FSH.Starter.WebApi.MicroFinance.Application.Staffs.Suspend.v1;
 
 /// <summary>
 /// Handler for suspending a staff member.
