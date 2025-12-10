@@ -43,9 +43,6 @@ internal static class BranchSeeder
                 name: data.Name,
                 branchType: data.Type,
                 address: data.Address,
-                city: data.City,
-                state: data.State,
-                country: data.Country,
                 phone: data.Phone,
                 email: data.Email,
                 openingDate: DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-2)));

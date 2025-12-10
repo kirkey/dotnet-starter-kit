@@ -254,10 +254,6 @@ public class Member : AuditableEntity, IAggregateRoot
         if (dateOfBirth != DateOfBirth) { DateOfBirth = dateOfBirth; hasChanges = true; }
         if (gender != Gender) { Gender = gender?.Trim(); hasChanges = true; }
         if (address != Address) { Address = address?.Trim(); hasChanges = true; }
-        if (city != City) { City = city?.Trim(); hasChanges = true; }
-        if (state != State) { State = state?.Trim(); hasChanges = true; }
-        if (postalCode != PostalCode) { PostalCode = postalCode?.Trim(); hasChanges = true; }
-        if (country != Country) { Country = country?.Trim(); hasChanges = true; }
         if (nationalId != NationalId) { NationalId = nationalId?.Trim(); hasChanges = true; }
         if (occupation != Occupation) { Occupation = occupation?.Trim(); hasChanges = true; }
         if (monthlyIncome != MonthlyIncome) { MonthlyIncome = monthlyIncome; hasChanges = true; }
