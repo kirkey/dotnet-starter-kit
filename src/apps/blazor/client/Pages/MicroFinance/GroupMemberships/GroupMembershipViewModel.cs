@@ -57,6 +57,11 @@ public class GroupMembershipViewModel
     public DateTime? LeftDate { get; set; }
 
     /// <summary>
+    /// Date when the member left the group (API mapping property name).
+    /// </summary>
+    public DateTime? LeaveDate { get; set; }
+
+    /// <summary>
     /// Whether the membership is currently active.
     /// </summary>
     public bool IsActive { get; set; } = true;

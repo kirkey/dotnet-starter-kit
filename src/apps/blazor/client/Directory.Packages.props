@@ -9,7 +9,7 @@
     <IsPackable>true</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Blazor-ApexCharts" Version="4.0.0" />
+    <PackageVersion Include="Blazor-ApexCharts" Version="6.0.2" />
     <PackageVersion Include="ClosedXML" Version="0.105.0" />
     <PackageVersion Include="Mapster" Version="7.4.0" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.15.0.120848" />

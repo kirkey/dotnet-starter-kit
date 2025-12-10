@@ -36,4 +36,10 @@ public class InvestmentAccountViewModel
     public string? Notes { get; set; }
 
     public DateTime? FirstInvestmentDate { get; set; }
+
+    public DateTime? LastTransactionDate { get; set; }
+
+    public DateTime? NextSipDate { get; set; }
+
+    public DateTime? TargetDate { get; set; }
 }
