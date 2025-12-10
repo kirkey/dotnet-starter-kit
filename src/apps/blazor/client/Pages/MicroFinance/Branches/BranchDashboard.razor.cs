@@ -144,13 +144,10 @@ public partial class BranchDashboard
             {
                 LoanDisbursementTarget = random.Next(8000000, 12000000),
                 LoanDisbursementActual = random.Next(6000000, 11000000),
-                LoanDisbursementAchievement = 0, // Will be calculated
                 SavingsTarget = random.Next(15000000, 25000000),
                 SavingsActual = random.Next(12000000, 23000000),
-                SavingsAchievement = 0,
                 MemberTargetCount = random.Next(150, 250),
-                MemberActualCount = random.Next(100, 220),
-                MemberAchievement = 0
+                MemberActualCount = random.Next(100, 220)
             },
 
             RecentLoans = Enumerable.Range(1, 10).Select(i => new RecentLoanData

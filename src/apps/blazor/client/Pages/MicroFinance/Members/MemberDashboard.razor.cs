@@ -9,14 +9,19 @@ public partial class MemberDashboard
 {
     [Parameter]
     public Guid Id { get; set; }
-
     private bool _loading;
     private string _memberName = string.Empty;
     private MemberDashboardData _dashboard = new();
     private List<BreadcrumbItem> _breadcrumbs = new();
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
         _breadcrumbs = new List<BreadcrumbItem>
         {
             new("Home", "/", icon: Icons.Material.Filled.Home),

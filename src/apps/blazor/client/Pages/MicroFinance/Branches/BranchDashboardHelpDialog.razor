@@ -112,8 +112,15 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="@context.Close" Color="MudBlazor.Color.Primary" Variant="Variant.Filled">
+        <MudButton OnClick="Close" Color="MudBlazor.Color.Primary" Variant="Variant.Filled">
             Got It
         </MudButton>
     </DialogActions>
 </MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    private void Close() => MudDialog.Close();
+}
