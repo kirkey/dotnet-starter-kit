@@ -27,5 +27,6 @@ public class CostCentersEndpoints() : CarterModule
         group.MapCostCenterSearchEndpoint();
         group.MapCostCenterUpdateEndpoint();
         group.MapUpdateCostCenterBudgetEndpoint();
+        group.MapCostCenterDashboardEndpoint();
     }
 }

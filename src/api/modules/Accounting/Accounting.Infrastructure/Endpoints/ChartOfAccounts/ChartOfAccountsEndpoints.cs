@@ -31,5 +31,6 @@ public class ChartOfAccountsEndpoints() : CarterModule
         group.MapChartOfAccountUpdateBalanceEndpoint();
         group.MapChartOfAccountImportEndpoint();
         group.MapChartOfAccountExportEndpoint();
+        group.MapChartOfAccountDashboardEndpoint();
     }
 }

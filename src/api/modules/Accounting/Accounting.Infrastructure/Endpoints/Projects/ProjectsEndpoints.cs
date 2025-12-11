@@ -23,5 +23,6 @@ public class ProjectsEndpoints() : CarterModule
         group.MapProjectGetEndpoint();
         group.MapProjectSearchEndpoint();
         group.MapProjectUpdateEndpoint();
+        group.MapProjectDashboardEndpoint();
     }
 }

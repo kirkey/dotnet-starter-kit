@@ -21,6 +21,7 @@ public class BudgetsEndpoints() : CarterModule
         group.MapBudgetApproveEndpoint();
         group.MapBudgetCloseEndpoint();
         group.MapBudgetCreateEndpoint();
+        group.MapBudgetDashboardEndpoint();
         group.MapBudgetDeleteEndpoint();
         group.MapBudgetGetEndpoint();
         group.MapBudgetSearchEndpoint();
