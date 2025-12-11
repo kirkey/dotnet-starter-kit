@@ -11,7 +11,7 @@ public sealed record GetEmployeeDashboardRequest(
 /// <summary>
 /// Personal information summary section.
 /// </summary>
-public sealed record PersonalSummaryDto(
+public sealed record EmployeePersonalSummaryDto(
     DefaultIdType EmployeeId,
     string FirstName,
     string LastName,
@@ -26,17 +26,17 @@ public sealed record PersonalSummaryDto(
 /// <summary>
 /// Leave metrics and balances section.
 /// </summary>
-public sealed record LeaveMetricsDto(
+public sealed record EmployeeLeaveMetricsDto(
     decimal TotalEntitlement,
     decimal TakenDays,
     decimal PendingDays,
     decimal AvailableDays,
-    List<LeaveBalanceItemDto> BalancesByType);
+    List<EmployeeLeaveBalanceItemDto> BalancesByType);
 
 /// <summary>
 /// Leave balance item for specific leave type.
 /// </summary>
-public sealed record LeaveBalanceItemDto(
+public sealed record EmployeeLeaveBalanceItemDto(
     DefaultIdType LeaveTypeId,
     string LeaveTypeName,
     decimal Entitlement,
@@ -47,7 +47,7 @@ public sealed record LeaveBalanceItemDto(
 /// <summary>
 /// Attendance metrics section.
 /// </summary>
-public sealed record AttendanceMetricsDto(
+public sealed record EmployeeAttendanceMetricsDto(
     int WorkingDaysThisMonth,
     int PresentDaysThisMonth,
     int AbsentDaysThisMonth,
@@ -60,7 +60,7 @@ public sealed record AttendanceMetricsDto(
 /// <summary>
 /// Payroll information snapshot.
 /// </summary>
-public sealed record PayrollSnapshotDto(
+public sealed record EmployeePayrollSnapshotDto(
     decimal LastSalary,
     DateTime? LastPayrollDate,
     DateTime? NextPayrollDate,
@@ -69,16 +69,16 @@ public sealed record PayrollSnapshotDto(
 /// <summary>
 /// Pending approvals section.
 /// </summary>
-public sealed record PendingApprovalsDto(
+public sealed record EmployeePendingApprovalsDto(
     int PendingLeaveRequests,
     int PendingTimesheets,
     int PendingPerformanceReviews,
-    List<PendingItemDto> RecentPending);
+    List<EmployeePendingItemDto> RecentPending);
 
 /// <summary>
 /// Individual pending item.
 /// </summary>
-public sealed record PendingItemDto(
+public sealed record EmployeePendingItemDto(
     DefaultIdType ItemId,
     string ItemType, // "LeaveRequest", "Timesheet", "PerformanceReview"
     string Description,
@@ -88,15 +88,15 @@ public sealed record PendingItemDto(
 /// <summary>
 /// Performance review section.
 /// </summary>
-public sealed record PerformanceSnapshotDto(
+public sealed record EmployeePerformanceSnapshotDto(
     int PendingReviews,
     int AcknowledgedReviews,
-    List<RecentReviewDto> RecentReviews);
+    List<EmployeeRecentReviewDto> RecentReviews);
 
 /// <summary>
 /// Recent performance review item.
 /// </summary>
-public sealed record RecentReviewDto(
+public sealed record EmployeeRecentReviewDto(
     DefaultIdType ReviewId,
     string ReviewerName,
     DateTime ReviewDate,
@@ -106,14 +106,14 @@ public sealed record RecentReviewDto(
 /// <summary>
 /// Upcoming schedule section.
 /// </summary>
-public sealed record UpcomingScheduleDto(
-    List<UpcomingShiftDto> UpcomingShifts,
-    List<HolidayDto> UpcomingHolidays);
+public sealed record EmployeeUpcomingScheduleDto(
+    List<EmployeeUpcomingShiftDto> UpcomingShifts,
+    List<EmployeeHolidayDto> UpcomingHolidays);
 
 /// <summary>
 /// Upcoming shift item.
 /// </summary>
-public sealed record UpcomingShiftDto(
+public sealed record EmployeeUpcomingShiftDto(
     DefaultIdType ShiftAssignmentId,
     string ShiftName,
     DateTime ShiftDate,
@@ -123,7 +123,7 @@ public sealed record UpcomingShiftDto(
 /// <summary>
 /// Holiday item.
 /// </summary>
-public sealed record HolidayDto(
+public sealed record EmployeeHolidayDto(
     DefaultIdType HolidayId,
     string HolidayName,
     DateTime HolidayDate,
@@ -132,7 +132,7 @@ public sealed record HolidayDto(
 /// <summary>
 /// Quick actions available for employee.
 /// </summary>
-public sealed record QuickActionsDto(
+public sealed record EmployeeQuickActionsDto(
     bool CanSubmitLeave,
     bool CanClockIn,
     bool CanClockOut,
@@ -145,13 +145,13 @@ public sealed record QuickActionsDto(
 /// </summary>
 public sealed record EmployeeDashboardResponse(
     DefaultIdType EmployeeId,
-    PersonalSummaryDto PersonalSummary,
-    LeaveMetricsDto LeaveMetrics,
-    AttendanceMetricsDto AttendanceMetrics,
-    PayrollSnapshotDto PayrollSnapshot,
-    PendingApprovalsDto PendingApprovals,
-    PerformanceSnapshotDto PerformanceSnapshot,
-    UpcomingScheduleDto UpcomingSchedule,
-    QuickActionsDto QuickActions,
+    EmployeePersonalSummaryDto PersonalSummary,
+    EmployeeLeaveMetricsDto LeaveMetrics,
+    EmployeeAttendanceMetricsDto AttendanceMetrics,
+    EmployeePayrollSnapshotDto PayrollSnapshot,
+    EmployeePendingApprovalsDto PendingApprovals,
+    EmployeePerformanceSnapshotDto PerformanceSnapshot,
+    EmployeeUpcomingScheduleDto UpcomingSchedule,
+    EmployeeQuickActionsDto QuickActions,
     DateTime GeneratedAt);
 

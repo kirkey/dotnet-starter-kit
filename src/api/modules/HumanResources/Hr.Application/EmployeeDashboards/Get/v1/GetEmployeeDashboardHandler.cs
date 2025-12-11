@@ -62,14 +62,14 @@ public sealed class GetEmployeeDashboardHandler(
         return response;
     }
 
-    private async Task<PersonalSummaryDto> GetPersonalSummaryAsync(
+    private async Task<EmployeePersonalSummaryDto> GetPersonalSummaryAsync(
         DefaultIdType employeeId,
         CancellationToken cancellationToken)
     {
         var employee = await employeeRepository.GetByIdAsync(employeeId, cancellationToken)
             ?? throw new NotFoundException($"Employee with ID {employeeId} not found");
 
-        return new PersonalSummaryDto(
+        return new EmployeePersonalSummaryDto(
             EmployeeId: employee.Id,
             FirstName: employee.FirstName,
             LastName: employee.LastName,
@@ -82,7 +82,7 @@ public sealed class GetEmployeeDashboardHandler(
             EmploymentStatus: employee.Status);
     }
 
-    private async Task<LeaveMetricsDto> GetLeaveMetricsAsync(
+    private async Task<EmployeeLeaveMetricsDto> GetLeaveMetricsAsync(
         DefaultIdType employeeId,
         CancellationToken cancellationToken)
     {
@@ -97,7 +97,7 @@ public sealed class GetEmployeeDashboardHandler(
         var pendingDays = balances.Sum(x => x.PendingDays);
         var availableDays = balances.Sum(x => x.RemainingDays);
 
-        var balanceItems = balances.Select(x => new LeaveBalanceItemDto(
+        var balanceItems = balances.Select(x => new EmployeeLeaveBalanceItemDto(
             LeaveTypeId: x.LeaveTypeId,
             LeaveTypeName: x.LeaveType?.Name ?? "Unknown",
             Entitlement: x.AvailableDays,
@@ -105,7 +105,7 @@ public sealed class GetEmployeeDashboardHandler(
             Pending: x.PendingDays,
             Available: x.RemainingDays)).ToList();
 
-        return new LeaveMetricsDto(
+        return new EmployeeLeaveMetricsDto(
             TotalEntitlement: totalEntitlement,
             TakenDays: takenDays,
             PendingDays: pendingDays,
@@ -113,7 +113,7 @@ public sealed class GetEmployeeDashboardHandler(
             BalancesByType: balanceItems);
     }
 
-    private async Task<AttendanceMetricsDto> GetAttendanceMetricsAsync(
+    private async Task<EmployeeAttendanceMetricsDto> GetAttendanceMetricsAsync(
         DefaultIdType employeeId,
         CancellationToken cancellationToken)
     {
@@ -148,7 +148,7 @@ public sealed class GetEmployeeDashboardHandler(
             ? Math.Round((decimal)yearPresent / yearWorkingDays * 100, 2)
             : 0m;
 
-        return new AttendanceMetricsDto(
+        return new EmployeeAttendanceMetricsDto(
             WorkingDaysThisMonth: monthWorkingDays,
             PresentDaysThisMonth: monthPresent,
             AbsentDaysThisMonth: monthAbsent,
@@ -159,7 +159,7 @@ public sealed class GetEmployeeDashboardHandler(
             AttendancePercentageThisYear: yearAttendancePercentage);
     }
 
-    private async Task<PayrollSnapshotDto> GetPayrollSnapshotAsync(
+    private async Task<EmployeePayrollSnapshotDto> GetPayrollSnapshotAsync(
         DefaultIdType employeeId,
         CancellationToken cancellationToken)
     {
@@ -170,14 +170,14 @@ public sealed class GetEmployeeDashboardHandler(
 
         var lastPayroll = payrolls.FirstOrDefault();
 
-        return new PayrollSnapshotDto(
+        return new EmployeePayrollSnapshotDto(
             LastSalary: lastPayroll?.TotalNetPay ?? 0m,
             LastPayrollDate: lastPayroll?.ProcessedDate,
             NextPayrollDate: CalculateNextPayrollDate(),
             LastPayrollStatus: lastPayroll?.Status);
     }
 
-    private async Task<PendingApprovalsDto> GetPendingApprovalsAsync(
+    private async Task<EmployeePendingApprovalsDto> GetPendingApprovalsAsync(
         DefaultIdType employeeId,
         CancellationToken cancellationToken)
     {
@@ -196,37 +196,37 @@ public sealed class GetEmployeeDashboardHandler(
             cancellationToken)
             .ConfigureAwait(false);
 
-        var recentPending = new List<PendingItemDto>();
+        var recentPending = new List<EmployeePendingItemDto>();
 
-        recentPending.AddRange(leaveRequests.Take(3).Select(x => new PendingItemDto(
+        recentPending.AddRange(leaveRequests.Take(3).Select(x => new EmployeePendingItemDto(
             ItemId: x.Id,
             ItemType: "LeaveRequest",
             Description: $"{x.LeaveType?.Name} from {x.StartDate:MMM dd} to {x.EndDate:MMM dd}",
             SubmittedDate: (x.SubmittedDate ?? x.CreatedOn).DateTime,
             Status: x.Status)));
 
-        recentPending.AddRange(timesheets.Take(2).Select(x => new PendingItemDto(
+        recentPending.AddRange(timesheets.Take(2).Select(x => new EmployeePendingItemDto(
             ItemId: x.Id,
             ItemType: "Timesheet",
             Description: $"Timesheet for {x.PeriodType} ({x.StartDate:MMM dd} - {x.EndDate:MMM dd})",
             SubmittedDate: x.CreatedOn.DateTime,
             Status: x.Status)));
 
-        recentPending.AddRange(performanceReviews.Take(1).Select(x => new PendingItemDto(
+        recentPending.AddRange(performanceReviews.Take(1).Select(x => new EmployeePendingItemDto(
             ItemId: x.Id,
             ItemType: "PerformanceReview",
             Description: $"Review by {x.Reviewer?.FirstName} {x.Reviewer?.LastName}",
             SubmittedDate: x.ReviewPeriodEnd,
             Status: x.Status)));
 
-        return new PendingApprovalsDto(
+        return new EmployeePendingApprovalsDto(
             PendingLeaveRequests: leaveRequests.Count(x => x.Status == "Pending"),
             PendingTimesheets: timesheets.Count(x => x.Status == "Pending"),
             PendingPerformanceReviews: performanceReviews.Count(x => x.Status == "Pending"),
             RecentPending: recentPending.OrderByDescending(x => x.SubmittedDate).Take(5).ToList());
     }
 
-    private async Task<PerformanceSnapshotDto> GetPerformanceSnapshotAsync(
+    private async Task<EmployeePerformanceSnapshotDto> GetPerformanceSnapshotAsync(
         DefaultIdType employeeId,
         CancellationToken cancellationToken)
     {
@@ -235,20 +235,20 @@ public sealed class GetEmployeeDashboardHandler(
             cancellationToken)
             .ConfigureAwait(false);
 
-        var recentReviews = reviews.Take(3).Select(x => new RecentReviewDto(
+        var recentReviews = reviews.Take(3).Select(x => new EmployeeRecentReviewDto(
             ReviewId: x.Id,
             ReviewerName: $"{x.Reviewer?.FirstName} {x.Reviewer?.LastName}",
             ReviewDate: x.ReviewPeriodEnd,
             OverallRating: x.OverallRating,
             Status: x.Status)).ToList();
 
-        return new PerformanceSnapshotDto(
+        return new EmployeePerformanceSnapshotDto(
             PendingReviews: reviews.Count(x => x.Status == "Pending"),
             AcknowledgedReviews: reviews.Count(x => x.Status == "Acknowledged"),
             RecentReviews: recentReviews);
     }
 
-    private async Task<UpcomingScheduleDto> GetUpcomingScheduleAsync(
+    private async Task<EmployeeUpcomingScheduleDto> GetUpcomingScheduleAsync(
         DefaultIdType employeeId,
         CancellationToken cancellationToken)
     {
@@ -263,31 +263,31 @@ public sealed class GetEmployeeDashboardHandler(
             cancellationToken)
             .ConfigureAwait(false);
 
-        var upcomingShiftDtos = upcomingShifts.Take(5).Select(x => new UpcomingShiftDto(
+        var upcomingShiftDtos = upcomingShifts.Take(5).Select(x => new EmployeeUpcomingShiftDto(
             ShiftAssignmentId: x.Id,
             ShiftName: x.Shift?.Name ?? "Shift",
             ShiftDate: x.StartDate,
             StartTime: x.Shift?.StartTime ?? TimeSpan.Zero,
             EndTime: x.Shift?.EndTime ?? TimeSpan.Zero)).ToList();
 
-        var holidayDtos = holidays.Take(5).Select(x => new HolidayDto(
+        var holidayDtos = holidays.Take(5).Select(x => new EmployeeHolidayDto(
             HolidayId: x.Id,
             HolidayName: x.HolidayName,
             HolidayDate: x.HolidayDate,
             IsNationalHoliday: x.Type == "RegularPublicHoliday")).ToList();
 
-        return new UpcomingScheduleDto(
+        return new EmployeeUpcomingScheduleDto(
             UpcomingShifts: upcomingShiftDtos,
             UpcomingHolidays: holidayDtos);
     }
 
-    private async Task<QuickActionsDto> GetQuickActionsAsync(
+    private async Task<EmployeeQuickActionsDto> GetQuickActionsAsync(
         DefaultIdType employeeId,
         CancellationToken cancellationToken)
     {
         // Simplified quick actions - all true for now
         // In production, add permission and state checks
-        return new QuickActionsDto(
+        return new EmployeeQuickActionsDto(
             CanSubmitLeave: true,
             CanClockIn: true,
             CanClockOut: true,
