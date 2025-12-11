@@ -39,10 +39,10 @@ public sealed record VendorDashboardResponse
     public List<AccountBreakdown> ExpenseBreakdown { get; init; } = [];
 
     // Recent Bills
-    public List<RecentBillInfo> RecentBills { get; init; } = [];
+    public List<VendorRecentBillInfo> RecentBills { get; init; } = [];
 
     // Recent Payments
-    public List<RecentPaymentInfo> RecentPayments { get; init; } = [];
+    public List<VendorRecentPaymentInfo> RecentPayments { get; init; } = [];
 
     // Monthly Performance
     public List<MonthlyComparisonData> MonthlyPerformance { get; init; } = [];
@@ -98,7 +98,7 @@ public sealed record VendorAccountMetrics
     public decimal TotalByDefaultAccount { get; init; }
 }
 
-public sealed record RecentBillInfo
+public sealed record VendorRecentBillInfo
 {
     public Guid BillId { get; init; }
     public string BillNumber { get; init; } = default!;
@@ -110,7 +110,7 @@ public sealed record RecentBillInfo
     public bool IsPaid { get; init; }
 }
 
-public sealed record RecentPaymentInfo
+public sealed record VendorRecentPaymentInfo
 {
     public Guid PaymentId { get; init; }
     public string PaymentNumber { get; init; } = default!;

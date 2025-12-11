@@ -318,13 +318,13 @@ public sealed class GetProjectDashboardHandler(
         return result;
     }
 
-    private static List<CostCategoryBreakdown> CalculateCostCategoryBreakdown(List<ProjectCostEntry> costEntries)
+    private static List<ProjectCostCategoryBreakdown> CalculateCostCategoryBreakdown(List<ProjectCostEntry> costEntries)
     {
         var totalAmount = costEntries.Sum(c => c.Amount);
 
         return costEntries
             .GroupBy(c => c.Category ?? "Uncategorized")
-            .Select(g => new CostCategoryBreakdown
+            .Select(g => new ProjectCostCategoryBreakdown
             {
                 Category = g.Key,
                 EntryCount = g.Count(),

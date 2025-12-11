@@ -36,7 +36,7 @@ public sealed record ProjectDashboardResponse
     public List<AccountingTimeSeriesDataPoint> BudgetUtilizationTrend { get; init; } = [];
 
     // Cost Category Breakdown
-    public List<CostCategoryBreakdown> CostByCategory { get; init; } = [];
+    public List<ProjectCostCategoryBreakdown> CostByCategory { get; init; } = [];
 
     // Recent Cost Entries
     public List<RecentProjectCostInfo> RecentCosts { get; init; } = [];
@@ -96,7 +96,7 @@ public sealed record ProjectTimelineMetrics
     public bool IsOnSchedule { get; init; }
 }
 
-public sealed record CostCategoryBreakdown
+public sealed record ProjectCostCategoryBreakdown
 {
     public string Category { get; init; } = default!;
     public int EntryCount { get; init; }

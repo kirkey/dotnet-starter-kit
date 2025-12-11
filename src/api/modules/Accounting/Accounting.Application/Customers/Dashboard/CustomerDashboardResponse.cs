@@ -39,7 +39,7 @@ public sealed record CustomerDashboardResponse
     public List<AccountingTimeSeriesDataPoint> BalanceTrend { get; init; } = [];
 
     // Recent Invoices
-    public List<RecentInvoiceInfo> RecentInvoices { get; init; } = [];
+    public List<CustomerRecentInvoiceInfo> RecentInvoices { get; init; } = [];
 
     // Recent Payments
     public List<RecentCustomerPaymentInfo> RecentPayments { get; init; } = [];
@@ -101,7 +101,7 @@ public sealed record CustomerAgingMetrics
     public int DaysSalesOutstanding { get; init; }
 }
 
-public sealed record RecentInvoiceInfo
+public sealed record CustomerRecentInvoiceInfo
 {
     public Guid InvoiceId { get; init; }
     public string InvoiceNumber { get; init; } = default!;

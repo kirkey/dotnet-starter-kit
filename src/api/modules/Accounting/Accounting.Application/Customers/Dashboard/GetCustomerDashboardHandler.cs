@@ -63,7 +63,7 @@ public sealed class GetCustomerDashboardHandler(
         var recentInvoices = invoices
             .OrderByDescending(i => i.InvoiceDate)
             .Take(10)
-            .Select(i => new RecentInvoiceInfo
+            .Select(i => new CustomerRecentInvoiceInfo
             {
                 InvoiceId = i.Id,
                 InvoiceNumber = i.InvoiceNumber,

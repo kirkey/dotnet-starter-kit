@@ -75,7 +75,7 @@ public sealed class GetChartOfAccountDashboardHandler(
             .Where(x => x.JournalEntry != null)
             .OrderByDescending(x => x.JournalEntry!.Date)
             .Take(10)
-            .Select(x => new RecentJournalEntryInfo
+            .Select(x => new ChartOfAccountRecentJournalEntryInfo
             {
                 JournalEntryId = x.JournalEntry!.Id,
                 JournalEntryLineId = x.Line.Id,
@@ -125,7 +125,7 @@ public sealed class GetChartOfAccountDashboardHandler(
         return response;
     }
 
-    private static AccountBalanceMetrics CalculateBalanceMetrics(
+    private static ChartOfAccountBalanceMetrics CalculateBalanceMetrics(
         ChartOfAccount account,
         List<JournalEntryLine> lines,
         Dictionary<Guid, JournalEntry> journalEntryDict,
@@ -162,7 +162,7 @@ public sealed class GetChartOfAccountDashboardHandler(
             ? (account.Balance - lastYearBalance) / Math.Abs(lastYearBalance) * 100
             : 0;
 
-        return new AccountBalanceMetrics
+        return new ChartOfAccountBalanceMetrics
         {
             CurrentBalance = account.Balance,
             BeginningBalance = beginningBalance,
@@ -175,7 +175,7 @@ public sealed class GetChartOfAccountDashboardHandler(
         };
     }
 
-    private static AccountActivityMetrics CalculateActivityMetrics(
+    private static ChartOfAccountActivityMetrics CalculateActivityMetrics(
         List<JournalEntryLine> lines,
         Dictionary<Guid, JournalEntry> journalEntryDict,
         DateTime startOfYear,
@@ -218,7 +218,7 @@ public sealed class GetChartOfAccountDashboardHandler(
             ? (int)(today - lastTransactionDate.Value.Date).TotalDays
             : 0;
 
-        return new AccountActivityMetrics
+        return new ChartOfAccountActivityMetrics
         {
             TotalTransactions = lines.Count,
             TransactionsYTD = ytdLines.Count,
@@ -232,7 +232,7 @@ public sealed class GetChartOfAccountDashboardHandler(
         };
     }
 
-    private static SubAccountSummary CalculateSubAccountSummary(List<ChartOfAccount> subAccounts, decimal parentBalance)
+    private static ChartOfAccountSubAccountSummary CalculateSubAccountSummary(List<ChartOfAccount> subAccounts, decimal parentBalance)
     {
         var activeSubAccounts = subAccounts.Where(s => s.IsActive).ToList();
         var combinedBalance = subAccounts.Sum(s => s.Balance);
@@ -240,7 +240,7 @@ public sealed class GetChartOfAccountDashboardHandler(
         var topSubAccounts = subAccounts
             .OrderByDescending(s => Math.Abs(s.Balance))
             .Take(5)
-            .Select(s => new SubAccountInfo
+            .Select(s => new ChartOfAccountSubAccountInfo
             {
                 AccountId = s.Id,
                 AccountCode = s.AccountCode,
@@ -249,7 +249,7 @@ public sealed class GetChartOfAccountDashboardHandler(
                 PercentageOfParent = parentBalance != 0 ? s.Balance / Math.Abs(parentBalance) * 100 : 0
             }).ToList();
 
-        return new SubAccountSummary
+        return new ChartOfAccountSubAccountSummary
         {
             TotalSubAccounts = subAccounts.Count,
             ActiveSubAccounts = activeSubAccounts.Count,

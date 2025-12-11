@@ -208,7 +208,7 @@ public sealed class GetCostCenterDashboardHandler(
         };
     }
 
-    private static ChildCostCenterSummary CalculateChildCostCenterSummary(List<CostCenter> childCostCenters)
+    private static CostCenterChildSummary CalculateChildCostCenterSummary(List<CostCenter> childCostCenters)
     {
         var activeChildren = childCostCenters.Where(c => c.IsActive).ToList();
         var combinedBudget = childCostCenters.Sum(c => c.BudgetAmount);
@@ -217,7 +217,7 @@ public sealed class GetCostCenterDashboardHandler(
         var topChildren = childCostCenters
             .OrderByDescending(c => c.ActualAmount)
             .Take(5)
-            .Select(c => new ChildCostCenterInfo
+            .Select(c => new CostCenterChildInfo
             {
                 CostCenterId = c.Id,
                 Code = c.Code,
@@ -227,7 +227,7 @@ public sealed class GetCostCenterDashboardHandler(
                 BudgetUtilization = c.BudgetAmount > 0 ? c.ActualAmount / c.BudgetAmount * 100 : 0
             }).ToList();
 
-        return new ChildCostCenterSummary
+        return new CostCenterChildSummary
         {
             TotalChildCostCenters = childCostCenters.Count,
             ActiveChildCostCenters = activeChildren.Count,

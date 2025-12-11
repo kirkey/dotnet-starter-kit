@@ -27,7 +27,7 @@ public sealed record CostCenterDashboardResponse
     public CostCenterTransactionMetrics Transactions { get; init; } = new();
 
     // Child Cost Centers (if parent)
-    public ChildCostCenterSummary ChildCostCenters { get; init; } = new();
+    public CostCenterChildSummary ChildCostCenters { get; init; } = new();
 
     // Trend Data for Charts
     public List<AccountingTimeSeriesDataPoint> ActualTrend { get; init; } = [];
@@ -71,16 +71,16 @@ public sealed record CostCenterTransactionMetrics
     public int DaysSinceLastTransaction { get; init; }
 }
 
-public sealed record ChildCostCenterSummary
+public sealed record CostCenterChildSummary
 {
     public int TotalChildCostCenters { get; init; }
     public int ActiveChildCostCenters { get; init; }
     public decimal CombinedBudget { get; init; }
     public decimal CombinedActual { get; init; }
-    public List<ChildCostCenterInfo> TopChildren { get; init; } = [];
+    public List<CostCenterChildInfo> TopChildren { get; init; } = [];
 }
 
-public sealed record ChildCostCenterInfo
+public sealed record CostCenterChildInfo
 {
     public Guid CostCenterId { get; init; }
     public string Code { get; init; } = default!;

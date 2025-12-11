@@ -22,13 +22,13 @@ public sealed record ChartOfAccountDashboardResponse
     public Guid? ParentAccountId { get; init; }
 
     // Balance Overview
-    public AccountBalanceMetrics Balances { get; init; } = new();
+    public ChartOfAccountBalanceMetrics Balances { get; init; } = new();
 
     // Activity Metrics
-    public AccountActivityMetrics Activity { get; init; } = new();
+    public ChartOfAccountActivityMetrics Activity { get; init; } = new();
 
     // Sub-Account Summary (if control account)
-    public SubAccountSummary SubAccounts { get; init; } = new();
+    public ChartOfAccountSubAccountSummary SubAccounts { get; init; } = new();
 
     // Trend Data for Charts
     public List<AccountingTimeSeriesDataPoint> BalanceTrend { get; init; } = [];
@@ -39,7 +39,7 @@ public sealed record ChartOfAccountDashboardResponse
     public List<PeriodBreakdown> PeriodActivity { get; init; } = [];
 
     // Recent Transactions
-    public List<RecentJournalEntryInfo> RecentTransactions { get; init; } = [];
+    public List<ChartOfAccountRecentJournalEntryInfo> RecentTransactions { get; init; } = [];
 
     // Monthly Performance
     public List<MonthlyComparisonData> MonthlyPerformance { get; init; } = [];
@@ -48,7 +48,7 @@ public sealed record ChartOfAccountDashboardResponse
     public List<DashboardAlert> Alerts { get; init; } = [];
 }
 
-public sealed record AccountBalanceMetrics
+public sealed record ChartOfAccountBalanceMetrics
 {
     public decimal CurrentBalance { get; init; }
     public decimal BeginningBalance { get; init; }
@@ -60,7 +60,7 @@ public sealed record AccountBalanceMetrics
     public decimal BalanceChangePercentage { get; init; }
 }
 
-public sealed record AccountActivityMetrics
+public sealed record ChartOfAccountActivityMetrics
 {
     public int TotalTransactions { get; init; }
     public int TransactionsYTD { get; init; }
@@ -73,15 +73,15 @@ public sealed record AccountActivityMetrics
     public int DaysSinceLastTransaction { get; init; }
 }
 
-public sealed record SubAccountSummary
+public sealed record ChartOfAccountSubAccountSummary
 {
     public int TotalSubAccounts { get; init; }
     public int ActiveSubAccounts { get; init; }
     public decimal CombinedBalance { get; init; }
-    public List<SubAccountInfo> TopSubAccounts { get; init; } = [];
+    public List<ChartOfAccountSubAccountInfo> TopSubAccounts { get; init; } = [];
 }
 
-public sealed record SubAccountInfo
+public sealed record ChartOfAccountSubAccountInfo
 {
     public Guid AccountId { get; init; }
     public string AccountCode { get; init; } = default!;
@@ -90,7 +90,7 @@ public sealed record SubAccountInfo
     public decimal PercentageOfParent { get; init; }
 }
 
-public sealed record RecentJournalEntryInfo
+public sealed record ChartOfAccountRecentJournalEntryInfo
 {
     public Guid JournalEntryId { get; init; }
     public Guid JournalEntryLineId { get; init; }

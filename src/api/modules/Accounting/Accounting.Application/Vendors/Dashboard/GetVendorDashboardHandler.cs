@@ -73,7 +73,7 @@ public sealed class GetVendorDashboardHandler(
         var recentBills = bills
             .OrderByDescending(b => b.BillDate)
             .Take(10)
-            .Select(b => new RecentBillInfo
+            .Select(b => new VendorRecentBillInfo
             {
                 BillId = b.Id,
                 BillNumber = b.BillNumber,
@@ -90,7 +90,7 @@ public sealed class GetVendorDashboardHandler(
             .Where(c => c.Status == "Issued" || c.Status == "Cleared")
             .OrderByDescending(c => c.CreatedOn)
             .Take(10)
-            .Select(c => new RecentPaymentInfo
+            .Select(c => new VendorRecentPaymentInfo
             {
                 PaymentId = c.Id,
                 PaymentNumber = c.CheckNumber,
