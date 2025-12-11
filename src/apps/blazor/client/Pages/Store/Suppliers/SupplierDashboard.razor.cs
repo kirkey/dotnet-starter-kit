@@ -38,10 +38,25 @@ public partial class SupplierDashboard
         _loading = true;
         try
         {
-            // Simulate API call - replace with actual API call when ready
-            await Task.Delay(500);
+            var response = await Client.GetSupplierDashboardEndpointAsync(Id);
+            
+            if (response != null && !string.IsNullOrEmpty(response.SupplierName))
+            {
+                _dashboard = response.Adapt<SupplierDashboardData>();
+                _supplierName = _dashboard.SupplierName;
+            }
+            else
+            {
+                _dashboard = GenerateMockDashboardData();
+                _supplierName = _dashboard.SupplierName;
+                Snackbar.Add("Using sample data for demonstration", Severity.Info);
+            }
+        }
+        catch (Exception ex)
+        {
             _dashboard = GenerateMockDashboardData();
             _supplierName = _dashboard.SupplierName;
+            Snackbar.Add($"Error loading dashboard. Using sample data: {ex.Message}", Severity.Warning);
         }
         finally
         {

@@ -39,11 +39,28 @@ public partial class ItemDashboard
         _loading = true;
         try
         {
-            // Simulate API call - replace with actual API call when ready
-            await Task.Delay(500);
+            var response = await Client.GetItemDashboardEndpointAsync(Id);
+            
+            if (response != null && !string.IsNullOrEmpty(response.ItemName))
+            {
+                _dashboard = response.Adapt<ItemDashboardData>();
+                _itemName = _dashboard.ItemName;
+                _itemSku = _dashboard.Sku;
+            }
+            else
+            {
+                _dashboard = GenerateMockDashboardData();
+                _itemName = _dashboard.ItemName;
+                _itemSku = _dashboard.Sku;
+                Snackbar.Add("Using sample data for demonstration", Severity.Info);
+            }
+        }
+        catch (Exception ex)
+        {
             _dashboard = GenerateMockDashboardData();
             _itemName = _dashboard.ItemName;
             _itemSku = _dashboard.Sku;
+            Snackbar.Add($"Error loading dashboard. Using sample data: {ex.Message}", Severity.Warning);
         }
         finally
         {
