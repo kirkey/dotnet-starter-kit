@@ -19,25 +19,25 @@ public sealed record WarehouseDashboardResponse
     public bool IsActive { get; init; }
 
     // Capacity Metrics
-    public CapacityMetrics Capacity { get; init; } = new();
+    public WarehouseCapacityMetrics Capacity { get; init; } = new();
 
     // Inventory Summary
-    public InventorySummary Inventory { get; init; } = new();
+    public WarehouseInventorySummary Inventory { get; init; } = new();
 
     // Movement Metrics
-    public MovementMetrics Movements { get; init; } = new();
+    public WarehouseMovementMetrics Movements { get; init; } = new();
 
     // Operations Metrics
-    public OperationsMetrics Operations { get; init; } = new();
+    public WarehouseOperationsMetrics Operations { get; init; } = new();
 
     // Location Utilization
-    public LocationUtilization Locations { get; init; } = new();
+    public WarehouseLocationUtilization Locations { get; init; } = new();
 
     // Trend Data for Charts
-    public List<TimeSeriesDataPoint> InventoryValueTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> ReceivingTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> ShippingTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> TurnoverTrend { get; init; } = [];
+    public List<StoreTimeSeriesDataPoint> InventoryValueTrend { get; init; } = [];
+    public List<StoreTimeSeriesDataPoint> ReceivingTrend { get; init; } = [];
+    public List<StoreTimeSeriesDataPoint> ShippingTrend { get; init; } = [];
+    public List<StoreTimeSeriesDataPoint> TurnoverTrend { get; init; } = [];
 
     // Category Breakdown
     public List<WarehouseCategoryBreakdown> InventoryByCategory { get; init; } = [];
@@ -58,7 +58,7 @@ public sealed record WarehouseDashboardResponse
     public List<WarehouseAlert> Alerts { get; init; } = [];
 }
 
-public sealed record CapacityMetrics
+public sealed record WarehouseCapacityMetrics
 {
     public decimal TotalCapacity { get; init; }
     public decimal UsedCapacity { get; init; }
@@ -70,7 +70,7 @@ public sealed record CapacityMetrics
     public decimal LocationUtilizationPercentage { get; init; }
 }
 
-public sealed record InventorySummary
+public sealed record WarehouseInventorySummary
 {
     public int TotalItems { get; init; }
     public int TotalSku { get; init; }
@@ -84,7 +84,7 @@ public sealed record InventorySummary
     public decimal AverageItemValue { get; init; }
 }
 
-public sealed record MovementMetrics
+public sealed record WarehouseMovementMetrics
 {
     public int TotalInboundToday { get; init; }
     public int TotalOutboundToday { get; init; }
@@ -98,7 +98,7 @@ public sealed record MovementMetrics
     public decimal InventoryTurnover { get; init; }
 }
 
-public sealed record OperationsMetrics
+public sealed record WarehouseOperationsMetrics
 {
     public int PendingPutAways { get; init; }
     public int PendingPickLists { get; init; }
@@ -112,16 +112,16 @@ public sealed record OperationsMetrics
     public int TasksOverdue { get; init; }
 }
 
-public sealed record LocationUtilization
+public sealed record WarehouseLocationUtilization
 {
     public int TotalBins { get; init; }
     public int OccupiedBins { get; init; }
     public int EmptyBins { get; init; }
     public decimal BinUtilizationPercentage { get; init; }
-    public List<ZoneUtilization> ZoneBreakdown { get; init; } = [];
+    public List<WarehouseZoneUtilization> ZoneBreakdown { get; init; } = [];
 }
 
-public sealed record ZoneUtilization
+public sealed record WarehouseZoneUtilization
 {
     public string ZoneName { get; init; } = default!;
     public int TotalLocations { get; init; }

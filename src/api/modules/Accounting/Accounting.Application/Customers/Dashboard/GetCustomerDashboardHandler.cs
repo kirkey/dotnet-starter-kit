@@ -265,9 +265,9 @@ public sealed class GetCustomerDashboardHandler(
         };
     }
 
-    private static List<TimeSeriesDataPoint> GenerateInvoiceValueTrend(List<Invoice> invoices, int months)
+    private static List<AccountingTimeSeriesDataPoint> GenerateInvoiceValueTrend(List<Invoice> invoices, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -278,7 +278,7 @@ public sealed class GetCustomerDashboardHandler(
                 .Where(inv => inv.InvoiceDate >= monthStart && inv.InvoiceDate < monthEnd)
                 .Sum(inv => inv.TotalAmount);
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = monthValue,
@@ -289,9 +289,9 @@ public sealed class GetCustomerDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GeneratePaymentTrend(List<Payment> payments, int months)
+    private static List<AccountingTimeSeriesDataPoint> GeneratePaymentTrend(List<Payment> payments, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -302,7 +302,7 @@ public sealed class GetCustomerDashboardHandler(
                 .Where(p => p.PaymentDate >= monthStart && p.PaymentDate < monthEnd)
                 .Sum(p => p.Amount);
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = monthValue,
@@ -313,12 +313,12 @@ public sealed class GetCustomerDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateBalanceTrend(
+    private static List<AccountingTimeSeriesDataPoint> GenerateBalanceTrend(
         List<Invoice> invoices,
         List<Payment> payments,
         int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
         decimal runningBalance = 0;
 
@@ -332,7 +332,7 @@ public sealed class GetCustomerDashboardHandler(
 
             runningBalance += monthInvoices - monthPayments;
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = runningBalance,

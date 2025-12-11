@@ -29,8 +29,8 @@ public sealed record BudgetDashboardResponse
     public BudgetDetailMetrics Details { get; init; } = new();
 
     // Trend Data for Charts
-    public List<TimeSeriesDataPoint> ActualTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> UtilizationTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> ActualTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> UtilizationTrend { get; init; } = [];
 
     // Account Breakdown
     public List<BudgetAccountBreakdown> TopBudgetedAccounts { get; init; } = [];

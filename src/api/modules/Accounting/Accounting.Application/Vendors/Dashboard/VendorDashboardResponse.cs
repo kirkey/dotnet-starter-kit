@@ -31,9 +31,9 @@ public sealed record VendorDashboardResponse
     public VendorAccountMetrics Accounts { get; init; } = new();
 
     // Trend Data for Charts
-    public List<TimeSeriesDataPoint> BillValueTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> PaymentTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> BalanceTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> BillValueTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> PaymentTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> BalanceTrend { get; init; } = [];
 
     // Expense Account Breakdown
     public List<AccountBreakdown> ExpenseBreakdown { get; init; } = [];

@@ -1,9 +1,9 @@
 namespace Accounting.Application.Dashboard;
 
 /// <summary>
-/// Represents a single data point in a time series chart.
+/// Represents a single data point in a time series chart for Accounting dashboards.
 /// </summary>
-public sealed record TimeSeriesDataPoint
+public sealed record AccountingTimeSeriesDataPoint
 {
     public DateTime Date { get; init; }
     public decimal Value { get; init; }

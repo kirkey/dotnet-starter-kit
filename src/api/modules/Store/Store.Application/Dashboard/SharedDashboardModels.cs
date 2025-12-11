@@ -1,9 +1,9 @@
 namespace FSH.Starter.WebApi.Store.Application.Dashboard;
 
 /// <summary>
-/// Represents a single data point in a time series chart.
+/// Represents a single data point in a time series chart for Store dashboards.
 /// </summary>
-public sealed record TimeSeriesDataPoint
+public sealed record StoreTimeSeriesDataPoint
 {
     public DateTime Date { get; init; }
     public decimal Value { get; init; }
@@ -11,9 +11,9 @@ public sealed record TimeSeriesDataPoint
 }
 
 /// <summary>
-/// Represents category-based data breakdown for charts.
+/// Represents category-based data breakdown for charts in Store dashboards.
 /// </summary>
-public sealed record CategoryBreakdown
+public sealed record StoreCategoryBreakdown
 {
     public string CategoryName { get; init; } = default!;
     public int OrderCount { get; init; }

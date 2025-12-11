@@ -19,43 +19,43 @@ public sealed record SupplierDashboardResponse
     public decimal Rating { get; init; }
 
     // Financial Overview
-    public FinancialMetrics Financials { get; init; } = new();
+    public SupplierFinancialMetrics Financials { get; init; } = new();
 
     // Order Metrics
-    public OrderMetrics Orders { get; init; } = new();
+    public SupplierOrderMetrics Orders { get; init; } = new();
 
     // Delivery Performance
-    public DeliveryPerformance Delivery { get; init; } = new();
+    public SupplierDeliveryPerformance Delivery { get; init; } = new();
 
     // Quality Metrics
-    public QualityMetrics Quality { get; init; } = new();
+    public SupplierQualityMetrics Quality { get; init; } = new();
 
     // Item Portfolio
-    public ItemPortfolio Items { get; init; } = new();
+    public SupplierItemPortfolio Items { get; init; } = new();
 
     // Trend Data for Charts
-    public List<TimeSeriesDataPoint> OrderValueTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> OrderCountTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> LeadTimeTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> OnTimeDeliveryTrend { get; init; } = [];
+    public List<StoreTimeSeriesDataPoint> OrderValueTrend { get; init; } = [];
+    public List<StoreTimeSeriesDataPoint> OrderCountTrend { get; init; } = [];
+    public List<StoreTimeSeriesDataPoint> LeadTimeTrend { get; init; } = [];
+    public List<StoreTimeSeriesDataPoint> OnTimeDeliveryTrend { get; init; } = [];
 
     // Category Breakdown
-    public List<CategoryBreakdown> OrdersByCategory { get; init; } = [];
+    public List<StoreCategoryBreakdown> OrdersByCategory { get; init; } = [];
 
     // Top Items from this Supplier
-    public List<TopItemInfo> TopItems { get; init; } = [];
+    public List<SupplierTopItemInfo> TopItems { get; init; } = [];
 
     // Recent Purchase Orders
-    public List<RecentPurchaseOrder> RecentOrders { get; init; } = [];
+    public List<SupplierRecentPurchaseOrder> RecentOrders { get; init; } = [];
 
     // Monthly Comparison
-    public List<MonthlyComparison> MonthlyPerformance { get; init; } = [];
+    public List<SupplierMonthlyComparison> MonthlyPerformance { get; init; } = [];
 
     // Comparative Ranking
     public SupplierRanking Ranking { get; init; } = new();
 }
 
-public sealed record FinancialMetrics
+public sealed record SupplierFinancialMetrics
 {
     public decimal TotalPurchaseValue { get; init; }
     public decimal TotalPurchaseValueYTD { get; init; }
@@ -68,7 +68,7 @@ public sealed record FinancialMetrics
     public decimal GrowthPercentage { get; init; }
 }
 
-public sealed record OrderMetrics
+public sealed record SupplierOrderMetrics
 {
     public int TotalOrders { get; init; }
     public int TotalOrdersYTD { get; init; }
@@ -82,7 +82,7 @@ public sealed record OrderMetrics
     public decimal AverageItemsPerOrder { get; init; }
 }
 
-public sealed record DeliveryPerformance
+public sealed record SupplierDeliveryPerformance
 {
     public decimal OnTimeDeliveryRate { get; init; }
     public decimal AverageLeadTimeDays { get; init; }
@@ -95,7 +95,7 @@ public sealed record DeliveryPerformance
     public decimal DeliveryReliabilityScore { get; init; }
 }
 
-public sealed record QualityMetrics
+public sealed record SupplierQualityMetrics
 {
     public decimal AcceptanceRate { get; init; }
     public int TotalItemsReceived { get; init; }
@@ -108,7 +108,7 @@ public sealed record QualityMetrics
     public decimal QualityScore { get; init; }
 }
 
-public sealed record ItemPortfolio
+public sealed record SupplierItemPortfolio
 {
     public int TotalItemsSupplied { get; init; }
     public int ActiveItems { get; init; }
@@ -117,7 +117,7 @@ public sealed record ItemPortfolio
     public List<string> TopCategories { get; init; } = [];
 }
 
-public sealed record TopItemInfo
+public sealed record SupplierTopItemInfo
 {
     public Guid ItemId { get; init; }
     public string ItemName { get; init; } = default!;
@@ -128,7 +128,7 @@ public sealed record TopItemInfo
     public decimal AverageUnitPrice { get; init; }
 }
 
-public sealed record RecentPurchaseOrder
+public sealed record SupplierRecentPurchaseOrder
 {
     public Guid PurchaseOrderId { get; init; }
     public string OrderNumber { get; init; } = default!;
@@ -140,7 +140,7 @@ public sealed record RecentPurchaseOrder
     public DateTime? ActualDelivery { get; init; }
 }
 
-public sealed record MonthlyComparison
+public sealed record SupplierMonthlyComparison
 {
     public string Month { get; init; } = default!;
     public int Year { get; init; }

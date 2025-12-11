@@ -169,7 +169,7 @@ public sealed class GetCategoryDashboardHandler(
         return result;
     }
 
-    private static ItemMetrics CalculateItemMetrics(
+    private static CategoryItemMetrics CalculateItemMetrics(
         List<Item> items,
         List<InventoryTransaction> transactions,
         DateTime startOfMonth)
@@ -195,7 +195,7 @@ public sealed class GetCategoryDashboardHandler(
             ? items.FirstOrDefault(i => i.Id == salesByItem.ItemId)?.Name
             : null;
 
-        return new ItemMetrics
+        return new CategoryItemMetrics
         {
             TotalItems = items.Count,
             ActiveItems = items.Count, // All items returned are active by default
@@ -344,13 +344,13 @@ public sealed class GetCategoryDashboardHandler(
         };
     }
 
-    private async Task<SubcategorySummary> CalculateSubcategorySummary(
+    private async Task<CategorySubcategorySummary> CalculateSubcategorySummary(
         List<Category> subcategories,
         CancellationToken cancellationToken)
     {
         var activeSubcategories = subcategories.Where(c => c.IsActive).ToList();
 
-        var topSubcategories = new List<SubcategoryInfo>();
+        var topSubcategories = new List<CategorySubcategoryInfo>();
         foreach (var sub in activeSubcategories.Take(5))
         {
             var subItems = await itemRepository.ListAsync(new ItemsByCategorySpec(sub.Id), cancellationToken);
@@ -363,7 +363,7 @@ public sealed class GetCategoryDashboardHandler(
                 return item != null ? s.QuantityOnHand * item.UnitPrice : 0;
             });
 
-            topSubcategories.Add(new SubcategoryInfo
+            topSubcategories.Add(new CategorySubcategoryInfo
             {
                 CategoryId = sub.Id,
                 CategoryName = sub.Name ?? "Unknown",
@@ -373,7 +373,7 @@ public sealed class GetCategoryDashboardHandler(
             });
         }
 
-        return new SubcategorySummary
+        return new CategorySubcategorySummary
         {
             TotalSubcategories = subcategories.Count,
             ActiveSubcategories = activeSubcategories.Count,
@@ -381,9 +381,9 @@ public sealed class GetCategoryDashboardHandler(
         };
     }
 
-    private static List<TimeSeriesDataPoint> GenerateSalesTrend(List<InventoryTransaction> transactions, int months)
+    private static List<StoreTimeSeriesDataPoint> GenerateSalesTrend(List<InventoryTransaction> transactions, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<StoreTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -394,7 +394,7 @@ public sealed class GetCategoryDashboardHandler(
                 .Where(t => t.Quantity < 0 && t.TransactionDate >= monthStart && t.TransactionDate < monthEnd)
                 .Sum(t => Math.Abs(t.TotalCost));
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new StoreTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = monthSales,
@@ -405,12 +405,12 @@ public sealed class GetCategoryDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateInventoryTrend(
+    private static List<StoreTimeSeriesDataPoint> GenerateInventoryTrend(
         List<StockLevel> stockLevels,
         List<Item> items,
         int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<StoreTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
         var itemDict = items.ToDictionary(i => i.Id, i => i);
 
@@ -427,7 +427,7 @@ public sealed class GetCategoryDashboardHandler(
         for (int i = months - 1; i >= 0; i--)
         {
             var monthStart = new DateTime(today.Year, today.Month, 1).AddMonths(-i);
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new StoreTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = currentValue,
@@ -438,9 +438,9 @@ public sealed class GetCategoryDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GeneratePurchaseTrend(List<PurchaseOrderItem> items, int months)
+    private static List<StoreTimeSeriesDataPoint> GeneratePurchaseTrend(List<PurchaseOrderItem> items, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<StoreTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -451,7 +451,7 @@ public sealed class GetCategoryDashboardHandler(
                 .Where(p => p.CreatedOn >= monthStart && p.CreatedOn < monthEnd)
                 .Sum(p => p.TotalPrice);
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new StoreTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = monthValue,
@@ -550,14 +550,14 @@ public sealed class GetCategoryDashboardHandler(
         }).ToList();
     }
 
-    private static List<SupplierDistribution> CalculateSupplierDistribution(
+    private static List<CategorySupplierDistribution> CalculateSupplierDistribution(
         List<ItemSupplier> itemSuppliers,
         Dictionary<Guid, Supplier> supplierDict)
     {
         return itemSuppliers
             .GroupBy(s => s.SupplierId)
             .Where(g => supplierDict.ContainsKey(g.Key))
-            .Select(g => new SupplierDistribution
+            .Select(g => new CategorySupplierDistribution
             {
                 SupplierId = g.Key,
                 SupplierName = supplierDict[g.Key].Name ?? "Unknown",
@@ -570,7 +570,7 @@ public sealed class GetCategoryDashboardHandler(
             .ToList();
     }
 
-    private static List<WarehouseDistribution> CalculateWarehouseDistribution(
+    private static List<CategoryWarehouseDistribution> CalculateWarehouseDistribution(
         List<StockLevel> stockLevels,
         Dictionary<Guid, Warehouse> warehouseDict,
         List<Item> items)
@@ -600,7 +600,7 @@ public sealed class GetCategoryDashboardHandler(
                     return 0;
                 });
 
-                return new WarehouseDistribution
+                return new CategoryWarehouseDistribution
                 {
                     WarehouseId = g.Key,
                     WarehouseName = warehouseDict[g.Key].Name ?? "Unknown",

@@ -92,7 +92,7 @@ public sealed class GetItemDashboardHandler(
             .Where(s => s.QuantityOnHand > 0)
             .OrderByDescending(s => s.QuantityOnHand)
             .Take(5)
-            .Select(s => new WarehouseStockInfo
+            .Select(s => new ItemWarehouseStockInfo
             {
                 WarehouseId = s.WarehouseId,
                 WarehouseName = s.Warehouse?.Name ?? "Unknown",
@@ -105,7 +105,7 @@ public sealed class GetItemDashboardHandler(
         var recentTransactions = transactions
             .OrderByDescending(t => t.TransactionDate)
             .Take(10)
-            .Select(t => new StoreRecentTransaction
+            .Select(t => new ItemRecentTransaction
             {
                 TransactionId = t.Id,
                 TransactionDate = t.TransactionDate,
@@ -165,7 +165,7 @@ public sealed class GetItemDashboardHandler(
         return response;
     }
 
-    private static SalesMetrics CalculateSalesMetrics(
+    private static ItemSalesMetrics CalculateSalesMetrics(
         List<InventoryTransaction> transactions,
         DateTime startDate,
         DateTime endDate,
@@ -189,7 +189,7 @@ public sealed class GetItemDashboardHandler(
         var previousQty = previousTransactions.Sum(t => Math.Abs(t.Quantity));
         var growth = previousQty > 0 ? (totalQty - previousQty) / previousQty * 100 : 0;
 
-        return new SalesMetrics
+        return new ItemSalesMetrics
         {
             TotalQuantitySold = totalQty,
             TotalRevenue = totalQty * unitPrice,
@@ -230,9 +230,9 @@ public sealed class GetItemDashboardHandler(
         return "Healthy";
     }
 
-    private static List<TimeSeriesDataPoint> GenerateDailyTrend(List<InventoryTransaction> transactions, int days)
+    private static List<StoreTimeSeriesDataPoint> GenerateDailyTrend(List<InventoryTransaction> transactions, int days)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<StoreTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = days - 1; i >= 0; i--)
@@ -242,7 +242,7 @@ public sealed class GetItemDashboardHandler(
                 .Where(t => t.TransactionDate.Date == date)
                 .ToList();
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new StoreTimeSeriesDataPoint
             {
                 Date = date,
                 Value = dayTransactions.Sum(t => Math.Abs(t.Quantity)),
@@ -253,7 +253,7 @@ public sealed class GetItemDashboardHandler(
         return result;
     }
 
-    private async Task<List<TimeSeriesDataPoint>> GenerateStockTrend(Guid itemId, int days, CancellationToken ct)
+    private async Task<List<StoreTimeSeriesDataPoint>> GenerateStockTrend(Guid itemId, int days, CancellationToken ct)
     {
         // For stock trend, we'll use current stock and work backwards based on transactions
         var stockLevels = await stockLevelRepository.ListAsync(new StockLevelsByItemSpec(itemId), ct);
@@ -265,7 +265,7 @@ public sealed class GetItemDashboardHandler(
         var transactions = await transactionRepository
             .ListAsync(new TransactionsByItemAndDateSpec(itemId, startDate), ct);
 
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<StoreTimeSeriesDataPoint>();
 
         // Work backwards from current stock
         var runningStock = currentStock;
@@ -277,7 +277,7 @@ public sealed class GetItemDashboardHandler(
                 .Where(t => t.TransactionDate.Date == date)
                 .ToList();
 
-            result.Insert(0, new TimeSeriesDataPoint
+            result.Insert(0, new StoreTimeSeriesDataPoint
             {
                 Date = date,
                 Value = runningStock,
@@ -294,12 +294,12 @@ public sealed class GetItemDashboardHandler(
         return result;
     }
 
-    private async Task<List<SupplierPerformanceInfo>> GetSupplierPerformance(Guid itemId, CancellationToken ct)
+    private async Task<List<ItemSupplierPerformanceInfo>> GetSupplierPerformance(Guid itemId, CancellationToken ct)
     {
         var itemSuppliers = await itemSupplierRepository
             .ListAsync(new ItemSuppliersByItemSpec(itemId), ct);
 
-        var result = new List<SupplierPerformanceInfo>();
+        var result = new List<ItemSupplierPerformanceInfo>();
 
         foreach (var itemSupplier in itemSuppliers.Take(5))
         {
@@ -310,7 +310,7 @@ public sealed class GetItemDashboardHandler(
             var poItems = await purchaseOrderItemRepository
                 .ListAsync(new POItemsBySupplierAndItemSpec(itemSupplier.SupplierId, itemId), ct);
 
-            result.Add(new SupplierPerformanceInfo
+            result.Add(new ItemSupplierPerformanceInfo
             {
                 SupplierId = supplier.Id,
                 SupplierName = supplier.Name ?? "Unknown",
@@ -325,7 +325,7 @@ public sealed class GetItemDashboardHandler(
         return result;
     }
 
-    private async Task<PurchaseMetrics> CalculatePurchaseMetrics(Guid itemId, CancellationToken ct)
+    private async Task<ItemPurchaseMetrics> CalculatePurchaseMetrics(Guid itemId, CancellationToken ct)
     {
         var oneYearAgo = DateTime.UtcNow.AddYears(-1);
 
@@ -336,7 +336,7 @@ public sealed class GetItemDashboardHandler(
         var totalCost = poItems.Sum(p => p.ReceivedQuantity * p.UnitPrice);
         var avgCost = totalQty > 0 ? totalCost / totalQty : 0;
 
-        return new PurchaseMetrics
+        return new ItemPurchaseMetrics
         {
             TotalQuantityPurchased = totalQty,
             TotalPurchaseCost = totalCost,
@@ -347,7 +347,7 @@ public sealed class GetItemDashboardHandler(
         };
     }
 
-    private static BackorderMetrics CalculateBackorderMetrics(
+    private static ItemBackorderMetrics CalculateBackorderMetrics(
         int onHand,
         int reserved,
         decimal avgDailySales,
@@ -356,7 +356,7 @@ public sealed class GetItemDashboardHandler(
         var backorderQty = Math.Max(0, reserved - onHand);
         var fillRate = reserved > 0 ? Math.Min(100, (decimal)onHand / reserved * 100) : 100;
 
-        return new BackorderMetrics
+        return new ItemBackorderMetrics
         {
             CurrentBackorderQuantity = backorderQty,
             StockoutDaysLast30 = 0, // Would need historical tracking

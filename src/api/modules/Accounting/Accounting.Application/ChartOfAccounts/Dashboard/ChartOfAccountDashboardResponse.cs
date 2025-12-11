@@ -31,9 +31,9 @@ public sealed record ChartOfAccountDashboardResponse
     public SubAccountSummary SubAccounts { get; init; } = new();
 
     // Trend Data for Charts
-    public List<TimeSeriesDataPoint> BalanceTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> DebitTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> CreditTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> BalanceTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> DebitTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> CreditTrend { get; init; } = [];
 
     // Period Breakdown
     public List<PeriodBreakdown> PeriodActivity { get; init; } = [];

@@ -259,9 +259,9 @@ public sealed class GetVendorDashboardHandler(
         };
     }
 
-    private static List<TimeSeriesDataPoint> GenerateBillValueTrend(List<Bill> bills, int months)
+    private static List<AccountingTimeSeriesDataPoint> GenerateBillValueTrend(List<Bill> bills, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -272,7 +272,7 @@ public sealed class GetVendorDashboardHandler(
                 .Where(b => b.BillDate >= monthStart && b.BillDate < monthEnd)
                 .Sum(b => b.TotalAmount);
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = monthValue,
@@ -283,9 +283,9 @@ public sealed class GetVendorDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GeneratePaymentTrend(List<Check> checks, int months)
+    private static List<AccountingTimeSeriesDataPoint> GeneratePaymentTrend(List<Check> checks, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
         var issuedChecks = checks.Where(c => c.Status == "Issued" || c.Status == "Cleared").ToList();
 
@@ -297,7 +297,7 @@ public sealed class GetVendorDashboardHandler(
                 .Where(c => c.CreatedOn >= monthStart && c.CreatedOn < monthEnd)
                 .Sum(c => c.Amount ?? 0);
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = monthValue,
@@ -308,9 +308,9 @@ public sealed class GetVendorDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateBalanceTrend(List<Bill> bills, List<Check> checks, int months)
+    private static List<AccountingTimeSeriesDataPoint> GenerateBalanceTrend(List<Bill> bills, List<Check> checks, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
         var issuedChecks = checks.Where(c => c.Status == "Issued" || c.Status == "Cleared").ToList();
 
@@ -331,7 +331,7 @@ public sealed class GetVendorDashboardHandler(
 
             runningBalance += monthBills - monthPayments;
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = runningBalance,

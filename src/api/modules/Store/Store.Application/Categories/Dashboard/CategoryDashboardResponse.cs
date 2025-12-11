@@ -19,7 +19,7 @@ public sealed record CategoryDashboardResponse
     public string? ParentCategoryName { get; init; }
 
     // Item Metrics
-    public ItemMetrics Items { get; init; } = new();
+    public CategoryItemMetrics Items { get; init; } = new();
 
     // Inventory Metrics
     public CategoryInventoryMetrics Inventory { get; init; } = new();
@@ -31,22 +31,22 @@ public sealed record CategoryDashboardResponse
     public CategoryPurchaseMetrics Purchases { get; init; } = new();
 
     // Subcategories Summary
-    public SubcategorySummary Subcategories { get; init; } = new();
+    public CategorySubcategorySummary Subcategories { get; init; } = new();
 
     // Trend Data for Charts
-    public List<TimeSeriesDataPoint> SalesTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> InventoryTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> PurchaseTrend { get; init; } = [];
+    public List<StoreTimeSeriesDataPoint> SalesTrend { get; init; } = [];
+    public List<StoreTimeSeriesDataPoint> InventoryTrend { get; init; } = [];
+    public List<StoreTimeSeriesDataPoint> PurchaseTrend { get; init; } = [];
 
     // Top Items in Category
     public List<TopCategoryItem> TopItemsBySales { get; init; } = [];
     public List<TopCategoryItem> TopItemsByInventoryValue { get; init; } = [];
 
     // Supplier Distribution
-    public List<SupplierDistribution> SupplierBreakdown { get; init; } = [];
+    public List<CategorySupplierDistribution> SupplierBreakdown { get; init; } = [];
 
     // Warehouse Distribution
-    public List<WarehouseDistribution> WarehouseBreakdown { get; init; } = [];
+    public List<CategoryWarehouseDistribution> WarehouseBreakdown { get; init; } = [];
 
     // Recent Transactions
     public List<CategoryRecentTransaction> RecentTransactions { get; init; } = [];
@@ -58,7 +58,7 @@ public sealed record CategoryDashboardResponse
     public List<CategoryAlert> Alerts { get; init; } = [];
 }
 
-public sealed record ItemMetrics
+public sealed record CategoryItemMetrics
 {
     public int TotalItems { get; init; }
     public int ActiveItems { get; init; }
@@ -112,14 +112,14 @@ public sealed record CategoryPurchaseMetrics
     public decimal AverageLeadTimeDays { get; init; }
 }
 
-public sealed record SubcategorySummary
+public sealed record CategorySubcategorySummary
 {
     public int TotalSubcategories { get; init; }
     public int ActiveSubcategories { get; init; }
-    public List<SubcategoryInfo> TopSubcategories { get; init; } = [];
+    public List<CategorySubcategoryInfo> TopSubcategories { get; init; } = [];
 }
 
-public sealed record SubcategoryInfo
+public sealed record CategorySubcategoryInfo
 {
     public Guid CategoryId { get; init; }
     public string CategoryName { get; init; } = default!;
@@ -142,7 +142,7 @@ public sealed record TopCategoryItem
     public string StockStatus { get; init; } = default!;
 }
 
-public sealed record SupplierDistribution
+public sealed record CategorySupplierDistribution
 {
     public Guid SupplierId { get; init; }
     public string SupplierName { get; init; } = default!;
@@ -151,7 +151,7 @@ public sealed record SupplierDistribution
     public decimal Percentage { get; init; }
 }
 
-public sealed record WarehouseDistribution
+public sealed record CategoryWarehouseDistribution
 {
     public Guid WarehouseId { get; init; }
     public string WarehouseName { get; init; } = default!;

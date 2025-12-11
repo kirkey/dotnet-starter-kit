@@ -87,15 +87,15 @@ public sealed class GetSupplierDashboardHandler(
         var recentOrders = allOrders
             .OrderByDescending(o => o.CreatedOn)
             .Take(10)
-            .Select(o => new RecentPurchaseOrder
+            .Select(po => new SupplierRecentPurchaseOrder
             {
-                PurchaseOrderId = o.Id,
-                OrderNumber = o.OrderNumber ?? $"PO-{o.Id.ToString()[..8]}",
-                OrderDate = o.OrderDate,
-                Status = o.Status ?? "Unknown",
-                TotalAmount = o.TotalAmount,
-                ItemCount = o.Items?.Count ?? 0,
-                ExpectedDelivery = o.ExpectedDeliveryDate,
+                PurchaseOrderId = po.Id,
+                OrderNumber = po.OrderNumber ?? $"PO-{po.Id.ToString()[..8]}",
+                OrderDate = po.OrderDate,
+                Status = po.Status ?? "Unknown",
+                TotalAmount = po.TotalAmount,
+                ItemCount = po.Items?.Count ?? 0,
+                ExpectedDelivery = po.ExpectedDeliveryDate,
                 ActualDelivery = null // Would need to track from goods receipts
             }).ToList();
 
@@ -137,7 +137,7 @@ public sealed class GetSupplierDashboardHandler(
         return response;
     }
 
-    private static FinancialMetrics CalculateFinancialMetrics(
+    private static SupplierFinancialMetrics CalculateFinancialMetrics(
         List<PurchaseOrder> allOrders,
         List<PurchaseOrder> ordersYTD,
         List<PurchaseOrder> ordersLastYear,
@@ -153,7 +153,7 @@ public sealed class GetSupplierDashboardHandler(
             ? 0 / supplier.CreditLimit.Value * 100 // Would need actual outstanding balance
             : 0;
 
-        return new FinancialMetrics
+        return new SupplierFinancialMetrics
         {
             TotalPurchaseValue = totalValue,
             TotalPurchaseValueYTD = totalValueYTD,
@@ -167,7 +167,7 @@ public sealed class GetSupplierDashboardHandler(
         };
     }
 
-    private static OrderMetrics CalculateOrderMetrics(
+    private static SupplierOrderMetrics CalculateOrderMetrics(
         List<PurchaseOrder> allOrders,
         List<PurchaseOrder> ordersYTD,
         List<PurchaseOrder> ordersLastYear)
@@ -189,7 +189,7 @@ public sealed class GetSupplierDashboardHandler(
             ? allOrders.Average(o => o.Items?.Count ?? 0)
             : 0;
 
-        return new OrderMetrics
+        return new SupplierOrderMetrics
         {
             TotalOrders = allOrders.Count,
             TotalOrdersYTD = ordersYTD.Count,
@@ -204,7 +204,7 @@ public sealed class GetSupplierDashboardHandler(
         };
     }
 
-    private static DeliveryPerformance CalculateDeliveryPerformance(
+    private static SupplierDeliveryPerformance CalculateDeliveryPerformance(
         List<PurchaseOrder> allOrders,
         List<GoodsReceipt> goodsReceipts)
     {
@@ -252,7 +252,7 @@ public sealed class GetSupplierDashboardHandler(
         var totalDelivered = early + onTime + late;
         var onTimeRate = totalDelivered > 0 ? (decimal)(early + onTime) / totalDelivered * 100 : 100;
 
-        return new DeliveryPerformance
+        return new SupplierDeliveryPerformance
         {
             OnTimeDeliveryRate = onTimeRate,
             AverageLeadTimeDays = (decimal)avgLeadTime,
@@ -266,7 +266,7 @@ public sealed class GetSupplierDashboardHandler(
         };
     }
 
-    private async Task<QualityMetrics> CalculateQualityMetrics(
+    private async Task<SupplierQualityMetrics> CalculateQualityMetrics(
         Guid supplierId,
         List<GoodsReceipt> goodsReceipts,
         CancellationToken ct)
@@ -289,7 +289,7 @@ public sealed class GetSupplierDashboardHandler(
         var acceptanceRate = totalReceived > 0 ? (decimal)accepted / totalReceived * 100 : 100;
         var defectRate = totalReceived > 0 ? (decimal)rejected / totalReceived * 100 : 0;
 
-        return new QualityMetrics
+        return new SupplierQualityMetrics
         {
             AcceptanceRate = acceptanceRate,
             TotalItemsReceived = totalReceived,
@@ -303,7 +303,7 @@ public sealed class GetSupplierDashboardHandler(
         };
     }
 
-    private async Task<ItemPortfolio> CalculateItemPortfolio(
+    private async Task<SupplierItemPortfolio> CalculateItemPortfolio(
         List<ItemSupplier> itemSuppliers,
         CancellationToken ct)
     {
@@ -323,7 +323,7 @@ public sealed class GetSupplierDashboardHandler(
             }
         }
 
-        return new ItemPortfolio
+        return new SupplierItemPortfolio
         {
             TotalItemsSupplied = itemSuppliers.Count,
             ActiveItems = activeItems,
@@ -333,9 +333,9 @@ public sealed class GetSupplierDashboardHandler(
         };
     }
 
-    private static List<TimeSeriesDataPoint> GenerateMonthlyValueTrend(List<PurchaseOrder> orders, int months)
+    private static List<StoreTimeSeriesDataPoint> GenerateMonthlyValueTrend(List<PurchaseOrder> orders, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<StoreTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -346,7 +346,7 @@ public sealed class GetSupplierDashboardHandler(
             var monthOrders = orders.Where(o =>
                 o.CreatedOn >= monthStart && o.CreatedOn < monthEnd).ToList();
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new StoreTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = monthOrders.Sum(o => o.TotalAmount),
@@ -357,9 +357,9 @@ public sealed class GetSupplierDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateMonthlyCountTrend(List<PurchaseOrder> orders, int months)
+    private static List<StoreTimeSeriesDataPoint> GenerateMonthlyCountTrend(List<PurchaseOrder> orders, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<StoreTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -370,7 +370,7 @@ public sealed class GetSupplierDashboardHandler(
             var monthOrders = orders.Where(o =>
                 o.CreatedOn >= monthStart && o.CreatedOn < monthEnd).ToList();
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new StoreTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = monthOrders.Count,
@@ -381,12 +381,12 @@ public sealed class GetSupplierDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateLeadTimeTrend(
+    private static List<StoreTimeSeriesDataPoint> GenerateLeadTimeTrend(
         List<PurchaseOrder> orders,
         List<GoodsReceipt> receipts,
         int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<StoreTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -409,7 +409,7 @@ public sealed class GetSupplierDashboardHandler(
                 }
             }
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new StoreTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = leadTimes.Count > 0 ? (decimal)leadTimes.Average() : 0,
@@ -420,12 +420,12 @@ public sealed class GetSupplierDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateOnTimeDeliveryTrend(
+    private static List<StoreTimeSeriesDataPoint> GenerateOnTimeDeliveryTrend(
         List<PurchaseOrder> orders,
         List<GoodsReceipt> receipts,
         int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<StoreTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -449,7 +449,7 @@ public sealed class GetSupplierDashboardHandler(
                 }
             }
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new StoreTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = total > 0 ? (decimal)onTime / total * 100 : 100,
@@ -460,7 +460,7 @@ public sealed class GetSupplierDashboardHandler(
         return result;
     }
 
-    private async Task<List<CategoryBreakdown>> CalculateCategoryBreakdown(Guid supplierId, CancellationToken ct)
+    private async Task<List<StoreCategoryBreakdown>> CalculateCategoryBreakdown(Guid supplierId, CancellationToken ct)
     {
         var result = new Dictionary<string, (int count, decimal value)>();
 
@@ -487,7 +487,7 @@ public sealed class GetSupplierDashboardHandler(
         return result
             .OrderByDescending(r => r.Value.value)
             .Take(10)
-            .Select(r => new CategoryBreakdown
+            .Select(r => new StoreCategoryBreakdown
             {
                 CategoryName = r.Key,
                 OrderCount = r.Value.count,
@@ -496,9 +496,9 @@ public sealed class GetSupplierDashboardHandler(
             }).ToList();
     }
 
-    private async Task<List<TopItemInfo>> GetTopItems(Guid supplierId, CancellationToken ct)
+    private async Task<List<SupplierTopItemInfo>> GetTopItems(Guid supplierId, CancellationToken ct)
     {
-        var result = new Dictionary<Guid, TopItemInfo>();
+        var result = new Dictionary<Guid, SupplierTopItemInfo>();
 
         var poItems = await purchaseOrderItemRepository
             .ListAsync(new POItemsBySupplierSpec(supplierId), ct);
@@ -508,7 +508,7 @@ public sealed class GetSupplierDashboardHandler(
             if (!result.ContainsKey(poItem.ItemId))
             {
                 var item = await itemRepository.GetByIdAsync(poItem.ItemId, ct);
-                result[poItem.ItemId] = new TopItemInfo
+                result[poItem.ItemId] = new SupplierTopItemInfo
                 {
                     ItemId = poItem.ItemId,
                     ItemName = item?.Name ?? "Unknown",
@@ -538,12 +538,12 @@ public sealed class GetSupplierDashboardHandler(
             }).ToList();
     }
 
-    private static List<MonthlyComparison> GenerateMonthlyComparison(
+    private static List<SupplierMonthlyComparison> GenerateMonthlyComparison(
         List<PurchaseOrder> orders,
         List<GoodsReceipt> receipts,
         int months)
     {
-        var result = new List<MonthlyComparison>();
+        var result = new List<SupplierMonthlyComparison>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -571,7 +571,7 @@ public sealed class GetSupplierDashboardHandler(
                 }
             }
 
-            result.Add(new MonthlyComparison
+            result.Add(new SupplierMonthlyComparison
             {
                 Month = monthStart.ToString("MMM"),
                 Year = monthStart.Year,

@@ -34,9 +34,9 @@ public sealed record CustomerDashboardResponse
     public CustomerAgingMetrics Aging { get; init; } = new();
 
     // Trend Data for Charts
-    public List<TimeSeriesDataPoint> InvoiceValueTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> PaymentTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> BalanceTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> InvoiceValueTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> PaymentTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> BalanceTrend { get; init; } = [];
 
     // Recent Invoices
     public List<RecentInvoiceInfo> RecentInvoices { get; init; } = [];

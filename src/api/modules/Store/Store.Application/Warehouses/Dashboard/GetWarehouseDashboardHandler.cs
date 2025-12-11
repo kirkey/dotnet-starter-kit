@@ -149,7 +149,7 @@ public sealed class GetWarehouseDashboardHandler(
         return response;
     }
 
-    private static CapacityMetrics CalculateCapacityMetrics(
+    private static WarehouseCapacityMetrics CalculateCapacityMetrics(
         Warehouse warehouse,
         List<WarehouseLocation> locations,
         List<StockLevel> stockLevels)
@@ -162,7 +162,7 @@ public sealed class GetWarehouseDashboardHandler(
         var occupiedLocations = locations.Count(l => stockLevels.Any(s => s.WarehouseLocationId == l.Id && s.QuantityOnHand > 0));
         var locationUtilization = locations.Count > 0 ? (decimal)occupiedLocations / locations.Count * 100 : 0;
 
-        return new CapacityMetrics
+        return new WarehouseCapacityMetrics
         {
             TotalCapacity = totalCapacity,
             UsedCapacity = usedCapacity,
@@ -175,7 +175,7 @@ public sealed class GetWarehouseDashboardHandler(
         };
     }
 
-    private static InventorySummary CalculateInventorySummary(
+    private static WarehouseInventorySummary CalculateInventorySummary(
         List<StockLevel> stockLevels,
         Dictionary<Guid, Item> itemDict)
     {
@@ -216,7 +216,7 @@ public sealed class GetWarehouseDashboardHandler(
             return false;
         });
 
-        return new InventorySummary
+        return new WarehouseInventorySummary
         {
             TotalItems = stockLevels.Count,
             TotalSku = distinctItems,
@@ -231,7 +231,7 @@ public sealed class GetWarehouseDashboardHandler(
         };
     }
 
-    private static MovementMetrics CalculateMovementMetrics(
+    private static WarehouseMovementMetrics CalculateMovementMetrics(
         List<InventoryTransaction> transactions,
         DateTime today,
         DateTime startOfYear)
@@ -250,7 +250,7 @@ public sealed class GetWarehouseDashboardHandler(
         var daysSinceYearStart = (today - startOfYear).Days + 1;
         var avgDailyMovements = (decimal)(inboundYTD + outboundYTD) / daysSinceYearStart;
 
-        return new MovementMetrics
+        return new WarehouseMovementMetrics
         {
             TotalInboundToday = inboundToday,
             TotalOutboundToday = outboundToday,
@@ -265,7 +265,7 @@ public sealed class GetWarehouseDashboardHandler(
         };
     }
 
-    private static OperationsMetrics CalculateOperationsMetrics(
+    private static WarehouseOperationsMetrics CalculateOperationsMetrics(
         List<PutAwayTask> putAwayTasks,
         List<PickList> pickLists,
         List<CycleCount> cycleCounts,
@@ -292,7 +292,7 @@ public sealed class GetWarehouseDashboardHandler(
         var tasksOverdue = putAwayTasks.Count(t => t.Status != "Completed" && t.CreatedOn.Date < today.AddDays(-1))
             + pickLists.Count(p => p.Status != "Completed" && p.CreatedOn.Date < today.AddDays(-1));
 
-        return new OperationsMetrics
+        return new WarehouseOperationsMetrics
         {
             PendingPutAways = pendingPutAways,
             PendingPickLists = pendingPickLists,
@@ -307,7 +307,7 @@ public sealed class GetWarehouseDashboardHandler(
         };
     }
 
-    private static LocationUtilization CalculateLocationUtilization(List<WarehouseLocation> locations)
+    private static WarehouseLocationUtilization CalculateLocationUtilization(List<WarehouseLocation> locations)
     {
         var occupiedLocations = locations.Count(l => l.UsedCapacity > 0);
         var locationUtilization = locations.Count > 0 ? (decimal)occupiedLocations / locations.Count * 100 : 0;
@@ -315,7 +315,7 @@ public sealed class GetWarehouseDashboardHandler(
         var zones = locations
             .Where(l => !string.IsNullOrEmpty(l.Aisle))
             .GroupBy(l => l.Aisle)
-            .Select(g => new ZoneUtilization
+            .Select(g => new WarehouseZoneUtilization
             {
                 ZoneName = g.Key,
                 TotalLocations = g.Count(),
@@ -323,7 +323,7 @@ public sealed class GetWarehouseDashboardHandler(
                 UtilizationPercentage = g.Count() > 0 ? (decimal)g.Count(l => l.UsedCapacity > 0) / g.Count() * 100 : 0
             }).ToList();
 
-        return new LocationUtilization
+        return new WarehouseLocationUtilization
         {
             TotalBins = locations.Count,
             OccupiedBins = occupiedLocations,
@@ -333,9 +333,9 @@ public sealed class GetWarehouseDashboardHandler(
         };
     }
 
-    private static List<TimeSeriesDataPoint> GenerateInventoryValueTrend(List<InventoryTransaction> transactions, int months)
+    private static List<StoreTimeSeriesDataPoint> GenerateInventoryValueTrend(List<InventoryTransaction> transactions, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<StoreTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -345,7 +345,7 @@ public sealed class GetWarehouseDashboardHandler(
             var monthTransactions = transactions.Where(t => t.TransactionDate >= monthStart && t.TransactionDate < monthEnd);
             var value = monthTransactions.Sum(t => t.TotalCost);
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new StoreTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = value,
@@ -356,9 +356,9 @@ public sealed class GetWarehouseDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateReceivingTrend(List<InventoryTransaction> transactions, int months)
+    private static List<StoreTimeSeriesDataPoint> GenerateReceivingTrend(List<InventoryTransaction> transactions, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<StoreTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -367,7 +367,7 @@ public sealed class GetWarehouseDashboardHandler(
             var monthEnd = monthStart.AddMonths(1);
             var count = transactions.Count(t => t.TransactionDate >= monthStart && t.TransactionDate < monthEnd && t.Quantity > 0);
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new StoreTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = count,
@@ -378,9 +378,9 @@ public sealed class GetWarehouseDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateShippingTrend(List<InventoryTransaction> transactions, int months)
+    private static List<StoreTimeSeriesDataPoint> GenerateShippingTrend(List<InventoryTransaction> transactions, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<StoreTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -389,7 +389,7 @@ public sealed class GetWarehouseDashboardHandler(
             var monthEnd = monthStart.AddMonths(1);
             var count = transactions.Count(t => t.TransactionDate >= monthStart && t.TransactionDate < monthEnd && t.Quantity < 0);
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new StoreTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = count,
@@ -400,12 +400,12 @@ public sealed class GetWarehouseDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateTurnoverTrend(
+    private static List<StoreTimeSeriesDataPoint> GenerateTurnoverTrend(
         List<InventoryTransaction> transactions,
         List<StockLevel> stockLevels,
         int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<StoreTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -419,7 +419,7 @@ public sealed class GetWarehouseDashboardHandler(
             var avgInventory = stockLevels.Sum(s => s.QuantityOnHand);
             var turnover = avgInventory > 0 ? (decimal)outbound / avgInventory : 0;
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new StoreTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = turnover,

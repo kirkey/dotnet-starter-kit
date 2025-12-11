@@ -258,13 +258,13 @@ public sealed class GetChartOfAccountDashboardHandler(
         };
     }
 
-    private static List<TimeSeriesDataPoint> GenerateBalanceTrend(
+    private static List<AccountingTimeSeriesDataPoint> GenerateBalanceTrend(
         decimal currentBalance,
         List<JournalEntryLine> lines,
         Dictionary<Guid, JournalEntry> journalEntryDict,
         int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         // Work backwards from current balance
@@ -294,7 +294,7 @@ public sealed class GetChartOfAccountDashboardHandler(
         foreach (var (monthStart, netChange) in monthlyChanges)
         {
             balance += netChange;
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = balance,
@@ -305,13 +305,13 @@ public sealed class GetChartOfAccountDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateDebitCreditTrend(
+    private static List<AccountingTimeSeriesDataPoint> GenerateDebitCreditTrend(
         List<JournalEntryLine> lines,
         Dictionary<Guid, JournalEntry> journalEntryDict,
         bool isDebit,
         int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -324,7 +324,7 @@ public sealed class GetChartOfAccountDashboardHandler(
                            je.Date >= monthStart && je.Date < monthEnd)
                 .Sum(l => isDebit ? l.DebitAmount : l.CreditAmount);
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = monthValue,

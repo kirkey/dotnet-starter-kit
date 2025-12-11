@@ -173,12 +173,12 @@ public sealed class GetBudgetDashboardHandler(
         };
     }
 
-    private static List<TimeSeriesDataPoint> GenerateActualTrend(
+    private static List<AccountingTimeSeriesDataPoint> GenerateActualTrend(
         Budget budget,
         List<BudgetDetail> details,
         int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
         var totalActual = details.Sum(d => d.ActualAmount);
 
@@ -194,7 +194,7 @@ public sealed class GetBudgetDashboardHandler(
             var monthValue = i == 0 ? totalActual - cumulative : monthlyAvg;
             cumulative += monthValue;
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = cumulative,
@@ -205,12 +205,12 @@ public sealed class GetBudgetDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateUtilizationTrend(
+    private static List<AccountingTimeSeriesDataPoint> GenerateUtilizationTrend(
         Budget budget,
         List<BudgetDetail> details,
         int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
         var totalActual = details.Sum(d => d.ActualAmount);
         var totalBudget = budget.TotalBudgetedAmount;
@@ -226,7 +226,7 @@ public sealed class GetBudgetDashboardHandler(
 
             var utilization = totalBudget > 0 ? cumulative / totalBudget * 100 : 0;
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = Math.Min(100, utilization),

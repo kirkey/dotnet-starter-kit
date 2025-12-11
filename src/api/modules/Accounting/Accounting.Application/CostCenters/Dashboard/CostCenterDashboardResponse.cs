@@ -30,8 +30,8 @@ public sealed record CostCenterDashboardResponse
     public ChildCostCenterSummary ChildCostCenters { get; init; } = new();
 
     // Trend Data for Charts
-    public List<TimeSeriesDataPoint> ActualTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> BudgetUtilizationTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> ActualTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> BudgetUtilizationTrend { get; init; } = [];
 
     // Account Breakdown
     public List<AccountBreakdown> ExpenseBreakdown { get; init; } = [];

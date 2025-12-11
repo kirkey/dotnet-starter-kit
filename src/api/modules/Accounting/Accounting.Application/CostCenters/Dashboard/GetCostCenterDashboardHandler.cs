@@ -237,12 +237,12 @@ public sealed class GetCostCenterDashboardHandler(
         };
     }
 
-    private static List<TimeSeriesDataPoint> GenerateActualTrend(
+    private static List<AccountingTimeSeriesDataPoint> GenerateActualTrend(
         List<BillLineItem> billLineItems,
         Dictionary<Guid, Bill> billDict,
         int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -255,7 +255,7 @@ public sealed class GetCostCenterDashboardHandler(
                            bill.BillDate >= monthStart && bill.BillDate < monthEnd)
                 .Sum(l => l.Amount);
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = monthAmount,
@@ -266,13 +266,13 @@ public sealed class GetCostCenterDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateBudgetUtilizationTrend(
+    private static List<AccountingTimeSeriesDataPoint> GenerateBudgetUtilizationTrend(
         CostCenter costCenter,
         List<BillLineItem> billLineItems,
         Dictionary<Guid, Bill> billDict,
         int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
         decimal cumulativeAmount = 0;
 
@@ -295,7 +295,7 @@ public sealed class GetCostCenterDashboardHandler(
                 ? cumulativeAmount / costCenter.BudgetAmount * 100
                 : 0;
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = Math.Min(100, utilization),

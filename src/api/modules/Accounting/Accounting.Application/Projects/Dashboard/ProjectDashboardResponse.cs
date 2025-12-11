@@ -31,9 +31,9 @@ public sealed record ProjectDashboardResponse
     public ProjectTimelineMetrics Timeline { get; init; } = new();
 
     // Trend Data for Charts
-    public List<TimeSeriesDataPoint> CostTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> RevenueTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> BudgetUtilizationTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> CostTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> RevenueTrend { get; init; } = [];
+    public List<AccountingTimeSeriesDataPoint> BudgetUtilizationTrend { get; init; } = [];
 
     // Cost Category Breakdown
     public List<CostCategoryBreakdown> CostByCategory { get; init; } = [];

@@ -32,33 +32,33 @@ public sealed record ItemDashboardResponse
     public int DaysOfSupply { get; init; }
 
     // Sales Metrics
-    public SalesMetrics DailySales { get; init; } = new();
-    public SalesMetrics WeeklySales { get; init; } = new();
-    public SalesMetrics MonthlySales { get; init; } = new();
-    public SalesMetrics YearlySales { get; init; } = new();
+    public ItemSalesMetrics DailySales { get; init; } = new();
+    public ItemSalesMetrics WeeklySales { get; init; } = new();
+    public ItemSalesMetrics MonthlySales { get; init; } = new();
+    public ItemSalesMetrics YearlySales { get; init; } = new();
 
     // Purchase/Receiving Metrics
-    public PurchaseMetrics PurchaseStats { get; init; } = new();
+    public ItemPurchaseMetrics PurchaseStats { get; init; } = new();
 
     // Trend Data for Charts
-    public List<TimeSeriesDataPoint> SalesTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> StockTrend { get; init; } = [];
-    public List<TimeSeriesDataPoint> PurchaseTrend { get; init; } = [];
+    public List<StoreTimeSeriesDataPoint> SalesTrend { get; init; } = [];
+    public List<StoreTimeSeriesDataPoint> StockTrend { get; init; } = [];
+    public List<StoreTimeSeriesDataPoint> PurchaseTrend { get; init; } = [];
 
     // Top Warehouses for this Item
-    public List<WarehouseStockInfo> TopWarehouses { get; init; } = [];
+    public List<ItemWarehouseStockInfo> TopWarehouses { get; init; } = [];
 
     // Recent Transactions
-    public List<StoreRecentTransaction> RecentTransactions { get; init; } = [];
+    public List<ItemRecentTransaction> RecentTransactions { get; init; } = [];
 
     // Supplier Performance for this Item
-    public List<SupplierPerformanceInfo> SupplierPerformance { get; init; } = [];
+    public List<ItemSupplierPerformanceInfo> SupplierPerformance { get; init; } = [];
 
     // Backorder/Stockout Info
-    public BackorderMetrics BackorderStats { get; init; } = new();
+    public ItemBackorderMetrics BackorderStats { get; init; } = new();
 }
 
-public sealed record SalesMetrics
+public sealed record ItemSalesMetrics
 {
     public decimal TotalQuantitySold { get; init; }
     public decimal TotalRevenue { get; init; }
@@ -68,7 +68,7 @@ public sealed record SalesMetrics
     public decimal GrowthPercentage { get; init; }
 }
 
-public sealed record PurchaseMetrics
+public sealed record ItemPurchaseMetrics
 {
     public decimal TotalQuantityPurchased { get; init; }
     public decimal TotalPurchaseCost { get; init; }
@@ -78,7 +78,7 @@ public sealed record PurchaseMetrics
     public decimal OnTimeDeliveryRate { get; init; }
 }
 
-public sealed record WarehouseStockInfo
+public sealed record ItemWarehouseStockInfo
 {
     public Guid WarehouseId { get; init; }
     public string WarehouseName { get; init; } = default!;
@@ -87,7 +87,7 @@ public sealed record WarehouseStockInfo
     public decimal PercentageOfTotal { get; init; }
 }
 
-public sealed record StoreRecentTransaction
+public sealed record ItemRecentTransaction
 {
     public Guid TransactionId { get; init; }
     public DateTime TransactionDate { get; init; }
@@ -97,7 +97,7 @@ public sealed record StoreRecentTransaction
     public string? Reference { get; init; }
 }
 
-public sealed record SupplierPerformanceInfo
+public sealed record ItemSupplierPerformanceInfo
 {
     public Guid SupplierId { get; init; }
     public string SupplierName { get; init; } = default!;
@@ -108,7 +108,7 @@ public sealed record SupplierPerformanceInfo
     public decimal QualityScore { get; init; }
 }
 
-public sealed record BackorderMetrics
+public sealed record ItemBackorderMetrics
 {
     public int CurrentBackorderQuantity { get; init; }
     public int StockoutDaysLast30 { get; init; }

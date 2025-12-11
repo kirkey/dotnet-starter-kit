@@ -231,9 +231,9 @@ public sealed class GetProjectDashboardHandler(
         };
     }
 
-    private static List<TimeSeriesDataPoint> GenerateCostTrend(List<ProjectCostEntry> costEntries, int months)
+    private static List<AccountingTimeSeriesDataPoint> GenerateCostTrend(List<ProjectCostEntry> costEntries, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
 
         for (int i = months - 1; i >= 0; i--)
@@ -244,7 +244,7 @@ public sealed class GetProjectDashboardHandler(
                 .Where(c => c.EntryDate >= monthStart && c.EntryDate < monthEnd)
                 .Sum(c => c.Amount);
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = monthCost,
@@ -255,9 +255,9 @@ public sealed class GetProjectDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateRevenueTrend(Project project, int months)
+    private static List<AccountingTimeSeriesDataPoint> GenerateRevenueTrend(Project project, int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
         var daysActive = (today - project.StartDate).Days;
         var avgMonthlyRevenue = daysActive > 30 ? project.ActualRevenue / (daysActive / 30m) : project.ActualRevenue;
@@ -269,7 +269,7 @@ public sealed class GetProjectDashboardHandler(
             // Only show revenue for months after project started
             var value = monthStart >= project.StartDate ? avgMonthlyRevenue : 0;
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = value,
@@ -280,12 +280,12 @@ public sealed class GetProjectDashboardHandler(
         return result;
     }
 
-    private static List<TimeSeriesDataPoint> GenerateBudgetUtilizationTrend(
+    private static List<AccountingTimeSeriesDataPoint> GenerateBudgetUtilizationTrend(
         Project project,
         List<ProjectCostEntry> costEntries,
         int months)
     {
-        var result = new List<TimeSeriesDataPoint>();
+        var result = new List<AccountingTimeSeriesDataPoint>();
         var today = DateTime.UtcNow.Date;
         decimal cumulativeCost = 0;
 
@@ -307,7 +307,7 @@ public sealed class GetProjectDashboardHandler(
                 ? cumulativeCost / project.BudgetedAmount * 100
                 : 0;
 
-            result.Add(new TimeSeriesDataPoint
+            result.Add(new AccountingTimeSeriesDataPoint
             {
                 Date = monthStart,
                 Value = Math.Min(100, utilization),
