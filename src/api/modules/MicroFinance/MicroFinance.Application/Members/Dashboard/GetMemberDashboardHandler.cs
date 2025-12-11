@@ -339,7 +339,7 @@ public sealed class GetMemberDashboardHandler(
         );
     }
 
-    private static RepaymentPerformance CalculateRepaymentPerformance(
+    private static MemberRepaymentPerformance CalculateRepaymentPerformance(
         List<LoanRepayment> repayments,
         List<LoanSchedule> schedules)
     {
@@ -406,7 +406,7 @@ public sealed class GetMemberDashboardHandler(
             })
             .ToList();
 
-        return new RepaymentPerformance(
+        return new MemberRepaymentPerformance(
             TotalPaymentsMade: totalPaymentsMade,
             OnTimePayments: onTimePayments,
             LatePayments: latePayments,

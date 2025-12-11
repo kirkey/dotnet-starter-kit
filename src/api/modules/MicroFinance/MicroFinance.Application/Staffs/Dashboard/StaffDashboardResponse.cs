@@ -5,10 +5,10 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.Staffs.Dashboard;
 /// </summary>
 public sealed record StaffDashboardResponse(
     StaffOverview StaffInfo,
-    PortfolioSummary Portfolio,
-    PerformanceMetrics Performance,
-    TargetProgress Targets,
-    RecentActivitySummary RecentActivity,
+    StaffPortfolioSummary Portfolio,
+    StaffPerformanceMetrics Performance,
+    StaffTargetProgress Targets,
+    StaffRecentActivitySummary RecentActivity,
     IReadOnlyList<AssignedMemberInfo> AssignedMembers,
     IReadOnlyList<AssignedGroupInfo> AssignedGroups,
     StaffAlerts Alerts);
@@ -35,7 +35,7 @@ public sealed record StaffOverview(
 /// <summary>
 /// Loan officer portfolio summary.
 /// </summary>
-public sealed record PortfolioSummary(
+public sealed record StaffPortfolioSummary(
     int TotalAssignedMembers,
     int ActiveMembers,
     int TotalAssignedGroups,
@@ -50,7 +50,7 @@ public sealed record PortfolioSummary(
 /// <summary>
 /// Staff performance metrics.
 /// </summary>
-public sealed record PerformanceMetrics(
+public sealed record StaffPerformanceMetrics(
     int LoansDisbursedThisMonth,
     decimal AmountDisbursedThisMonth,
     int LoansCollectedThisMonth,
@@ -63,7 +63,7 @@ public sealed record PerformanceMetrics(
 /// <summary>
 /// Target achievement progress.
 /// </summary>
-public sealed record TargetProgress(
+public sealed record StaffTargetProgress(
     decimal DisbursementTarget,
     decimal DisbursementActual,
     decimal DisbursementProgress,
@@ -80,7 +80,7 @@ public sealed record TargetProgress(
 /// <summary>
 /// Summary of recent activities.
 /// </summary>
-public sealed record RecentActivitySummary(
+public sealed record StaffRecentActivitySummary(
     int LoansApprovedToday,
     int LoansDisbursedToday,
     int RepaymentsReceivedToday,

@@ -11,11 +11,11 @@ public sealed record LoanProductDashboardResponse(
     bool IsActive,
     LoanProductOverview Overview,
     LoanProductPortfolioMetrics Portfolio,
-    RepaymentMetrics Repayments,
-    DelinquencyMetrics Delinquency,
-    List<LoanDistribution> LoansByStatus,
-    List<MonthlyTrend> DisbursementTrends,
-    List<MonthlyTrend> CollectionTrends,
+    LoanProductRepaymentMetrics Repayments,
+    LoanProductDelinquencyMetrics Delinquency,
+    List<LoanProductLoanDistribution> LoansByStatus,
+    List<LoanProductMonthlyTrend> DisbursementTrends,
+    List<LoanProductMonthlyTrend> CollectionTrends,
     List<RecentLoanActivity> RecentActivity,
     LoanProductAlerts Alerts
 );
@@ -61,7 +61,7 @@ public sealed record LoanProductPortfolioMetrics(
 /// <summary>
 /// Repayment performance metrics for the loan product.
 /// </summary>
-public sealed record RepaymentMetrics(
+public sealed record LoanProductRepaymentMetrics(
     decimal TotalCollected,
     decimal TotalPrincipalCollected,
     decimal TotalInterestCollected,
@@ -77,7 +77,7 @@ public sealed record RepaymentMetrics(
 /// <summary>
 /// Delinquency and risk metrics for the loan product.
 /// </summary>
-public sealed record DelinquencyMetrics(
+public sealed record LoanProductDelinquencyMetrics(
     int OverdueLoans,
     decimal OverdueAmount,
     decimal PortfolioAtRisk1Day,
@@ -94,7 +94,7 @@ public sealed record DelinquencyMetrics(
 /// <summary>
 /// Distribution of loans by status.
 /// </summary>
-public sealed record LoanDistribution(
+public sealed record LoanProductLoanDistribution(
     string Status,
     int Count,
     decimal TotalAmount,
@@ -104,7 +104,7 @@ public sealed record LoanDistribution(
 /// <summary>
 /// Monthly trend data for charts.
 /// </summary>
-public sealed record MonthlyTrend(
+public sealed record LoanProductMonthlyTrend(
     string Month,
     int Year,
     decimal Amount,

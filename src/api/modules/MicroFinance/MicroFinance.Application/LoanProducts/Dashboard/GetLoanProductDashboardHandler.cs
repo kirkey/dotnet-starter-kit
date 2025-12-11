@@ -142,7 +142,7 @@ public sealed class GetLoanProductDashboardHandler(
         );
     }
 
-    private static RepaymentMetrics CalculateRepaymentMetrics(
+    private static LoanProductRepaymentMetrics CalculateRepaymentMetrics(
         List<LoanRepayment> repayments,
         List<LoanSchedule> schedules)
     {
@@ -176,7 +176,7 @@ public sealed class GetLoanProductDashboardHandler(
         var totalCollected = activeRepayments.Sum(r => r.TotalAmount);
         var totalExpected = schedules.Sum(s => s.TotalAmount);
 
-        return new RepaymentMetrics(
+        return new LoanProductRepaymentMetrics(
             TotalCollected: totalCollected,
             TotalPrincipalCollected: activeRepayments.Sum(r => r.PrincipalAmount),
             TotalInterestCollected: activeRepayments.Sum(r => r.InterestAmount),
@@ -194,7 +194,7 @@ public sealed class GetLoanProductDashboardHandler(
         );
     }
 
-    private static DelinquencyMetrics CalculateDelinquencyMetrics(
+    private static LoanProductDelinquencyMetrics CalculateDelinquencyMetrics(
         List<Loan> loans,
         List<LoanSchedule> schedules)
     {
@@ -247,7 +247,7 @@ public sealed class GetLoanProductDashboardHandler(
         var writtenOffAmount = writtenOffLoans.Sum(l => l.OutstandingPrincipal + l.OutstandingInterest);
         var totalDisbursed = loans.Where(l => l.DisbursementDate.HasValue).Sum(l => l.PrincipalAmount);
 
-        return new DelinquencyMetrics(
+        return new LoanProductDelinquencyMetrics(
             OverdueLoans: overdueLoans,
             OverdueAmount: overdueAmount,
             PortfolioAtRisk1Day: totalOutstanding > 0 ? (par1Day / totalOutstanding * 100) : 0,
@@ -262,12 +262,12 @@ public sealed class GetLoanProductDashboardHandler(
         );
     }
 
-    private static List<LoanDistribution> CalculateLoanDistribution(List<Loan> loans)
+    private static List<LoanProductLoanDistribution> CalculateLoanDistribution(List<Loan> loans)
     {
         var total = loans.Count;
         var statusGroups = loans
             .GroupBy(l => l.Status)
-            .Select(g => new LoanDistribution(
+            .Select(g => new LoanProductLoanDistribution(
                 Status: g.Key,
                 Count: g.Count(),
                 TotalAmount: g.Sum(l => l.PrincipalAmount),
@@ -279,7 +279,7 @@ public sealed class GetLoanProductDashboardHandler(
         return statusGroups;
     }
 
-    private static List<MonthlyTrend> CalculateDisbursementTrends(List<Loan> loans)
+    private static List<LoanProductMonthlyTrend> CalculateDisbursementTrends(List<Loan> loans)
     {
         var disbursedLoans = loans.Where(l => l.DisbursementDate.HasValue).ToList();
         var last12Months = Enumerable.Range(0, 12)
@@ -294,7 +294,7 @@ public sealed class GetLoanProductDashboardHandler(
                 .Where(l => l.DisbursementDate!.Value.Month == m.Month && l.DisbursementDate.Value.Year == m.Year)
                 .ToList();
 
-            return new MonthlyTrend(
+            return new LoanProductMonthlyTrend(
                 Month: new DateTime(m.Year, m.Month, 1).ToString("MMM"),
                 Year: m.Year,
                 Amount: monthLoans.Sum(l => l.PrincipalAmount),
@@ -303,7 +303,7 @@ public sealed class GetLoanProductDashboardHandler(
         }).ToList();
     }
 
-    private static List<MonthlyTrend> CalculateCollectionTrends(List<LoanRepayment> repayments)
+    private static List<LoanProductMonthlyTrend> CalculateCollectionTrends(List<LoanRepayment> repayments)
     {
         var activeRepayments = repayments.Where(r => r.Status == LoanRepayment.StatusActive).ToList();
         var last12Months = Enumerable.Range(0, 12)
@@ -318,7 +318,7 @@ public sealed class GetLoanProductDashboardHandler(
                 .Where(r => r.RepaymentDate.Month == m.Month && r.RepaymentDate.Year == m.Year)
                 .ToList();
 
-            return new MonthlyTrend(
+            return new LoanProductMonthlyTrend(
                 Month: new DateTime(m.Year, m.Month, 1).ToString("MMM"),
                 Year: m.Year,
                 Amount: monthRepayments.Sum(r => r.TotalAmount),

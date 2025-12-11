@@ -213,7 +213,7 @@ public sealed class GetMemberGroupDashboardHandler : IRequestHandler<GetMemberGr
             alerts);
     }
 
-    private static MembershipStatistics BuildMembershipStatistics(
+    private static MemberGroupMembershipStatistics BuildMembershipStatistics(
         IReadOnlyList<GroupMembership> memberships,
         DateOnly today,
         DateOnly monthStart)
@@ -230,7 +230,7 @@ public sealed class GetMemberGroupDashboardHandler : IRequestHandler<GetMemberGr
         var newThisMonth = memberships.Count(m => m.JoinDate >= monthStart);
         var leftThisMonth = memberships.Count(m => m.LeaveDate.HasValue && m.LeaveDate.Value >= monthStart);
 
-        return new MembershipStatistics(
+        return new MemberGroupMembershipStatistics(
             TotalMembers: memberships.Count,
             ActiveMembers: activeMemberships.Count,
             InactiveMembers: inactiveMemberships.Count,
@@ -314,7 +314,7 @@ public sealed class GetMemberGroupDashboardHandler : IRequestHandler<GetMemberGr
             GroupRepaymentRate: repaymentRate);
     }
 
-    private static MeetingInformation BuildMeetingInformation(MemberGroup group, DateOnly today)
+    private static MemberGroupMeetingInformation BuildMeetingInformation(MemberGroup group, DateOnly today)
     {
         // Calculate next meeting date based on meeting day and frequency
         DateOnly? nextMeetingDate = null;
@@ -328,7 +328,7 @@ public sealed class GetMemberGroupDashboardHandler : IRequestHandler<GetMemberGr
             }
         }
 
-        return new MeetingInformation(
+        return new MemberGroupMeetingInformation(
             MeetingLocation: group.MeetingLocation,
             MeetingFrequency: group.MeetingFrequency,
             MeetingDay: group.MeetingDay,
@@ -338,7 +338,7 @@ public sealed class GetMemberGroupDashboardHandler : IRequestHandler<GetMemberGr
             AverageAttendanceRate: 0); // Would need meeting attendance tracking
     }
 
-    private static GroupActivitySummary BuildActivitySummary(
+    private static MemberGroupActivitySummary BuildActivitySummary(
         IReadOnlyList<Loan> loans,
         IReadOnlyList<LoanRepayment> repayments,
         IReadOnlyList<GroupMembership> memberships,
@@ -352,7 +352,7 @@ public sealed class GetMemberGroupDashboardHandler : IRequestHandler<GetMemberGr
         var newJoins = memberships.Count(m => m.JoinDate >= monthStart);
         var exits = memberships.Count(m => m.LeaveDate.HasValue && m.LeaveDate.Value >= monthStart);
 
-        return new GroupActivitySummary(
+        return new MemberGroupActivitySummary(
             LoanApplicationsThisMonth: loanAppsThisMonth,
             LoanDisbursementsThisMonth: disbursementsThisMonth,
             LoanRepaymentsThisMonth: repaymentsThisMonth,
@@ -412,7 +412,7 @@ public sealed class GetMemberGroupDashboardHandler : IRequestHandler<GetMemberGr
         IReadOnlyList<GroupMembership> memberships,
         IReadOnlyList<Loan> loans,
         IReadOnlyList<SavingsAccount> savingsAccounts,
-        MeetingInformation meetingInfo,
+        MemberGroupMeetingInformation meetingInfo,
         DateOnly today)
     {
         var alertsList = new List<MemberGroupAlert>();

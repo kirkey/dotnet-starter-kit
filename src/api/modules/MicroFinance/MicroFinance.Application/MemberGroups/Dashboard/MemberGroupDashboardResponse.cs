@@ -5,10 +5,10 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.MemberGroups.Dashboard;
 /// </summary>
 public sealed record MemberGroupDashboardResponse(
     MemberGroupOverview GroupOverview,
-    MembershipStatistics MembershipStats,
+    MemberGroupMembershipStatistics MembershipStats,
     GroupFinancialMetrics FinancialMetrics,
-    MeetingInformation MeetingInfo,
-    GroupActivitySummary ActivitySummary,
+    MemberGroupMeetingInformation MeetingInfo,
+    MemberGroupActivitySummary ActivitySummary,
     IReadOnlyList<RecentMemberActivity> RecentMemberActivities,
     MemberGroupAlerts Alerts);
 
@@ -31,7 +31,7 @@ public sealed record MemberGroupOverview(
 /// <summary>
 /// Statistics about group membership composition.
 /// </summary>
-public sealed record MembershipStatistics(
+public sealed record MemberGroupMembershipStatistics(
     int TotalMembers,
     int ActiveMembers,
     int InactiveMembers,
@@ -82,7 +82,7 @@ public sealed record MemberGroupSavingsPortfolioSummary(
 /// <summary>
 /// Meeting schedule and attendance information.
 /// </summary>
-public sealed record MeetingInformation(
+public sealed record MemberGroupMeetingInformation(
     string? MeetingLocation,
     string? MeetingFrequency,
     string? MeetingDay,
@@ -94,7 +94,7 @@ public sealed record MeetingInformation(
 /// <summary>
 /// Summary of recent group activities.
 /// </summary>
-public sealed record GroupActivitySummary(
+public sealed record MemberGroupActivitySummary(
     int LoanApplicationsThisMonth,
     int LoanDisbursementsThisMonth,
     int LoanRepaymentsThisMonth,

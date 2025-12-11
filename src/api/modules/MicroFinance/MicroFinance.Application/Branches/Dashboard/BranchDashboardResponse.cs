@@ -20,19 +20,19 @@ public sealed record BranchDashboardResponse
     public BranchFinancialMetrics Financials { get; init; } = new();
 
     // Member Metrics
-    public MemberMetrics Members { get; init; } = new();
+    public BranchMemberMetrics Members { get; init; } = new();
 
     // Loan Portfolio
-    public LoanPortfolioMetrics LoanPortfolio { get; init; } = new();
+    public BranchLoanPortfolioMetrics LoanPortfolio { get; init; } = new();
 
     // Savings Portfolio
-    public SavingsPortfolioMetrics SavingsPortfolio { get; init; } = new();
+    public BranchSavingsPortfolioMetrics SavingsPortfolio { get; init; } = new();
 
     // Staff Information
-    public StaffMetrics Staff { get; init; } = new();
+    public BranchStaffMetrics Staff { get; init; } = new();
 
     // Performance Targets
-    public TargetAchievement Targets { get; init; } = new();
+    public BranchTargetAchievement Targets { get; init; } = new();
 
     // Trend Data for Charts
     public List<BranchTimeSeriesDataPoint> LoanDisbursementTrend { get; init; } = [];
@@ -41,8 +41,8 @@ public sealed record BranchDashboardResponse
     public List<BranchTimeSeriesDataPoint> PortfolioAtRiskTrend { get; init; } = [];
 
     // Product Mix
-    public List<ProductMixData> LoanProductMix { get; init; } = [];
-    public List<ProductMixData> SavingsProductMix { get; init; } = [];
+    public List<BranchProductMixData> LoanProductMix { get; init; } = [];
+    public List<BranchProductMixData> SavingsProductMix { get; init; } = [];
 
     // Top Performers
     public List<TopLoanOfficer> TopLoanOfficers { get; init; } = [];
@@ -76,7 +76,7 @@ public sealed record BranchFinancialMetrics
     public decimal CashUtilization { get; init; }
 }
 
-public sealed record MemberMetrics
+public sealed record BranchMemberMetrics
 {
     public int TotalMembers { get; init; }
     public int ActiveMembers { get; init; }
@@ -90,7 +90,7 @@ public sealed record MemberMetrics
     public decimal AverageLoanSizePerMember { get; init; }
 }
 
-public sealed record LoanPortfolioMetrics
+public sealed record BranchLoanPortfolioMetrics
 {
     public int TotalActiveLoans { get; init; }
     public decimal TotalOutstandingPrincipal { get; init; }
@@ -109,7 +109,7 @@ public sealed record LoanPortfolioMetrics
     public decimal CollectionEfficiency { get; init; }
 }
 
-public sealed record SavingsPortfolioMetrics
+public sealed record BranchSavingsPortfolioMetrics
 {
     public int TotalSavingsAccounts { get; init; }
     public int ActiveSavingsAccounts { get; init; }
@@ -123,7 +123,7 @@ public sealed record SavingsPortfolioMetrics
     public int ShareAccountsActive { get; init; }
 }
 
-public sealed record StaffMetrics
+public sealed record BranchStaffMetrics
 {
     public int TotalStaff { get; init; }
     public int ActiveStaff { get; init; }
@@ -135,7 +135,7 @@ public sealed record StaffMetrics
     public decimal StaffProductivity { get; init; }
 }
 
-public sealed record TargetAchievement
+public sealed record BranchTargetAchievement
 {
     public decimal LoanDisbursementTarget { get; init; }
     public decimal LoanDisbursementActual { get; init; }
@@ -156,7 +156,7 @@ public sealed record BranchTimeSeriesDataPoint
     public decimal Value { get; init; }
 }
 
-public sealed record ProductMixData
+public sealed record BranchProductMixData
 {
     public string ProductName { get; init; } = default!;
     public int AccountCount { get; init; }

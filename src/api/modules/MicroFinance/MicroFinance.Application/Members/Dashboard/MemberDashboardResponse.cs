@@ -15,7 +15,7 @@ public sealed record MemberDashboardResponse(
     SharePortfolioSummary SharePortfolio,
     FixedDepositSummary FixedDeposits,
     FeesSummary Fees,
-    RepaymentPerformance RepaymentPerformance,
+    MemberRepaymentPerformance RepaymentPerformance,
     List<RecentTransactionItem> RecentTransactions,
     List<UpcomingPayment> UpcomingPayments,
     List<ProductHolding> ProductHoldings,
@@ -178,7 +178,7 @@ public sealed record FeeBreakdown(
 /// <summary>
 /// Member's loan repayment performance metrics.
 /// </summary>
-public sealed record RepaymentPerformance(
+public sealed record MemberRepaymentPerformance(
     int TotalPaymentsMade,
     int OnTimePayments,
     int LatePayments,

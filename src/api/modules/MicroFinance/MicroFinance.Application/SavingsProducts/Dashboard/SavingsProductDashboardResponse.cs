@@ -5,12 +5,12 @@ namespace FSH.Starter.WebApi.MicroFinance.Application.SavingsProducts.Dashboard;
 /// </summary>
 public sealed record SavingsProductDashboardResponse(
     SavingsProductOverview Overview,
-    AccountStatistics AccountStats,
-    BalanceMetrics BalanceMetrics,
-    TransactionMetrics TransactionMetrics,
-    InterestMetrics InterestMetrics,
-    List<AccountStatusDistribution> StatusDistribution,
-    List<MonthlyActivityTrend> MonthlyTrends,
+    SavingsProductAccountStatistics AccountStats,
+    SavingsProductBalanceMetrics BalanceMetrics,
+    SavingsProductTransactionMetrics TransactionMetrics,
+    SavingsProductInterestMetrics InterestMetrics,
+    List<SavingsProductAccountStatusDistribution> StatusDistribution,
+    List<SavingsProductMonthlyActivityTrend> MonthlyTrends,
     List<RecentAccountActivity> RecentAccounts,
     SavingsProductAlerts Alerts,
     DateTime GeneratedAt);
@@ -37,7 +37,7 @@ public sealed record SavingsProductOverview(
 /// <summary>
 /// Account statistics by status
 /// </summary>
-public sealed record AccountStatistics(
+public sealed record SavingsProductAccountStatistics(
     int TotalAccounts,
     int ActiveAccounts,
     int PendingAccounts,
@@ -52,7 +52,7 @@ public sealed record AccountStatistics(
 /// <summary>
 /// Aggregate balance metrics
 /// </summary>
-public sealed record BalanceMetrics(
+public sealed record SavingsProductBalanceMetrics(
     decimal TotalBalance,
     decimal TotalDeposits,
     decimal TotalWithdrawals,
@@ -67,7 +67,7 @@ public sealed record BalanceMetrics(
 /// <summary>
 /// Transaction volume and trends
 /// </summary>
-public sealed record TransactionMetrics(
+public sealed record SavingsProductTransactionMetrics(
     int TotalTransactionsLast30Days,
     decimal TotalDepositAmountLast30Days,
     decimal TotalWithdrawalAmountLast30Days,
@@ -83,7 +83,7 @@ public sealed record TransactionMetrics(
 /// <summary>
 /// Interest-related metrics
 /// </summary>
-public sealed record InterestMetrics(
+public sealed record SavingsProductInterestMetrics(
     decimal TotalInterestPaidThisMonth,
     decimal TotalInterestPaidThisYear,
     decimal AverageInterestPerAccount,
@@ -94,7 +94,7 @@ public sealed record InterestMetrics(
 /// <summary>
 /// Distribution of accounts by status
 /// </summary>
-public sealed record AccountStatusDistribution(
+public sealed record SavingsProductAccountStatusDistribution(
     string Status,
     int Count,
     decimal TotalBalance,
@@ -103,7 +103,7 @@ public sealed record AccountStatusDistribution(
 /// <summary>
 /// Monthly activity trends
 /// </summary>
-public sealed record MonthlyActivityTrend(
+public sealed record SavingsProductMonthlyActivityTrend(
     string Month,
     int Year,
     int NewAccounts,

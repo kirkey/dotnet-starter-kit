@@ -197,7 +197,7 @@ public sealed class GetStaffDashboardHandler : IRequestHandler<GetStaffDashboard
             alerts);
     }
 
-    private static PortfolioSummary BuildPortfolioSummary(
+    private static StaffPortfolioSummary BuildPortfolioSummary(
         IReadOnlyList<Member> members,
         IReadOnlyList<MemberGroup> groups,
         IReadOnlyList<Loan> loans,
@@ -220,7 +220,7 @@ public sealed class GetStaffDashboardHandler : IRequestHandler<GetStaffDashboard
             .Sum(l => l.OutstandingPrincipal);
         var par30Rate = totalOutstandingPrincipal > 0 ? par30Amount / totalOutstandingPrincipal * 100 : 0;
 
-        return new PortfolioSummary(
+        return new StaffPortfolioSummary(
             TotalAssignedMembers: members.Count,
             ActiveMembers: activeMembers,
             TotalAssignedGroups: groups.Count,
@@ -233,7 +233,7 @@ public sealed class GetStaffDashboardHandler : IRequestHandler<GetStaffDashboard
             TotalSavingsBalance: 0);
     }
 
-    private static PerformanceMetrics BuildPerformanceMetrics(
+    private static StaffPerformanceMetrics BuildPerformanceMetrics(
         IReadOnlyList<Loan> loans,
         IReadOnlyList<LoanRepayment> repayments,
         IReadOnlyList<Member> members,
@@ -250,7 +250,7 @@ public sealed class GetStaffDashboardHandler : IRequestHandler<GetStaffDashboard
         // Collection rate = collected / (disbursed this month + outstanding expected)
         var collectionRate = totalDisbursed > 0 ? (totalCollected / totalDisbursed) * 100 : 0;
 
-        return new PerformanceMetrics(
+        return new StaffPerformanceMetrics(
             LoansDisbursedThisMonth: disbursedThisMonth.Count,
             AmountDisbursedThisMonth: totalDisbursed,
             LoansCollectedThisMonth: repaymentsThisMonth.Select(r => r.LoanId).Distinct().Count(),
@@ -261,7 +261,7 @@ public sealed class GetStaffDashboardHandler : IRequestHandler<GetStaffDashboard
             AverageProcessingTimeDays: 0); // Would need approval date tracking
     }
 
-    private static TargetProgress BuildTargetProgress(
+    private static StaffTargetProgress BuildTargetProgress(
         IReadOnlyList<Loan> loans,
         IReadOnlyList<LoanRepayment> repayments,
         IReadOnlyList<Member> members,
@@ -281,7 +281,7 @@ public sealed class GetStaffDashboardHandler : IRequestHandler<GetStaffDashboard
             .Where(r => r.RepaymentDate >= monthStart)
             .Sum(r => r.TotalAmount);
 
-        return new TargetProgress(
+        return new StaffTargetProgress(
             DisbursementTarget: disbursementTarget,
             DisbursementActual: disbursementActual,
             DisbursementProgress: disbursementTarget > 0 ? (disbursementActual / disbursementTarget) * 100 : 0,
@@ -296,14 +296,14 @@ public sealed class GetStaffDashboardHandler : IRequestHandler<GetStaffDashboard
             OverdueRecoveryProgress: 0);
     }
 
-    private static RecentActivitySummary BuildRecentActivity(
+    private static StaffRecentActivitySummary BuildRecentActivity(
         IReadOnlyList<Loan> loans,
         IReadOnlyList<LoanRepayment> repayments,
         DateOnly today)
     {
         var weekStart = today.AddDays(-(int)today.DayOfWeek);
 
-        return new RecentActivitySummary(
+        return new StaffRecentActivitySummary(
             LoansApprovedToday: loans.Count(l => l.ApprovalDate == today),
             LoansDisbursedToday: loans.Count(l => l.DisbursementDate == today),
             RepaymentsReceivedToday: repayments.Count(r => r.RepaymentDate == today),

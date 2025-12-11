@@ -115,7 +115,7 @@ public sealed class GetSavingsProductDashboardHandler(
             product.IsActive);
     }
 
-    private static AccountStatistics BuildAccountStatistics(List<SavingsAccount> accounts)
+    private static SavingsProductAccountStatistics BuildAccountStatistics(List<SavingsAccount> accounts)
     {
         var total = accounts.Count;
         var active = accounts.Count(a => a.Status == SavingsAccount.StatusActive);
@@ -133,18 +133,18 @@ public sealed class GetSavingsProductDashboardHandler(
         var closureRate = total > 0 ? (decimal)closed / total * 100 : 0;
         var dormancyRate = total > 0 ? (decimal)dormant / total * 100 : 0;
 
-        return new AccountStatistics(
+        return new SavingsProductAccountStatistics(
             total, active, pending, dormant, closed, frozen,
             newLast30Days, newLast12Months,
             Math.Round(closureRate, 2),
             Math.Round(dormancyRate, 2));
     }
 
-    private static BalanceMetrics BuildBalanceMetrics(List<SavingsAccount> accounts, decimal minimumForInterest)
+    private static SavingsProductBalanceMetrics BuildBalanceMetrics(List<SavingsAccount> accounts, decimal minimumForInterest)
     {
         if (accounts.Count == 0)
         {
-            return new BalanceMetrics(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            return new SavingsProductBalanceMetrics(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         }
 
         var activeAccounts = accounts.Where(a => a.Status != SavingsAccount.StatusClosed).ToList();
@@ -163,7 +163,7 @@ public sealed class GetSavingsProductDashboardHandler(
         var belowMinimum = activeAccounts.Count(a => a.Balance < minimumForInterest);
         var percentBelowMin = activeAccounts.Count > 0 ? (decimal)belowMinimum / activeAccounts.Count * 100 : 0;
 
-        return new BalanceMetrics(
+        return new SavingsProductBalanceMetrics(
             totalBalance,
             totalDeposits,
             totalWithdrawals,
@@ -176,7 +176,7 @@ public sealed class GetSavingsProductDashboardHandler(
             Math.Round(percentBelowMin, 2));
     }
 
-    private static TransactionMetrics BuildTransactionMetrics(
+    private static SavingsProductTransactionMetrics BuildTransactionMetrics(
         List<SavingsTransaction> recentTransactions,
         List<SavingsTransaction> allTransactions)
     {
@@ -201,7 +201,7 @@ public sealed class GetSavingsProductDashboardHandler(
         var avgDeposit = deposits.Count != 0 ? deposits.Average(t => t.Amount) : 0;
         var avgWithdrawal = withdrawals.Count != 0 ? withdrawals.Average(t => t.Amount) : 0;
 
-        return new TransactionMetrics(
+        return new SavingsProductTransactionMetrics(
             totalLast30,
             depositsLast30,
             withdrawalsLast30,
@@ -215,7 +215,7 @@ public sealed class GetSavingsProductDashboardHandler(
             Math.Round(avgWithdrawal, 2));
     }
 
-    private static InterestMetrics BuildInterestMetrics(
+    private static SavingsProductInterestMetrics BuildInterestMetrics(
         List<SavingsAccount> accounts,
         List<SavingsTransaction> transactions,
         decimal annualRate)
@@ -254,7 +254,7 @@ public sealed class GetSavingsProductDashboardHandler(
         var monthlyRate = annualRate / 12 / 100;
         var projectedMonthly = totalActiveBalance * monthlyRate;
 
-        return new InterestMetrics(
+        return new SavingsProductInterestMetrics(
             interestThisMonth,
             interestThisYear,
             Math.Round(avgInterest, 2),
@@ -263,14 +263,14 @@ public sealed class GetSavingsProductDashboardHandler(
             Math.Round(projectedMonthly, 2));
     }
 
-    private static List<AccountStatusDistribution> BuildStatusDistribution(List<SavingsAccount> accounts)
+    private static List<SavingsProductAccountStatusDistribution> BuildStatusDistribution(List<SavingsAccount> accounts)
     {
         var total = accounts.Count;
         if (total == 0) return [];
 
         var statusGroups = accounts
             .GroupBy(a => a.Status)
-            .Select(g => new AccountStatusDistribution(
+            .Select(g => new SavingsProductAccountStatusDistribution(
                 g.Key,
                 g.Count(),
                 g.Sum(a => a.Balance),
@@ -281,11 +281,11 @@ public sealed class GetSavingsProductDashboardHandler(
         return statusGroups;
     }
 
-    private static List<MonthlyActivityTrend> BuildMonthlyTrends(
+    private static List<SavingsProductMonthlyActivityTrend> BuildMonthlyTrends(
         List<SavingsAccount> accounts,
         List<SavingsTransaction> transactions)
     {
-        var trends = new List<MonthlyActivityTrend>();
+        var trends = new List<SavingsProductMonthlyActivityTrend>();
 
         for (int i = 11; i >= 0; i--)
         {
@@ -317,7 +317,7 @@ public sealed class GetSavingsProductDashboardHandler(
                 .Where(t => t.TransactionType == SavingsTransaction.TypeInterest)
                 .Sum(t => t.Amount);
 
-            trends.Add(new MonthlyActivityTrend(
+            trends.Add(new SavingsProductMonthlyActivityTrend(
                 date.ToString("MMM"),
                 year,
                 newAccounts,

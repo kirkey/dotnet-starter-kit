@@ -236,7 +236,7 @@ public sealed class GetBranchDashboardHandler(
         };
     }
 
-    private static MemberMetrics CalculateMemberMetrics(
+    private static BranchMemberMetrics CalculateMemberMetrics(
         List<Member> allMembers,
         List<Member> membersYTD,
         List<Member> membersLastYear,
@@ -268,7 +268,7 @@ public sealed class GetBranchDashboardHandler(
             .Count();
         var avgLoanSize = membersWithActiveLoans > 0 ? activeLoanAmount / membersWithActiveLoans : 0;
 
-        return new MemberMetrics
+        return new BranchMemberMetrics
         {
             TotalMembers = totalMembers,
             ActiveMembers = activeMembers,
@@ -283,7 +283,7 @@ public sealed class GetBranchDashboardHandler(
         };
     }
 
-    private static async Task<LoanPortfolioMetrics> CalculateLoanPortfolioMetrics(
+    private static async Task<BranchLoanPortfolioMetrics> CalculateLoanPortfolioMetrics(
         List<Loan> allLoans,
         DateTime startOfYear,
         CancellationToken cancellationToken)
@@ -319,7 +319,7 @@ public sealed class GetBranchDashboardHandler(
         // Approval rate (simplified - would need application data)
         var approvalRate = 85.0m;
 
-        return new LoanPortfolioMetrics
+        return new BranchLoanPortfolioMetrics
         {
             TotalActiveLoans = activeLoans.Count,
             TotalOutstandingPrincipal = totalOutstandingPrincipal,
@@ -356,7 +356,7 @@ public sealed class GetBranchDashboardHandler(
         return daysOverdue;
     }
 
-    private static SavingsPortfolioMetrics CalculateSavingsPortfolioMetrics(
+    private static BranchSavingsPortfolioMetrics CalculateSavingsPortfolioMetrics(
         List<SavingsAccount> savingsAccounts,
         List<ShareAccount> shareAccounts,
         DateTime startOfYear)
@@ -371,7 +371,7 @@ public sealed class GetBranchDashboardHandler(
             .Where(s => s.Status == "Active")
             .Sum(s => s.TotalShareValue);
 
-        return new SavingsPortfolioMetrics
+        return new BranchSavingsPortfolioMetrics
         {
             TotalSavingsAccounts = savingsAccounts.Count,
             ActiveSavingsAccounts = activeAccounts.Count,
@@ -386,7 +386,7 @@ public sealed class GetBranchDashboardHandler(
         };
     }
 
-    private static StaffMetrics CalculateStaffMetrics(
+    private static BranchStaffMetrics CalculateStaffMetrics(
         List<Staff> staff,
         List<Loan> loans,
         List<Member> members)
@@ -405,7 +405,7 @@ public sealed class GetBranchDashboardHandler(
             ? (decimal)members.Count / loanOfficers.Count 
             : 0;
 
-        return new StaffMetrics
+        return new BranchStaffMetrics
         {
             TotalStaff = staff.Count,
             ActiveStaff = activeStaff.Count,
@@ -418,7 +418,7 @@ public sealed class GetBranchDashboardHandler(
         };
     }
 
-    private static TargetAchievement CalculateTargetAchievement(
+    private static BranchTargetAchievement CalculateTargetAchievement(
         List<BranchTarget> targets,
         List<Loan> loans,
         List<SavingsAccount> savingsAccounts,
@@ -456,7 +456,7 @@ public sealed class GetBranchDashboardHandler(
 
         var overallAchievement = (loanAchievement + savingsAchievement + memberAchievement) / 3;
 
-        return new TargetAchievement
+        return new BranchTargetAchievement
         {
             LoanDisbursementTarget = loanTarget,
             LoanDisbursementActual = loanActual,
@@ -576,14 +576,14 @@ public sealed class GetBranchDashboardHandler(
         return result;
     }
 
-    private static List<ProductMixData> CalculateLoanProductMix(List<Loan> loans)
+    private static List<BranchProductMixData> CalculateLoanProductMix(List<Loan> loans)
     {
         var activeLoans = loans.Where(l => l.Status != "Closed" && l.Status != "Written Off").ToList();
         var total = activeLoans.Sum(l => l.OutstandingPrincipal);
 
         return activeLoans
             .GroupBy(l => l.LoanProduct?.Name ?? "Unknown")
-            .Select(g => new ProductMixData
+            .Select(g => new BranchProductMixData
             {
                 ProductName = g.Key,
                 AccountCount = g.Count(),
@@ -594,14 +594,14 @@ public sealed class GetBranchDashboardHandler(
             .ToList();
     }
 
-    private static List<ProductMixData> CalculateSavingsProductMix(List<SavingsAccount> accounts)
+    private static List<BranchProductMixData> CalculateSavingsProductMix(List<SavingsAccount> accounts)
     {
         var activeAccounts = accounts.Where(a => a.Status == "Active").ToList();
         var total = activeAccounts.Sum(a => a.Balance);
 
         return activeAccounts
             .GroupBy(a => a.SavingsProduct?.Name ?? "Unknown")
-            .Select(g => new ProductMixData
+            .Select(g => new BranchProductMixData
             {
                 ProductName = g.Key,
                 AccountCount = g.Count(),
