@@ -1,0 +1,319 @@
+@page "/hr/employees/dashboard"
+@page "/hr/employees/{Id:guid}/dashboard"
+
+<FshPage Title="@($"Employee Dashboard: {_employeeName}")"
+         Description="View comprehensive employee overview, attendance, leave, payroll, and performance metrics"
+         Breadcrumbs="@_breadcrumbs">
+
+    <MudPaper Class="pa-4 mb-4" Elevation="@_preference.Elevation">
+        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+            <MudStack Spacing="1">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                    <MudAvatar Size="MudBlazor.Size.Large" Image="@_dashboard.PersonalSummary.ProfilePhotoUrl">
+                        @if (string.IsNullOrEmpty(_dashboard.PersonalSummary.ProfilePhotoUrl))
+                        {
+                            <MudIcon Icon="@Icons.Material.Filled.Person" />
+                        }
+                    </MudAvatar>
+                    <MudStack Spacing="0">
+                        <MudText Typo="Typo.h5">@_employeeName</MudText>
+                        <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">
+                            @_dashboard.PersonalSummary.Designation | @_dashboard.PersonalSummary.Department
+                        </MudText>
+                    </MudStack>
+                    <MudChip T="string" Color="@GetStatusColor(_dashboard.PersonalSummary.EmploymentStatus)" Size="MudBlazor.Size.Small">
+                        @_dashboard.PersonalSummary.EmploymentStatus
+                    </MudChip>
+                </MudStack>
+            </MudStack>
+            <MudStack Row="true" Spacing="2">
+                <MudButton Variant="Variant.Outlined"
+                           StartIcon="@Icons.Material.Filled.Refresh"
+                           OnClick="RefreshData"
+                           Color="MudBlazor.Color.Primary">
+                    Refresh
+                </MudButton>
+                <MudButton Variant="Variant.Outlined"
+                           StartIcon="@Icons.Material.Filled.Help"
+                           OnClick="OpenHelpDialog"
+                           Color="MudBlazor.Color.Info">
+                    Help
+                </MudButton>
+            </MudStack>
+        </MudStack>
+    </MudPaper>
+
+    @if (_loading)
+    {
+        <MudProgressLinear Color="MudBlazor.Color.Primary" Indeterminate="true" Class="mb-4" />
+    }
+
+    <!-- Key Performance Indicators -->
+    <MudGrid Class="mb-4">
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Elevation="@_preference.Elevation">
+                <MudCardContent>
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.EventAvailable" Color="MudBlazor.Color.Success" Size="MudBlazor.Size.Large" />
+                        <MudText Typo="Typo.h4" Color="MudBlazor.Color.Success">@_dashboard.AttendanceMetrics.PresentDaysThisMonth</MudText>
+                        <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Present Days</MudText>
+                        <MudText Typo="Typo.caption">This Month</MudText>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Elevation="@_preference.Elevation">
+                <MudCardContent>
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.BeachAccess" Color="MudBlazor.Color.Info" Size="MudBlazor.Size.Large" />
+                        <MudText Typo="Typo.h4" Color="MudBlazor.Color.Info">@_dashboard.LeaveMetrics.AvailableLeaveDays.ToString("N1")</MudText>
+                        <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Available Leave</MudText>
+                        <MudText Typo="Typo.caption">@_dashboard.LeaveMetrics.UsedLeaveDays.ToString("N1") days used</MudText>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Elevation="@_preference.Elevation">
+                <MudCardContent>
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Color="MudBlazor.Color.Primary" Size="MudBlazor.Size.Large" />
+                        <MudText Typo="Typo.h4" Color="MudBlazor.Color.Primary">@_dashboard.PayrollSnapshot.LastPayAmount.ToString("C0")</MudText>
+                        <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Last Payment</MudText>
+                        <MudText Typo="Typo.caption">@_dashboard.PayrollSnapshot.LastPayDate.ToString("MMM yyyy")</MudText>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Elevation="@_preference.Elevation">
+                <MudCardContent>
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.Star" Color="@GetRatingColor(_dashboard.PerformanceSnapshot.AverageRating)" Size="MudBlazor.Size.Large" />
+                        <MudText Typo="Typo.h4" Color="@GetRatingColor(_dashboard.PerformanceSnapshot.AverageRating)">@_dashboard.PerformanceSnapshot.AverageRating.ToString("N1")</MudText>
+                        <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Performance</MudText>
+                        <MudText Typo="Typo.caption">@_dashboard.PerformanceSnapshot.TotalReviews reviews</MudText>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+    <!-- Attendance & Leave Overview -->
+    <MudGrid Class="mb-4">
+        <MudItem xs="12" md="6">
+            <MudCard Elevation="@_preference.Elevation" Style="height:100%">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Attendance Metrics</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudGrid>
+                        <MudItem xs="6">
+                            <MudStack AlignItems="AlignItems.Center">
+                                <MudText Typo="Typo.h5">@_dashboard.AttendanceMetrics.AttendanceRate.ToString("N1")%</MudText>
+                                <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Attendance Rate</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudStack AlignItems="AlignItems.Center">
+                                <MudText Typo="Typo.h5">@_dashboard.AttendanceMetrics.TotalDaysThisMonth</MudText>
+                                <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Total Days</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudStack AlignItems="AlignItems.Center">
+                                <MudText Typo="Typo.h5" Color="MudBlazor.Color.Error">@_dashboard.AttendanceMetrics.AbsentDaysThisMonth</MudText>
+                                <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Absent Days</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudStack AlignItems="AlignItems.Center">
+                                <MudText Typo="Typo.h5" Color="MudBlazor.Color.Warning">@_dashboard.AttendanceMetrics.LateDaysThisMonth</MudText>
+                                <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Late Days</MudText>
+                            </MudStack>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudCard Elevation="@_preference.Elevation" Style="height:100%">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Leave Balance</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudGrid>
+                        <MudItem xs="6">
+                            <MudStack AlignItems="AlignItems.Center">
+                                <MudText Typo="Typo.h5">@_dashboard.LeaveMetrics.TotalEntitlement.ToString("N1")</MudText>
+                                <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Total Entitlement</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudStack AlignItems="AlignItems.Center">
+                                <MudText Typo="Typo.h5" Color="MudBlazor.Color.Success">@_dashboard.LeaveMetrics.AvailableLeaveDays.ToString("N1")</MudText>
+                                <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Available</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudStack AlignItems="AlignItems.Center">
+                                <MudText Typo="Typo.h5" Color="MudBlazor.Color.Warning">@_dashboard.LeaveMetrics.PendingLeaveDays.ToString("N1")</MudText>
+                                <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Pending</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudStack AlignItems="AlignItems.Center">
+                                <MudText Typo="Typo.h5">@_dashboard.LeaveMetrics.UsedLeaveDays.ToString("N1")</MudText>
+                                <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Used</MudText>
+                            </MudStack>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+    <!-- Payroll Summary -->
+    <MudPaper Class="pa-4 mb-4" Elevation="@_preference.Elevation">
+        <MudText Typo="Typo.h6" Class="mb-3">Payroll Summary</MudText>
+        <MudGrid>
+            <MudItem xs="12" md="3">
+                <MudStack AlignItems="AlignItems.Center">
+                    <MudText Typo="Typo.h5">@_dashboard.PayrollSnapshot.GrossPayYTD.ToString("C0")</MudText>
+                    <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Gross Pay YTD</MudText>
+                </MudStack>
+            </MudItem>
+            <MudItem xs="12" md="3">
+                <MudStack AlignItems="AlignItems.Center">
+                    <MudText Typo="Typo.h5">@_dashboard.PayrollSnapshot.NetPayYTD.ToString("C0")</MudText>
+                    <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Net Pay YTD</MudText>
+                </MudStack>
+            </MudItem>
+            <MudItem xs="12" md="3">
+                <MudStack AlignItems="AlignItems.Center">
+                    <MudText Typo="Typo.h5">@_dashboard.PayrollSnapshot.TotalDeductionsYTD.ToString("C0")</MudText>
+                    <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Deductions YTD</MudText>
+                </MudStack>
+            </MudItem>
+            <MudItem xs="12" md="3">
+                <MudStack AlignItems="AlignItems.Center">
+                    <MudText Typo="Typo.h5">@_dashboard.PayrollSnapshot.TaxWithheldYTD.ToString("C0")</MudText>
+                    <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Tax Withheld YTD</MudText>
+                </MudStack>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
+    <!-- Pending Approvals & Upcoming Schedule -->
+    <MudGrid Class="mb-4">
+        <MudItem xs="12" md="6">
+            <MudCard Elevation="@_preference.Elevation" Style="height:100%">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Pending Approvals</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudStack Spacing="2">
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText Typo="Typo.body2">Leave Requests</MudText>
+                            <MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Warning">@_dashboard.PendingApprovals.PendingLeaveRequests</MudChip>
+                        </MudStack>
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText Typo="Typo.body2">Timesheets</MudText>
+                            <MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Warning">@_dashboard.PendingApprovals.PendingTimesheets</MudChip>
+                        </MudStack>
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText Typo="Typo.body2">Documents</MudText>
+                            <MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Warning">@_dashboard.PendingApprovals.PendingDocuments</MudChip>
+                        </MudStack>
+                        @if (_dashboard.PendingApprovals.TotalPending > 0)
+                        {
+                            <MudAlert Severity="Severity.Warning" Dense="true">
+                                You have @_dashboard.PendingApprovals.TotalPending pending item(s) requiring attention
+                            </MudAlert>
+                        }
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudCard Elevation="@_preference.Elevation" Style="height:100%">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Upcoming Schedule</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudStack Spacing="2">
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText Typo="Typo.body2">Next Shift</MudText>
+                            <MudText Typo="Typo.body2" Color="MudBlazor.Color.Primary">@_dashboard.UpcomingSchedule.NextShiftDate.ToString("MMM dd")</MudText>
+                        </MudStack>
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText Typo="Typo.body2">Shift Time</MudText>
+                            <MudText Typo="Typo.body2">@_dashboard.UpcomingSchedule.NextShiftTime</MudText>
+                        </MudStack>
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText Typo="Typo.body2">Upcoming Holidays</MudText>
+                            <MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Info">@_dashboard.UpcomingSchedule.UpcomingHolidays</MudChip>
+                        </MudStack>
+                        <MudStack Row="true" Justify="Justify.SpaceBetween">
+                            <MudText Typo="Typo.body2">Scheduled Leave</MudText>
+                            <MudChip T="string" Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Info">@_dashboard.UpcomingSchedule.ScheduledLeaveDays</MudChip>
+                        </MudStack>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+    <!-- Quick Actions -->
+    <MudPaper Class="pa-4 mb-4" Elevation="@_preference.Elevation">
+        <MudText Typo="Typo.h6" Class="mb-3">Quick Actions</MudText>
+        <MudStack Row="true" Spacing="2" Class="flex-wrap">
+            <MudButton Variant="Variant.Filled"
+                       Color="MudBlazor.Color.Primary"
+                       StartIcon="@Icons.Material.Filled.BeachAccess"
+                       Disabled="!_dashboard.QuickActions.CanSubmitLeave">
+                Request Leave
+            </MudButton>
+            <MudButton Variant="Variant.Filled"
+                       Color="MudBlazor.Color.Success"
+                       StartIcon="@Icons.Material.Filled.Login"
+                       Disabled="!_dashboard.QuickActions.CanClockIn">
+                Clock In
+            </MudButton>
+            <MudButton Variant="Variant.Filled"
+                       Color="MudBlazor.Color.Warning"
+                       StartIcon="@Icons.Material.Filled.Logout"
+                       Disabled="!_dashboard.QuickActions.CanClockOut">
+                Clock Out
+            </MudButton>
+            <MudButton Variant="Variant.Filled"
+                       Color="MudBlazor.Color.Info"
+                       StartIcon="@Icons.Material.Filled.Schedule"
+                       Disabled="!_dashboard.QuickActions.CanSubmitTimesheet">
+                Submit Timesheet
+            </MudButton>
+            <MudButton Variant="Variant.Filled"
+                       Color="MudBlazor.Color.Secondary"
+                       StartIcon="@Icons.Material.Filled.Upload"
+                       Disabled="!_dashboard.QuickActions.CanUploadDocument">
+                Upload Document
+            </MudButton>
+        </MudStack>
+        @if (!string.IsNullOrEmpty(_dashboard.QuickActions.NextActionMessage))
+        {
+            <MudAlert Severity="Severity.Info" Class="mt-3" Dense="true">
+                @_dashboard.QuickActions.NextActionMessage
+            </MudAlert>
+        }
+    </MudPaper>
+
+</FshPage>

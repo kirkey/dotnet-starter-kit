@@ -1,0 +1,78 @@
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.h6" Class="mb-3">Employee Dashboard Help</MudText>
+        
+        <MudText Typo="Typo.subtitle2" Class="mb-2">Overview</MudText>
+        <MudText Typo="Typo.body2" Class="mb-3">
+            The Employee Dashboard provides a comprehensive view of your employment status, attendance, leave balance, 
+            payroll information, and performance metrics. Use this dashboard to track your work activities and stay 
+            informed about your employment details.
+        </MudText>
+
+        <MudText Typo="Typo.subtitle2" Class="mb-2">Key Performance Indicators</MudText>
+        <MudList T="string" Dense="true" Class="mb-3">
+            <MudListItem T="string" Icon="@Icons.Material.Filled.EventAvailable" IconColor="MudBlazor.Color.Success">
+                <MudText Typo="Typo.body2"><strong>Present Days:</strong> Number of days you attended work this month</MudText>
+            </MudListItem>
+            <MudListItem T="string" Icon="@Icons.Material.Filled.BeachAccess" IconColor="MudBlazor.Color.Info">
+                <MudText Typo="Typo.body2"><strong>Available Leave:</strong> Remaining leave days you can use this year</MudText>
+            </MudListItem>
+            <MudListItem T="string" Icon="@Icons.Material.Filled.AttachMoney" IconColor="MudBlazor.Color.Primary">
+                <MudText Typo="Typo.body2"><strong>Last Payment:</strong> Most recent salary payment amount and date</MudText>
+            </MudListItem>
+            <MudListItem T="string" Icon="@Icons.Material.Filled.Star" IconColor="MudBlazor.Color.Warning">
+                <MudText Typo="Typo.body2"><strong>Performance:</strong> Average rating from performance reviews</MudText>
+            </MudListItem>
+        </MudList>
+
+        <MudText Typo="Typo.subtitle2" Class="mb-2">Attendance Metrics</MudText>
+        <MudText Typo="Typo.body2" Class="mb-3">
+            Track your attendance rate, present days, absent days, and late arrivals for the current month. 
+            Maintaining good attendance is important for performance evaluations.
+        </MudText>
+
+        <MudText Typo="Typo.subtitle2" Class="mb-2">Leave Balance</MudText>
+        <MudText Typo="Typo.body2" Class="mb-3">
+            View your total leave entitlement, available leave days, pending requests, and used leave days. 
+            Plan your time off accordingly to maintain work-life balance.
+        </MudText>
+
+        <MudText Typo="Typo.subtitle2" Class="mb-2">Payroll Summary</MudText>
+        <MudText Typo="Typo.body2" Class="mb-3">
+            Review year-to-date gross pay, net pay, total deductions, and tax withheld. This helps you understand 
+            your compensation structure and plan your finances.
+        </MudText>
+
+        <MudText Typo="Typo.subtitle2" Class="mb-2">Quick Actions</MudText>
+        <MudText Typo="Typo.body2" Class="mb-3">
+            Use quick action buttons to request leave, clock in/out, submit timesheets, or upload documents. 
+            Actions are enabled/disabled based on current time and your employment status.
+        </MudText>
+
+        <MudText Typo="Typo.subtitle2" Class="mb-2">Tips</MudText>
+        <MudList T="string" Dense="true">
+            <MudListItem T="string" Icon="@Icons.Material.Filled.TipsAndUpdates">
+                <MudText Typo="Typo.body2">Check pending approvals regularly to address any outstanding items</MudText>
+            </MudListItem>
+            <MudListItem T="string" Icon="@Icons.Material.Filled.TipsAndUpdates">
+                <MudText Typo="Typo.body2">Review upcoming schedule to prepare for shifts and holidays</MudText>
+            </MudListItem>
+            <MudListItem T="string" Icon="@Icons.Material.Filled.TipsAndUpdates">
+                <MudText Typo="Typo.body2">Use the Refresh button to get the latest dashboard data</MudText>
+            </MudListItem>
+            <MudListItem T="string" Icon="@Icons.Material.Filled.TipsAndUpdates">
+                <MudText Typo="Typo.body2">Monitor your performance rating to identify areas for improvement</MudText>
+            </MudListItem>
+        </MudList>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="MudBlazor.Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    void Close() => MudDialog.Close();
+}
