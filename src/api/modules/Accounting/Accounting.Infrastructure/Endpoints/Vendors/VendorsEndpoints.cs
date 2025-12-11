@@ -22,7 +22,7 @@ public class VendorsEndpoints() : CarterModule
         group.MapVendorDeleteEndpoint();
         group.MapVendorGetEndpoint();
         group.MapVendorSearchEndpoint();
-        group.MapVendorUpdateEndpoint();
+        // group.MapVendorActivateEndpoint();
         group.MapVendorDashboardEndpoint();
     }
 }

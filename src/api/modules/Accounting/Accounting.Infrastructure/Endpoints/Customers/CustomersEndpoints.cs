@@ -21,7 +21,7 @@ public class CustomersEndpoints() : CarterModule
         group.MapCustomerCreateEndpoint();
         group.MapCustomerGetEndpoint();
         group.MapCustomerSearchEndpoint();
-        group.MapCustomerUpdateEndpoint();
+        // group.MapCustomerActivateEndpoint();
         group.MapCustomerDashboardEndpoint();
     }
 }
