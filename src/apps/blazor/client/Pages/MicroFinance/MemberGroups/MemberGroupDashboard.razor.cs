@@ -21,11 +21,21 @@ public partial class MemberGroupDashboard
         try
         {
             var response = await Client.GetMemberGroupDashboardAsync("1", Id);
-            _dashboardData = response.Adapt<MemberGroupDashboardData>();
+            
+            if (response != null && response.GroupOverview != null && !string.IsNullOrEmpty(response.GroupOverview.Name))
+            {
+                _dashboardData = response.Adapt<MemberGroupDashboardData>();
+            }
+            else
+            {
+                _dashboardData = GetMockData();
+                Snackbar.Add("Using sample data for demonstration", Severity.Info);
+            }
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Error loading dashboard: {ex.Message}", Severity.Error);
+            _dashboardData = GetMockData();
+            Snackbar.Add($"Error loading dashboard. Using sample data: {ex.Message}", Severity.Warning);
         }
         finally
         {

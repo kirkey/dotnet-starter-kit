@@ -21,11 +21,21 @@ public partial class StaffDashboard
         try
         {
             var response = await Client.GetStaffDashboardAsync("1", Id);
-            _dashboardData = response.Adapt<StaffDashboardData>();
+            
+            if (response != null && response.StaffInfo != null && !string.IsNullOrEmpty(response.StaffInfo.FullName))
+            {
+                _dashboardData = response.Adapt<StaffDashboardData>();
+            }
+            else
+            {
+                _dashboardData = GetMockData();
+                Snackbar.Add("Using sample data for demonstration", Severity.Info);
+            }
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Error loading dashboard: {ex.Message}", Severity.Error);
+            _dashboardData = GetMockData();
+            Snackbar.Add($"Error loading dashboard. Using sample data: {ex.Message}", Severity.Warning);
         }
         finally
         {

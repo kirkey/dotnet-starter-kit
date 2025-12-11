@@ -41,12 +41,26 @@ public partial class MemberDashboard
         try
         {
             var response = await Client.GetMemberDashboardAsync("1", Id);
-            _dashboard = response.Adapt<MemberDashboardData>();
-            _memberName = _dashboard.MemberName;
+            
+            // Check if API returned valid data
+            if (response != null && !string.IsNullOrEmpty(response.MemberName))
+            {
+                _dashboard = response.Adapt<MemberDashboardData>();
+                _memberName = _dashboard.MemberName;
+            }
+            else
+            {
+                // Use mock data if API returns empty
+                _dashboard = GenerateMockData();
+                _memberName = _dashboard.MemberName;
+                Snackbar.Add("Using sample data for demonstration", Severity.Info);
+            }
         }
         catch (Exception ex)
         {
-            Snackbar.Add($"Failed to load dashboard: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Failed to load dashboard: {ex.Message}. Using sample data.", Severity.Warning);
+            _dashboard = GenerateMockData();
+            _memberName = _dashboard.MemberName;
         }
         finally
         {
