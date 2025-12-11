@@ -22,5 +22,8 @@ public class WarehousesEndpoints() : CarterModule
         group.MapGetWarehouseEndpoint();
         group.MapSearchWarehousesEndpoint();
         group.MapAssignWarehouseManagerEndpoint();
+        
+        // Dashboard
+        group.MapGetWarehouseDashboardEndpoint();
     }
 }

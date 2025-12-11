@@ -21,5 +21,8 @@ public class CategoriesEndpoints() : CarterModule
         group.MapUpdateCategoryEndpoint();
         group.MapDeleteCategoryEndpoint();
         group.MapSearchCategoriesEndpoint();
+        
+        // Dashboard
+        group.MapGetCategoryDashboardEndpoint();
     }
 }
