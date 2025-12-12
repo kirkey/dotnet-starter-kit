@@ -11,7 +11,7 @@
     else if (_dashboardData != null)
     {
         <!-- Header -->
-        <MudPaper Class="pa-4 mb-4" Elevation="2">
+        <MudPaper Class="pa-4 mb-4" Elevation="@_preference.Elevation">
             <div class="d-flex justify-space-between align-center flex-wrap gap-2">
                 <div>
                     <MudText Typo="Typo.h4">@_dashboardData.GroupOverview.Name Dashboard</MudText>
@@ -36,7 +36,7 @@
         </MudPaper>
 
         <!-- Group Info Summary -->
-        <MudPaper Class="pa-4 mb-4" Elevation="2">
+        <MudPaper Class="pa-4 mb-4" Elevation="@_preference.Elevation">
             <MudText Typo="Typo.h6" Class="mb-3">Group Information</MudText>
             <MudGrid>
                 <MudItem xs="12" sm="6" md="3">
@@ -67,28 +67,28 @@
         <!-- KPI Cards -->
         <MudGrid>
             <MudItem xs="12" sm="6" md="4" lg="2">
-                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                <MudPaper Class="pa-4" Elevation="@_preference.Elevation" Style="height: 100%;">
                     <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Active Members</MudText>
                     <MudText Typo="Typo.h4" Color="MudBlazor.Color.Primary">@_dashboardData.MembershipStats.ActiveMembers</MudText>
                     <MudText Typo="Typo.body2">of @_dashboardData.MembershipStats.TotalMembers total</MudText>
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6" md="4" lg="2">
-                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                <MudPaper Class="pa-4" Elevation="@_preference.Elevation" Style="height: 100%;">
                     <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Active Loans</MudText>
                     <MudText Typo="Typo.h4" Color="MudBlazor.Color.Info">@_dashboardData.FinancialMetrics.LoanPortfolio.ActiveLoans</MudText>
                     <MudText Typo="Typo.body2">@_dashboardData.FinancialMetrics.LoanPortfolio.OverdueLoans overdue</MudText>
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6" md="4" lg="2">
-                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                <MudPaper Class="pa-4" Elevation="@_preference.Elevation" Style="height: 100%;">
                     <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Outstanding Principal</MudText>
                     <MudText Typo="Typo.h4" Color="MudBlazor.Color.Warning">@FormatCurrency(_dashboardData.FinancialMetrics.LoanPortfolio.TotalOutstandingPrincipal)</MudText>
                     <MudText Typo="Typo.body2">+ @FormatCurrency(_dashboardData.FinancialMetrics.LoanPortfolio.TotalOutstandingInterest) interest</MudText>
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6" md="4" lg="2">
-                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                <MudPaper Class="pa-4" Elevation="@_preference.Elevation" Style="height: 100%;">
                     <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">PAR > 30 Days</MudText>
                     <MudText Typo="Typo.h4" Color="@GetPARColor(_dashboardData.FinancialMetrics.LoanPortfolio.PortfolioAtRisk30Days)">
                         @_dashboardData.FinancialMetrics.LoanPortfolio.PortfolioAtRisk30Days.ToString("F1")%
@@ -97,14 +97,14 @@
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6" md="4" lg="2">
-                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                <MudPaper Class="pa-4" Elevation="@_preference.Elevation" Style="height: 100%;">
                     <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Savings Balance</MudText>
                     <MudText Typo="Typo.h4" Color="MudBlazor.Color.Success">@FormatCurrency(_dashboardData.FinancialMetrics.SavingsPortfolio.TotalSavingsBalance)</MudText>
                     <MudText Typo="Typo.body2">@_dashboardData.FinancialMetrics.SavingsPortfolio.ActiveSavingsAccounts accounts</MudText>
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6" md="4" lg="2">
-                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                <MudPaper Class="pa-4" Elevation="@_preference.Elevation" Style="height: 100%;">
                     <MudText Typo="Typo.caption" Color="MudBlazor.Color.Secondary">Repayment Rate</MudText>
                     <MudText Typo="Typo.h4" Color="@GetRepaymentRateColor(_dashboardData.FinancialMetrics.GroupRepaymentRate)">
                         @_dashboardData.FinancialMetrics.GroupRepaymentRate.ToString("F1")%
@@ -118,7 +118,7 @@
         <MudGrid Class="mt-4">
             <!-- Membership Distribution -->
             <MudItem xs="12" md="6">
-                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                <MudPaper Class="pa-4" Elevation="@_preference.Elevation" Style="height: 100%;">
                     <MudText Typo="Typo.h6" Class="mb-3">Membership Distribution</MudText>
                     <MudGrid>
                         <MudItem xs="6">
@@ -168,7 +168,7 @@
 
             <!-- Activity Summary -->
             <MudItem xs="12" md="6">
-                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                <MudPaper Class="pa-4" Elevation="@_preference.Elevation" Style="height: 100%;">
                     <MudText Typo="Typo.h6" Class="mb-3">This Month's Activity</MudText>
                     <MudList T="string" Dense="true">
                         <MudListItem Icon="@Icons.Material.Filled.Assignment">
@@ -216,7 +216,7 @@
         <MudGrid Class="mt-4">
             <!-- Recent Member Activities -->
             <MudItem xs="12" md="7">
-                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                <MudPaper Class="pa-4" Elevation="@_preference.Elevation" Style="height: 100%;">
                     <MudText Typo="Typo.h6" Class="mb-3">Recent Member Activities</MudText>
                     @if (_dashboardData.RecentMemberActivities.Count > 0)
                     {
@@ -248,7 +248,7 @@
 
             <!-- Alerts -->
             <MudItem xs="12" md="5">
-                <MudPaper Class="pa-4" Elevation="2" Style="height: 100%;">
+                <MudPaper Class="pa-4" Elevation="@_preference.Elevation" Style="height: 100%;">
                     <MudText Typo="Typo.h6" Class="mb-3">Alerts & Notifications</MudText>
                     @if (_dashboardData.Alerts.AlertsList.Count > 0)
                     {

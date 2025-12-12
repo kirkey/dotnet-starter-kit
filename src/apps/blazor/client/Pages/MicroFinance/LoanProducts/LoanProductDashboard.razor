@@ -3,7 +3,7 @@
 
 <FshPage Title="@($"{_productName} Dashboard")" Breadcrumbs="@_breadcrumbs" Loading="@_loading">
     @* Header Section *@
-    <MudPaper Class="pa-4 mb-4" Elevation="0">
+    <MudPaper Class="pa-4 mb-4" Elevation="@_preference.Elevation">
         <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
             <MudStack>
                 <MudText Typo="Typo.h5">@_productName</MudText>
@@ -31,7 +31,7 @@
     @* Alerts Section *@
     @if (_dashboard.Alerts.TotalAlerts > 0)
     {
-        <MudPaper Class="pa-4 mb-4" Elevation="0">
+        <MudPaper Class="pa-4 mb-4" Elevation="@_preference.Elevation">
             <MudText Typo="Typo.h6" Class="mb-3">
                 <MudIcon Icon="@Icons.Material.Filled.Warning" Class="mr-2" />
                 Alerts (@_dashboard.Alerts.TotalAlerts)
@@ -50,7 +50,7 @@
     @* Overview KPIs *@
     <MudGrid Class="mb-4">
         <MudItem xs="12" sm="6" md="3">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudStack>
                     <MudText Typo="Typo.caption" Class="mud-text-secondary">Total Loans Issued</MudText>
                     <MudText Typo="Typo.h4" Color="MudBlazor.Color.Primary">@_dashboard.Overview.TotalLoansIssued</MudText>
@@ -61,7 +61,7 @@
             </MudPaper>
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudStack>
                     <MudText Typo="Typo.caption" Class="mud-text-secondary">Total Disbursed</MudText>
                     <MudText Typo="Typo.h4" Color="MudBlazor.Color.Info">@FormatCurrency(_dashboard.Overview.TotalAmountDisbursed)</MudText>
@@ -70,7 +70,7 @@
             </MudPaper>
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudStack>
                     <MudText Typo="Typo.caption" Class="mud-text-secondary">Outstanding Balance</MudText>
                     <MudText Typo="Typo.h4" Color="MudBlazor.Color.Warning">@FormatCurrency(_dashboard.Overview.TotalOutstanding)</MudText>
@@ -79,7 +79,7 @@
             </MudPaper>
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudStack>
                     <MudText Typo="Typo.caption" Class="mud-text-secondary">Collection Rate</MudText>
                     <MudText Typo="Typo.h4" Color="@GetCollectionRateColor(_dashboard.Repayments.CollectionRate)">
@@ -95,7 +95,7 @@
     <MudGrid>
         @* Portfolio at Risk Section *@
         <MudItem xs="12" md="6">
-            <MudPaper Class="pa-4" Elevation="2" Style="height: 100%">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation" Style="height: 100%">
                 <MudText Typo="Typo.h6" Class="mb-3">
                     <MudIcon Icon="@Icons.Material.Filled.Warning" Class="mr-2" />
                     Portfolio at Risk
@@ -160,7 +160,7 @@
 
         @* Loan Distribution by Status *@
         <MudItem xs="12" md="6">
-            <MudPaper Class="pa-4" Elevation="2" Style="height: 100%">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation" Style="height: 100%">
                 <MudText Typo="Typo.h6" Class="mb-3">
                     <MudIcon Icon="@Icons.Material.Filled.PieChart" Class="mr-2" />
                     Loan Distribution by Status
@@ -195,7 +195,7 @@
 
         @* Repayment Performance *@
         <MudItem xs="12" md="6">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudText Typo="Typo.h6" Class="mb-3">
                     <MudIcon Icon="@Icons.Material.Filled.Payments" Class="mr-2" />
                     Repayment Performance
@@ -239,7 +239,7 @@
 
         @* Product Settings *@
         <MudItem xs="12" md="6">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudText Typo="Typo.h6" Class="mb-3">
                     <MudIcon Icon="@Icons.Material.Filled.Settings" Class="mr-2" />
                     Product Configuration
@@ -282,7 +282,7 @@
 
         @* Recent Loan Activity *@
         <MudItem xs="12">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudText Typo="Typo.h6" Class="mb-3">
                     <MudIcon Icon="@Icons.Material.Filled.History" Class="mr-2" />
                     Recent Loan Activity
@@ -321,7 +321,7 @@
 
         @* Write-off Summary *@
         <MudItem xs="12" md="6">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudText Typo="Typo.h6" Class="mb-3">
                     <MudIcon Icon="@Icons.Material.Filled.Cancel" Class="mr-2" />
                     Write-off Summary
@@ -347,7 +347,7 @@
 
         @* Loan Pipeline *@
         <MudItem xs="12" md="6">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudText Typo="Typo.h6" Class="mb-3">
                     <MudIcon Icon="@Icons.Material.Filled.Queue" Class="mr-2" />
                     Loan Pipeline

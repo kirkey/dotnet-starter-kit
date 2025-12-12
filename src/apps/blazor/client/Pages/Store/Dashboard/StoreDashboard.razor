@@ -591,7 +591,7 @@ else
                     @if (_goodsReceipts.Count > 0)
                     {
                         <div style="height: 380px; overflow-y: auto;">
-                            <MudTable Items="@_goodsReceipts" Dense="true" Hover="true" Striped="true" Elevation="0">
+                            <MudTable Items="@_goodsReceipts" Dense="true" Hover="true" Striped="true" Elevation="@_preference.Elevation">
                                 <HeaderContent>
                                     <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Receipt #</MudText></MudTh>
                                     <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">PO #</MudText></MudTh>
@@ -633,7 +633,7 @@ else
                     @if (_inventoryTransfers.Count > 0)
                     {
                         <div style="height: 380px; overflow-y: auto;">
-                            <MudTable Items="@_inventoryTransfers" Dense="true" Hover="true" Striped="true" Elevation="0">
+                            <MudTable Items="@_inventoryTransfers" Dense="true" Hover="true" Striped="true" Elevation="@_preference.Elevation">
                                 <HeaderContent>
                                     <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Transfer #</MudText></MudTh>
                                     <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">From</MudText></MudTh>
@@ -678,7 +678,7 @@ else
                     @if (_pickLists.Count > 0)
                     {
                         <div style="height: 380px; overflow-y: auto;">
-                            <MudTable Items="@_pickLists" Dense="true" Hover="true" Striped="true" Elevation="0">
+                            <MudTable Items="@_pickLists" Dense="true" Hover="true" Striped="true" Elevation="@_preference.Elevation">
                                 <HeaderContent>
                                     <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Pick List #</MudText></MudTh>
                                     <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Warehouse</MudText></MudTh>
@@ -724,7 +724,7 @@ else
                     @if (_putAwayTasks.Count > 0)
                     {
                         <div style="height: 380px; overflow-y: auto;">
-                            <MudTable Items="@_putAwayTasks" Dense="true" Hover="true" Striped="true" Elevation="0">
+                            <MudTable Items="@_putAwayTasks" Dense="true" Hover="true" Striped="true" Elevation="@_preference.Elevation">
                                 <HeaderContent>
                                     <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Task #</MudText></MudTh>
                                     <MudTh Style="font-weight: 600;"><MudText Color="Color.Default">Warehouse</MudText></MudTh>

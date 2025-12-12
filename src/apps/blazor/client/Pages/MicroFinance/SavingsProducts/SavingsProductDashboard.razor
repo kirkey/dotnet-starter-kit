@@ -3,7 +3,7 @@
 
 <FshPage Title="@($"{_productName} Dashboard")" Breadcrumbs="@_breadcrumbs" Loading="@_loading">
     @* Header Section *@
-    <MudPaper Class="pa-4 mb-4" Elevation="0">
+    <MudPaper Class="pa-4 mb-4" Elevation="@_preference.Elevation">
         <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
             <MudStack>
                 <MudText Typo="Typo.h5">@_productName</MudText>
@@ -31,7 +31,7 @@
     @* Product Configuration Overview *@
     <MudGrid Class="mb-4">
         <MudItem xs="12" md="6" lg="3">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudStack>
                     <MudText Typo="Typo.caption" Class="mud-text-secondary">Interest Rate</MudText>
                     <MudText Typo="Typo.h4" Color="MudBlazor.Color.Primary">@_dashboard.Overview.InterestRate.ToString("F2")%</MudText>
@@ -40,7 +40,7 @@
             </MudPaper>
         </MudItem>
         <MudItem xs="12" md="6" lg="3">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudStack>
                     <MudText Typo="Typo.caption" Class="mud-text-secondary">Total Accounts</MudText>
                     <MudText Typo="Typo.h4" Color="MudBlazor.Color.Info">@_dashboard.AccountStats.TotalAccounts</MudText>
@@ -49,7 +49,7 @@
             </MudPaper>
         </MudItem>
         <MudItem xs="12" md="6" lg="3">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudStack>
                     <MudText Typo="Typo.caption" Class="mud-text-secondary">Total Balance</MudText>
                     <MudText Typo="Typo.h4" Color="MudBlazor.Color.Success">@FormatCurrency(_dashboard.BalanceMetrics.TotalBalance)</MudText>
@@ -58,7 +58,7 @@
             </MudPaper>
         </MudItem>
         <MudItem xs="12" md="6" lg="3">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudStack>
                     <MudText Typo="Typo.caption" Class="mud-text-secondary">Total Interest Earned</MudText>
                     <MudText Typo="Typo.h4" Color="MudBlazor.Color.Warning">@FormatCurrency(_dashboard.BalanceMetrics.TotalInterestEarned)</MudText>
@@ -71,7 +71,7 @@
     @* Account Status and Balance Metrics *@
     <MudGrid Class="mb-4">
         <MudItem xs="12" lg="6">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudText Typo="Typo.h6" Class="mb-3">Account Status Distribution</MudText>
                 <MudStack Spacing="2">
                     @foreach (var status in _dashboard.StatusDistribution)
@@ -93,7 +93,7 @@
             </MudPaper>
         </MudItem>
         <MudItem xs="12" lg="6">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudText Typo="Typo.h6" Class="mb-3">Balance Distribution</MudText>
                 <MudStack Spacing="2">
                     <MudStack Row="true" Justify="Justify.SpaceBetween">
@@ -132,7 +132,7 @@
     @* Transaction Metrics *@
     <MudGrid Class="mb-4">
         <MudItem xs="12" lg="6">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudText Typo="Typo.h6" Class="mb-3">Transaction Summary (Last 30 Days)</MudText>
                 <MudGrid>
                     <MudItem xs="6">
@@ -168,7 +168,7 @@
             </MudPaper>
         </MudItem>
         <MudItem xs="12" lg="6">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudText Typo="Typo.h6" Class="mb-3">Transaction Types (12 Months)</MudText>
                 <MudStack Spacing="2">
                     <MudStack Row="true" Justify="Justify.SpaceBetween">
@@ -214,7 +214,7 @@
     @* Interest Metrics and Alerts *@
     <MudGrid Class="mb-4">
         <MudItem xs="12" lg="6">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudText Typo="Typo.h6" Class="mb-3">Interest Metrics</MudText>
                 <MudStack Spacing="2">
                     <MudStack Row="true" Justify="Justify.SpaceBetween">
@@ -244,7 +244,7 @@
             </MudPaper>
         </MudItem>
         <MudItem xs="12" lg="6">
-            <MudPaper Class="pa-4" Elevation="2">
+            <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
                 <MudText Typo="Typo.h6" Class="mb-3">Alerts</MudText>
                 @if (_dashboard.Alerts.AlertList.Count == 0)
                 {
@@ -266,7 +266,7 @@
     </MudGrid>
 
     @* Recent Accounts *@
-    <MudPaper Class="pa-4 mb-4" Elevation="2">
+    <MudPaper Class="pa-4 mb-4" Elevation="@_preference.Elevation">
         <MudText Typo="Typo.h6" Class="mb-3">Recent Accounts</MudText>
         <MudTable Items="@_dashboard.RecentAccounts" Hover="true" Dense="true" Striped="true">
             <HeaderContent>
@@ -293,7 +293,7 @@
     </MudPaper>
 
     @* Monthly Trends *@
-    <MudPaper Class="pa-4" Elevation="2">
+    <MudPaper Class="pa-4" Elevation="@_preference.Elevation">
         <MudText Typo="Typo.h6" Class="mb-3">Monthly Activity Trends (12 Months)</MudText>
         <MudTable Items="@_dashboard.MonthlyTrends" Hover="true" Dense="true">
             <HeaderContent>
