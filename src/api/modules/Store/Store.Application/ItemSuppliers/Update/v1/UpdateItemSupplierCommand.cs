@@ -11,14 +11,11 @@ public record UpdateItemSupplierCommand : IRequest<UpdateItemSupplierResponse>
     public DefaultIdType Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the name.
-    /// </summary>
-    [DefaultValue("Item-supplier relationship")]
-    public string? Name { get; set; }
-
-    /// <summary>
     /// Gets or sets the description.
     /// </summary>
+    /// <remarks>
+    /// The Name field is automatically regenerated from SupplierCode + ItemName when updating.
+    /// </remarks>
     [DefaultValue(null)]
     public string? Description { get; set; }
 

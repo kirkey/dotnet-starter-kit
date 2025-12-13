@@ -25,10 +25,7 @@
         }
 
         <MudItem xs="12">
-            <MudTextField Label="Name" For="@(() => context.Name)" @bind-Value="context.Name" Required="true" Variant="Variant.Filled" />
-        </MudItem>
 
-        <MudItem xs="12">
             <AutocompleteItem Value="context.ItemId"
                              ValueChanged="@((DefaultIdType val) => context.ItemId = val)"
                              For="@(() => context.ItemId)"

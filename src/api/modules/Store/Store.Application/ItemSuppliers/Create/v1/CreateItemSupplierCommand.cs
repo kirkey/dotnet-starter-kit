@@ -3,8 +3,10 @@ namespace FSH.Starter.WebApi.Store.Application.ItemSuppliers.Create.v1;
 /// <summary>
 /// Command to create a new item-supplier relationship.
 /// </summary>
+/// <remarks>
+/// The Name field is automatically generated from SupplierCode + ItemName.
+/// </remarks>
 public sealed record CreateItemSupplierCommand(
-    [property: DefaultValue("Item Supplier Relationship")] string? Name,
     [property: DefaultValue(null)] string? Description,
     [property: DefaultValue(null)] string? Notes,
     DefaultIdType ItemId,

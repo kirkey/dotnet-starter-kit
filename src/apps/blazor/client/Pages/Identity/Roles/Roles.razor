@@ -11,7 +11,7 @@
         }
     </ExtraActions>
     <EditFormContent Context="context">
-        @if (!Context.AddEditModal.IsCreate)
+        @if (!string.IsNullOrEmpty(context.Id))
         {
             <MudItem xs="12" md="6">
                 <MudTextField Value="context.Id" ReadOnly Underline="false" Label="Role Id]" />
