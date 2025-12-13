@@ -8,7 +8,7 @@ public static class WriteOffRecordRecoveryEndpoint
     internal static RouteHandlerBuilder MapWriteOffRecordRecoveryEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/recovery", async (DefaultIdType id, RecordRecoveryCommand request, ISender mediator) =>
+            .MapPost("/{id}/recovery", async (DefaultIdType id, RecordRecoveryCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var writeOffId = await mediator.Send(command).ConfigureAwait(false);

@@ -15,9 +15,8 @@ public class FuelConsumptionEndpoints() : CarterModule
     /// </summary>
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("accounting/fuel-consumption").WithTags("fuel-consumption");
-
         // TODO: Implement FuelConsumption endpoints
+        // var group = app.MapGroup("accounting/fuel-consumption").WithTags("fuel-consumption");
         // group.MapFuelConsumptionCreateEndpoint();
         // group.MapFuelConsumptionDeleteEndpoint();
         // group.MapFuelConsumptionGetEndpoint();

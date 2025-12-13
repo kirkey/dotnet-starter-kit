@@ -16,7 +16,7 @@ public static class AutoAddItemsToPurchaseOrderEndpoint
     /// <returns>Route handler builder for auto-add items endpoint</returns>
     internal static RouteHandlerBuilder MapAutoAddItemsToPurchaseOrderEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/auto-add-items",
+        return endpoints.MapPost("/{id}/auto-add-items",
             async (DefaultIdType id, [FromBody] AutoAddItemsToPurchaseOrderCommand command, ISender sender) =>
             {
                 // Override purchase order ID from route parameter

@@ -58,7 +58,7 @@ public class MobileWalletEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/credit", async (DefaultIdType id, CreditRequest request, ISender sender) =>
+        group.MapPost("/{id}/credit", async (DefaultIdType id, CreditRequest request, ISender sender) =>
         {
             var result = await sender.Send(new CreditMobileWalletCommand(id, request.Amount, request.TransactionReference));
             return Results.Ok(result);
@@ -69,7 +69,7 @@ public class MobileWalletEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Deposit, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/debit", async (DefaultIdType id, DebitRequest request, ISender sender) =>
+        group.MapPost("/{id}/debit", async (DefaultIdType id, DebitRequest request, ISender sender) =>
         {
             var result = await sender.Send(new DebitMobileWalletCommand(id, request.Amount, request.TransactionReference)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -80,7 +80,7 @@ public class MobileWalletEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Withdraw, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/activate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ActivateMobileWalletCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -91,7 +91,7 @@ public class MobileWalletEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/suspend", async (DefaultIdType id, SuspendMobileWalletRequest request, ISender sender) =>
+        group.MapPost("/{id}/suspend", async (DefaultIdType id, SuspendMobileWalletRequest request, ISender sender) =>
         {
             var result = await sender.Send(new SuspendMobileWalletCommand(id, request.Reason)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -102,7 +102,7 @@ public class MobileWalletEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Cancel, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/link-savings", async (DefaultIdType id, LinkSavingsRequest request, ISender sender) =>
+        group.MapPost("/{id}/link-savings", async (DefaultIdType id, LinkSavingsRequest request, ISender sender) =>
         {
             var result = await sender.Send(new LinkSavingsMobileWalletCommand(id, request.SavingsAccountId)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -113,7 +113,7 @@ public class MobileWalletEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/upgrade-tier", async (DefaultIdType id, UpgradeTierRequest request, ISender sender) =>
+        group.MapPost("/{id}/upgrade-tier", async (DefaultIdType id, UpgradeTierRequest request, ISender sender) =>
         {
             var result = await sender.Send(new UpgradeTierMobileWalletCommand(id, request.NewTier, request.NewDailyLimit, request.NewMonthlyLimit)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -135,7 +135,7 @@ public class MobileWalletEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/block", async (DefaultIdType id, BlockMobileWalletRequest request, ISender sender) =>
+        group.MapPost("/{id}/block", async (DefaultIdType id, BlockMobileWalletRequest request, ISender sender) =>
         {
             var result = await sender.Send(new BlockMobileWalletCommand(id, request.Reason)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -146,7 +146,7 @@ public class MobileWalletEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Cancel, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/unblock", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/unblock", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new UnblockMobileWalletCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -157,7 +157,7 @@ public class MobileWalletEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reactivate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/reactivate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ReactivateMobileWalletCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -168,7 +168,7 @@ public class MobileWalletEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/close", async (DefaultIdType id, CloseMobileWalletRequest request, ISender sender) =>
+        group.MapPost("/{id}/close", async (DefaultIdType id, CloseMobileWalletRequest request, ISender sender) =>
         {
             var result = await sender.Send(new CloseMobileWalletCommand(id, request.Reason)).ConfigureAwait(false);
             return Results.Ok(result);

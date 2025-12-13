@@ -6,7 +6,7 @@ public static class ToggleUserStatusEndpoint
 {
     internal static RouteHandlerBuilder ToggleUserStatusEndpointEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/toggle-status", async (
+        return endpoints.MapPost("/{id}/toggle-status", async (
             string id,
             ToggleUserStatusCommand command,
             [FromServices] IUserService userService,

@@ -72,7 +72,7 @@ public class SavingsAccountEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapPost("/{id:guid}/deposit", async (DefaultIdType id, DepositCommand command, ISender sender) =>
+        savingsAccountsGroup.MapPost("/{id}/deposit", async (DefaultIdType id, DepositCommand command, ISender sender) =>
             {
                 if (id != command.AccountId)
                 {
@@ -87,7 +87,7 @@ public class SavingsAccountEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Deposit, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapPost("/{id:guid}/withdraw", async (DefaultIdType id, WithdrawCommand command, ISender sender) =>
+        savingsAccountsGroup.MapPost("/{id}/withdraw", async (DefaultIdType id, WithdrawCommand command, ISender sender) =>
             {
                 if (id != command.AccountId)
                 {
@@ -130,7 +130,7 @@ public class SavingsAccountEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapPost("/{id:guid}/post-interest", async (DefaultIdType id, PostInterestCommand command, ISender sender) =>
+        savingsAccountsGroup.MapPost("/{id}/post-interest", async (DefaultIdType id, PostInterestCommand command, ISender sender) =>
             {
                 if (id != command.AccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -142,7 +142,7 @@ public class SavingsAccountEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapPost("/{id:guid}/freeze", async (DefaultIdType id, ISender sender) =>
+        savingsAccountsGroup.MapPost("/{id}/freeze", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new FreezeAccountCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -153,7 +153,7 @@ public class SavingsAccountEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Freeze, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapPost("/{id:guid}/unfreeze", async (DefaultIdType id, ISender sender) =>
+        savingsAccountsGroup.MapPost("/{id}/unfreeze", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new UnfreezeAccountCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -164,7 +164,7 @@ public class SavingsAccountEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Unfreeze, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapPost("/{id:guid}/close", async (DefaultIdType id, CloseAccountCommand command, ISender sender) =>
+        savingsAccountsGroup.MapPost("/{id}/close", async (DefaultIdType id, CloseAccountCommand command, ISender sender) =>
             {
                 if (id != command.AccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -176,7 +176,7 @@ public class SavingsAccountEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsAccountsGroup.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        savingsAccountsGroup.MapPost("/{id}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivateSavingsAccountCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);

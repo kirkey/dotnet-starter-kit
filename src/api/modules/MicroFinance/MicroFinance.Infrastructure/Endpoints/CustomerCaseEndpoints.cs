@@ -47,7 +47,7 @@ public class CustomerCaseEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/assign", async (DefaultIdType id, AssignCustomerCaseRequest request, ISender sender) =>
+        group.MapPost("/{id}/assign", async (DefaultIdType id, AssignCustomerCaseRequest request, ISender sender) =>
         {
             var result = await sender.Send(new AssignCustomerCaseCommand(id, request.StaffId));
             return Results.Ok(result);
@@ -58,7 +58,7 @@ public class CustomerCaseEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/escalate", async (DefaultIdType id, EscalateCustomerCaseRequest request, ISender sender) =>
+        group.MapPost("/{id}/escalate", async (DefaultIdType id, EscalateCustomerCaseRequest request, ISender sender) =>
         {
             var result = await sender.Send(new EscalateCustomerCaseCommand(id, request.EscalatedToId, request.Reason));
             return Results.Ok(result);
@@ -69,7 +69,7 @@ public class CustomerCaseEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/resolve", async (DefaultIdType id, ResolveCustomerCaseRequest request, ISender sender) =>
+        group.MapPost("/{id}/resolve", async (DefaultIdType id, ResolveCustomerCaseRequest request, ISender sender) =>
         {
             var result = await sender.Send(new ResolveCustomerCaseCommand(id, request.Resolution));
             return Results.Ok(result);
@@ -80,7 +80,7 @@ public class CustomerCaseEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/close", async (DefaultIdType id, CloseCustomerCaseRequest request, ISender sender) =>
+        group.MapPost("/{id}/close", async (DefaultIdType id, CloseCustomerCaseRequest request, ISender sender) =>
         {
             var result = await sender.Send(new CloseCustomerCaseCommand(id, request.SatisfactionScore, request.Feedback));
             return Results.Ok(result);

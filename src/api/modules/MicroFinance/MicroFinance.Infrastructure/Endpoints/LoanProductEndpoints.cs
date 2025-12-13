@@ -87,7 +87,7 @@ public class LoanProductEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        loanProductsGroup.MapGet("/{id:guid}/dashboard", async (DefaultIdType id, ISender sender) =>
+        loanProductsGroup.MapGet("/{id}/dashboard", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetLoanProductDashboardQuery(id)).ConfigureAwait(false);
                 return Results.Ok(response);

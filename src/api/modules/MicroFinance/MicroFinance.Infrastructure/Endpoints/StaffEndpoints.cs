@@ -77,7 +77,7 @@ public class StaffEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/suspend", async (DefaultIdType id, SuspendStaffCommand command, ISender sender) =>
+        group.MapPost("/{id}/suspend", async (DefaultIdType id, SuspendStaffCommand command, ISender sender) =>
         {
             if (id != command.Id)
             {
@@ -92,7 +92,7 @@ public class StaffEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Suspend, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reinstate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/reinstate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ReinstateStaffCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -103,7 +103,7 @@ public class StaffEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Activate, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapGet("/{id:guid}/dashboard", async (DefaultIdType id, ISender sender) =>
+        group.MapGet("/{id}/dashboard", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new GetStaffDashboardQuery(id)).ConfigureAwait(false);
             return Results.Ok(result);

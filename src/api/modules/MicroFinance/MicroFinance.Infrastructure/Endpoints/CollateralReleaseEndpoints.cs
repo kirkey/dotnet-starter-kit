@@ -47,7 +47,7 @@ public class CollateralReleaseEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveReleaseRequest request, ISender sender) =>
+        group.MapPost("/{id}/approve", async (DefaultIdType id, ApproveReleaseRequest request, ISender sender) =>
         {
             var result = await sender.Send(new ApproveReleaseCommand(id, request.ApprovedById));
             return Results.Ok(result);
@@ -58,7 +58,7 @@ public class CollateralReleaseEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/release", async (DefaultIdType id, ReleaseRequest request, ISender sender) =>
+        group.MapPost("/{id}/release", async (DefaultIdType id, ReleaseRequest request, ISender sender) =>
         {
             var result = await sender.Send(new CompleteCollateralReleaseCommand(
                 id,
@@ -85,7 +85,7 @@ public class CollateralReleaseEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectReleaseRequest request, ISender sender) =>
+        group.MapPost("/{id}/reject", async (DefaultIdType id, RejectReleaseRequest request, ISender sender) =>
         {
             var result = await sender.Send(new RejectCollateralReleaseCommand(id, request.Reason, request.RejectedById)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -96,7 +96,7 @@ public class CollateralReleaseEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/cancel", async (DefaultIdType id, CancelReleaseRequest request, ISender sender) =>
+        group.MapPost("/{id}/cancel", async (DefaultIdType id, CancelReleaseRequest request, ISender sender) =>
         {
             var result = await sender.Send(new CancelCollateralReleaseCommand(id, request.Reason)).ConfigureAwait(false);
             return Results.Ok(result);

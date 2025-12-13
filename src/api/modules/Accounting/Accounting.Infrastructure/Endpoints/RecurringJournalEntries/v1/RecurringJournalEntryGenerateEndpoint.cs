@@ -8,7 +8,7 @@ public static class RecurringJournalEntryGenerateEndpoint
     internal static RouteHandlerBuilder MapRecurringJournalEntryGenerateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/generate", async (DefaultIdType id, GenerateRecurringJournalEntryCommand request, ISender mediator) =>
+            .MapPost("/{id}/generate", async (DefaultIdType id, GenerateRecurringJournalEntryCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var journalEntryId = await mediator.Send(command).ConfigureAwait(false);

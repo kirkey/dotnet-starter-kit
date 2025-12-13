@@ -52,7 +52,7 @@ public class CollectionCaseEndpoints : CarterModule
             .MapToApiVersion(1);
 
         // Assignment
-        group.MapPost("/{id:guid}/assign", async (DefaultIdType id, AssignCollectionCaseCommand command, ISender sender) =>
+        group.MapPost("/{id}/assign", async (DefaultIdType id, AssignCollectionCaseCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -65,7 +65,7 @@ public class CollectionCaseEndpoints : CarterModule
             .MapToApiVersion(1);
 
         // Collection Activities
-        group.MapPost("/{id:guid}/record-contact", async (DefaultIdType id, RecordContactCommand command, ISender sender) =>
+        group.MapPost("/{id}/record-contact", async (DefaultIdType id, RecordContactCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -77,7 +77,7 @@ public class CollectionCaseEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/record-recovery", async (DefaultIdType id, RecordCollectionCaseRecoveryCommand command, ISender sender) =>
+        group.MapPost("/{id}/record-recovery", async (DefaultIdType id, RecordCollectionCaseRecoveryCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -90,7 +90,7 @@ public class CollectionCaseEndpoints : CarterModule
             .MapToApiVersion(1);
 
         // Escalation & Resolution
-        group.MapPost("/{id:guid}/escalate-legal", async (DefaultIdType id, EscalateToLegalCommand command, ISender sender) =>
+        group.MapPost("/{id}/escalate-legal", async (DefaultIdType id, EscalateToLegalCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -102,7 +102,7 @@ public class CollectionCaseEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/settle", async (DefaultIdType id, SettleCollectionCaseCommand command, ISender sender) =>
+        group.MapPost("/{id}/settle", async (DefaultIdType id, SettleCollectionCaseCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -114,7 +114,7 @@ public class CollectionCaseEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/close", async (DefaultIdType id, CloseCollectionCaseCommand command, ISender sender) =>
+        group.MapPost("/{id}/close", async (DefaultIdType id, CloseCollectionCaseCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

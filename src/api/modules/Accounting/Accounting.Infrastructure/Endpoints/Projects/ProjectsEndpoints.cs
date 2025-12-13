@@ -19,10 +19,10 @@ public class ProjectsEndpoints() : CarterModule
         var group = app.MapGroup("accounting/projects").WithTags("project");
 
         group.MapProjectCreateEndpoint();
+        group.MapProjectSearchEndpoint();
+        // group.MapProjectDashboardEndpoint(); // DISABLED: Dashboard endpoints need separate implementation
         group.MapProjectDeleteEndpoint();
         group.MapProjectGetEndpoint();
-        group.MapProjectSearchEndpoint();
         group.MapProjectUpdateEndpoint();
-        group.MapProjectDashboardEndpoint();
     }
 }

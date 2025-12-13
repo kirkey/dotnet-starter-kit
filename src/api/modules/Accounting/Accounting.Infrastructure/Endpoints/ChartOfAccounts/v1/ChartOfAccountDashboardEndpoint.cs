@@ -8,7 +8,7 @@ public static class ChartOfAccountDashboardEndpoint
     internal static RouteHandlerBuilder MapChartOfAccountDashboardEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id:guid}/dashboard", async (DefaultIdType id, ISender mediator) =>
+            .MapGet("/{id}/dashboard", async (DefaultIdType id, ISender mediator) =>
             {
                 var response = await mediator.Send(new GetChartOfAccountDashboardQuery(id)).ConfigureAwait(false);
                 return Results.Ok(response);

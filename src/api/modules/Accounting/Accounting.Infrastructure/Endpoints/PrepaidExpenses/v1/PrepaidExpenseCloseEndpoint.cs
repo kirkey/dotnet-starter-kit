@@ -8,7 +8,7 @@ public static class PrepaidExpenseCloseEndpoint
     internal static RouteHandlerBuilder MapPrepaidExpenseCloseEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/close", async (DefaultIdType id, ClosePrepaidExpenseCommand command, ISender mediator) =>
+            .MapPost("/{id}/close", async (DefaultIdType id, ClosePrepaidExpenseCommand command, ISender mediator) =>
             {
                 if (id != command.Id)
                     return Results.BadRequest("ID mismatch");

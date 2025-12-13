@@ -41,7 +41,7 @@ public class LoanOfficerTargetEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/progress", async (DefaultIdType id, RecordLoanOfficerProgressRequest request, ISender sender) =>
+        group.MapPost("/{id}/progress", async (DefaultIdType id, RecordLoanOfficerProgressRequest request, ISender sender) =>
         {
             var command = new RecordLoanOfficerProgressCommand(id, request.AchievedValue);
             var result = await sender.Send(command);

@@ -8,7 +8,7 @@ public static class AllocateStockEndpoint
     internal static RouteHandlerBuilder MapAllocateStockEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/allocate", async (DefaultIdType id, AllocateStockCommand request, ISender sender) =>
+            .MapPost("/{id}/allocate", async (DefaultIdType id, AllocateStockCommand request, ISender sender) =>
             {
                 if (id != request.StockLevelId)
                 {

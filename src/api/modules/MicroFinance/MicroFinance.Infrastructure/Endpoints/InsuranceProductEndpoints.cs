@@ -56,7 +56,7 @@ public class InsuranceProductEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivateInsuranceProductCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);

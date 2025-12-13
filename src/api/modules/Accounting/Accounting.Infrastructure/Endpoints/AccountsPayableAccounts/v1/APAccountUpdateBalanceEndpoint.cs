@@ -8,7 +8,7 @@ public static class ApAccountUpdateBalanceEndpoint
     internal static RouteHandlerBuilder MapApAccountUpdateBalanceEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/balance", async (DefaultIdType id, UpdateAPBalanceCommand command, ISender mediator) =>
+            .MapPut("/{id}/balance", async (DefaultIdType id, UpdateAPBalanceCommand command, ISender mediator) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
                 var accountId = await mediator.Send(command).ConfigureAwait(false);

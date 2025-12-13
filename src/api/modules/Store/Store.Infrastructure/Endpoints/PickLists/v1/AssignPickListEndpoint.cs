@@ -8,7 +8,7 @@ public static class AssignPickListEndpoint
     internal static RouteHandlerBuilder MapAssignPickListEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/assign", async (DefaultIdType id, AssignPickListCommand request, ISender sender) =>
+            .MapPost("/{id}/assign", async (DefaultIdType id, AssignPickListCommand request, ISender sender) =>
             {
                 if (id != request.PickListId)
                 {

@@ -43,7 +43,7 @@ public class CollateralInsuranceEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/record-premium", async (DefaultIdType id, RecordPremiumRequest request, ISender sender) =>
+        group.MapPost("/{id}/record-premium", async (DefaultIdType id, RecordPremiumRequest request, ISender sender) =>
         {
             var result = await sender.Send(new RecordCollateralInsurancePremiumCommand(id, request.PaymentDate, request.NextDueDate));
             return Results.Ok(result);
@@ -54,7 +54,7 @@ public class CollateralInsuranceEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/renew", async (DefaultIdType id, RenewRequest request, ISender sender) =>
+        group.MapPost("/{id}/renew", async (DefaultIdType id, RenewRequest request, ISender sender) =>
         {
             var result = await sender.Send(new RenewInsuranceCommand(id, request.NewExpiryDate, request.NewPremium));
             return Results.Ok(result);

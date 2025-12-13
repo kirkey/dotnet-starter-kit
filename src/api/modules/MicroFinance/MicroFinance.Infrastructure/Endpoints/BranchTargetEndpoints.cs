@@ -41,7 +41,7 @@ public class BranchTargetEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/progress", async (DefaultIdType id, RecordBranchProgressRequest request, ISender sender) =>
+        group.MapPost("/{id}/progress", async (DefaultIdType id, RecordBranchProgressRequest request, ISender sender) =>
         {
             var command = new RecordBranchProgressCommand(id, request.AchievedValue);
             var result = await sender.Send(command);

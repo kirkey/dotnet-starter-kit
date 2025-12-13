@@ -45,7 +45,7 @@ public class CollateralValuationEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/submit", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/submit", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new SubmitValuationCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -56,7 +56,7 @@ public class CollateralValuationEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Submit, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveRequest request, ISender sender) =>
+        group.MapPost("/{id}/approve", async (DefaultIdType id, ApproveRequest request, ISender sender) =>
         {
             var result = await sender.Send(new ApproveValuationCommand(id, request.ApprovedById)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -67,7 +67,7 @@ public class CollateralValuationEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectRequest request, ISender sender) =>
+        group.MapPost("/{id}/reject", async (DefaultIdType id, RejectRequest request, ISender sender) =>
         {
             var result = await sender.Send(new RejectValuationCommand(id, request.Reason)).ConfigureAwait(false);
             return Results.Ok(result);

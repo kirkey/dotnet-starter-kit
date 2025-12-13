@@ -11,7 +11,7 @@ public static class CostCenterRecordActualEndpoint
     internal static RouteHandlerBuilder MapCostCenterRecordActualEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/actual", async (DefaultIdType id, RecordCostCenterActualCommand command, ISender mediator) =>
+            .MapPost("/{id}/actual", async (DefaultIdType id, RecordCostCenterActualCommand command, ISender mediator) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var costCenterId = await mediator.Send(command).ConfigureAwait(false);

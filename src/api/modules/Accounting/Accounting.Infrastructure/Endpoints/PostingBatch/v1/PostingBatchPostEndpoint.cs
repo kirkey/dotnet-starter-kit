@@ -8,7 +8,7 @@ public static class PostingBatchPostEndpoint
     internal static RouteHandlerBuilder MapPostingBatchPostEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/post", async (DefaultIdType id, ISender mediator) =>
+            .MapPost("/{id}/post", async (DefaultIdType id, ISender mediator) =>
             {
                 var batchId = await mediator.Send(new PostPostingBatchCommand(id)).ConfigureAwait(false);
                 return Results.Ok(new { Id = batchId, Message = "Posting batch posted successfully" });

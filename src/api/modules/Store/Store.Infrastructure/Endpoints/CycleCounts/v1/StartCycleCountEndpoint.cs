@@ -6,7 +6,7 @@ public static class StartCycleCountEndpoint
 {
     internal static RouteHandlerBuilder MapStartCycleCountEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/start", async (DefaultIdType id, StartCycleCountCommand command, ISender sender) =>
+        return endpoints.MapPost("/{id}/start", async (DefaultIdType id, StartCycleCountCommand command, ISender sender) =>
         {
             if (id != command.Id)
             {

@@ -58,7 +58,7 @@ public class InsurancePolicyEndpoints : CarterModule
             .MapToApiVersion(1);
 
         // Lifecycle Operations
-        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivateInsurancePolicyCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -69,7 +69,7 @@ public class InsurancePolicyEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/cancel", async (DefaultIdType id, CancelInsurancePolicyCommand command, ISender sender) =>
+        group.MapPost("/{id}/cancel", async (DefaultIdType id, CancelInsurancePolicyCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -82,7 +82,7 @@ public class InsurancePolicyEndpoints : CarterModule
             .MapToApiVersion(1);
 
         // Premium Payments
-        group.MapPost("/{id:guid}/record-premium", async (DefaultIdType id, RecordInsurancePolicyPremiumCommand command, ISender sender) =>
+        group.MapPost("/{id}/record-premium", async (DefaultIdType id, RecordInsurancePolicyPremiumCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

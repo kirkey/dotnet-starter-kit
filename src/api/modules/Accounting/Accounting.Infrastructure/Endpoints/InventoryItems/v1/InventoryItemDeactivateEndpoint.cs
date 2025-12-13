@@ -8,7 +8,7 @@ public static class InventoryItemDeactivateEndpoint
     internal static RouteHandlerBuilder MapInventoryItemDeactivateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender mediator) =>
+            .MapPost("/{id}/deactivate", async (DefaultIdType id, ISender mediator) =>
             {
                 var itemId = await mediator.Send(new DeactivateInventoryItemCommand(id)).ConfigureAwait(false);
                 return Results.Ok(new { Id = itemId, Message = "Inventory item deactivated successfully" });

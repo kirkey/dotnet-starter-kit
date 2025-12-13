@@ -11,7 +11,7 @@ public static class UpdateInventoryTransactionNotesEndpoint
     internal static RouteHandlerBuilder MapUpdateInventoryTransactionNotesEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPatch("/{id:guid}/notes", async (DefaultIdType id, UpdateInventoryTransactionNotesCommand request, ISender sender) =>
+            .MapPatch("/{id}/notes", async (DefaultIdType id, UpdateInventoryTransactionNotesCommand request, ISender sender) =>
             {
                 request.Id = id;
                 var response = await sender.Send(request).ConfigureAwait(false);

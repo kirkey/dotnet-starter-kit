@@ -1,4 +1,5 @@
 using FSH.Starter.Blazor.Client.Components.Dialogs;
+using FSH.Starter.Blazor.Shared;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -13,9 +14,15 @@ public partial class SavingsProductDashboard
     private string _productName = string.Empty;
     private SavingsProductDashboardData _dashboard = new();
     private List<BreadcrumbItem> _breadcrumbs = new();
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
         _breadcrumbs = new List<BreadcrumbItem>
         {
             new("Home", "/", icon: Icons.Material.Filled.Home),

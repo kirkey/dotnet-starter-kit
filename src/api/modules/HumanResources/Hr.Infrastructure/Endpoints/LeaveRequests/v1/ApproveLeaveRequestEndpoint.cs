@@ -12,7 +12,7 @@ public static class ApproveLeaveRequestEndpoint
     internal static RouteHandlerBuilder MapApproveLeaveRequestEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveLeaveRequestCommand command, ISender mediator) =>
+            .MapPost("/{id}/approve", async (DefaultIdType id, ApproveLeaveRequestCommand command, ISender mediator) =>
             {
                 var request = command with { Id = id };
                 var response = await mediator.Send(request).ConfigureAwait(false);

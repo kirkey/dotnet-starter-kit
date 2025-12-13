@@ -97,7 +97,7 @@ public class LeaveRequestsEndpoints() : CarterModule("humanresources")
             .RequirePermission(FshPermission.NameFor(FshActions.Submit, FshResources.Leaves))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveLeaveRequestCommand command, ISender mediator) =>
+        group.MapPost("/{id}/approve", async (DefaultIdType id, ApproveLeaveRequestCommand command, ISender mediator) =>
             {
                 var request = command with { Id = id };
                 var response = await mediator.Send(request).ConfigureAwait(false);

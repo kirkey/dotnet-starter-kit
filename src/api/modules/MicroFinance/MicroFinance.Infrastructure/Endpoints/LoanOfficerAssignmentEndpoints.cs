@@ -56,7 +56,7 @@ public class LoanOfficerAssignmentEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/transfer", async (DefaultIdType id, TransferAssignmentRequest request, ISender sender) =>
+        group.MapPost("/{id}/transfer", async (DefaultIdType id, TransferAssignmentRequest request, ISender sender) =>
         {
             var command = new TransferAssignmentCommand(id, request.NewStaffId, request.Reason);
             var result = await sender.Send(command);
@@ -68,7 +68,7 @@ public class LoanOfficerAssignmentEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Transfer, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/end", async (DefaultIdType id, EndAssignmentRequest request, ISender sender) =>
+        group.MapPost("/{id}/end", async (DefaultIdType id, EndAssignmentRequest request, ISender sender) =>
         {
             var command = new EndAssignmentCommand(id, request.EndDate, request.Reason);
             var result = await sender.Send(command);

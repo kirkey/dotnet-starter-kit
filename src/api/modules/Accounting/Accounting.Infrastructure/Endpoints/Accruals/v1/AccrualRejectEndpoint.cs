@@ -7,7 +7,7 @@ public static class AccrualRejectEndpoint
 {
     internal static RouteHandlerBuilder MapAccrualRejectEndpoint(this IEndpointRouteBuilder endpoints)
         => endpoints
-            .MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectAccrualCommand command, ISender mediator) =>
+            .MapPost("/{id}/reject", async (DefaultIdType id, RejectAccrualCommand command, ISender mediator) =>
             {
                 if (id != command.AccrualId) return Results.BadRequest("ID in URL does not match ID in request body.");
                 var result = await mediator.Send(command).ConfigureAwait(false);

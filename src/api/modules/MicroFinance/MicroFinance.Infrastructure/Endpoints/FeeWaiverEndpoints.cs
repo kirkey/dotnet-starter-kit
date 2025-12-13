@@ -61,7 +61,7 @@ public class FeeWaiverEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveFeeWaiverCommand command, ISender sender) =>
+        group.MapPost("/{id}/approve", async (DefaultIdType id, ApproveFeeWaiverCommand command, ISender sender) =>
         {
             if (id != command.Id)
             {
@@ -76,7 +76,7 @@ public class FeeWaiverEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectFeeWaiverCommand command, ISender sender) =>
+        group.MapPost("/{id}/reject", async (DefaultIdType id, RejectFeeWaiverCommand command, ISender sender) =>
         {
             if (id != command.Id)
             {
@@ -91,7 +91,7 @@ public class FeeWaiverEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/cancel", async (DefaultIdType id, CancelFeeWaiverCommand command, ISender sender) =>
+        group.MapPost("/{id}/cancel", async (DefaultIdType id, CancelFeeWaiverCommand command, ISender sender) =>
         {
             if (id != command.Id)
             {

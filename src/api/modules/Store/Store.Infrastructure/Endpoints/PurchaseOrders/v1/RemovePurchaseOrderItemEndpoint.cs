@@ -13,7 +13,7 @@ internal static class RemovePurchaseOrderItemEndpoint
     /// </summary>
     internal static RouteHandlerBuilder MapRemovePurchaseOrderItemEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapDelete("/{id:guid}/items/{itemId:guid}", async (DefaultIdType id, DefaultIdType itemId, ISender sender) =>
+        return endpoints.MapDelete("/{id}/items/{itemId:guid}", async (DefaultIdType id, DefaultIdType itemId, ISender sender) =>
         {
             var command = new RemovePurchaseOrderItemCommand(id, itemId);
             await sender.Send(command).ConfigureAwait(false);

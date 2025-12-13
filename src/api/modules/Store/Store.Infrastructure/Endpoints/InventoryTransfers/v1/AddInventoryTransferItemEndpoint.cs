@@ -7,7 +7,7 @@ public static class AddInventoryTransferItemEndpoint
 {
     internal static RouteHandlerBuilder MapAddInventoryTransferItemEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/items", async (DefaultIdType id, AddInventoryTransferItemCommand command, ISender sender) =>
+        return endpoints.MapPost("/{id}/items", async (DefaultIdType id, AddInventoryTransferItemCommand command, ISender sender) =>
         {
             if (id != command.InventoryTransferId) return Results.BadRequest("ID mismatch");
             var result = await sender.Send(command).ConfigureAwait(false);

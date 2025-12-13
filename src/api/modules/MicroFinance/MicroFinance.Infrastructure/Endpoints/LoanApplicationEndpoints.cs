@@ -55,7 +55,7 @@ public class LoanApplicationEndpoints : CarterModule
             .MapToApiVersion(1);
 
         // Application Workflow
-        group.MapPost("/{id:guid}/submit", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/submit", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new SubmitLoanApplicationCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -66,7 +66,7 @@ public class LoanApplicationEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Submit, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/assign", async (DefaultIdType id, AssignLoanApplicationCommand command, ISender sender) =>
+        group.MapPost("/{id}/assign", async (DefaultIdType id, AssignLoanApplicationCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -78,7 +78,7 @@ public class LoanApplicationEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/review", async (DefaultIdType id, ReviewLoanApplicationCommand command, ISender sender) =>
+        group.MapPost("/{id}/review", async (DefaultIdType id, ReviewLoanApplicationCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -90,7 +90,7 @@ public class LoanApplicationEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveLoanApplicationCommand command, ISender sender) =>
+        group.MapPost("/{id}/approve", async (DefaultIdType id, ApproveLoanApplicationCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -102,7 +102,7 @@ public class LoanApplicationEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectLoanApplicationCommand command, ISender sender) =>
+        group.MapPost("/{id}/reject", async (DefaultIdType id, RejectLoanApplicationCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -114,7 +114,7 @@ public class LoanApplicationEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/withdraw", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/withdraw", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new WithdrawLoanApplicationCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -125,7 +125,7 @@ public class LoanApplicationEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Withdraw, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/return", async (DefaultIdType id, ReturnLoanApplicationCommand command, ISender sender) =>
+        group.MapPost("/{id}/return", async (DefaultIdType id, ReturnLoanApplicationCommand command, ISender sender) =>
             {
                 if (id != command.LoanApplicationId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

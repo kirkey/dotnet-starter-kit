@@ -8,7 +8,7 @@ public static class WriteOffReverseEndpoint
     internal static RouteHandlerBuilder MapWriteOffReverseEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/reverse", async (DefaultIdType id, ReverseWriteOffCommand request, ISender mediator) =>
+            .MapPost("/{id}/reverse", async (DefaultIdType id, ReverseWriteOffCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var writeOffId = await mediator.Send(command).ConfigureAwait(false);

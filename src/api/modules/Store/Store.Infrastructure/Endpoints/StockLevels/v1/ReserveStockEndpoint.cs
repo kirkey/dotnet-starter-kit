@@ -8,7 +8,7 @@ public static class ReserveStockEndpoint
     internal static RouteHandlerBuilder MapReserveStockEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/reserve", async (DefaultIdType id, ReserveStockCommand request, ISender sender) =>
+            .MapPost("/{id}/reserve", async (DefaultIdType id, ReserveStockCommand request, ISender sender) =>
             {
                 if (id != request.StockLevelId)
                 {

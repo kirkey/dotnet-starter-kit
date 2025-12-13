@@ -19,9 +19,10 @@ public class CustomersEndpoints() : CarterModule
         var group = app.MapGroup("accounting/customers").WithTags("customer");
 
         group.MapCustomerCreateEndpoint();
-        group.MapCustomerGetEndpoint();
         group.MapCustomerSearchEndpoint();
+        // group.MapCustomerDashboardEndpoint(); // DISABLED: Dashboard endpoints need separate implementation
+        group.MapCustomerGetEndpoint();
+        group.MapCustomerUpdateEndpoint();
         // group.MapCustomerActivateEndpoint();
-        group.MapCustomerDashboardEndpoint();
     }
 }

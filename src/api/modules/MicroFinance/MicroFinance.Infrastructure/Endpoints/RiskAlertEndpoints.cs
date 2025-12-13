@@ -47,7 +47,7 @@ public class RiskAlertEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/acknowledge", async (DefaultIdType id, AcknowledgeRiskAlertRequest request, ISender sender) =>
+        group.MapPost("/{id}/acknowledge", async (DefaultIdType id, AcknowledgeRiskAlertRequest request, ISender sender) =>
         {
             var result = await sender.Send(new AcknowledgeRiskAlertCommand(id, request.UserId));
             return Results.Ok(result);
@@ -58,7 +58,7 @@ public class RiskAlertEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/assign", async (DefaultIdType id, AssignRiskAlertRequest request, ISender sender) =>
+        group.MapPost("/{id}/assign", async (DefaultIdType id, AssignRiskAlertRequest request, ISender sender) =>
         {
             var result = await sender.Send(new AssignRiskAlertCommand(id, request.UserId));
             return Results.Ok(result);
@@ -69,7 +69,7 @@ public class RiskAlertEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/escalate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/escalate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new EscalateRiskAlertCommand(id));
             return Results.Ok(result);
@@ -80,7 +80,7 @@ public class RiskAlertEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/resolve", async (DefaultIdType id, ResolveRiskAlertRequest request, ISender sender) =>
+        group.MapPost("/{id}/resolve", async (DefaultIdType id, ResolveRiskAlertRequest request, ISender sender) =>
         {
             var result = await sender.Send(new ResolveRiskAlertCommand(id, request.UserId, request.Resolution));
             return Results.Ok(result);

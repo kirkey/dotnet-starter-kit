@@ -8,7 +8,7 @@ public static class StartPickingEndpoint
     internal static RouteHandlerBuilder MapStartPickingEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/start", async (DefaultIdType id, StartPickingCommand request, ISender sender) =>
+            .MapPost("/{id}/start", async (DefaultIdType id, StartPickingCommand request, ISender sender) =>
             {
                 if (id != request.PickListId)
                 {

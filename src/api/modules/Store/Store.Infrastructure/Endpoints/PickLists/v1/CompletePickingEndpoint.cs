@@ -8,7 +8,7 @@ public static class CompletePickingEndpoint
     internal static RouteHandlerBuilder MapCompletePickingEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/complete", async (DefaultIdType id, CompletePickingCommand request, ISender sender) =>
+            .MapPost("/{id}/complete", async (DefaultIdType id, CompletePickingCommand request, ISender sender) =>
             {
                 if (id != request.PickListId)
                 {

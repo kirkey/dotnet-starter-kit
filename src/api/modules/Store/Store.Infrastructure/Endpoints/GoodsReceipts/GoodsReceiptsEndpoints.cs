@@ -41,7 +41,7 @@ public class GoodsReceiptsEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Add item to goods receipt
-        group.MapPost("/{id:guid}/items", async (DefaultIdType id, AddGoodsReceiptItemCommand request, ISender sender) =>
+        group.MapPost("/{id}/items", async (DefaultIdType id, AddGoodsReceiptItemCommand request, ISender sender) =>
         {
             if (id != request.GoodsReceiptId)
             {
@@ -59,7 +59,7 @@ public class GoodsReceiptsEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Mark goods receipt as received
-        group.MapPost("/{id:guid}/mark-received", async (DefaultIdType id, MarkReceivedCommand request, ISender sender) =>
+        group.MapPost("/{id}/mark-received", async (DefaultIdType id, MarkReceivedCommand request, ISender sender) =>
         {
             if (id != request.GoodsReceiptId)
             {

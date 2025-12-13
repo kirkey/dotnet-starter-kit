@@ -14,7 +14,7 @@ public static class VoidInvoiceEndpoint
     internal static RouteHandlerBuilder MapVoidInvoiceEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/void", async (DefaultIdType id, [FromBody] VoidInvoiceCommand command, ISender mediator) =>
+            .MapPost("/{id}/void", async (DefaultIdType id, [FromBody] VoidInvoiceCommand command, ISender mediator) =>
             {
                 if (id != command.InvoiceId)
                 {

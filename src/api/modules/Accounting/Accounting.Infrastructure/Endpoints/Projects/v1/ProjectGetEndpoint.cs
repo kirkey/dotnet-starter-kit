@@ -9,7 +9,7 @@ public static class ProjectGetEndpoint
     internal static RouteHandlerBuilder MapProjectGetEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+            .MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
             {
                 var response = await mediator.Send(new GetProjectQuery(id)).ConfigureAwait(false);
                 return Results.Ok(response);

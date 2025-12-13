@@ -11,7 +11,7 @@ public static class AddFiscalPeriodCloseValidationIssueEndpoint
     internal static RouteHandlerBuilder MapAddFiscalPeriodCloseValidationIssueEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/validation-issues", async (DefaultIdType id, AddFiscalPeriodCloseValidationIssueCommand command, ISender mediator) =>
+            .MapPost("/{id}/validation-issues", async (DefaultIdType id, AddFiscalPeriodCloseValidationIssueCommand command, ISender mediator) =>
             {
                 if (id != command.FiscalPeriodCloseId)
                 {

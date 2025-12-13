@@ -69,7 +69,7 @@ public class ShareAccountEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareAccountsGroup.MapPost("/{id:guid}/purchase", async (DefaultIdType id, PurchaseSharesCommand command, ISender sender) =>
+        shareAccountsGroup.MapPost("/{id}/purchase", async (DefaultIdType id, PurchaseSharesCommand command, ISender sender) =>
             {
                 if (id != command.ShareAccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -81,7 +81,7 @@ public class ShareAccountEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareAccountsGroup.MapPost("/{id:guid}/redeem", async (DefaultIdType id, RedeemSharesCommand command, ISender sender) =>
+        shareAccountsGroup.MapPost("/{id}/redeem", async (DefaultIdType id, RedeemSharesCommand command, ISender sender) =>
             {
                 if (id != command.ShareAccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -93,7 +93,7 @@ public class ShareAccountEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareAccountsGroup.MapPost("/{id:guid}/post-dividend", async (DefaultIdType id, PostDividendCommand command, ISender sender) =>
+        shareAccountsGroup.MapPost("/{id}/post-dividend", async (DefaultIdType id, PostDividendCommand command, ISender sender) =>
             {
                 if (id != command.ShareAccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -105,7 +105,7 @@ public class ShareAccountEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareAccountsGroup.MapPost("/{id:guid}/pay-dividend", async (DefaultIdType id, PayDividendCommand command, ISender sender) =>
+        shareAccountsGroup.MapPost("/{id}/pay-dividend", async (DefaultIdType id, PayDividendCommand command, ISender sender) =>
             {
                 if (id != command.ShareAccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -117,7 +117,7 @@ public class ShareAccountEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareAccountsGroup.MapPost("/{id:guid}/close", async (DefaultIdType id, CloseShareAccountCommand command, ISender sender) =>
+        shareAccountsGroup.MapPost("/{id}/close", async (DefaultIdType id, CloseShareAccountCommand command, ISender sender) =>
             {
                 if (id != command.AccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -129,7 +129,7 @@ public class ShareAccountEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareAccountsGroup.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveShareAccountCommand command, ISender sender) =>
+        shareAccountsGroup.MapPost("/{id}/approve", async (DefaultIdType id, ApproveShareAccountCommand command, ISender sender) =>
             {
                 if (id != command.ShareAccountId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -141,7 +141,7 @@ public class ShareAccountEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        shareAccountsGroup.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        shareAccountsGroup.MapPost("/{id}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivateShareAccountCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);

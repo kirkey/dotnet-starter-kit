@@ -7,7 +7,7 @@ public static class ReverseAccrualEndpoint
 {
     internal static RouteHandlerBuilder MapReverseAccrualEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPut("/{id:guid}/reverse", async (DefaultIdType id, ReverseAccrualCommand command, ISender mediator) =>
+        return endpoints.MapPut("/{id}/reverse", async (DefaultIdType id, ReverseAccrualCommand command, ISender mediator) =>
         {
             command.Id = id;
             await mediator.Send(command).ConfigureAwait(false);

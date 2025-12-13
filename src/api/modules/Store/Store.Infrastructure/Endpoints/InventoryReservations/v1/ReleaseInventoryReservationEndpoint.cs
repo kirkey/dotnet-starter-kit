@@ -8,7 +8,7 @@ public static class ReleaseInventoryReservationEndpoint
     internal static RouteHandlerBuilder MapReleaseInventoryReservationEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/release", async (DefaultIdType id, ReleaseInventoryReservationCommand request, ISender sender) =>
+            .MapPost("/{id}/release", async (DefaultIdType id, ReleaseInventoryReservationCommand request, ISender sender) =>
             {
                 if (id != request.Id)
                 {

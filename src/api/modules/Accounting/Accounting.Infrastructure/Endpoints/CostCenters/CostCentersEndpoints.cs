@@ -21,12 +21,12 @@ public class CostCentersEndpoints() : CarterModule
         group.MapCostCenterActivateEndpoint();
         group.MapCostCenterCreateEndpoint();
         group.MapCostCenterDeactivateEndpoint();
+        group.MapCostCenterSearchEndpoint();
+        // group.MapCostCenterDashboardEndpoint(); // DISABLED: Dashboard endpoints need separate implementation
         group.MapCostCenterDeleteEndpoint();
         group.MapCostCenterGetEndpoint();
         group.MapCostCenterRecordActualEndpoint();
-        group.MapCostCenterSearchEndpoint();
         group.MapCostCenterUpdateEndpoint();
         group.MapUpdateCostCenterBudgetEndpoint();
-        group.MapCostCenterDashboardEndpoint();
     }
 }

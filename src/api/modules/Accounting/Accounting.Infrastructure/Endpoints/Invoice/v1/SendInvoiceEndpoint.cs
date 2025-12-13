@@ -14,7 +14,7 @@ public static class SendInvoiceEndpoint
     internal static RouteHandlerBuilder MapSendInvoiceEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/send", async (DefaultIdType id, ISender mediator) =>
+            .MapPost("/{id}/send", async (DefaultIdType id, ISender mediator) =>
             {
                 var response = await mediator.Send(new SendInvoiceCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);

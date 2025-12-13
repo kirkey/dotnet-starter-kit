@@ -5,7 +5,7 @@ public static class AssignRolesToUserEndpoint
 {
     internal static RouteHandlerBuilder MapAssignRolesToUserEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/roles", async (AssignUserRoleCommand command,
+        return endpoints.MapPost("/{id}/roles", async (AssignUserRoleCommand command,
             HttpContext context,
             string id,
             IUserService userService,

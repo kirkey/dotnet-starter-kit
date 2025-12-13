@@ -14,7 +14,7 @@ public static class MarkBillAsPaidEndpoint
     internal static RouteHandlerBuilder MapMarkBillAsPaidEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/mark-paid", async (DefaultIdType id, MarkBillAsPaidRequest request, ISender mediator) =>
+            .MapPut("/{id}/mark-paid", async (DefaultIdType id, MarkBillAsPaidRequest request, ISender mediator) =>
             {
                 var command = new MarkBillAsPaidCommand(id, request.PaidDate);
                 var response = await mediator.Send(command).ConfigureAwait(false);

@@ -43,7 +43,7 @@ public class PromiseToPayEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/record-payment", async (DefaultIdType id, RecordPaymentRequest request, ISender sender) =>
+        group.MapPost("/{id}/record-payment", async (DefaultIdType id, RecordPaymentRequest request, ISender sender) =>
         {
             var result = await sender.Send(new RecordPromisePaymentCommand(id, request.Amount, request.PaymentDate));
             return Results.Ok(result);
@@ -54,7 +54,7 @@ public class PromiseToPayEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/mark-broken", async (DefaultIdType id, MarkBrokenRequest request, ISender sender) =>
+        group.MapPost("/{id}/mark-broken", async (DefaultIdType id, MarkBrokenRequest request, ISender sender) =>
         {
             var result = await sender.Send(new MarkPromiseBrokenCommand(id, request.Reason));
             return Results.Ok(result);

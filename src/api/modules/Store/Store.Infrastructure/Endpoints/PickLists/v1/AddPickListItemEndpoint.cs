@@ -12,7 +12,7 @@ public static class AddPickListItemEndpoint
     internal static RouteHandlerBuilder MapAddPickListItemEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/items", async (DefaultIdType id, AddPickListItemCommand request, ISender sender) =>
+            .MapPost("/{id}/items", async (DefaultIdType id, AddPickListItemCommand request, ISender sender) =>
             {
                 if (id != request.PickListId)
                 {

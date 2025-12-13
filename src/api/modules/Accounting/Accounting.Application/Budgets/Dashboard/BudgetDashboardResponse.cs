@@ -91,23 +91,3 @@ public sealed record BudgetAccountBreakdown
     public decimal Utilization { get; init; }
     public bool IsOverBudget { get; init; }
 }
-
-public sealed record MonthlyComparisonData
-{
-    public string Month { get; init; } = default!;
-    public int Year { get; init; }
-    public decimal Amount { get; init; }
-    public decimal PreviousAmount { get; init; }
-    public decimal ChangePercentage { get; init; }
-    public int TransactionCount { get; init; }
-}
-
-public sealed record DashboardAlert
-{
-    public string AlertType { get; init; } = default!;
-    public string Severity { get; init; } = default!;
-    public string Message { get; init; } = default!;
-    public DateTime CreatedDate { get; init; }
-    public Guid RelatedEntityId { get; init; }
-    public string? RelatedEntityName { get; init; }
-}

@@ -11,7 +11,7 @@ public static class ArAccountRecordWriteOffEndpoint
     internal static RouteHandlerBuilder MapArAccountRecordWriteOffEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/write-offs", async (DefaultIdType id, RecordARWriteOffCommand request, ISender mediator) =>
+            .MapPost("/{id}/write-offs", async (DefaultIdType id, RecordARWriteOffCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var accountId = await mediator.Send(command).ConfigureAwait(false);

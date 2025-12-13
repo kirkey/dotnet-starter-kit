@@ -91,7 +91,7 @@ public class MemberEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        membersGroup.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        membersGroup.MapPost("/{id}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivateMemberCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -102,7 +102,7 @@ public class MemberEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        membersGroup.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
+        membersGroup.MapPost("/{id}/deactivate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new DeactivateMemberCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -113,7 +113,7 @@ public class MemberEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        membersGroup.MapGet("/{id:guid}/dashboard", async (DefaultIdType id, ISender sender) =>
+        membersGroup.MapGet("/{id}/dashboard", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetMemberDashboardQuery(id)).ConfigureAwait(false);
                 return Results.Ok(response);

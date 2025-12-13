@@ -12,7 +12,7 @@ public static class ProcessPayrollEndpoint
     internal static RouteHandlerBuilder MapProcessPayrollEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/process", async (DefaultIdType id, ISender mediator) =>
+            .MapPost("/{id}/process", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new ProcessPayrollCommand(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);

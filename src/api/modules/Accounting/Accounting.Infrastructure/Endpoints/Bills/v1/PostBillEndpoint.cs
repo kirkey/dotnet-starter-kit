@@ -14,7 +14,7 @@ public static class PostBillEndpoint
     internal static RouteHandlerBuilder MapPostBillEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/post", async (DefaultIdType id, ISender mediator) =>
+            .MapPut("/{id}/post", async (DefaultIdType id, ISender mediator) =>
             {
                 var command = new PostBillCommand(id);
                 var response = await mediator.Send(command).ConfigureAwait(false);

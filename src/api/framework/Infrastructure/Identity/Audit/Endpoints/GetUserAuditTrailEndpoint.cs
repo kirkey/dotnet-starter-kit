@@ -4,7 +4,7 @@ public static class GetUserAuditTrailEndpoint
 {
     internal static RouteHandlerBuilder MapGetUserAuditTrailEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/{id:guid}/audit-trails", (DefaultIdType id, IAuditService service) =>
+        return endpoints.MapGet("/{id}/audit-trails", (DefaultIdType id, IAuditService service) =>
         {
             return service.GetUserTrailsAsync(id);
         })

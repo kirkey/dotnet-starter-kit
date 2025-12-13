@@ -8,7 +8,7 @@ public static class ApproveInventoryTransactionEndpoint
     internal static RouteHandlerBuilder MapApproveInventoryTransactionEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveInventoryTransactionCommand request, ISender sender) =>
+            .MapPost("/{id}/approve", async (DefaultIdType id, ApproveInventoryTransactionCommand request, ISender sender) =>
             {
                 if (id != request.Id)
                 {

@@ -14,7 +14,7 @@ public static class VoidBillEndpoint
     internal static RouteHandlerBuilder MapVoidBillEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/void", async (DefaultIdType id, VoidBillRequest request, ISender mediator) =>
+            .MapPut("/{id}/void", async (DefaultIdType id, VoidBillRequest request, ISender mediator) =>
             {
                 var command = new VoidBillCommand(id, request.Reason);
                 var response = await mediator.Send(command).ConfigureAwait(false);

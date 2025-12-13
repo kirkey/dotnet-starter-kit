@@ -7,7 +7,7 @@ public static class ActivateSupplierEndpoint
 {
     internal static RouteHandlerBuilder MapActivateSupplierEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/activate", async (DefaultIdType id, ActivateSupplierCommand command, ISender sender) =>
+        return endpoints.MapPost("/{id}/activate", async (DefaultIdType id, ActivateSupplierCommand command, ISender sender) =>
             {
                 if (id != command.Id)
                 {

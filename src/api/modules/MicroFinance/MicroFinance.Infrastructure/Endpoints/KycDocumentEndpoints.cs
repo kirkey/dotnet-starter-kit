@@ -43,7 +43,7 @@ public class KycDocumentEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/verify", async (DefaultIdType id, VerifyKycDocumentRequest request, ISender sender) =>
+        group.MapPost("/{id}/verify", async (DefaultIdType id, VerifyKycDocumentRequest request, ISender sender) =>
         {
             var command = new VerifyKycDocumentCommand(id, request.VerifiedById, request.Notes);
             var result = await sender.Send(command);
@@ -55,7 +55,7 @@ public class KycDocumentEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectKycDocumentRequest request, ISender sender) =>
+        group.MapPost("/{id}/reject", async (DefaultIdType id, RejectKycDocumentRequest request, ISender sender) =>
         {
             var command = new RejectKycDocumentCommand(id, request.RejectedById, request.Reason);
             var result = await sender.Send(command);

@@ -75,7 +75,7 @@ public class LoanRepaymentEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        loanRepaymentsGroup.MapPost("/{id:guid}/reverse", async (DefaultIdType id, ReverseLoanRepaymentCommand command, ISender sender) =>
+        loanRepaymentsGroup.MapPost("/{id}/reverse", async (DefaultIdType id, ReverseLoanRepaymentCommand command, ISender sender) =>
             {
                 if (id != command.LoanRepaymentId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

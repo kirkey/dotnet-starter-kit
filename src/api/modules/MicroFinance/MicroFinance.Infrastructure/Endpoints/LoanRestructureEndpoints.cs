@@ -43,7 +43,7 @@ public class LoanRestructureEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveRestructureRequest request, ISender sender) =>
+        group.MapPost("/{id}/approve", async (DefaultIdType id, ApproveRestructureRequest request, ISender sender) =>
         {
             var command = new ApproveRestructureCommand(id, request.UserId, request.ApproverName, request.EffectiveDate);
             var result = await sender.Send(command).ConfigureAwait(false);
@@ -55,7 +55,7 @@ public class LoanRestructureEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectRestructureRequest request, ISender sender) =>
+        group.MapPost("/{id}/reject", async (DefaultIdType id, RejectRestructureRequest request, ISender sender) =>
         {
             var command = new RejectRestructureCommand(id, request.UserId, request.Reason);
             var result = await sender.Send(command).ConfigureAwait(false);

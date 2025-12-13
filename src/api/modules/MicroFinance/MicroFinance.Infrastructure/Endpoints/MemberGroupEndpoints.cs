@@ -67,7 +67,7 @@ public class MemberGroupEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        memberGroupsGroup.MapPost("/{id:guid}/members", async (DefaultIdType id, AddMemberToGroupCommand command, ISender sender) =>
+        memberGroupsGroup.MapPost("/{id}/members", async (DefaultIdType id, AddMemberToGroupCommand command, ISender sender) =>
             {
                 if (id != command.GroupId)
                 {
@@ -94,7 +94,7 @@ public class MemberGroupEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        memberGroupsGroup.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        memberGroupsGroup.MapPost("/{id}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivateMemberGroupCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -105,7 +105,7 @@ public class MemberGroupEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        memberGroupsGroup.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
+        memberGroupsGroup.MapPost("/{id}/deactivate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new DeactivateMemberGroupCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -116,7 +116,7 @@ public class MemberGroupEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        memberGroupsGroup.MapPost("/{id:guid}/dissolve", async (DefaultIdType id, DissolveMemberGroupCommand command, ISender sender) =>
+        memberGroupsGroup.MapPost("/{id}/dissolve", async (DefaultIdType id, DissolveMemberGroupCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -128,7 +128,7 @@ public class MemberGroupEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        memberGroupsGroup.MapGet("/{id:guid}/dashboard", async (DefaultIdType id, ISender sender) =>
+        memberGroupsGroup.MapGet("/{id}/dashboard", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetMemberGroupDashboardQuery(id)).ConfigureAwait(false);
                 return Results.Ok(response);

@@ -8,7 +8,7 @@ public static class InventoryItemReduceStockEndpoint
     internal static RouteHandlerBuilder MapInventoryItemReduceStockEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/reduce-stock", async (DefaultIdType id, ReduceStockCommand request, ISender mediator) =>
+            .MapPost("/{id}/reduce-stock", async (DefaultIdType id, ReduceStockCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var itemId = await mediator.Send(command).ConfigureAwait(false);

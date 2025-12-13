@@ -63,7 +63,7 @@ public class InterestRateChangeEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveInterestRateChangeCommand command, ISender sender) =>
+        group.MapPost("/{id}/approve", async (DefaultIdType id, ApproveInterestRateChangeCommand command, ISender sender) =>
         {
             if (id != command.Id)
             {
@@ -78,7 +78,7 @@ public class InterestRateChangeEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectInterestRateChangeCommand command, ISender sender) =>
+        group.MapPost("/{id}/reject", async (DefaultIdType id, RejectInterestRateChangeCommand command, ISender sender) =>
         {
             if (id != command.Id)
             {
@@ -93,7 +93,7 @@ public class InterestRateChangeEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/apply", async (DefaultIdType id, ApplyInterestRateChangeCommand command, ISender sender) =>
+        group.MapPost("/{id}/apply", async (DefaultIdType id, ApplyInterestRateChangeCommand command, ISender sender) =>
         {
             if (id != command.Id)
             {
@@ -108,7 +108,7 @@ public class InterestRateChangeEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/cancel", async (DefaultIdType id, CancelInterestRateChangeCommand command, ISender sender) =>
+        group.MapPost("/{id}/cancel", async (DefaultIdType id, CancelInterestRateChangeCommand command, ISender sender) =>
         {
             if (id != command.Id)
             {

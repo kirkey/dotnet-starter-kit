@@ -8,7 +8,7 @@ public static class PostingBatchRejectEndpoint
     internal static RouteHandlerBuilder MapPostingBatchRejectEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectPostingBatchCommand request, ISender mediator) =>
+            .MapPost("/{id}/reject", async (DefaultIdType id, RejectPostingBatchCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var batchId = await mediator.Send(command).ConfigureAwait(false);

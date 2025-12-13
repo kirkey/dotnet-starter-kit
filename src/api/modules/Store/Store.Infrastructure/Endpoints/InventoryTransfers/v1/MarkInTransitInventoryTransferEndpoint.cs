@@ -7,7 +7,7 @@ public static class MarkInTransitInventoryTransferEndpoint
 {
     internal static RouteHandlerBuilder MapMarkInTransitInventoryTransferEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/in-transit", async (DefaultIdType id, MarkInTransitInventoryTransferCommand command, ISender sender) =>
+        return endpoints.MapPost("/{id}/in-transit", async (DefaultIdType id, MarkInTransitInventoryTransferCommand command, ISender sender) =>
         {
             if (id != command.Id) return Results.BadRequest("ID mismatch");
             var result = await sender.Send(command).ConfigureAwait(false);

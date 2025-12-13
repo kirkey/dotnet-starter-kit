@@ -61,7 +61,7 @@ public class UssdSessionEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/complete", async (DefaultIdType id, CompleteUssdSessionRequest request, ISender sender) =>
+        group.MapPost("/{id}/complete", async (DefaultIdType id, CompleteUssdSessionRequest request, ISender sender) =>
             {
                 var command = new CompleteUssdSessionCommand(id, request.FinalOutput);
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -73,7 +73,7 @@ public class UssdSessionEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/timeout", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/timeout", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new TimeoutUssdSessionCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -84,7 +84,7 @@ public class UssdSessionEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/cancel", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/cancel", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new CancelUssdSessionCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);

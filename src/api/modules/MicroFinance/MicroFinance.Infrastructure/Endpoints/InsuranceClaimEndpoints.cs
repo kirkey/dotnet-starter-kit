@@ -59,7 +59,7 @@ public class InsuranceClaimEndpoints : CarterModule
             .MapToApiVersion(1);
 
         // Claim Workflow
-        group.MapPost("/{id:guid}/review", async (DefaultIdType id, ReviewInsuranceClaimCommand command, ISender sender) =>
+        group.MapPost("/{id}/review", async (DefaultIdType id, ReviewInsuranceClaimCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -71,7 +71,7 @@ public class InsuranceClaimEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveInsuranceClaimCommand command, ISender sender) =>
+        group.MapPost("/{id}/approve", async (DefaultIdType id, ApproveInsuranceClaimCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -83,7 +83,7 @@ public class InsuranceClaimEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectInsuranceClaimCommand command, ISender sender) =>
+        group.MapPost("/{id}/reject", async (DefaultIdType id, RejectInsuranceClaimCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -95,7 +95,7 @@ public class InsuranceClaimEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/settle", async (DefaultIdType id, SettleInsuranceClaimCommand command, ISender sender) =>
+        group.MapPost("/{id}/settle", async (DefaultIdType id, SettleInsuranceClaimCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

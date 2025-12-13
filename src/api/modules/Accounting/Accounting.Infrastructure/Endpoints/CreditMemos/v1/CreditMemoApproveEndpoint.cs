@@ -8,7 +8,7 @@ public static class CreditMemoApproveEndpoint
     internal static RouteHandlerBuilder MapCreditMemoApproveEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveCreditMemoCommand command, ISender mediator) =>
+            .MapPost("/{id}/approve", async (DefaultIdType id, ApproveCreditMemoCommand command, ISender mediator) =>
             {
                 if (id != command.Id)
                     return Results.BadRequest("ID mismatch");

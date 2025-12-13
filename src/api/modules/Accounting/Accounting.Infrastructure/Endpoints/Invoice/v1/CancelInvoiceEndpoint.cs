@@ -14,7 +14,7 @@ public static class CancelInvoiceEndpoint
     internal static RouteHandlerBuilder MapCancelInvoiceEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/cancel", async (DefaultIdType id, [FromBody] CancelInvoiceCommand command, ISender mediator) =>
+            .MapPost("/{id}/cancel", async (DefaultIdType id, [FromBody] CancelInvoiceCommand command, ISender mediator) =>
             {
                 if (id != command.InvoiceId)
                 {

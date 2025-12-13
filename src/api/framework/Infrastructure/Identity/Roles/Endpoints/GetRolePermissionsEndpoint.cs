@@ -3,7 +3,7 @@ public static class GetRolePermissionsEndpoint
 {
     public static RouteHandlerBuilder MapGetRolePermissionsEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/{id:guid}/permissions", async (string id, IRoleService roleService, CancellationToken cancellationToken) =>
+        return endpoints.MapGet("/{id}/permissions", async (string id, IRoleService roleService, CancellationToken cancellationToken) =>
         {
             return await roleService.GetWithPermissionsAsync(id, cancellationToken).ConfigureAwait(false);
         })

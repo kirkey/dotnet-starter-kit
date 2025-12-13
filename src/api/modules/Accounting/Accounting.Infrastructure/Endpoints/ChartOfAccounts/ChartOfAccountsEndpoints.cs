@@ -20,10 +20,11 @@ public class ChartOfAccountsEndpoints() : CarterModule
 
         // CRUD operations
         group.MapChartOfAccountCreateEndpoint();
+        group.MapChartOfAccountSearchEndpoint();
+        // group.MapChartOfAccountDashboardEndpoint(); // DISABLED: Dashboard endpoints need separate implementation
         group.MapChartOfAccountGetEndpoint();
         group.MapChartOfAccountUpdateEndpoint();
         group.MapChartOfAccountDeleteEndpoint();
-        group.MapChartOfAccountSearchEndpoint();
 
         // Business operations
         group.MapChartOfAccountActivateEndpoint();
@@ -31,6 +32,5 @@ public class ChartOfAccountsEndpoints() : CarterModule
         group.MapChartOfAccountUpdateBalanceEndpoint();
         group.MapChartOfAccountImportEndpoint();
         group.MapChartOfAccountExportEndpoint();
-        group.MapChartOfAccountDashboardEndpoint();
     }
 }

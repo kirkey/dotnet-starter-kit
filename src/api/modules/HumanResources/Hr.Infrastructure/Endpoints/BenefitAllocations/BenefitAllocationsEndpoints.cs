@@ -57,7 +57,7 @@ public class BenefitAllocationsEndpoints() : CarterModule("humanresources")
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Benefits))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ICurrentUser currentUser, ISender mediator) =>
+        group.MapPost("/{id}/approve", async (DefaultIdType id, ICurrentUser currentUser, ISender mediator) =>
             {
                 var request = new ApproveBenefitAllocationCommand(id, currentUser.GetUserId());
                 var response = await mediator.Send(request).ConfigureAwait(false);

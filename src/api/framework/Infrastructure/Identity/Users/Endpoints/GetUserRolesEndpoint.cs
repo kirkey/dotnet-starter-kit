@@ -3,7 +3,7 @@ public static class GetUserRolesEndpoint
 {
     internal static RouteHandlerBuilder MapGetUserRolesEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/{id:guid}/roles", (string id, IUserService service) =>
+        return endpoints.MapGet("/{id}/roles", (string id, IUserService service) =>
         {
             return service.GetUserRolesAsync(id, CancellationToken.None);
         })

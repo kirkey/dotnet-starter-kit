@@ -47,7 +47,7 @@ public class StaffTrainingEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/start", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/start", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new StartStaffTrainingCommand(id));
             return Results.Ok(result);
@@ -58,7 +58,7 @@ public class StaffTrainingEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/complete", async (DefaultIdType id, CompleteTrainingRequest request, ISender sender) =>
+        group.MapPost("/{id}/complete", async (DefaultIdType id, CompleteTrainingRequest request, ISender sender) =>
         {
             var command = new CompleteStaffTrainingCommand(id, request.Score, request.CompletionDate);
             var result = await sender.Send(command);
@@ -70,7 +70,7 @@ public class StaffTrainingEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/certificate", async (DefaultIdType id, IssueCertificateCommand command, ISender sender) =>
+        group.MapPost("/{id}/certificate", async (DefaultIdType id, IssueCertificateCommand command, ISender sender) =>
         {
             var cmd = command with { Id = id };
             var result = await sender.Send(cmd);
@@ -82,7 +82,7 @@ public class StaffTrainingEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/cancel", async (DefaultIdType id, CancelTrainingRequest? request, ISender sender) =>
+        group.MapPost("/{id}/cancel", async (DefaultIdType id, CancelTrainingRequest? request, ISender sender) =>
         {
             var command = new CancelStaffTrainingCommand(id, request?.Reason);
             var result = await sender.Send(command);

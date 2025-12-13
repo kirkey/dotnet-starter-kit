@@ -11,7 +11,7 @@ public static class ApAccountRecordDiscountLostEndpoint
     internal static RouteHandlerBuilder MapApAccountRecordDiscountLostEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/discounts-lost", async (DefaultIdType id, RecordAPDiscountLostCommand command, ISender mediator) =>
+            .MapPost("/{id}/discounts-lost", async (DefaultIdType id, RecordAPDiscountLostCommand command, ISender mediator) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
                 var accountId = await mediator.Send(command).ConfigureAwait(false);

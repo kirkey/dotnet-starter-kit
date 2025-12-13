@@ -8,7 +8,7 @@ public static class DebitMemoApplyEndpoint
     internal static RouteHandlerBuilder MapDebitMemoApplyEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/apply", async (DefaultIdType id, ApplyDebitMemoCommand command, ISender mediator) =>
+            .MapPost("/{id}/apply", async (DefaultIdType id, ApplyDebitMemoCommand command, ISender mediator) =>
             {
                 if (id != command.Id)
                     return Results.BadRequest("ID mismatch");

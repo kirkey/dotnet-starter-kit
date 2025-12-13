@@ -56,7 +56,7 @@ public class ReportGenerationEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/cancel", async (DefaultIdType id, CancelReportGenerationCommand command, ISender sender) =>
+        group.MapPost("/{id}/cancel", async (DefaultIdType id, CancelReportGenerationCommand command, ISender sender) =>
             {
                 if (id != command.Id)
                     return Results.BadRequest("ID mismatch");

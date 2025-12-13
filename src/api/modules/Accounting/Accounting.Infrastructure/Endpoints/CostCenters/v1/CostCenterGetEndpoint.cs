@@ -9,7 +9,7 @@ public static class CostCenterGetEndpoint
     internal static RouteHandlerBuilder MapCostCenterGetEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+            .MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
             {
                 var response = await mediator.Send(new GetCostCenterRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);

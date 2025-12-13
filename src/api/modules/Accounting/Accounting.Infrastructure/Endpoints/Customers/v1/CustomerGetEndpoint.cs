@@ -15,7 +15,7 @@ public static class CustomerGetEndpoint
     internal static RouteHandlerBuilder MapCustomerGetEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id:guid}", async (DefaultIdType id, ISender mediator) =>
+            .MapGet("/{id}", async (DefaultIdType id, ISender mediator) =>
             {
                 var response = await mediator.Send(new GetCustomerRequest(id)).ConfigureAwait(false);
                 return Results.Ok(response);

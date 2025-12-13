@@ -347,7 +347,7 @@ public static class DebitMemoApproveEndpoint
     internal static RouteHandlerBuilder MapDebitMemoApproveEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveDebitMemoCommand command, ISender mediator) =>
+            .MapPost("/{id}/approve", async (DefaultIdType id, ApproveDebitMemoCommand command, ISender mediator) =>
             {
                 if (id != command.Id)
                     return Results.BadRequest("ID mismatch");
@@ -366,7 +366,7 @@ public static class DebitMemoApproveEndpoint
 ```
 
 **Pattern for Specialized Operations:**
-- ✅ RESTful action route: `/{id:guid}/{action}`
+- ✅ RESTful action route: `/{id}/{action}`
 - ✅ Route parameter validation (id must match command id)
 - ✅ Command record for operation parameters
 - ✅ Returns Ok() for successful operations

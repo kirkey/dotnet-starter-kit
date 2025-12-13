@@ -41,7 +41,7 @@ public class CreditBureauInquiryEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/complete", async (DefaultIdType id, CompleteInquiryRequest request, ISender sender) =>
+        group.MapPost("/{id}/complete", async (DefaultIdType id, CompleteInquiryRequest request, ISender sender) =>
         {
             var result = await sender.Send(new CompleteInquiryCommand(
                 id,

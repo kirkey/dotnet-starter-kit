@@ -19,10 +19,11 @@ public class VendorsEndpoints() : CarterModule
         var group = app.MapGroup("accounting/vendors").WithTags("vendor");
 
         group.MapVendorCreateEndpoint();
+        group.MapVendorSearchEndpoint();
+        // group.MapVendorDashboardEndpoint(); // DISABLED: Dashboard endpoints need separate implementation
         group.MapVendorDeleteEndpoint();
         group.MapVendorGetEndpoint();
-        group.MapVendorSearchEndpoint();
+        group.MapVendorUpdateEndpoint();
         // group.MapVendorActivateEndpoint();
-        group.MapVendorDashboardEndpoint();
     }
 }

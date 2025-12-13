@@ -8,7 +8,7 @@ public static class PostingBatchApproveEndpoint
     internal static RouteHandlerBuilder MapPostingBatchApproveEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/approve", async (DefaultIdType id, ApprovePostingBatchCommand request, ISender mediator) =>
+            .MapPost("/{id}/approve", async (DefaultIdType id, ApprovePostingBatchCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var batchId = await mediator.Send(command).ConfigureAwait(false);

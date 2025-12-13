@@ -7,7 +7,7 @@ public static class ApproveInventoryTransferEndpoint
 {
     internal static RouteHandlerBuilder MapApproveInventoryTransferEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveInventoryTransferCommand command, ISender sender) =>
+        return endpoints.MapPost("/{id}/approve", async (DefaultIdType id, ApproveInventoryTransferCommand command, ISender sender) =>
         {
             if (id != command.Id) return Results.BadRequest("ID mismatch");
             var result = await sender.Send(command).ConfigureAwait(false);

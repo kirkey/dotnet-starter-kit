@@ -14,7 +14,7 @@ public static class MarkInvoiceAsPaidEndpoint
     internal static RouteHandlerBuilder MapMarkInvoiceAsPaidEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/mark-paid", async (DefaultIdType id, [FromBody] MarkInvoiceAsPaidCommand command, ISender mediator) =>
+            .MapPost("/{id}/mark-paid", async (DefaultIdType id, [FromBody] MarkInvoiceAsPaidCommand command, ISender mediator) =>
             {
                 if (id != command.InvoiceId)
                 {

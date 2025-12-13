@@ -12,7 +12,7 @@ public static class ApproveBenefitAllocationEndpoint
     internal static RouteHandlerBuilder MapApproveBenefitAllocationEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/approve", async (DefaultIdType id, ICurrentUser currentUser, ISender mediator) =>
+            .MapPost("/{id}/approve", async (DefaultIdType id, ICurrentUser currentUser, ISender mediator) =>
             {
                 var request = new ApproveBenefitAllocationCommand(id, currentUser.GetUserId());
                 var response = await mediator.Send(request).ConfigureAwait(false);

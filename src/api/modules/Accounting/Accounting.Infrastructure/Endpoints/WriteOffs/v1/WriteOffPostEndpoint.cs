@@ -8,7 +8,7 @@ public static class WriteOffPostEndpoint
     internal static RouteHandlerBuilder MapWriteOffPostEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/post", async (DefaultIdType id, PostWriteOffCommand request, ISender mediator) =>
+            .MapPost("/{id}/post", async (DefaultIdType id, PostWriteOffCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var writeOffId = await mediator.Send(command).ConfigureAwait(false);

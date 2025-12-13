@@ -8,7 +8,7 @@ public static class CostCenterDashboardEndpoint
     internal static RouteHandlerBuilder MapCostCenterDashboardEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id:guid}/dashboard", async (DefaultIdType id, ISender mediator) =>
+            .MapGet("/by-id/{id}/dashboard", async (DefaultIdType id, ISender mediator) =>
             {
                 var response = await mediator.Send(new GetCostCenterDashboardQuery(id)).ConfigureAwait(false);
                 return Results.Ok(response);

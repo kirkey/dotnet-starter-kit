@@ -8,7 +8,7 @@ public static class RetainedEarningsCloseEndpoint
     internal static RouteHandlerBuilder MapRetainedEarningsCloseEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/close", async (DefaultIdType id, CloseRetainedEarningsCommand request, ISender mediator) =>
+            .MapPost("/{id}/close", async (DefaultIdType id, CloseRetainedEarningsCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var reId = await mediator.Send(command).ConfigureAwait(false);

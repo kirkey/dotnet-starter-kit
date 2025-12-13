@@ -99,7 +99,7 @@ public class GroupMembershipEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        membershipsGroup.MapPut("/{id:guid}/role", async (DefaultIdType id, UpdateMembershipRoleCommand command, ISender mediator) =>
+        membershipsGroup.MapPut("/{id}/role", async (DefaultIdType id, UpdateMembershipRoleCommand command, ISender mediator) =>
         {
             if (id != command.Id) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);
@@ -111,7 +111,7 @@ public class GroupMembershipEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        membershipsGroup.MapPost("/{id:guid}/withdraw", async (DefaultIdType id, WithdrawMembershipCommand command, ISender mediator) =>
+        membershipsGroup.MapPost("/{id}/withdraw", async (DefaultIdType id, WithdrawMembershipCommand command, ISender mediator) =>
         {
             if (id != command.Id) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);
@@ -123,7 +123,7 @@ public class GroupMembershipEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Withdraw, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        membershipsGroup.MapPost("/{id:guid}/suspend", async (DefaultIdType id, ISender mediator) =>
+        membershipsGroup.MapPost("/{id}/suspend", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new SuspendMembershipCommand(id));
             return Results.Ok(response);
@@ -134,7 +134,7 @@ public class GroupMembershipEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        membershipsGroup.MapPost("/{id:guid}/reactivate", async (DefaultIdType id, ISender mediator) =>
+        membershipsGroup.MapPost("/{id}/reactivate", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new ReactivateMembershipCommand(id));
             return Results.Ok(response);

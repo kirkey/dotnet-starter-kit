@@ -8,7 +8,7 @@ public static class AddGoodsReceiptItemEndpoint
     internal static RouteHandlerBuilder MapAddGoodsReceiptItemEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/items", async (DefaultIdType id, AddGoodsReceiptItemCommand request, ISender sender) =>
+            .MapPost("/{id}/items", async (DefaultIdType id, AddGoodsReceiptItemCommand request, ISender sender) =>
             {
                 if (id != request.GoodsReceiptId)
                 {

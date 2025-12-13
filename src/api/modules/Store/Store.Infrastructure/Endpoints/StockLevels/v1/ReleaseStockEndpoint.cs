@@ -8,7 +8,7 @@ public static class ReleaseStockEndpoint
     internal static RouteHandlerBuilder MapReleaseStockEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/release", async (DefaultIdType id, ReleaseStockCommand request, ISender sender) =>
+            .MapPost("/{id}/release", async (DefaultIdType id, ReleaseStockCommand request, ISender sender) =>
             {
                 if (id != request.StockLevelId)
                 {

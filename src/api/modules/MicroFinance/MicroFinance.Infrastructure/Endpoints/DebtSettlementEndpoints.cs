@@ -43,7 +43,7 @@ public class DebtSettlementEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveSettlementRequest request, ISender sender) =>
+        group.MapPost("/{id}/approve", async (DefaultIdType id, ApproveSettlementRequest request, ISender sender) =>
         {
             var result = await sender.Send(new ApproveSettlementCommand(id, request.ApprovedById)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -54,7 +54,7 @@ public class DebtSettlementEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/record-payment", async (DefaultIdType id, SettlementPaymentRequest request, ISender sender) =>
+        group.MapPost("/{id}/record-payment", async (DefaultIdType id, SettlementPaymentRequest request, ISender sender) =>
         {
             var result = await sender.Send(new RecordSettlementPaymentCommand(id, request.Amount)).ConfigureAwait(false);
             return Results.Ok(result);

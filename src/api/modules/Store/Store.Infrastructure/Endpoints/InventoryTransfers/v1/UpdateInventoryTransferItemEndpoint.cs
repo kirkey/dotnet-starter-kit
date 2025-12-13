@@ -13,7 +13,7 @@ public static class UpdateInventoryTransferItemEndpoint
     /// </summary>
     internal static RouteHandlerBuilder MapUpdateInventoryTransferItemEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPut("/{id:guid}/items/{itemId:guid}", async (DefaultIdType id, DefaultIdType itemId, UpdateInventoryTransferItemCommand request, ISender sender) =>
+        return endpoints.MapPut("/{id}/items/{itemId:guid}", async (DefaultIdType id, DefaultIdType itemId, UpdateInventoryTransferItemCommand request, ISender sender) =>
         {
             var command = request with { InventoryTransferId = id, ItemId = itemId };
             var result = await sender.Send(command).ConfigureAwait(false);

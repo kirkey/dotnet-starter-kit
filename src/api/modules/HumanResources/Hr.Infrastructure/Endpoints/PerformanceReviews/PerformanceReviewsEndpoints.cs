@@ -71,7 +71,7 @@ public class PerformanceReviewsEndpoints() : CarterModule("humanresources")
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/submit", async (DefaultIdType id, ISender mediator) =>
+        group.MapPost("/{id}/submit", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new SubmitPerformanceReviewCommand(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);
@@ -84,7 +84,7 @@ public class PerformanceReviewsEndpoints() : CarterModule("humanresources")
             .RequirePermission(FshPermission.NameFor(FshActions.Submit, FshResources.Employees))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/acknowledge", async (DefaultIdType id, ISender mediator) =>
+        group.MapPost("/{id}/acknowledge", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new AcknowledgePerformanceReviewCommand(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);
@@ -97,7 +97,7 @@ public class PerformanceReviewsEndpoints() : CarterModule("humanresources")
             .RequirePermission(FshPermission.NameFor(FshActions.Acknowledge, FshResources.Employees))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/complete", async (DefaultIdType id, ISender mediator) =>
+        group.MapPost("/{id}/complete", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new CompletePerformanceReviewCommand(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);

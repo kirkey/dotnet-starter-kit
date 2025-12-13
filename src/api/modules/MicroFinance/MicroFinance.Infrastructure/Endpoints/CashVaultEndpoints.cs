@@ -53,7 +53,7 @@ public class CashVaultEndpoints : CarterModule
             .MapToApiVersion(1);
 
         // Cash Operations
-        group.MapPost("/{id:guid}/deposit", async (DefaultIdType id, DepositCashCommand command, ISender sender) =>
+        group.MapPost("/{id}/deposit", async (DefaultIdType id, DepositCashCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -65,7 +65,7 @@ public class CashVaultEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Deposit, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/withdraw", async (DefaultIdType id, WithdrawCashCommand command, ISender sender) =>
+        group.MapPost("/{id}/withdraw", async (DefaultIdType id, WithdrawCashCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -78,7 +78,7 @@ public class CashVaultEndpoints : CarterModule
             .MapToApiVersion(1);
 
         // Day Operations
-        group.MapPost("/{id:guid}/open-day", async (DefaultIdType id, OpenDayCommand command, ISender sender) =>
+        group.MapPost("/{id}/open-day", async (DefaultIdType id, OpenDayCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -90,7 +90,7 @@ public class CashVaultEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reconcile", async (DefaultIdType id, ReconcileCashVaultCommand command, ISender sender) =>
+        group.MapPost("/{id}/reconcile", async (DefaultIdType id, ReconcileCashVaultCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -102,7 +102,7 @@ public class CashVaultEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/close-day", async (DefaultIdType id, CloseDayCashVaultCommand command, ISender sender) =>
+        group.MapPost("/{id}/close-day", async (DefaultIdType id, CloseDayCashVaultCommand command, ISender sender) =>
             {
                 if (id != command.CashVaultId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

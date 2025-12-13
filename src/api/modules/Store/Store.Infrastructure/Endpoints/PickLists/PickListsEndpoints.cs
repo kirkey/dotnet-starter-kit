@@ -43,7 +43,7 @@ public class PickListsEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Add item to pick list
-        group.MapPost("/{id:guid}/items", async (DefaultIdType id, AddPickListItemCommand request, ISender sender) =>
+        group.MapPost("/{id}/items", async (DefaultIdType id, AddPickListItemCommand request, ISender sender) =>
         {
             if (id != request.PickListId)
             {
@@ -63,7 +63,7 @@ public class PickListsEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Assign pick list to picker
-        group.MapPost("/{id:guid}/assign", async (DefaultIdType id, AssignPickListCommand request, ISender sender) =>
+        group.MapPost("/{id}/assign", async (DefaultIdType id, AssignPickListCommand request, ISender sender) =>
         {
             if (id != request.PickListId)
             {
@@ -81,7 +81,7 @@ public class PickListsEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Start picking
-        group.MapPost("/{id:guid}/start", async (DefaultIdType id, StartPickingCommand request, ISender sender) =>
+        group.MapPost("/{id}/start", async (DefaultIdType id, StartPickingCommand request, ISender sender) =>
         {
             if (id != request.PickListId)
             {
@@ -99,7 +99,7 @@ public class PickListsEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Complete picking
-        group.MapPost("/{id:guid}/complete", async (DefaultIdType id, CompletePickingCommand request, ISender sender) =>
+        group.MapPost("/{id}/complete", async (DefaultIdType id, CompletePickingCommand request, ISender sender) =>
         {
             if (id != request.PickListId)
             {

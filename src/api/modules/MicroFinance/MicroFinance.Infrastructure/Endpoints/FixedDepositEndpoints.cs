@@ -67,7 +67,7 @@ public class FixedDepositEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        fixedDepositsGroup.MapPost("/{id:guid}/post-interest", async (DefaultIdType id, PostFixedDepositInterestCommand command, ISender mediator) =>
+        fixedDepositsGroup.MapPost("/{id}/post-interest", async (DefaultIdType id, PostFixedDepositInterestCommand command, ISender mediator) =>
         {
             if (id != command.DepositId) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);
@@ -79,7 +79,7 @@ public class FixedDepositEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Post, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        fixedDepositsGroup.MapPost("/{id:guid}/pay-interest", async (DefaultIdType id, PayFixedDepositInterestCommand command, ISender mediator) =>
+        fixedDepositsGroup.MapPost("/{id}/pay-interest", async (DefaultIdType id, PayFixedDepositInterestCommand command, ISender mediator) =>
         {
             if (id != command.DepositId) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);
@@ -91,7 +91,7 @@ public class FixedDepositEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        fixedDepositsGroup.MapPost("/{id:guid}/mature", async (DefaultIdType id, ISender mediator) =>
+        fixedDepositsGroup.MapPost("/{id}/mature", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new MatureFixedDepositCommand(id));
             return Results.Ok(response);
@@ -102,7 +102,7 @@ public class FixedDepositEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Mature, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        fixedDepositsGroup.MapPost("/{id:guid}/renew", async (DefaultIdType id, ISender mediator) =>
+        fixedDepositsGroup.MapPost("/{id}/renew", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new RenewFixedDepositCommand(id));
             return Results.Ok(response);
@@ -113,7 +113,7 @@ public class FixedDepositEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Renew, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        fixedDepositsGroup.MapPost("/{id:guid}/close-premature", async (DefaultIdType id, ClosePrematureFixedDepositCommand command, ISender mediator) =>
+        fixedDepositsGroup.MapPost("/{id}/close-premature", async (DefaultIdType id, ClosePrematureFixedDepositCommand command, ISender mediator) =>
         {
             if (id != command.DepositId) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);
@@ -125,7 +125,7 @@ public class FixedDepositEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        fixedDepositsGroup.MapPut("/{id:guid}/maturity-instruction", async (DefaultIdType id, UpdateMaturityInstructionCommand command, ISender mediator) =>
+        fixedDepositsGroup.MapPut("/{id}/maturity-instruction", async (DefaultIdType id, UpdateMaturityInstructionCommand command, ISender mediator) =>
         {
             if (id != command.DepositId) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);

@@ -56,7 +56,7 @@ public class LegalActionEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/file-case", async (DefaultIdType id, FileCaseRequest request, ISender sender) =>
+        group.MapPost("/{id}/file-case", async (DefaultIdType id, FileCaseRequest request, ISender sender) =>
         {
             var command = new FileCaseCommand(id, request.FiledDate, request.CaseReference, request.CourtName, request.CourtFees);
             var result = await sender.Send(command).ConfigureAwait(false);

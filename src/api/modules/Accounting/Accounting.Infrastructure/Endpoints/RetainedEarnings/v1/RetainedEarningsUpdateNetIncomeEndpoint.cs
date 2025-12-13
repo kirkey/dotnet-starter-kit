@@ -8,7 +8,7 @@ public static class RetainedEarningsUpdateNetIncomeEndpoint
     internal static RouteHandlerBuilder MapRetainedEarningsUpdateNetIncomeEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/net-income", async (DefaultIdType id, UpdateNetIncomeCommand request, ISender mediator) =>
+            .MapPut("/{id}/net-income", async (DefaultIdType id, UpdateNetIncomeCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var reId = await mediator.Send(command).ConfigureAwait(false);

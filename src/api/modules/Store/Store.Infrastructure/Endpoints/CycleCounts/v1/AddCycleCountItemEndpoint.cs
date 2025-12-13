@@ -6,7 +6,7 @@ public static class AddCycleCountItemEndpoint
 {
     internal static RouteHandlerBuilder MapAddCycleCountItemEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/items", async (DefaultIdType id, AddCycleCountItemCommand command, ISender sender) =>
+        return endpoints.MapPost("/{id}/items", async (DefaultIdType id, AddCycleCountItemCommand command, ISender sender) =>
         {
             if (id != command.CycleCountId) return Results.BadRequest("ID mismatch");
             var result = await sender.Send(command).ConfigureAwait(false);

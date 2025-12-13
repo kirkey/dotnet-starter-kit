@@ -45,7 +45,7 @@ public class LoanDisbursementTrancheEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/verify-milestone", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/verify-milestone", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new VerifyMilestoneCommand(id));
             return Results.Ok(result);
@@ -56,7 +56,7 @@ public class LoanDisbursementTrancheEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveTrancheRequest request, ISender sender) =>
+        group.MapPost("/{id}/approve", async (DefaultIdType id, ApproveTrancheRequest request, ISender sender) =>
         {
             var command = new ApproveTrancheCommand(id, request.UserId);
             var result = await sender.Send(command);
@@ -68,7 +68,7 @@ public class LoanDisbursementTrancheEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/disburse", async (DefaultIdType id, DisburseTrancheRequest request, ISender sender) =>
+        group.MapPost("/{id}/disburse", async (DefaultIdType id, DisburseTrancheRequest request, ISender sender) =>
         {
             var command = new DisburseTrancheCommand(id, request.UserId, request.ReferenceNumber, request.DisbursedDate);
             var result = await sender.Send(command);

@@ -8,7 +8,7 @@ public static class WriteOffApproveEndpoint
     internal static RouteHandlerBuilder MapWriteOffApproveEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveWriteOffCommand request, ISender mediator) =>
+            .MapPost("/{id}/approve", async (DefaultIdType id, ApproveWriteOffCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var writeOffId = await mediator.Send(command).ConfigureAwait(false);

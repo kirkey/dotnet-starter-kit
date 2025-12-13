@@ -57,7 +57,7 @@ public class FeePaymentEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reverse", async (DefaultIdType id, ReverseFeePaymentCommand command, ISender sender) =>
+        group.MapPost("/{id}/reverse", async (DefaultIdType id, ReverseFeePaymentCommand command, ISender sender) =>
         {
             if (id != command.Id)
             {

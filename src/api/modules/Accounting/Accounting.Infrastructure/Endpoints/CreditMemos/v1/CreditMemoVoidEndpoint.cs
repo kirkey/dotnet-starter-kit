@@ -8,7 +8,7 @@ public static class CreditMemoVoidEndpoint
     internal static RouteHandlerBuilder MapCreditMemoVoidEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/void", async (DefaultIdType id, VoidCreditMemoCommand command, ISender mediator) =>
+            .MapPost("/{id}/void", async (DefaultIdType id, VoidCreditMemoCommand command, ISender mediator) =>
             {
                 if (id != command.Id)
                     return Results.BadRequest("ID mismatch");

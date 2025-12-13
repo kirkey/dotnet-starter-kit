@@ -8,7 +8,7 @@ public static class ArAccountUpdateAllowanceEndpoint
     internal static RouteHandlerBuilder MapArAccountUpdateAllowanceEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/allowance", async (DefaultIdType id, UpdateARAllowanceCommand request, ISender mediator) =>
+            .MapPut("/{id}/allowance", async (DefaultIdType id, UpdateARAllowanceCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var accountId = await mediator.Send(command).ConfigureAwait(false);

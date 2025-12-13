@@ -11,7 +11,7 @@ public static class ReverseSalesImportEndpoint
     internal static RouteHandlerBuilder MapReverseSalesImportEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/reverse", async (Guid id, ReverseSalesImportCommand request, ISender mediator) =>
+            .MapPost("/{id}/reverse", async (Guid id, ReverseSalesImportCommand request, ISender mediator) =>
             {
                 if (id != request.Id)
                 {

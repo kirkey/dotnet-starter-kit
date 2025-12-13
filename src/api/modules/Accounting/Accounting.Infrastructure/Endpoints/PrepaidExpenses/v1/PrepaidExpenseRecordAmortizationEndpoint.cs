@@ -8,7 +8,7 @@ public static class PrepaidExpenseRecordAmortizationEndpoint
     internal static RouteHandlerBuilder MapPrepaidExpenseRecordAmortizationEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/amortization", async (DefaultIdType id, RecordAmortizationCommand request, ISender mediator) =>
+            .MapPost("/{id}/amortization", async (DefaultIdType id, RecordAmortizationCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var expenseId = await mediator.Send(command).ConfigureAwait(false);

@@ -41,7 +41,7 @@ public class CommunicationLogEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/delivered", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/delivered", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new MarkCommunicationDeliveredCommand(id));
             return Results.Ok(result);

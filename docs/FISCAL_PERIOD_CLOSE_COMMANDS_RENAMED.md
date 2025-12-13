@@ -144,7 +144,7 @@ public static class AddValidationIssueEndpoint
 {
     internal static RouteHandlerBuilder MapAddValidationIssueEndpoint(...)
     {
-        return endpoints.MapPost("/{id:guid}/validation-issues", 
+        return endpoints.MapPost("/{id}/validation-issues", 
             async (DefaultIdType id, AddValidationIssueCommand command, ISender mediator) => ...)
             .WithSummary("Add a validation issue")
     }
@@ -155,7 +155,7 @@ public static class AddFiscalPeriodCloseValidationIssueEndpoint
 {
     internal static RouteHandlerBuilder MapAddFiscalPeriodCloseValidationIssueEndpoint(...)
     {
-        return endpoints.MapPost("/{id:guid}/validation-issues", 
+        return endpoints.MapPost("/{id}/validation-issues", 
             async (DefaultIdType id, AddFiscalPeriodCloseValidationIssueCommand command, ISender mediator) => ...)
             .WithSummary("Add a validation issue to fiscal period close")
     }
@@ -169,7 +169,7 @@ public static class ResolveValidationIssueEndpoint
 {
     internal static RouteHandlerBuilder MapResolveValidationIssueEndpoint(...)
     {
-        return endpoints.MapPut("/{id:guid}/validation-issues/resolve", 
+        return endpoints.MapPut("/{id}/validation-issues/resolve", 
             async (DefaultIdType id, ResolveValidationIssueCommand command, ISender mediator) => ...)
             .WithSummary("Resolve a validation issue")
     }
@@ -180,7 +180,7 @@ public static class ResolveFiscalPeriodCloseValidationIssueEndpoint
 {
     internal static RouteHandlerBuilder MapResolveFiscalPeriodCloseValidationIssueEndpoint(...)
     {
-        return endpoints.MapPut("/{id:guid}/validation-issues/resolve", 
+        return endpoints.MapPut("/{id}/validation-issues/resolve", 
             async (DefaultIdType id, ResolveFiscalPeriodCloseValidationIssueCommand command, ISender mediator) => ...)
             .WithSummary("Resolve a fiscal period close validation issue")
     }

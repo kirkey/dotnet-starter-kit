@@ -10,7 +10,7 @@ public static class UpdateCostCenterBudgetEndpoint
 {
     internal static RouteHandlerBuilder MapUpdateCostCenterBudgetEndpoint(this IEndpointRouteBuilder app)
     {
-        return app.MapPut("/{id:guid}/budget", async (DefaultIdType id, UpdateCostCenterBudgetCommand command, ISender mediator) =>
+        return app.MapPut("/{id}/budget", async (DefaultIdType id, UpdateCostCenterBudgetCommand command, ISender mediator) =>
             {
                 if (id != command.Id)
                     return Results.BadRequest("ID mismatch");

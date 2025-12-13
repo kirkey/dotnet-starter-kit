@@ -13,7 +13,7 @@ internal static class ReceivePurchaseOrderItemQuantityEndpoint
     /// </summary>
     internal static RouteHandlerBuilder MapReceivePurchaseOrderItemQuantityEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPut("/{id:guid}/items/{itemId:guid}/receive", async (DefaultIdType id, DefaultIdType itemId, ReceivePurchaseOrderItemQuantityCommand request, ISender sender) =>
+        return endpoints.MapPut("/{id}/items/{itemId:guid}/receive", async (DefaultIdType id, DefaultIdType itemId, ReceivePurchaseOrderItemQuantityCommand request, ISender sender) =>
         {
             var command = request with { PurchaseOrderItemId = itemId };
             await sender.Send(command).ConfigureAwait(false);

@@ -14,7 +14,7 @@ public static class ApplyInvoicePaymentEndpoint
     internal static RouteHandlerBuilder MapApplyInvoicePaymentEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/apply-payment", async (DefaultIdType id, [FromBody] ApplyInvoicePaymentCommand command, ISender mediator) =>
+            .MapPost("/{id}/apply-payment", async (DefaultIdType id, [FromBody] ApplyInvoicePaymentCommand command, ISender mediator) =>
             {
                 if (id != command.InvoiceId)
                 {

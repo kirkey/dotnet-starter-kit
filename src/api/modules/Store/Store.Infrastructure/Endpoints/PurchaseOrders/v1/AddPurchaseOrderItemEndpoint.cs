@@ -13,7 +13,7 @@ internal static class AddPurchaseOrderItemEndpoint
     /// </summary>
     internal static RouteHandlerBuilder MapAddPurchaseOrderItemEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/items", async (DefaultIdType id, AddPurchaseOrderItemCommand request, ISender sender) =>
+        return endpoints.MapPost("/{id}/items", async (DefaultIdType id, AddPurchaseOrderItemCommand request, ISender sender) =>
         {
             // Attach the path purchase order id to the command and forward to MediatR
             var command = request with { PurchaseOrderId = id };

@@ -50,7 +50,7 @@ public class AmlAlertEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/assign", async (DefaultIdType id, AssignAmlAlertRequest request, ISender sender) =>
+        group.MapPost("/{id}/assign", async (DefaultIdType id, AssignAmlAlertRequest request, ISender sender) =>
         {
             var result = await sender.Send(new AssignAmlAlertCommand(id, request.AssignedToId)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -61,7 +61,7 @@ public class AmlAlertEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/escalate", async (DefaultIdType id, EscalateAmlAlertRequest request, ISender sender) =>
+        group.MapPost("/{id}/escalate", async (DefaultIdType id, EscalateAmlAlertRequest request, ISender sender) =>
         {
             var result = await sender.Send(new EscalateAmlAlertCommand(id, request.Reason)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -72,7 +72,7 @@ public class AmlAlertEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/clear", async (DefaultIdType id, ClearAmlAlertRequest request, ISender sender) =>
+        group.MapPost("/{id}/clear", async (DefaultIdType id, ClearAmlAlertRequest request, ISender sender) =>
         {
             var result = await sender.Send(new ClearAmlAlertCommand(id, request.ResolvedById, request.Notes)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -83,7 +83,7 @@ public class AmlAlertEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/confirm", async (DefaultIdType id, ConfirmAmlAlertRequest request, ISender sender) =>
+        group.MapPost("/{id}/confirm", async (DefaultIdType id, ConfirmAmlAlertRequest request, ISender sender) =>
         {
             var result = await sender.Send(new ConfirmAmlAlertCommand(id, request.ResolvedById, request.Notes)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -94,7 +94,7 @@ public class AmlAlertEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/file-sar", async (DefaultIdType id, FileSarAmlAlertRequest request, ISender sender) =>
+        group.MapPost("/{id}/file-sar", async (DefaultIdType id, FileSarAmlAlertRequest request, ISender sender) =>
         {
             var result = await sender.Send(new FileSarAmlAlertCommand(id, request.SarReference, request.FiledDate)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -105,7 +105,7 @@ public class AmlAlertEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/close", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/close", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new CloseAmlAlertCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);

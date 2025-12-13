@@ -87,7 +87,7 @@ public class PayrollsEndpoints() : CarterModule("humanresources")
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Payroll))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/process", async (DefaultIdType id, ISender mediator) =>
+        group.MapPost("/{id}/process", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new ProcessPayrollCommand(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);
@@ -100,7 +100,7 @@ public class PayrollsEndpoints() : CarterModule("humanresources")
             .RequirePermission(FshPermission.NameFor(FshActions.Process, FshResources.Payroll))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/complete-processing", async (DefaultIdType id, ISender mediator) =>
+        group.MapPost("/{id}/complete-processing", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new CompletePayrollProcessingCommand(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);

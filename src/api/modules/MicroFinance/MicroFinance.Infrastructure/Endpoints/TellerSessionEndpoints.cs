@@ -54,7 +54,7 @@ public class TellerSessionEndpoints : CarterModule
             .MapToApiVersion(1);
 
         // Transaction Recording
-        group.MapPost("/{id:guid}/cash-in", async (DefaultIdType id, RecordCashInCommand command, ISender sender) =>
+        group.MapPost("/{id}/cash-in", async (DefaultIdType id, RecordCashInCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -66,7 +66,7 @@ public class TellerSessionEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Deposit, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/cash-out", async (DefaultIdType id, RecordCashOutCommand command, ISender sender) =>
+        group.MapPost("/{id}/cash-out", async (DefaultIdType id, RecordCashOutCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -79,7 +79,7 @@ public class TellerSessionEndpoints : CarterModule
             .MapToApiVersion(1);
 
         // Session Pause & Resume
-        group.MapPost("/{id:guid}/pause", async (DefaultIdType id, PauseTellerSessionCommand command, ISender sender) =>
+        group.MapPost("/{id}/pause", async (DefaultIdType id, PauseTellerSessionCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -91,7 +91,7 @@ public class TellerSessionEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/resume", async (DefaultIdType id, ResumeTellerSessionCommand command, ISender sender) =>
+        group.MapPost("/{id}/resume", async (DefaultIdType id, ResumeTellerSessionCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -104,7 +104,7 @@ public class TellerSessionEndpoints : CarterModule
             .MapToApiVersion(1);
 
         // Session Close & Verification
-        group.MapPost("/{id:guid}/close", async (DefaultIdType id, CloseTellerSessionCommand command, ISender sender) =>
+        group.MapPost("/{id}/close", async (DefaultIdType id, CloseTellerSessionCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -116,7 +116,7 @@ public class TellerSessionEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/verify", async (DefaultIdType id, VerifyTellerSessionCommand command, ISender sender) =>
+        group.MapPost("/{id}/verify", async (DefaultIdType id, VerifyTellerSessionCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -141,7 +141,7 @@ public class TellerSessionEndpoints : CarterModule
             .MapToApiVersion(1);
 
         // Cash Transfer
-        group.MapPost("/{id:guid}/transfer-cash", async (DefaultIdType id, TransferCashCommand command, ISender sender) =>
+        group.MapPost("/{id}/transfer-cash", async (DefaultIdType id, TransferCashCommand command, ISender sender) =>
             {
                 if (id != command.TellerSessionId) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);

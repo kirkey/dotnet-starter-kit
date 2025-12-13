@@ -9,7 +9,7 @@ public static class CancelCycleCountEndpoint
 {
     internal static RouteHandlerBuilder MapCancelCycleCountEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/cancel", 
+        return endpoints.MapPost("/{id}/cancel", 
             async (DefaultIdType id, CancelCycleCountCommand command, ISender sender) =>
         {
             if (id != command.Id)

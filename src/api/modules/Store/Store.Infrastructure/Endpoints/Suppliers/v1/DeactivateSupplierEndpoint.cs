@@ -7,7 +7,7 @@ public static class DeactivateSupplierEndpoint
 {
     internal static RouteHandlerBuilder MapDeactivateSupplierEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, DeactivateSupplierCommand command, ISender sender) =>
+        return endpoints.MapPost("/{id}/deactivate", async (DefaultIdType id, DeactivateSupplierCommand command, ISender sender) =>
         {
             if (id != command.Id)
             {

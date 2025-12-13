@@ -97,7 +97,7 @@ public class LoanGuarantorEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        guarantorsGroup.MapPost("/{id:guid}/approve", async (DefaultIdType id, ISender mediator) =>
+        guarantorsGroup.MapPost("/{id}/approve", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new ApproveGuarantorCommand(id));
             return Results.Ok(response);
@@ -108,7 +108,7 @@ public class LoanGuarantorEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        guarantorsGroup.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectGuarantorCommand command, ISender mediator) =>
+        guarantorsGroup.MapPost("/{id}/reject", async (DefaultIdType id, RejectGuarantorCommand command, ISender mediator) =>
         {
             if (id != command.Id) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);
@@ -120,7 +120,7 @@ public class LoanGuarantorEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        guarantorsGroup.MapPost("/{id:guid}/release", async (DefaultIdType id, ReleaseGuarantorCommand command, ISender mediator) =>
+        guarantorsGroup.MapPost("/{id}/release", async (DefaultIdType id, ReleaseGuarantorCommand command, ISender mediator) =>
         {
             if (id != command.Id) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);
@@ -132,7 +132,7 @@ public class LoanGuarantorEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        guarantorsGroup.MapPut("/{id:guid}/amount", async (DefaultIdType id, UpdateGuaranteedAmountCommand command, ISender mediator) =>
+        guarantorsGroup.MapPut("/{id}/amount", async (DefaultIdType id, UpdateGuaranteedAmountCommand command, ISender mediator) =>
         {
             if (id != command.Id) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);

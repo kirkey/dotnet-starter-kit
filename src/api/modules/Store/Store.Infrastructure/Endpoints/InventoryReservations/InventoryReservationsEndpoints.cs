@@ -51,7 +51,7 @@ public class InventoryReservationsEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Release inventory reservation
-        group.MapPost("/{id:guid}/release", async (DefaultIdType id, ReleaseInventoryReservationCommand request, ISender sender) =>
+        group.MapPost("/{id}/release", async (DefaultIdType id, ReleaseInventoryReservationCommand request, ISender sender) =>
         {
             if (id != request.Id)
             {

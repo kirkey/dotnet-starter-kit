@@ -121,7 +121,7 @@ public class PurchaseOrdersEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Add purchase order item
-        group.MapPost("/{id:guid}/items", async (DefaultIdType id, AddPurchaseOrderItemCommand request, ISender sender) =>
+        group.MapPost("/{id}/items", async (DefaultIdType id, AddPurchaseOrderItemCommand request, ISender sender) =>
         {
             var command = request with { PurchaseOrderId = id };
             var response = await sender.Send(command).ConfigureAwait(false);
@@ -135,7 +135,7 @@ public class PurchaseOrdersEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Remove purchase order item
-        group.MapDelete("/{id:guid}/items/{itemId:guid}", async (DefaultIdType id, DefaultIdType itemId, ISender sender) =>
+        group.MapDelete("/{id}/items/{itemId:guid}", async (DefaultIdType id, DefaultIdType itemId, ISender sender) =>
         {
             var command = new RemovePurchaseOrderItemCommand(id, itemId);
             await sender.Send(command).ConfigureAwait(false);
@@ -148,7 +148,7 @@ public class PurchaseOrdersEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Update purchase order item quantity
-        group.MapPut("/{id:guid}/items/{itemId:guid}/quantity", async (DefaultIdType id, DefaultIdType itemId, UpdatePurchaseOrderItemQuantityCommand request, ISender sender) =>
+        group.MapPut("/{id}/items/{itemId:guid}/quantity", async (DefaultIdType id, DefaultIdType itemId, UpdatePurchaseOrderItemQuantityCommand request, ISender sender) =>
         {
             var command = request with { PurchaseOrderItemId = itemId };
             await sender.Send(command).ConfigureAwait(false);
@@ -161,7 +161,7 @@ public class PurchaseOrdersEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Update purchase order item price
-        group.MapPut("/{id:guid}/items/{itemId:guid}/price", async (DefaultIdType id, DefaultIdType itemId, UpdatePurchaseOrderItemPriceCommand request, ISender sender) =>
+        group.MapPut("/{id}/items/{itemId:guid}/price", async (DefaultIdType id, DefaultIdType itemId, UpdatePurchaseOrderItemPriceCommand request, ISender sender) =>
         {
             var command = request with { PurchaseOrderItemId = itemId };
             await sender.Send(command).ConfigureAwait(false);
@@ -174,7 +174,7 @@ public class PurchaseOrdersEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Get purchase order items
-        group.MapGet("/{id:guid}/items", async (DefaultIdType id, ISender sender) =>
+        group.MapGet("/{id}/items", async (DefaultIdType id, ISender sender) =>
         {
             var query = new GetPurchaseOrderItemsQuery(id);
             var response = await sender.Send(query).ConfigureAwait(false);
@@ -248,7 +248,7 @@ public class PurchaseOrdersEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Receive purchase order item quantity
-        group.MapPut("/{id:guid}/items/{itemId:guid}/receive", async (DefaultIdType id, DefaultIdType itemId, ReceivePurchaseOrderItemQuantityCommand request, ISender sender) =>
+        group.MapPut("/{id}/items/{itemId:guid}/receive", async (DefaultIdType id, DefaultIdType itemId, ReceivePurchaseOrderItemQuantityCommand request, ISender sender) =>
         {
             var command = request with { PurchaseOrderItemId = itemId };
             await sender.Send(command).ConfigureAwait(false);
@@ -293,7 +293,7 @@ public class PurchaseOrdersEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Auto-add items to purchase order
-        group.MapPost("/{id:guid}/auto-add-items", async (DefaultIdType id, [FromBody] AutoAddItemsToPurchaseOrderCommand command, ISender sender) =>
+        group.MapPost("/{id}/auto-add-items", async (DefaultIdType id, [FromBody] AutoAddItemsToPurchaseOrderCommand command, ISender sender) =>
         {
             var cmd = command with { PurchaseOrderId = id };
             var result = await sender.Send(cmd).ConfigureAwait(false);

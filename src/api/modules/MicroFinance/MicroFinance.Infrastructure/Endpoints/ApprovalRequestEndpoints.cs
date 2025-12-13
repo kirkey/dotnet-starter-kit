@@ -45,7 +45,7 @@ public class ApprovalRequestEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveRequestBody body, ISender sender) =>
+        group.MapPost("/{id}/approve", async (DefaultIdType id, ApproveRequestBody body, ISender sender) =>
         {
             var command = new ApproveRequestLevelCommand(id, body.ApproverId, body.Comments);
             var result = await sender.Send(command);
@@ -57,7 +57,7 @@ public class ApprovalRequestEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectRequestBody body, ISender sender) =>
+        group.MapPost("/{id}/reject", async (DefaultIdType id, RejectRequestBody body, ISender sender) =>
         {
             var command = new RejectApprovalRequestCommand(id, body.ApproverId, body.Reason);
             var result = await sender.Send(command);
@@ -69,7 +69,7 @@ public class ApprovalRequestEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/cancel", async (DefaultIdType id, CancelRequestBody body, ISender sender) =>
+        group.MapPost("/{id}/cancel", async (DefaultIdType id, CancelRequestBody body, ISender sender) =>
         {
             var command = new CancelApprovalRequestCommand(id, body.Reason);
             var result = await sender.Send(command);

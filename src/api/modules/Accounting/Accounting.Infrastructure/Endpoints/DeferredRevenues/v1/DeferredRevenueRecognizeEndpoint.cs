@@ -8,7 +8,7 @@ public static class DeferredRevenueRecognizeEndpoint
     internal static RouteHandlerBuilder MapDeferredRevenueRecognizeEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/recognize", async (DefaultIdType id, RecognizeDeferredRevenueCommand command, ISender mediator) =>
+            .MapPost("/{id}/recognize", async (DefaultIdType id, RecognizeDeferredRevenueCommand command, ISender mediator) =>
             {
                 if (id != command.Id)
                     return Results.BadRequest("ID mismatch");

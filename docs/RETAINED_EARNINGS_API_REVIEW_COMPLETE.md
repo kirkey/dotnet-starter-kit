@@ -102,7 +102,7 @@ public sealed record ReopenRetainedEarningsCommand : IRequest<DefaultIdType>
 
 **Pattern Applied (following JournalEntry pattern):**
 ```csharp
-.MapPut("/{id:guid}/net-income", async (DefaultIdType id, UpdateNetIncomeCommand request, ISender mediator) =>
+.MapPut("/{id}/net-income", async (DefaultIdType id, UpdateNetIncomeCommand request, ISender mediator) =>
 {
     // Construct command with ID from URL
     var command = request with { Id = id };

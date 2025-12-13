@@ -60,7 +60,7 @@ public class RiskCategoryEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/activate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ActivateRiskCategoryCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -71,7 +71,7 @@ public class RiskCategoryEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/deactivate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new DeactivateRiskCategoryCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);

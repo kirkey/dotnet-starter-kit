@@ -62,7 +62,7 @@ public class LoanScheduleEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        schedulesGroup.MapPost("/{id:guid}/apply-payment", async (DefaultIdType id, ApplyPaymentRequest request, ISender mediator) =>
+        schedulesGroup.MapPost("/{id}/apply-payment", async (DefaultIdType id, ApplyPaymentRequest request, ISender mediator) =>
         {
             var response = await mediator.Send(new ApplyPaymentCommand(id, request.Amount, request.PaymentDate));
             return Results.Ok(response);

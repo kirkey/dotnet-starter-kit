@@ -58,7 +58,7 @@ public class AgentBankingEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/approve", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ApproveAgentBankingCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -69,7 +69,7 @@ public class AgentBankingEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/suspend", async (DefaultIdType id, SuspendAgentRequest request, ISender sender) =>
+        group.MapPost("/{id}/suspend", async (DefaultIdType id, SuspendAgentRequest request, ISender sender) =>
             {
                 var response = await sender.Send(new SuspendAgentBankingCommand(id, request.Reason)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -80,7 +80,7 @@ public class AgentBankingEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/credit-float", async (DefaultIdType id, FloatAmountRequest request, ISender sender) =>
+        group.MapPost("/{id}/credit-float", async (DefaultIdType id, FloatAmountRequest request, ISender sender) =>
             {
                 var response = await sender.Send(new CreditFloatCommand(id, request.Amount)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -91,7 +91,7 @@ public class AgentBankingEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/debit-float", async (DefaultIdType id, FloatAmountRequest request, ISender sender) =>
+        group.MapPost("/{id}/debit-float", async (DefaultIdType id, FloatAmountRequest request, ISender sender) =>
             {
                 var response = await sender.Send(new DebitFloatCommand(id, request.Amount)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -114,7 +114,7 @@ public class AgentBankingEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/upgrade-tier", async (DefaultIdType id, UpgradeTierAgentRequest request, ISender sender) =>
+        group.MapPost("/{id}/upgrade-tier", async (DefaultIdType id, UpgradeTierAgentRequest request, ISender sender) =>
             {
                 var response = await sender.Send(new UpgradeTierAgentBankingCommand(id, request.NewTier)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -125,7 +125,7 @@ public class AgentBankingEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/record-audit", async (DefaultIdType id, RecordAuditAgentRequest request, ISender sender) =>
+        group.MapPost("/{id}/record-audit", async (DefaultIdType id, RecordAuditAgentRequest request, ISender sender) =>
             {
                 var response = await sender.Send(new RecordAuditAgentBankingCommand(id, request.AuditDate)).ConfigureAwait(false);
                 return Results.Ok(response);

@@ -7,7 +7,7 @@ public static class ApproveStockAdjustmentEndpoint
 {
     internal static RouteHandlerBuilder MapApproveStockAdjustmentEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveStockAdjustmentCommand command, ISender sender) =>
+        return endpoints.MapPost("/{id}/approve", async (DefaultIdType id, ApproveStockAdjustmentCommand command, ISender sender) =>
         {
             if (id != command.Id) return Results.BadRequest("ID mismatch");
             var result = await sender.Send(command).ConfigureAwait(false);

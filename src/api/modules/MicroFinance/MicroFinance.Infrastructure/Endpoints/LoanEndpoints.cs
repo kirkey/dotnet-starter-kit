@@ -71,7 +71,7 @@ public class LoanEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        loansGroup.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveLoanCommand command, ISender sender) =>
+        loansGroup.MapPost("/{id}/approve", async (DefaultIdType id, ApproveLoanCommand command, ISender sender) =>
             {
                 if (id != command.Id)
                 {
@@ -86,7 +86,7 @@ public class LoanEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Approve, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        loansGroup.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectLoanCommand command, ISender sender) =>
+        loansGroup.MapPost("/{id}/reject", async (DefaultIdType id, RejectLoanCommand command, ISender sender) =>
             {
                 if (id != command.Id)
                 {
@@ -101,7 +101,7 @@ public class LoanEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Reject, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        loansGroup.MapPost("/{id:guid}/disburse", async (DefaultIdType id, DisburseLoanCommand command, ISender sender) =>
+        loansGroup.MapPost("/{id}/disburse", async (DefaultIdType id, DisburseLoanCommand command, ISender sender) =>
             {
                 if (id != command.Id)
                 {
@@ -116,7 +116,7 @@ public class LoanEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Disburse, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        loansGroup.MapPost("/{id:guid}/close", async (DefaultIdType id, ISender sender) =>
+        loansGroup.MapPost("/{id}/close", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new CloseLoanCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -127,7 +127,7 @@ public class LoanEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Close, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        loansGroup.MapPost("/{id:guid}/write-off", async (DefaultIdType id, WriteOffLoanCommand command, ISender sender) =>
+        loansGroup.MapPost("/{id}/write-off", async (DefaultIdType id, WriteOffLoanCommand command, ISender sender) =>
             {
                 if (id != command.Id)
                 {

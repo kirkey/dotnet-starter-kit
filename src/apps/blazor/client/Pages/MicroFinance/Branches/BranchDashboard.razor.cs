@@ -122,7 +122,7 @@ public partial class BranchDashboard
                     MemberName = loan.MemberName ?? "",
                     ProductName = loan.ProductName ?? "",
                     PrincipalAmount = loan.PrincipalAmount,
-                    DisbursementDate = loan.DisbursementDate?.DateTime ?? DateTime.Now,
+                    DisbursementDate = loan.DisbursementDate,
                     Status = loan.Status ?? "",
                     LoanOfficerName = loan.LoanOfficerName
                 }).ToList() ?? new List<RecentLoanData>()

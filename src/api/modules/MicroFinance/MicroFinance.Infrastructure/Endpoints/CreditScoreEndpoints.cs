@@ -41,7 +41,7 @@ public class CreditScoreEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/loss-parameters", async (DefaultIdType id, SetLossParametersRequest request, ISender sender) =>
+        group.MapPost("/{id}/loss-parameters", async (DefaultIdType id, SetLossParametersRequest request, ISender sender) =>
         {
             var result = await sender.Send(new SetLossParametersCommand(
                 id,

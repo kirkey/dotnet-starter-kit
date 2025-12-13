@@ -7,7 +7,7 @@ public static class RemoveInventoryTransferItemEndpoint
 {
     internal static RouteHandlerBuilder MapRemoveInventoryTransferItemEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapDelete("/{id:guid}/items/{itemId:guid}", async (DefaultIdType id, DefaultIdType itemId, ISender sender) =>
+        return endpoints.MapDelete("/{id}/items/{itemId:guid}", async (DefaultIdType id, DefaultIdType itemId, ISender sender) =>
         {
             await sender.Send(new RemoveInventoryTransferItemCommand(id, itemId)).ConfigureAwait(false);
             return Results.NoContent();

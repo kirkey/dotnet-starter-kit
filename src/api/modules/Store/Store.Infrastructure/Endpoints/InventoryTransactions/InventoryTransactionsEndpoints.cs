@@ -41,7 +41,7 @@ public class InventoryTransactionsEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Approve inventory transaction
-        group.MapPost("/{id:guid}/approve", async (DefaultIdType id, ApproveInventoryTransactionCommand request, ISender sender) =>
+        group.MapPost("/{id}/approve", async (DefaultIdType id, ApproveInventoryTransactionCommand request, ISender sender) =>
         {
             if (id != request.Id)
             {
@@ -59,7 +59,7 @@ public class InventoryTransactionsEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Reject inventory transaction
-        group.MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectInventoryTransactionCommand request, ISender sender) =>
+        group.MapPost("/{id}/reject", async (DefaultIdType id, RejectInventoryTransactionCommand request, ISender sender) =>
         {
             if (id != request.Id)
             {
@@ -79,7 +79,7 @@ public class InventoryTransactionsEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Update inventory transaction notes
-        group.MapPatch("/{id:guid}/notes", async (DefaultIdType id, UpdateInventoryTransactionNotesCommand request, ISender sender) =>
+        group.MapPatch("/{id}/notes", async (DefaultIdType id, UpdateInventoryTransactionNotesCommand request, ISender sender) =>
         {
             request.Id = id;
             var response = await sender.Send(request).ConfigureAwait(false);

@@ -8,7 +8,7 @@ public static class CreditMemoRefundEndpoint
     internal static RouteHandlerBuilder MapCreditMemoRefundEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/refund", async (DefaultIdType id, RefundCreditMemoCommand command, ISender mediator) =>
+            .MapPost("/{id}/refund", async (DefaultIdType id, RefundCreditMemoCommand command, ISender mediator) =>
             {
                 if (id != command.Id)
                     return Results.BadRequest("ID mismatch");

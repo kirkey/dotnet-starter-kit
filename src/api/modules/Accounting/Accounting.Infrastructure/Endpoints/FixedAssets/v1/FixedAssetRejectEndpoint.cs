@@ -7,7 +7,7 @@ public static class FixedAssetRejectEndpoint
 {
     internal static RouteHandlerBuilder MapFixedAssetRejectEndpoint(this IEndpointRouteBuilder endpoints)
         => endpoints
-            .MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectFixedAssetCommand command, ISender mediator) =>
+            .MapPost("/{id}/reject", async (DefaultIdType id, RejectFixedAssetCommand command, ISender mediator) =>
             {
                 if (id != command.FixedAssetId) return Results.BadRequest("ID in URL does not match ID in request body.");
                 var result = await mediator.Send(command).ConfigureAwait(false);

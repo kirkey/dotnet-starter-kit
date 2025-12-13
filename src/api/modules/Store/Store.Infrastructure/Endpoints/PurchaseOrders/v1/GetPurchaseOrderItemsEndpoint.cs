@@ -13,7 +13,7 @@ internal static class GetPurchaseOrderItemsEndpoint
     /// </summary>
     internal static RouteHandlerBuilder MapGetPurchaseOrderItemsEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/{id:guid}/items", async (DefaultIdType id, ISender sender) =>
+        return endpoints.MapGet("/{id}/items", async (DefaultIdType id, ISender sender) =>
         {
             var query = new GetPurchaseOrderItemsQuery(id);
             var response = await sender.Send(query).ConfigureAwait(false);

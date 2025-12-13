@@ -8,7 +8,7 @@ public static class ApAccountRecordPaymentEndpoint
     internal static RouteHandlerBuilder MapApAccountRecordPaymentEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/payments", async (DefaultIdType id, RecordAPPaymentCommand command, ISender mediator) =>
+            .MapPost("/{id}/payments", async (DefaultIdType id, RecordAPPaymentCommand command, ISender mediator) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
                 var accountId = await mediator.Send(command).ConfigureAwait(false);

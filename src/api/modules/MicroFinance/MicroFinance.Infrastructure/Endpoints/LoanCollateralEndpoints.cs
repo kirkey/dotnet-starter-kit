@@ -83,7 +83,7 @@ public class LoanCollateralEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        collateralsGroup.MapPut("/{id:guid}/valuation", async (DefaultIdType id, UpdateCollateralValuationCommand command, ISender mediator) =>
+        collateralsGroup.MapPut("/{id}/valuation", async (DefaultIdType id, UpdateCollateralValuationCommand command, ISender mediator) =>
         {
             if (id != command.Id) return Results.BadRequest("ID mismatch");
             var response = await mediator.Send(command);
@@ -95,7 +95,7 @@ public class LoanCollateralEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        collateralsGroup.MapPost("/{id:guid}/verify", async (DefaultIdType id, ISender mediator) =>
+        collateralsGroup.MapPost("/{id}/verify", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new VerifyCollateralCommand(id));
             return Results.Ok(response);
@@ -106,7 +106,7 @@ public class LoanCollateralEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        collateralsGroup.MapPost("/{id:guid}/pledge", async (DefaultIdType id, ISender mediator) =>
+        collateralsGroup.MapPost("/{id}/pledge", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new PledgeCollateralCommand(id));
             return Results.Ok(response);
@@ -117,7 +117,7 @@ public class LoanCollateralEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        collateralsGroup.MapPost("/{id:guid}/release", async (DefaultIdType id, ISender mediator) =>
+        collateralsGroup.MapPost("/{id}/release", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new ReleaseLoanCollateralCommand(id));
             return Results.Ok(response);
@@ -128,7 +128,7 @@ public class LoanCollateralEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        collateralsGroup.MapPost("/{id:guid}/seize", async (DefaultIdType id, ISender mediator) =>
+        collateralsGroup.MapPost("/{id}/seize", async (DefaultIdType id, ISender mediator) =>
         {
             var response = await mediator.Send(new SeizeCollateralCommand(id));
             return Results.Ok(response);

@@ -14,9 +14,15 @@ public partial class LoanProductDashboard
     private string _productName = string.Empty;
     private LoanProductDashboardData _dashboard = new();
     private List<BreadcrumbItem> _breadcrumbs = new();
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+
         _breadcrumbs = new List<BreadcrumbItem>
         {
             new("Home", "/", icon: Icons.Material.Filled.Home),

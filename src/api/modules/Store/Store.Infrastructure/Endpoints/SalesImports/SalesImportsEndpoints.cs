@@ -61,7 +61,7 @@ public class SalesImportsEndpoints() : CarterModule
         .MapToApiVersion(1);
 
         // Reverse sales import
-        group.MapPost("/{id:guid}/reverse", async (Guid id, ReverseSalesImportCommand request, ISender mediator) =>
+        group.MapPost("/{id}/reverse", async (Guid id, ReverseSalesImportCommand request, ISender mediator) =>
         {
             if (id != request.Id)
             {

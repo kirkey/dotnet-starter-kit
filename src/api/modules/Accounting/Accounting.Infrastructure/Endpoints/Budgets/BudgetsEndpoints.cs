@@ -21,10 +21,10 @@ public class BudgetsEndpoints() : CarterModule
         group.MapBudgetApproveEndpoint();
         group.MapBudgetCloseEndpoint();
         group.MapBudgetCreateEndpoint();
-        group.MapBudgetDashboardEndpoint();
+        group.MapBudgetSearchEndpoint();
+        // group.MapBudgetDashboardEndpoint(); // DISABLED: Dashboard endpoints need separate implementation
         group.MapBudgetDeleteEndpoint();
         group.MapBudgetGetEndpoint();
-        group.MapBudgetSearchEndpoint();
         group.MapBudgetUpdateEndpoint();
     }
 }

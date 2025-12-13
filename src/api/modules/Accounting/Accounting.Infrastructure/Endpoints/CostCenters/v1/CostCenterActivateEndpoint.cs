@@ -8,7 +8,7 @@ public static class CostCenterActivateEndpoint
     internal static RouteHandlerBuilder MapCostCenterActivateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender mediator) =>
+            .MapPost("/{id}/activate", async (DefaultIdType id, ISender mediator) =>
             {
                 var costCenterId = await mediator.Send(new ActivateCostCenterCommand(id)).ConfigureAwait(false);
                 return Results.Ok(new { Id = costCenterId, Message = "Cost center activated successfully" });

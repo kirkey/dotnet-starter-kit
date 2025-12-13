@@ -45,7 +45,7 @@ public class CollectionStrategyEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/activate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ActivateStrategyCommand(id));
             return Results.Ok(result);
@@ -56,7 +56,7 @@ public class CollectionStrategyEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/deactivate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new DeactivateStrategyCommand(id));
             return Results.Ok(result);

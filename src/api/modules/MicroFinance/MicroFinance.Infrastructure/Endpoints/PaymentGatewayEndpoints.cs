@@ -61,7 +61,7 @@ public class PaymentGatewayEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivatePaymentGatewayCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -72,7 +72,7 @@ public class PaymentGatewayEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Activate, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/deactivate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new DeactivatePaymentGatewayCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);

@@ -11,7 +11,7 @@ public static class TrialBalanceFinalizeEndpoint
     internal static RouteHandlerBuilder MapTrialBalanceFinalizeEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/finalize", async (DefaultIdType id, FinalizeTrialBalanceCommand command, ISender mediator) =>
+            .MapPost("/{id}/finalize", async (DefaultIdType id, FinalizeTrialBalanceCommand command, ISender mediator) =>
             {
                 if (id != command.Id)
                 {

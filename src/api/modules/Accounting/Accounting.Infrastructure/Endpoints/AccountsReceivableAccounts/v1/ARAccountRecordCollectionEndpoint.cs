@@ -11,7 +11,7 @@ public static class ArAccountRecordCollectionEndpoint
     internal static RouteHandlerBuilder MapArAccountRecordCollectionEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/collections", async (DefaultIdType id, RecordARCollectionCommand request, ISender mediator) =>
+            .MapPost("/{id}/collections", async (DefaultIdType id, RecordARCollectionCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var accountId = await mediator.Send(command).ConfigureAwait(false);

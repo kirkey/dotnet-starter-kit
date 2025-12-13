@@ -8,7 +8,7 @@ public static class RetainedEarningsRecordDistributionEndpoint
     internal static RouteHandlerBuilder MapRetainedEarningsRecordDistributionEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/distributions", async (DefaultIdType id, RecordDistributionCommand request, ISender mediator) =>
+            .MapPost("/{id}/distributions", async (DefaultIdType id, RecordDistributionCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var reId = await mediator.Send(command).ConfigureAwait(false);

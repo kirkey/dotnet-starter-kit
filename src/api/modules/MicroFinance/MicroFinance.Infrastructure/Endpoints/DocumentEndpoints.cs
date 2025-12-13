@@ -47,7 +47,7 @@ public class DocumentEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/verify", async (DefaultIdType id, VerifyDocumentRequest request, ISender sender) =>
+        group.MapPost("/{id}/verify", async (DefaultIdType id, VerifyDocumentRequest request, ISender sender) =>
         {
             var result = await sender.Send(new VerifyDocumentCommand(id, request.VerifiedById));
             return Results.Ok(result);
@@ -81,7 +81,7 @@ public class DocumentEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/archive", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/archive", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ArchiveDocumentCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -92,7 +92,7 @@ public class DocumentEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/mark-expired", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/mark-expired", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new MarkExpiredDocumentCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);

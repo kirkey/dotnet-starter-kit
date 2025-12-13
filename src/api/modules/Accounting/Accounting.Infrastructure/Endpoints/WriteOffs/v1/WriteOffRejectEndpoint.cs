@@ -8,7 +8,7 @@ public static class WriteOffRejectEndpoint
     internal static RouteHandlerBuilder MapWriteOffRejectEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectWriteOffCommand request, ISender mediator) =>
+            .MapPost("/{id}/reject", async (DefaultIdType id, RejectWriteOffCommand request, ISender mediator) =>
             {
                 var command = request with { Id = id };
                 var writeOffId = await mediator.Send(command).ConfigureAwait(false);

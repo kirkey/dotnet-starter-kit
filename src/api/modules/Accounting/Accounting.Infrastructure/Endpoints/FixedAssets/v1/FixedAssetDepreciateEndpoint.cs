@@ -8,7 +8,7 @@ public static class FixedAssetDepreciateEndpoint
     internal static RouteHandlerBuilder MapFixedAssetDepreciateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/depreciate", async (DefaultIdType id, DepreciateFixedAssetCommand command, ISender mediator) =>
+            .MapPost("/{id}/depreciate", async (DefaultIdType id, DepreciateFixedAssetCommand command, ISender mediator) =>
             {
                 if (id != command.FixedAssetId) return Results.BadRequest("ID in URL does not match ID in request body.");
                 var assetId = await mediator.Send(command).ConfigureAwait(false);

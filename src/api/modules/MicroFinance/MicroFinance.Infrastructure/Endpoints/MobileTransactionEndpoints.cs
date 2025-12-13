@@ -58,7 +58,7 @@ public class MobileTransactionEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/complete", async (DefaultIdType id, CompleteMobileTransactionRequest request, ISender sender) =>
+        group.MapPost("/{id}/complete", async (DefaultIdType id, CompleteMobileTransactionRequest request, ISender sender) =>
         {
             var command = new CompleteMobileTransactionCommand(id, request.ProviderResponse);
             var result = await sender.Send(command);
@@ -70,7 +70,7 @@ public class MobileTransactionEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Complete, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/fail", async (DefaultIdType id, FailMobileTransactionRequest request, ISender sender) =>
+        group.MapPost("/{id}/fail", async (DefaultIdType id, FailMobileTransactionRequest request, ISender sender) =>
         {
             var command = new FailMobileTransactionCommand(id, request.FailureReason);
             var result = await sender.Send(command);

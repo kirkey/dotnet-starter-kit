@@ -8,7 +8,7 @@ public static class FixedAssetUpdateMaintenanceEndpoint
     internal static RouteHandlerBuilder MapFixedAssetUpdateMaintenanceEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}/maintenance", async (DefaultIdType id, UpdateMaintenanceCommand command, ISender mediator) =>
+            .MapPut("/{id}/maintenance", async (DefaultIdType id, UpdateMaintenanceCommand command, ISender mediator) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID in URL does not match ID in request body.");
                 var assetId = await mediator.Send(command).ConfigureAwait(false);

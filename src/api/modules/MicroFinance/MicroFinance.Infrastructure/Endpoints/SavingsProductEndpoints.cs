@@ -74,7 +74,7 @@ public class SavingsProductEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        savingsProductsGroup.MapGet("/{id:guid}/dashboard", async (DefaultIdType id, ISender sender) =>
+        savingsProductsGroup.MapGet("/{id}/dashboard", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new GetSavingsProductDashboardQuery(id)).ConfigureAwait(false);
                 return Results.Ok(response);

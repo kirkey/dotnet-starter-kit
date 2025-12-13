@@ -12,7 +12,7 @@ public static class AssignWarehouseManagerEndpoint
     /// </summary>
     internal static RouteHandlerBuilder MapAssignWarehouseManagerEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPut("/{id:guid}/assign-manager", async (DefaultIdType id, AssignWarehouseManagerCommand request, ISender sender) =>
+        return endpoints.MapPut("/{id}/assign-manager", async (DefaultIdType id, AssignWarehouseManagerCommand request, ISender sender) =>
         {
             var command = request with { Id = id };
             var result = await sender.Send(command).ConfigureAwait(false);

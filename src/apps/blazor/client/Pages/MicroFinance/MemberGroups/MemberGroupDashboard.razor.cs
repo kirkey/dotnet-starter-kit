@@ -7,9 +7,15 @@ public partial class MemberGroupDashboard
 
     private bool _isLoading = true;
     private MemberGroupDashboardData? _dashboardData;
+    private ClientPreference _preference = new();
 
     protected override async Task OnInitializedAsync()
     {
+        if (await ClientPreferences.GetPreference() is ClientPreference preference)
+        {
+            _preference = preference;
+        }
+        
         await LoadDashboardData();
     }
 

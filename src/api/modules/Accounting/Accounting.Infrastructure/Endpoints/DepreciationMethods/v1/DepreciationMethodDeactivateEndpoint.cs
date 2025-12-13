@@ -8,7 +8,7 @@ public static class DepreciationMethodDeactivateEndpoint
     internal static RouteHandlerBuilder MapDepreciationMethodDeactivateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender mediator) =>
+            .MapPost("/{id}/deactivate", async (DefaultIdType id, ISender mediator) =>
             {
                 var methodId = await mediator.Send(new DeactivateDepreciationMethodCommand(id)).ConfigureAwait(false);
                 return Results.Ok(new { Id = methodId, Message = "Depreciation method deactivated successfully" });

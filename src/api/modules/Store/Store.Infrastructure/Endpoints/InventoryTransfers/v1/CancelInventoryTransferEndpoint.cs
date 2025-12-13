@@ -7,7 +7,7 @@ public static class CancelInventoryTransferEndpoint
 {
     internal static RouteHandlerBuilder MapCancelInventoryTransferEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/cancel", async (DefaultIdType id, CancelInventoryTransferCommand command, ISender sender) =>
+        return endpoints.MapPost("/{id}/cancel", async (DefaultIdType id, CancelInventoryTransferCommand command, ISender sender) =>
         {
             if (id != command.Id) return Results.BadRequest("ID mismatch");
             var result = await sender.Send(command).ConfigureAwait(false);

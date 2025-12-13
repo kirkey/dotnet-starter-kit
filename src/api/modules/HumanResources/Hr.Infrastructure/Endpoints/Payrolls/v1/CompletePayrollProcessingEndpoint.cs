@@ -12,7 +12,7 @@ public static class CompletePayrollProcessingEndpoint
     internal static RouteHandlerBuilder MapCompletePayrollProcessingEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/complete-processing", async (DefaultIdType id, ISender mediator) =>
+            .MapPost("/{id}/complete-processing", async (DefaultIdType id, ISender mediator) =>
             {
                 var request = new CompletePayrollProcessingCommand(id);
                 var response = await mediator.Send(request).ConfigureAwait(false);

@@ -43,7 +43,7 @@ public class CustomerSurveyEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/activate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ActivateCustomerSurveyCommand(id));
             return Results.Ok(result);
@@ -54,7 +54,7 @@ public class CustomerSurveyEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/complete", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/complete", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new CompleteCustomerSurveyCommand(id));
             return Results.Ok(result);

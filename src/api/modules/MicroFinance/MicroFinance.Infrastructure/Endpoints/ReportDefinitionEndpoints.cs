@@ -66,7 +66,7 @@ public class ReportDefinitionEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/activate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new ActivateReportDefinitionCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -77,7 +77,7 @@ public class ReportDefinitionEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Activate, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/deactivate", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new DeactivateReportDefinitionCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);
@@ -111,7 +111,7 @@ public class ReportDefinitionEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Delete, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/configure-schedule", async (DefaultIdType id, ConfigureScheduleCommand command, ISender sender) =>
+        group.MapPost("/{id}/configure-schedule", async (DefaultIdType id, ConfigureScheduleCommand command, ISender sender) =>
             {
                 if (id != command.Id) return Results.BadRequest("ID mismatch");
                 var response = await sender.Send(command).ConfigureAwait(false);
@@ -123,7 +123,7 @@ public class ReportDefinitionEndpoints : CarterModule
             .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/disable-schedule", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/disable-schedule", async (DefaultIdType id, ISender sender) =>
             {
                 var response = await sender.Send(new DisableScheduleCommand(id)).ConfigureAwait(false);
                 return Results.Ok(response);

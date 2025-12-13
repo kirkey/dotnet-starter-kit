@@ -45,7 +45,7 @@ public class RiskIndicatorEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/measure", async (DefaultIdType id, RecordMeasurementRequest request, ISender sender) =>
+        group.MapPost("/{id}/measure", async (DefaultIdType id, RecordMeasurementRequest request, ISender sender) =>
         {
             var command = new RecordMeasurementCommand(id, request.Value);
             var result = await sender.Send(command);
@@ -57,7 +57,7 @@ public class RiskIndicatorEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Create, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/activate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ActivateRiskIndicatorCommand(id));
             return Results.Ok(result);
@@ -68,7 +68,7 @@ public class RiskIndicatorEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/deactivate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new DeactivateRiskIndicatorCommand(id));
             return Results.Ok(result);

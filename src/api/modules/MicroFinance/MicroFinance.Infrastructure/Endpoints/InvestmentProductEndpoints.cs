@@ -62,7 +62,7 @@ public class InvestmentProductEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Search, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPut("/{id:guid}/nav", async (DefaultIdType id, UpdateNavRequest request, ISender sender) =>
+        group.MapPut("/{id}/nav", async (DefaultIdType id, UpdateNavRequest request, ISender sender) =>
         {
             var result = await sender.Send(new UpdateInvestmentProductNavCommand(id, request.NewNav, request.NavDate));
             return Results.Ok(result);
@@ -99,7 +99,7 @@ public class InvestmentProductEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/activate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/activate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new ActivateInvestmentProductCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);
@@ -110,7 +110,7 @@ public class InvestmentProductEndpoints : CarterModule
         .RequirePermission(FshPermission.NameFor(FshActions.Update, FshResources.MicroFinance))
         .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/deactivate", async (DefaultIdType id, ISender sender) =>
+        group.MapPost("/{id}/deactivate", async (DefaultIdType id, ISender sender) =>
         {
             var result = await sender.Send(new DeactivateInvestmentProductCommand(id)).ConfigureAwait(false);
             return Results.Ok(result);

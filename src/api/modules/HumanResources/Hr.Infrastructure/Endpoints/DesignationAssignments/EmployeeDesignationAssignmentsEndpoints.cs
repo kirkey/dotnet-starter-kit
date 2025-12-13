@@ -57,7 +57,7 @@ public class EmployeeDesignationAssignmentsEndpoints() : CarterModule("humanreso
             .RequirePermission(FshPermission.NameFor(FshActions.View, FshResources.Employees))
             .MapToApiVersion(1);
 
-        group.MapPost("/{id:guid}/end", async (DefaultIdType id, EndDesignationRequest request, ISender mediator) =>
+        group.MapPost("/{id}/end", async (DefaultIdType id, EndDesignationRequest request, ISender mediator) =>
             {
                 var response = await mediator
                     .Send(new EndDesignationAssignmentCommand(id, request.EndDate, request.Reason))

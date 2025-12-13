@@ -14,7 +14,7 @@ public static class ApproveBillEndpoint
     internal static RouteHandlerBuilder MapApproveBillEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/approve", async (DefaultIdType id, ISender mediator) =>
+            .MapPost("/{id}/approve", async (DefaultIdType id, ISender mediator) =>
             {
                 var command = new ApproveBillCommand(id);
                 var response = await mediator.Send(command).ConfigureAwait(false);

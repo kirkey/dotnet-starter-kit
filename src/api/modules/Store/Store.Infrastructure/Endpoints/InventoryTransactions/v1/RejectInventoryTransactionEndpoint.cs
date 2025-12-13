@@ -11,7 +11,7 @@ public static class RejectInventoryTransactionEndpoint
     internal static RouteHandlerBuilder MapRejectInventoryTransactionEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPost("/{id:guid}/reject", async (DefaultIdType id, RejectInventoryTransactionCommand request, ISender sender) =>
+            .MapPost("/{id}/reject", async (DefaultIdType id, RejectInventoryTransactionCommand request, ISender sender) =>
             {
                 if (id != request.Id)
                 {

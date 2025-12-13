@@ -6,7 +6,7 @@ public static class ReconcileCycleCountEndpoint
 {
     public static RouteHandlerBuilder MapReconcileCycleCountEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPost("/{id:guid}/reconcile", async (DefaultIdType id, ReconcileCycleCountCommand command, ISender sender) =>
+        return endpoints.MapPost("/{id}/reconcile", async (DefaultIdType id, ReconcileCycleCountCommand command, ISender sender) =>
         {
             if (id != command.Id)
             {
