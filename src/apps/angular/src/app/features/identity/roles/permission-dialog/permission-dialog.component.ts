@@ -453,6 +453,7 @@ export class PermissionDialogComponent implements OnInit {
 
   getActionIcon(action: string): string {
     const icons: Record<string, string> = {
+      // Standard CRUD Actions
       [FshActions.View]: 'visibility',
       [FshActions.Create]: 'add_circle',
       [FshActions.Update]: 'edit',
@@ -462,6 +463,15 @@ export class PermissionDialogComponent implements OnInit {
       [FshActions.Import]: 'upload',
       [FshActions.Generate]: 'auto_fix_high',
       [FshActions.Clean]: 'cleaning_services',
+      [FshActions.UpgradeSubscription]: 'upgrade',
+      
+      // HR & Employee Actions
+      [FshActions.Regularize]: 'verified_user',
+      [FshActions.Terminate]: 'person_remove',
+      [FshActions.Assign]: 'person_add',
+      [FshActions.Manage]: 'settings',
+      
+      // Workflow & Approval Actions
       [FshActions.Approve]: 'check_circle',
       [FshActions.Reject]: 'cancel',
       [FshActions.Submit]: 'send',
@@ -472,8 +482,55 @@ export class PermissionDialogComponent implements OnInit {
       [FshActions.Post]: 'post_add',
       [FshActions.Send]: 'send',
       [FshActions.Receive]: 'move_to_inbox',
-      [FshActions.Manage]: 'settings',
-      [FshActions.Assign]: 'person_add'
+      [FshActions.Acknowledge]: 'fact_check',
+      
+      // Financial Actions
+      [FshActions.MarkAsPaid]: 'paid',
+      [FshActions.Accrue]: 'trending_up',
+      [FshActions.Disburse]: 'payments',
+      [FshActions.Deposit]: 'account_balance',
+      [FshActions.Withdraw]: 'money_off',
+      [FshActions.Transfer]: 'swap_horiz',
+      [FshActions.WriteOff]: 'money_off_csred',
+      [FshActions.Mature]: 'schedule',
+      
+      // Status Actions
+      [FshActions.Activate]: 'check_circle_outline',
+      [FshActions.Deactivate]: 'highlight_off',
+      [FshActions.Suspend]: 'pause_circle_outline',
+      [FshActions.Close]: 'close',
+      [FshActions.Freeze]: 'ac_unit',
+      [FshActions.Unfreeze]: 'wb_sunny',
+      [FshActions.Renew]: 'autorenew',
+      [FshActions.Return]: 'keyboard_return',
+      
+      // MicroFinance - Collections & Recovery Actions
+      [FshActions.Escalate]: 'priority_high',
+      [FshActions.MarkBroken]: 'broken_image',
+      [FshActions.RecordPayment]: 'receipt',
+      
+      // MicroFinance - AML & Compliance Actions
+      [FshActions.FileSar]: 'report_problem',
+      [FshActions.Confirm]: 'verified',
+      [FshActions.Clear]: 'check',
+      
+      // MicroFinance - Insurance Actions
+      [FshActions.RecordPremium]: 'payment',
+      
+      // MicroFinance - Investment Actions
+      [FshActions.Invest]: 'trending_up',
+      [FshActions.Redeem]: 'redeem',
+      [FshActions.SetupSip]: 'schedule_send',
+      
+      // MicroFinance - Agent Banking Actions
+      [FshActions.RecordAudit]: 'checklist',
+      [FshActions.UpgradeTier]: 'upgrade',
+      [FshActions.CreditFloat]: 'add_card',
+      [FshActions.DebitFloat]: 'remove_circle',
+      
+      // MicroFinance - Loan Actions
+      [FshActions.ApplyPayment]: 'payment',
+      [FshActions.Restructure]: 'transform'
     };
     return icons[action] || 'check';
   }

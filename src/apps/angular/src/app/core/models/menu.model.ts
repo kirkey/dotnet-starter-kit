@@ -7,6 +7,10 @@ export interface MenuItem {
   disabled?: boolean;
   badge?: string;
   badgeColor?: 'primary' | 'accent' | 'warn';
+  action?: string;  // Required permission action (e.g., 'View')
+  resource?: string;  // Required permission resource (e.g., 'Products')
+  isGroupHeader?: boolean;  // For sub-menu group headers
+  pageStatus?: 'completed' | 'inProgress' | 'comingSoon';
 }
 
 export interface MenuSection {

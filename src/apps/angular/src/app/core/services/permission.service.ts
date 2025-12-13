@@ -130,6 +130,131 @@ export class PermissionService {
   }
 
   /**
+   * Check if user can search a resource
+   */
+  canSearch(resource: string): boolean {
+    return this.hasPermission(FshActions.Search, resource);
+  }
+
+  /**
+   * Check if user can import a resource
+   */
+  canImport(resource: string): boolean {
+    return this.hasPermission(FshActions.Import, resource);
+  }
+
+  // Workflow & Approval Actions
+  
+  /**
+   * Check if user can approve a resource
+   */
+  canApprove(resource: string): boolean {
+    return this.hasPermission(FshActions.Approve, resource);
+  }
+
+  /**
+   * Check if user can reject a resource
+   */
+  canReject(resource: string): boolean {
+    return this.hasPermission(FshActions.Reject, resource);
+  }
+
+  /**
+   * Check if user can submit a resource
+   */
+  canSubmit(resource: string): boolean {
+    return this.hasPermission(FshActions.Submit, resource);
+  }
+
+  /**
+   * Check if user can process a resource
+   */
+  canProcess(resource: string): boolean {
+    return this.hasPermission(FshActions.Process, resource);
+  }
+
+  /**
+   * Check if user can complete a resource
+   */
+  canComplete(resource: string): boolean {
+    return this.hasPermission(FshActions.Complete, resource);
+  }
+
+  // Financial Actions
+  
+  /**
+   * Check if user can disburse (for loans/payments)
+   */
+  canDisburse(resource: string): boolean {
+    return this.hasPermission(FshActions.Disburse, resource);
+  }
+
+  /**
+   * Check if user can deposit (for accounts)
+   */
+  canDeposit(resource: string): boolean {
+    return this.hasPermission(FshActions.Deposit, resource);
+  }
+
+  /**
+   * Check if user can withdraw (for accounts)
+   */
+  canWithdraw(resource: string): boolean {
+    return this.hasPermission(FshActions.Withdraw, resource);
+  }
+
+  /**
+   * Check if user can write off (for loans)
+   */
+  canWriteOff(resource: string): boolean {
+    return this.hasPermission(FshActions.WriteOff, resource);
+  }
+
+  /**
+   * Check if user can post (for accounting)
+   */
+  canPost(resource: string): boolean {
+    return this.hasPermission(FshActions.Post, resource);
+  }
+
+  // Status Actions
+  
+  /**
+   * Check if user can activate a resource
+   */
+  canActivate(resource: string): boolean {
+    return this.hasPermission(FshActions.Activate, resource);
+  }
+
+  /**
+   * Check if user can deactivate a resource
+   */
+  canDeactivate(resource: string): boolean {
+    return this.hasPermission(FshActions.Deactivate, resource);
+  }
+
+  /**
+   * Check if user can suspend a resource
+   */
+  canSuspend(resource: string): boolean {
+    return this.hasPermission(FshActions.Suspend, resource);
+  }
+
+  /**
+   * Check if user can close a resource
+   */
+  canClose(resource: string): boolean {
+    return this.hasPermission(FshActions.Close, resource);
+  }
+
+  /**
+   * Check if user can assign a resource
+   */
+  canAssign(resource: string): boolean {
+    return this.hasPermission(FshActions.Assign, resource);
+  }
+
+  /**
    * Clear cached permissions (call on logout)
    */
   clearPermissions(): void {
