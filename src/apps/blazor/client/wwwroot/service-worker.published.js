@@ -1,7 +1,15 @@
 // Caution! Be sure you understand the caveats before publishing an application with
 // offline support. See https://aka.ms/blazor-offline-considerations
 
-self.importScripts('./service-worker-assets.js');
+try {
+    self.importScripts('./service-worker-assets.js');
+} catch (error) {
+    console.error('Service worker: Failed to load service-worker-assets.js', error);
+    // If assets manifest fails to load, skip offline support
+    self.addEventListener('fetch', () => { });
+    throw error;
+}
+
 self.addEventListener('install', event => event.waitUntil(onInstall(event)));
 self.addEventListener('activate', event => event.waitUntil(onActivate(event)));
 self.addEventListener('fetch', event => event.respondWith(onFetch(event)));
@@ -19,36 +27,71 @@ const manifestUrlList = self.assetsManifest.assets.map(asset => new URL(asset.ur
 async function onInstall(event) {
     console.info('Service worker: Install');
 
-    // Fetch and cache all matching items from the assets manifest
-    const assetsRequests = self.assetsManifest.assets
-        .filter(asset => offlineAssetsInclude.some(pattern => pattern.test(asset.url)))
-        .filter(asset => !offlineAssetsExclude.some(pattern => pattern.test(asset.url)))
-        .map(asset => new Request(asset.url, { integrity: asset.hash, cache: 'no-cache' }));
-    await caches.open(cacheName).then(cache => cache.addAll(assetsRequests));
+    try {
+        // Fetch and cache all matching items from the assets manifest
+        const assetsRequests = self.assetsManifest.assets
+            .filter(asset => offlineAssetsInclude.some(pattern => pattern.test(asset.url)))
+            .filter(asset => !offlineAssetsExclude.some(pattern => pattern.test(asset.url)))
+            .map(asset => new Request(asset.url, { integrity: asset.hash, cache: 'no-cache' }));
+        
+        const cache = await caches.open(cacheName);
+        
+        // Cache assets one by one to avoid failing the entire installation
+        const results = await Promise.allSettled(
+            assetsRequests.map(async request => {
+                try {
+                    const response = await fetch(request);
+                    if (response.ok) {
+                        await cache.put(request, response);
+                    } else {
+                        console.warn(`Service worker: Failed to fetch ${request.url}, status: ${response.status}`);
+                    }
+                } catch (error) {
+                    console.warn(`Service worker: Failed to cache ${request.url}:`, error.message);
+                }
+            })
+        );
+        
+        const failedCount = results.filter(r => r.status === 'rejected').length;
+        if (failedCount > 0) {
+            console.warn(`Service worker: Failed to cache ${failedCount} assets, but installation will continue`);
+        }
+    } catch (error) {
+        console.error('Service worker: Failed to cache assets during install', error);
+        // Continue installation even if caching fails
+    }
 }
 
 async function onActivate(event) {
     console.info('Service worker: Activate');
 
-    // Delete unused caches
-    const cacheKeys = await caches.keys();
-    await Promise.all(cacheKeys
-        .filter(key => key.startsWith(cacheNamePrefix) && key !== cacheName)
-        .map(key => caches.delete(key)));
+    try {
+        // Delete unused caches
+        const cacheKeys = await caches.keys();
+        await Promise.all(cacheKeys
+            .filter(key => key.startsWith(cacheNamePrefix) && key !== cacheName)
+            .map(key => caches.delete(key)));
+    } catch (error) {
+        console.error('Service worker: Failed to clean up old caches', error);
+    }
 }
 
 async function onFetch(event) {
     let cachedResponse = null;
-    if (event.request.method === 'GET') {
-        // For all navigation requests, try to serve index.html from cache,
-        // unless that request is for an offline resource.
-        // If you need some URLs to be server-rendered, edit the following check to exclude those URLs
-        const shouldServeIndexHtml = event.request.mode === 'navigate'
-            && !manifestUrlList.some(url => url === event.request.url);
+    try {
+        if (event.request.method === 'GET') {
+            // For all navigation requests, try to serve index.html from cache,
+            // unless that request is for an offline resource.
+            // If you need some URLs to be server-rendered, edit the following check to exclude those URLs
+            const shouldServeIndexHtml = event.request.mode === 'navigate'
+                && !manifestUrlList.some(url => url === event.request.url);
 
-        const request = shouldServeIndexHtml ? 'index.html' : event.request;
-        const cache = await caches.open(cacheName);
-        cachedResponse = await cache.match(request);
+            const request = shouldServeIndexHtml ? 'index.html' : event.request;
+            const cache = await caches.open(cacheName);
+            cachedResponse = await cache.match(request);
+        }
+    } catch (error) {
+        console.error('Service worker: Error fetching from cache', error);
     }
 
     return cachedResponse || fetch(event.request);

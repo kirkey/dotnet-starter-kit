@@ -11,7 +11,9 @@ public static class Extensions
             policy.AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()
-                .WithOrigins(corsOptions.AllowedOrigins.ToArray())));
+                .SetPreflightMaxAge(TimeSpan.FromMinutes(10))
+                .WithOrigins(corsOptions.AllowedOrigins.ToArray())
+                .WithExposedHeaders("*")));
     }
 
     internal static IApplicationBuilder UseCorsPolicy(this IApplicationBuilder app)

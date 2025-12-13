@@ -36,9 +36,16 @@ echo "Project: $API_PROJECT_PATH"
 echo "Output: $API_OUTPUT_PATH"
 
 cd "$API_PROJECT_PATH"
-dotnet publish -c $CONFIGURATION -o "$API_OUTPUT_PATH" --no-self-contained /p:PublishProfile="" /p:EnableSdkContainerSupport=false
+# Publish for IIS - self-contained to generate .exe executable
+dotnet publish -c $CONFIGURATION -o "$API_OUTPUT_PATH" \
+  --self-contained \
+  -r win-x64 \
+  /p:PublishProfile="" \
+  /p:EnableSdkContainerSupport=false \
+  /p:DebugType=none \
+  /p:DebugSymbols=false
 if [ $? -eq 0 ]; then
-    echo "✓ API published successfully"
+    echo "✓ API published successfully for IIS (win-x64 self-contained)"
 else
     echo "✗ API publish failed"
     exit 1

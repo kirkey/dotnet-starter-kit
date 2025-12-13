@@ -44,16 +44,16 @@ internal static class ShareAccountSeeder
 
             // Add to context first
             await context.ShareAccounts.AddAsync(account, cancellationToken).ConfigureAwait(false);
-            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             
-            // Now approve and activate the account (workflow: Pending -> Approved -> Active)
+            // Now approve and activate the account BEFORE saving (workflow: Pending -> Approved -> Active)
             account.Approve("Auto-approved during seeding");
             account.Activate();
-            await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-
-            // Purchase varying amounts of shares (5-100)
+            
+            // Purchase varying amounts of shares (5-100) BEFORE saving
             int shareCount = 5 + (random.Next(1, 20) * 5);
             account.PurchaseShares(shareCount, product.CurrentPrice);
+            
+            // Save everything at once after all operations are done
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         }
 

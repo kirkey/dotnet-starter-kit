@@ -65,7 +65,19 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
-    <script>navigator.serviceWorker.register('service-worker.js');</script>
+    <script src="js/serviceWorkerHelper.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(registration => {
+                    console.log('Service Worker registered successfully:', registration);
+                })
+                .catch(error => {
+                    console.warn('Service Worker registration failed:', error);
+                    // Application will continue to work without offline support
+                });
+        }
+    </script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
     <script src="js/networkStatus.js"></script>
     <script src="js/idle.js"></script>

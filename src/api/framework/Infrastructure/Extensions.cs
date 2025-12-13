@@ -69,11 +69,11 @@ public static class Extensions
     public static WebApplication UseFshFramework(this WebApplication app)
     {
         app.MapDefaultEndpoints();
+        app.UseCorsPolicy(); // CORS must be early in the pipeline to handle OPTIONS preflight requests
         app.UseRateLimit();
         app.UseSecurityHeaders();
         app.UseMultitenancy();
         app.UseExceptionHandler();
-        app.UseCorsPolicy();
         app.UseOpenApi();
         app.UseJobDashboard(app.Configuration);
         app.UseRouting();

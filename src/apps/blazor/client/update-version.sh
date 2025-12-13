@@ -1,4 +1,4 @@
-./update-version.sh -v 1.0.9 -d "Patch release"#!/bin/bash
+./update-version.sh -v 1.0.12 -d "Patch release"#!/bin/bash
 # Version Update Script
 # Updates the version.json file with a new version number and build timestamp
 
