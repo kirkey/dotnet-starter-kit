@@ -48,10 +48,34 @@ public partial class AddItemToSupplierDialog
             Snackbar.Add($"Item successfully added to supplier", Severity.Success);
             MudDialog.Close(DialogResult.Ok(true));
         }
+        catch (ApiException ex) when (ex.StatusCode == 409)
+        {
+            // Handle duplicate ItemSupplier error - extract detail from response
+            string errorMessage = "This item is already linked to the selected supplier";
+            
+            // Try to extract the detailed error message from the response
+            if (!string.IsNullOrEmpty(ex.Response))
+            {
+                try
+                {
+                    using var doc = System.Text.Json.JsonDocument.Parse(ex.Response);
+                    if (doc.RootElement.TryGetProperty("detail", out var detailElement))
+                    {
+                        errorMessage = detailElement.GetString() ?? errorMessage;
+                    }
+                }
+                catch
+                {
+                    // Fall back to default message if parsing fails
+                }
+            }
+            
+            Snackbar.Add(errorMessage, Severity.Error);
+        }
         catch (ApiException ex) when (ex.StatusCode == 400)
         {
-            // Handle duplicate ItemSupplier error
-            Snackbar.Add($"This item is already linked to the selected supplier", Severity.Error);
+            // Handle validation errors
+            Snackbar.Add($"Validation error: {ex.Message}", Severity.Error);
         }
         catch (Exception ex)
         {
