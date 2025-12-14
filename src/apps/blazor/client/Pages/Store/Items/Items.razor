@@ -150,6 +150,9 @@
         <MudMenuItem Icon="@Icons.Material.Filled.Dashboard" OnClick="@(() => OnViewDashboard(item.Id))">
             View Dashboard
         </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Filled.AddBusiness" OnClick="@(() => OnAddToSupplier(item.Id, item.Name))">
+            Add to Supplier
+        </MudMenuItem>
     </ExtraActions>
 </EntityTable>
 

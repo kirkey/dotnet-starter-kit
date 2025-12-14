@@ -1,0 +1,99 @@
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="_form" Model="@Model">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField Label="Item" 
+                                  Value="@_itemName" 
+                                  ReadOnly="true" 
+                                  Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <AutocompleteSupplier Value="Model.SupplierId"
+                                          ValueChanged="@((DefaultIdType? val) => Model.SupplierId = val ?? DefaultIdType.Empty)"
+                                          For="@(() => Model.SupplierId)"
+                                          Label="Supplier"
+                                          Required="true"
+                                          Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField T="decimal" 
+                                     @bind-Value="Model.UnitCost" 
+                                     For="@(() => Model.UnitCost)" 
+                                     Label="Unit Cost" 
+                                     Required="true" 
+                                     Min="0" 
+                                     Format="N2" 
+                                     Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField T="int" 
+                                     @bind-Value="Model.LeadTimeDays" 
+                                     For="@(() => Model.LeadTimeDays)" 
+                                     Label="Lead Time (Days)" 
+                                     Required="true" 
+                                     Min="0" 
+                                     Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField T="int" 
+                                     @bind-Value="Model.MinimumOrderQuantity" 
+                                     For="@(() => Model.MinimumOrderQuantity)" 
+                                     Label="Minimum Order Quantity" 
+                                     Required="true" 
+                                     Min="1" 
+                                     Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="Supplier Part Number" 
+                                  For="@(() => Model.SupplierPartNumber)" 
+                                  @bind-Value="Model.SupplierPartNumber" 
+                                  Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudNumericField T="int?" 
+                                     @bind-Value="Model.PackagingQuantity" 
+                                     For="@(() => Model.PackagingQuantity)" 
+                                     Label="Packaging Quantity" 
+                                     Min="1" 
+                                     Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudSwitch @bind-Value="Model.IsPreferred" 
+                               For="@(() => Model.IsPreferred)" 
+                               Label="Preferred Supplier" 
+                               Color="Color.Primary" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField Label="Description" 
+                                  For="@(() => Model.Description)" 
+                                  @bind-Value="Model.Description" 
+                                  Lines="3" 
+                                  Variant="Variant.Filled" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField Label="Notes" 
+                                  For="@(() => Model.Notes)" 
+                                  @bind-Value="Model.Notes" 
+                                  Lines="3" 
+                                  Variant="Variant.Filled" />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Add to Supplier</MudButton>
+    </DialogActions>
+</MudDialog>

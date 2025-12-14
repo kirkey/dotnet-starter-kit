@@ -193,6 +193,33 @@ public partial class Items
     }
 
     /// <summary>
+    /// Show dialog to add item to supplier.
+    /// </summary>
+    private async Task OnAddToSupplier(DefaultIdType itemId, string itemName)
+    {
+        var parameters = new DialogParameters
+        {
+            { nameof(AddItemToSupplierDialog.ItemId), itemId },
+            { nameof(AddItemToSupplierDialog.ItemName), itemName }
+        };
+
+        var options = new DialogOptions
+        {
+            CloseButton = true,
+            MaxWidth = MaxWidth.Medium,
+            FullWidth = true
+        };
+
+        var dialog = await DialogService.ShowAsync<AddItemToSupplierDialog>("Add Item to Supplier", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await _table.ReloadDataAsync();
+        }
+    }
+
+    /// <summary>
     /// Show items help dialog.
     /// </summary>
     private async Task ShowItemsHelp()
