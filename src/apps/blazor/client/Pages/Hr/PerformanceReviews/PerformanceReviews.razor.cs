@@ -1,5 +1,3 @@
-using FSH.Starter.Blazor.Infrastructure.Api;
-
 namespace FSH.Starter.Blazor.Client.Pages.Hr.PerformanceReviews;
 
 /// <summary>

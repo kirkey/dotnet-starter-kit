@@ -1,7 +1,3 @@
-using FSH.Starter.Blazor.Shared;
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
-
 namespace FSH.Starter.Blazor.Client.Pages.Store.Suppliers;
 
 public partial class SupplierDashboard

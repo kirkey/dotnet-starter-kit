@@ -6,12 +6,12 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 /// </summary>
 public class AutocompleteSupplier : AutocompleteBase<SupplierResponse, IClient, DefaultIdType?>
 {
-    private readonly ISnackbar _snackbar = null!;
+    [Inject] private ISnackbar _snackbar { get; set; } = null!;
     private Dictionary<DefaultIdType, SupplierResponse> _cache = [];
 
     protected override async Task<SupplierResponse?> GetItem(DefaultIdType? id)
     {
-        if (!id.HasValue) return null;
+        if (!id.HasValue || id.Value == DefaultIdType.Empty) return null;
         if (_cache.TryGetValue(id.Value, out var cached)) return cached;
 
         try

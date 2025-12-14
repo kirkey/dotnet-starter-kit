@@ -1,8 +1,3 @@
-using FSH.Starter.Blazor.Client.Components.Dialogs;
-using FSH.Starter.Blazor.Shared;
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
-
 namespace FSH.Starter.Blazor.Client.Pages.MicroFinance.Members;
 
 public partial class MemberDashboard

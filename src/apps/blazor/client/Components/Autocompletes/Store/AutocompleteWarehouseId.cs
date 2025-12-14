@@ -17,7 +17,7 @@ public class AutocompleteWarehouseId : AutocompleteBase<WarehouseResponse, IClie
     /// <returns>The warehouse response, or null if not found.</returns>
     protected override async Task<WarehouseResponse?> GetItem(DefaultIdType? id)
     {
-        if (id is null or null) return null;
+        if (!id.HasValue || id.Value == DefaultIdType.Empty) return null;
         
         if (_cache.TryGetValue(id.Value, out var cached)) return cached;
 

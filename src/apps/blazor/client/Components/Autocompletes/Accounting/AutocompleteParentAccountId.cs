@@ -19,7 +19,7 @@ public class AutocompleteParentAccountId : AutocompleteBase<ChartOfAccountRespon
     /// <returns>The category response, or null if not found.</returns>
     protected override async Task<ChartOfAccountResponse?> GetItem(DefaultIdType? id)
     {
-        if (!id.HasValue) return null;
+        if (!id.HasValue || id.Value == DefaultIdType.Empty) return null;
         if (_cache.TryGetValue(id.Value, out var cached)) return cached;
 
         var dto = await ApiHelper.ExecuteCallGuardedAsync(

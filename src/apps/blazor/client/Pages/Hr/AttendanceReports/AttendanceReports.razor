@@ -1,6 +1,4 @@
 @page "/hr/attendance-reports"
-@using FSH.Starter.Blazor.Client.Pages.Hr.AttendanceReports
-@using FSH.Starter.Blazor.Client.Components.EntityTable
 
 <FshPage Title="Attendance Reports"
          Description="View and analyze attendance statistics and trends">
@@ -16,7 +14,7 @@
                            OnClick="ShowHelp" />
         </MudTooltip>
     </ExtraActions>
-    <ChildContent>
+    <ChildContent Context="context">
         <EntityTable @ref="_table" TEntity="AttendanceReportDto" TId="DefaultIdType" TRequest="AttendanceReportViewModel" Context="Context">
             <ExtraActions>
                 <MudMenuItem OnClick="@(() => ViewReportDetailsAsync(context))"

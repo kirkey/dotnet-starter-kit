@@ -1,4 +1,3 @@
-using FSH.Starter.Blazor.Infrastructure.Api;
 namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Hr;
 
 /// <summary>
@@ -9,7 +8,7 @@ public class AutocompleteEmployee : AutocompleteBase<EmployeeResponse, IClient, 
 {
     protected override async Task<EmployeeResponse?> GetItem(DefaultIdType? id)
     {
-        if (!id.HasValue) return null;
+        if (!id.HasValue || id.Value == DefaultIdType.Empty) return null;
         
         try
         {

@@ -7,7 +7,7 @@ namespace FSH.Starter.Blazor.Client.Components.Autocompletes.Store;
 /// </summary>
 public class AutocompleteItem : AutocompleteBase<ItemResponse, IClient, DefaultIdType>
 {
-    private readonly ISnackbar _snackbar = null!;
+    [Inject] private ISnackbar _snackbar { get; set; } = null!;
     
     /// <summary>
     /// Optional supplier ID to filter items by supplier.
@@ -18,6 +18,7 @@ public class AutocompleteItem : AutocompleteBase<ItemResponse, IClient, DefaultI
     
     protected override async Task<ItemResponse?> GetItem(DefaultIdType id)
     {
+        if (id == DefaultIdType.Empty) return null;
         try
         {
             return await Client.GetItemEndpointAsync("1", id).ConfigureAwait(false);
