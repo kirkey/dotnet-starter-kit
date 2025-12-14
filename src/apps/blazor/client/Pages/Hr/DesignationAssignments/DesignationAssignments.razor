@@ -18,7 +18,7 @@
     
     <!-- Tab 1: Current Assignments View -->
     <MudTabPanel Text="Current Assignments" Icon="@Icons.Material.Filled.Assignment">
-        <MudPaper Elevation="0" Class="pa-4">
+        <MudPaper Elevation="@_preference.Elevation" Class="pa-4">
             <EntityTable TEntity="DesignationAssignmentResponse" TId="DefaultIdType" TRequest="DesignationAssignmentViewModel" Context="Context">
                 <EditFormContent Context="context">
                     @if (context.Id != DefaultIdType.Empty)
@@ -156,7 +156,7 @@
 
     <!-- Tab 2: Assignment History View -->
     <MudTabPanel Text="Assignment History" Icon="@Icons.Material.Filled.History">
-        <MudPaper Elevation="0" Class="pa-4">
+        <MudPaper Elevation="@_preference.Elevation" Class="pa-4">
             <MudText Typo="Typo.h6" Class="mb-4">Employee Assignment History</MudText>
             
             <MudGrid Spacing="2" Class="mb-4">

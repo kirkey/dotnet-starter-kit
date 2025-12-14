@@ -4,7 +4,7 @@
     <DialogContent>
         @if (Report != null)
         {
-            <MudTabs Elevation="0" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-4">
+            <MudTabs Elevation="@_preference.Elevation" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-4">
                 <MudTabPanel Text="Overview">
                     <MudGrid>
                         <MudItem xs="12" md="6">
@@ -32,20 +32,20 @@
                 <MudTabPanel Text="Credit Score">
                     <MudGrid>
                         <MudItem xs="12" md="4">
-                            <MudPaper Class="pa-4 text-center" Elevation="2">
+                            <MudPaper Class="pa-4 text-center" Elevation="@_preference.Elevation">
                                 <MudText Typo="Typo.h3" Color="@GetScoreColor(Report.CreditScore)">@Report.CreditScore</MudText>
                                 <MudText Typo="Typo.body2">Credit Score</MudText>
                                 <MudText Typo="Typo.caption">(@Report.ScoreMin - @Report.ScoreMax)</MudText>
                             </MudPaper>
                         </MudItem>
                         <MudItem xs="12" md="4">
-                            <MudPaper Class="pa-4 text-center" Elevation="2">
+                            <MudPaper Class="pa-4 text-center" Elevation="@_preference.Elevation">
                                 <MudText Typo="Typo.h4">@Report.RiskGrade</MudText>
                                 <MudText Typo="Typo.body2">Risk Grade</MudText>
                             </MudPaper>
                         </MudItem>
                         <MudItem xs="12" md="4">
-                            <MudPaper Class="pa-4 text-center" Elevation="2">
+                            <MudPaper Class="pa-4 text-center" Elevation="@_preference.Elevation">
                                 <MudText Typo="Typo.h4">@(Report.CreditUtilization?.ToString("P0") ?? "N/A")</MudText>
                                 <MudText Typo="Typo.body2">Credit Utilization</MudText>
                             </MudPaper>

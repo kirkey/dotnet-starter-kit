@@ -10,7 +10,7 @@
         {
             <MudGrid Spacing="2">
                 <MudItem xs="12">
-                    <MudPaper Elevation="2" Class="pa-4">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-4">
                         <MudGrid>
                             <MudItem xs="12" md="6">
                                 <MudText Typo="Typo.h5" Class="mb-2">
@@ -32,7 +32,7 @@
                 </MudItem>
 
                 <MudItem xs="12" md="6">
-                    <MudPaper Elevation="1" Class="pa-3">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-3">
                         <MudText Typo="Typo.h6" Class="mb-2">Invoice Information</MudText>
                         <MudList T="string" Dense="true">
                             <MudListItem T="string" Icon="@Icons.Material.Filled.CalendarToday">
@@ -55,7 +55,7 @@
                 </MudItem>
 
                 <MudItem xs="12" md="6">
-                    <MudPaper Elevation="1" Class="pa-3">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-3">
                         <MudText Typo="Typo.h6" Class="mb-2">Payment Information</MudText>
                         <MudList T="string" Dense="true">
                             <MudListItem T="string" Icon="@Icons.Material.Filled.AttachMoney">
@@ -81,7 +81,7 @@
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudPaper Elevation="1" Class="pa-3">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-3">
                         <MudText Typo="Typo.h6" Class="mb-3">Charge Breakdown</MudText>
                         <MudSimpleTable Dense="true" Hover="true" Bordered="true">
                             <thead>
@@ -183,9 +183,9 @@
                 @if (_lineItems.Any())
                 {
                     <MudItem xs="12">
-                        <MudPaper Elevation="1" Class="pa-3">
+                        <MudPaper Elevation="@_preference.Elevation" Class="pa-3">
                             <MudText Typo="Typo.h6" Class="mb-3">Invoice Line Items</MudText>
-                            <MudTable Items="@_lineItems" Dense="true" Hover="true" Elevation="0">
+                            <MudTable Items="@_lineItems" Dense="true" Hover="true" Elevation="@_preference.Elevation">
                                 <HeaderContent>
                                     <MudTh>Description</MudTh>
                                     <MudTh>Account</MudTh>
@@ -212,7 +212,7 @@
                 @if (!string.IsNullOrEmpty(_invoice.Description))
                 {
                     <MudItem xs="12">
-                        <MudPaper Elevation="1" Class="pa-3">
+                        <MudPaper Elevation="@_preference.Elevation" Class="pa-3">
                             <MudText Typo="Typo.h6" Class="mb-2">Description</MudText>
                             <MudText>@_invoice.Description</MudText>
                         </MudPaper>
@@ -222,7 +222,7 @@
                 @if (!string.IsNullOrEmpty(_invoice.Notes))
                 {
                     <MudItem xs="12">
-                        <MudPaper Elevation="1" Class="pa-3">
+                        <MudPaper Elevation="@_preference.Elevation" Class="pa-3">
                             <MudText Typo="Typo.h6" Class="mb-2">Notes</MudText>
                             <MudText>@_invoice.Notes</MudText>
                         </MudPaper>

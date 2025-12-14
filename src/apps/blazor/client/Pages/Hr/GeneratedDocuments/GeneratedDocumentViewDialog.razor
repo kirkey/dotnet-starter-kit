@@ -55,7 +55,7 @@
                     <MudItem xs="12">
                         <MudDivider Class="my-3" />
                         <MudText Typo="Typo.subtitle2">Content Preview</MudText>
-                        <MudPaper Elevation="0" Class="pa-3 mt-2" Style="background-color: var(--mud-palette-background-gray); max-height: 300px; overflow-y: auto;">
+                        <MudPaper Elevation="@_preference.Elevation" Class="pa-3 mt-2" Style="background-color: var(--mud-palette-background-gray); max-height: 300px; overflow-y: auto;">
                             @((MarkupString)Document.GeneratedContent)
                         </MudPaper>
                     </MudItem>

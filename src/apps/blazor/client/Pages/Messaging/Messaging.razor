@@ -193,7 +193,7 @@
                     <MudStack Class="pa-3" Spacing="2">
                         @if (_replyToMessage != null)
                         {
-                            <MudPaper Class="pa-2" Elevation="0" Style="background-color: var(--mud-palette-background-grey);">
+                            <MudPaper Class="pa-2" Elevation="@_preference.Elevation" Style="background-color: var(--mud-palette-background-grey);">
                                 <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
                                     <MudStack Spacing="0">
                                         <MudText Typo="Typo.caption" Color="Color.Primary">Replying to</MudText>

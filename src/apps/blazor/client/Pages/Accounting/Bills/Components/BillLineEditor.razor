@@ -4,7 +4,7 @@
     Similar to Journal Entry Line Editor pattern
 *@
 
-<MudTable Items="@Lines" Dense="true" Hover="true" Elevation="0" Class="mb-3">
+<MudTable Items="@Lines" Dense="true" Hover="true" Elevation="@_preference.Elevation" Class="mb-3">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Bill Line Items</MudText>
         <MudSpacer />

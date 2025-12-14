@@ -30,7 +30,7 @@
         
         <MudText Typo="Typo.subtitle1" Class="mb-2" Color="Color.Primary">Template Variables</MudText>
         <MudText Class="mb-2">Use these placeholders in your template content:</MudText>
-        <MudPaper Class="pa-3 mb-4" Elevation="0" Style="background-color: var(--mud-palette-background-grey);">
+        <MudPaper Class="pa-3 mb-4" Elevation="@_preference.Elevation" Style="background-color: var(--mud-palette-background-grey);">
             <code>
                 {{EmployeeName}}, {{Position}}, {{Department}}<br/>
                 {{StartDate}}, {{EndDate}}, {{Salary}}<br/>

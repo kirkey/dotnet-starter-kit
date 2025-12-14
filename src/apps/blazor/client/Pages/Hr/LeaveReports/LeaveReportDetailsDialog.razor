@@ -15,7 +15,7 @@
                 </MudItem>
 
                 <MudItem xs="6" md="3">
-                    <MudCard Elevation="1" Class="pa-3 text-center">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudIcon Icon="@Icons.Material.Filled.People" Color="Color.Primary" Size="Size.Large" />
                         <MudText Typo="Typo.h5">@Report.TotalEmployees</MudText>
                         <MudText Typo="Typo.caption">Total Employees</MudText>
@@ -23,7 +23,7 @@
                 </MudItem>
 
                 <MudItem xs="6" md="3">
-                    <MudCard Elevation="1" Class="pa-3 text-center">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudIcon Icon="@Icons.Material.Filled.Assignment" Color="Color.Info" Size="Size.Large" />
                         <MudText Typo="Typo.h5">@Report.TotalLeaveRequests</MudText>
                         <MudText Typo="Typo.caption">Total Requests</MudText>
@@ -31,7 +31,7 @@
                 </MudItem>
 
                 <MudItem xs="6" md="3">
-                    <MudCard Elevation="1" Class="pa-3 text-center">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Large" />
                         <MudText Typo="Typo.h5">@Report.ApprovedLeaveCount</MudText>
                         <MudText Typo="Typo.caption">Approved</MudText>
@@ -39,7 +39,7 @@
                 </MudItem>
 
                 <MudItem xs="6" md="3">
-                    <MudCard Elevation="1" Class="pa-3 text-center">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudIcon Icon="@Icons.Material.Filled.Pending" Color="Color.Warning" Size="Size.Large" />
                         <MudText Typo="Typo.h5">@Report.PendingLeaveCount</MudText>
                         <MudText Typo="Typo.caption">Pending</MudText>

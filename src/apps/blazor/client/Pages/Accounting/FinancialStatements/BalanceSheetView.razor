@@ -242,7 +242,7 @@
 
                     <!-- Grand Total -->
                     <MudDivider Class="my-4" />
-                    <MudPaper Elevation="3" Class="pa-3" Style="background-color: var(--mud-palette-info-lighten);">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-3" Style="background-color: var(--mud-palette-info-lighten);">
                         <MudText Typo="Typo.h5" Style="font-weight: bold;">
                             Total Liabilities and Equity: @_balanceSheet.TotalLiabilitiesAndEquity.ToString("N2")
                         </MudText>

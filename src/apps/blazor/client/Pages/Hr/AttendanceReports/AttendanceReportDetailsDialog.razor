@@ -15,7 +15,7 @@
                 </MudItem>
 
                 <MudItem xs="6" md="3">
-                    <MudCard Elevation="1" Class="pa-3 text-center">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudIcon Icon="@Icons.Material.Filled.People" Color="Color.Primary" Size="Size.Large" />
                         <MudText Typo="Typo.h5">@Report.TotalEmployees</MudText>
                         <MudText Typo="Typo.caption">Total Employees</MudText>
@@ -23,7 +23,7 @@
                 </MudItem>
 
                 <MudItem xs="6" md="3">
-                    <MudCard Elevation="1" Class="pa-3 text-center">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Large" />
                         <MudText Typo="Typo.h5">@Report.PresentCount</MudText>
                         <MudText Typo="Typo.caption">Present</MudText>
@@ -31,7 +31,7 @@
                 </MudItem>
 
                 <MudItem xs="6" md="3">
-                    <MudCard Elevation="1" Class="pa-3 text-center">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Size="Size.Large" />
                         <MudText Typo="Typo.h5">@Report.AbsentCount</MudText>
                         <MudText Typo="Typo.caption">Absent</MudText>
@@ -39,7 +39,7 @@
                 </MudItem>
 
                 <MudItem xs="6" md="3">
-                    <MudCard Elevation="1" Class="pa-3 text-center">
+                    <MudCard Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudIcon Icon="@Icons.Material.Filled.Percent" Color="Color.Info" Size="Size.Large" />
                         <MudText Typo="Typo.h5">@Report.AttendancePercentage.ToString("F1")%</MudText>
                         <MudText Typo="Typo.caption">Attendance Rate</MudText>

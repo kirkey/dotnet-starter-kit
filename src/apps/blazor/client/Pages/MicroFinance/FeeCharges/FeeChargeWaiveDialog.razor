@@ -22,13 +22,13 @@
                 </MudItem>
 
                 <MudItem xs="12" md="6">
-                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudText Typo="Typo.caption" Color="Color.Secondary">Total Amount</MudText>
                         <MudText Typo="Typo.h6">@_charge.Amount.ToString("C2")</MudText>
                     </MudPaper>
                 </MudItem>
                 <MudItem xs="12" md="6">
-                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudText Typo="Typo.caption" Color="Color.Secondary">Outstanding</MudText>
                         <MudText Typo="Typo.h6" Color="Color.Warning">@_charge.Outstanding.ToString("C2")</MudText>
                     </MudPaper>

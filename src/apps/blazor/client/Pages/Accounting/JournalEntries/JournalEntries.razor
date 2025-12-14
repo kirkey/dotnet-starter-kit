@@ -221,7 +221,7 @@
             </MudItem>
 
             <MudItem xs="12">
-                <MudTable Items="@context.Lines" Dense="true" Hover="true" Elevation="0">
+                <MudTable Items="@context.Lines" Dense="true" Hover="true" Elevation="@_preference.Elevation">
                     <HeaderContent>
                         <MudTh>Account</MudTh>
                         <MudTh Style="text-align:right">Debit</MudTh>

@@ -3,7 +3,7 @@
     Provides inline editing of invoice line items with real-time total calculation
 *@
 
-<MudTable Items="@Lines" Dense="true" Hover="true" Elevation="0" Class="mb-3">
+<MudTable Items="@Lines" Dense="true" Hover="true" Elevation="@_preference.Elevation" Class="mb-3">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Invoice Line Items</MudText>
         <MudSpacer />

@@ -48,7 +48,7 @@
                     @if (!string.IsNullOrEmpty(Valuation.Notes))
                     {
                         <MudText Typo="Typo.h6" Class="mb-2">Notes</MudText>
-                        <MudPaper Elevation="0" Class="pa-3 mud-background-gray">
+                        <MudPaper Elevation="@_preference.Elevation" Class="pa-3 mud-background-gray">
                             <MudText>@Valuation.Notes</MudText>
                         </MudPaper>
                     }

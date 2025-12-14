@@ -3,7 +3,7 @@
 <MudDialog>
     <DialogContent>
         <MudStack Spacing="3">
-            <MudPaper Elevation="0" Class="pa-4 mud-theme-primary" Style="border-radius: 8px;">
+            <MudPaper Elevation="@_preference.Elevation" Class="pa-4 mud-theme-primary" Style="border-radius: 8px;">
                 <MudText Typo="Typo.h6">@Enrollment.BenefitName</MudText>
                 <MudText Typo="Typo.body2">Enrollment for @Enrollment.EmployeeName</MudText>
             </MudPaper>
@@ -55,7 +55,7 @@
             <MudText Typo="Typo.subtitle2">Contributions (Per Pay Period)</MudText>
             <MudGrid>
                 <MudItem xs="6">
-                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudText Typo="Typo.caption">Employee</MudText>
                         <MudText Typo="Typo.h6" Color="Color.Primary">
                             @Enrollment.EmployeeContributionAmount.ToString("C2")
@@ -63,7 +63,7 @@
                     </MudPaper>
                 </MudItem>
                 <MudItem xs="6">
-                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudText Typo="Typo.caption">Employer</MudText>
                         <MudText Typo="Typo.h6" Color="Color.Secondary">
                             @Enrollment.EmployerContributionAmount.ToString("C2")
@@ -72,7 +72,7 @@
                 </MudItem>
             </MudGrid>
 
-            <MudPaper Elevation="1" Class="pa-3 text-center">
+            <MudPaper Elevation="@_preference.Elevation" Class="pa-3 text-center">
                 <MudText Typo="Typo.caption">Annual Total Contribution</MudText>
                 <MudText Typo="Typo.h5" Color="Color.Info">
                     @Enrollment.AnnualContribution.ToString("C2")

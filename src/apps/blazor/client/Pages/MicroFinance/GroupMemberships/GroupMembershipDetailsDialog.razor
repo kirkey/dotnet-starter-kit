@@ -16,7 +16,7 @@
         {
             <MudGrid>
                 <MudItem xs="12">
-                    <MudPaper Elevation="0" Class="pa-4" Style="background-color: var(--mud-palette-background-grey);">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-4" Style="background-color: var(--mud-palette-background-grey);">
                         <MudGrid>
                             <MudItem xs="12" md="6">
                                 <MudText Typo="Typo.caption" Color="Color.Secondary">Group ID</MudText>
@@ -48,19 +48,19 @@
                 </MudItem>
 
                 <MudItem xs="12" md="4">
-                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudText Typo="Typo.caption" Color="Color.Secondary">Role</MudText>
                         <MudText Typo="Typo.h6" Color="Color.Primary">@_membership.Role</MudText>
                     </MudPaper>
                 </MudItem>
                 <MudItem xs="12" md="4">
-                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudText Typo="Typo.caption" Color="Color.Secondary">Join Date</MudText>
                         <MudText Typo="Typo.h6">@_membership.JoinDate.ToString("MMM dd, yyyy")</MudText>
                     </MudPaper>
                 </MudItem>
                 <MudItem xs="12" md="4">
-                    <MudPaper Elevation="1" Class="pa-3 text-center">
+                    <MudPaper Elevation="@_preference.Elevation" Class="pa-3 text-center">
                         <MudText Typo="Typo.caption" Color="Color.Secondary">Leave Date</MudText>
                         <MudText Typo="Typo.h6">@(_membership.LeaveDate?.ToString("MMM dd, yyyy") ?? "N/A")</MudText>
                     </MudPaper>
