@@ -6,7 +6,7 @@
             <MudText Typo="Typo.h6">Account Reconciliation Help</MudText>
 
             <MudExpansionPanels Elevation="@_preference.Elevation">
-                <MudExpansionPanel Text="What is Account Reconciliation?">
+                <MudExpansionPanel Text="What is Account Reconciliation?" Icon="@Icons.Material.Filled.MenuBook">
                     <MudStack Spacing="2">
                         <MudText Typo="Typo.body2">
                             Account reconciliation is the process of verifying that the General Ledger (GL) balance 
@@ -19,7 +19,7 @@
                     </MudStack>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="How to Create a Reconciliation">
+                <MudExpansionPanel Text="How to Create a Reconciliation" Icon="@Icons.Material.Filled.AddCircle">
                     <MudStack Spacing="2">
                         <MudText Typo="Typo.body2">
                             <ol style="margin: 10px 0; padding-left: 20px;">
@@ -36,7 +36,7 @@
                     </MudStack>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Handling Variance">
+                <MudExpansionPanel Text="Handling Variance" Icon="@Icons.Material.Filled.Warning">
                     <MudStack Spacing="2">
                         <MudText Typo="Typo.body2">
                             If the GL balance does not equal the subsidiary ledger balance, there is a variance:
@@ -54,7 +54,7 @@
                     </MudStack>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Approval Process">
+                <MudExpansionPanel Text="Approval Process" Icon="@Icons.Material.Filled.Timeline">
                     <MudStack Spacing="2">
                         <MudText Typo="Typo.body2">
                             Once reconciliation is complete (variance = zero):
@@ -72,7 +72,7 @@
                     </MudStack>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Reconciliation Statuses">
+                <MudExpansionPanel Text="Reconciliation Statuses" Icon="@Icons.Material.Filled.Info">
                     <MudList T="string" Dense="true">
                         <MudListItem T="string" Icon="@Icons.Material.Filled.Schedule">
                             <strong>Pending:</strong> Initial state when first created
@@ -92,7 +92,7 @@
                     </MudList>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Best Practices">
+                <MudExpansionPanel Text="Best Practices" Icon="@Icons.Material.Filled.Lightbulb">
                     <MudList T="string" Dense="true">
                         <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle" IconColor="Color.Success">
                             Reconcile accounts monthly, ideally within 5 business days of period end

@@ -7,7 +7,7 @@
     </TitleContent>
     <DialogContent>
         <MudExpansionPanels Elevation="@_preference.Elevation" MultiExpansion="true">
-            <MudExpansionPanel Text="Overview">
+            <MudExpansionPanel Text="Overview" Icon="@Icons.Material.Filled.Info">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     Leave Requests allow employees to request time off from work.
                     Requests go through an approval workflow before being finalized
@@ -15,7 +15,7 @@
                 </MudText>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Request Lifecycle">
+            <MudExpansionPanel Text="Request Lifecycle" Icon="@Icons.Material.Filled.Timeline">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.Edit">
                         <b>Draft</b> - Initial state. Can be edited before submission.
@@ -35,7 +35,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Creating a Leave Request">
+            <MudExpansionPanel Text="Creating a Leave Request" Icon="@Icons.Material.Filled.AddCircle">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     To create a new leave request:
                 </MudText>
@@ -58,7 +58,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Workflow Actions">
+            <MudExpansionPanel Text="Workflow Actions" Icon="@Icons.Material.Filled.Timeline">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     Use the action menu to perform workflow actions:
                 </MudText>
@@ -78,7 +78,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Best Practices">
+            <MudExpansionPanel Text="Best Practices" Icon="@Icons.Material.Filled.CheckCircle">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.Schedule">
                         Submit requests in advance when possible.

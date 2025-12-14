@@ -7,7 +7,7 @@
     </TitleContent>
     <DialogContent>
         <MudExpansionPanels Elevation="@_preference.Elevation" MultiExpansion="true">
-            <MudExpansionPanel Text="Overview">
+            <MudExpansionPanel Text="Overview" Icon="@Icons.Material.Filled.Info">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     The Payrolls module manages payroll periods and the processing workflow.
                     Each payroll represents a pay period (weekly, bi-weekly, semi-monthly, or monthly)
@@ -15,7 +15,7 @@
                 </MudText>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Payroll Lifecycle">
+            <MudExpansionPanel Text="Payroll Lifecycle" Icon="@Icons.Material.Filled.Timeline">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     Payrolls follow a defined workflow:
                 </MudText>
@@ -38,7 +38,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Creating a Payroll">
+            <MudExpansionPanel Text="Creating a Payroll" Icon="@Icons.Material.Filled.AddCircle">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     To create a new payroll period:
                 </MudText>
@@ -58,7 +58,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Workflow Actions">
+            <MudExpansionPanel Text="Workflow Actions" Icon="@Icons.Material.Filled.Timeline">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     Use the action menu (three dots) to perform workflow actions:
                 </MudText>
@@ -78,7 +78,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Pay Frequency Options">
+            <MudExpansionPanel Text="Pay Frequency Options" Icon="@Icons.Material.Filled.Info">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.Event">
                         <b>Weekly</b> - 52 pay periods per year.
@@ -95,7 +95,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Payroll Totals">
+            <MudExpansionPanel Text="Payroll Totals" Icon="@Icons.Material.Filled.Info">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     The grid displays aggregated totals:
                 </MudText>

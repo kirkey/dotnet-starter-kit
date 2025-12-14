@@ -6,7 +6,7 @@
     </TitleContent>
     <DialogContent>
         <MudExpansionPanels Elevation="@_preference.Elevation" MultiExpansion="true">
-            <MudExpansionPanel Text="Overview" IsInitiallyExpanded="true">
+            <MudExpansionPanel Text="Overview" Icon="@Icons.Material.Filled.Info" IsInitiallyExpanded="true">
                 <MudText Typo="Typo.body2" Class="mb-2">
                     The Supplier Dashboard provides comprehensive analytics and performance metrics for a specific supplier. 
                     It displays order trends, delivery performance, quality metrics, financial summaries, and comparative rankings 
@@ -14,7 +14,7 @@
                 </MudText>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Key Performance Indicators (KPIs)">
+            <MudExpansionPanel Text="Key Performance Indicators (KPIs)" Icon="@Icons.Material.Filled.TrendingUp">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.ShoppingCart">
                         <b>Total Orders:</b> Total number of purchase orders placed with this supplier, including pending orders.
@@ -31,7 +31,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Performance Tiers">
+            <MudExpansionPanel Text="Performance Tiers" Icon="@Icons.Material.Filled.TrendingUp">
                 <MudText Typo="Typo.body2" Class="mb-2">
                     Suppliers are classified into performance tiers based on their overall metrics:
                 </MudText>
@@ -57,7 +57,7 @@
                 </MudSimpleTable>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Order Value Trend">
+            <MudExpansionPanel Text="Order Value Trend" Icon="@Icons.Material.Filled.TrendingUp">
                 <MudText Typo="Typo.body2" Class="mb-2">
                     The order value trend chart displays historical purchasing data over the last 12 months. The area chart 
                     shows total order value while the line chart shows order count. Use this to identify purchasing patterns 
@@ -65,7 +65,7 @@
                 </MudText>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Delivery Performance">
+            <MudExpansionPanel Text="Delivery Performance" Icon="@Icons.Material.Filled.TrendingUp">
                 <MudText Typo="Typo.body2" Class="mb-2">
                     Delivery metrics help evaluate the supplier's reliability:
                 </MudText>
@@ -85,7 +85,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Quality Metrics">
+            <MudExpansionPanel Text="Quality Metrics" Icon="@Icons.Material.Filled.CheckCircle">
                 <MudText Typo="Typo.body2" Class="mb-2">
                     Quality metrics measure the supplier's product reliability:
                 </MudText>
@@ -102,7 +102,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Financial Summary">
+            <MudExpansionPanel Text="Financial Summary" Icon="@Icons.Material.Filled.AttachMoney">
                 <MudText Typo="Typo.body2" Class="mb-2">
                     Financial metrics provide visibility into the commercial relationship:
                 </MudText>
@@ -114,7 +114,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Supplier Rankings">
+            <MudExpansionPanel Text="Supplier Rankings" Icon="@Icons.Material.Filled.Stars">
                 <MudText Typo="Typo.body2" Class="mb-2">
                     Rankings compare this supplier against all other suppliers across different dimensions:
                 </MudText>

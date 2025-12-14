@@ -3,11 +3,10 @@
 <MudDialog>
     <DialogContent>
         <MudStack Spacing="3">
-            <MudText Typo="Typo.h6">Understanding Work Shifts</MudText>
 
             <MudExpansionPanels Elevation="@_preference.Elevation">
-                <MudExpansionPanel Text="What is a Shift?">
-                    <MudText Typo="Typo.body2" Class="mb-2">
+                <MudExpansionPanel Text="What is a Shift?" Icon="@Icons.Material.Filled.Schedule">
+                    <MudStack Spacing="2">
                         A shift defines a reusable work schedule template that can be assigned to employees. 
                         Each shift specifies work hours, break times, and whether it spans overnight.
                     </MudText>
@@ -22,7 +21,7 @@
                     </MudList>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Overnight Shifts">
+                <MudExpansionPanel Text="Overnight Shifts" Icon="@Icons.Material.Filled.Info">
                     <MudText Typo="Typo.body2" Class="mb-2">
                         Enable "Overnight Shift" when the shift spans midnight (e.g., 10:00 PM to 6:00 AM).
                     </MudText>
@@ -31,7 +30,7 @@
                     </MudAlert>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Break Duration">
+                <MudExpansionPanel Text="Break Duration" Icon="@Icons.Material.Filled.Info">
                     <MudText Typo="Typo.body2" Class="mb-2">
                         Break duration is the total break time in minutes for the shift. This is subtracted 
                         from the total shift duration to calculate working hours.
@@ -41,7 +40,7 @@
                     </MudText>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Managing Shifts">
+                <MudExpansionPanel Text="Managing Shifts" Icon="@Icons.Material.Filled.Settings">
                     <MudText Typo="Typo.body2" Class="mb-2">
                         <strong>Creating a Shift:</strong>
                     </MudText>
@@ -54,7 +53,7 @@
                     </MudList>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Assigning Shifts to Employees">
+                <MudExpansionPanel Text="Assigning Shifts to Employees" Icon="@Icons.Material.Filled.Info">
                     <MudText Typo="Typo.body2" Class="mb-2">
                         After creating shifts, you can assign them to employees through:
                     </MudText>

@@ -6,7 +6,7 @@
     </TitleContent>
     <DialogContent>
         <MudExpansionPanels Elevation="@_preference.Elevation" MultiExpansion="true">
-            <MudExpansionPanel Text="Overview" IsInitiallyExpanded="true">
+            <MudExpansionPanel Text="Overview" Icon="@Icons.Material.Filled.Info" IsInitiallyExpanded="true">
                 <MudText Typo="Typo.body2" Class="mb-2">
                     The Item Dashboard provides comprehensive analytics and performance metrics for a specific inventory item. 
                     It displays sales trends, stock levels, supplier performance, and backorder analysis to help you make 
@@ -14,7 +14,7 @@
                 </MudText>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Key Performance Indicators (KPIs)">
+            <MudExpansionPanel Text="Key Performance Indicators (KPIs)" Icon="@Icons.Material.Filled.TrendingUp">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.Inventory2">
                         <b>Stock On Hand:</b> Current total quantity available across all warehouses with days of supply calculation.
@@ -31,7 +31,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Movement Classification">
+            <MudExpansionPanel Text="Movement Classification" Icon="@Icons.Material.Filled.Info">
                 <MudText Typo="Typo.body2" Class="mb-2">
                     Items are classified based on their sales velocity:
                 </MudText>
@@ -57,7 +57,7 @@
                 </MudSimpleTable>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Sales Trend Chart">
+            <MudExpansionPanel Text="Sales Trend Chart" Icon="@Icons.Material.Filled.BarChart">
                 <MudText Typo="Typo.body2" Class="mb-2">
                     The sales trend chart displays historical sales data over the last 12 months. The area chart shows 
                     quantity sold while the line chart shows corresponding revenue. Use this to identify seasonal patterns 
@@ -65,14 +65,14 @@
                 </MudText>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Stock Distribution">
+            <MudExpansionPanel Text="Stock Distribution" Icon="@Icons.Material.Filled.Info">
                 <MudText Typo="Typo.body2" Class="mb-2">
                     The donut chart shows how the item's stock is distributed across different warehouses. This helps 
                     identify which warehouses hold the most inventory and may need replenishment or rebalancing.
                 </MudText>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Backorder & Stockout Analysis">
+            <MudExpansionPanel Text="Backorder & Stockout Analysis" Icon="@Icons.Material.Filled.Assessment">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.Warning">
                         <b>Current Backorder:</b> Quantity of pending orders that cannot be fulfilled from current stock.
@@ -86,7 +86,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Supplier Performance">
+            <MudExpansionPanel Text="Supplier Performance" Icon="@Icons.Material.Filled.Assessment">
                 <MudText Typo="Typo.body2" Class="mb-2">
                     Shows performance metrics for suppliers who provide this item, including:
                 </MudText>

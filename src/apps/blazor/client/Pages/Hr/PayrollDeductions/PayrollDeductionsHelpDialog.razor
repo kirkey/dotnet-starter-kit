@@ -10,7 +10,7 @@
             </MudText>
 
             <MudExpansionPanels Elevation="@_preference.Elevation">
-                <MudExpansionPanel Text="Deduction Types">
+                <MudExpansionPanel Text="Deduction Types" Icon="@Icons.Material.Filled.Category">
                     <MudList T="string" Dense="true">
                         <MudListItem Icon="@Icons.Material.Filled.AttachMoney">
                             <b>Fixed Amount</b> - Specific dollar amount each period
@@ -27,7 +27,7 @@
                     </MudList>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Common Deductions">
+                <MudExpansionPanel Text="Common Deductions" Icon="@Icons.Material.Filled.Info">
                     <MudList T="string" Dense="true">
                         <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
                             <b>Taxes</b> - Federal, state, local taxes
@@ -44,7 +44,7 @@
                     </MudList>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Settings">
+                <MudExpansionPanel Text="Settings" Icon="@Icons.Material.Filled.Tune">
                     <MudList T="string" Dense="true">
                         <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
                             <b>Authorized</b> - Employee-approved deduction

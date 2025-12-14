@@ -3,17 +3,16 @@
 <MudDialog>
     <DialogContent>
         <MudStack Spacing="3">
-            <MudText Typo="Typo.h6">Benefit Enrollments Help</MudText>
 
             <MudExpansionPanels Elevation="@_preference.Elevation">
-                <MudExpansionPanel Text="Overview">
+                <MudExpansionPanel Text="Overview" Icon="@Icons.Material.Filled.Info">
                     <MudText>
                         Benefit Enrollments track employee participation in company-offered benefit programs such as 
                         health insurance, life insurance, retirement plans, and other employee benefits.
                     </MudText>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Coverage Levels">
+                <MudExpansionPanel Text="Coverage Levels" Icon="@Icons.Material.Filled.Info">
                     <MudList T="string" Dense="true">
                         <MudListItem Icon="@Icons.Material.Filled.Person">
                             <strong>Individual:</strong> Covers only the employee
@@ -30,7 +29,7 @@
                     </MudList>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Key Dates">
+                <MudExpansionPanel Text="Key Dates" Icon="@Icons.Material.Filled.Info">
                     <MudList T="string" Dense="true">
                         <MudListItem Icon="@Icons.Material.Filled.Event">
                             <strong>Enrollment Date:</strong> When the employee signed up for the benefit
@@ -44,14 +43,14 @@
                     </MudList>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Contributions">
+                <MudExpansionPanel Text="Contributions" Icon="@Icons.Material.Filled.Info">
                     <MudText>
                         Most benefits involve shared costs between the employee and employer. 
                         The contribution amounts shown are typically per pay period (bi-weekly or monthly).
                     </MudText>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Terminating Enrollments">
+                <MudExpansionPanel Text="Terminating Enrollments" Icon="@Icons.Material.Filled.Info">
                     <MudText>
                         Use the "Terminate Enrollment" action to end an employee's participation in a benefit plan. 
                         This is typically done when an employee leaves the company, loses eligibility, 

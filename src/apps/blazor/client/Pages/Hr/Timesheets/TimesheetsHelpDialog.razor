@@ -7,7 +7,7 @@
     </TitleContent>
     <DialogContent>
         <MudExpansionPanels Elevation="@_preference.Elevation" MultiExpansion="true">
-            <MudExpansionPanel Text="Overview">
+            <MudExpansionPanel Text="Overview" Icon="@Icons.Material.Filled.Info">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     Timesheets track employee work hours for payroll processing.
                     Each timesheet covers a defined period (weekly, bi-weekly, etc.)
@@ -15,7 +15,7 @@
                 </MudText>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Timesheet Lifecycle">
+            <MudExpansionPanel Text="Timesheet Lifecycle" Icon="@Icons.Material.Filled.Timeline">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.Edit">
                         <b>Draft</b> - Initial state. Employee enters hours.
@@ -32,7 +32,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Creating Timesheets">
+            <MudExpansionPanel Text="Creating Timesheets" Icon="@Icons.Material.Filled.AddCircle">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     To create a new timesheet:
                 </MudText>
@@ -52,7 +52,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Period Types">
+            <MudExpansionPanel Text="Period Types" Icon="@Icons.Material.Filled.Category">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.Event">
                         <b>Weekly</b> - 7-day period (Sunday to Saturday).
@@ -69,7 +69,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Hours Tracking">
+            <MudExpansionPanel Text="Hours Tracking" Icon="@Icons.Material.Filled.Info">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.WorkOutline">
                         <b>Regular Hours</b> - Standard work hours (typically up to 40/week).
@@ -83,7 +83,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Best Practices">
+            <MudExpansionPanel Text="Best Practices" Icon="@Icons.Material.Filled.CheckCircle">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.Today">
                         Submit timesheets promptly at period end.

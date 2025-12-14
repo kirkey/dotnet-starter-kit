@@ -7,14 +7,14 @@
     </TitleContent>
     <DialogContent>
         <MudExpansionPanels Elevation="@_preference.Elevation" MultiExpansion="true">
-            <MudExpansionPanel Text="Overview">
+            <MudExpansionPanel Text="Overview" Icon="@Icons.Material.Filled.Info">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     Leave Balances track employee leave entitlements by type and year.
                     This includes opening balances, accruals, usage, and remaining days.
                 </MudText>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Balance Components">
+            <MudExpansionPanel Text="Balance Components" Icon="@Icons.Material.Filled.Layers">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.PlayCircle">
                         <b>Opening Balance</b> - Initial leave days at start of period.
@@ -31,7 +31,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Usage Tracking">
+            <MudExpansionPanel Text="Usage Tracking" Icon="@Icons.Material.Filled.Info">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.Check">
                         <b>Taken Days</b> - Approved leave that has been used.
@@ -45,7 +45,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Carryover Rules">
+            <MudExpansionPanel Text="Carryover Rules" Icon="@Icons.Material.Filled.Info">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     Unused leave may carry over to the next year with restrictions:
                 </MudText>
@@ -62,7 +62,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Best Practices">
+            <MudExpansionPanel Text="Best Practices" Icon="@Icons.Material.Filled.CheckCircle">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.Verified">
                         Review balances at start of each year.

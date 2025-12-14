@@ -7,14 +7,14 @@
     </TitleContent>
     <DialogContent>
         <MudExpansionPanels Elevation="@_preference.Elevation" MultiExpansion="true">
-            <MudExpansionPanel Text="Overview">
+            <MudExpansionPanel Text="Overview" Icon="@Icons.Material.Filled.Info">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     Tax Brackets define the progressive tax rates applied to different income ranges.
                     Each bracket specifies the minimum and maximum income thresholds and the applicable tax rate.
                 </MudText>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Tax Types">
+            <MudExpansionPanel Text="Tax Types" Icon="@Icons.Material.Filled.Category">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
                         <b>Federal</b> - Federal income tax brackets.
@@ -34,7 +34,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Filing Status">
+            <MudExpansionPanel Text="Filing Status" Icon="@Icons.Material.Filled.Info">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     Tax brackets vary by filing status:
                 </MudText>
@@ -54,7 +54,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Creating Tax Brackets">
+            <MudExpansionPanel Text="Creating Tax Brackets" Icon="@Icons.Material.Filled.AddCircle">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     To create a new tax bracket:
                 </MudText>
@@ -77,7 +77,7 @@
                 </MudList>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Progressive Taxation">
+            <MudExpansionPanel Text="Progressive Taxation" Icon="@Icons.Material.Filled.Info">
                 <MudText Typo="Typo.body1" Class="mb-2">
                     Tax brackets work progressively - only income within each bracket is taxed at that rate.
                 </MudText>
@@ -100,7 +100,7 @@
                 </MudSimpleTable>
             </MudExpansionPanel>
 
-            <MudExpansionPanel Text="Best Practices">
+            <MudExpansionPanel Text="Best Practices" Icon="@Icons.Material.Filled.CheckCircle">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.Update">
                         Update brackets annually when tax laws change.

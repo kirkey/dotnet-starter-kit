@@ -3,11 +3,10 @@
 <MudDialog>
     <DialogContent>
         <MudStack Spacing="3">
-            <MudText Typo="Typo.h6">Understanding Tax Configurations</MudText>
 
             <MudExpansionPanels Elevation="@_preference.Elevation">
-                <MudExpansionPanel Text="What are Tax Configurations?">
-                    <MudText Typo="Typo.body2" Class="mb-2">
+                <MudExpansionPanel Text="What are Tax Configurations?" Icon="@Icons.Material.Filled.MenuBook">
+                    <MudStack Spacing="2">
                         Tax configurations define the various tax rates and rules applicable to your organization. 
                         This includes VAT, sales tax, withholding taxes, and other tax types.
                     </MudText>
@@ -22,7 +21,7 @@
                     </MudList>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Tax Types">
+                <MudExpansionPanel Text="Tax Types" Icon="@Icons.Material.Filled.Category">
                     <MudText Typo="Typo.body2" Class="mb-2">
                         Different tax types serve different purposes:
                     </MudText>
@@ -35,7 +34,7 @@
                     </MudList>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Tax Rates">
+                <MudExpansionPanel Text="Tax Rates" Icon="@Icons.Material.Filled.Info">
                     <MudText Typo="Typo.body2" Class="mb-2">
                         Tax rates are stored as decimals (0-1):
                     </MudText>
@@ -50,7 +49,7 @@
                     </MudAlert>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Compound Taxes">
+                <MudExpansionPanel Text="Compound Taxes" Icon="@Icons.Material.Filled.Info">
                     <MudText Typo="Typo.body2" Class="mb-2">
                         A compound tax is calculated on the subtotal plus other taxes. 
                         This is used when one tax is applied on top of another.
@@ -60,7 +59,7 @@
                     </MudAlert>
                 </MudExpansionPanel>
 
-                <MudExpansionPanel Text="Effective Dates">
+                <MudExpansionPanel Text="Effective Dates" Icon="@Icons.Material.Filled.Info">
                     <MudText Typo="Typo.body2" Class="mb-2">
                         Tax rates can change over time. Use effective dates to:
                     </MudText>

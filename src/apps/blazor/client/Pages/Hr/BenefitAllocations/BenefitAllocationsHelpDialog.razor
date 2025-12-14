@@ -3,17 +3,16 @@
 <MudDialog>
     <DialogContent>
         <MudStack Spacing="3">
-            <MudText Typo="Typo.h6">Benefit Allocations Help</MudText>
 
             <MudExpansionPanels Elevation="@_preference.Elevation">
-                <MudExpansionPanel Text="Overview">
+                <MudExpansionPanel Text="Overview" Icon="@Icons.Material.Filled.Info">
                     <MudText>
                         Benefit Allocations track the usage and distribution of employee benefits. This includes claims, 
                         premium payments, usage records, adjustments, and refunds associated with benefit enrollments.
                     </MudText>
                 </MudExpansionPanel>
                 
-                <MudExpansionPanel Text="Allocation Types">
+                <MudExpansionPanel Text="Allocation Types" Icon="@Icons.Material.Filled.Category">
                     <MudList T="string" Dense="true">
                         <MudListItem Icon="@Icons.Material.Filled.PlayCircle">
                             <strong>Usage</strong> - Regular benefit usage such as medical visits or gym access
@@ -33,7 +32,7 @@
                     </MudList>
                 </MudExpansionPanel>
                 
-                <MudExpansionPanel Text="Workflow">
+                <MudExpansionPanel Text="Workflow" Icon="@Icons.Material.Filled.Timeline">
                     <MudList T="string" Dense="true">
                         <MudListItem Icon="@Icons.Material.Filled.AddCircle">
                             <strong>Create</strong> - Create a new allocation record for an active enrollment
@@ -50,7 +49,7 @@
                     </MudList>
                 </MudExpansionPanel>
                 
-                <MudExpansionPanel Text="Status Indicators">
+                <MudExpansionPanel Text="Status Indicators" Icon="@Icons.Material.Filled.Info">
                     <MudStack Spacing="2">
                         <MudStack Row="true" Spacing="2">
                             <MudChip T="string" Color="Color.Warning" Size="Size.Small">Pending</MudChip>
@@ -67,7 +66,7 @@
                     </MudStack>
                 </MudExpansionPanel>
                 
-                <MudExpansionPanel Text="Tips">
+                <MudExpansionPanel Text="Tips" Icon="@Icons.Material.Filled.Info">
                     <MudList T="string" Dense="true">
                         <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
                             Always include a reference number for tracking purposes

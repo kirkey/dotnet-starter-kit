@@ -9,14 +9,14 @@
     </TitleContent>
     <DialogContent>
         <MudExpansionPanels Elevation="@_preference.Elevation">
-            <MudExpansionPanel Text="Overview">
+            <MudExpansionPanel Text="Overview" Icon="@Icons.Material.Filled.Info">
                 <MudText>
                     Deductions define the types of payroll deductions that can be applied to employee salaries, 
                     including loans, taxes, insurance, and other contributions.
                 </MudText>
             </MudExpansionPanel>
             
-            <MudExpansionPanel Text="Deduction Types">
+            <MudExpansionPanel Text="Deduction Types" Icon="@Icons.Material.Filled.Category">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.AccountBalance">
                         <strong>Loan</strong> - Employee loans with installment recovery
@@ -33,7 +33,7 @@
                 </MudList>
             </MudExpansionPanel>
             
-            <MudExpansionPanel Text="Recovery Methods">
+            <MudExpansionPanel Text="Recovery Methods" Icon="@Icons.Material.Filled.Info">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.Edit">
                         <strong>Manual</strong> - Amount entered manually each payroll
@@ -50,7 +50,7 @@
                 </MudList>
             </MudExpansionPanel>
             
-            <MudExpansionPanel Text="Tips">
+            <MudExpansionPanel Text="Tips" Icon="@Icons.Material.Filled.Info">
                 <MudList T="string" Dense="true">
                     <MudListItem Icon="@Icons.Material.Filled.Lightbulb">
                         Set max recovery percentage to protect employee take-home pay
